@@ -87,7 +87,9 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
             status,
             stepNum: completedInCity + 1 > totalSteps ? totalSteps : completedInCity + 1,
             totalSteps,
-            cinematicIntro: city.cinematic_intro
+            cinematicIntro: city.cinematic_intro,
+            color: city.city_color,
+            iconName: city.icon_name
           };
         });
         setCities(mappedCities);

@@ -51,6 +51,8 @@ export type City = {
   stepNum: number;
   totalSteps: number;
   cinematicIntro?: string;
+  color?: string;
+  iconName?: string;
 };
 
 export type Mission = {
