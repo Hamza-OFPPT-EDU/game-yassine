@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&family=Cairo:wght@400;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-headline: "Plus Jakarta Sans", sans-serif;
+  --font-arabic: "Cairo", sans-serif;
+
+  /* ── Couleurs utilitaires neutres ─────────────────────── */
+  --color-duo-orange:      #FF9600;
+  --color-duo-red:         #FF4B4B;
+  --color-duo-red-dark:    #ea2b2b;
+  --color-duo-yellow:      #FFC800;
+  --color-duo-eel:         #4B4B4B;
+  --color-duo-wolf:        #777777;
+  --color-duo-swan:        #E5E5E5;
+
+  /* ── Palette Marron — identité "Voyage des Compétences" ─ */
+  --color-voyage-primary:       #7B3F1A;   /* marron soutenu */
+  --color-voyage-primary-dark:  #4E2510;   /* marron très foncé */
+  --color-voyage-primary-light: #A0572B;   /* marron clair */
+
+  --color-voyage-secondary:      #C9A96E;  /* sable doré */
+  --color-voyage-secondary-dark: #A07840;  /* ocre profond */
+  --color-voyage-secondary-light:#E8D5B0;  /* sable pâle */
+
+  --color-voyage-accent:        #D4A43E;   /* or marocain */
+  --color-voyage-accent-dark:   #A87D28;   /* or foncé */
+  --color-voyage-accent-light:  #F0CC7A;   /* or clair */
+
+  --color-voyage-sand:          #FBF3E3;   /* parchemin */
+  --color-voyage-parchment:     #F5E8C8;   /* beige chaud */
+  --color-voyage-terracotta:    #C1440E;   /* terracotta */
+  --color-voyage-zellige:       #2C6E7F;   /* bleu zellij */
+
+  --color-grad-start:           #7B3F1A;
+  --color-grad-end:             #4E2510;
+}
+
+
+@layer base {
+  body {
+    background-color: #FBF3E3;
+    color: #4E2510;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Réduction globale des icônes de 5% */
+  svg {
+    width: 0.95em;
+    height: 0.95em;
+    transform: scale(0.95);
+    transform-origin: center;
+  }
+}
+
+.font-headline { font-family: var(--font-headline); }
+.arabic-font   { font-family: var(--font-arabic); }
+
+/* ── Composants ──────────────────────────────────────────────────────────── */
+@layer components {
+  /* --- Boutons Voyage (identité marron/or) --- */
+  .btn-voyage {
+    @apply text-white rounded-2xl font-black px-6 py-3 border-b-4 active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight shadow-lg;
+    background: linear-gradient(135deg, #A0572B, #7B3F1A);
+    border-bottom-color: #4E2510;
+  }
+  .btn-voyage:hover { background: linear-gradient(135deg, #B0673B, #8B4F2A); }
+
+  .btn-voyage-primary {
+    @apply text-white rounded-2xl font-black px-6 py-3 border-b-4 border-voyage-primary-dark active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight shadow-lg;
+    background: linear-gradient(135deg, #A0572B, #7B3F1A);
+  }
+  .btn-voyage-primary:hover { background: linear-gradient(135deg, #B0673B, #8B4F2A); }
+
+  .btn-voyage-accent {
+    @apply text-voyage-primary-dark rounded-2xl font-black px-6 py-3 border-b-4 active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight shadow-lg;
+    background: linear-gradient(135deg, #F0CC7A, #D4A43E);
+    border-bottom-color: #A87D28;
+  }
+  .btn-voyage-accent:hover { background: linear-gradient(135deg, #F5D68A, #E0B050); }
+
+  /* --- Boutons feedback (rouge/orange/jaune conservés) --- */
+  .btn-duo-red    { @apply bg-duo-red    text-white rounded-2xl font-black px-6 py-3 border-b-4 border-duo-red-dark active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight; }
+  .btn-duo-orange { @apply bg-duo-orange text-white rounded-2xl font-black px-6 py-3 border-b-4 border-[#e68a00]   active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight; }
+  .btn-duo-yellow { @apply bg-duo-yellow text-white rounded-2xl font-black px-6 py-3 border-b-4 border-[#e6b400]   active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight; }
+
+  /* --- Cartes --- */
+  .card-duo    { @apply bg-white border-2 border-duo-swan rounded-3xl p-6 shadow-sm; }
+  .card-voyage { @apply bg-white border-2 border-voyage-secondary/30 rounded-3xl p-6 shadow-md; }
+}
+
+/* ── Chemin SVG animé ────────────────────────────────────────────────────── */
+.path-dashed {
+  stroke-dasharray: 14, 22;
+  animation: dash-move 25s linear infinite;
+}
+@keyframes dash-move {
+  from { stroke-dashoffset: 700; }
+  to   { stroke-dashoffset: 0;   }
+}
+
+/* ── Fond texturé marocain (zellige pattern) ─────────────────────────────── */
+.zellige-pattern {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 18px,
+      rgba(123,63,26,0.07) 18px,
+      rgba(123,63,26,0.07) 20px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 18px,
+      rgba(212,164,62,0.06) 18px,
+      rgba(212,164,62,0.06) 20px
+    );
+}
+
+/* ── Fond parchemin carte ────────────────────────────────────────────────── */
+.map-bg {
+  background-color: #F5E8C8;
+  background-image:
+    radial-gradient(ellipse at 20% 30%, rgba(123,63,26,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(212,164,62,0.10) 0%, transparent 50%),
+    repeating-linear-gradient(
+      0deg, transparent, transparent 39px,
+      rgba(123,63,26,0.04) 39px, rgba(123,63,26,0.04) 40px
+    ),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 39px,
+      rgba(123,63,26,0.04) 39px, rgba(123,63,26,0.04) 40px
+    );
+}
+
+/* ── Aura pulsante ville active ──────────────────────────────────────────── */
+@keyframes city-pulse {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  50%  { transform: scale(1.5); opacity: 0.15; }
+  100% { transform: scale(1);   opacity: 0.5; }
+}
+.city-aura { animation: city-pulse 3s ease-in-out infinite; }
+
+/* ── Étoile scintillante ─────────────────────────────────────────────────── */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50%       { opacity: 1;   transform: scale(1.2); }
+}
+.star-twinkle { animation: twinkle 2s ease-in-out infinite; }
+
+/* ── Anneau tournant ville active ────────────────────────────────────────── */
+@keyframes ring-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.ring-spin { animation: ring-spin 8s linear infinite; }
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

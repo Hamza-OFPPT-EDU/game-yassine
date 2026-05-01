@@ -1,0 +1,1002 @@
+import { useState, useEffect, useRef, type FC, type ReactNode } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import {
+  DndContext,
+  type DragEndEvent,
+  type DragStartEvent,
+  type DragOverEvent,
+  PointerSensor,
+  useDraggable,
+  useDroppable,
+  useSensor,
+  useSensors,
+  DragOverlay,
+  closestCenter,
+} from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
+import { Lightbulb, TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw } from 'lucide-react';
+import { type City, type Challenge, type MissionCompletionSummary, type MissionQuestionResult } from '../types';
+import { cn } from '../lib/utils';
+import { useSupabaseQuestions } from '../hooks/useSupabase';
+import { useAudio } from '../hooks/useAudio';
+
+interface ChallengeScreenProps {
+  city: City;
+  missionId: string;
+  missionTitle?: string;
+  onComplete: (summary: MissionCompletionSummary) => void;
+  onBack: () => void;
+}
+
+export default function ChallengeScreen({ city, missionId, missionTitle, onComplete, onBack }: ChallengeScreenProps) {
+  const { playSound } = useAudio();
+  const { questions, loading: loadingQuestions } = useSupabaseQuestions(missionId);
+  
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const [selectedWordIdx, setSelectedWordIdx] = useState<number | null>(null);
+  const [selectedRankIds, setSelectedRankIds] = useState<string[]>([]);
+  const [matchingSelections, setMatchingSelections] = useState<{ [key: string]: string }>({});
+  const [blanksValues, setBlanksValues] = useState<{ [key: string]: string }>({});
+  const [teamRoleValues, setTeamRoleValues] = useState<{ [key: string]: string }>({});
+  
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+  const [activeDragId, setActiveDragId] = useState<string | null>(null);
+  const [hoverDropId, setHoverDropId] = useState<string | null>(null);
+  const [questionResults, setQuestionResults] = useState<MissionQuestionResult[]>([]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 6 },
+    }),
+  );
+  const hoverFeedbackRef = useRef<string | null>(null);
+  const currentQuestionResultRef = useRef<MissionQuestionResult | null>(null);
+
+  const challenge = questions[currentIdx];
+  
+  // Options are now normalized in useSupabaseQuestions hook
+  // Ensure options is always an array for safe .map() calls
+  const normalizedOptions = Array.isArray(challenge?.options) ? challenge.options : [];
+  
+  const matchingOptions = normalizedOptions;
+  const matchingTargets = Array.from(
+    new Set(matchingOptions.map((option) => option.match).filter(Boolean)),
+  ).sort();
+  const rankingOptions = normalizedOptions;
+
+  useEffect(() => {
+    if (!hoverDropId || hoverFeedbackRef.current === hoverDropId) return;
+    hoverFeedbackRef.current = hoverDropId;
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      navigator.vibrate(12);
+    }
+  }, [hoverDropId]);
+
+  useEffect(() => {
+    handleReset();
+  }, [currentIdx]);
+
+  const handleReset = () => {
+    setSelectedOptionId(null);
+    setSelectedWordIdx(null);
+    setSelectedRankIds([]);
+    setMatchingSelections({});
+    setBlanksValues({});
+    setTeamRoleValues({});
+    if (challenge?.type === 'zellige') {
+      const initialRotations: { [key: string]: string } = {};
+      for (let i = 0; i < 9; i++) {
+        initialRotations[i] = String(Math.floor(Math.random() * 4) * 90);
+      }
+      setMatchingSelections(initialRotations);
+    } else {
+      setMatchingSelections({});
+    }
+    setShowFeedback(false);
+    setShowHint(false);
+    setActiveDragId(null);
+    setHoverDropId(null);
+    hoverFeedbackRef.current = null;
+    currentQuestionResultRef.current = null;
+  };
+
+  const parseMatchingSource = (id: string) => id.startsWith('match-src-') ? Number(id.replace('match-src-', '')) : null;
+  const parseMatchingTarget = (id: string) => id.startsWith('match-target-') ? Number(id.replace('match-target-', '')) : null;
+  const parseRankOptionId = (id: string) => id.startsWith('rank-opt-') ? id.replace('rank-opt-', '') : null;
+  const parseRankSlot = (id: string) => id.startsWith('rank-slot-') ? Number(id.replace('rank-slot-', '')) : null;
+
+  const getActiveDragLabel = () => {
+    if (!activeDragId) return null;
+
+    if (activeDragId.startsWith('match-src-')) {
+      const sourceIdx = parseMatchingSource(activeDragId);
+      if (sourceIdx === null || Number.isNaN(sourceIdx)) return null;
+      return matchingOptions[sourceIdx]?.text || null;
+    }
+
+    if (activeDragId.startsWith('rank-opt-')) {
+      const optionId = parseRankOptionId(activeDragId);
+      if (!optionId) return null;
+      return rankingOptions.find((option) => option.id === optionId)?.text || null;
+    }
+
+    return null;
+  };
+
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveDragId(String(event.active.id));
+  };
+
+  const handleDragOver = (event: DragOverEvent) => {
+    setHoverDropId(event.over ? String(event.over.id) : null);
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const activeId = String(event.active.id);
+    const overId = event.over ? String(event.over.id) : null;
+
+    setActiveDragId(null);
+    setHoverDropId(null);
+
+    if (!challenge || showFeedback || !overId) return;
+
+    if (challenge.type === 'matching') {
+      const sourceIdx = parseMatchingSource(activeId);
+      const targetIdx = parseMatchingTarget(overId);
+
+      if (sourceIdx === null || targetIdx === null || Number.isNaN(sourceIdx) || Number.isNaN(targetIdx)) return;
+
+      const targetLabel = matchingTargets[targetIdx];
+      if (!targetLabel) return;
+
+      setMatchingSelections((prev) => {
+        return {
+          ...prev,
+          [String(sourceIdx)]: targetLabel,
+        };
+      });
+      playSound('match');
+      return;
+    }
+
+    if (challenge.type === 'ranking') {
+      const optionId = parseRankOptionId(activeId);
+      if (!optionId) return;
+
+      if (overId === 'rank-pool') {
+        setSelectedRankIds((prev) => prev.filter((id) => id !== optionId));
+        playSound('click');
+        return;
+      }
+
+      let slotIndex = parseRankSlot(overId);
+      if ((slotIndex === null || Number.isNaN(slotIndex)) && overId.startsWith('rank-opt-')) {
+        const overOptionId = parseRankOptionId(overId);
+        if (overOptionId) {
+          const existingIndex = selectedRankIds.indexOf(overOptionId);
+          if (existingIndex >= 0) slotIndex = existingIndex;
+        }
+      }
+
+      if (slotIndex === null || Number.isNaN(slotIndex)) return;
+
+      setSelectedRankIds((prev) => {
+        const without = prev.filter((id) => id !== optionId);
+        const insertAt = Math.max(0, Math.min(slotIndex, rankingOptions.length - 1));
+        without.splice(insertAt, 0, optionId);
+        return without;
+      });
+      playSound('click');
+    }
+  };
+
+  const handleConfirm = () => {
+    if (canConfirm()) {
+      const result = buildQuestionResult();
+      if (result) {
+        currentQuestionResultRef.current = result;
+        setQuestionResults((prev) => [...prev, result]);
+      }
+      setShowFeedback(true);
+      if (isCorrect()) {
+        playSound('correct');
+      } else {
+        playSound('wrong');
+      }
+    }
+  };
+
+  const canConfirm = () => {
+    if (!challenge) return false;
+    const type = challenge.type;
+    if (['multiple-choice', 'true-false', 'scenario-decision', 'scenario-dialogue', 'short-answer', 'puzzle-riddle', 'time-attack'].includes(type)) return !!selectedOptionId;
+    if (type === 'glitch') return selectedWordIdx !== null;
+    if (type === 'ranking') return selectedRankIds.length === (challenge.options?.length || 0);
+    if (type === 'fill-in-blanks') return Object.keys(blanksValues).length > 0;
+    if (type === 'matching') return Object.keys(matchingSelections).length === matchingOptions.length;
+    if (type === 'team-roles') return Object.keys(teamRoleValues).length > 0;
+    if (type === 'zellige') return true; 
+    return false;
+  };
+
+  const isCorrect = () => {
+    if (!challenge) return false;
+    const type = challenge.type;
+    if (type === 'glitch') return selectedWordIdx === parseInt(challenge.correctOptionId || '0');
+    if (type === 'ranking') return selectedRankIds.join(',') === challenge.correctOptionId;
+    if (type === 'fill-in-blanks') {
+      const sorted = Object.keys(blanksValues).sort().map(k => blanksValues[k]);
+      const correct = challenge.correctOptionId?.split(/[|,,]/).map(s => s.trim()) || [];
+      return sorted.join('|') === correct.join('|');
+    }
+    if (type === 'matching') {
+      return matchingOptions.every((opt, idx) => matchingSelections[String(idx)] === opt.match);
+    }
+    if (type === 'team-roles') return true; 
+    if (type === 'zellige') {
+      return Object.values(matchingSelections).every(angle => parseInt(angle as string) % 360 === 0);
+    }
+    return selectedOptionId === challenge.correctOptionId;
+  };
+
+  const handleNext = () => {
+    if (currentIdx < questions.length - 1) {
+      setCurrentIdx(currentIdx + 1);
+    } else {
+      const finalResults = mergeResults(questionResults, currentQuestionResultRef.current);
+      playSound('success');
+      onComplete(buildMissionSummary(finalResults));
+    }
+  };
+
+  const mergeResults = (
+    results: MissionQuestionResult[],
+    currentResult: MissionQuestionResult | null,
+  ) => {
+    const merged = new Map<string, MissionQuestionResult>();
+    results.forEach((result) => merged.set(result.questionId, result));
+    if (currentResult) {
+      merged.set(currentResult.questionId, currentResult);
+    }
+    return Array.from(merged.values());
+  };
+
+  const buildMissionSummary = (results: MissionQuestionResult[]): MissionCompletionSummary => {
+    const totalXp = results.reduce((sum, result) => sum + result.xpEarned, 0);
+    const totalStars = results.reduce((sum, result) => sum + result.starsEarned, 0);
+    const correctCount = results.filter((result) => result.isCorrect).length;
+    const totalQuestions = results.length;
+
+    return {
+      missionId,
+      missionTitle,
+      cityId: city.id,
+      cityName: city.name,
+      questions: results,
+      totalXp,
+      totalStars,
+      correctCount,
+      totalQuestions,
+      successRate: totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0,
+    };
+  };
+
+  const buildQuestionResult = (): MissionQuestionResult | null => {
+    if (!challenge) return null;
+
+    const xpReward = challenge.xp_reward ?? 20;
+    const correct = isCorrect();
+    const starsEarned = correct ? 1 : 0;
+
+    const getOptionText = (optionId: string | null | undefined, options: any[]) => {
+      if (!optionId) return '—';
+      return options.find((option) => option.id === optionId)?.text || optionId;
+    };
+
+    const getSelectedRankTexts = () => selectedRankIds
+      .map((optionId) => rankingOptions.find((option) => option.id === optionId)?.text || optionId)
+      .join(' → ');
+
+    const getCorrectRankTexts = () => (challenge.correctOptionId || '')
+      .split(',')
+      .map((optionId) => optionId.trim())
+      .filter(Boolean)
+      .map((optionId) => rankingOptions.find((option) => option.id === optionId)?.text || optionId)
+      .join(' → ');
+
+    const getMatchingAnswer = (sourceMap: Record<string, string>) => matchingOptions
+      .map((option, index) => `${option.text} → ${sourceMap[String(index)] || '—'}`)
+      .join('\n');
+
+    const result: MissionQuestionResult = {
+      questionId: challenge.id,
+      questionType: challenge.type,
+      question: challenge.question,
+      givenAnswer: '—',
+      correctAnswer: '—',
+      isCorrect: correct,
+      xpEarned: correct ? xpReward : 0,
+      starsEarned,
+    };
+
+    if (['multiple-choice', 'true-false', 'scenario-decision', 'scenario-dialogue', 'puzzle-riddle', 'time-attack'].includes(challenge.type)) {
+      result.givenAnswer = getOptionText(selectedOptionId, challenge.options || []);
+      result.correctAnswer = getOptionText(challenge.correctOptionId, challenge.options || []);
+      return result;
+    }
+
+    if (challenge.type === 'short-answer') {
+      result.givenAnswer = selectedOptionId || '—';
+      result.correctAnswer = challenge.correctOptionId || 'Réponse attendue par l’équipe pédagogique';
+      return result;
+    }
+
+    if (challenge.type === 'fill-in-blanks') {
+      const orderedGiven = Object.keys(blanksValues)
+        .sort((a, b) => Number(a) - Number(b))
+        .map((key) => blanksValues[key])
+        .filter(Boolean);
+      const orderedCorrect = (challenge.correctOptionId || '')
+        .split(/[|,]/)
+        .map((part) => part.trim())
+        .filter(Boolean);
+      result.givenAnswer = orderedGiven.join(' | ') || '—';
+      result.correctAnswer = orderedCorrect.join(' | ') || '—';
+      return result;
+    }
+
+    if (challenge.type === 'matching') {
+      result.givenAnswer = getMatchingAnswer(matchingSelections);
+      result.correctAnswer = getMatchingAnswer(
+        Object.fromEntries((challenge.options as any[]).map((option, index) => [String(index), option.match || '—'])),
+      );
+      return result;
+    }
+
+    if (challenge.type === 'ranking') {
+      result.givenAnswer = getSelectedRankTexts() || '—';
+      result.correctAnswer = getCorrectRankTexts() || '—';
+      return result;
+    }
+
+    if (challenge.type === 'zellige') {
+      result.givenAnswer = `${Object.values(matchingSelections).filter(Boolean).length} carreaux orientés`;
+      result.correctAnswer = 'Tous les carreaux orientés correctement';
+      return result;
+    }
+
+    if (challenge.type === 'team-roles') {
+      result.givenAnswer = Object.entries(teamRoleValues)
+        .map(([role, value]) => `${role}: ${value}`)
+        .join('\n') || '—';
+      result.correctAnswer = 'Réponses à compléter selon le scénario';
+      return result;
+    }
+
+    return result;
+  };
+
+  if (loadingQuestions) {
+    return (
+      <div className="h-full w-full bg-white flex flex-col items-center justify-center">
+        <Loader2 className="animate-spin text-voyage-accent" size={48} />
+        <p className="mt-4 font-headline font-black text-voyage-accent uppercase tracking-widest text-xs">Chargement du défi...</p>
+      </div>
+    );
+  }
+
+  if (questions.length === 0) {
+    return (
+      <div className="h-full w-full bg-white flex flex-col items-center justify-center p-8 text-center">
+        <div className="w-32 h-32 bg-duo-orange/10 rounded-full flex items-center justify-center mb-6">
+           <MapIcon size={64} className="text-duo-orange" />
+        </div>
+        <h2 className="font-headline font-black text-2xl text-duo-eel mb-2">Oups !</h2>
+        <p className="font-bold text-duo-wolf mb-8">Nous n'avons pas trouvé de questions pour cette mission.</p>
+        <button onClick={onBack} className="btn-voyage-accent px-12 py-4 uppercase font-black tracking-tight">Retour</button>
+      </div>
+    );
+  }
+
+  // Handle case where challenge data might be incomplete
+  if (challenge && (!challenge.options || (Array.isArray(challenge.options) && challenge.options.length === 0))) {
+    const typeNoOptions = ['short-answer', 'puzzle-riddle', 'glitch'];
+    if (!typeNoOptions.includes(challenge.type)) {
+       return (
+        <div className="flex flex-col items-center justify-center h-full text-center space-y-6 px-8 bg-white">
+          <div className="w-24 h-24 bg-duo-swan/20 rounded-full flex items-center justify-center border-2 border-duo-swan">
+             <LayoutGrid className="text-duo-wolf opacity-40" size={48} />
+          </div>
+          <div className="space-y-2">
+             <h2 className="text-2xl font-black text-duo-eel tracking-tight">Oups ! Données manquantes</h2>
+             <p className="text-duo-wolf font-bold">Cet exercice n'est pas encore prêt. Ne t'inquiète pas, tu peux le passer !</p>
+          </div>
+          <button 
+             onClick={() => setCurrentIdx(prev => prev + 1)}
+             className="btn-voyage-accent w-full max-w-xs"
+          >
+             Passer cet exercice
+          </button>
+          <button 
+             onClick={onBack}
+             className="text-voyage-accent font-black uppercase tracking-widest text-xs hover:underline"
+          >
+             Retour à la mission
+          </button>
+        </div>
+       );
+    }
+  }
+
+  const progress = ((currentIdx + 1) / questions.length) * 100;
+
+  return (
+    <div className="h-full w-full bg-white flex flex-col relative overflow-hidden">
+      <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b-[3px] border-duo-swan px-6 py-4 flex items-center gap-6">
+        <button onClick={onBack} className="p-2 hover:bg-duo-swan rounded-xl transition-colors">
+          <X size={24} className="text-duo-wolf" />
+        </button>
+        
+        <div className="grow">
+          <div className="h-4 w-full bg-duo-swan rounded-full overflow-hidden border-2 border-duo-swan relative">
+            <motion.div 
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+              className="h-full bg-voyage-primary rounded-full shadow-lg relative"
+            >
+               <div className="absolute top-0.5 left-1 right-1 h-1 bg-white/30 rounded-full" />
+            </motion.div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+           <div className="w-8 h-8 rounded-lg bg-duo-orange/10 flex items-center justify-center">
+              <TrendingUp size={16} className="text-duo-orange" />
+           </div>
+           <span className="font-black text-duo-orange text-sm">{currentIdx + 1}/{questions.length}</span>
+        </div>
+      </header>
+      
+      <main className="grow pt-24 pb-32 px-6 max-w-2xl mx-auto w-full relative z-10 overflow-y-auto scrollbar-hide">
+        <div className="mb-8 space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-voyage-accent/10 rounded-full border border-voyage-accent/20">
+             <span className="text-[10px] font-black text-voyage-accent uppercase tracking-widest">{challenge.type.replace('-', ' ')}</span>
+          </div>
+          <h2 className="text-2xl font-black text-duo-eel leading-tight tracking-tight">{challenge.question}</h2>
+        </div>
+
+        <motion.div 
+          key={challenge.id}
+          initial={{ x: 20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          className="space-y-6"
+        >
+          {['multiple-choice', 'true-false', 'scenario-decision', 'scenario-cascade'].includes(challenge.type) && (
+            <div className="space-y-3">
+              {normalizedOptions.map((opt) => (
+                <button
+                  key={opt.id}
+                  disabled={showFeedback}
+                  onClick={() => {
+                    playSound('click');
+                    setSelectedOptionId(opt.id);
+                  }}
+                  className={cn(
+                    "w-full flex items-center gap-4 p-5 text-left rounded-2xl border-2 transition-all duration-100 group relative",
+                    selectedOptionId === opt.id 
+                      ? "bg-voyage-primary/5 border-voyage-primary shadow-[0_4px_0_0_#8B4513] -translate-y-0.5"
+                      : "bg-white border-voyage-secondary/30 hover:bg-voyage-secondary/10 border-b-4 active:translate-y-0.5 active:border-b-0"
+                  )}
+                >
+                  <div className={cn(
+                    "w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm border-2 transition-colors",
+                    selectedOptionId === opt.id ? "bg-voyage-primary border-voyage-primary text-white" : "bg-white border-voyage-secondary/30 text-voyage-secondary group-hover:border-voyage-primary/30"
+                  )}>
+                    {opt.label || '?'}
+                  </div>
+                  <span className={cn(
+                    "font-bold text-lg",
+                    selectedOptionId === opt.id ? "text-voyage-primary" : "text-duo-eel"
+                  )}>{opt.text}</span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {challenge.type === 'scenario-dialogue' && (
+            <div className="space-y-8">
+              <div className="flex items-end gap-4">
+                <div className="w-16 h-16 rounded-2xl bg-voyage-secondary/20 flex items-center justify-center shrink-0 border-2 border-voyage-secondary/30">
+                  <User className="text-voyage-primary" size={32} />
+                </div>
+                <div className="bg-white border-2 border-voyage-secondary/30 p-5 rounded-2xl rounded-bl-none relative shadow-sm max-w-sm">
+                   <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-white border-b-2 border-l-2 border-voyage-secondary/30 rotate-45" />
+                   <p className="font-bold text-duo-eel italic">"{challenge.context_dialogue || challenge.question}"</p>
+                </div>
+              </div>
+
+              <div className="space-y-3 pl-20">
+                {normalizedOptions.map((opt) => (
+                  <button
+                    key={opt.id}
+                    disabled={showFeedback}
+                    onClick={() => {
+                      playSound('click');
+                      setSelectedOptionId(opt.id);
+                    }}
+                    className={cn(
+                      "w-full p-4 text-left rounded-2xl border-2 transition-all group relative",
+                      selectedOptionId === opt.id 
+                        ? "bg-voyage-primary text-white border-voyage-primary shadow-[0_4px_0_0_#8B4513] -translate-y-0.5"
+                        : "bg-white border-voyage-secondary/30 text-duo-eel border-b-4 hover:border-voyage-primary/50"
+                    )}
+                  >
+                    <span className="font-bold">{opt.text}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {challenge.type === 'fill-in-blanks' && (
+            <div className="space-y-10">
+              <div className="bg-duo-swan/20 p-8 rounded-[2.5rem] border-2 border-duo-swan leading-loose text-xl text-duo-eel text-center font-bold">
+                {challenge.content?.[0]?.split(/\[\d+\]/).map((part, i, arr) => (
+                  <span key={i}>
+                    {part}
+                    {i < arr.length - 1 && (
+                      <span className={cn(
+                        "inline-flex min-w-30 h-10 border-b-4 mx-2 rounded-t-lg transition-all px-3 font-black text-voyage-accent bg-white shadow-inner",
+                        blanksValues[String(i+1)] ? "border-voyage-accent text-voyage-accent" : "border-duo-swan text-transparent"
+                      )}>
+                        {blanksValues[String(i+1)] || "____"}
+                      </span>
+                    )}
+                  </span>
+                )) || "Contenu manquant."}
+              </div>
+              <div className="flex flex-wrap gap-3 justify-center">
+                {normalizedOptions.map((opt) => {
+                  const isUsed = Object.values(blanksValues).includes(opt.text);
+                  return (
+                    <button
+                      key={opt.id}
+                      disabled={isUsed || showFeedback}
+                      onClick={() => {
+                        playSound('click');
+                        const nextBlank = String(Object.keys(blanksValues).length + 1);
+                        setBlanksValues(prev => ({ ...prev, [nextBlank]: opt.text }));
+                      }}
+                      className={cn(
+                        "px-6 py-4 rounded-2xl font-black transition-all shadow-md border-b-4",
+                        isUsed 
+                          ? "bg-duo-swan text-duo-wolf/40 border-transparent translate-y-1 shadow-none" 
+                          : "bg-white border-duo-swan text-duo-eel hover:bg-duo-swan/20 active:translate-y-0.5 active:border-b-0"
+                      )}
+                    >
+                      {opt.text}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="flex justify-center">
+                 <button onClick={() => setBlanksValues({})} disabled={showFeedback} className="text-xs font-black text-voyage-accent uppercase tracking-widest hover:opacity-70 disabled:opacity-30">Réinitialiser</button>
+              </div>
+            </div>
+          )}
+
+          {challenge.type === 'matching' && (
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragStart={handleDragStart}
+              onDragOver={handleDragOver}
+              onDragEnd={handleDragEnd}
+              onDragCancel={() => {
+                setActiveDragId(null);
+                setHoverDropId(null);
+              }}
+            >
+              <div className="grid grid-cols-2 gap-8">
+                <div className="space-y-3">
+                  {matchingOptions.map((opt, idx) => {
+                    const isAssigned = !!matchingSelections[String(idx)];
+                    return (
+                      <DraggableCard
+                        key={`match-src-${idx}`}
+                        id={`match-src-${idx}`}
+                        disabled={showFeedback}
+                        className={cn(
+                          "w-full p-4 rounded-2xl text-left text-sm font-black border-b-4 transition-all",
+                          isAssigned
+                            ? "bg-voyage-primary/10 border-voyage-primary/40 text-voyage-primary"
+                            : "bg-white border-duo-swan text-duo-eel"
+                        )}
+                      >
+                        {opt.text}
+                      </DraggableCard>
+                    );
+                  })}
+                </div>
+                <div className="space-y-3">
+                  {matchingTargets.map((target, idx) => {
+                    const dropId = `match-target-${idx}`;
+                    const linkedSourceTexts = Object.entries(matchingSelections)
+                      .filter(([, value]) => value === target)
+                      .map(([sourceIdx]) => matchingOptions[Number(sourceIdx)]?.text)
+                      .filter(Boolean);
+                    return (
+                      <DroppableZone
+                        key={dropId}
+                        id={dropId}
+                        className={cn(
+                          "w-full p-4 rounded-2xl text-left text-sm font-black border-b-4 transition-all",
+                          hoverDropId === dropId
+                            ? "bg-voyage-accent/15 border-voyage-accent text-voyage-primary"
+                            : "bg-white border-duo-swan text-duo-eel"
+                        )}
+                      >
+                        <div className="flex flex-col gap-1">
+                          <span className="text-duo-wolf/70 text-[10px] uppercase tracking-widest">Cible</span>
+                          <span>{target}</span>
+                          {linkedSourceTexts.length > 0 && (
+                            <div className="mt-2 flex flex-col gap-1">
+                              {linkedSourceTexts.map((sourceText) => (
+                                <span
+                                  key={sourceText}
+                                  className="inline-flex w-fit px-2 py-1 rounded-full bg-voyage-primary/10 text-voyage-primary text-[10px] uppercase tracking-wide"
+                                >
+                                  {sourceText}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </DroppableZone>
+                    );
+                  })}
+                </div>
+              </div>
+              <DragOverlay>
+                {getActiveDragLabel() ? (
+                  <div className="px-4 py-3 rounded-2xl bg-voyage-primary text-white font-black shadow-2xl">
+                    {getActiveDragLabel()}
+                  </div>
+                ) : null}
+              </DragOverlay>
+            </DndContext>
+          )}
+
+          {challenge.type === 'ranking' && (
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragStart={handleDragStart}
+              onDragOver={handleDragOver}
+              onDragEnd={handleDragEnd}
+              onDragCancel={() => {
+                setActiveDragId(null);
+                setHoverDropId(null);
+              }}
+            >
+              <div className="grid grid-cols-1 gap-5">
+                <DroppableZone
+                  id="rank-pool"
+                  className={cn(
+                    "p-4 rounded-2xl border-2 border-dashed transition-all",
+                    hoverDropId === 'rank-pool'
+                      ? "border-voyage-accent bg-voyage-accent/10"
+                      : "border-duo-swan bg-duo-swan/10"
+                  )}
+                >
+                  <p className="text-[10px] font-black text-duo-wolf uppercase tracking-widest mb-2">Options à classer</p>
+                  <div className="space-y-2">
+                    {rankingOptions.filter((opt) => !selectedRankIds.includes(opt.id)).map((opt) => (
+                      <DraggableCard
+                        key={`rank-opt-${opt.id}`}
+                        id={`rank-opt-${opt.id}`}
+                        disabled={showFeedback}
+                        className="w-full flex items-center gap-4 p-4 text-left rounded-2xl border-b-4 bg-white border-duo-swan"
+                      >
+                        <span className="font-bold text-duo-eel text-base">{opt.text}</span>
+                      </DraggableCard>
+                    ))}
+                    {rankingOptions.filter((opt) => !selectedRankIds.includes(opt.id)).length === 0 && (
+                      <p className="text-xs font-bold text-duo-wolf/60">Toutes les options sont classées.</p>
+                    )}
+                  </div>
+                </DroppableZone>
+
+                <div className="space-y-3">
+                  {rankingOptions.map((_, slotIdx) => {
+                    const slotId = `rank-slot-${slotIdx}`;
+                    const assignedId = selectedRankIds[slotIdx];
+                    const assignedOption = rankingOptions.find((opt) => opt.id === assignedId);
+                    return (
+                      <DroppableZone
+                        key={slotId}
+                        id={slotId}
+                        className={cn(
+                          "w-full flex items-center gap-4 p-4 rounded-2xl border-b-4 transition-all min-h-18",
+                          hoverDropId === slotId
+                            ? "bg-voyage-primary/10 border-voyage-primary"
+                            : "bg-white border-duo-swan"
+                        )}
+                      >
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm border-2 bg-duo-orange/10 border-duo-orange text-duo-orange">
+                          {slotIdx + 1}
+                        </div>
+                        {assignedOption ? (
+                          <DraggableCard
+                            id={`rank-opt-${assignedOption.id}`}
+                            disabled={showFeedback}
+                            className="w-full p-2 rounded-xl bg-transparent"
+                          >
+                            <span className="font-bold text-duo-eel text-lg">{assignedOption.text}</span>
+                          </DraggableCard>
+                        ) : (
+                          <span className="text-duo-wolf/50 font-bold">Dépose ici...</span>
+                        )}
+                      </DroppableZone>
+                    );
+                  })}
+                </div>
+              </div>
+              <DragOverlay>
+                {getActiveDragLabel() ? (
+                  <div className="px-4 py-3 rounded-2xl bg-voyage-primary text-white font-black shadow-2xl">
+                    {getActiveDragLabel()}
+                  </div>
+                ) : null}
+              </DragOverlay>
+            </DndContext>
+          )}
+
+          {challenge.type === 'team-roles' && (
+            <div className="space-y-4">
+              {((challenge.options as any)?.roles || []).map((roleObj: any, idx: number) => (
+                <div key={idx} className="flex flex-col gap-2 p-4 bg-white border-2 border-duo-swan rounded-2xl shadow-sm hover:border-voyage-accent/50 transition-all">
+                  <span className="text-[10px] font-black text-duo-wolf uppercase tracking-widest">{roleObj.role}</span>
+                  <input
+                    type="text"
+                    placeholder="Nom du membre..."
+                    className="p-2 bg-duo-swan/10 border-b-2 border-duo-swan font-bold text-duo-eel focus:border-voyage-accent outline-none transition-all"
+                    onChange={(e) => setTeamRoleValues(prev => ({ ...prev, [roleObj.role]: e.target.value }))}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {challenge.type === 'short-answer' && (
+             <div className="bg-duo-swan/10 rounded-3xl p-6 border-2 border-duo-swan focus-within:border-voyage-accent transition-colors">
+               <textarea 
+                 value={selectedOptionId || ''}
+                 onChange={(e) => setSelectedOptionId(e.target.value)}
+                 disabled={showFeedback}
+                 placeholder="Écris ta réponse ici..."
+                 className="w-full bg-transparent border-none focus:ring-0 text-xl font-bold text-duo-eel placeholder:text-duo-wolf/30 min-h-37.5 resize-none"
+               />
+             </div>
+          )}
+
+          {challenge.type === 'glitch' && (
+            <div className="bg-white border-2 border-duo-swan p-8 rounded-[2.5rem] leading-[2.5] text-xl font-bold text-duo-eel text-center">
+               {challenge.content?.[0]?.split(' ').map((word, i) => (
+                 <button
+                   key={i}
+                   disabled={showFeedback}
+                   onClick={() => {
+                     playSound('click');
+                     setSelectedWordIdx(i);
+                   }}
+                   className={cn(
+                     "inline-block px-2 mx-0.5 rounded-lg transition-all",
+                     selectedWordIdx === i 
+                       ? "bg-voyage-accent text-white shadow-[0_4px_0_0_#A8862E] -translate-y-0.5" 
+                       : "hover:bg-duo-swan/30 cursor-pointer"
+                   )}
+                 >
+                   {word}
+                 </button>
+               ))}
+               <p className="mt-8 text-xs font-black text-duo-wolf uppercase tracking-widest opacity-60">Clique sur le mot qui contient une erreur</p>
+            </div>
+          )}
+
+          {challenge.type === 'puzzle-riddle' && (
+            <div className="bg-linear-to-br from-voyage-primary to-voyage-primary/80 p-8 rounded-[3rem] border-4 border-voyage-accent shadow-2xl relative overflow-hidden">
+               <div className="absolute top-0 right-0 p-4 opacity-10">
+                  <Sparkles size={120} className="text-white" />
+               </div>
+               <div className="relative z-10 space-y-8">
+                 <div className="flex justify-center">
+                    <div className="bg-voyage-accent/20 p-4 rounded-full border border-voyage-accent/30 backdrop-blur-sm">
+                       <MessageSquare className="text-voyage-accent" size={32} />
+                    </div>
+                 </div>
+                 <p className="text-2xl font-black text-white text-center leading-relaxed italic">
+                   "{challenge.question}"
+                 </p>
+                 <div className="grid grid-cols-2 gap-4">
+                    {normalizedOptions.map((opt) => (
+                      <button
+                        key={opt.id}
+                        disabled={showFeedback}
+                        onClick={() => {
+                          playSound('click');
+                          setSelectedOptionId(opt.id);
+                        }}
+                        className={cn(
+                          "p-4 rounded-2xl font-black transition-all border-b-4",
+                          selectedOptionId === opt.id 
+                            ? "bg-voyage-accent text-voyage-primary border-voyage-accent-dark -translate-y-0.5" 
+                            : "bg-white/10 text-white border-white/20 hover:bg-white/20"
+                        )}
+                      >
+                        {opt.text}
+                      </button>
+                    ))}
+                 </div>
+               </div>
+            </div>
+          )}
+
+          {challenge.type === 'zellige' && (
+            <div className="flex flex-col items-center gap-8 py-4">
+               <div className="grid grid-cols-3 gap-2 w-full max-w-sm aspect-square bg-voyage-primary/5 p-4 rounded-3xl border-4 border-voyage-secondary/20 shadow-inner">
+                  {[...Array(9)].map((_, i) => (
+                    <motion.button 
+                      key={i}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => {
+                        if (showFeedback) return;
+                        playSound('click');
+                        setMatchingSelections(prev => ({ ...prev, [i]: String((parseInt(prev[i] || '0') + 90) % 360) }));
+                      }}
+                      className="bg-white rounded-xl border-2 border-voyage-secondary/10 flex items-center justify-center relative overflow-hidden group shadow-sm"
+                    >
+                       <motion.div 
+                         animate={{ rotate: parseInt(matchingSelections[i] || '0') }}
+                         className="w-full h-full flex items-center justify-center bg-linear-to-tr from-voyage-primary/10 to-voyage-accent/10"
+                       >
+                          <LayoutGrid className="text-voyage-primary opacity-30" size={32} />
+                       </motion.div>
+                       <div className="absolute inset-0 border-2 border-transparent group-hover:border-voyage-accent/30 rounded-xl transition-colors" />
+                    </motion.button>
+                  ))}
+               </div>
+               <div className="flex flex-col items-center gap-2">
+                 <p className="text-voyage-primary font-black uppercase tracking-widest text-xs">Atelier Zellige</p>
+                 <p className="text-duo-wolf font-bold italic text-center">Oriente correctement les carreaux pour restaurer le motif fassi.</p>
+               </div>
+            </div>
+          )}
+
+          {showHint && (
+            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="bg-voyage-accent/10 border-2 border-voyage-accent/30 p-6 rounded-4xl flex items-start gap-4">
+              <Lightbulb className="text-voyage-accent shrink-0" size={24} />
+              <div>
+                 <span className="text-[10px] font-black text-voyage-accent uppercase tracking-widest block mb-1">INDICE</span>
+                 <p className="text-voyage-primary font-bold italic">"{challenge.hint || "Rappelle-toi des leçons précédentes !"}"</p>
+              </div>
+            </motion.div>
+          )}
+        </motion.div>
+      </main>
+
+      <AnimatePresence>
+        {showFeedback ? (
+          <motion.footer 
+            initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
+            className={cn(
+              "fixed bottom-0 left-0 w-full z-50 p-6 pb-12 pt-8 flex flex-col items-center gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]",
+              isCorrect() ? "bg-voyage-sand border-t-4 border-voyage-accent" : "bg-[#FFF1EE] border-t-4 border-voyage-terracotta"
+            )}
+          >
+            <div className="max-w-2xl w-full flex items-start gap-6 px-4 text-left">
+              <div className={cn("w-20 h-20 rounded-3xl flex items-center justify-center shrink-0 border-b-8 shadow-xl", isCorrect() ? "bg-voyage-primary border-voyage-primary-dark" : "bg-voyage-terracotta border-voyage-terracotta-dark")}>
+                {isCorrect() ? <CheckCircle2 size={48} className="text-white stroke-[3px]" /> : <X size={48} className="text-white stroke-[3px]" />}
+              </div>
+              <div className="space-y-2">
+                <h3 className={cn("text-3xl font-black tracking-tight", isCorrect() ? "text-voyage-primary" : "text-voyage-terracotta")}>
+                  {isCorrect() ? "Excellent !" : "Pas tout à fait..."}
+                </h3>
+                <p className={cn("font-bold leading-relaxed", isCorrect() ? "text-voyage-primary/80" : "text-voyage-terracotta/80")}>
+                  {isCorrect() ? (challenge.feedbackPositive || "C'est la bonne réponse ! +10 XP") : (challenge.feedbackNegative || "Retente ta chance !")}
+                </p>
+                {isCorrect() && (
+                   <div className="bg-white/40 backdrop-blur-sm px-4 py-2 rounded-2xl inline-flex items-center gap-2 border border-white/40">
+                      <PartyPopper size={18} className="text-voyage-primary" />
+                      <span className="text-voyage-primary font-black text-sm uppercase tracking-tight">+15 XP</span>
+                   </div>
+                )}
+              </div>
+            </div>
+            <div className="w-full max-w-2xl px-4">
+               <motion.button whileTap={{ scale: 0.95 }} onClick={handleNext} className={cn("w-full text-xl py-5 font-black uppercase tracking-tight", isCorrect() ? "btn-voyage-primary" : "bg-voyage-terracotta text-white border-b-4 border-voyage-terracotta-dark rounded-2xl")}>
+                 {currentIdx === questions.length - 1 ? "VOIR LE RÉSULTAT" : "CONTINUER"}
+               </motion.button>
+            </div>
+          </motion.footer>
+        ) : (
+          <footer className="fixed bottom-0 left-0 w-full z-40 bg-white border-t-[3px] border-voyage-secondary/20 p-6 pb-10 flex justify-center">
+            <div className="w-full max-w-2xl flex items-center gap-4 px-4">
+              <button onClick={() => setShowHint(!showHint)} className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4">
+                <Lightbulb size={24} />
+              </button>
+              <motion.button
+                disabled={!canConfirm()} whileTap={{ scale: 0.95 }} onClick={handleConfirm}
+                className={cn("grow text-xl py-5 font-black uppercase tracking-tight", canConfirm() ? "btn-voyage" : "bg-voyage-sand text-voyage-secondary/30 border-transparent cursor-not-allowed border-b-0")}
+              >
+                Vérifier
+              </motion.button>
+            </div>
+          </footer>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+const DraggableCard: FC<{
+  id: string;
+  className: string;
+  children: ReactNode;
+  disabled?: boolean;
+}> = ({
+  id,
+  className,
+  children,
+  disabled = false,
+}) => {
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id,
+    disabled,
+  });
+
+  const style = {
+    transform: CSS.Translate.toString(transform),
+    touchAction: 'none' as const,
+    opacity: isDragging ? 0.45 : 1,
+    zIndex: isDragging ? 20 : 1,
+  };
+
+  return (
+    <motion.div
+      layout
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+      className={cn(className, 'cursor-grab active:cursor-grabbing')}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+const DroppableZone: FC<{
+  id: string;
+  className: string;
+  children: ReactNode;
+}> = ({
+  id,
+  className,
+  children,
+}) => {
+  const { setNodeRef, isOver } = useDroppable({ id });
+
+  return (
+    <motion.div
+      layout
+      ref={setNodeRef}
+      className={cn(className, isOver && 'ring-2 ring-voyage-accent/50')}
+    >
+      {children}
+    </motion.div>
+  );
+};
+

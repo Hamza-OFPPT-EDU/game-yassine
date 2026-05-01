@@ -1,0 +1,69 @@
+Analyse du projet Voyage
+
+1. Vue d'ensemble
+Le projet est une application web d'apprentissage gamifiée construite avec React, TypeScript et Vite. L'objectif principal est de proposer un parcours éducatif immersif autour de villes, de missions et de défis interactifs, avec une présentation visuelle soignée, de l'animation, du son et une navigation pensée comme une application mobile.
+
+2. Fonctionnalités principales
+L'application commence par un écran de splash puis un écran d'accueil avant d'entrer dans le parcours principal.
+
+Le cœur du produit est un parcours cartographique qui présente des villes, leur progression, leur statut de déblocage et leur mise en scène cinématique. Chaque ville peut être ouverte pour afficher une histoire, puis une mission, puis un ou plusieurs défis.
+
+Les fonctionnalités visibles dans le projet sont les suivantes :
+
+- Parcours de progression sur une carte de villes.
+- Système de villes complétées, actives ou verrouillées.
+- Séquences narratives avec écran d'histoire avant les défis.
+- Défis pédagogiques variés avec plusieurs formats d'exercices.
+- Validation des réponses, feedback positif/négatif et progression vers l'exercice suivant.
+- Récompenses en XP et étoiles, avec suivi d'état local de l'utilisateur.
+- Modal de fin de niveau lorsqu'une ville est terminée.
+- Espace profil avec statistiques, compétences et succès.
+- Espace réglages avec taille de texte, langue, mode d'affichage et audio.
+- Module de ligues compétitives avec classement, création et détail de ligue.
+- Mini-jeu ou écran d'exploration additionnel comme Grammar Quest et Vocabulary Match.
+- Navigation mobile par barre inférieure.
+- Effets sonores sur les actions importantes et persistance des préférences audio.
+
+3. Architecture du projet
+Le projet suit une architecture front-end en Single Page Application.
+
+Le point d'entrée principal est [src/main.tsx](src/main.tsx), qui monte l'application React, applique le provider des réglages et enregistre le service worker PWA.
+
+Le contrôleur global est [src/App.tsx](src/App.tsx). Il gère l'état de navigation via un enum d'écrans, sélectionne la vue courante, orchestre les transitions, centralise l'état de progression et pilote la logique de passage d'une mission à l'autre.
+
+L'architecture est organisée en plusieurs couches :
+
+- Composants partagés dans [src/components](src/components) pour la barre supérieure, la barre de navigation et la modal de fin.
+- Contextes globaux dans [src/contexts](src/contexts) pour les réglages utilisateur.
+- Hooks métiers dans [src/hooks](src/hooks) pour l'audio et l'accès à Supabase.
+- Vues métier dans [src/views](src/views) pour chaque écran de l'expérience.
+- Types et données de référence dans [src/types.ts](src/types.ts).
+- Client Supabase isolé dans [src/lib/supabase.ts](src/lib/supabase.ts).
+- Utilitaires UI dans [src/lib/utils.ts](src/lib/utils.ts).
+
+Le projet utilise aussi Motion pour les transitions et les animations, Tailwind CSS pour le style, et une logique PWA pour un comportement proche d'une application installée.
+
+4. Flux de données et logique métier
+La logique métier repose sur un mélange de données distantes et d'état local.
+
+Les villes, missions et questions sont récupérées depuis Supabase via des hooks dédiés. Les données brutes sont ensuite normalisées avant d'être envoyées aux écrans. Ce mapping est important car le schéma de la base ne correspond pas toujours exactement aux types front-end.
+
+L'état de progression de l'utilisateur est conservé dans le composant principal : villes terminées, missions terminées, mission courante, ville sélectionnée et statistiques XP/étoiles/niveau. L'interface réagit à ces états pour afficher la bonne vue et la bonne progression.
+
+Le son est géré de manière centralisée avec un hook qui charge les effets audio, les met en cache et persiste les réglages dans localStorage.
+
+5. Défis techniques rencontrés
+Plusieurs défis techniques ressortent clairement du code.
+
+- Hétérogénéité des données Supabase : le code doit absorber plusieurs formes de contenu selon les missions et les questions, avec des champs optionnels et des structures JSONB différentes.
+- Normalisation des types de défis : la base peut renvoyer des variantes de noms de types, donc le front doit les convertir vers un format unifié.
+- Gestion d'interfaces très dynamiques : la même vue de défi doit gérer plusieurs mécaniques, comme QCM, vrai/faux, classement, glisser/matching, texte à trous, casse-tête ou puzzle visuel.
+- Synchronisation progression / contenu : lorsqu'une mission est terminée, l'application doit identifier la mission suivante, ou basculer vers la fin du niveau si la ville est complète.
+- État local complexe : la navigation, la sélection de ville, la sélection de mission, la progression et les stats sont gérés côté client, ce qui demande une bonne coordination entre écrans.
+- Audio côté navigateur : la lecture des sons est soumise aux politiques d'autoplay et doit être encapsulée avec prudence.
+- Expérience responsive et animée : l'interface repose sur des transitions et des layouts très visuels, ce qui augmente le risque de régressions de performance sur mobile.
+- Données statiques et dynamiques mélangées : certaines vues utilisent encore des contenus de démonstration en dur, alors que d'autres s'appuient sur Supabase, ce qui peut créer des incohérences fonctionnelles.
+- Gestion des cas incomplets : plusieurs écrans doivent prévoir des retours de secours quand des données sont absentes ou encore incomplètes.
+
+6. Conclusion
+Voyage est une application éducative gamifiée orientée expérience utilisateur, avec une base technique solide pour un produit interactif moderne. Son architecture est simple à comprendre, mais sa complexité réelle vient de la diversité des formats de contenu, de la logique de progression, et du besoin de faire cohabiter animations, audio, données distantes et navigation fluide dans une seule interface.
