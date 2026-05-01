@@ -14,11 +14,13 @@ import {
   closestCenter,
 } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import { Lightbulb, TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw } from 'lucide-react';
+import { Lightbulb, TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw, SkipForward } from 'lucide-react';
 import { type City, type Challenge, type MissionCompletionSummary, type MissionQuestionResult } from '../types';
 import { cn } from '../lib/utils';
 import { useSupabaseQuestions } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
+import { useTimer } from '../hooks/useTimer';
+import { TimerBar } from '../components/TimerBar';
 
 interface ChallengeScreenProps {
   city: City;
@@ -45,6 +47,17 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
   const [hoverDropId, setHoverDropId] = useState<string | null>(null);
   const [questionResults, setQuestionResults] = useState<MissionQuestionResult[]>([]);
+  
+  // Timer & Skip state
+  const DEFAULT_QUESTION_TIME = 30; // seconds
+  const timer = useTimer({
+    initialSeconds: DEFAULT_QUESTION_TIME,
+    enabled: !showFeedback,
+    onTimeExpired: () => handleTimeExpired(),
+  });
+  
+  const [timerStartTime, setTimerStartTime] = useState(Date.now());
+  const [isTimerPaused, setIsTimerPaused] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -76,6 +89,9 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
 
   useEffect(() => {
     handleReset();
+    timer.reset(DEFAULT_QUESTION_TIME);
+    setTimerStartTime(Date.now());
+    setIsTimerPaused(false);
   }, [currentIdx]);
 
   const handleReset = () => {
@@ -208,6 +224,53 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
     }
   };
 
+  const handleSkip = () => {
+    playSound('click');
+    const timeSpent = (Date.now() - timerStartTime) / 1000;
+    const skipResult: MissionQuestionResult = {
+      questionId: challenge?.id || '',
+      questionType: challenge?.type || 'multiple-choice',
+      question: challenge?.question || '',
+      givenAnswer: '(Passée)',
+      correctAnswer: challenge?.correctOptionId || '—',
+      isCorrect: false,
+      xpEarned: 0,
+      starsEarned: 0,
+      isSkipped: true,
+      timeSpent,
+    };
+    currentQuestionResultRef.current = skipResult;
+    setQuestionResults((prev) => [...prev, skipResult]);
+    handleNext();
+  };
+
+  const handleTimeExpired = () => {
+    if (showFeedback) return; // Already submitted
+    playSound('wrong');
+    setShowFeedback(true);
+    
+    const timeSpent = (Date.now() - timerStartTime) / 1000;
+    const timedOutResult: MissionQuestionResult = {
+      questionId: challenge?.id || '',
+      questionType: challenge?.type || 'multiple-choice',
+      question: challenge?.question || '',
+      givenAnswer: '—',
+      correctAnswer: challenge?.correctOptionId || '—',
+      isCorrect: false,
+      xpEarned: 0,
+      starsEarned: 0,
+      isTimedOut: true,
+      timeSpent,
+    };
+    currentQuestionResultRef.current = timedOutResult;
+    setQuestionResults((prev) => [...prev, timedOutResult]);
+    
+    // Auto-advance after 1.5 seconds
+    setTimeout(() => {
+      handleNext();
+    }, 1500);
+  };
+
   const canConfirm = () => {
     if (!challenge) return false;
     const type = challenge.type;
@@ -289,6 +352,7 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
     const xpReward = challenge.xp_reward ?? 20;
     const correct = isCorrect();
     const starsEarned = correct ? 1 : 0;
+    const timeSpent = (Date.now() - timerStartTime) / 1000;
 
     const getOptionText = (optionId: string | null | undefined, options: any[]) => {
       if (!optionId) return '—';
@@ -319,6 +383,7 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
       isCorrect: correct,
       xpEarned: correct ? xpReward : 0,
       starsEarned,
+      timeSpent,
     };
 
     if (['multiple-choice', 'true-false', 'scenario-decision', 'scenario-dialogue', 'puzzle-riddle', 'time-attack'].includes(challenge.type)) {
@@ -459,7 +524,18 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
         </div>
       </header>
       
-      <main className="grow pt-24 pb-32 px-6 max-w-2xl mx-auto w-full relative z-10 overflow-y-auto scrollbar-hide">
+      {/* Timer Bar */}
+      <div className="fixed top-20 left-0 right-0 z-40">
+        <TimerBar
+          percentRemaining={timer.percentRemaining}
+          secondsRemaining={timer.remaining}
+          isWarning={timer.isWarning}
+          isCritical={timer.isCritical}
+          isPaused={isTimerPaused}
+        />
+      </div>
+      
+      <main className="grow pt-40 pb-32 px-6 max-w-2xl mx-auto w-full relative z-10 overflow-y-auto scrollbar-hide">
         <div className="mb-8 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-voyage-accent/10 rounded-full border border-voyage-accent/20">
              <span className="text-[10px] font-black text-voyage-accent uppercase tracking-widest">{challenge.type.replace('-', ' ')}</span>
@@ -926,6 +1002,9 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
             <div className="w-full max-w-2xl flex items-center gap-4 px-4">
               <button onClick={() => setShowHint(!showHint)} className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4">
                 <Lightbulb size={24} />
+              </button>
+              <button onClick={handleSkip} className="p-4 bg-voyage-accent/10 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/20 transition-colors border-b-4 tooltip" title="Passer cette question (0 points)">
+                <SkipForward size={24} />
               </button>
               <motion.button
                 disabled={!canConfirm()} whileTap={{ scale: 0.95 }} onClick={handleConfirm}

@@ -5,7 +5,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { Award, ArrowRight, MapPin, RotateCcw, Star } from 'lucide-react';
+import { Award, ArrowRight, MapPin, RotateCcw, Star, Clock, SkipForward } from 'lucide-react';
 import { type MissionCompletionSummary } from '../types';
 
 interface LevelCompleteModalProps {
@@ -162,51 +162,81 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
             </div>
 
             <div className="space-y-4">
-              {(summary?.questions || []).map((questionResult, index) => (
-                <motion.article
-                  key={questionResult.questionId}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 + index * 0.03 }}
-                  className="rounded-[1.7rem] border border-white/75 bg-white/60 p-5 shadow-[0_14px_40px_rgba(56,39,26,0.07)] backdrop-blur-xl"
-                >
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.28em] text-[#9B7B5D]">
-                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#F2E8DA] text-[#6C5036]">
-                        {index + 1}
-                      </span>
-                      <span>{questionResult.questionType.replace('-', ' ')}</span>
-                    </div>
-                    <span className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] ${questionResult.isCorrect ? 'bg-emerald-500/10 text-emerald-700' : 'bg-rose-500/10 text-rose-700'}`}>
-                      {questionResult.isCorrect ? 'Correct' : 'À revoir'}
-                    </span>
-                  </div>
-
-                  <h4 className="mt-4 text-base font-semibold leading-relaxed text-[#23150D] sm:text-[17px]">
-                    {questionResult.question}
-                  </h4>
-
-                  <div className="mt-4 grid gap-3 md:grid-cols-2">
-                    <AnswerPanel label="Réponse donnée" value={questionResult.givenAnswer} muted />
-                    <AnswerPanel label="Réponse correcte" value={questionResult.correctAnswer} />
-                  </div>
-
-                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex flex-wrap items-center gap-3 text-sm font-black text-[#6D5037]">
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFF8F0] px-3 py-1.5 border border-[#E6D8C8]">
-                        <Star size={14} className="fill-[#B58B60] text-[#B58B60]" />
-                        +{questionResult.starsEarned} étoile{questionResult.starsEarned > 1 ? 's' : ''}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFF8F0] px-3 py-1.5 border border-[#E6D8C8]">
-                        +{questionResult.xpEarned} XP
+              {(summary?.questions || []).map((questionResult, index) => {
+                const isSkipped = questionResult.isSkipped;
+                const isTimedOut = questionResult.isTimedOut;
+                const statusColor = isSkipped || isTimedOut ? 'bg-blue-500/10 text-blue-700' : (questionResult.isCorrect ? 'bg-emerald-500/10 text-emerald-700' : 'bg-rose-500/10 text-rose-700');
+                const statusText = isSkipped ? 'Passée' : (isTimedOut ? 'Temps écoulé' : (questionResult.isCorrect ? 'Correct' : 'À revoir'));
+                
+                return (
+                  <motion.article
+                    key={questionResult.questionId}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 + index * 0.03 }}
+                    className="rounded-[1.7rem] border border-white/75 bg-white/60 p-5 shadow-[0_14px_40px_rgba(56,39,26,0.07)] backdrop-blur-xl"
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                      <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.28em] text-[#9B7B5D]">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#F2E8DA] text-[#6C5036]">
+                          {index + 1}
+                        </span>
+                        <span>{questionResult.questionType.replace('-', ' ')}</span>
+                      </div>
+                      <span className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] ${statusColor} flex items-center gap-1.5`}>
+                        {isTimedOut && <Clock size={12} />}
+                        {isSkipped && <SkipForward size={12} />}
+                        {statusText}
                       </span>
                     </div>
-                    <div className={`text-xs font-black uppercase tracking-[0.24em] ${questionResult.isCorrect ? 'text-emerald-700' : 'text-rose-700'}`}>
-                      {questionResult.isCorrect ? 'Maîtrisé' : 'À revoir'}
+
+                    <h4 className="mt-4 text-base font-semibold leading-relaxed text-[#23150D] sm:text-[17px]">
+                      {questionResult.question}
+                    </h4>
+
+                    {!isSkipped && !isTimedOut && (
+                      <div className="mt-4 grid gap-3 md:grid-cols-2">
+                        <AnswerPanel label="Réponse donnée" value={questionResult.givenAnswer} muted />
+                        <AnswerPanel label="Réponse correcte" value={questionResult.correctAnswer} />
+                      </div>
+                    )}
+
+                    {(isSkipped || isTimedOut) && (
+                      <div className="mt-4">
+                        <div className="rounded-lg bg-blue-50/50 border border-blue-100/50 p-3">
+                          <p className="text-xs font-semibold text-blue-700">
+                            {isSkipped ? '✓ Question passée sans réponse' : '⏱ Temps écoulé avant validation'}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex flex-wrap items-center gap-3 text-sm font-black text-[#6D5037]">
+                        {!isSkipped && !isTimedOut && (
+                          <>
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFF8F0] px-3 py-1.5 border border-[#E6D8C8]">
+                              <Star size={14} className="fill-[#B58B60] text-[#B58B60]" />
+                              +{questionResult.starsEarned} étoile{questionResult.starsEarned > 1 ? 's' : ''}
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFF8F0] px-3 py-1.5 border border-[#E6D8C8]">
+                              +{questionResult.xpEarned} XP
+                            </span>
+                          </>
+                        )}
+                        {(isSkipped || isTimedOut) && (
+                          <span className="text-xs text-gray-500">0 XP • 0 étoiles</span>
+                        )}
+                      </div>
+                      {questionResult.timeSpent !== undefined && (
+                        <div className="text-xs text-gray-500 font-medium">
+                          ⏱ {questionResult.timeSpent.toFixed(1)}s
+                        </div>
+                      )}
                     </div>
-                  </div>
-                </motion.article>
-              ))}
+                  </motion.article>
+                );
+              })}
             </div>
           </div>
         </div>

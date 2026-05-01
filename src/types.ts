@@ -104,6 +104,9 @@ export type MissionQuestionResult = {
   isCorrect: boolean;
   xpEarned: number;
   starsEarned: number;
+  isSkipped?: boolean;
+  isTimedOut?: boolean;
+  timeSpent?: number; // in seconds
 };
 
 export type MissionCompletionSummary = {
