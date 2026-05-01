@@ -230,7 +230,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                       </div>
                       {questionResult.timeSpent !== undefined && (
                         <div className="text-xs text-gray-500 font-medium">
-                          ⏱ {questionResult.timeSpent.toFixed(1)}s
+                          ⏱ {Math.max(0, Math.round(questionResult.timeSpent))}s
                         </div>
                       )}
                     </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, type FC, type ReactNode } from 'react';
+import { useState, useEffect, useRef, useCallback, type FC, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   DndContext,
@@ -66,6 +66,8 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
   );
   const hoverFeedbackRef = useRef<string | null>(null);
   const currentQuestionResultRef = useRef<MissionQuestionResult | null>(null);
+  const timeoutHandledRef = useRef(false);
+  const autoNextTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const challenge = questions[currentIdx];
   
@@ -88,11 +90,26 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
   }, [hoverDropId]);
 
   useEffect(() => {
+    if (autoNextTimeoutRef.current) {
+      clearTimeout(autoNextTimeoutRef.current);
+      autoNextTimeoutRef.current = null;
+    }
+
+    timeoutHandledRef.current = false;
     handleReset();
     timer.reset(DEFAULT_QUESTION_TIME);
     setTimerStartTime(Date.now());
     setIsTimerPaused(false);
   }, [currentIdx]);
+
+  useEffect(() => {
+    return () => {
+      if (autoNextTimeoutRef.current) {
+        clearTimeout(autoNextTimeoutRef.current);
+        autoNextTimeoutRef.current = null;
+      }
+    };
+  }, []);
 
   const handleReset = () => {
     setSelectedOptionId(null);
@@ -210,6 +227,12 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
 
   const handleConfirm = () => {
     if (canConfirm()) {
+      timeoutHandledRef.current = true;
+      if (autoNextTimeoutRef.current) {
+        clearTimeout(autoNextTimeoutRef.current);
+        autoNextTimeoutRef.current = null;
+      }
+
       const result = buildQuestionResult();
       if (result) {
         currentQuestionResultRef.current = result;
@@ -225,6 +248,12 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
   };
 
   const handleSkip = () => {
+    timeoutHandledRef.current = true;
+    if (autoNextTimeoutRef.current) {
+      clearTimeout(autoNextTimeoutRef.current);
+      autoNextTimeoutRef.current = null;
+    }
+
     playSound('click');
     const timeSpent = (Date.now() - timerStartTime) / 1000;
     const skipResult: MissionQuestionResult = {
@@ -245,10 +274,12 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
   };
 
   const handleTimeExpired = () => {
-    if (showFeedback) return; // Already submitted
+    if (timeoutHandledRef.current || showFeedback) return;
+
+    timeoutHandledRef.current = true;
     playSound('wrong');
     setShowFeedback(true);
-    
+
     const timeSpent = (Date.now() - timerStartTime) / 1000;
     const timedOutResult: MissionQuestionResult = {
       questionId: challenge?.id || '',
@@ -262,15 +293,14 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
       isTimedOut: true,
       timeSpent,
     };
+
     currentQuestionResultRef.current = timedOutResult;
     setQuestionResults((prev) => [...prev, timedOutResult]);
-    
-    // Auto-advance after 1.5 seconds
-    setTimeout(() => {
+
+    autoNextTimeoutRef.current = setTimeout(() => {
       handleNext();
     }, 1500);
   };
-
   const canConfirm = () => {
     if (!challenge) return false;
     const type = challenge.type;
@@ -304,15 +334,15 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
     return selectedOptionId === challenge.correctOptionId;
   };
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentIdx < questions.length - 1) {
-      setCurrentIdx(currentIdx + 1);
+      setCurrentIdx((prev) => prev + 1);
     } else {
       const finalResults = mergeResults(questionResults, currentQuestionResultRef.current);
       playSound('success');
       onComplete(buildMissionSummary(finalResults));
     }
-  };
+  }, [currentIdx, questions.length, questionResults, playSound, onComplete]);
 
   const mergeResults = (
     results: MissionQuestionResult[],

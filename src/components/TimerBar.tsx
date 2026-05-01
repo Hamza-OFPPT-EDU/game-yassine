@@ -17,6 +17,8 @@ export function TimerBar({
   isCritical,
   isPaused,
 }: TimerBarProps) {
+  const displaySeconds = Math.max(0, Math.ceil(secondsRemaining));
+
   return (
     <div className="w-full bg-gradient-to-b from-white to-voyage-secondary/10 backdrop-blur-sm border-b border-voyage-secondary/20 px-4 py-3">
       <div className="max-w-7xl mx-auto">
@@ -54,7 +56,7 @@ export function TimerBar({
                     : 'text-voyage-primary'
               )}
             >
-              {secondsRemaining.toFixed(1)}s
+              {displaySeconds}s
             </span>
           </div>
           {isPaused && (

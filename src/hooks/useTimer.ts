@@ -1,78 +1,92 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface UseTimerProps {
   initialSeconds: number;
   enabled?: boolean;
   onTimeExpired?: () => void;
-  onTick?: (remaining: number) => void;
 }
 
 export function useTimer({
   initialSeconds,
   enabled = true,
   onTimeExpired,
-  onTick,
 }: UseTimerProps) {
   const [remaining, setRemaining] = useState(initialSeconds);
-  const [isActive, setIsActive] = useState(enabled);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const deadlineRef = useRef<number>(Date.now() + initialSeconds * 1000);
+  const expiredRef = useRef(false);
 
-  // Handle time expiration
+  // Start/stop interval based on enabled prop
   useEffect(() => {
-    if (!isActive || remaining > 0) return;
+    if (!enabled || remaining <= 0) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      return;
+    }
 
-    setIsActive(false);
-    onTimeExpired?.();
-  }, [remaining, isActive, onTimeExpired]);
-
-  // Timer tick effect
-  useEffect(() => {
-    if (!isActive || remaining <= 0) return;
-
+    // Start interval
     intervalRef.current = setInterval(() => {
       setRemaining((prev) => {
-        const next = prev - 0.1;
-        onTick?.(Math.max(0, next));
-        return Math.max(0, next);
+        const nextVal = Math.max(0, (deadlineRef.current - Date.now()) / 1000);
+        
+        if (nextVal <= 0) {
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+          if (!expiredRef.current) {
+            expiredRef.current = true;
+            onTimeExpired?.();
+          }
+          return 0;
+        }
+        
+        return nextVal;
       });
     }, 100);
 
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     };
-  }, [isActive, onTick]);
+  }, [enabled, onTimeExpired]);
 
-  const pause = useCallback(() => {
-    setIsActive(false);
-  }, []);
-
-  const resume = useCallback(() => {
-    if (remaining > 0) {
-      setIsActive(true);
-    }
-  }, [remaining]);
-
-  const reset = useCallback((newTime?: number) => {
-    setIsActive(false);
+  const reset = (newTime?: number) => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
-    setRemaining(newTime ?? initialSeconds);
-  }, [initialSeconds]);
+    const nextTime = newTime ?? initialSeconds;
+    deadlineRef.current = Date.now() + nextTime * 1000;
+    expiredRef.current = false;
+    setRemaining(nextTime);
+  };
 
-  const percentRemaining = (remaining / initialSeconds) * 100;
-  const isWarning = percentRemaining <= 25;
-  const isCritical = percentRemaining <= 10;
+  const pause = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+
+  const resume = () => {
+    deadlineRef.current = Date.now() + remaining * 1000;
+  };
+
+  const clampedRemaining = Math.max(0, remaining);
+  const percentRemaining = initialSeconds > 0 ? (clampedRemaining / initialSeconds) * 100 : 0;
 
   return {
-    remaining: Math.max(0, remaining),
+    remaining: clampedRemaining,
     percentRemaining,
-    isActive,
-    isWarning,
-    isCritical,
-    isExpired: remaining <= 0,
+    isActive: clampedRemaining > 0 && enabled,
+    isWarning: percentRemaining <= 25,
+    isCritical: percentRemaining <= 10,
+    isExpired: clampedRemaining <= 0,
     pause,
     resume,
     reset,
