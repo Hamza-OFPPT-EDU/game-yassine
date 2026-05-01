@@ -348,18 +348,15 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
     results: MissionQuestionResult[],
     currentResult: MissionQuestionResult | null,
   ) => {
-    const merged = new Map<string, MissionQuestionResult>();
-    results.forEach((result) => merged.set(result.questionId, result));
-    if (currentResult) {
-      merged.set(currentResult.questionId, currentResult);
-    }
-    return Array.from(merged.values());
+    if (!currentResult) return results;
+    const filtered = results.filter(r => r.questionId !== currentResult.questionId);
+    return [...filtered, currentResult];
   };
 
   const buildMissionSummary = (results: MissionQuestionResult[]): MissionCompletionSummary => {
-    const totalXp = results.reduce((sum, result) => sum + result.xpEarned, 0);
-    const totalStars = results.reduce((sum, result) => sum + result.starsEarned, 0);
-    const correctCount = results.filter((result) => result.isCorrect).length;
+    const totalXp = results.reduce((sum, r) => sum + (r.xpEarned || 0), 0);
+    const totalStars = results.reduce((sum, r) => sum + (r.starsEarned || 0), 0);
+    const correctCount = results.filter((r) => r.isCorrect).length;
     const totalQuestions = results.length;
 
     return {
@@ -375,6 +372,8 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
       successRate: totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0,
     };
   };
+
+  // Skip button handler
 
   const buildQuestionResult = (): MissionQuestionResult | null => {
     if (!challenge) return null;

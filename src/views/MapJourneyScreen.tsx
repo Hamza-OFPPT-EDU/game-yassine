@@ -3,18 +3,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Landmark, Waves, Flower2, Shield, Ship, Palette, 
   MapPin, Trophy, Check, ChevronRight, X, Loader2, Lock,
-  Star, Sparkles, Navigation2, Sun, Mountain, Castle
+  Star, Sparkles, Navigation2, Sun, Mountain, Castle, ArrowDown
 } from 'lucide-react';
 import { type City } from '../types';
 import { cn } from '../lib/utils';
 import TopAppBar from '../components/TopAppBar';
 import { useAudio } from '../hooks/useAudio';
 import { useSupabaseCities, useSupabaseMissions } from '../hooks/useSupabase';
+import { useAutoScroll } from '../hooks/useAutoScroll';
 
 // ── Thèmes par ville ────────────────────────────────────────────────────────
 const CITY_THEMES: Record<string, { 
@@ -127,6 +128,18 @@ export default function MapJourneyScreen({
   const [cinematicCity, setCinematicCity]   = useState<City | null>(null);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true);
 
+  // Refs pour scroll automatique
+  const activeCityRef = useRef<HTMLDivElement | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const [scrollDone, setScrollDone] = useState(false);
+
+  // Hook pour scroll automatique
+  const { isInView: isActiveCityInView } = useAutoScroll({
+    targetRef: activeCityRef,
+    enabled: !loading && !scrollDone,
+    onScrolDone: () => setScrollDone(true),
+  });
+
   const handleShowCitySheet  = (city: City) => { 
     if (city.status !== 'locked') { 
       playSound('whoosh');
@@ -238,7 +251,7 @@ export default function MapJourneyScreen({
       </AnimatePresence>
 
       {/* ── Corps principal ──────────────────────────────────────────────── */}
-      <main className="flex-grow overflow-y-auto relative pt-6 pb-48 scrollbar-hide">
+      <main className="flex-grow overflow-y-auto relative pt-6 pb-48 scrollbar-hide" ref={scrollContainerRef}>
 
         {/* Titre décoratif */}
         <div className="text-center mb-2 pt-16 relative z-10">
@@ -302,18 +315,52 @@ export default function MapJourneyScreen({
             style={{ gap: 0 }}
           >
             {cities.map((city, index) => (
-              <div key={city.id} style={{ marginBottom: index < cities.length - 1 ? '140px' : 0 }}>
+              <div 
+                key={city.id} 
+                style={{ marginBottom: index < cities.length - 1 ? '140px' : 0 }}
+                ref={city.status === 'active' ? activeCityRef : null}
+              >
                 <CityNode
                   city={city}
                   onSelect={() => handleShowCitySheet(city)}
                   isSelected={selectedCityId === city.id}
                   delay={index * 0.12}
                   index={index}
+                  isScrollTarget={city.status === 'active'}
+                  scrollDone={scrollDone}
                 />
               </div>
             ))}
           </div>
         </div>
+
+        {/* ── Flèche flottante pour revenir à la ville active ────────────── */}
+        <AnimatePresence>
+          {!isActiveCityInView && scrollDone && (
+            <motion.button
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                playSound('whoosh');
+                activeCityRef.current?.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'center',
+                });
+              }}
+              className="fixed bottom-52 left-1/2 -translate-x-1/2 z-50 p-3 rounded-full shadow-lg border-2 bg-white/95 backdrop-blur-sm border-[#D4A43E]/60 hover:bg-white transition-all group"
+            >
+              <motion.div
+                animate={{ y: [0, 4, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <ArrowDown size={24} className="text-[#D4A43E] group-hover:text-[#A87D28] transition-colors" />
+              </motion.div>
+            </motion.button>
+          )}
+        </AnimatePresence>
 
         {/* ── Bottom Sheet ─────────────────────────────────────────────────── */}
         <AnimatePresence>
@@ -510,7 +557,9 @@ const CityNode: React.FC<{
   isSelected: boolean;
   delay: number;
   index: number;
-}> = ({ city, onSelect, isSelected, delay }) => {
+  isScrollTarget?: boolean;
+  scrollDone?: boolean;
+}> = ({ city, onSelect, isSelected, delay, isScrollTarget = false, scrollDone = false }) => {
   const isLocked    = city.status === 'locked';
   const isCompleted = city.status === 'completed';
   const isActive    = city.status === 'active';
@@ -520,13 +569,48 @@ const CityNode: React.FC<{
   return (
     <motion.div
       initial={{ y: 30, opacity: 0, scale: 0.85 }}
-      animate={{ y: 0, opacity: 1, scale: isSelected ? 1.1 : 1 }}
+      animate={{ 
+        y: 0, 
+        opacity: 1, 
+        scale: isSelected || (isScrollTarget && scrollDone) ? 1.15 : 1 
+      }}
       transition={{
         delay,
         scale: { type: 'spring', stiffness: 300, damping: 22 },
       }}
       className="flex flex-col items-center relative"
     >
+      {/* Animation Focus - Aura brillante après scroll */}
+      {isScrollTarget && scrollDone && (
+        <>
+          <motion.div
+            initial={{ opacity: 0, scale: 1.2 }}
+            animate={{ opacity: [0.6, 0.2, 0.6], scale: [1.3, 1.5, 1.3] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              width: 180,
+              height: 180,
+              top: -42,
+              left: -42,
+              background: 'radial-gradient(circle, #D4A43E 0%, transparent 70%)',
+              filter: 'blur(20px)',
+            }}
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0.4, 0.8, 0.4] }}
+            transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
+            className="absolute rounded-full pointer-events-none border-2 border-[#D4A43E]"
+            style={{
+              width: 150,
+              height: 150,
+              top: -27,
+              left: -27,
+            }}
+          />
+        </>
+      )}
       {/* Aura extérieure pulsante */}
       {!isLocked && (
         <>
