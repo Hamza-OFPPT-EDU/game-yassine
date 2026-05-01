@@ -130,7 +130,7 @@ export default function MapEditorPage() {
                             onClick={() => setFormData({...formData, icon_name: null})}
                           >
                             <div className="icon-preview-circle empty">
-                              <MapIcon size={20} />
+                              <MapIcon size={30} />
                             </div>
                             <span>Défaut</span>
                           </div>
@@ -381,14 +381,14 @@ export default function MapEditorPage() {
         }
 
         .icon-preview-circle {
-          width: 36px;
-          height: 36px;
+          width: 55px;
+          height: 55px;
           border-radius: 50%;
           background: var(--bg-surface);
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 1.2rem;
+          font-size: 1.8rem;
           border: 1px solid var(--border-light);
         }
 
@@ -418,8 +418,8 @@ export default function MapEditorPage() {
         }
 
         .node-preview-main {
-          width: 54px;
-          height: 54px;
+          width: 78px;
+          height: 78px;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -439,7 +439,7 @@ export default function MapEditorPage() {
           top: 7px;
         }
 
-        .preview-icon { font-size: 24px; }
+        .preview-icon { font-size: 38px; }
         .preview-label {
           font-size: 0.8rem;
           font-weight: 800;

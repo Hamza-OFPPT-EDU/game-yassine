@@ -15,7 +15,7 @@ const CITY_OPTIONS = [
 
 const EMPTY = {
   city_id: 'rabat', city_name_fr: '', city_name_ar: '',
-  city_color: '#735c00', headline_fr: '', headline_ar: '',
+  city_color: '#735c00', icon_name: 'landmark', headline_fr: '', headline_ar: '',
   description_fr: '', description_ar: '', focus_fr: '',
   step_label: '', progress: 0.25, illustration_url: '',
   sort_order: 0, is_published: false,
@@ -111,8 +111,9 @@ export default function ChallengesManager({ onSelectChallenge, onViewCurriculum 
 
               {/* Info */}
               <div className="challenge-card-body">
-                <div className="challenge-card-city" style={{ color: c.city_color }}>
+                <div className="challenge-card-city" style={{ color: c.city_color, display: 'flex', alignItems: 'center', gap: 6 }}>
                   {CITY_OPTIONS.find(o => o.value === c.city_id)?.label || c.city_id}
+                  <span style={{ fontSize: 12, opacity: 0.6 }}>({c.icon_name || 'no-icon'})</span>
                 </div>
                 <h3 className="challenge-card-title">{c.headline_fr}</h3>
                 <p className="challenge-card-desc">{c.description_fr?.slice(0, 100)}…</p>
@@ -162,6 +163,9 @@ export default function ChallengesManager({ onSelectChallenge, onViewCurriculum 
                   <input type="color" value={modal.city_color} onChange={e => set('city_color', e.target.value)} style={{ width:40, height:36, border:'none', borderRadius:8, cursor:'pointer' }} />
                   <Input value={modal.city_color} onChange={v => set('city_color', v)} placeholder="#hex" />
                 </div>
+              </Field>
+              <Field label="Nom de l'icône (Lucide)" hint="Ex: landmark, castle, tent, waves, mountain, mosque">
+                <Input value={modal.icon_name} onChange={v => set('icon_name', v)} placeholder="landmark" />
               </Field>
             </div>
 

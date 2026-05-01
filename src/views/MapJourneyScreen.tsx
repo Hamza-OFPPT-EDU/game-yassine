@@ -6,85 +6,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  Landmark, Waves, Flower2, Shield, Ship, Palette, 
-  MapPin, Trophy, Check, ChevronRight, X, Loader2, Lock,
-  Star, Sparkles, Navigation2, Sun, Mountain, Castle
+  Trophy, Check, ChevronRight, X, Loader2, Lock,
+  Star, Sparkles, Navigation2
 } from 'lucide-react';
 import { type City } from '../types';
 import { cn } from '../lib/utils';
 import TopAppBar from '../components/TopAppBar';
 import { useAudio } from '../hooks/useAudio';
 import { useSupabaseCities, useSupabaseMissions } from '../hooks/useSupabase';
-
-// ── Thèmes par ville ────────────────────────────────────────────────────────
-const CITY_THEMES: Record<string, { 
-  icon: React.ReactNode, 
-  color: string, 
-  colorDark: string,
-  colorLight: string,
-  bgGradient: string 
-}> = {
-  rabat: {
-    icon: <Landmark />,
-    color: '#7B3F1A',
-    colorDark: '#4E2510',
-    colorLight: '#A0572B',
-    bgGradient: 'linear-gradient(135deg, #A0572B, #7B3F1A)'
-  },
-  chefchaouen: {
-    icon: <Mountain />,
-    color: '#1E40AF',
-    colorDark: '#1E3A8A',
-    colorLight: '#3B82F6',
-    bgGradient: 'linear-gradient(135deg, #3B82F6, #1E40AF)'
-  },
-  fes: {
-    icon: <Castle />,
-    color: '#065F46',
-    colorDark: '#064E3B',
-    colorLight: '#10B981',
-    bgGradient: 'linear-gradient(135deg, #10B981, #065F46)'
-  },
-  marrakech: {
-    icon: <Flower2 />,
-    color: '#991B1B',
-    colorDark: '#7F1D1D',
-    colorLight: '#EF4444',
-    bgGradient: 'linear-gradient(135deg, #EF4444, #991B1B)'
-  },
-  agadir: {
-    icon: <Sun />,
-    color: '#D97706',
-    colorDark: '#92400E',
-    colorLight: '#F59E0B',
-    bgGradient: 'linear-gradient(135deg, #F59E0B, #D97706)'
-  },
-  meknes: {
-    icon: <Shield />,
-    color: '#3F6212',
-    colorDark: '#365314',
-    colorLight: '#84CC16',
-    bgGradient: 'linear-gradient(135deg, #84CC16, #3F6212)'
-  },
-  tanger: {
-    icon: <Ship />,
-    color: '#3730A3',
-    colorDark: '#312E81',
-    colorLight: '#6366F1',
-    bgGradient: 'linear-gradient(135deg, #6366F1, #3730A3)'
-  },
-  essaouira: {
-    icon: <Palette />,
-    color: '#0369A1',
-    colorDark: '#075985',
-    colorLight: '#0EA5E9',
-    bgGradient: 'linear-gradient(135deg, #0EA5E9, #0369A1)'
-  },
-};
-
-const CITY_ICONS: Record<string, React.ReactNode> = Object.fromEntries(
-  Object.entries(CITY_THEMES).map(([cityId, theme]) => [cityId, theme.icon])
-);
+import { getCityTheme, resolveCityIcon } from '../lib/city-theme';
 
 // ── Couleurs de nœud par statut ─────────────────────────────────────────────
 const NODE_STYLES = {
@@ -196,13 +126,13 @@ export default function MapJourneyScreen({
                   transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                   className="max-w-lg space-y-10 relative z-10 py-12"
                 >
-                  <motion.div
+                    <motion.div
                     animate={{ rotate: [0, 5, -5, 0] }}
                     transition={{ duration: 4, repeat: Infinity }}
                     className="w-28 h-28 mx-auto rounded-full flex items-center justify-center shadow-2xl border-4 border-[#D4A43E]/50"
-                    style={{ background: CITY_THEMES[cinematicCity.id]?.bgGradient || 'radial-gradient(circle, #A0572B, #4E2510)' }}
+                    style={{ background: getCityTheme(cinematicCity).bgGradient }}
                   >
-                    {React.cloneElement(CITY_THEMES[cinematicCity.id]?.icon as React.ReactElement, { size: 56, className: "text-white" }) ?? '🗺️'}
+                    {resolveCityIcon(cinematicCity, 144, "text-white")}
                   </motion.div>
 
                   <div className="space-y-3">
@@ -340,7 +270,7 @@ export default function MapJourneyScreen({
                 >
                   {/* Décoration coin */}
                   <div className="absolute top-0 right-0 w-28 h-28 opacity-10 pointer-events-none flex items-start justify-end pr-4 pt-4">
-                    {React.cloneElement(CITY_THEMES[displayCity.id]?.icon as React.ReactElement, { size: 80, className: "text-voyage-primary" })}
+                    {resolveCityIcon(displayCity, 165, "text-voyage-primary")}
                   </div>
 
                   {/* Fermer */}
@@ -358,9 +288,9 @@ export default function MapJourneyScreen({
                   <div className="flex items-start gap-4 mb-4 pr-10">
                     <div
                       className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 border-2 border-white/40 shadow-md"
-                      style={{ background: CITY_THEMES[displayCity.id]?.bgGradient || 'linear-gradient(135deg, #A0572B, #7B3F1A)' }}
+                      style={{ background: getCityTheme(displayCity).bgGradient }}
                     >
-                      {React.cloneElement(CITY_THEMES[displayCity.id]?.icon as React.ReactElement, { size: 32, className: "text-white" })}
+                      {resolveCityIcon(displayCity, 86, "text-white")}
                     </div>
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-2">
@@ -455,7 +385,7 @@ export default function MapJourneyScreen({
                       <MissionsList 
                         cityId={displayCity.id} 
                         completedMissions={completedMissions} 
-                        cityTheme={CITY_THEMES[displayCity.id]}
+                        cityTheme={getCityTheme(displayCity)}
                       />
                     </div>
                   </div>
@@ -515,7 +445,7 @@ const CityNode: React.FC<{
   const isCompleted = city.status === 'completed';
   const isActive    = city.status === 'active';
   const style       = NODE_STYLES[city.status];
-  const icon        = CITY_ICONS[city.id] ?? '📍';
+  const theme       = getCityTheme(city);
 
   return (
     <motion.div
@@ -539,8 +469,8 @@ const CityNode: React.FC<{
           />
           {isActive && (
             <div
-              className="absolute rounded-full pointer-events-none border-2 border-dashed border-[#D4A43E]/40 ring-spin"
-              style={{ width: 128, height: 128, top: -16, left: -16 }}
+              className="absolute rounded-full pointer-events-none border-2 border-dashed ring-spin"
+              style={{ width: 128, height: 128, top: -16, left: -16, borderColor: `${theme.color}66` }}
             />
           )}
         </>
@@ -578,10 +508,7 @@ const CityNode: React.FC<{
               transition={{ duration: 3 + Math.random(), repeat: Infinity, ease: 'easeInOut' }}
               className="leading-none select-none flex items-center justify-center"
             >
-              {React.cloneElement(CITY_THEMES[city.id]?.icon as React.ReactElement, { 
-                size: 32, 
-                className: isLocked ? "text-[#9B8870]" : "text-white" 
-              })}
+              {resolveCityIcon(city, 86, isLocked ? "text-[#9B8870]" : "text-white")}
             </motion.span>
           )}
         </div>

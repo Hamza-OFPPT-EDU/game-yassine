@@ -38,7 +38,7 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
             )}
           >
             <Icon 
-              size={24} 
+              size={30} 
               className={cn(
                 "transition-colors",
                 isActive ? "text-voyage-primary stroke-[3px]" : "text-voyage-secondary group-hover:text-voyage-primary/60"
