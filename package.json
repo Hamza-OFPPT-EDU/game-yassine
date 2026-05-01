@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "dashboard:install": "cd dashboard && npm install --legacy-peer-deps",
+    "dashboard:dev": "cd dashboard && npm run dev"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

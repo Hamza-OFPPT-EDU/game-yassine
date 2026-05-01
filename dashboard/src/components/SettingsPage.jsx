@@ -1,0 +1,345 @@
+import { useState } from 'react';
+import { useSettings } from '../hooks/useContent';
+import { Save, RefreshCw, AlertCircle, CheckCircle2 } from 'lucide-react';
+
+export default function SettingsPage() {
+  const { settings, loading, save, refresh } = useSettings();
+  const [saving, setSaving] = useState(false);
+  const [feedback, setFeedback] = useState(null);
+
+  const handleUpdateSetting = async (setting, newValue) => {
+    try {
+      setSaving(true);
+      await save({ ...setting, value: newValue });
+      setFeedback({ type: 'success', text: `Paramètre "${setting.key}" mis à jour.` });
+      setTimeout(() => setFeedback(null), 3000);
+    } catch (err) {
+      setFeedback({ type: 'error', text: "Erreur lors de la mise à jour." });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const renderValueEditor = (setting) => {
+    const isArray = Array.isArray(setting.value);
+    const isObject = typeof setting.value === 'object' && !isArray;
+
+    if (isArray) {
+      return (
+        <div className="settings-list-editor">
+          {setting.value.map((item, idx) => (
+            <div key={idx} className="settings-list-item">
+              <input 
+                type="text" 
+                value={item} 
+                onChange={(e) => {
+                  const newArr = [...setting.value];
+                  newArr[idx] = e.target.value;
+                  handleUpdateSetting(setting, newArr);
+                }}
+              />
+            </div>
+          ))}
+          <button 
+            className="btn btn-ghost btn-sm"
+            onClick={() => handleUpdateSetting(setting, [...setting.value, "Nouveau"])}
+          >
+            + Ajouter un élément
+          </button>
+        </div>
+      );
+    }
+
+    if (isObject) {
+      return (
+        <div className="settings-object-editor">
+          {Object.entries(setting.value).map(([key, val]) => (
+            <div key={key} className="settings-form-group">
+              <label>{key}</label>
+              <input 
+                type={typeof val === 'number' ? 'number' : 'text'}
+                value={val} 
+                onChange={(e) => {
+                  const newVal = typeof val === 'number' ? Number(e.target.value) : e.target.value;
+                  handleUpdateSetting(setting, { ...setting.value, [key]: newVal });
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    const isBoolean = typeof setting.value === 'boolean' || 
+                      (typeof setting.value === 'string' && ['true', 'false'].includes(setting.value.trim().toLowerCase())) ||
+                      setting.key === 'dev_show_quick_nav';
+
+    if (isBoolean) {
+      const boolValue = typeof setting.value === 'boolean' 
+        ? setting.value 
+        : (typeof setting.value === 'string' ? setting.value.trim().toLowerCase() === 'true' : !!setting.value);
+
+      return (
+        <div className="settings-checkbox-editor">
+          <label className="checkbox-container">
+            <input 
+              type="checkbox" 
+              checked={boolValue} 
+              onChange={(e) => handleUpdateSetting(setting, e.target.checked)}
+            />
+            <span className="checkmark"></span>
+            <span className="checkbox-label">{boolValue ? 'Activé' : 'Désactivé'}</span>
+          </label>
+        </div>
+      );
+    }
+
+    return (
+      <input 
+        type="text" 
+        className="form-input"
+        value={setting.value} 
+        onChange={(e) => handleUpdateSetting(setting, e.target.value)}
+      />
+    );
+  };
+
+  if (loading) return (
+    <div className="loading-state">
+      <div className="spinner" />
+      <p>Chargement des réglages...</p>
+    </div>
+  );
+
+  return (
+    <div className="settings-page fade-in">
+      <div className="cms-section-header">
+        <div>
+          <h2 className="cms-section-title">⚙️ Paramètres Généraux</h2>
+          <p className="cms-section-sub">Personnalisez le contenu et le comportement global de l'application</p>
+        </div>
+        <div className="header-actions">
+          <button className="btn btn-ghost" onClick={refresh}>
+            <RefreshCw size={16} /> Rafraîchir
+          </button>
+        </div>
+      </div>
+
+      {feedback && (
+        <div className={`alert alert-${feedback.type} slide-in`}>
+          {feedback.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
+          {feedback.text}
+        </div>
+      )}
+
+      <div className="settings-grid">
+        {settings.map(s => (
+          <div key={s.id} className="settings-card">
+            <div className="settings-card-header">
+              <h3 className="settings-key">{s.key.replace(/_/g, ' ')}</h3>
+              <span className="settings-id">ID: {s.id.slice(0, 8)}</span>
+            </div>
+            <p className="settings-desc">{s.description}</p>
+            <div className="settings-editor">
+              {renderValueEditor(s)}
+            </div>
+            <div className="settings-card-footer">
+              <span className="last-updated">Dernière modification : {new Date(s.updated_at).toLocaleString()}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <style>{`
+        .settings-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+          gap: 24px;
+          margin-top: 24px;
+        }
+
+        .settings-card {
+          background: var(--surface);
+          border-radius: 16px;
+          padding: 24px;
+          border: 1px solid var(--border);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+          display: flex;
+          flex-direction: column;
+        }
+
+        .settings-card-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 12px;
+        }
+
+        .settings-key {
+          text-transform: capitalize;
+          font-weight: 700;
+          font-size: 1.1rem;
+          color: var(--primary);
+        }
+
+        .settings-id {
+          font-family: monospace;
+          font-size: 0.75rem;
+          opacity: 0.5;
+        }
+
+        .settings-desc {
+          font-size: 0.9rem;
+          color: var(--on-surface-variant);
+          margin-bottom: 20px;
+          line-height: 1.5;
+        }
+
+        .settings-editor {
+          flex: 1;
+        }
+
+        .settings-form-group {
+          margin-bottom: 12px;
+        }
+
+        .settings-form-group label {
+          display: block;
+          font-size: 0.75rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin-bottom: 4px;
+          opacity: 0.7;
+        }
+
+        .settings-form-group input {
+          width: 100%;
+          padding: 10px 14px;
+          background: var(--background);
+          border: 1px solid var(--border);
+          border-radius: 8px;
+          font-size: 0.9rem;
+          color: var(--on-surface);
+        }
+
+        .settings-list-item {
+          margin-bottom: 8px;
+        }
+
+        .settings-list-item input {
+          width: 100%;
+          padding: 8px 12px;
+          background: var(--background);
+          border: 1px solid var(--border);
+          border-radius: 6px;
+          font-size: 0.85rem;
+        }
+
+        .settings-card-footer {
+          margin-top: 24px;
+          padding-top: 12px;
+          border-top: 1px solid var(--border);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .last-updated {
+          font-size: 0.7rem;
+          opacity: 0.4;
+        }
+
+        .alert {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px 20px;
+          border-radius: 12px;
+          margin-bottom: 24px;
+          font-weight: 500;
+        }
+
+        .alert-success {
+          background: #d1fae5;
+          color: #065f46;
+          border: 1px solid #10b981;
+        }
+
+        .alert-error {
+          background: #fee2e2;
+          color: #991b1b;
+          border: 1px solid #ef4444;
+        }
+
+        /* Checkbox Container */
+        .settings-checkbox-editor {
+          margin: 12px 0;
+        }
+
+        .checkbox-container {
+          display: flex;
+          align-items: center;
+          position: relative;
+          padding-left: 35px;
+          cursor: pointer;
+          font-size: 0.9rem;
+          font-weight: 600;
+          user-select: none;
+          color: var(--on-surface);
+        }
+
+        .checkbox-container input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+        }
+
+        .checkmark {
+          position: absolute;
+          top: -2px;
+          left: 0;
+          height: 24px;
+          width: 24px;
+          background-color: var(--border);
+          border-radius: 6px;
+          transition: all 0.3s;
+        }
+
+        .checkbox-container:hover input ~ .checkmark {
+          background-color: var(--primary-light);
+        }
+
+        .checkbox-container input:checked ~ .checkmark {
+          background-color: var(--primary);
+        }
+
+        .checkmark:after {
+          content: "";
+          position: absolute;
+          display: none;
+        }
+
+        .checkbox-container input:checked ~ .checkmark:after {
+          display: block;
+        }
+
+        .checkbox-container .checkmark:after {
+          left: 9px;
+          top: 5px;
+          width: 6px;
+          height: 12px;
+          border: solid white;
+          border-width: 0 3px 3px 0;
+          transform: rotate(45deg);
+        }
+
+        .checkbox-label {
+          margin-left: 4px;
+        }
+      `}</style>
+    </div>
+  );
+}
