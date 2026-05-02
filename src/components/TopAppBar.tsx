@@ -16,7 +16,7 @@ interface TopAppBarProps {
 
 export default function TopAppBar({ stats, onBack, title = "Le Voyage", showProgress = true }: TopAppBarProps) {
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b-[3px] border-voyage-secondary/20 shadow-sm">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md px-6 py-2 flex items-center justify-between border-b-[3px] border-voyage-secondary/20 shadow-sm">
       <div className="flex items-center gap-6">
         {onBack && (
           <button onClick={onBack} className="p-2 hover:bg-voyage-sand rounded-xl transition-colors">

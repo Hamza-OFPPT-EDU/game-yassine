@@ -51,6 +51,7 @@ export type City = {
   stepNum: number;
   totalSteps: number;
   cinematicIntro?: string;
+  cinematicCharacter?: string;
   color?: string;
   iconName?: string;
 };

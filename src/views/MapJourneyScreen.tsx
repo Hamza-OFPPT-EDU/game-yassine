@@ -6,9 +6,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  Landmark, Waves, Flower2, Shield, Ship, Palette, 
-  MapPin, Trophy, Check, ChevronRight, X, Loader2, Lock,
-  Star, Sparkles, Navigation2, Sun, Mountain, Castle, ArrowDown
+  MapPin, Check, ChevronRight, X, Loader2, Lock,
+  Star, Sparkles, Navigation2, ArrowDown
 } from 'lucide-react';
 import { type City } from '../types';
 import { cn } from '../lib/utils';
@@ -16,101 +15,9 @@ import TopAppBar from '../components/TopAppBar';
 import { useAudio } from '../hooks/useAudio';
 import { useSupabaseCities, useSupabaseMissions } from '../hooks/useSupabase';
 import { useAutoScroll } from '../hooks/useAutoScroll';
+import { getCityTheme, resolveCityIcon } from '../lib/city-theme';
 
-// ── Thèmes par ville ────────────────────────────────────────────────────────
-const CITY_THEMES: Record<string, { 
-  icon: React.ReactNode, 
-  color: string, 
-  colorDark: string,
-  colorLight: string,
-  bgGradient: string 
-}> = {
-  rabat: {
-    icon: <Landmark />,
-    color: '#7B3F1A',
-    colorDark: '#4E2510',
-    colorLight: '#A0572B',
-    bgGradient: 'linear-gradient(135deg, #A0572B, #7B3F1A)'
-  },
-  chefchaouen: {
-    icon: <Mountain />,
-    color: '#1E40AF',
-    colorDark: '#1E3A8A',
-    colorLight: '#3B82F6',
-    bgGradient: 'linear-gradient(135deg, #3B82F6, #1E40AF)'
-  },
-  fes: {
-    icon: <Castle />,
-    color: '#065F46',
-    colorDark: '#064E3B',
-    colorLight: '#10B981',
-    bgGradient: 'linear-gradient(135deg, #10B981, #065F46)'
-  },
-  marrakech: {
-    icon: <Flower2 />,
-    color: '#991B1B',
-    colorDark: '#7F1D1D',
-    colorLight: '#EF4444',
-    bgGradient: 'linear-gradient(135deg, #EF4444, #991B1B)'
-  },
-  agadir: {
-    icon: <Sun />,
-    color: '#D97706',
-    colorDark: '#92400E',
-    colorLight: '#F59E0B',
-    bgGradient: 'linear-gradient(135deg, #F59E0B, #D97706)'
-  },
-  meknes: {
-    icon: <Shield />,
-    color: '#3F6212',
-    colorDark: '#365314',
-    colorLight: '#84CC16',
-    bgGradient: 'linear-gradient(135deg, #84CC16, #3F6212)'
-  },
-  tanger: {
-    icon: <Ship />,
-    color: '#3730A3',
-    colorDark: '#312E81',
-    colorLight: '#6366F1',
-    bgGradient: 'linear-gradient(135deg, #6366F1, #3730A3)'
-  },
-  essaouira: {
-    icon: <Palette />,
-    color: '#0369A1',
-    colorDark: '#075985',
-    colorLight: '#0EA5E9',
-    bgGradient: 'linear-gradient(135deg, #0EA5E9, #0369A1)'
-  },
-};
-
-const CITY_ICONS: Record<string, React.ReactNode> = Object.fromEntries(
-  Object.entries(CITY_THEMES).map(([cityId, theme]) => [cityId, theme.icon])
-);
-
-// ── Couleurs de nœud par statut ─────────────────────────────────────────────
-const NODE_STYLES = {
-  locked: {
-    outer:  'bg-[#D4C5B0] border-[#B5A48A]',
-    inner:  'bg-[#C9B99A]',
-    text:   'text-[#9B8870]',
-    aura:   'bg-[#C9A96E]/10',
-    ring:   'border-[#C9A96E]/20',
-  },
-  active: {
-    outer:  'bg-gradient-to-br from-[#A0572B] to-[#7B3F1A] border-[#4E2510]',
-    inner:  'bg-gradient-to-br from-[#B5693A] to-[#8B4A22]',
-    text:   'text-white',
-    aura:   'bg-[#7B3F1A]/25',
-    ring:   'border-[#D4A43E]',
-  },
-  completed: {
-    outer:  'bg-gradient-to-br from-[#D4A43E] to-[#A87D28] border-[#7A5C1A]',
-    inner:  'bg-gradient-to-br from-[#F0CC7A] to-[#D4A43E]',
-    text:   'text-[#4E2510]',
-    aura:   'bg-[#D4A43E]/25',
-    ring:   'border-[#D4A43E]',
-  },
-};
+// ── MapJourneyScreen ─────────────────────────────────────────────────────────
 
 interface MapJourneyScreenProps {
   stats: { xp: number; stars: number; level: number };
@@ -140,18 +47,31 @@ export default function MapJourneyScreen({
     onScrolDone: () => setScrollDone(true),
   });
 
-  const handleShowCitySheet  = (city: City) => { 
-    if (city.status !== 'locked') { 
-      playSound('whoosh');
-      setSelectedCityId(city.id); 
-      setIsDescriptionExpanded(true); 
-    } 
+  const handleShowCitySheet = (city: City) => { 
+    playSound('whoosh');
+    setSelectedCityId(city.id); 
+    setIsDescriptionExpanded(true); 
   };
   const handleLaunchAdventure = (city: City) => {
     playSound('click');
-    if (city.cinematicIntro && city.status !== 'completed') { setCinematicCity(city); }
-    else { onSelectCity(city); }
+    if (city.cinematicIntro && city.status !== 'completed') {
+      setCinematicCity(city);
+    } else {
+      onSelectCity(city);
+    }
   };
+
+  // Hook pour jouer la voix de Rabat automatiquement
+  useEffect(() => {
+    if (cinematicCity && cinematicCity.name === 'Rabat') {
+      const audio = new Audio('/audio/rabat_intro_voice.mp3');
+      audio.play().catch(err => console.log('Audio playback prevented:', err));
+      return () => {
+        audio.pause();
+        audio.currentTime = 0;
+      };
+    }
+  }, [cinematicCity]);
 
   // ── Loading ──────────────────────────────────────────────────────────────
   if (loading) {
@@ -169,8 +89,9 @@ export default function MapJourneyScreen({
     );
   }
 
-  const activeCity  = (cities?.length > 0) ? (cities.find(c => c.status === 'active') || cities[0]) : null;
-  const displayCity = selectedCityId ? cities.find(c => c.id === selectedCityId) : null;
+  const activeCity       = (cities?.length > 0) ? (cities.find(c => c.status === 'active') || cities[0]) : null;
+  const displayCity      = selectedCityId ? cities.find(c => c.id === selectedCityId) : null;
+  const displayCityTheme = getCityTheme(displayCity ?? null);
 
   return (
     <div className="h-full w-full flex flex-col relative overflow-hidden map-bg">
@@ -207,30 +128,51 @@ export default function MapJourneyScreen({
                   initial={{ scale: 0.8, y: 30 }}
                   animate={{ scale: 1, y: 0 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                  className="max-w-lg space-y-10 relative z-10 py-12"
+                  className="max-w-lg space-y-9 relative z-10 py-10"
                 >
                     <motion.div
                     animate={{ rotate: [0, 5, -5, 0] }}
                     transition={{ duration: 4, repeat: Infinity }}
-                    className="w-28 h-28 mx-auto rounded-full flex items-center justify-center shadow-2xl border-4 border-[#D4A43E]/50"
-                    style={{ background: CITY_THEMES[cinematicCity.id]?.bgGradient || 'radial-gradient(circle, #A0572B, #4E2510)' }}
+                    className="w-[100px] h-[100px] mx-auto rounded-full flex items-center justify-center shadow-2xl border-4 border-[#D4A43E]/50"
+                    style={{ background: getCityTheme(cinematicCity).bgGradient }}
                   >
-                    {React.cloneElement(CITY_THEMES[cinematicCity.id]?.icon as React.ReactElement, { size: 56, className: "text-white" }) ?? '🗺️'}
+                    {resolveCityIcon(cinematicCity, 50, 'text-white')}
                   </motion.div>
 
-                  <div className="space-y-3">
-                    <p className="text-[#D4A43E] font-black uppercase tracking-[0.3em] text-xs">
+                  <div className="space-y-2.5">
+                    <p className="text-[#D4A43E] font-black uppercase tracking-[0.3em] text-[13px]">
                       Le Voyage des Compétences
                     </p>
-                    <h1 className="text-5xl font-headline font-black text-white tracking-tight">
+                    <h1 className="text-[43px] font-headline font-black text-white tracking-tight">
                       {cinematicCity.name}
                     </h1>
-                    <p className="arabic-font text-[#C9A96E] text-xl">{cinematicCity.arabicName}</p>
+                    <p className="arabic-font text-[#C9A96E] text-lg">{cinematicCity.arabicName}</p>
                   </div>
 
-                  <p className="text-xl font-bold text-white/85 leading-relaxed italic font-serif px-4">
-                    "{cinematicCity.cinematicIntro}"
-                  </p>
+                  {cinematicCity.name === 'Rabat' ? (
+                    <div className="space-y-5">
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="relative group"
+                      >
+                        <div className="absolute inset-0 bg-white/10 blur-2xl rounded-full scale-110" />
+                        <img 
+                          src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/intro_caracter.png" 
+                          alt="Personnage"
+                          className="w-[230px] h-[230px] mx-auto object-contain drop-shadow-2xl relative z-10"
+                        />
+                      </motion.div>
+                      <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 shadow-xl">
+                         <p className="text-[#C9A96E] font-bold text-[11px] uppercase tracking-[0.3em] mb-1">Guide de l'aventure</p>
+                         <p className="text-white text-xl font-bold">{cinematicCity.cinematicCharacter || 'Hassan'}</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-xl font-bold text-white/85 leading-relaxed italic font-serif px-4">
+                      "{cinematicCity.cinematicIntro}"
+                    </p>
+                  )}
 
                   <motion.button
                     whileHover={{ scale: 1.04 }}
@@ -239,7 +181,7 @@ export default function MapJourneyScreen({
                       playSound('click');
                       const c = cinematicCity; setCinematicCity(null); onSelectCity(c); 
                     }}
-                    className="btn-voyage-accent px-10 py-4 text-lg w-full"
+                    className="btn-voyage-accent px-9 py-3.5 text-lg w-full"
                   >
                     🚀 Commencer l'Aventure
                   </motion.button>
@@ -382,12 +324,15 @@ export default function MapJourneyScreen({
                 className="w-full max-w-lg mb-20"
               >
                 <div
-                  className="rounded-[2rem] p-6 shadow-2xl relative overflow-hidden border border-[#C9A96E]/30"
-                  style={{ background: 'linear-gradient(160deg, #FBF3E3 0%, #F5E8C8 100%)' }}
+                  className="rounded-[2rem] p-6 shadow-2xl relative overflow-hidden backdrop-blur-xl border border-white/40"
+                  style={{
+                    background: 'linear-gradient(160deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%)',
+                    boxShadow: `0 25px 50px -12px ${displayCityTheme.color}40`,
+                  }}
                 >
                   {/* Décoration coin */}
                   <div className="absolute top-0 right-0 w-28 h-28 opacity-10 pointer-events-none flex items-start justify-end pr-4 pt-4">
-                    {React.cloneElement(CITY_THEMES[displayCity.id]?.icon as React.ReactElement, { size: 80, className: "text-voyage-primary" })}
+                    {resolveCityIcon(displayCity, 80, 'text-voyage-primary')}
                   </div>
 
                   {/* Fermer */}
@@ -396,40 +341,51 @@ export default function MapJourneyScreen({
                       playSound('click');
                       setSelectedCityId(null);
                     }}
-                    className="absolute top-4 right-4 p-2 bg-white/60 hover:bg-white rounded-xl transition-colors z-50 border border-[#C9A96E]/30"
+                    className="absolute top-4 right-4 p-2 bg-white/30 backdrop-blur-md hover:bg-white/50 rounded-xl transition-colors z-50 border border-white/40"
                   >
-                    <X size={18} className="text-[#7B3F1A]" />
+                    <X size={18} style={{ color: displayCityTheme.color }} />
                   </button>
 
                   {/* En-tête */}
                   <div className="flex items-start gap-4 mb-4 pr-10">
                     <div
                       className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 border-2 border-white/40 shadow-md"
-                      style={{ background: CITY_THEMES[displayCity.id]?.bgGradient || 'linear-gradient(135deg, #A0572B, #7B3F1A)' }}
+                      style={{ background: displayCityTheme.bgGradient }}
                     >
-                      {React.cloneElement(CITY_THEMES[displayCity.id]?.icon as React.ReactElement, { size: 32, className: "text-white" })}
+                      {resolveCityIcon(displayCity, 32, 'text-white')}
                     </div>
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-[#D4A43E] rounded-full animate-pulse" />
-                        <span className="text-[9px] font-black text-[#7B3F1A] uppercase tracking-widest">
-                          {displayCity.focus}
-                        </span>
+                        {displayCity.status === 'locked' ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/10 border border-black/10">
+                            <Lock size={9} className="text-[#4E2510]" />
+                            <span className="text-[9px] font-black text-[#4E2510] uppercase tracking-widest">Verrouillée</span>
+                          </span>
+                        ) : (
+                          <>
+                            <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: displayCityTheme.color }} />
+                            <span className="text-[9px] font-black text-[#4E2510] uppercase tracking-widest opacity-70">
+                              {displayCity.focus}
+                            </span>
+                          </>
+                        )}
                       </div>
                       <h2 className="text-3xl font-headline font-black text-[#4E2510] tracking-tight leading-none">
                         {displayCity.name}
                       </h2>
-                      <p className="arabic-font text-sm font-black text-[#A0572B]">
+                      <p className="arabic-font text-sm font-black text-[#4E2510]/80">
                         {displayCity.arabicName}
                       </p>
                     </div>
                     {/* Badge progression */}
                     <div
-                      className="ml-auto shrink-0 px-3 py-2 rounded-2xl flex flex-col items-center border border-[#D4A43E]/40"
-                      style={{ background: 'linear-gradient(135deg, #D4A43E22, #D4A43E44)' }}
+                      className="ml-auto shrink-0 px-3 py-2 rounded-2xl flex flex-col items-center backdrop-blur-md border border-white/40"
+                      style={{
+                        background: `rgba(255, 255, 255, 0.2)`,
+                      }}
                     >
-                      <span className="text-[9px] font-black text-[#A87D28] uppercase tracking-widest">Progrès</span>
-                      <span className="text-[#7B3F1A] font-black text-xl leading-none mt-0.5">
+                      <span className="text-[9px] font-black uppercase tracking-widest" style={{ color: displayCityTheme.color }}>Progrès</span>
+                      <span className="font-black text-xl leading-none mt-0.5" style={{ color: displayCityTheme.colorDark || displayCityTheme.color }}>
                         {Math.round((displayCity.stepNum / displayCity.totalSteps) * 100)}%
                       </span>
                     </div>
@@ -442,11 +398,11 @@ export default function MapJourneyScreen({
                         playSound('click');
                         setIsDescriptionExpanded(!isDescriptionExpanded);
                       }}
-                      className="w-full flex items-center justify-between p-3 rounded-xl bg-white/50 border border-[#C9A96E]/20 hover:bg-white/80 transition-all mb-2 group"
+                      className="w-full flex items-center justify-between p-3 rounded-xl bg-white/20 backdrop-blur-md hover:bg-white/40 transition-all mb-2 group border border-white/30"
                     >
                       <div className="flex items-center gap-2">
-                        <Sparkles size={14} className="text-[#D4A43E]" />
-                        <span className="text-[10px] font-black text-[#A0572B] uppercase tracking-widest">
+                        <Sparkles size={14} style={{ color: displayCityTheme.color }} />
+                        <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: displayCityTheme.color }}>
                           {isDescriptionExpanded ? "Réduire la description" : "En savoir plus sur la ville"}
                         </span>
                       </div>
@@ -454,7 +410,7 @@ export default function MapJourneyScreen({
                         animate={{ rotate: isDescriptionExpanded ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <ChevronRight size={14} strokeWidth={3} className="text-[#A0572B] group-hover:translate-x-0.5 transition-transform" />
+                        <ChevronRight size={14} strokeWidth={3} style={{ color: displayCityTheme.color }} className="group-hover:translate-x-0.5 transition-transform" />
                       </motion.div>
                     </button>
                     
@@ -465,7 +421,7 @@ export default function MapJourneyScreen({
                           animate={{ height: 'auto', opacity: 1, marginBottom: 12 }}
                           exit={{ height: 0, opacity: 0, marginBottom: 0 }}
                           transition={{ duration: 0.3, ease: 'easeInOut' }}
-                          className="text-[#7B3F1A]/70 text-sm leading-relaxed font-bold overflow-hidden"
+                          className="text-[#4E2510]/80 text-sm leading-relaxed font-bold overflow-hidden p-2"
                         >
                           {displayCity.description}
                         </motion.p>
@@ -475,24 +431,24 @@ export default function MapJourneyScreen({
 
                   {/* Barre de progression */}
                   <div className="mb-5 space-y-1">
-                    <div className="flex justify-between text-[10px] font-black text-[#A0572B]/60 uppercase tracking-widest">
+                    <div className="flex justify-between text-[10px] font-black text-[#4E2510]/60 uppercase tracking-widest">
                       <span>Progression</span>
                       <span>{displayCity.stepNum}/{displayCity.totalSteps} missions</span>
                     </div>
-                    <div className="h-2.5 w-full bg-[#C9A96E]/20 rounded-full overflow-hidden border border-[#C9A96E]/20">
+                    <div className="h-2.5 w-full bg-white/20 rounded-full overflow-hidden border border-white/20">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${(displayCity.stepNum / displayCity.totalSteps) * 100}%` }}
                         transition={{ duration: 0.8, ease: 'easeOut' }}
                         className="h-full rounded-full"
-                        style={{ background: 'linear-gradient(90deg, #D4A43E, #A0572B)' }}
+                        style={{ background: `linear-gradient(90deg, ${displayCityTheme.colorLight || displayCityTheme.color}, ${displayCityTheme.color})` }}
                       />
                     </div>
                   </div>
 
                   {/* Missions */}
                   <div className="mb-5">
-                    <h4 className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest opacity-50 mb-2">
+                    <h4 className="text-[10px] font-black text-[#4E2510] uppercase tracking-widest opacity-50 mb-2">
                       Missions de la ville
                     </h4>
                     <div className={cn(
@@ -502,22 +458,36 @@ export default function MapJourneyScreen({
                       <MissionsList 
                         cityId={displayCity.id} 
                         completedMissions={completedMissions} 
-                        cityTheme={CITY_THEMES[displayCity.id]}
+                        cityTheme={displayCityTheme}
                       />
                     </div>
                   </div>
 
                   {/* CTA */}
                   <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => handleLaunchAdventure(displayCity)}
-                    className="btn-voyage w-full flex items-center justify-center gap-3 text-base py-4"
+                    whileHover={{ scale: displayCity.status !== 'locked' ? 1.02 : 1 }}
+                    whileTap={{ scale: displayCity.status !== 'locked' ? 0.98 : 1 }}
+                    onClick={() => displayCity.status !== 'locked' && handleLaunchAdventure(displayCity)}
+                    disabled={displayCity.status === 'locked'}
+                    className={cn(
+                      "w-full flex items-center justify-center gap-3 text-base py-4 rounded-2xl font-black text-white shadow-lg transition-all",
+                      displayCity.status === 'locked' ? "opacity-40 cursor-not-allowed" : "hover:brightness-110 active:scale-95"
+                    )}
+                    style={{
+                      background: displayCity.status === 'locked'
+                        ? 'rgba(0,0,0,0.2)'
+                        : `linear-gradient(135deg, ${displayCityTheme.colorLight || displayCityTheme.color}, ${displayCityTheme.colorDark || displayCityTheme.color})`,
+                      boxShadow: displayCity.status !== 'locked' ? `0 8px 25px ${displayCityTheme.color}50` : undefined,
+                    }}
                   >
                     <span className="font-black uppercase tracking-tight">
-                      {displayCity.status === 'completed' ? 'Relever de nouveau' : "Continuer l'aventure"}
+                      {displayCity.status === 'locked' 
+                        ? '🔒 Ville verrouillée'
+                        : displayCity.status === 'completed' 
+                          ? '✦ Relever de nouveau' 
+                          : "🚀 Continuer l'aventure"}
                     </span>
-                    <ChevronRight size={22} strokeWidth={3} />
+                    {displayCity.status !== 'locked' && <ChevronRight size={22} strokeWidth={3} />}
                   </motion.button>
                 </div>
               </motion.div>
@@ -563,8 +533,7 @@ const CityNode: React.FC<{
   const isLocked    = city.status === 'locked';
   const isCompleted = city.status === 'completed';
   const isActive    = city.status === 'active';
-  const style       = NODE_STYLES[city.status];
-  const icon        = CITY_ICONS[city.id] ?? '📍';
+  const cityTheme   = getCityTheme(city);
 
   return (
     <motion.div
@@ -593,7 +562,7 @@ const CityNode: React.FC<{
               height: 180,
               top: -42,
               left: -42,
-              background: 'radial-gradient(circle, #D4A43E 0%, transparent 70%)',
+              background: `radial-gradient(circle, ${cityTheme.color} 0%, transparent 70%)`,
               filter: 'blur(20px)',
             }}
           />
@@ -601,12 +570,13 @@ const CityNode: React.FC<{
             initial={{ opacity: 0 }}
             animate={{ opacity: [0.4, 0.8, 0.4] }}
             transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
-            className="absolute rounded-full pointer-events-none border-2 border-[#D4A43E]"
+            className="absolute rounded-full pointer-events-none border-2"
             style={{
               width: 150,
               height: 150,
               top: -27,
               left: -27,
+              borderColor: `${cityTheme.color}88`,
             }}
           />
         </>
@@ -615,16 +585,19 @@ const CityNode: React.FC<{
       {!isLocked && (
         <>
           <div
-            className={cn(
-              'absolute rounded-full city-aura pointer-events-none',
-              style.aura,
-            )}
-            style={{ width: 140, height: 140, top: -22, left: -22 }}
+            className='absolute rounded-full city-aura pointer-events-none'
+            style={{ 
+              width: 140, 
+              height: 140, 
+              top: -22, 
+              left: -22,
+              backgroundColor: `${cityTheme.color}40`
+            }}
           />
           {isActive && (
             <div
               className="absolute rounded-full pointer-events-none border-2 border-dashed ring-spin"
-              style={{ width: 128, height: 128, top: -16, left: -16, borderColor: `${CITY_THEMES[city.id]?.color || '#D4A43E'}66` }}
+              style={{ width: 128, height: 128, top: -16, left: -16, borderColor: `${cityTheme.color}66` }}
             />
           )}
         </>
@@ -632,41 +605,54 @@ const CityNode: React.FC<{
 
       {/* Bouton principal */}
       <button
-        disabled={isLocked}
         onClick={onSelect}
         className={cn(
           'relative w-24 h-24 rounded-full flex items-center justify-center',
           'border-[6px] shadow-2xl transition-all duration-300',
           'focus:outline-none',
-          style.outer,
-          isSelected && 'ring-4 ring-[#D4A43E]/50 scale-110',
-          isLocked && 'opacity-40 grayscale cursor-not-allowed',
+          isLocked && 'opacity-50 cursor-pointer',
+          isSelected && 'ring-4 scale-110',
         )}
+        style={{
+          background: isLocked
+            ? 'linear-gradient(135deg, #C9B99A, #D4C5B0)'
+            : isCompleted
+              ? `linear-gradient(135deg, ${cityTheme.color}CC, ${cityTheme.color})`
+              : `linear-gradient(135deg, ${cityTheme.colorLight || cityTheme.color}CC, ${cityTheme.color})`,
+          borderColor: isLocked ? '#B5A48A' : cityTheme.colorDark || cityTheme.color,
+          ...(isSelected ? { boxShadow: `0 0 0 4px ${cityTheme.color}50` } : {}),
+        }}
       >
         {/* Cercle intérieur */}
         <div
-          className={cn(
-            'w-16 h-16 rounded-full flex items-center justify-center',
-            style.inner,
-          )}
+          className='w-16 h-16 rounded-full flex items-center justify-center relative'
+          style={{
+            background: isLocked
+              ? `linear-gradient(135deg, ${cityTheme.color}55, ${cityTheme.color}33)`
+              : isCompleted
+                ? `linear-gradient(135deg, #F0CC7A, ${cityTheme.color})`
+                : `linear-gradient(135deg, ${cityTheme.colorLight || cityTheme.color}, ${cityTheme.color}CC)`,
+          }}
         >
           {isCompleted ? (
             <div className="flex flex-col items-center">
-              <Check size={32} className="text-[#4E2510] stroke-[3px]" />
+              <Check size={28} className="text-white stroke-[3px]" />
             </div>
-          ) : isLocked ? (
-            <Lock size={28} className="text-[#9B8870]" />
           ) : (
             <motion.span
-              animate={{ y: [0, -6, 0], scale: [1, 1.06, 1] }}
+              animate={isLocked ? {} : { y: [0, -4, 0], scale: [1, 1.06, 1] }}
               transition={{ duration: 3 + Math.random(), repeat: Infinity, ease: 'easeInOut' }}
               className="leading-none select-none flex items-center justify-center"
+              style={{ opacity: isLocked ? 0.5 : 1 }}
             >
-              {React.cloneElement(CITY_THEMES[city.id]?.icon as React.ReactElement, { 
-                size: 32, 
-                className: isLocked ? "text-[#9B8870]" : "text-white" 
-              })}
+              {resolveCityIcon(city, 30, 'text-white')}
             </motion.span>
+          )}
+          {/* Badge cadenas pour villes verrouillées */}
+          {isLocked && (
+            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#9B8870] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+              <Lock size={9} className="text-white" />
+            </div>
           )}
         </div>
 
@@ -706,12 +692,12 @@ const CityNode: React.FC<{
           <>
             <Star
               size={12}
-              className="absolute -right-1 top-1 text-[#D4A43E] fill-[#D4A43E] star-twinkle"
+              className="absolute -right-1 top-1 text-white fill-white star-twinkle shadow-sm"
               style={{ animationDelay: '0.3s' }}
             />
             <Star
               size={10}
-              className="absolute -left-1 bottom-2 text-[#D4A43E] fill-[#D4A43E] star-twinkle"
+              className="absolute -left-1 bottom-2 text-white fill-white star-twinkle shadow-sm"
               style={{ animationDelay: '0.8s' }}
             />
           </>
@@ -720,16 +706,16 @@ const CityNode: React.FC<{
 
       {/* Label ville */}
       <div className="mt-6 text-center space-y-0.5">
-        <p className={cn(
-          'font-headline font-black text-sm tracking-tight',
-          isLocked ? 'text-[#C9A96E]/40' : 'text-[#4E2510]',
-        )}>
+        <p 
+          className={cn('font-headline font-black text-sm tracking-tight')}
+          style={{ color: isLocked ? '#C9A96E' : cityTheme.colorDark || cityTheme.color }}
+        >
           {city.name}
         </p>
-        <p className={cn(
-          'arabic-font text-xs font-black',
-          isLocked ? 'text-[#C9A96E]/30' : 'text-[#A0572B]',
-        )}>
+        <p 
+          className={cn('arabic-font text-xs font-black')}
+          style={{ color: isLocked ? '#C9A96E' : cityTheme.color, opacity: isLocked ? 0.3 : 0.8 }}
+        >
           {city.arabicName}
         </p>
         {!isLocked && (
@@ -768,22 +754,25 @@ const MissionsList: React.FC<{
     <div className="space-y-2">
       {missions.length > 0 ? missions.map((mission, idx) => {
         const isDone = completedMissions.includes(mission.id);
+        const themeColor = cityTheme?.color || '#7B3F1A';
         return (
           <div
             key={mission.id}
             className={cn(
-              'p-3 rounded-xl border-2 flex items-center justify-between transition-all',
-              isDone
-                ? 'bg-[#D4A43E]/10 border-[#D4A43E]/30'
-                : 'bg-white/60 border-[#C9A96E]/20',
+              'p-3 rounded-xl border flex items-center justify-between transition-all backdrop-blur-md shadow-sm',
+              isDone ? '' : 'bg-white/20 border-white/40',
             )}
+            style={isDone ? { 
+              backgroundColor: `${themeColor}22`, 
+              borderColor: `${themeColor}60` 
+            } : {}}
           >
             <div className="flex items-center gap-3">
               <div 
                 className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm transition-colors"
                 style={{ 
-                  backgroundColor: isDone ? cityTheme?.color : `${cityTheme?.color}22`,
-                  color: isDone ? 'white' : cityTheme?.color
+                  backgroundColor: isDone ? themeColor : `${themeColor}22`,
+                  color: isDone ? 'white' : themeColor
                 }}
               >
                 {isDone ? <Check size={14} strokeWidth={3} /> : idx + 1}
@@ -794,7 +783,7 @@ const MissionsList: React.FC<{
                 </p>
                 <p 
                   className="text-[10px] font-bold opacity-60"
-                  style={{ color: cityTheme?.color }}
+                  style={{ color: themeColor }}
                 >
                   +{mission.xp_reward} XP
                 </p>

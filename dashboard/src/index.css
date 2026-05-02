@@ -2190,4 +2190,61 @@ select:focus {
   to { transform: rotate(360deg); }
 }
 
+/* Media Library Enhancements */
+.media-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
 
+.media-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.media-card:hover .media-actions {
+  opacity: 1;
+}
+
+.btn-icon-sm {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.btn-icon-sm:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--primary-light);
+}
+
+.row-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.list-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #000;
+  color: var(--primary-light);
+}
+
+.btn-primary.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}

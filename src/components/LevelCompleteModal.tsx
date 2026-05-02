@@ -47,8 +47,8 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
     return () => cancelAnimationFrame(frame);
   }, [totalXp, totalStars, successRate, summary?.missionId]);
 
-  const ringSize = 168;
-  const ringStroke = 10;
+  const ringSize = 151;
+  const ringStroke = 9;
   const ringRadius = (ringSize - ringStroke) / 2;
   const ringCircumference = 2 * Math.PI * ringRadius;
   const ringOffset = ringCircumference * (1 - countedRate / 100);
@@ -113,26 +113,26 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 }}
-              className="inline-flex items-center gap-2 rounded-full border border-[#D8C5AF] bg-white/70 px-4 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-[#8A6A49] shadow-sm backdrop-blur-md"
+              className="inline-flex items-center gap-2 rounded-full border border-[#D8C5AF] bg-white/70 px-4 py-2 text-[11px] font-black uppercase tracking-[0.3em] text-[#8A6A49] shadow-sm backdrop-blur-md"
             >
-              <Award size={14} className="text-[#B58B60]" />
+              <Award size={12} className="text-[#B58B60]" />
               Vue finale
             </motion.div>
 
             <div className="mt-5 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
               <div className="space-y-6">
                 <div className="space-y-3">
-                  <p className="text-[10px] font-black uppercase tracking-[0.34em] text-[#A08363]">Mission terminée</p>
-                  <h2 className="max-w-2xl text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#24160D]">
+                  <p className="text-[11px] font-black uppercase tracking-[0.34em] text-[#A08363]">Mission terminée</p>
+                  <h2 className="max-w-2xl text-[27px] sm:text-[32px] lg:text-[43px] font-black tracking-tight text-[#24160D]">
                     {summary?.missionTitle || 'Mission terminée'}
                   </h2>
-                  <div className="flex flex-wrap items-center gap-3 text-sm font-semibold text-[#6A5543]">
+                  <div className="flex flex-wrap items-center gap-3 text-base font-semibold text-[#6A5543]">
                     <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1.5 border border-white/70 shadow-sm backdrop-blur-md">
-                      <MapPin size={14} className="text-[#A77C55]" />
+                      <MapPin size={12} className="text-[#A77C55]" />
                       {summary?.cityName || 'Ville'}
                     </span>
                     <span className="inline-flex items-center gap-2 rounded-full bg-[#F4EADF]/80 px-3 py-1.5 border border-[#E8D9C8] shadow-sm">
-                      <Star size={14} className="fill-[#B58B60] text-[#B58B60]" />
+                      <Star size={12} className="fill-[#B58B60] text-[#B58B60]" />
                       {summary?.correctCount ?? 0}/{summary?.totalQuestions ?? 0} réponses correctes
                     </span>
                   </div>
@@ -163,10 +163,10 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
 
                 <div className="relative flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#A08363]">Taux de réussite</p>
-                    <p className="mt-1 text-lg font-bold text-[#27170E]">{countedRate}% des réponses validées</p>
+                    <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#A08363]">Taux de réussite</p>
+                    <p className="mt-1 text-[20px] font-bold text-[#27170E]">{countedRate}% des réponses validées</p>
                   </div>
-                  <div className="relative h-[168px] w-[168px] shrink-0">
+                  <div className="relative h-[151px] w-[151px] shrink-0">
                     <svg viewBox={`0 0 ${ringSize} ${ringSize}`} className="h-full w-full -rotate-90">
                       <circle
                         cx={ringSize / 2}
@@ -197,8 +197,8 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                       </defs>
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                      <span className="text-4xl font-black tracking-tight text-[#22140D]">{countedRate}</span>
-                      <span className="text-[10px] font-black uppercase tracking-[0.28em] text-[#9B7B5D]">réussite</span>
+                      <span className="text-[40px] font-black tracking-tight text-[#22140D]">{countedRate}</span>
+                      <span className="text-[11px] font-black uppercase tracking-[0.28em] text-[#9B7B5D]">réussite</span>
                     </div>
                   </div>
                 </div>
@@ -209,10 +209,10 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
           <div className="px-6 pb-28 pt-8 sm:px-8 lg:px-10">
             <div className="mb-4 flex items-end justify-between gap-4">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.34em] text-[#A08363]">Récapitulatif détaillé</p>
-                <h3 className="mt-2 text-2xl font-black tracking-tight text-[#24160D]">Une carte par question</h3>
+                <p className="text-[11px] font-black uppercase tracking-[0.34em] text-[#A08363]">Récapitulatif détaillé</p>
+                <h3 className="mt-2 text-[21px] font-black tracking-tight text-[#24160D]">Une carte par question</h3>
               </div>
-              <p className="hidden sm:block text-sm font-semibold text-[#6D5948]">
+              <p className="hidden sm:block text-base font-semibold text-[#6D5948]">
                 {summary?.questions.length ?? 0} éléments analysés
               </p>
             </div>
@@ -241,7 +241,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                       className="p-5"
                     >
                       <div className="flex flex-wrap items-start justify-between gap-4">
-                        <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.28em] text-[#9B7B5D]">
+                        <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.28em] text-[#9B7B5D]">
                           <motion.span 
                             className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#F2E8DA] text-[#6C5036] font-black"
                             whileHover={{ scale: 1.1 }}
@@ -250,26 +250,26 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                           </motion.span>
                           <span>{questionResult.questionType.replace('-', ' ')}</span>
                         </div>
-                        <span className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] ${statusColor} flex items-center gap-1.5`}>
+                        <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em] ${statusColor} flex items-center gap-1.5`}>
                           {isTimedOut && <Clock size={12} />}
                           {isSkipped && <SkipForward size={12} />}
                           {statusText}
                         </span>
                       </div>
 
-                      <h4 className="mt-4 text-base font-semibold leading-relaxed text-[#23150D] sm:text-[17px] group-hover:text-[#0F0B08] transition-colors">
+                      <h4 className="mt-4 text-[18px] font-semibold leading-relaxed text-[#23150D] sm:text-[19px] group-hover:text-[#0F0B08] transition-colors">
                         {questionResult.question}
                       </h4>
 
                       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-                        <div className="flex flex-wrap items-center gap-3 text-sm font-black text-[#6D5037]">
+                        <div className="flex flex-wrap items-center gap-3 text-base font-black text-[#6D5037]">
                           {!isSkipped && !isTimedOut && (
                             <>
                               <motion.span 
                                 className="inline-flex items-center gap-1.5 rounded-full bg-[#FFF8F0] px-3 py-1.5 border border-[#E6D8C8]"
                                 whileHover={{ scale: 1.05 }}
                               >
-                                <Star size={14} className="fill-[#B58B60] text-[#B58B60]" />
+                                <Star size={12} className="fill-[#B58B60] text-[#B58B60]" />
                                 +{questionResult.starsEarned} étoile{questionResult.starsEarned > 1 ? 's' : ''}
                               </motion.span>
                               <motion.span 
@@ -294,7 +294,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                               ⏱ {Math.max(0, Math.round(questionResult.timeSpent))}s
                             </div>
                           )}
-                          <ChevronDown size={18} className="text-[#A08363] group-hover:text-[#7B6B57]" />
+                          <ChevronDown size={16} className="text-[#A08363] group-hover:text-[#7B6B57]" />
                         </motion.div>
                       </div>
 
@@ -327,7 +327,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                                   animate={{ opacity: 1 }}
                                   className="rounded-lg bg-blue-50/50 border border-blue-100/50 p-3"
                                 >
-                                  <p className="text-xs font-semibold text-blue-700">
+                                  <p className="text-sm font-semibold text-blue-700">
                                     {isSkipped ? '✓ Question passée sans réponse' : '⏱ Temps écoulé avant validation'}
                                   </p>
                                 </motion.div>
@@ -347,7 +347,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
         <div className="absolute inset-x-0 bottom-0 border-t border-white/40 bg-[linear-gradient(180deg,rgba(255,250,243,0.62),rgba(248,240,230,0.95))] px-6 py-4 backdrop-blur-2xl sm:px-8 lg:px-10">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <motion.div 
-              className="text-sm font-semibold text-[#6D5948]"
+              className="text-base font-semibold text-[#6D5948]"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
@@ -368,10 +368,10 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
                 onClick={onReplayMission}
-                className="inline-flex h-14 items-center justify-center gap-3 rounded-full border border-[#D7C4AD] bg-white/75 px-6 font-black text-[#2A1A10] shadow-sm backdrop-blur-md transition-all hover:bg-white hover:border-[#E6D8C8]"
+                className="inline-flex h-[50px] items-center justify-center gap-3 rounded-full border border-[#D7C4AD] bg-white/75 px-6 font-black text-[#2A1A10] shadow-sm backdrop-blur-md transition-all hover:bg-white hover:border-[#E6D8C8]"
               >
                 <motion.div animate={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-                  <RotateCcw size={18} className="text-[#A77C55]" />
+                  <RotateCcw size={16} className="text-[#A77C55]" />
                 </motion.div>
                 Rejouer la mission
               </motion.button>
@@ -382,12 +382,12 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45 }}
                 onClick={onBackToCity}
-                className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#24160D] to-[#2A1A10] px-6 font-black text-white shadow-[0_16px_30px_rgba(22,14,9,0.2)] transition-all hover:shadow-[0_20px_40px_rgba(22,14,9,0.3)]"
+                className="inline-flex h-[50px] items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#24160D] to-[#2A1A10] px-6 font-black text-white shadow-[0_16px_30px_rgba(22,14,9,0.2)] transition-all hover:shadow-[0_20px_40px_rgba(22,14,9,0.3)]"
               >
-                <MapPin size={18} />
+                <MapPin size={16} />
                 Retour à la ville
                 <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-                  <ArrowRight size={18} />
+                  <ArrowRight size={16} />
                 </motion.div>
               </motion.button>
             </div>
@@ -405,7 +405,7 @@ function StatTile({ label, value, suffix, accent }: { label: string; value: numb
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="rounded-[1.5rem] border border-white/70 bg-white/60 p-4 shadow-[0_10px_30px_rgba(58,41,27,0.07)] backdrop-blur-xl overflow-hidden relative group"
+      className="rounded-[1.5rem] border border-white/70 bg-white/60 p-3.5 shadow-[0_10px_30px_rgba(58,41,27,0.07)] backdrop-blur-xl overflow-hidden relative group"
     >
       {/* Glow effect au hover */}
       <motion.div 
@@ -419,17 +419,17 @@ function StatTile({ label, value, suffix, accent }: { label: string; value: numb
         animate={{ width: [64, 80, 64] }}
         transition={{ duration: 2, repeat: Infinity }}
       />
-      <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#A08363]">{label}</p>
+      <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#A08363]">{label}</p>
       <div className="mt-2 flex items-baseline gap-1 text-[#24160D]">
         <motion.span 
-          className="text-3xl font-black tracking-tight"
+          className="text-[33px] font-black tracking-tight"
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
         >
           {value}
         </motion.span>
-        <span className="text-sm font-black uppercase tracking-[0.24em] text-[#7D634A]">{suffix}</span>
+        <span className="text-base font-black uppercase tracking-[0.24em] text-[#7D634A]">{suffix}</span>
       </div>
     </motion.div>
   );
@@ -441,7 +441,7 @@ function AnswerPanel({ label, value, muted = false }: { label: string; value: st
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className={`rounded-[1.35rem] border p-4 overflow-hidden relative group ${muted ? 'border-[#E9DDCF] bg-white/65' : 'border-[#E6D8C8] bg-[#FBF6EF]'}`}
+      className={`rounded-[1.35rem] border p-3.5 overflow-hidden relative group ${muted ? 'border-[#E9DDCF] bg-white/65' : 'border-[#E6D8C8] bg-[#FBF6EF]'}`}
     >
       {/* Hover glow */}
       <motion.div 
@@ -450,8 +450,8 @@ function AnswerPanel({ label, value, muted = false }: { label: string; value: st
         style={{ pointerEvents: 'none' }}
       />
 
-      <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#A08363] relative z-10">{label}</p>
-      <p className="mt-2 whitespace-pre-line text-sm font-semibold leading-relaxed text-[#4A3828] relative z-10">{value || '—'}</p>
+      <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#A08363] relative z-10">{label}</p>
+      <p className="mt-2 whitespace-pre-line text-base font-semibold leading-relaxed text-[#4A3828] relative z-10">{value || '—'}</p>
     </motion.div>
   );
 }

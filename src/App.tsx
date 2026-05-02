@@ -21,6 +21,7 @@ import LeagueScreen from './views/LeagueScreen';
 import LeagueDetailScreen from './views/LeagueDetailScreen';
 import LeagueCreateScreen from './views/LeagueCreateScreen';
 import VocabularyMatchScreen from './views/VocabularyMatchScreen';
+import FullscreenPrompt from './components/FullscreenPrompt';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>(Screen.Splash);
@@ -31,11 +32,22 @@ export default function App() {
   const [selectedLeagueId, setSelectedLeagueId] = useState<string | null>(null);
   const [loadingMissions, setLoadingMissions] = useState(false);
   const [missionSummary, setMissionSummary] = useState<MissionCompletionSummary | null>(null);
+  const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(false);
+  const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
   const [userStats, setUserStats] = useState({
     xp: 1450,
     stars: 120,
     level: 4,
   });
+
+  /** Navigate to Challenge, showing the fullscreen prompt the first time. */
+  const goToChallenge = () => {
+    if (!fullscreenShownOnce) {
+      setShowFullscreenPrompt(true);
+    } else {
+      setCurrentScreen(Screen.Challenge);
+    }
+  };
 
   useEffect(() => {
     if (currentScreen === Screen.Splash) {
@@ -155,7 +167,7 @@ export default function App() {
             mission={selectedMission || undefined}
             loadingMission={loadingMissions}
             onClose={() => { setSelectedMission(null); setCurrentScreen(Screen.Map); }}
-            onStartChallenge={() => setCurrentScreen(Screen.Challenge)}
+            onStartChallenge={goToChallenge}
           />
         );
       case Screen.Challenge:
@@ -262,6 +274,21 @@ export default function App() {
           />
         </div>
       )}
+
+      {/* Fullscreen prompt — shown once before first challenge */}
+      <FullscreenPrompt
+        show={showFullscreenPrompt}
+        onAccept={() => {
+          setShowFullscreenPrompt(false);
+          setFullscreenShownOnce(true);
+          setCurrentScreen(Screen.Challenge);
+        }}
+        onDecline={() => {
+          setShowFullscreenPrompt(false);
+          setFullscreenShownOnce(true);
+          setCurrentScreen(Screen.Challenge);
+        }}
+      />
     </div>
   );
 }
