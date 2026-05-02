@@ -6,7 +6,7 @@
 import { motion } from 'motion/react';
 import { Map, Star } from 'lucide-react';
 
-export default function SplashScreen() {
+export default function SplashScreen({ progress = 0 }: { progress?: number }) {
   return (
     <div className="relative h-full w-full flex flex-col items-center justify-center bg-white overflow-hidden">
       <div className="z-10 flex flex-col items-center text-center px-10">
@@ -60,15 +60,15 @@ export default function SplashScreen() {
         <div className="h-4 w-full bg-voyage-accent/10 rounded-full overflow-hidden border-2 border-voyage-accent/20 p-0.5">
           <motion.div 
             initial={{ width: 0 }}
-            animate={{ width: "100%" }}
-            transition={{ duration: 2.5, ease: "easeInOut" }}
+            animate={{ width: `${progress}%` }}
+            transition={{ type: "spring", stiffness: 50, damping: 20 }}
             className="h-full bg-voyage-primary rounded-full relative"
           >
              <div className="absolute top-0.5 left-1 right-1 h-1 bg-white/30 rounded-full" />
           </motion.div>
         </div>
         <p className="text-center text-[10px] font-black text-duo-wolf uppercase tracking-widest animate-pulse">
-          Chargement du monde...
+          {progress < 100 ? `Chargement ${progress}%` : "C'est prêt !"}
         </p>
       </div>
     </div>

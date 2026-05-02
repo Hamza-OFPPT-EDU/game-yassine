@@ -22,9 +22,24 @@ import LeagueDetailScreen from './views/LeagueDetailScreen';
 import LeagueCreateScreen from './views/LeagueCreateScreen';
 import VocabularyMatchScreen from './views/VocabularyMatchScreen';
 import FullscreenPrompt from './components/FullscreenPrompt';
+import { preloadAssets, Asset } from './lib/preloader';
+
+// Static assets to preload
+const STATIC_ASSETS: Asset[] = [
+  { url: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4', type: 'video' },
+  { url: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/intro_caracter.png', type: 'image' },
+  { url: '/audio/correct.mp3', type: 'audio' },
+  { url: '/audio/wrong.mp3', type: 'audio' },
+  { url: '/audio/click.mp3', type: 'audio' },
+  { url: '/audio/match.mp3', type: 'audio' },
+  { url: '/audio/success.mp3', type: 'audio' },
+  { url: '/audio/whoosh.mp3', type: 'audio' },
+  { url: '/audio/rabat_intro_voice.mp3', type: 'audio' },
+];
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>(Screen.Splash);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const [selectedCity, setSelectedCity] = useState<City | null>(null); 
   const [selectedMission, setSelectedMission] = useState<Mission | null>(null);
   const [completedMissions, setCompletedMissions] = useState<string[]>([]);
@@ -50,10 +65,46 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (currentScreen === Screen.Splash) {
-      const timer = setTimeout(() => setCurrentScreen(Screen.Welcome), 3000);
-      return () => clearTimeout(timer);
+    async function startPreloading() {
+      if (currentScreen !== Screen.Splash) return;
+
+      try {
+        // 1. Fetch cities to get dynamic assets
+        const { data: cityData } = await supabase
+          .from('challenges')
+          .select('illustration_url, icon_name');
+
+        const dynamicAssets: Asset[] = [];
+        if (cityData) {
+          cityData.forEach(city => {
+            if (city.illustration_url) {
+              dynamicAssets.push({ url: city.illustration_url, type: 'image' });
+            }
+            if (city.icon_name && city.icon_name.startsWith('http')) {
+              dynamicAssets.push({ url: city.icon_name, type: 'image' });
+            }
+          });
+        }
+
+        const allAssets = [...STATIC_ASSETS, ...dynamicAssets];
+        
+        // 2. Start preloading
+        await preloadAssets(allAssets, (p) => {
+          setLoadingProgress(p);
+        });
+
+        // 3. Small delay for smooth transition
+        setTimeout(() => {
+          setCurrentScreen(Screen.Welcome);
+        }, 500);
+      } catch (error) {
+        console.error('Preloading failed:', error);
+        // Fallback: move to welcome after a delay
+        setTimeout(() => setCurrentScreen(Screen.Welcome), 3000);
+      }
     }
+
+    startPreloading();
   }, [currentScreen]);
 
   useEffect(() => {
@@ -144,7 +195,7 @@ export default function App() {
   const renderScreen = () => {
     switch (currentScreen) {
       case Screen.Splash:
-        return <SplashScreen />;
+        return <SplashScreen progress={loadingProgress} />;
       case Screen.Welcome:
         return <WelcomeScreen onStart={() => setCurrentScreen(Screen.Map)} />;
       case Screen.Map:
@@ -223,7 +274,7 @@ export default function App() {
           />
         );
       default:
-        return <SplashScreen />;
+        return <SplashScreen progress={loadingProgress} />;
     }
   };
 
