@@ -8,6 +8,7 @@ import { supabase } from './lib/supabase';
 import { useSupabaseProfile } from './hooks/useSupabase';
 import { motion, AnimatePresence } from 'motion/react';
 import { Screen, type City, type Mission, type MissionCompletionSummary } from './types';
+import { AudioProvider } from './contexts/AudioContext';
 import BottomNavBar from './components/BottomNavBar';
 import SplashScreen from './views/SplashScreen';
 import WelcomeScreen from './views/WelcomeScreen';
@@ -52,7 +53,7 @@ export default function App() {
         level: profile.level || 1,
       });
     }
-  }, [profileLoading]);
+  }, [profile, profileLoading]);
 
   /** Navigate to Challenge, showing the fullscreen prompt the first time. */
   const goToChallenge = () => {
@@ -78,7 +79,6 @@ export default function App() {
     async function fetchFirstMission() {
       if (selectedCity) {
         setLoadingMissions(true);
-        console.log('🚀 Fetching first mission for city:', selectedCity.id, selectedCity.name);
         
         // Try fetching with city_id first
         let { data: missions, error } = await supabase
@@ -89,7 +89,6 @@ export default function App() {
         
         // If no missions found, try with challenge_id
         if (!error && (!missions || missions.length === 0)) {
-          console.log('⚠️ No missions with city_id, trying challenge_id...');
           const { data: challengeData, error: challengeError } = await supabase
             .from('missions')
             .select('*')
@@ -98,22 +97,15 @@ export default function App() {
           
           if (!challengeError) {
             missions = challengeData;
-            console.log('✅ Found missions with challenge_id');
           } else {
             error = challengeError;
           }
         }
         
-        console.log('📊 Query result:', { error, missionsCount: missions?.length || 0, missions });
-        
         if (!error && missions && missions.length > 0) {
-          // Find the first incomplete mission
           const nextMission = missions.find(m => !completedMissions.includes(m.id)) || missions[0];
-          console.log('✅ Next mission selected:', nextMission.title_fr);
           setSelectedMission(nextMission);
         } else {
-          // If no missions found, set to null
-          console.warn('❌ No missions found for city:', selectedCity.id);
           setSelectedMission(null);
         }
         setLoadingMissions(false);
@@ -130,7 +122,7 @@ export default function App() {
       const newStats = {
         xp: userStats.xp + summary.totalXp,
         stars: userStats.stars + summary.totalStars,
-        level: userStats.level // Logic for level up could be added here
+        level: userStats.level 
       };
       
       setCompletedMissions((prev) => [...prev, summary.missionId]);
@@ -190,7 +182,7 @@ export default function App() {
           />
         );
       case Screen.Story:
-        if (!selectedCity) return <MapJourneyScreen stats={userStats} completedCities={completedCities} completedMissions={completedMissions} onSelectCity={(city) => { setSelectedCity(city); setCurrentScreen(Screen.Story); }} />;
+        if (!selectedCity) return null;
         return (
           <StoryScreen 
             city={selectedCity} 
@@ -201,12 +193,7 @@ export default function App() {
           />
         );
       case Screen.Challenge:
-        if (!selectedCity || !selectedMission) {
-          // If we somehow got here without a mission, go back to map
-          setSelectedCity(null);
-          setSelectedMission(null);
-          return <MapJourneyScreen stats={userStats} completedCities={completedCities} completedMissions={completedMissions} onSelectCity={(city) => { setSelectedCity(city); setCurrentScreen(Screen.Story); }} />;
-        }
+        if (!selectedCity || !selectedMission) return null;
         return (
           <ChallengeScreen 
             city={selectedCity} 
@@ -272,59 +259,60 @@ export default function App() {
   };
 
   return (
-    <div className="relative h-screen w-full bg-white overflow-hidden flex flex-col">
-      <div className="grow overflow-hidden relative">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentScreen}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="h-full w-full"
-          >
-            {renderScreen()}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {showNavBar && (
-        <div className="shrink-0">
-          <BottomNavBar 
-            activeTab={getActiveTab()} 
-            onTabChange={(tab) => {
-              switch (tab) {
-                case 'journey': setCurrentScreen(Screen.Map); break;
-                case 'profile': setCurrentScreen(Screen.Profile); break;
-                case 'settings': setCurrentScreen(Screen.Settings); break;
-                case 'explore': setCurrentScreen(Screen.GrammarQuest); break;
-                case 'league': setCurrentScreen(Screen.League); break;
-              }
-            }} 
-          />
+    <AudioProvider>
+      <div className="relative h-screen w-full bg-white overflow-hidden flex flex-col font-sans select-none touch-none">
+        <div className="grow overflow-hidden relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentScreen}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="h-full w-full"
+            >
+              {renderScreen()}
+            </motion.div>
+          </AnimatePresence>
         </div>
-      )}
 
-      {/* Fullscreen prompt — shown once before first challenge */}
-      <FullscreenPrompt
-        show={showFullscreenPrompt}
-        onAccept={() => {
-          setShowFullscreenPrompt(false);
-          setFullscreenShownOnce(true);
-          if (nextScreenAfterFullscreen) {
-            setCurrentScreen(nextScreenAfterFullscreen);
-            setNextScreenAfterFullscreen(null);
-          }
-        }}
-        onDecline={() => {
-          setShowFullscreenPrompt(false);
-          setFullscreenShownOnce(true);
-          if (nextScreenAfterFullscreen) {
-            setCurrentScreen(nextScreenAfterFullscreen);
-            setNextScreenAfterFullscreen(null);
-          }
-        }}
-      />
-    </div>
+        {showNavBar && (
+          <div className="shrink-0">
+            <BottomNavBar 
+              activeTab={getActiveTab()} 
+              onTabChange={(tab) => {
+                switch (tab) {
+                  case 'journey': setCurrentScreen(Screen.Map); break;
+                  case 'profile': setCurrentScreen(Screen.Profile); break;
+                  case 'settings': setCurrentScreen(Screen.Settings); break;
+                  case 'explore': setCurrentScreen(Screen.GrammarQuest); break;
+                  case 'league': setCurrentScreen(Screen.League); break;
+                }
+              }} 
+            />
+          </div>
+        )}
+
+        <FullscreenPrompt
+          show={showFullscreenPrompt}
+          onAccept={() => {
+            setShowFullscreenPrompt(false);
+            setFullscreenShownOnce(true);
+            if (nextScreenAfterFullscreen) {
+              setCurrentScreen(nextScreenAfterFullscreen);
+              setNextScreenAfterFullscreen(null);
+            }
+          }}
+          onDecline={() => {
+            setShowFullscreenPrompt(false);
+            setFullscreenShownOnce(true);
+            if (nextScreenAfterFullscreen) {
+              setCurrentScreen(nextScreenAfterFullscreen);
+              setNextScreenAfterFullscreen(null);
+            }
+          }}
+        />
+      </div>
+    </AudioProvider>
   );
 }
