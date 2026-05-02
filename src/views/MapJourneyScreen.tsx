@@ -5,7 +5,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
+import {
   MapPin, Check, ChevronRight, X, Loader2, Lock,
   Star, Sparkles, Navigation2, ArrowDown
 } from 'lucide-react';
@@ -32,7 +32,7 @@ export default function MapJourneyScreen({
   const { playSound } = useAudio();
   const { cities, loading } = useSupabaseCities(completedCities, completedMissions);
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
-  const [cinematicCity, setCinematicCity]   = useState<City | null>(null);
+  const [cinematicCity, setCinematicCity] = useState<City | null>(null);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true);
 
   // Refs pour scroll automatique
@@ -47,10 +47,10 @@ export default function MapJourneyScreen({
     onScrolDone: () => setScrollDone(true),
   });
 
-  const handleShowCitySheet = (city: City) => { 
+  const handleShowCitySheet = (city: City) => {
     playSound('whoosh');
-    setSelectedCityId(city.id); 
-    setIsDescriptionExpanded(true); 
+    setSelectedCityId(city.id);
+    setIsDescriptionExpanded(true);
   };
   const handleLaunchAdventure = (city: City) => {
     playSound('click');
@@ -89,8 +89,8 @@ export default function MapJourneyScreen({
     );
   }
 
-  const activeCity       = (cities?.length > 0) ? (cities.find(c => c.status === 'active') || cities[0]) : null;
-  const displayCity      = selectedCityId ? cities.find(c => c.id === selectedCityId) : null;
+  const activeCity = (cities?.length > 0) ? (cities.find(c => c.status === 'active') || cities[0]) : null;
+  const displayCity = selectedCityId ? cities.find(c => c.id === selectedCityId) : null;
   const displayCityTheme = getCityTheme(displayCity ?? null);
 
   return (
@@ -130,7 +130,7 @@ export default function MapJourneyScreen({
                   transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                   className="max-w-lg space-y-9 relative z-10 py-10"
                 >
-                    <motion.div
+                  <motion.div
                     animate={{ rotate: [0, 5, -5, 0] }}
                     transition={{ duration: 4, repeat: Infinity }}
                     className="w-[100px] h-[100px] mx-auto rounded-full flex items-center justify-center shadow-2xl border-4 border-[#D4A43E]/50"
@@ -151,21 +151,21 @@ export default function MapJourneyScreen({
 
                   {cinematicCity.name === 'Rabat' ? (
                     <div className="space-y-5">
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="relative group"
                       >
                         <div className="absolute inset-0 bg-white/10 blur-2xl rounded-full scale-110" />
-                        <img 
-                          src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/intro_caracter.png" 
+                        <img
+                          src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/intro_caracter.png"
                           alt="Personnage"
                           className="w-[230px] h-[230px] mx-auto object-contain drop-shadow-2xl relative z-10"
                         />
                       </motion.div>
                       <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 shadow-xl">
-                         <p className="text-[#C9A96E] font-bold text-[11px] uppercase tracking-[0.3em] mb-1">Guide de l'aventure</p>
-                         <p className="text-white text-xl font-bold">{cinematicCity.cinematicCharacter || 'Hassan'}</p>
+                        <p className="text-[#C9A96E] font-bold text-[11px] uppercase tracking-[0.3em] mb-1">Guide de l'aventure</p>
+                        <p className="text-white text-xl font-bold">{cinematicCity.cinematicCharacter || 'Hassan'}</p>
                       </div>
                     </div>
                   ) : (
@@ -177,9 +177,9 @@ export default function MapJourneyScreen({
                   <motion.button
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.96 }}
-                    onClick={() => { 
+                    onClick={() => {
                       playSound('click');
-                      const c = cinematicCity; setCinematicCity(null); onSelectCity(c); 
+                      const c = cinematicCity; setCinematicCity(null); onSelectCity(c);
                     }}
                     className="flex items-center justify-center gap-3 text-white text-lg py-4 px-9 rounded-2xl font-black shadow-xl hover:brightness-110 active:scale-95 transition-all w-full"
                     style={{
@@ -261,8 +261,8 @@ export default function MapJourneyScreen({
             style={{ gap: 0 }}
           >
             {cities.map((city, index) => (
-              <div 
-                key={city.id} 
+              <div
+                key={city.id}
                 style={{ marginBottom: index < cities.length - 1 ? '140px' : 0 }}
                 ref={city.status === 'active' ? activeCityRef : null}
               >
@@ -397,7 +397,7 @@ export default function MapJourneyScreen({
 
                   {/* Description avec Toggle */}
                   <div className="mb-5">
-                    <button 
+                    <button
                       onClick={() => {
                         playSound('click');
                         setIsDescriptionExpanded(!isDescriptionExpanded);
@@ -417,10 +417,10 @@ export default function MapJourneyScreen({
                         <ChevronRight size={14} strokeWidth={3} style={{ color: displayCityTheme.color }} className="group-hover:translate-x-0.5 transition-transform" />
                       </motion.div>
                     </button>
-                    
+
                     <AnimatePresence>
                       {isDescriptionExpanded && (
-                        <motion.p 
+                        <motion.p
                           initial={{ height: 0, opacity: 0, marginBottom: 0 }}
                           animate={{ height: 'auto', opacity: 1, marginBottom: 12 }}
                           exit={{ height: 0, opacity: 0, marginBottom: 0 }}
@@ -459,9 +459,9 @@ export default function MapJourneyScreen({
                       "space-y-2 overflow-y-auto pr-1 scrollbar-hide transition-all duration-300",
                       isDescriptionExpanded ? "max-h-[28vh]" : "max-h-[45vh]"
                     )}>
-                      <MissionsList 
-                        cityId={displayCity.id} 
-                        completedMissions={completedMissions} 
+                      <MissionsList
+                        cityId={displayCity.id}
+                        completedMissions={completedMissions}
                         cityTheme={displayCityTheme}
                       />
                     </div>
@@ -483,10 +483,10 @@ export default function MapJourneyScreen({
                     }}
                   >
                     <span className="font-black uppercase tracking-tight">
-                      {displayCity.status === 'locked' 
+                      {displayCity.status === 'locked'
                         ? '🔒 Ville verrouillée'
-                        : displayCity.status === 'completed' 
-                          ? '✦ Relever de nouveau' 
+                        : displayCity.status === 'completed'
+                          ? '✦ Relever de nouveau'
                           : "🚀 Continuer l'aventure"}
                     </span>
                     {displayCity.status !== 'locked' && <ChevronRight size={22} strokeWidth={3} />}
@@ -506,7 +506,7 @@ function buildPath(count: number, width: number): string {
   if (count < 2) return '';
   const cx = width / 2;
   const stepH = 220;
-  const amp   = 70;
+  const amp = 70;
   const totalH = count * stepH;
 
   let d = `M ${cx} ${totalH - 30}`;
@@ -532,18 +532,18 @@ const CityNode: React.FC<{
   isScrollTarget?: boolean;
   scrollDone?: boolean;
 }> = ({ city, onSelect, isSelected, delay, isScrollTarget = false, scrollDone = false }) => {
-  const isLocked    = city.status === 'locked';
+  const isLocked = city.status === 'locked';
   const isCompleted = city.status === 'completed';
-  const isActive    = city.status === 'active';
-  const cityTheme   = getCityTheme(city);
+  const isActive = city.status === 'active';
+  const cityTheme = getCityTheme(city);
 
   return (
     <motion.div
       initial={{ y: 30, opacity: 0, scale: 0.85 }}
-      animate={{ 
-        y: 0, 
-        opacity: 1, 
-        scale: isSelected || (isScrollTarget && scrollDone) ? 1.15 : 1 
+      animate={{
+        y: 0,
+        opacity: 1,
+        scale: isSelected || (isScrollTarget && scrollDone) ? 1.15 : 1
       }}
       transition={{
         delay,
@@ -588,10 +588,10 @@ const CityNode: React.FC<{
         <>
           <div
             className='absolute rounded-full city-aura pointer-events-none'
-            style={{ 
-              width: 140, 
-              height: 140, 
-              top: -22, 
+            style={{
+              width: 140,
+              height: 140,
+              top: -22,
               left: -22,
               backgroundColor: `${cityTheme.color}40`
             }}
@@ -708,13 +708,13 @@ const CityNode: React.FC<{
 
       {/* Label ville */}
       <div className="mt-6 text-center space-y-0.5">
-        <p 
+        <p
           className={cn('font-headline font-black text-sm tracking-tight')}
           style={{ color: isLocked ? '#C9A96E' : cityTheme.colorDark || cityTheme.color }}
         >
           {city.name}
         </p>
-        <p 
+        <p
           className={cn('arabic-font text-xs font-black')}
           style={{ color: isLocked ? '#C9A96E' : cityTheme.color, opacity: isLocked ? 0.3 : 0.8 }}
         >
@@ -737,74 +737,74 @@ const CityNode: React.FC<{
 };
 
 // ── Liste de missions ─────────────────────────────────────────────────────────
-const MissionsList: React.FC<{ 
-  cityId: string; 
+const MissionsList: React.FC<{
+  cityId: string;
   completedMissions: string[];
   cityTheme?: any;
 }> = ({
   cityId, completedMissions, cityTheme
 }) => {
-  const { missions, loading } = useSupabaseMissions(cityId);
+    const { missions, loading } = useSupabaseMissions(cityId);
 
-  if (loading) return (
-    <div className="flex justify-center py-4">
-      <Loader2 className="animate-spin text-[#C9A96E]" size={20} />
-    </div>
-  );
+    if (loading) return (
+      <div className="flex justify-center py-4">
+        <Loader2 className="animate-spin text-[#C9A96E]" size={20} />
+      </div>
+    );
 
-  return (
-    <div className="space-y-2">
-      {missions.length > 0 ? missions.map((mission, idx) => {
-        const isDone = completedMissions.includes(mission.id);
-        const themeColor = cityTheme?.color || '#7B3F1A';
-        return (
-          <div
-            key={mission.id}
-            className={cn(
-              'p-3 rounded-xl border flex items-center justify-between transition-all backdrop-blur-md shadow-sm',
-              isDone ? '' : 'bg-white/20 border-white/40',
-            )}
-            style={isDone ? { 
-              backgroundColor: `${themeColor}22`, 
-              borderColor: `${themeColor}60` 
-            } : {}}
-          >
-            <div className="flex items-center gap-3">
-              <div 
-                className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm transition-colors"
-                style={{ 
-                  backgroundColor: isDone ? themeColor : `${themeColor}22`,
-                  color: isDone ? 'white' : themeColor
-                }}
-              >
-                {isDone ? <Check size={14} strokeWidth={3} /> : idx + 1}
-              </div>
-              <div>
-                <p className={cn('text-sm font-black', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]')}>
-                  {mission.title_fr}
-                </p>
-                <p 
-                  className="text-[10px] font-bold opacity-60"
-                  style={{ color: themeColor }}
+    return (
+      <div className="space-y-2">
+        {missions.length > 0 ? missions.map((mission, idx) => {
+          const isDone = completedMissions.includes(mission.id);
+          const themeColor = cityTheme?.color || '#7B3F1A';
+          return (
+            <div
+              key={mission.id}
+              className={cn(
+                'p-3 rounded-xl border flex items-center justify-between transition-all backdrop-blur-md shadow-sm',
+                isDone ? '' : 'bg-white/20 border-white/40',
+              )}
+              style={isDone ? {
+                backgroundColor: `${themeColor}22`,
+                borderColor: `${themeColor}60`
+              } : {}}
+            >
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm transition-colors"
+                  style={{
+                    backgroundColor: isDone ? themeColor : `${themeColor}22`,
+                    color: isDone ? 'white' : themeColor
+                  }}
                 >
-                  +{mission.xp_reward} XP
-                </p>
+                  {isDone ? <Check size={14} strokeWidth={3} /> : idx + 1}
+                </div>
+                <div>
+                  <p className={cn('text-sm font-black', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]')}>
+                    {mission.title_fr}
+                  </p>
+                  <p
+                    className="text-[10px] font-bold opacity-60"
+                    style={{ color: themeColor }}
+                  >
+                    +{mission.xp_reward} XP
+                  </p>
+                </div>
               </div>
+              {isDone && (
+                <div className="flex gap-0.5">
+                  {[...Array(3)].map((_, i) => (
+                    <Star key={i} size={10} className="text-[#D4A43E] fill-[#D4A43E] star-twinkle" style={{ animationDelay: `${i * 0.2}s` }} />
+                  ))}
+                </div>
+              )}
             </div>
-            {isDone && (
-              <div className="flex gap-0.5">
-                {[...Array(3)].map((_, i) => (
-                  <Star key={i} size={10} className="text-[#D4A43E] fill-[#D4A43E] star-twinkle" style={{ animationDelay: `${i * 0.2}s` }} />
-                ))}
-              </div>
-            )}
-          </div>
-        );
-      }) : (
-        <p className="text-xs text-[#A0572B] font-bold italic py-2 text-center opacity-40">
-          Aucune mission trouvée
-        </p>
-      )}
-    </div>
-  );
-};
+          );
+        }) : (
+          <p className="text-xs text-[#A0572B] font-bold italic py-2 text-center opacity-40">
+            Aucune mission trouvée
+          </p>
+        )}
+      </div>
+    );
+  };

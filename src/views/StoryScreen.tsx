@@ -19,12 +19,12 @@ interface StoryScreenProps {
 
 export default function StoryScreen({ city, onClose, onStartChallenge, mission, loadingMission }: StoryScreenProps) {
   const { playSound } = useAudio();
-  
+
   // Show error if mission loading is complete but no mission found
   if (!loadingMission && !mission) {
     return (
       <div className="h-full w-full bg-white flex flex-col items-center justify-center p-8 text-center relative overflow-hidden">
-        <motion.div 
+        <motion.div
           initial={{ scale: 0.8, y: 30 }}
           animate={{ scale: 1, y: 0 }}
           className="max-w-md space-y-6 relative z-10"
@@ -47,15 +47,15 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
   return (
     <div className="h-full w-full relative overflow-hidden bg-white">
       {/* Hero Background Illustration */}
-      <motion.div 
+      <motion.div
         initial={{ scale: 1.1 }}
         animate={{ scale: 1 }}
         className="absolute inset-0 z-0"
       >
-        <img 
-          src={city.image} 
-          alt={city.name} 
-          className="w-full h-full object-cover opacity-30" 
+        <img
+          src={city.image}
+          alt={city.name}
+          className="w-full h-full object-cover opacity-30"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-linear-to-t from-white via-white/80 to-transparent" />
@@ -69,11 +69,11 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
 
         <div className="flex-1 px-8">
           <div className="h-3 w-full bg-voyage-accent/10 rounded-full overflow-hidden border-2 border-voyage-accent/20">
-            <motion.div 
+            <motion.div
               initial={{ width: 0 }}
               animate={{ width: '100%' }}
               transition={{ duration: 0.5 }}
-              className="h-full bg-voyage-primary rounded-full shadow-lg" 
+              className="h-full bg-voyage-primary rounded-full shadow-lg"
             />
           </div>
         </div>
@@ -85,7 +85,7 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
 
       {/* Narrative Panel */}
       <main className="relative z-10 h-full flex flex-col justify-end">
-        <motion.section 
+        <motion.section
           initial={{ y: '100%' }}
           animate={{ y: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 120 }}
@@ -97,7 +97,7 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
               <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-voyage-accent/10 rounded-full border-2 border-voyage-accent/20">
                 <BookOpen className="text-voyage-accent" size={14} />
                 <span className="font-headline font-black text-voyage-accent text-[10px] uppercase tracking-widest">
-                   Mission {city.stepNum} • {city.name}
+                  Mission {city.stepNum} • {city.name}
                 </span>
               </div>
             </div>
@@ -107,7 +107,7 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
               <h1 className="font-headline font-black text-3xl text-voyage-primary tracking-tight leading-tight">
                 {mission?.title_fr || "Prêt pour le défi ?"}
               </h1>
-              
+
               <div className="bg-voyage-accent/5 rounded-3xl p-6 border-2 border-voyage-accent/20 relative">
                 <div className="absolute -top-4 left-6 bg-white border-2 border-voyage-accent/20 px-3 py-1 rounded-full text-[9px] font-black text-voyage-primary uppercase tracking-widest">
                   Objectif
@@ -123,12 +123,8 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
               </div>
 
               {/* Mentor Dialogue */}
-              <div className="flex items-start gap-4 text-left mt-6">
-                <div className="w-16 h-16 rounded-2xl bg-voyage-accent shrink-0 flex items-center justify-center border-b-4 border-voyage-accent-dark">
-                  <User size={32} className="text-white" />
-                </div>
-                <div className="bg-white border-2 border-voyage-accent/20 p-4 rounded-2xl rounded-tl-none relative shadow-sm">
-                  <div className="absolute -left-2 top-0 w-2 h-2 bg-white border-l-2 border-t-2 border-voyage-accent/20 -rotate-45" />
+              <div className="text-left mt-6">
+                <div className="bg-white border-2 border-voyage-accent/20 p-4 rounded-3xl relative shadow-sm w-full">
                   <p className="text-sm font-bold text-voyage-primary italic">
                     <span className="text-[10px] uppercase tracking-widest text-voyage-primary/60 block not-italic mb-1">Coach Yassine</span>
                     "{mission?.script_opening || "Allez, on y va ! Montre-moi ce que tu sais faire."}"
@@ -139,13 +135,12 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
 
             {/* CTA Action */}
             <div className="pt-4">
-              <motion.button 
+              <motion.button
                 whileTap={{ scale: loadingMission ? 1 : 0.95 }}
                 onClick={() => { playSound('click'); onStartChallenge(); }}
                 disabled={loadingMission || !mission}
-                className={`w-full text-xl py-5 flex items-center justify-center gap-3 rounded-2xl font-black text-white shadow-lg transition-all ${
-                  loadingMission || !mission ? 'opacity-60 cursor-not-allowed' : 'hover:brightness-110 active:scale-95'
-                }`}
+                className={`w-full text-xl py-5 flex items-center justify-center gap-3 rounded-2xl font-black text-white shadow-lg transition-all ${loadingMission || !mission ? 'opacity-60 cursor-not-allowed' : 'hover:brightness-110 active:scale-95'
+                  }`}
                 style={{
                   background: `linear-gradient(135deg, ${getCityTheme(city).colorLight || getCityTheme(city).color}, ${getCityTheme(city).colorDark || getCityTheme(city).color})`,
                   boxShadow: `0 8px 25px ${getCityTheme(city).color}50`,
@@ -168,20 +163,20 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
               </motion.button>
             </div>
 
-              <div className="mt-8 flex flex-col items-center gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex -space-x-3">
-                    {[...Array(4)].map((_, i) => (
-                      <div key={i} className="w-9 h-9 rounded-full border-2 border-white bg-voyage-accent/10 flex items-center justify-center overflow-hidden">
-                         <User size={20} className="text-voyage-primary/40" />
-                      </div>
-                    ))}
-                  </div>
-                  <span className="text-voyage-primary/60 text-[10px] font-black uppercase tracking-widest opacity-60">
-                    +15 voyageurs actifs
-                  </span>
+            <div className="mt-8 flex flex-col items-center gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-3">
+                  {[...Array(4)].map((_, i) => (
+                    <div key={i} className="w-9 h-9 rounded-full border-2 border-white bg-voyage-accent/10 flex items-center justify-center overflow-hidden">
+                      <User size={20} className="text-voyage-primary/40" />
+                    </div>
+                  ))}
                 </div>
+                <span className="text-voyage-primary/60 text-[10px] font-black uppercase tracking-widest opacity-60">
+                  +15 voyageurs actifs
+                </span>
               </div>
+            </div>
           </div>
         </motion.section>
       </main>
