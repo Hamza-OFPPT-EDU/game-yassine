@@ -180,3 +180,68 @@ export const CITIES: City[] = [
     totalSteps: 15,
   },
 ];
+
+// --- Multiplayer & Badges Types ---
+
+export type RoomStatus = 'waiting' | 'playing' | 'finished';
+
+export type Room = {
+  id: string;
+  code: string;
+  host_id: string;
+  status: RoomStatus;
+  mission_id: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type RoomMember = {
+  id: string;
+  room_id: string;
+  user_id: string;
+  player_name: string;
+  avatar?: string;
+  progress: number;
+  is_host: boolean;
+  joined_at: string;
+};
+
+export type BadgeCategory = 'cultural' | 'achievement' | 'challenge' | 'multiplayer';
+export type BadgeRarity = 'common' | 'uncommon' | 'rare' | 'legendary';
+
+export type BadgeDefinition = {
+  id: string;
+  badge_name: string;
+  description_fr: string;
+  description_ar?: string;
+  requirement?: string;
+  icon_url?: string;
+  category: BadgeCategory;
+  rarity: BadgeRarity;
+  image_url?: string;
+  created_at: string;
+};
+
+export type PlayerEarnedBadge = {
+  id: string;
+  player_id: string;
+  badge_id: string;
+  earned_at: string;
+  badge?: BadgeDefinition;
+};
+
+export type PlayerStats = {
+  id: string;
+  player_id: string;
+  total_xp: number;
+  total_stars: number;
+  total_games_played: number;
+  multiplayer_games_played: number;
+  win_count: number;
+  average_score: number;
+  badge_count: number;
+  level: number;
+  last_game_at?: string;
+  created_at: string;
+  updated_at: string;
+};

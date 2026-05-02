@@ -1,50 +1,61 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import BadgesManager from './cms/BadgesManager';
-import { LayoutGrid, PieChart as ChartIcon, List } from 'lucide-react';
+import { LayoutGrid, PieChart as ChartIcon, List, Award, TrendingUp, Users } from 'lucide-react';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid,
   PieChart, Pie, Legend,
 } from 'recharts';
 
-const RANK_COLORS = { bronze: '#cd7f32', argent: '#c0c0c0', or: '#ffd700' };
-const SKILL_COLORS = { decision: '#a78bfa', equipe: '#67e8f9', stress: '#fcd34d', excellence: '#34d399' };
+const RARITY_COLORS = { 
+  common: '#94a3b8', 
+  uncommon: '#22c55e', 
+  rare: '#3b82f6', 
+  legendary: '#eab308' 
+};
+
+const CATEGORY_COLORS = {
+  cultural: '#a78bfa',
+  achievement: '#34d399',
+  challenge: '#fcd34d',
+  multiplayer: '#67e8f9'
+};
 
 export default function BadgesPage() {
   const [activeTab, setActiveTab] = useState('analytics'); // 'analytics' | 'manager'
-  const [badges, setBadges] = useState([]);
+  const [earnedBadges, setEarnedBadges] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetch() {
+      // On récupère les badges gagnés avec les détails de la définition
       const { data } = await supabase
         .from('player_earned_badges')
-        .select('*')
+        .select(`
+          *,
+          badge:badge_definitions(*)
+        `)
         .order('earned_at', { ascending: false });
-      setBadges(data || []);
+      
+      setEarnedBadges(data || []);
       setLoading(false);
     }
     fetch();
   }, []);
 
-  // Stats
-  const byRank = ['bronze', 'argent', 'or'].map(rank => ({
-    name: rank.charAt(0).toUpperCase() + rank.slice(1),
-    value: badges.filter(b => b.rank === rank).length,
-    color: RANK_COLORS[rank],
+  // Stats par Rareté
+  const byRarity = Object.entries(RARITY_COLORS).map(([rarity, color]) => ({
+    name: rarity.charAt(0).toUpperCase() + rarity.slice(1),
+    value: earnedBadges.filter(b => b.badge?.rarity === rarity).length,
+    color,
   }));
 
-  const bySkill = Object.entries(SKILL_COLORS).map(([skill, color]) => ({
-    name: skill,
-    value: badges.filter(b => b.skill === skill).length,
+  // Stats par Catégorie
+  const byCategory = Object.entries(CATEGORY_COLORS).map(([cat, color]) => ({
+    name: cat.charAt(0).toUpperCase() + cat.slice(1),
+    value: earnedBadges.filter(b => b.badge?.category === cat).length,
     color,
   })).filter(s => s.value > 0);
-
-  const byCity = {};
-  badges.forEach(b => {
-    if (b.city) byCity[b.city] = (byCity[b.city] || 0) + 1;
-  });
-  const cityData = Object.entries(byCity).map(([city, count]) => ({ city, count })).sort((a,b)=>b.count-a.count);
 
   const CustomTooltip = ({ active, payload }) => {
     if (!active || !payload?.length) return null;
@@ -74,14 +85,14 @@ export default function BadgesPage() {
 
       {activeTab === 'analytics' ? (
         <>
-          <div className="stats-grid fade-in" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
-            {byRank.map((r, i) => (
+          <div className="stats-grid fade-in" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
+            {byRarity.map((r, i) => (
               <div key={r.name} className="stat-card fade-in" style={{ '--delay': `${i * 0.1}s` }}>
-                <div style={{ fontSize: 32, marginBottom: 12 }}>
-                  {r.name === 'Bronze' ? '🥉' : r.name === 'Argent' ? '🥈' : '🥇'}
+                <div style={{ fontSize: 28, marginBottom: 10 }}>
+                  {r.name === 'Common' ? '⚪' : r.name === 'Uncommon' ? '🟢' : r.name === 'Rare' ? '🔵' : '🟡'}
                 </div>
                 <div className="stat-value" style={{ color: r.color }}>{r.value}</div>
-                <div className="stat-label">Badges {r.name}</div>
+                <div className="stat-label">{r.name}</div>
               </div>
             ))}
           </div>
@@ -90,20 +101,31 @@ export default function BadgesPage() {
             <div className="card fade-in">
               <div className="card-header">
                 <div className="card-title">
-                  <div className="card-icon">🏅</div>
-                  <h3>Badges par compétence</h3>
+                  <div className="card-icon"><Award size={18} /></div>
+                  <h3>Distribution par Catégorie</h3>
                 </div>
               </div>
               <div className="card-body">
-                {bySkill.length === 0 ? (
-                  <div className="empty-state"><span className="empty-icon">🏅</span><h3>Aucun badge</h3></div>
+                {byCategory.length === 0 ? (
+                  <div className="empty-state"><span className="empty-icon">🏅</span><h3>Aucun badge gagné</h3></div>
                 ) : (
                   <ResponsiveContainer width="100%" height={220}>
                     <PieChart>
-                      <Pie data={bySkill} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label={({name, value}) => `${name}: ${value}`} labelLine={false}>
-                        {bySkill.map((entry, i) => <Cell key={i} fill={entry.color} />)}
+                      <Pie 
+                        data={byCategory} 
+                        dataKey="value" 
+                        nameKey="name" 
+                        cx="50%" 
+                        cy="50%" 
+                        outerRadius={80} 
+                        innerRadius={50}
+                        paddingAngle={5}
+                        label={({name, value}) => `${name}: ${value}`}
+                      >
+                        {byCategory.map((entry, i) => <Cell key={i} fill={entry.color} />)}
                       </Pie>
                       <Tooltip content={<CustomTooltip />} />
+                      <Legend verticalAlign="bottom" height={36}/>
                     </PieChart>
                   </ResponsiveContainer>
                 )}
@@ -113,22 +135,22 @@ export default function BadgesPage() {
             <div className="card fade-in">
               <div className="card-header">
                 <div className="card-title">
-                  <div className="card-icon">MAP</div>
-                  <h3>Badges par ville</h3>
+                  <div className="card-icon"><TrendingUp size={18} /></div>
+                  <h3>Badges par Rareté</h3>
                 </div>
               </div>
               <div className="card-body">
-                {cityData.length === 0 ? (
-                  <div className="empty-state"><span className="empty-icon">🏙️</span><h3>Aucun badge par ville</h3></div>
+                {earnedBadges.length === 0 ? (
+                  <div className="empty-state"><span className="empty-icon">📈</span><h3>Aucune donnée</h3></div>
                 ) : (
                   <ResponsiveContainer width="100%" height={220}>
-                    <BarChart data={cityData} barSize={20}>
+                    <BarChart data={byRarity} barSize={30}>
                       <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" vertical={false} />
-                      <XAxis dataKey="city" tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} />
+                      <XAxis dataKey="name" tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} />
                       <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} />
                       <Tooltip content={<CustomTooltip />} />
-                      <Bar dataKey="count" name="Badges" fill="#7c3aed" radius={[4,4,0,0]}>
-                        {cityData.map((_, i) => <Cell key={i} fill={`hsl(${260 + i * 20}, 70%, 60%)`} />)}
+                      <Bar dataKey="value" name="Nombre" radius={[6,6,0,0]}>
+                        {byRarity.map((entry, i) => <Cell key={i} fill={entry.color} />)}
                       </Bar>
                     </BarChart>
                   </ResponsiveContainer>
@@ -140,14 +162,14 @@ export default function BadgesPage() {
           <div className="card fade-in">
             <div className="card-header">
               <div className="card-title">
-                <div className="card-icon">⏱️</div>
-                <h3>Derniers badges obtenus</h3>
+                <div className="card-icon"><Users size={18} /></div>
+                <h3>Dernières acquisitions de joueurs</h3>
               </div>
             </div>
             <div className="table-wrapper">
               {loading ? (
                 <div className="loading"><div className="spinner" /> Chargement...</div>
-              ) : badges.length === 0 ? (
+              ) : earnedBadges.length === 0 ? (
                 <div className="empty-state">
                   <span className="empty-icon">🏅</span>
                   <h3>Aucun badge encore</h3>
@@ -157,29 +179,40 @@ export default function BadgesPage() {
                 <table>
                   <thead>
                     <tr>
+                      <th>Joueur (ID)</th>
                       <th>Badge</th>
-                      <th>Ville</th>
-                      <th>Compétence</th>
-                      <th>Rang</th>
-                      <th>Points</th>
-                      <th>Obtenu le</th>
+                      <th>Catégorie</th>
+                      <th>Rareté</th>
+                      <th>Date d'obtention</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {badges.slice(0, 20).map(b => (
+                    {earnedBadges.slice(0, 15).map(b => (
                       <tr key={b.id}>
                         <td>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                            <span style={{ fontSize: 20 }}>{b.badge_emoji || '🏅'}</span>
-                            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{b.badge_name_fr}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <div className="user-avatar-sm">{b.player_id.substring(0, 2).toUpperCase()}</div>
+                            <span style={{ fontSize: 13, color: 'var(--text-primary)' }}>{b.player_id}</span>
                           </div>
                         </td>
-                        <td>{b.city || '—'}</td>
-                        <td>{b.skill ? <span className={`skill-chip ${b.skill}`}>{b.skill}</span> : '—'}</td>
-                        <td>{b.rank ? <span className={`rank-tag ${b.rank}`}>{b.rank}</span> : '—'}</td>
-                        <td style={{ color: '#fcd34d', fontWeight: 600 }}>{b.points || 0}</td>
+                        <td>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                            <span style={{ fontSize: 20 }}>{b.badge?.icon_url || '🏅'}</span>
+                            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{b.badge?.badge_name}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <span className="badge-category-chip" style={{ color: CATEGORY_COLORS[b.badge?.category] || '#7c3aed' }}>
+                            {b.badge?.category}
+                          </span>
+                        </td>
+                        <td>
+                          <span className="rarity-tag" style={{ backgroundColor: RARITY_COLORS[b.badge?.rarity] }}>
+                            {b.badge?.rarity}
+                          </span>
+                        </td>
                         <td style={{ color: 'var(--text-muted)', fontSize: 12 }}>
-                          {new Date(b.earned_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                          {new Date(b.earned_at).toLocaleString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute:'2-digit' })}
                         </td>
                       </tr>
                     ))}
@@ -193,7 +226,7 @@ export default function BadgesPage() {
         <BadgesManager />
       )}
 
-      <style jsx>{`
+      <style>{`
         .tab-btn {
           background: transparent;
           border: none;
@@ -215,6 +248,32 @@ export default function BadgesPage() {
           color: var(--primary-main);
           background: rgba(124, 58, 237, 0.1);
           box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
+        }
+        .user-avatar-sm {
+          width: 24px;
+          height: 24px;
+          border-radius: 6px;
+          background: var(--bg-main);
+          border: 1px solid var(--border-light);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 10px;
+          font-weight: 800;
+          color: var(--primary-light);
+        }
+        .rarity-tag {
+          font-size: 10px;
+          font-weight: 800;
+          color: white;
+          padding: 2px 8px;
+          border-radius: 10px;
+          text-transform: uppercase;
+        }
+        .badge-category-chip {
+          font-size: 11px;
+          font-weight: 700;
+          text-transform: capitalize;
         }
       `}</style>
     </div>

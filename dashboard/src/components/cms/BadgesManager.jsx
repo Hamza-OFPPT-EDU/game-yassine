@@ -1,56 +1,112 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
-import { Award, Search, Plus, Edit2, Trash2, Globe, MapPin, Star } from 'lucide-react';
+import { useState } from 'react';
+import { Award, Search, Plus, Edit2, Trash2, Globe, Tag, Info, Layers, Zap } from 'lucide-react';
+import { useBadges } from '../../hooks/useContent';
+import { Modal, Field, Input, Textarea, Toast, Confirm } from './CmsUI';
+import ImageUploader from './ImageUploader';
+
+const CATEGORY_OPTIONS = [
+  { value: 'cultural',    label: '🏛️ Culturel' },
+  { value: 'achievement', label: '🏆 Accomplissement' },
+  { value: 'challenge',   label: '🎯 Défi' },
+  { value: 'multiplayer', label: '👥 Multijoueur' },
+];
+
+const RARITY_OPTIONS = [
+  { value: 'common',    label: '⚪ Commun',    color: '#94a3b8' },
+  { value: 'uncommon',  label: '🟢 Peu Commun', color: '#22c55e' },
+  { value: 'rare',      label: '🔵 Rare',       color: '#3b82f6' },
+  { value: 'legendary', label: '🟡 Légendaire', color: '#eab308' },
+];
+
+const EMPTY_BADGE = {
+  badge_name: '',
+  description_fr: '',
+  description_ar: '',
+  requirement: '',
+  icon_url: '🏅',
+  category: 'achievement',
+  rarity: 'common',
+  image_url: '',
+};
 
 export default function BadgesManager() {
-  const [badges, setBadges] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { badges, loading, save, remove } = useBadges();
   const [searchTerm, setSearchTerm] = useState('');
+  const [modal, setModal] = useState(null); // null | object
+  const [toast, setToast] = useState(null);
+  const [confirm, setConfirm] = useState(null);
+  const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    fetchBadges();
-  }, []);
+  const showToast = (msg, type = 'success') => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
-  async function fetchBadges() {
-    setLoading(true);
-    const { data, error } = await supabase
-      .from('badge_definitions')
-      .select('*')
-      .order('city', { ascending: true });
+  const openNew = () => setModal({ ...EMPTY_BADGE });
+  const openEdit = (badge) => setModal({ ...badge });
+  const closeModal = () => setModal(null);
+
+  const handleSave = async () => {
+    if (!modal.badge_name || !modal.description_fr) {
+      showToast('Le nom et la description sont obligatoires', 'error');
+      return;
+    }
     
-    if (error) console.error('Error fetching badges:', error);
-    else setBadges(data || []);
-    setLoading(false);
-  }
+    setSaving(true);
+    try {
+      await save(modal);
+      showToast(modal.id ? 'Badge mis à jour ✓' : 'Badge créé ✓');
+      closeModal();
+    } catch (e) {
+      showToast('Erreur : ' + e.message, 'error');
+    }
+    setSaving(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await remove(confirm.id);
+      showToast('Badge supprimé');
+      setConfirm(null);
+    } catch (e) {
+      showToast('Erreur : ' + e.message, 'error');
+    }
+  };
+
+  const set = (key, val) => setModal(prev => ({ ...prev, [key]: val }));
 
   const filteredBadges = badges.filter(b => 
-    b.name_fr?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    b.city?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    b.badge_id?.toLowerCase().includes(searchTerm.toLowerCase())
+    b.badge_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    b.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    b.description_fr?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getRankEmoji = (rank) => {
-    switch (rank?.toLowerCase()) {
-      case 'or': return '🥇';
-      case 'argent': return '🥈';
-      case 'bronze': return '🥉';
-      default: return '🏅';
-    }
+  const getRarityColor = (rarity) => {
+    return RARITY_OPTIONS.find(o => o.value === rarity)?.color || '#94a3b8';
   };
 
   return (
     <div className="badges-manager fade-in">
+      <Toast message={toast?.msg} type={toast?.type} onClose={() => setToast(null)} />
+      
+      <Confirm
+        open={!!confirm}
+        message={`Supprimer le badge "${confirm?.badge_name}" ? Cette action est irréversible.`}
+        onConfirm={handleDelete}
+        onCancel={() => setConfirm(null)}
+      />
+
       <div className="cms-toolbar">
         <div className="search-box">
           <Search size={18} />
           <input 
             type="text" 
-            placeholder="Rechercher un badge (nom, ville, id)..." 
+            placeholder="Rechercher un badge (nom, catégorie, description)..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <button className="btn-primary" onClick={() => {}}>
+        <button className="btn btn-primary" onClick={openNew}>
           <Plus size={18} /> Nouveau Badge
         </button>
       </div>
@@ -62,57 +118,114 @@ export default function BadgesManager() {
           <div className="empty-state">Aucun badge ne correspond à votre recherche.</div>
         ) : (
           filteredBadges.map((badge) => (
-            <div key={badge.badge_id} className="badge-definition-card">
-              <div className="badge-image-container" style={{ background: badge.city === 'rabat' ? 'linear-gradient(135deg, #7c2d12 0%, #451a03 100%)' : '' }}>
+            <div key={badge.id} className="badge-definition-card">
+              <div className="badge-image-container" style={{ 
+                background: badge.rarity === 'legendary' ? 'linear-gradient(135deg, #713f12 0%, #422006 100%)' : 
+                            badge.rarity === 'rare' ? 'linear-gradient(135deg, #1e3a8a 0%, #172554 100%)' :
+                            badge.rarity === 'uncommon' ? 'linear-gradient(135deg, #064e3b 0%, #022c22 100%)' :
+                            'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
+              }}>
                 {badge.image_url ? (
-                  <img src={badge.image_url} alt={badge.name_fr} className="badge-img" />
+                  <img src={badge.image_url} alt={badge.badge_name} className="badge-img" />
                 ) : (
                   <div className="badge-placeholder">
                     <Award size={40} opacity={0.3} />
-                    <span>{getRankEmoji(badge.rank)}</span>
+                    <span style={{ fontSize: 24 }}>{badge.icon_url || '🏅'}</span>
                   </div>
                 )}
-                <div className={`badge-rank-tag ${badge.rank}`}>
-                  {badge.rank?.toUpperCase()}
+                <div className={`badge-rarity-tag`} style={{ backgroundColor: getRarityColor(badge.rarity) }}>
+                  {badge.rarity?.toUpperCase()}
                 </div>
               </div>
 
               <div className="badge-info">
                 <div className="badge-header">
-                  <h4>{badge.name_fr}</h4>
-                  <span className="badge-id">#{badge.badge_id}</span>
+                  <h4>{badge.badge_name}</h4>
+                  <span className="badge-category-chip">{badge.category}</span>
                 </div>
                 
-                <p className="badge-description">{badge.description || "Aucune description"}</p>
-                
-                <div className="badge-meta">
-                  <div className="meta-item">
-                    <MapPin size={14} />
-                    <span>{badge.city || 'Global'}</span>
-                  </div>
-                  <div className="meta-item">
-                    <Star size={14} />
-                    <span>{badge.skill || 'Compétence'}</span>
-                  </div>
+                <div className="badge-languages">
+                  <p className="badge-description fr">
+                    <span className="lang-tag">FR</span> {badge.description_fr}
+                  </p>
+                  {badge.description_ar && (
+                    <p className="badge-description ar" dir="rtl">
+                      <span className="lang-tag">AR</span> {badge.description_ar}
+                    </p>
+                  )}
                 </div>
-
+                
                 <div className="badge-condition">
-                  <strong>Condition :</strong> {badge.condition_text || "Non définie"}
-                </div>
-
-                <div className="badge-points">
-                  <Award size={14} /> {badge.points} points
+                  <Zap size={14} />
+                  <span><strong>Condition :</strong> {badge.requirement || "Non définie"}</span>
                 </div>
               </div>
 
               <div className="badge-actions">
-                <button className="icon-btn" title="Modifier"><Edit2 size={16} /></button>
-                <button className="icon-btn delete" title="Supprimer"><Trash2 size={16} /></button>
+                <button className="icon-btn" title="Modifier" onClick={() => openEdit(badge)}><Edit2 size={16} /></button>
+                <button className="icon-btn delete" title="Supprimer" onClick={() => setConfirm(badge)}><Trash2 size={16} /></button>
               </div>
             </div>
           ))
         )}
       </div>
+
+      {/* Edit/New Modal */}
+      <Modal open={!!modal} onClose={closeModal} title={modal?.id ? 'Modifier le badge' : 'Nouveau badge'} wide>
+        {modal && (
+          <div className="modal-form">
+            <div className="form-row-2">
+              <Field label="Nom du badge *">
+                <Input value={modal.badge_name} onChange={v => set('badge_name', v)} placeholder="Expert en Logistique" />
+              </Field>
+              <Field label="Icône (Émoji)" hint="Utilisé si l'image est absente">
+                <Input value={modal.icon_url} onChange={v => set('icon_url', v)} placeholder="🏅" />
+              </Field>
+            </div>
+
+            <div className="form-row-2">
+              <Field label="Description (FR) *">
+                <Textarea value={modal.description_fr} onChange={v => set('description_fr', v)} placeholder="Description en français..." rows={2} />
+              </Field>
+              <Field label="Description (AR)">
+                <Textarea value={modal.description_ar} onChange={v => set('description_ar', v)} placeholder="الوصف باللغة العربية..." rows={2} dir="rtl" />
+              </Field>
+            </div>
+
+            <div className="form-row-2">
+              <Field label="Catégorie">
+                <select className="cms-select" value={modal.category} onChange={e => set('category', e.target.value)}>
+                  {CATEGORY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                </select>
+              </Field>
+              <Field label="Rareté">
+                <select className="cms-select" value={modal.rarity} onChange={e => set('rarity', e.target.value)}>
+                  {RARITY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                </select>
+              </Field>
+            </div>
+
+            <Field label="Condition d'obtention (Requirement)">
+              <Input value={modal.requirement} onChange={v => set('requirement', v)} placeholder="Ex: Gagner 5 parties multijoueur..." />
+            </Field>
+
+            <Field label="🖼️ Image du badge" hint="Recommandé: PNG transparent 256x256">
+              <ImageUploader
+                value={modal.image_url}
+                onChange={v => set('image_url', v)}
+                folder="badges"
+              />
+            </Field>
+
+            <div style={{ display:'flex', justifyContent:'flex-end', gap:12, marginTop:24 }}>
+              <button className="btn btn-ghost" onClick={closeModal}>Annuler</button>
+              <button className="btn btn-primary" onClick={handleSave} disabled={saving}>
+                {saving ? 'Enregistrement…' : (modal.id ? 'Mettre à jour' : 'Créer le badge')}
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
 
       <style>{`
         .badges-manager {
@@ -145,8 +258,8 @@ export default function BadgesManager() {
         }
         .badges-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: 20px;
+          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+          gap: 24px;
         }
         .badge-definition-card {
           background: var(--bg-card);
@@ -160,12 +273,11 @@ export default function BadgesManager() {
         }
         .badge-definition-card:hover {
           transform: translateY(-4px);
-          box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+          box-shadow: 0 10px 25px rgba(0,0,0,0.15);
           border-color: var(--primary-main);
         }
         .badge-image-container {
           height: 140px;
-          background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -174,7 +286,7 @@ export default function BadgesManager() {
         .badge-img {
           height: 100px;
           object-fit: contain;
-          filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+          filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
         }
         .badge-placeholder {
           color: white;
@@ -183,7 +295,7 @@ export default function BadgesManager() {
           align-items: center;
           gap: 8px;
         }
-        .badge-rank-tag {
+        .badge-rarity-tag {
           position: absolute;
           top: 12px;
           right: 12px;
@@ -192,71 +304,74 @@ export default function BadgesManager() {
           font-size: 10px;
           font-weight: 800;
           color: white;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        .badge-rank-tag.or { background: linear-gradient(to right, #b45309, #fbbf24); }
-        .badge-rank-tag.argent { background: linear-gradient(to right, #4b5563, #9ca3af); }
-        .badge-rank-tag.bronze { background: linear-gradient(to right, #78350f, #a16207); }
         
         .badge-info {
-          padding: 16px;
+          padding: 18px;
           flex: 1;
         }
         .badge-header {
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
-          margin-bottom: 12px;
+          margin-bottom: 14px;
+          gap: 8px;
         }
         .badge-header h4 {
           margin: 0;
           font-size: 17px;
           color: var(--text-primary);
+          line-height: 1.2;
         }
-        .badge-id {
+        .badge-category-chip {
           font-size: 10px;
-          font-family: monospace;
-          color: var(--text-muted);
-          background: var(--bg-main);
-          padding: 2px 6px;
+          text-transform: uppercase;
+          color: var(--primary-light);
+          background: rgba(124, 58, 237, 0.1);
+          padding: 2px 8px;
           border-radius: 4px;
+          font-weight: 700;
+          white-space: nowrap;
+        }
+        .badge-languages {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          margin-bottom: 16px;
         }
         .badge-description {
           font-size: 13px;
           color: var(--text-secondary);
           line-height: 1.4;
-          margin-bottom: 16px;
-          min-height: 36px;
-        }
-        .badge-meta {
+          margin: 0;
           display: flex;
-          gap: 12px;
-          margin-bottom: 12px;
-          flex-wrap: wrap;
+          gap: 6px;
         }
-        .meta-item {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-          font-size: 11px;
+        .badge-description.ar {
+          text-align: right;
           color: var(--text-muted);
-          text-transform: capitalize;
+          font-family: 'Inter', sans-serif;
+        }
+        .lang-tag {
+          font-size: 9px;
+          font-weight: 800;
+          background: var(--bg-main);
+          color: var(--text-muted);
+          padding: 1px 4px;
+          border-radius: 3px;
+          height: fit-content;
         }
         .badge-condition {
-          background: rgba(124, 58, 237, 0.05);
-          border-radius: 8px;
-          padding: 10px;
+          background: rgba(255, 255, 255, 0.03);
+          border-radius: 10px;
+          padding: 12px;
           font-size: 12px;
           color: var(--text-secondary);
-          margin-bottom: 12px;
-          border-left: 3px solid var(--primary-main);
-        }
-        .badge-points {
           display: flex;
           align-items: center;
-          gap: 6px;
-          font-weight: 700;
-          color: #f59e0b;
-          font-size: 14px;
+          gap: 10px;
+          border: 1px solid var(--border-light);
         }
         .badge-actions {
           padding: 12px;
@@ -264,6 +379,7 @@ export default function BadgesManager() {
           display: flex;
           justify-content: flex-end;
           gap: 8px;
+          background: rgba(0,0,0,0.02);
         }
         .icon-btn {
           background: transparent;
@@ -287,6 +403,18 @@ export default function BadgesManager() {
           color: #ef4444;
           border-color: #ef4444;
           background: #fef2f2;
+        }
+
+        .modal-form { display: flex; flex-direction: column; gap: 20px; }
+        .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .cms-select {
+          width: 100%;
+          background: var(--bg-main);
+          border: 1px solid var(--border-light);
+          border-radius: 8px;
+          padding: 10px;
+          color: var(--text-primary);
+          outline: none;
         }
       `}</style>
     </div>

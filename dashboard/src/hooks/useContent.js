@@ -144,3 +144,41 @@ export function useSettings() {
 
   return { settings, loading, refresh: fetch, save };
 }
+
+export function useBadges() {
+  const [badges, setBadges] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetch = useCallback(async () => {
+    setLoading(true);
+    const { data } = await supabase
+      .from('badge_definitions')
+      .select('*')
+      .order('created_at', { ascending: false });
+    setBadges(data || []);
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { fetch(); }, [fetch]);
+
+  const save = async (badge) => {
+    // If it has badge_id, it's an update, but wait, do we use badge_id as PK?
+    // Let's check if we have a real UUID 'id' as well.
+    // Standardizing on 'id' if possible, or using 'badge_id' if that's the PK.
+    if (badge.id) {
+      const { error } = await supabase.from('badge_definitions').update(badge).eq('id', badge.id);
+      if (error) throw error;
+    } else {
+      const { error } = await supabase.from('badge_definitions').insert(badge);
+      if (error) throw error;
+    }
+    await fetch();
+  };
+
+  const remove = async (id) => {
+    await supabase.from('badge_definitions').delete().eq('id', id);
+    await fetch();
+  };
+
+  return { badges, loading, refresh: fetch, save, remove };
+}
