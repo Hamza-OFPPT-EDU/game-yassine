@@ -181,7 +181,11 @@ export default function MapJourneyScreen({
                       playSound('click');
                       const c = cinematicCity; setCinematicCity(null); onSelectCity(c); 
                     }}
-                    className="btn-voyage-accent px-9 py-3.5 text-lg w-full"
+                    className="flex items-center justify-center gap-3 text-white text-lg py-4 px-9 rounded-2xl font-black shadow-xl hover:brightness-110 active:scale-95 transition-all w-full"
+                    style={{
+                      background: `linear-gradient(135deg, ${getCityTheme(cinematicCity).colorLight || getCityTheme(cinematicCity).color}, ${getCityTheme(cinematicCity).colorDark || getCityTheme(cinematicCity).color})`,
+                      boxShadow: `0 8px 25px ${getCityTheme(cinematicCity).color}50`,
+                    }}
                   >
                     🚀 Commencer l'Aventure
                   </motion.button>
@@ -474,10 +478,8 @@ export default function MapJourneyScreen({
                       displayCity.status === 'locked' ? "opacity-40 cursor-not-allowed" : "hover:brightness-110 active:scale-95"
                     )}
                     style={{
-                      background: displayCity.status === 'locked'
-                        ? 'rgba(0,0,0,0.2)'
-                        : `linear-gradient(135deg, ${displayCityTheme.colorLight || displayCityTheme.color}, ${displayCityTheme.colorDark || displayCityTheme.color})`,
-                      boxShadow: displayCity.status !== 'locked' ? `0 8px 25px ${displayCityTheme.color}50` : undefined,
+                      background: `linear-gradient(135deg, ${displayCityTheme.colorLight || displayCityTheme.color}, ${displayCityTheme.colorDark || displayCityTheme.color})`,
+                      boxShadow: `0 8px 25px ${displayCityTheme.color}50`,
                     }}
                   >
                     <span className="font-black uppercase tracking-tight">

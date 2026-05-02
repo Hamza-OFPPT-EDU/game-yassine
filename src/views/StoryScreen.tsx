@@ -7,6 +7,7 @@ import { motion } from 'motion/react';
 import { X, MoreVertical, MapPin, ArrowRight, User, BookOpen } from 'lucide-react';
 import { type City, type Mission } from '../types';
 import { useAudio } from '../hooks/useAudio';
+import { getCityTheme } from '../lib/city-theme';
 
 interface StoryScreenProps {
   city: City;
@@ -142,9 +143,13 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
                 whileTap={{ scale: loadingMission ? 1 : 0.95 }}
                 onClick={() => { playSound('click'); onStartChallenge(); }}
                 disabled={loadingMission || !mission}
-                className={`btn-voyage-primary w-full text-xl py-5 flex items-center justify-center gap-3 ${
-                  loadingMission || !mission ? 'opacity-60 cursor-not-allowed' : ''
+                className={`w-full text-xl py-5 flex items-center justify-center gap-3 rounded-2xl font-black text-white shadow-lg transition-all ${
+                  loadingMission || !mission ? 'opacity-60 cursor-not-allowed' : 'hover:brightness-110 active:scale-95'
                 }`}
+                style={{
+                  background: `linear-gradient(135deg, ${getCityTheme(city).colorLight || getCityTheme(city).color}, ${getCityTheme(city).colorDark || getCityTheme(city).color})`,
+                  boxShadow: `0 8px 25px ${getCityTheme(city).color}50`,
+                }}
               >
                 {loadingMission ? (
                   <>
