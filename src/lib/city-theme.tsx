@@ -1,7 +1,9 @@
 import React from 'react';
 import { 
   Landmark, Flower2, Castle, Mountain, Ship, Sun, Shield, 
-  MapPin, Tent, Waves, Compass, Landmark as LandmarkIcon 
+  MapPin, Tent, Waves, Compass, Landmark as LandmarkIcon,
+  Palmtree, Book, GraduationCap, Users, Rocket, Building2,
+  Gem, Heart, Star, Camera, Music
 } from 'lucide-react';
 import { type City } from '../types';
 
@@ -65,6 +67,17 @@ export const resolveCityIcon = (city: City, size = 72, className = "") => {
   if (name === 'flower') return <Flower2 {...props} />;
   if (name === 'compass') return <Compass {...props} />;
   if (name === 'mosque') return <LandmarkIcon {...props} />;
+  if (name === 'palmtree') return <Palmtree {...props} />;
+  if (name === 'book') return <Book {...props} />;
+  if (name === 'education' || name === 'graduation') return <GraduationCap {...props} />;
+  if (name === 'users' || name === 'team') return <Users {...props} />;
+  if (name === 'rocket' || name === 'start') return <Rocket {...props} />;
+  if (name === 'building' || name === 'city') return <Building2 {...props} />;
+  if (name === 'gem' || name === 'premium') return <Gem {...props} />;
+  if (name === 'heart') return <Heart {...props} />;
+  if (name === 'star') return <Star {...props} />;
+  if (name === 'camera') return <Camera {...props} />;
+  if (name === 'music') return <Music {...props} />;
 
   // 4. Default City Mapping (Legacy)
   const cityId = city.id?.toLowerCase();

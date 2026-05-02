@@ -356,7 +356,7 @@ export default function MapJourneyScreen({
                       className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 border-2 border-white/40 shadow-md"
                       style={{ background: displayCityTheme.bgGradient }}
                     >
-                      {resolveCityIcon(displayCity, 32, 'text-white')}
+                      {resolveCityIcon(displayCity, 52, 'text-white')}
                     </div>
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-2">
@@ -638,7 +638,7 @@ const CityNode: React.FC<{
         >
           {isCompleted ? (
             <div className="flex flex-col items-center">
-              <Check size={28} className="text-white stroke-[3px]" />
+              <Check size={(city.iconSize || 52) - 4} className="text-white stroke-[3px]" />
             </div>
           ) : (
             <motion.span
@@ -647,7 +647,7 @@ const CityNode: React.FC<{
               className="leading-none select-none flex items-center justify-center"
               style={{ opacity: isLocked ? 0.5 : 1 }}
             >
-              {resolveCityIcon(city, 30, 'text-white')}
+              {resolveCityIcon(city, city.iconSize || 52, 'text-white')}
             </motion.span>
           )}
           {/* Badge cadenas pour villes verrouillées */}

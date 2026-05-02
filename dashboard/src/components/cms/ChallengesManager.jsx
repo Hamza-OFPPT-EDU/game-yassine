@@ -15,7 +15,7 @@ const CITY_OPTIONS = [
 
 const EMPTY = {
   city_id: 'rabat', city_name_fr: '', city_name_ar: '',
-  city_color: '#735c00', icon_name: 'landmark', headline_fr: '', headline_ar: '',
+  city_color: '#735c00', icon_name: 'landmark', icon_size: 52, headline_fr: '', headline_ar: '',
   description_fr: '', description_ar: '', focus_fr: '',
   step_label: '', progress: 0.25, illustration_url: '',
   sort_order: 0, is_published: false,
@@ -166,6 +166,9 @@ export default function ChallengesManager({ onSelectChallenge, onViewCurriculum 
               </Field>
               <Field label="Nom de l'icône (Lucide)" hint="Ex: landmark, castle, tent, waves, mountain, mosque">
                 <Input value={modal.icon_name} onChange={v => set('icon_name', v)} placeholder="landmark" />
+              </Field>
+              <Field label="Taille de l'icône" hint="Défaut: 52">
+                <Input type="number" value={modal.icon_size} onChange={v => set('icon_size', parseInt(v))} min="20" max="64" />
               </Field>
             </div>
 

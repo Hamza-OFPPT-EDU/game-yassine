@@ -5,6 +5,7 @@
  */
 
 import { useState, useCallback, useRef, useEffect } from 'react';
+import { useSupabaseSettings } from './useSupabase';
 
 export interface AudioSettings {
   soundEffectsEnabled: boolean;
@@ -61,8 +62,20 @@ function getAudioElement(type: SoundType): HTMLAudioElement {
 
 // ─── Hook principal ───────────────────────────────────────────────────────────
 export function useAudio() {
+  const { getSetting, loading: settingsLoading } = useSupabaseSettings();
   const [settings, setSettings] = useState<AudioSettings>(loadSettings);
   const musicRef = useRef<HTMLAudioElement | null>(null);
+
+  // Sync with Supabase settings when they load
+  useEffect(() => {
+    const dbSettings = getSetting('audio_settings');
+    if (dbSettings) {
+      setSettings(prev => ({
+        ...prev,
+        ...dbSettings
+      }));
+    }
+  }, [settingsLoading]);
 
   // Persist on change
   useEffect(() => { saveSettings(settings); }, [settings]);
@@ -95,14 +108,20 @@ export function useAudio() {
 
   // ── Lecture d'un effet sonore ─────────────────────────────────────────────
   const playSound = useCallback((type: SoundType) => {
-    if (!settings.soundEffectsEnabled) return;
+    // 1. Check global master switch from DB
+    const globalSettings = getSetting('audio_settings');
+    const globalEnabled = globalSettings?.soundEffectsEnabled ?? true;
+    
+    // 2. Check local setting
+    if (!globalEnabled || !settings.soundEffectsEnabled) return;
+
     try {
       const audio = getAudioElement(type);
       audio.volume = settings.effectsVolume / 100;
       audio.currentTime = 0;   // permet de rejouer rapidement
       audio.play().catch(() => { /* autoplay policy — silencieux */ });
     } catch (_) { /* ignore */ }
-  }, [settings.soundEffectsEnabled, settings.effectsVolume]);
+  }, [settings.soundEffectsEnabled, settings.effectsVolume, settingsLoading]);
 
   // ── Mise à jour des réglages ──────────────────────────────────────────────
   const updateSettings = useCallback((patch: Partial<AudioSettings>) => {

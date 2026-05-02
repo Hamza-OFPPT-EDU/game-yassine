@@ -54,6 +54,7 @@ export type City = {
   cinematicCharacter?: string;
   color?: string;
   iconName?: string;
+  iconSize?: number;
 };
 
 export type Mission = {

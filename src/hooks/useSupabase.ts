@@ -89,7 +89,8 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
             totalSteps,
             cinematicIntro: city.cinematic_intro,
             color: city.city_color,
-            iconName: city.icon_name
+            iconName: city.icon_name,
+            iconSize: city.icon_size || 52
           };
         });
         setCities(mappedCities);
@@ -339,5 +340,32 @@ function mapType(dbType: string): any {
     default:
       return 'multiple-choice';
   }
+}
+export function useSupabaseSettings() {
+  const [settings, setSettings] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchSettings() {
+      const { data, error } = await supabase
+        .from('app_settings')
+        .select('*');
+
+      if (error) {
+        console.error('Error fetching settings:', error);
+      } else {
+        setSettings(data || []);
+      }
+      setLoading(false);
+    }
+
+    fetchSettings();
+  }, []);
+
+  const getSetting = (key: string) => {
+    return settings.find(s => s.key === key)?.value;
+  };
+
+  return { settings, loading, getSetting };
 }
 
