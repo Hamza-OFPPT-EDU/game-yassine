@@ -42,11 +42,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
-              <img 
-                src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcomme_gif.gif" 
-                alt="Famille Ben Ali"
-                className="w-full h-auto drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)]"
-              />
+
             </motion.div>
 
             {/* Speech Bubble (Glassmorphic) */}
