@@ -5,7 +5,7 @@
  */
 
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { useSupabaseSettings } from './useSupabase';
+import { useSupabaseSettings, useSupabaseProfile } from './useSupabase';
 
 export interface AudioSettings {
   soundEffectsEnabled: boolean;
@@ -62,71 +62,71 @@ function getAudioElement(type: SoundType): HTMLAudioElement {
 
 // ─── Hook principal ───────────────────────────────────────────────────────────
 export function useAudio() {
-  const { getSetting, loading: settingsLoading } = useSupabaseSettings();
+  const { getSetting, loading: globalSettingsLoading } = useSupabaseSettings();
+  const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile();
   const [settings, setSettings] = useState<AudioSettings>(loadSettings);
   const musicRef = useRef<HTMLAudioElement | null>(null);
 
-  // Sync with Supabase settings when they load
+  // 1. Sync with Global settings (Master Switch)
+  // These act as an override or a default
   useEffect(() => {
-    const dbSettings = getSetting('audio_settings');
-    if (dbSettings) {
-      setSettings(prev => ({
-        ...prev,
-        ...dbSettings
-      }));
+    const globalAudio = getSetting('audio_settings');
+    if (globalAudio) {
+      // If global is disabled, we don't necessarily force local to disabled,
+      // but the playSound function will check the global flag.
     }
-  }, [settingsLoading]);
+  }, [globalSettingsLoading]);
 
-  // Persist on change
+  // 2. Sync with Individual Profile settings from Supabase
+  useEffect(() => {
+    if (profile?.audio_settings) {
+      setSettings(profile.audio_settings);
+      saveSettings(profile.audio_settings);
+    }
+  }, [profileLoading]);
+
+  // Persist locally on every change
   useEffect(() => { saveSettings(settings); }, [settings]);
 
   // ── Musique de fond ──────────────────────────────────────────────────────
-  // Si tu ajoutes un fichier music.mp3 dans /public/audio/ plus tard,
-  // décommente la ligne suivante et le bloc ci-dessous.
-  //
-  // const MUSIC_FILE = '/audio/music.mp3';
-  //
-  // useEffect(() => {
-  //   if (!musicRef.current) {
-  //     musicRef.current = new Audio(MUSIC_FILE);
-  //     musicRef.current.loop = true;
-  //   }
-  //   const music = musicRef.current;
-  //   music.volume = settings.musicVolume / 100;
-  //   if (settings.musicEnabled) {
-  //     music.play().catch(() => { /* autoplay bloqué */ });
-  //   } else {
-  //     music.pause();
-  //   }
-  //   return () => { music.pause(); };
-  // }, [settings.musicEnabled, settings.musicVolume]);
-
-  // Nettoyage si unmount
+  // (Bloc musique identique...)
   useEffect(() => {
     return () => { musicRef.current?.pause(); };
   }, []);
 
   // ── Lecture d'un effet sonore ─────────────────────────────────────────────
   const playSound = useCallback((type: SoundType) => {
-    // 1. Check global master switch from DB
-    const globalSettings = getSetting('audio_settings');
-    const globalEnabled = globalSettings?.soundEffectsEnabled ?? true;
+    // 1. Check global master switch from DB (Administrator control)
+    const globalAudio = getSetting('audio_settings');
+    const globalEnabled = globalAudio?.soundEffectsEnabled ?? true;
     
-    // 2. Check local setting
+    // 2. Check individual user setting
     if (!globalEnabled || !settings.soundEffectsEnabled) return;
 
     try {
       const audio = getAudioElement(type);
       audio.volume = settings.effectsVolume / 100;
-      audio.currentTime = 0;   // permet de rejouer rapidement
-      audio.play().catch(() => { /* autoplay policy — silencieux */ });
+      audio.currentTime = 0;
+      audio.play().catch(() => { /* silenced by browser */ });
     } catch (_) { /* ignore */ }
-  }, [settings.soundEffectsEnabled, settings.effectsVolume, settingsLoading]);
+  }, [settings.soundEffectsEnabled, settings.effectsVolume, globalSettingsLoading]);
 
   // ── Mise à jour des réglages ──────────────────────────────────────────────
   const updateSettings = useCallback((patch: Partial<AudioSettings>) => {
     setSettings(prev => ({ ...prev, ...patch }));
   }, []);
 
-  return { settings, updateSettings, playSound };
+  // ── Sauvegarde vers le Cloud ──────────────────────────────────────────────
+  const saveToCloud = useCallback(async () => {
+    if (!profile) return false;
+    return await updateProfile({ audio_settings: settings });
+  }, [settings, profile, updateProfile]);
+
+  return { 
+    settings, 
+    updateSettings, 
+    saveToCloud, 
+    playSound, 
+    loading: globalSettingsLoading || profileLoading 
+  };
 }

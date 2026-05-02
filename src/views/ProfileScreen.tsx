@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
-import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame } from 'lucide-react';
+import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2 } from 'lucide-react';
+import { useSupabaseProfile } from '../hooks/useSupabase';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 
@@ -9,7 +10,19 @@ interface ProfileScreenProps {
 }
 
 export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps) {
-  const stats = { xp: 1450, stars: 120, level: 4 };
+  const { profile, loading } = useSupabaseProfile();
+  
+  if (loading) return (
+    <div className="h-full w-full flex items-center justify-center bg-voyage-sand">
+      <Loader2 className="animate-spin text-voyage-primary" size={40} />
+    </div>
+  );
+
+  const stats = { 
+    xp: profile?.xp || 0, 
+    stars: profile?.stars || 0, 
+    level: profile?.level || 1 
+  };
   
   const skills = [
     { name: 'Communication', label: 'التواصل', level: 2, xp: 75, icon: MessageCircle, color: 'text-voyage-accent', bg: 'bg-voyage-accent/10', border: 'border-voyage-accent/20' },

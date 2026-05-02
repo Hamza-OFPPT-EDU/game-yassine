@@ -369,3 +369,57 @@ export function useSupabaseSettings() {
   return { settings, loading, getSetting };
 }
 
+export function useSupabaseProfile(userId: string = 'yassine_profile') {
+  const [profile, setProfile] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProfile() {
+      // First try to get the profile
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('user_id', userId)
+        .single();
+
+      if (error && error.code === 'PGRST116') {
+        // Profile doesn't exist, create it
+        const { data: newProfile, error: createError } = await supabase
+          .from('user_profiles')
+          .insert([{ 
+            user_id: userId, 
+            username: 'Yassine',
+            xp: 1450,
+            stars: 120,
+            level: 4
+          }])
+          .select()
+          .single();
+        
+        if (!createError) setProfile(newProfile);
+      } else if (!error) {
+        setProfile(data);
+      }
+      setLoading(false);
+    }
+
+    fetchProfile();
+  }, [userId]);
+
+  const updateProfile = async (updates: any) => {
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .update(updates)
+      .eq('user_id', userId)
+      .select()
+      .single();
+
+    if (!error) {
+      setProfile(data);
+      return true;
+    }
+    return false;
+  };
+
+  return { profile, loading, updateProfile };
+}

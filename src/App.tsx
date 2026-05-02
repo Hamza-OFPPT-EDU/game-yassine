@@ -5,6 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
+import { useSupabaseProfile } from './hooks/useSupabase';
 import { motion, AnimatePresence } from 'motion/react';
 import { Screen, type City, type Mission, type MissionCompletionSummary } from './types';
 import BottomNavBar from './components/BottomNavBar';
@@ -34,12 +35,24 @@ export default function App() {
   const [missionSummary, setMissionSummary] = useState<MissionCompletionSummary | null>(null);
   const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(false);
   const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
+  const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile();
   const [userStats, setUserStats] = useState({
     xp: 1450,
     stars: 120,
     level: 4,
   });
   const [nextScreenAfterFullscreen, setNextScreenAfterFullscreen] = useState<Screen | null>(null);
+
+  // Sync stats with profile once loaded
+  useEffect(() => {
+    if (profile) {
+      setUserStats({
+        xp: profile.xp || 0,
+        stars: profile.stars || 0,
+        level: profile.level || 1,
+      });
+    }
+  }, [profileLoading]);
 
   /** Navigate to Challenge, showing the fullscreen prompt the first time. */
   const goToChallenge = () => {
@@ -114,12 +127,24 @@ export default function App() {
 
     const wasAlreadyCompleted = completedMissions.includes(summary.missionId);
     if (!wasAlreadyCompleted) {
+      const newStats = {
+        xp: userStats.xp + summary.totalXp,
+        stars: userStats.stars + summary.totalStars,
+        level: userStats.level // Logic for level up could be added here
+      };
+      
       setCompletedMissions((prev) => [...prev, summary.missionId]);
-      setUserStats((prev) => ({
+      setUserStats(prev => ({
         ...prev,
-        xp: prev.xp + summary.totalXp,
-        stars: prev.stars + summary.totalStars,
+        xp: newStats.xp,
+        stars: newStats.stars
       }));
+
+      // Persist to Supabase
+      updateProfile({
+        xp: newStats.xp,
+        stars: newStats.stars
+      });
     }
 
     async function checkCityCompletion() {

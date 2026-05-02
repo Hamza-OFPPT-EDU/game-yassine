@@ -20,7 +20,21 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
   const [displayMode, setDisplayMode] = useState('clair');
   const [language, setLanguage] = useState('fr');
   const { fontSize, setFontSize } = useSettings();
-  const { settings: audio, updateSettings: updateAudio, playSound } = useAudio();
+  const { settings: audio, updateSettings: updateAudio, playSound, saveToCloud, loading: audioLoading } = useAudio();
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    playSound('click');
+    const success = await saveToCloud();
+    setIsSaving(false);
+    if (success) {
+      playSound('success');
+      alert('Paramètres enregistrés avec succès !');
+    } else {
+      alert('Erreur lors de la sauvegarde. Vérifiez votre connexion.');
+    }
+  };
 
   return (
     <div className="h-full w-full bg-voyage-sand flex flex-col overflow-hidden">
@@ -346,13 +360,24 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
           <motion.button 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full bg-voyage-primary text-white py-5 rounded-2xl font-headline font-black text-lg shadow-xl shadow-voyage-primary/20 flex items-center justify-center gap-4 group"
+            onClick={handleSave}
+            disabled={isSaving}
+            className={cn(
+              "w-full py-5 rounded-2xl font-headline font-black text-lg shadow-xl flex items-center justify-center gap-4 group transition-all",
+              isSaving 
+                ? "bg-slate-200 text-slate-400 cursor-wait" 
+                : "bg-voyage-primary text-white shadow-voyage-primary/20 hover:brightness-110"
+            )}
           >
             <div className="flex flex-col items-center leading-none">
-              <span className="tracking-tight">ENREGISTRER LES MODIFICATIONS</span>
-              <span className="text-xs opacity-60 font-bold mt-1 tracking-widest">حفظ التغييرات</span>
+              <span className="tracking-tight">{isSaving ? 'SAUVEGARDE...' : 'ENREGISTRER LES MODIFICATIONS'}</span>
+              <span className="text-xs opacity-60 font-bold mt-1 tracking-widest">{isSaving ? 'جاري الحفظ...' : 'حفظ التغييرات'}</span>
             </div>
-            <Save size={24} className="group-hover:rotate-12 transition-transform" />
+            {isSaving ? (
+              <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              <Save size={24} className="group-hover:rotate-12 transition-transform" />
+            )}
           </motion.button>
         </div>
       </main>
