@@ -156,81 +156,73 @@ export default function MapJourneyScreen({
                     <p className="arabic-font text-[#C9A96E] text-lg">{cinematicCity.arabicName}</p>
                   </div>
 
-                  {cinematicCity.name === 'Rabat' ? (
-                    <div className="space-y-6">
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="relative"
-                      >
-                        {/* Ambient Aura Effect */}
-                        <motion.div 
-                          animate={{ 
-                            scale: [1, 1.2, 1],
-                            opacity: [0.2, 0.5, 0.2]
-                          }}
-                          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                          className="absolute inset-0 bg-voyage-accent/30 blur-[60px] rounded-full scale-110" 
-                        />
-                        
-                        <motion.img
-                          src="/assets/intro_caracter.gif"
-                          alt="Personnage"
-                          animate={{ 
-                            y: [0, -12, 0],
-                            rotate: [-1, 1, -1],
-                            scale: [1, 1.02, 1]
-                          }}
-                          transition={{ 
-                            duration: 4, 
-                            repeat: Infinity, 
-                            ease: "easeInOut" 
-                          }}
-                          className="w-[240px] h-[240px] mx-auto object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.4)] relative z-10"
-                        />
-                      </motion.div>
-
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 }}
-                        className="bg-white/10 backdrop-blur-xl p-4 rounded-3xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
-                      >
-                        <p className="text-voyage-accent font-black text-[10px] uppercase tracking-[0.4em] mb-1.5 opacity-80">Guide de l'aventure</p>
-                        <p className="text-white text-2xl font-black tracking-tight drop-shadow-sm">
-                          {cinematicCity.cinematicCharacter || 'Hassan'}
-                        </p>
-                      </motion.div>
-                    </div>
-                  ) : (
+                  <div className="space-y-6">
                     <motion.div
-                      initial="hidden"
-                      animate="visible"
-                      variants={{
-                        hidden: { opacity: 1 },
-                        visible: {
-                          opacity: 1,
-                          transition: { staggerChildren: 0.02 }
-                        }
-                      }}
-                      className="px-6"
+                      initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      transition={{ duration: 0.8, ease: "easeOut" }}
+                      className="relative"
                     >
-                      <p className="text-2xl font-bold text-white/95 leading-relaxed italic font-serif">
+                      {/* Ambient Aura Effect */}
+                      <motion.div 
+                        animate={{ 
+                          scale: [1, 1.2, 1],
+                          opacity: [0.2, 0.5, 0.2]
+                        }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute inset-0 bg-voyage-accent/30 blur-[60px] rounded-full scale-110" 
+                      />
+                      
+                      <motion.img
+                        src="/assets/intro_caracter.gif"
+                        alt="Personnage"
+                        animate={{ 
+                          y: [0, -8, 0], // Subtle float
+                        }}
+                        transition={{ 
+                          duration: 4, 
+                          repeat: Infinity, 
+                          ease: "easeInOut" 
+                        }}
+                        className="w-[240px] h-[240px] mx-auto object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.4)] relative z-10"
+                      />
+                    </motion.div>
+
+                    {/* Staggered Text Typing Effect */}
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="bg-white/10 backdrop-blur-xl p-6 rounded-3xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] mx-4"
+                    >
+                      <p className="text-voyage-accent font-black text-[10px] uppercase tracking-[0.4em] mb-2.5 opacity-80">Guide de l'aventure</p>
+                      
+                      <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                          hidden: { opacity: 1 },
+                          visible: {
+                            opacity: 1,
+                            transition: { staggerChildren: 0.015 }
+                          }
+                        }}
+                        className="text-white text-lg font-medium leading-relaxed"
+                      >
                         {cinematicCity.cinematicIntro.split('').map((char, index) => (
                           <motion.span
                             key={index}
                             variants={{
-                              hidden: { opacity: 0, y: 5 },
-                              visible: { opacity: 1, y: 0 }
+                              hidden: { opacity: 0 },
+                              visible: { opacity: 1 }
                             }}
                           >
                             {char}
                           </motion.span>
                         ))}
-                      </p>
+                      </motion.div>
                     </motion.div>
-                  )}
+                  </div>
 
                   <motion.button
                     whileHover={{ scale: 1.04 }}
