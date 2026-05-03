@@ -50,31 +50,27 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="relative z-10 h-full w-full flex flex-col"
           >
-            {/* Hero section */}
-            <section className="relative h-[40vh] min-h-[300px] w-full shrink-0 flex items-center justify-center p-8">
-              <div className="relative w-full max-w-[150px]">
-                {/* Character image placeholder if needed in future */}
-              </div>
+            {/* Hero section with Logo Image */}
+            <section className="relative w-full shrink-0 flex items-center justify-center px-6 pt-12 pb-4">
+              <motion.img
+                initial={{ scale: 0.8, y: -20, opacity: 0 }}
+                animate={{ scale: 1, y: 0, opacity: 1 }}
+                transition={{ delay: 0.1, type: "spring", stiffness: 120, damping: 20 }}
+                src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png"
+                alt="Le Voyage des Compétences"
+                className="w-full max-w-[400px] object-contain drop-shadow-2xl"
+              />
             </section>
 
             {/* Content (Glassmorphic block) */}
-            <main className="flex-grow flex flex-col items-center justify-center px-6 text-center">
+            <main className="flex-grow flex flex-col items-start justify-center px-6 text-center mt-4">
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-[32px] shadow-2xl max-w-[320px] w-full space-y-4"
+                className="bg-black/30 backdrop-blur-xl border border-white/20 p-6 rounded-[24px] shadow-2xl max-w-[340px] mx-auto w-full"
               >
-                <div className="space-y-2">
-                  <h1 className="font-headline text-3xl font-black tracking-tight text-white leading-tight">
-                    Le Voyage des Compétences
-                  </h1>
-                  <p className="text-voyage-accent font-black text-xl arabic-font" dir="rtl">
-                    رحلة المهارات والنجاح
-                  </p>
-                </div>
-
-                <p className="text-white/80 font-bold leading-relaxed">
+                <p className="text-white/90 font-bold leading-relaxed text-[17px]">
                   Développe ton potentiel avec la famille Ben Ali à travers un parcours ludique au cœur du Maroc.
                 </p>
               </motion.div>
