@@ -107,6 +107,13 @@ export default function MapJourneyScreen({
             className="fixed inset-0 z-[100]"
             style={{ background: 'linear-gradient(160deg, #4E2510 0%, #7B3F1A 50%, #A0572B 100%)' }}
           >
+            <button 
+              onClick={() => setCinematicCity(null)}
+              className="absolute top-8 right-8 p-3 bg-white/10 hover:bg-white/20 rounded-2xl text-white transition-all z-20 backdrop-blur-md border border-white/20 shadow-xl"
+            >
+              <X size={24} strokeWidth={3} />
+            </button>
+
             {/* Étoiles de fond (fixes) */}
             {[...Array(12)].map((_, i) => (
               <motion.div
