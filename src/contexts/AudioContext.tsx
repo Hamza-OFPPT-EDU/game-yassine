@@ -12,19 +12,18 @@ export interface AudioSettings {
   musicVolume: number;
 }
 
-export type SoundType = 'correct' | 'wrong' | 'click' | 'match' | 'success' | 'whoosh' | 'rabat_intro';
+export type SoundType = 'correct' | 'wrong' | 'click' | 'match' | 'success' | 'whoosh';
 
 const SOUND_FILES: Record<SoundType, string> = {
-  correct: '/audio/correct.mp3',
-  wrong:   '/audio/wrong.mp3',
-  click:   '/audio/click.mp3',
-  match:   '/audio/match.mp3',
-  success: '/audio/success.mp3',
-  whoosh:  '/audio/whoosh.mp3',
-  rabat_intro: '/audio/rabat_intro_voice.mp3',
+  correct: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/correct.mp3',
+  wrong:   'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/wrong.mp3',
+  click:   'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/click.mp3',
+  match:   'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/match.mp3',
+  success: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/success.mp3',
+  whoosh:  'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/whoosh.mp3',
 };
 
-const BACKGROUND_MUSIC = '/audio/background-theme.mp3';
+const BACKGROUND_MUSIC = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/background-theme.mp3';
 const STORAGE_KEY = 'voyage_audio_settings';
 
 const DEFAULT_SETTINGS: AudioSettings = {
@@ -46,7 +45,6 @@ interface AudioContextType {
   settings: AudioSettings;
   updateSettings: (patch: Partial<AudioSettings>) => void;
   playSound: (type: SoundType) => void;
-  stopSound: (type: SoundType) => void;
   saveToCloud: () => Promise<boolean>;
   loading: boolean;
 }
@@ -125,14 +123,6 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     } catch (_) {}
   }, [settings, getSetting]);
 
-  const stopSound = useCallback((type: SoundType) => {
-    try {
-      const audio = getAudioElement(type);
-      audio.pause();
-      audio.currentTime = 0;
-    } catch (_) {}
-  }, []);
-
   const updateSettings = useCallback((patch: Partial<AudioSettings>) => {
     setSettings(prev => ({ ...prev, ...patch }));
   }, []);
@@ -147,7 +137,6 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       settings, 
       updateSettings, 
       playSound, 
-      stopSound,
       saveToCloud, 
       loading: globalSettingsLoading || profileLoading 
     }}>

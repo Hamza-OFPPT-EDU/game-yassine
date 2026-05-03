@@ -29,21 +29,11 @@ interface MapJourneyScreenProps {
 export default function MapJourneyScreen({
   stats, completedCities, completedMissions, onSelectCity
 }: MapJourneyScreenProps) {
-  const { playSound, stopSound } = useAudio();
+  const { playSound } = useAudio();
   const { cities, loading } = useSupabaseCities(completedCities, completedMissions);
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
   const [cinematicCity, setCinematicCity] = useState<City | null>(null);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true);
-
-  // Auto-play intro voice for Rabat
-  useEffect(() => {
-    if (cinematicCity?.name === 'Rabat') {
-      playSound('rabat_intro');
-    }
-    return () => {
-      stopSound('rabat_intro');
-    };
-  }, [cinematicCity, playSound, stopSound]);
 
   // Refs pour scroll automatique
   const activeCityRef = useRef<HTMLDivElement | null>(null);
@@ -74,7 +64,7 @@ export default function MapJourneyScreen({
   // Hook pour jouer la voix de Rabat automatiquement
   useEffect(() => {
     if (cinematicCity && cinematicCity.name === 'Rabat') {
-      const audio = new Audio('/audio/rabat_intro_voice.mp3');
+      const audio = new Audio('https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/rabat_intro_voice.mp3');
       audio.play().catch(err => console.log('Audio playback prevented:', err));
       return () => {
         audio.pause();
@@ -183,7 +173,7 @@ export default function MapJourneyScreen({
                       />
                       
                       <motion.img
-                        src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/intro_caracter.gif"
+                        src={cinematicCity.cinematicCharacter || "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/intro_caracter.gif"}
                         alt="Personnage"
                         animate={{ 
                           y: [0, -8, 0], // Subtle float

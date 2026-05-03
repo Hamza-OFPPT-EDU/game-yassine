@@ -88,6 +88,7 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
             stepNum: completedInCity + 1 > totalSteps ? totalSteps : completedInCity + 1,
             totalSteps,
             cinematicIntro: city.cinematic_intro,
+            cinematicCharacter: city.cinematic_character,
             color: city.city_color,
             iconName: city.icon_name,
             iconSize: city.icon_size || 52

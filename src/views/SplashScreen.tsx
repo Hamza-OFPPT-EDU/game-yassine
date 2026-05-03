@@ -27,13 +27,13 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     ].map(url => ({ url, type: 'image' as const }));
 
     const audio = [
-      '/audio/correct.mp3',
-      '/audio/wrong.mp3',
-      '/audio/click.mp3',
-      '/audio/match.mp3',
-      '/audio/success.mp3',
-      '/audio/whoosh.mp3',
-      '/audio/rabat_intro_voice.mp3',
+      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/correct.mp3',
+      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/wrong.mp3',
+      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/click.mp3',
+      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/match.mp3',
+      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/success.mp3',
+      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/whoosh.mp3',
+      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/rabat_intro_voice.mp3',
     ].map(url => ({ url, type: 'audio' as const }));
 
     const videos = [
