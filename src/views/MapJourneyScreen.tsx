@@ -192,7 +192,7 @@ export default function MapJourneyScreen({
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4, duration: 0.8 }}
-                      className="bg-black/20 backdrop-blur-2xl p-8 rounded-[40px] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.4)] mx-4 relative overflow-hidden group max-w-[400px]"
+                      className="bg-black/20 backdrop-blur-2xl p-8 rounded-[40px] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.4)] mx-4 relative overflow-hidden group max-w-[550px]"
                     >
                       {/* Decorative elements */}
                       <div className="absolute -top-24 -left-24 w-48 h-48 bg-voyage-accent/10 blur-[60px] rounded-full transition-all duration-700" />
