@@ -140,10 +140,9 @@ export default function MapJourneyScreen({
                   <motion.div
                     animate={{ rotate: [0, 5, -5, 0] }}
                     transition={{ duration: 4, repeat: Infinity }}
-                    className="w-[50px] h-[50px] mx-auto rounded-full flex items-center justify-center shadow-2xl border-2 border-[#D4A43E]/50"
-                    style={{ background: getCityTheme(cinematicCity).bgGradient }}
+                    className="mx-auto flex items-center justify-center"
                   >
-                    {resolveCityIcon(cinematicCity, 25, 'text-white')}
+                    {resolveCityIcon(cinematicCity, 40, 'text-[#D4A43E]')}
                   </motion.div>
 
                   <div className="space-y-2.5">
