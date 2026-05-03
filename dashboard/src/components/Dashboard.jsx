@@ -4,7 +4,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, Cell,
   LineChart, Line, CartesianGrid,
 } from 'recharts';
-import { Users, Award, Zap, TrendingUp, Search, RefreshCw, ChevronRight, Plus, X } from 'lucide-react';
+import { Users, Award, Zap, TrendingUp, Search, RefreshCw, ChevronRight, Plus, X, Upload } from 'lucide-react';
 import { useStats, usePlayers, useSkillDistribution, useCityStats } from '../hooks/useData';
 import PlayerPanel from './PlayerPanel';
 import ThemeToggle from './ThemeToggle';
@@ -50,7 +50,7 @@ function NewUserModal({ isOpen, onClose, onSubmit }) {
       if (err.code === 'DUPLICATE_USERNAME') {
         alert(err.message);
       } else {
-        alert('Erreur lors de la création de l\'utilisateur.');
+        alert("Erreur lors de la création de l'utilisateur.");
       }
     } finally {
       setLoading(false);
@@ -125,7 +125,7 @@ function NewUserModal({ isOpen, onClose, onSubmit }) {
           <div className="mt-4 pt-4 border-t border-white/10 flex justify-end gap-3">
             <button type="button" className="btn-ghost" onClick={onClose}>Annuler</button>
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Création...' : 'Créer l\'utilisateur'}
+              {loading ? 'Création...' : "Créer l'utilisateur"}
             </button>
           </div>
         </form>
@@ -134,14 +134,99 @@ function NewUserModal({ isOpen, onClose, onSubmit }) {
   );
 }
 
+function BulkImportModal({ isOpen, onClose, onSubmit }) {
+  const [text, setText] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  if (!isOpen) return null;
+
+  const handleSubmit = async () => {
+    if (!text.trim()) return;
+    setLoading(true);
+    try {
+      // Basic TSV/CSV parsing
+      const rows = text.split('\n').map(r => r.split('\t').length > 1 ? r.split('\t') : r.split(','));
+      
+      const usersData = [];
+      for (let row of rows) {
+        // Expected format: Nom_Prenom, Password, FullName, Site, SchoolLevel
+        // Or adapt to what makes sense based on columns. Let's assume columns in that order, or try to guess.
+        let [username, password, fullName, site, schoolLevel] = row;
+        
+        username = username?.trim();
+        password = password?.trim();
+        if (!username || !password) continue; // Skip invalid rows
+        
+        usersData.push({
+          username,
+          password,
+          fullName: fullName?.trim() || '',
+          site: site?.trim() || '',
+          schoolLevel: schoolLevel?.trim() || ''
+        });
+      }
+      
+      if (usersData.length === 0) {
+        alert("Aucun joueur valide trouvé. Format attendu : username,password,fullName,site,niveau");
+        setLoading(false);
+        return;
+      }
+
+      const res = await onSubmit(usersData);
+      alert(`Import terminé : ${res.added} ajoutés, ${res.skipped} ignorés (déjà existants).`);
+      onClose();
+      setText('');
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de l'importation : " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="modal-overlay z-[1000] fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="modal-content bg-bg-surface border-border-light rounded-2xl w-full max-w-2xl overflow-hidden relative shadow-2xl animate-slideUp">
+        <button className="absolute top-4 right-4 text-text-muted hover:text-text-primary" onClick={onClose}>
+          <X size={20} />
+        </button>
+        <div className="p-6 border-b border-border-light">
+          <h2 className="text-xl font-bold text-text-primary flex items-center gap-2">
+            <Upload size={20} className="text-primary-light" />
+            Importation en masse
+          </h2>
+          <p className="text-sm text-text-secondary">Collez votre liste depuis Excel (ou séparé par des virgules/tabulations).<br/>Colonnes : <b>Login, Mot de passe, Nom complet, Site, Niveau</b></p>
+        </div>
+        <div className="p-6 flex flex-col gap-4">
+          <textarea 
+            className="cms-input" 
+            placeholder="yacine_b&#9;pass123&#9;Yacine B.&#9;Rabat&#9;3ème AC&#10;sarah_k&#9;pass456&#9;Sarah K.&#9;Casa&#9;2ème AC"
+            rows={10}
+            value={text}
+            onChange={e => setText(e.target.value)}
+            style={{ fontFamily: 'monospace', whiteSpace: 'pre' }}
+          />
+          <div className="mt-4 flex justify-end gap-3">
+            <button type="button" className="btn-ghost" onClick={onClose}>Annuler</button>
+            <button type="button" className="btn-primary" onClick={handleSubmit} disabled={loading}>
+              {loading ? 'Importation...' : 'Importer'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Dashboard({ setPage }) {
   const { stats, loading: statsLoading } = useStats();
-  const { players, loading: playersLoading, createUser, deleteUser } = usePlayers();
+  const { players, loading: playersLoading, createUser, deleteUser, createUsersBulk } = usePlayers();
   const { data: skillData } = useSkillDistribution();
   const { data: cityData } = useCityStats();
 
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [showNewUserModal, setShowNewUserModal] = useState(false);
+  const [showBulkImportModal, setShowBulkImportModal] = useState(false);
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -176,6 +261,11 @@ export default function Dashboard({ setPage }) {
         isOpen={showNewUserModal} 
         onClose={() => setShowNewUserModal(false)}
         onSubmit={createUser}
+      />
+      <BulkImportModal
+        isOpen={showBulkImportModal}
+        onClose={() => setShowBulkImportModal(false)}
+        onSubmit={createUsersBulk}
       />
       <PlayerPanel 
         player={selectedPlayer} 
@@ -309,6 +399,9 @@ export default function Dashboard({ setPage }) {
                 onChange={e => setSearch(e.target.value)}
               />
             </div>
+            <button className="btn-ghost" onClick={() => setShowBulkImportModal(true)} style={{ gap: '6px', display: 'flex', alignItems: 'center' }}>
+              <Upload size={16} /> Importer
+            </button>
             <button className="btn-primary" onClick={() => setShowNewUserModal(true)}>
               <Plus size={16} /> Nouveau
             </button>

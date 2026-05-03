@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { ChevronLeft, BookOpen, HelpCircle, CheckCircle, List, Clock, Zap } from 'lucide-react';
+import { ChevronLeft, BookOpen, HelpCircle, CheckCircle, List, Clock, Zap, Award } from 'lucide-react';
 
 const QUESTION_TYPE_LABELS = {
   qcm: '🔘 QCM',

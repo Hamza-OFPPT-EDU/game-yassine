@@ -131,7 +131,56 @@ export function usePlayers() {
     await fetchPlayers();
   };
 
-  return { players, loading, fetchPlayers, createUser, deleteUser };
+  const createUsersBulk = async (usersData) => {
+    // 0. Fetch existing users to avoid duplicate usernames
+    const usernames = usersData.map(u => u.username);
+    const { data: existingUsers, error: checkError } = await supabase
+      .from('app_users')
+      .select('username')
+      .in('username', usernames);
+      
+    if (checkError) throw checkError;
+    const existingUsernames = new Set((existingUsers || []).map(u => u.username));
+    
+    const newUsers = usersData.filter(u => !existingUsernames.has(u.username));
+    
+    if (newUsers.length === 0) {
+      throw new Error("Tous les utilisateurs de la liste existent déjà.");
+    }
+
+    const appUsersToInsert = [];
+    const profilesToInsert = [];
+    
+    newUsers.forEach(u => {
+      const userId = crypto.randomUUID();
+      appUsersToInsert.push({
+        id: userId,
+        username: u.username,
+        password: u.password,
+        full_name: u.fullName,
+        site: u.site,
+        school_level: u.schoolLevel
+      });
+      profilesToInsert.push({
+        id: userId,
+        display_name: u.fullName || u.username,
+        profile_type: 'Le Stratège'
+      });
+    });
+
+    // Insert all app users
+    const { error: userError } = await supabase.from('app_users').insert(appUsersToInsert);
+    if (userError) throw userError;
+
+    // Insert all profiles
+    const { error: profileError } = await supabase.from('player_profiles').insert(profilesToInsert);
+    if (profileError) throw profileError;
+
+    await fetchPlayers();
+    return { added: newUsers.length, skipped: usersData.length - newUsers.length };
+  };
+
+  return { players, loading, fetchPlayers, createUser, deleteUser, createUsersBulk };
 }
 
 export function usePlayerDetail(playerId) {

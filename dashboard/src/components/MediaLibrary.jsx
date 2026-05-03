@@ -20,6 +20,9 @@ export default function MediaLibrary() {
   const [search, setSearch] = useState('');
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
   const [uploading, setUploading] = useState(false);
+  const [importUrl, setImportUrl] = useState('');
+  const [showUrlInput, setShowUrlInput] = useState(false);
+  const [importing, setImporting] = useState(false);
   const [copiedUrl, setCopiedUrl] = useState(null);
   const [editingFile, setEditingFile] = useState(null);
   const [assetConfigs, setAssetConfigs] = useState({});
@@ -149,6 +152,38 @@ export default function MediaLibrary() {
     }
   };
 
+  const handleImportFromUrl = async () => {
+    if (!importUrl) return;
+    setImporting(true);
+    try {
+      const response = await fetch(importUrl);
+      if (!response.ok) throw new Error('Impossible de récupérer l\'image. Vérifiez l\'URL ou les restrictions CORS.');
+      const blob = await response.blob();
+      
+      const urlPath = new URL(importUrl).pathname;
+      let filename = urlPath.split('/').pop() || `imported_${Date.now()}`;
+      if (!filename.includes('.')) {
+        const type = blob.type.split('/')[1] || 'png';
+        filename += `.${type}`;
+      }
+      
+      const cleanName = filename.replace(/[^\x00-\x7F]/g, "").replace(/\s+/g, "_");
+      const { error } = await supabase.storage.from(currentBucket).upload(cleanName, blob, {
+        upsert: true
+      });
+
+      if (error) throw error;
+      setImportUrl('');
+      setShowUrlInput(false);
+      await fetchFiles();
+    } catch (err) {
+      console.error('Error importing:', err);
+      alert('Erreur : ' + err.message + '\nNote: Certains sites bloquent l\'accès direct aux images (CORS).');
+    } finally {
+      setImporting(false);
+    }
+  };
+
   const deleteFile = async (name) => {
     if (!confirm(`Supprimer ${name} définitivement ?`)) return;
     try {
@@ -189,6 +224,13 @@ export default function MediaLibrary() {
               <Download size={16} /> Télécharger ({selection.length})
             </button>
           )}
+          <button 
+            className={`btn btn-ghost ${showUrlInput ? 'active' : ''}`} 
+            onClick={() => setShowUrlInput(!showUrlInput)}
+            title="Ajouter via un lien"
+          >
+            <Link size={16} />
+          </button>
           <label className={`btn btn-primary ${uploading ? 'loading' : ''}`} style={{ cursor: 'pointer' }}>
             <Upload size={16} /> {uploading ? 'Envoi...' : 'Ajouter'}
             <input type="file" hidden onChange={handleUpload} disabled={uploading} accept="image/*,video/*" />
@@ -198,6 +240,35 @@ export default function MediaLibrary() {
           </button>
         </div>
       </div>
+
+      {showUrlInput && (
+        <div className="url-import-bar fade-in" style={{ 
+          padding: '12px 20px', 
+          background: 'var(--bg-elevated)', 
+          borderBottom: '1px solid var(--border-light)',
+          display: 'flex',
+          gap: '10px',
+          alignItems: 'center'
+        }}>
+          <Link size={14} className="text-primary-light" />
+          <input 
+            type="text" 
+            placeholder="Collez l'URL de l'image ici..." 
+            value={importUrl}
+            onChange={e => setImportUrl(e.target.value)}
+            className="flex-1 bg-transparent border-none outline-none text-sm"
+            onKeyDown={e => e.key === 'Enter' && handleImportFromUrl()}
+          />
+          <button 
+            className={`btn btn-primary btn-sm ${importing ? 'loading' : ''}`} 
+            onClick={handleImportFromUrl}
+            disabled={importing || !importUrl}
+          >
+            {importing ? 'Importation...' : 'Importer'}
+          </button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setShowUrlInput(false)}>Annuler</button>
+        </div>
+      )}
 
       <div className="media-container">
         {/* Bucket Tabs */}
