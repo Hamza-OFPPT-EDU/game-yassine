@@ -173,7 +173,7 @@ export default function MapJourneyScreen({
                       />
                       
                       <motion.img
-                        src={cinematicCity.cinematicCharacter || "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/intro_caracter.gif"}
+                        src={cinematicCity.cinematicCharacter || "/assets/intro_caracter.gif"}
                         alt="Personnage"
                         animate={{ 
                           y: [0, -8, 0], // Subtle float
