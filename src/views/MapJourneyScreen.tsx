@@ -187,14 +187,20 @@ export default function MapJourneyScreen({
                       />
                     </motion.div>
 
-                    {/* Staggered Text Typing Effect */}
+                    {/* Narrative Introduction Box */}
                     <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
-                      className="bg-white/10 backdrop-blur-xl p-6 rounded-3xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] mx-4"
+                      transition={{ delay: 0.4, duration: 0.8 }}
+                      className="bg-black/20 backdrop-blur-2xl p-8 rounded-[40px] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.4)] mx-4 relative overflow-hidden group max-w-[400px]"
                     >
-                      <p className="text-voyage-accent font-black text-[10px] uppercase tracking-[0.4em] mb-2.5 opacity-80">Guide de l'aventure</p>
+                      {/* Decorative elements */}
+                      <div className="absolute -top-24 -left-24 w-48 h-48 bg-voyage-accent/10 blur-[60px] rounded-full transition-all duration-700" />
+                      
+                      <div className="flex flex-col items-center gap-2 mb-5">
+                        <div className="h-1 w-12 bg-voyage-accent/40 rounded-full" />
+                        <p className="text-voyage-accent font-black text-[11px] uppercase tracking-[0.5em] opacity-90">Guide de l'aventure</p>
+                      </div>
                       
                       <motion.div
                         initial="hidden"
@@ -206,14 +212,14 @@ export default function MapJourneyScreen({
                             transition: { staggerChildren: 0.015 }
                           }
                         }}
-                        className="text-white text-lg font-medium leading-relaxed"
+                        className="text-white/95 text-xl font-medium leading-[1.8] italic font-serif"
                       >
                         {cinematicCity.cinematicIntro.split('').map((char, index) => (
                           <motion.span
                             key={index}
                             variants={{
-                              hidden: { opacity: 0 },
-                              visible: { opacity: 1 }
+                              hidden: { opacity: 0, filter: 'blur(4px)' },
+                              visible: { opacity: 1, filter: 'blur(0px)' }
                             }}
                           >
                             {char}
