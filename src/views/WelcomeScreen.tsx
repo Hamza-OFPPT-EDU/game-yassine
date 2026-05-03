@@ -56,7 +56,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
                 initial={{ scale: 0.8, y: -20, opacity: 0 }}
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 transition={{ delay: 0.1, type: "spring", stiffness: 120, damping: 20 }}
-                src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo_voyage.png"
+                src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Logo-Voyage-de-comp%C3%A9tences.png"
                 alt="Le Voyage des Compétences"
                 className="w-full max-w-[400px] object-contain drop-shadow-2xl"
               />
