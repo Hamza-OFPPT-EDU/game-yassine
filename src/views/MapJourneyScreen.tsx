@@ -29,7 +29,7 @@ interface MapJourneyScreenProps {
 export default function MapJourneyScreen({
   stats, completedCities, completedMissions, onSelectCity
 }: MapJourneyScreenProps) {
-  const { playSound } = useAudio();
+  const { playSound, stopSound } = useAudio();
   const { cities, loading } = useSupabaseCities(completedCities, completedMissions);
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
   const [cinematicCity, setCinematicCity] = useState<City | null>(null);
