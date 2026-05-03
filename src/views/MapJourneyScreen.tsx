@@ -142,7 +142,7 @@ export default function MapJourneyScreen({
                     transition={{ duration: 4, repeat: Infinity }}
                     className="mx-auto flex items-center justify-center"
                   >
-                    {resolveCityIcon(cinematicCity, 40, 'text-[#D4A43E]')}
+                    {resolveCityIcon(cinematicCity, 60, 'text-[#D4A43E]')}
                   </motion.div>
 
                   <div className="space-y-2.5">
