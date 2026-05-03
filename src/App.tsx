@@ -34,7 +34,7 @@ export default function App() {
   const [selectedLeagueId, setSelectedLeagueId] = useState<string | null>(null);
   const [loadingMissions, setLoadingMissions] = useState(false);
   const [missionSummary, setMissionSummary] = useState<MissionCompletionSummary | null>(null);
-  const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(false);
+  const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(true);
   const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
   const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile();
   const [userStats, setUserStats] = useState({
@@ -42,7 +42,6 @@ export default function App() {
     stars: 120,
     level: 4,
   });
-  const [nextScreenAfterFullscreen, setNextScreenAfterFullscreen] = useState<Screen | null>(null);
 
   // Sync stats with profile once loaded
   useEffect(() => {
@@ -55,24 +54,14 @@ export default function App() {
     }
   }, [profile, profileLoading]);
 
-  /** Navigate to Challenge, showing the fullscreen prompt the first time. */
+  /** Navigate to Challenge. */
   const goToChallenge = () => {
-    if (!fullscreenShownOnce) {
-      setNextScreenAfterFullscreen(Screen.Challenge);
-      setShowFullscreenPrompt(true);
-    } else {
-      setCurrentScreen(Screen.Challenge);
-    }
+    setCurrentScreen(Screen.Challenge);
   };
 
-  /** Start the app journey from Welcome, showing the fullscreen prompt the first time. */
+  /** Start the app journey from Welcome. */
   const handleStartApp = () => {
-    if (!fullscreenShownOnce) {
-      setNextScreenAfterFullscreen(Screen.Map);
-      setShowFullscreenPrompt(true);
-    } else {
-      setCurrentScreen(Screen.Map);
-    }
+    setCurrentScreen(Screen.Map);
   };
 
   useEffect(() => {
@@ -166,6 +155,7 @@ export default function App() {
   const renderScreen = () => {
     switch (currentScreen) {
       case Screen.Splash:
+        if (!fullscreenShownOnce) return null;
         return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} />;
       case Screen.Welcome:
         return <WelcomeScreen onStart={handleStartApp} />;
@@ -298,18 +288,10 @@ export default function App() {
           onAccept={() => {
             setShowFullscreenPrompt(false);
             setFullscreenShownOnce(true);
-            if (nextScreenAfterFullscreen) {
-              setCurrentScreen(nextScreenAfterFullscreen);
-              setNextScreenAfterFullscreen(null);
-            }
           }}
           onDecline={() => {
             setShowFullscreenPrompt(false);
             setFullscreenShownOnce(true);
-            if (nextScreenAfterFullscreen) {
-              setCurrentScreen(nextScreenAfterFullscreen);
-              setNextScreenAfterFullscreen(null);
-            }
           }}
         />
       </div>
