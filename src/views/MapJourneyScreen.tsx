@@ -184,7 +184,7 @@ export default function MapJourneyScreen({
                           repeat: Infinity, 
                           ease: "easeInOut" 
                         }}
-                        className="w-[240px] h-[240px] mx-auto object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.4)] relative z-10"
+                        className="w-[288px] h-[288px] mx-auto object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.4)] relative z-10"
                       />
                     </motion.div>
 
