@@ -35,6 +35,16 @@ export default function MapJourneyScreen({
   const [cinematicCity, setCinematicCity] = useState<City | null>(null);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true);
 
+  // Auto-play intro voice for Rabat
+  useEffect(() => {
+    if (cinematicCity?.name === 'Rabat') {
+      playSound('rabat_intro');
+    }
+    return () => {
+      stopSound('rabat_intro');
+    };
+  }, [cinematicCity, playSound, stopSound]);
+
   // Refs pour scroll automatique
   const activeCityRef = useRef<HTMLDivElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);

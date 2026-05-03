@@ -12,7 +12,7 @@ export interface AudioSettings {
   musicVolume: number;
 }
 
-export type SoundType = 'correct' | 'wrong' | 'click' | 'match' | 'success' | 'whoosh';
+export type SoundType = 'correct' | 'wrong' | 'click' | 'match' | 'success' | 'whoosh' | 'rabat_intro';
 
 const SOUND_FILES: Record<SoundType, string> = {
   correct: '/audio/correct.mp3',
@@ -21,6 +21,7 @@ const SOUND_FILES: Record<SoundType, string> = {
   match:   '/audio/match.mp3',
   success: '/audio/success.mp3',
   whoosh:  '/audio/whoosh.mp3',
+  rabat_intro: '/audio/rabat_intro_voice.mp3',
 };
 
 const BACKGROUND_MUSIC = '/audio/background-theme.mp3';
@@ -45,6 +46,7 @@ interface AudioContextType {
   settings: AudioSettings;
   updateSettings: (patch: Partial<AudioSettings>) => void;
   playSound: (type: SoundType) => void;
+  stopSound: (type: SoundType) => void;
   saveToCloud: () => Promise<boolean>;
   loading: boolean;
 }
@@ -123,6 +125,14 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     } catch (_) {}
   }, [settings, getSetting]);
 
+  const stopSound = useCallback((type: SoundType) => {
+    try {
+      const audio = getAudioElement(type);
+      audio.pause();
+      audio.currentTime = 0;
+    } catch (_) {}
+  }, []);
+
   const updateSettings = useCallback((patch: Partial<AudioSettings>) => {
     setSettings(prev => ({ ...prev, ...patch }));
   }, []);
@@ -137,6 +147,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       settings, 
       updateSettings, 
       playSound, 
+      stopSound,
       saveToCloud, 
       loading: globalSettingsLoading || profileLoading 
     }}>
