@@ -61,13 +61,31 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         <motion.div 
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="relative mb-12 flex flex-col items-center justify-center"
+          className="relative w-40 h-40 mb-12 flex items-center justify-center"
         >
-          <img 
-            src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png"
-            alt="Panneau d'introduction"
-            className="w-full max-w-[300px] object-contain drop-shadow-2xl"
+          {/* Animated Background Rings */}
+          <motion.div 
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0 rounded-full bg-voyage-accent/10"
           />
+          <motion.div 
+            animate={{ scale: [1.2, 1.4, 1.2], opacity: [0.1, 0.05, 0.1] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute inset-0 rounded-full bg-voyage-accent/5"
+          />
+          
+          <div className="w-32 h-32 rounded-full bg-white shadow-2xl flex items-center justify-center relative border-4 border-voyage-accent/20 overflow-hidden">
+            <Map className="text-voyage-accent" size={64} strokeWidth={2.5} />
+          </div>
+          
+          <motion.div 
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="absolute -top-2 -right-2 w-10 h-10 rounded-2xl bg-voyage-accent flex items-center justify-center shadow-lg border-b-4 border-voyage-accent-dark"
+          >
+            <Star className="text-white" size={20} fill="currentColor" />
+          </motion.div>
         </motion.div>
 
         <motion.div
