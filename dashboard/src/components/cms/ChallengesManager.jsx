@@ -20,6 +20,8 @@ const EMPTY = {
   step_label: '', progress: 0.25, illustration_url: '',
   sort_order: 0, is_published: false,
   missions_title_fr: 'Missions :', missions_title_ar: 'المهمات :',
+  cinematic_intro: '', cinematic_character: 'intro_caracter', acte_title: '',
+  pedagogical_theories: '', learning_outcomes: '',
 };
 
 export default function ChallengesManager({ onSelectChallenge, onViewCurriculum }) {
@@ -182,6 +184,19 @@ export default function ChallengesManager({ onSelectChallenge, onViewCurriculum 
             </div>
 
             <div className="form-row-2">
+              <Field label="Titre de l'Acte (ex: Acte I)" hint="Utilisé dans les cinématiques">
+                <Input value={modal.acte_title} onChange={v => set('acte_title', v)} placeholder="Acte I : Le Réveil" />
+              </Field>
+              <Field label="Personnage Cinématique" hint="Nom technique de l'image (défaut: intro_caracter)">
+                <Input value={modal.cinematic_character} onChange={v => set('cinematic_character', v)} placeholder="intro_caracter" />
+              </Field>
+            </div>
+
+            <Field label="Texte Cinématique d'Introduction">
+              <Textarea value={modal.cinematic_intro} onChange={v => set('cinematic_intro', v)} placeholder="Bienvenue dans cette aventure..." rows={3} />
+            </Field>
+
+            <div className="form-row-2">
               <Field label="Titre accrocheur (FR) *">
                 <Input value={modal.headline_fr} onChange={v => set('headline_fr', v)} placeholder="Le Cœur Institutionnel du Royaume" />
               </Field>
@@ -194,28 +209,35 @@ export default function ChallengesManager({ onSelectChallenge, onViewCurriculum 
               <Field label="Description (FR) *">
                 <Textarea value={modal.description_fr} onChange={v => set('description_fr', v)} placeholder="Depuis la Kasbah des Oudayas…" rows={4} />
               </Field>
-            <div className="form-row-2">
               <Field label="Description (AR)">
                 <Textarea value={modal.description_ar} onChange={v => set('description_ar', v)} placeholder="من قصبة الأوداية…" rows={4} dir="rtl" />
-              </Field>
-              <Field label="Libellé bloc missions (FR)" hint="Titre au-dessus des jetons missions (ex: Missions :)">
-                <Input value={modal.missions_title_fr} onChange={v => set('missions_title_fr', v)} placeholder="Missions :" />
               </Field>
             </div>
 
             <div className="form-row-2">
-               <Field label="Libellé bloc missions (AR)">
+              <Field label="Libellé bloc missions (FR)" hint="Titre au-dessus des jetons missions (ex: Missions :)">
+                <Input value={modal.missions_title_fr} onChange={v => set('missions_title_fr', v)} placeholder="Missions :" />
+              </Field>
+              <Field label="Libellé bloc missions (AR)">
                 <Input value={modal.missions_title_ar} onChange={v => set('missions_title_ar', v)} placeholder="المهمات :" dir="rtl" />
               </Field>
+            </div>
+
+            <div className="form-row-2">
               <Field label="Focus pédagogique">
                 <Input value={modal.focus_fr} onChange={v => set('focus_fr', v)} placeholder="Gouvernance & Patrimoine" />
               </Field>
-            </div>
               <Field label="Label d'étape">
                 <Input value={modal.step_label} onChange={v => set('step_label', v)} placeholder="ÉTAPE 1 / 4" />
               </Field>
+            </div>
+
+            <div className="form-row-2">
               <Field label="Progression (0–1)" hint="Ex: 0.25 = 25%">
                 <Input type="number" value={modal.progress} onChange={v => set('progress', parseFloat(v))} min="0" max="1" step="0.05" />
+              </Field>
+              <Field label="Ordre d'affichage">
+                <Input type="number" value={modal.sort_order} onChange={v => set('sort_order', parseInt(v))} min="0" />
               </Field>
             </div>
 
@@ -226,6 +248,15 @@ export default function ChallengesManager({ onSelectChallenge, onViewCurriculum 
                 folder={modal.city_id || 'general'}
               />
             </Field>
+
+            <div className="form-row-2">
+              <Field label="Théories Pédagogiques (JSON/Texte)">
+                <Textarea value={modal.pedagogical_theories} onChange={v => set('pedagogical_theories', v)} placeholder="Théorie de..." rows={2} />
+              </Field>
+              <Field label="Résultats d'apprentissage">
+                <Textarea value={modal.learning_outcomes} onChange={v => set('learning_outcomes', v)} placeholder="L'élève saura..." rows={2} />
+              </Field>
+            </div>
 
             <div className="form-row-2">
               <Field label="Ordre d'affichage">

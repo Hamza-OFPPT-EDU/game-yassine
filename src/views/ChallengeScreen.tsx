@@ -565,11 +565,31 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
       </div>
       
       <main className="grow pt-40 pb-32 px-6 max-w-2xl mx-auto w-full relative z-10 overflow-y-auto scrollbar-hide">
-        <div className="mb-8 space-y-3">
+        <div className="mb-8 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-voyage-accent/10 rounded-full border border-voyage-accent/20">
              <span className="text-[10px] font-black text-voyage-accent uppercase tracking-widest">{challenge.type.replace('-', ' ')}</span>
           </div>
-          <h2 className="text-2xl font-black text-duo-eel leading-tight tracking-tight">{challenge.question}</h2>
+          
+          {challenge.content && challenge.content[0] && challenge.type !== 'fill-in-blanks' && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-voyage-accent/5 p-4 rounded-2xl border-2 border-voyage-accent/10 mb-4"
+            >
+              <p className="text-sm font-bold text-voyage-primary/80 leading-relaxed italic">
+                {challenge.content[0]}
+              </p>
+            </motion.div>
+          )}
+
+          <div className="space-y-2 text-center">
+            <h2 className="text-2xl font-black text-duo-eel leading-tight tracking-tight">{challenge.question}</h2>
+            {challenge.arabicQuestion && (
+              <h3 className="text-3xl font-bold text-voyage-accent leading-tight arabic-font" dir="rtl">
+                {challenge.arabicQuestion}
+              </h3>
+            )}
+          </div>
         </div>
 
         <motion.div 

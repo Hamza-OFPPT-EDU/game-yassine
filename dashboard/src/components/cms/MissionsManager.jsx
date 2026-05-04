@@ -13,6 +13,9 @@ const MISSION_TYPES = [
 const EMPTY = {
   title_fr: '', title_ar: '', description_fr: '', description_ar: '',
   mission_type: 'challenge', xp_reward: 50, sort_order: 0, is_published: false,
+  mentor_name: '', mentor_role: '', script_opening: '', script_closing: '',
+  narration: { intro: { texte: '', consigne: '', objectif: '' } },
+  soft_skill_dominant: '', bloom_level: '',
 };
 
 export default function MissionsManager({ challenge, onSelectMission, onBack }) {
@@ -172,11 +175,45 @@ export default function MissionsManager({ challenge, onSelectMission, onBack }) 
             </div>
 
             <div className="form-row-2">
+              <Field label="Mentor : Nom" hint="Ex: Amina, Grand-père Driss">
+                <Input value={modal.mentor_name} onChange={v => set('mentor_name', v)} placeholder="Amina" />
+              </Field>
+              <Field label="Mentor : Rôle" hint="Ex: Guide Expert, Mentor Sagesse">
+                <Input value={modal.mentor_role} onChange={v => set('mentor_role', v)} placeholder="Guide Expert" />
+              </Field>
+            </div>
+
+            <div className="form-row-2">
+              <Field label="Script d'ouverture (Story FR)">
+                <Textarea value={modal.script_opening} onChange={v => set('script_opening', v)} placeholder="Bienvenue à..." rows={3} />
+              </Field>
+              <Field label="Narration (JSON)" hint="Structure : { intro: { texte, consigne, objectif } }">
+                <Textarea 
+                  value={typeof modal.narration === 'string' ? modal.narration : JSON.stringify(modal.narration, null, 2)} 
+                  onChange={v => {
+                    try { set('narration', JSON.parse(v)); } catch(e) { set('narration', v); }
+                  }}
+                  placeholder="{...}"
+                  rows={5}
+                />
+              </Field>
+            </div>
+
+            <div className="form-row-2">
               <Field label="Description (FR)">
                 <Textarea value={modal.description_fr} onChange={v => set('description_fr', v)} placeholder="La famille Ben Ali doit…" rows={3} />
               </Field>
               <Field label="Description (AR)">
                 <Textarea value={modal.description_ar} onChange={v => set('description_ar', v)} placeholder="يجب على عائلة بن علي…" rows={3} dir="rtl" />
+              </Field>
+            </div>
+
+            <div className="form-row-2">
+              <Field label="Soft Skill Dominante" hint="Ex: Empathie, Négociation">
+                <Input value={modal.soft_skill_dominant} onChange={v => set('soft_skill_dominant', v)} placeholder="Empathie" />
+              </Field>
+              <Field label="Niveau Bloom" hint="Ex: Application, Analyse">
+                <Input value={modal.bloom_level} onChange={v => set('bloom_level', v)} placeholder="Application" />
               </Field>
             </div>
 

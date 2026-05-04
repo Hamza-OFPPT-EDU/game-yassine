@@ -104,29 +104,51 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
 
             {/* Text Content */}
             <div className="text-center space-y-4">
-              <h1 className="font-headline font-black text-3xl text-voyage-primary tracking-tight leading-tight">
-                {mission?.title_fr || "Prêt pour le défi ?"}
-              </h1>
+              <div className="space-y-1">
+                <h1 className="font-headline font-black text-3xl text-voyage-primary tracking-tight leading-tight">
+                  {mission?.title_fr || "Prêt pour le défi ?"}
+                </h1>
+                {mission?.title_ar && (
+                  <h2 className="font-bold text-2xl text-voyage-accent arabic-font" dir="rtl">
+                    {mission.title_ar}
+                  </h2>
+                )}
+              </div>
 
               <div className="bg-voyage-accent/5 rounded-3xl p-6 border-2 border-voyage-accent/20 relative">
                 <div className="absolute -top-4 left-6 bg-white border-2 border-voyage-accent/20 px-3 py-1 rounded-full text-[9px] font-black text-voyage-primary uppercase tracking-widest">
-                  Objectif
+                  {mission?.narration?.intro?.objectif ? "Objectif" : "Objectif"}
                 </div>
                 <p className="text-voyage-primary/80 font-bold leading-relaxed">
-                  {mission?.description_fr || city.description}
+                  {mission?.narration?.intro?.texte || mission?.description_fr || city.description}
                 </p>
                 {mission?.description_ar && (
                   <p className="text-voyage-accent font-bold text-lg mt-4 arabic-font" dir="rtl">
                     {mission.description_ar}
                   </p>
                 )}
+                {mission?.narration?.intro?.consigne && (
+                  <div className="mt-4 pt-4 border-t border-voyage-accent/10">
+                    <p className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.2em] mb-1">Consigne</p>
+                    <p className="text-xs font-bold text-voyage-primary/60 italic">
+                      {mission.narration.intro.consigne}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Mentor Dialogue */}
-              <div className="text-left mt-6">
-                <div className="bg-white border-2 border-voyage-accent/20 p-4 rounded-3xl relative shadow-sm w-full">
+              <div className="text-left mt-6 flex gap-4 items-start">
+                <div className="w-12 h-12 rounded-2xl bg-voyage-primary/10 flex items-center justify-center shrink-0 border-2 border-voyage-primary/20 shadow-sm">
+                  <User className="text-voyage-primary" size={24} />
+                </div>
+                <div className="bg-white border-2 border-voyage-accent/20 p-4 rounded-3xl relative shadow-sm flex-1">
+                  <div className="absolute -left-2 top-4 w-4 h-4 bg-white border-l-2 border-t-2 border-voyage-accent/20 rotate-[-45deg]" />
                   <p className="text-sm font-bold text-voyage-primary italic">
-                    <span className="text-[10px] uppercase tracking-widest text-voyage-primary/60 block not-italic mb-1">Coach Yassine</span>
+                    <span className="text-[10px] uppercase tracking-widest text-voyage-primary/60 block not-italic mb-1">
+                      {mission?.mentor_name || "Coach Yassine"} 
+                      {mission?.mentor_role ? ` (${mission.mentor_role})` : ''}
+                    </span>
                     "{mission?.script_opening || "Allez, on y va ! Montre-moi ce que tu sais faire."}"
                   </p>
                 </div>

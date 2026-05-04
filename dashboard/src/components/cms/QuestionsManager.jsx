@@ -25,6 +25,9 @@ const EMPTY = {
   score_decision: 0, score_equipe: 0, score_stress: 0,
   xp_reward: 20, time_limit_sec: 30,
   hint_fr: '', hint_ar: '', explanation_fr: '', explanation_ar: '',
+  presentation_fr: '', presentation_ar: '',
+  feedback_positive_fr: '', feedback_negative_fr: '',
+  feedback_positive_ar: '', feedback_negative_ar: '',
   sort_order: 0, is_published: false,
 };
 
@@ -414,6 +417,15 @@ export default function QuestionsManager({ mission, challenge, onBack }) {
             </Field>
 
             <div className="form-row-2">
+              <Field label="Présentation / Contexte (FR)">
+                <Textarea value={modal.presentation_fr} onChange={v => set('presentation_fr', v)} placeholder="Imaginez que vous êtes..." rows={2} />
+              </Field>
+              <Field label="Présentation / Contexte (AR)">
+                <Textarea value={modal.presentation_ar} onChange={v => set('presentation_ar', v)} placeholder="تخيل أنك..." rows={2} dir="rtl" />
+              </Field>
+            </div>
+
+            <div className="form-row-2">
               <Field label="Question (FR) *">
                 <div className="textarea-tools">
                    <button type="button" className="tool-btn" onClick={() => set('question_fr', modal.question_fr + ' ________ ')}>
@@ -424,7 +436,7 @@ export default function QuestionsManager({ mission, challenge, onBack }) {
               </Field>
               <Field label="Question (AR)">
                 <div className="textarea-tools">
-                   <button type="button" className="tool-btn" onClick={() => set('question_ar', modal.question_ar + ' ________ ')}>
+                   <button type="button" className="tool-btn" onClick={() => set('question_ar', (modal.question_ar || '') + ' ________ ')}>
                      إدراج مساحة (________)
                    </button>
                 </div>
@@ -538,6 +550,24 @@ export default function QuestionsManager({ mission, challenge, onBack }) {
               </Field>
               <Field label="Ordre">
                 <Input type="number" value={modal.sort_order} onChange={v => set('sort_order', parseInt(v)||0)} min="0" />
+              </Field>
+            </div>
+
+            <div className="form-row-2">
+              <Field label="Feedback Réussite (FR)">
+                <Input value={modal.feedback_positive_fr} onChange={v => set('feedback_positive_fr', v)} placeholder="Excellent !" />
+              </Field>
+              <Field label="Feedback Réussite (AR)">
+                <Input value={modal.feedback_positive_ar} onChange={v => set('feedback_positive_ar', v)} placeholder="ممتاز !" dir="rtl" />
+              </Field>
+            </div>
+
+            <div className="form-row-2">
+              <Field label="Feedback Échec (FR)">
+                <Input value={modal.feedback_negative_fr} onChange={v => set('feedback_negative_fr', v)} placeholder="Pas tout à fait..." />
+              </Field>
+              <Field label="Feedback Échec (AR)">
+                <Input value={modal.feedback_negative_ar} onChange={v => set('feedback_negative_ar', v)} placeholder="ليس تماما..." dir="rtl" />
               </Field>
             </div>
 
