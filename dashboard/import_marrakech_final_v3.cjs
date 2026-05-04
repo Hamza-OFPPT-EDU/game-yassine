@@ -1,7 +1,8 @@
+require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 
-const supabaseUrl = 'https://rydmefudpczpxrresflx.supabase.co';
-const supabaseKey = 'sb_publishable_SJ7HMAttFOIXccq61FRpMg_A0vpkgQ_';
+const supabaseUrl = process.env.VITE_SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const MARRAKECH_CHALLENGE_PK = '98b50e2ddc9943efb387052637738f64';
@@ -39,8 +40,8 @@ async function importMarrakech() {
     city_id: 'marrakech',
     city_name_fr: 'Marrakech',
     city_name_ar: 'مراكش',
-    description_fr: "Marrakech, ville du business et du tourisme, vous invite à évaluer : juger la qualité des décisions, critiquer avec des arguments solides, choisir entre des options toutes valables, et justifier vos choix avec des critères explicites.",
-    headline_fr: '🏜️ ACTE IV - LA PERLE DU SUD : L\'ÉVALUATION',
+    description_fr: `Marrakech, ville du business et du tourisme, vous invite à évaluer : juger la qualité des décisions, critiquer avec des arguments solides, choisir entre des options toutes valables, et justifier vos choix avec des critères explicites.`,
+    headline_fr: `🏜️ ACTE IV - LA PERLE DU SUD : L'ÉVALUATION`,
     sort_order: 4,
     is_published: true,
     city_color: '#e11d48',
@@ -54,11 +55,11 @@ async function importMarrakech() {
     {
       id: MISSION_IDS.M1,
       title_fr: 'Mission M1 : Startup Tech - Le Pitch d’Or',
-      description_fr: "Mentor: Mehdi (Entrepreneur). Soft Skill: Prise de décision (ÉVALUATION). Apprenez à évaluer la viabilité d'un projet et à critiquer de manière constructive.",
+      description_fr: `Mentor: Mehdi (Entrepreneur). Soft Skill: Prise de décision (ÉVALUATION). Apprenez à évaluer la viabilité d'un projet et à critiquer de manière constructive.`,
       questions: [
         {
           type: 'QCM',
-          q: 'Une startup propose une IA pour "traduire le silence". Quel est votre jugement critique prioritaire ?',
+          q: `Une startup propose une IA pour "traduire le silence". Quel est votre jugement critique prioritaire ?`,
           options: [
             { id: 'A', label_fr: `Le design de l'application` },
             { id: 'B', label_fr: `La pertinence du besoin client (Product-Market Fit)` },
@@ -91,7 +92,7 @@ async function importMarrakech() {
           ],
           correct: 'B',
           pos: `Bravo ! L'évaluation n'est pas une opinion, c'est un jugement basé sur des critères explicites.`,
-          neg: `Ne cédez pas à l'émotion. Justifiez votre position par des faits et des critères.`
+          neg: `Ne cédez pas à l'émotion. Justifiez votre position par des faits and des critères.`
         },
         {
           type: 'Classement',
@@ -103,13 +104,13 @@ async function importMarrakech() {
             { label_fr: `Émettre un jugement argumenté` }
           ],
           pos: `Méthode parfaite. C'est le coeur du niveau Bloom 5.`,
-          neg: `On ne juge pas avant d'avoir collecté les données et défini les critères.`
+          neg: `On ne juge pas avant d'avoir collecté les données and défini les critères.`
         },
         {
           type: 'Vrai/Faux',
           q: `« L'évaluation doit toujours être négative pour être utile. »`,
           correct: 'faux',
-          pos: `Exact ! Évaluer, c'est peser le positif et le négatif par rapport à un objectif.`,
+          pos: `Exact ! Évaluer, c'est peser le positif and le négatif par rapport à un objectif.`,
           neg: `Critiquer n'est pas démolir. C'est analyser la valeur réelle, bonne ou mauvaise.`
         },
         {
@@ -122,7 +123,7 @@ async function importMarrakech() {
             { text_fr: `« Analyse des risques détaillée »`, is_error: false }
           ],
           pos: `Vigilance critique activée ! L'absence de concurrents est souvent le signe d'un marché inexistant.`,
-          neg: `Une croissance "garantie" et une équipe non diversifiée sont des signes de danger.`
+          neg: `Une croissance "garantie" and une équipe non diversifiée sont des signes de danger.`
         },
         {
           type: 'Texte à trous',
@@ -177,7 +178,7 @@ async function importMarrakech() {
               }
             ]
           },
-          pos: `Audit logique et implacable. Vous évaluez les causes réelles.`,
+          pos: `Audit logique and implacable. Vous évaluez les causes réelles.`,
           neg: `Les décisions impulsives sans évaluation des causes mènent à l'échec.`
         },
         {
@@ -190,7 +191,7 @@ async function importMarrakech() {
           ],
           correct: 'B',
           pos: `Le jugement argumenté est votre outil le plus précieux à Marrakech.`,
-          neg: `C'est le jugement qui permet de mesurer l'écart entre le réel et l'idéal.`
+          neg: `C'est le jugement qui permet de mesurer l'écart entre le réel and l'idéal.`
         }
       ]
     },
@@ -210,7 +211,7 @@ async function importMarrakech() {
           ],
           correct: 'B',
           pos: `Exact ! Dans le luxe, l'évaluation porte autant sur l'émotion que sur la technique.`,
-          neg: `Le protocole ne suffit pas si l'âme et l'hospitalité manquent.`
+          neg: `Le protocole ne suffit pas si l'âme and l'hospitalité manquent.`
         },
         {
           type: 'Appariement',
@@ -240,7 +241,7 @@ async function importMarrakech() {
           type: 'Vrai/Faux',
           q: `« Dans un Riad, la tradition prime toujours sur les standards internationaux de luxe. »`,
           correct: 'faux',
-          pos: `Juste ! L'excellence réside dans l'équilibre évalué entre authenticité et standards.`,
+          pos: `Juste ! L'excellence réside dans l'équilibre évalué entre authenticité and standards.`,
           neg: `Le luxe exige les deux. Il faut savoir quand privilégier l'un ou l'autre.`
         },
         {
@@ -252,8 +253,8 @@ async function importMarrakech() {
             { text_fr: `Ne pas faire mousser le thé`, is_error: true },
             { text_fr: `Servir les aînés en premier`, is_error: false }
           ],
-          pos: `Précision culturelle ! Ces détails font la différence entre un 3* et un 5*.`,
-          neg: `La main gauche et le manque de mousse sont des fautes graves de savoir-vivre ici.`
+          pos: `Précision culturelle ! Ces détails font la différence entre un 3* and un 5*.`,
+          neg: `La main gauche and le manque de mousse sont des fautes graves de savoir-vivre ici.`
         },
         {
           type: 'Classement',
@@ -265,7 +266,7 @@ async function importMarrakech() {
             { label_fr: `Proposer deux solutions évaluées` }
           ],
           pos: `L'ordre de la désescalade. L'écoute vient avant l'action.`,
-          neg: `Ne proposez pas de solution avant d'avoir écouté et validé l'émotion.`
+          neg: `Ne proposez pas de solution avant d'avoir écouté and validé l'émotion.`
         },
         {
           type: 'Texte à trous',
@@ -275,7 +276,7 @@ async function importMarrakech() {
           ],
           correct: 'générosité, rigueur',
           pos: `C'est l'alliance de ces deux mondes que vous évaluez chaque jour.`,
-          neg: `Générosité et rigueur sont les deux piliers du Riad moderne.`
+          neg: `Générosité and rigueur sont les deux piliers du Riad moderne.`
         },
         {
           type: 'Contre-la-montre',
@@ -287,7 +288,7 @@ async function importMarrakech() {
           ],
           correct: 'B',
           pos: `L'hygiène ne se négocie pas. Évaluation sans concession.`,
-          neg: `Les mouches et l'absence de toque sont des motifs de fermeture immédiate.`
+          neg: `Les mouches and l'absence de toque sont des motifs de fermeture immédiate.`
         },
         {
           type: 'Scénario en cascade',
@@ -407,7 +408,7 @@ async function importMarrakech() {
             { text_fr: `Offrir un échantillon gratuit`, is_error: false }
           ],
           pos: `L'intégrité est le socle d'une réputation durable.`,
-          neg: `Le mensonge et la manipulation détruisent la confiance.`
+          neg: `Le mensonge and la manipulation détruisent la confiance.`
         },
         {
           type: 'Texte à trous',
@@ -416,7 +417,7 @@ async function importMarrakech() {
             { text: 'valeur' }, { text: 'prix' }
           ],
           correct: 'valeur, prix',
-          pos: `Exact ! Savoir évaluer l'écart entre prix et valeur est la clé du commerce.`,
+          pos: `Exact ! Savoir évaluer l'écart entre prix and valeur est la clé du commerce.`,
           neg: `Le prix est ce que vous payez, la valeur est ce que vous recevez.`
         },
         {
@@ -507,7 +508,7 @@ async function importMarrakech() {
             { left_fr: `Alerte Rouge`, right_fr: `Action immédiate et protection` }
           ],
           pos: `Gestion des seuils d'alerte maîtrisée.`,
-          neg: `Ne confondez pas vigilance et action immédiate.`
+          neg: `Ne confondez pas vigilance and action immédiate.`
         },
         {
           type: 'Dialogue de situation',
@@ -519,7 +520,7 @@ async function importMarrakech() {
           ],
           correct: 'B',
           pos: `Garder la tête froide par l'analyse factuelle. C'est la gestion du stress par l'évaluation.`,
-          neg: `La panique est contagieuse. Répondez par des chiffres et des zones sûres.`
+          neg: `La panique est contagieuse. Répondez par des chiffres and des zones sûres.`
         },
         {
           type: 'Vrai/Faux',
@@ -538,7 +539,7 @@ async function importMarrakech() {
             { text_fr: `Signalisation lumineuse autonome`, is_error: false }
           ],
           pos: `Audit de sécurité vital. Vous avez l'oeil du préventeur.`,
-          neg: `Pas d'ascenseur, rassemblement extérieur, et leaders clairs sont obligatoires.`
+          neg: `Pas d'ascenseur, rassemblement extérieur, and leaders clairs sont obligatoires.`
         },
         {
           type: 'Classement',
@@ -550,7 +551,7 @@ async function importMarrakech() {
             { label_fr: `Communiquer au public/médias` }
           ],
           pos: `Maîtrise de la chaîne de l'information. Pas de rumeur.`,
-          neg: `Ne parlez jamais aux médias avant d'avoir vérifié l'info et prévenu les autorités.`
+          neg: `Ne parlez jamais aux médias avant d'avoir vérifié l'info and prévenu les autorités.`
         },
         {
           type: 'Texte à trous',
@@ -707,14 +708,14 @@ async function importMarrakech() {
               }
             ]
           },
-          pos: `Leadership accompli. Vous évaluez avec sagesse et responsabilité.`,
+          pos: `Leadership accompli. Vous évaluez avec sagesse and responsabilité.`,
           neg: `Le profit seul est une vision pauvre. L'ambition sans transmission est vaine.`
         },
         {
           type: 'Vrai/Faux',
           q: `« On peut tout évaluer avec des chiffres. »`,
           correct: 'faux',
-          pos: `Faux. La dignité, la culture et l'émotion ne se chiffrent pas, mais s'évaluent par le coeur et l'esprit.`,
+          pos: `Faux. La dignité, la culture and l'émotion ne se chiffrent pas, mais s'évaluent par le coeur and l'esprit.`,
           neg: `Le piège du "tout-quantitatif" est une erreur de jugement classique.`
         },
         {
@@ -727,7 +728,7 @@ async function importMarrakech() {
             { text_fr: `Pensée critique et divergente`, is_error: false }
           ],
           pos: `Vigilance épistémologique ! Vous protégez la qualité du débat.`,
-          neg: `Le consensus forcé et l'obéissance aveugle sont les ennemis du jugement.`
+          neg: `Le consensus forcé and l'obéissance aveugle sont les ennemis du jugement.`
         },
         {
           type: 'Texte à trous',
@@ -773,46 +774,48 @@ async function importMarrakech() {
     // A. Upsert Mission
     const { error: mErr } = await supabase.from('missions').upsert({
       id,
+      city_id: MARRAKECH_CHALLENGE_PK,
       challenge_id: MARRAKECH_CHALLENGE_PK,
       title_fr,
       description_fr,
       xp_reward: 1000,
-      sort_order: parseInt(id.slice(-1))
+      sort_order: parseInt(id.slice(-1)) || 1
     });
 
     if (mErr) { console.error(`Error upserting mission ${title_fr}:`, mErr); continue; }
     console.log(`✅ Mission ${title_fr} upserted`);
 
-    // B. Delete existing questions for this mission
     await supabase.from('questions').delete().eq('mission_id', id);
 
-    // C. Insert new questions
     const questionsToInsert = questions.map((q, idx) => {
       const type = TYPE_MAPPING[q.type] || 'qcm';
-      const questionData = {
+      let optionsData = q.options;
+
+      if (type === 'matching' || type === 'team_roles') {
+        optionsData = { pairs: q.options.map(o => ({ left: o.left_fr, right: o.right_fr })) };
+      } else if (type === 'fill_blanks') {
+        optionsData = { bank: q.options.map(o => ({ text: o.text })) };
+      } else if (type === 'ranking') {
+        optionsData = q.options.map(o => ({ label: o.label_fr }));
+      } else if (type === 'error_detection') {
+        optionsData = q.options.map(o => ({ text_fr: o.text_fr, is_error: o.is_error }));
+      }
+
+      return {
         mission_id: id,
-        type,
-        question_text_fr: q.q,
-        correct_answer: q.correct || null,
-        options: q.options || null,
-        xp_reward: 100,
+        question_type: type,
+        question_fr: q.q,
+        options: optionsData || [],
+        correct_answer: q.correct || '',
+        feedback_positive_fr: q.pos || '',
+        feedback_negative_fr: q.neg || '',
+        explanation_fr: q.pos || '',
+        hint_fr: q.neg || '',
+        xp_reward: type === 'puzzle_riddle' ? 250 : 100,
+        time_limit_sec: 45,
         sort_order: idx + 1,
-        feedback_positive_fr: q.pos,
-        feedback_negative_fr: q.neg
+        is_published: true
       };
-
-      if (type === 'vrai_faux' && !q.options) {
-        questionData.options = [
-          { id: 'vrai', label_fr: 'VRAI' },
-          { id: 'faux', label_fr: 'FAUX' }
-        ];
-      }
-
-      if (type === 'scenario_cascade') {
-        questionData.options = q.options;
-      }
-
-      return questionData;
     });
 
     const { error: qErr } = await supabase.from('questions').insert(questionsToInsert);

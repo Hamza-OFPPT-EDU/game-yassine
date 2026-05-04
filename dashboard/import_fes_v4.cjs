@@ -28,20 +28,55 @@ const TYPE_MAPPING = {
   'Énigme': 'puzzle_riddle',
   'Rôles d’équipe': 'team_roles',
   'Prise de décision': 'scenario_decision',
-  'Réponse courte': 'short_answer'
+  'Réponse courte': 'short_answer',
+  'Énigme ultime': 'puzzle_riddle',
+  'Vrai/Faux analytique': 'vrai_faux'
 };
 
 async function importFes() {
-  console.log('🚀 Starting Fès HIGH-FIDELITY (Acte III) import...');
+  console.log('🚀 Starting Fès (Acte III) import v4...');
 
   // 1. Upsert City (Challenge)
+  const cityDescription = `# 🕌 ACTE III - FÈS : CAPITALE SPIRITUELLE ET INTELLECTUELLE
+
+## 📖 Brief narratif
+Ishaq analyse équipes, stress, décisions et systèmes avec des maîtres artisans, scientifiques et restaurateurs de la médina.
+
+---
+
+## 🏙️ Page de présentation de Fès
+
+### 🎯 Ce que vous allez apprendre dans cette ville
+Fès, plus vieille cité universitaire du monde, vous invite à **analyser** en profondeur : pourquoi les équipes échouent, comment le stress s’installe, pourquoi les décisions déraillent, et comment tradition et innovation coexistent.
+
+### 📋 Les 5 missions
+
+| Mission | Lieu | Soft skill dominant |
+|---------|------|---------------------|
+| F1 | Atelier de calligraphie | Travail en équipe (analyse) |
+| F2 | Tanneries Chouara | Gestion du stress (analyse) |
+| F3 | Université Sidi Mohamed Ben Abdellah | Prise de décision (analyse) |
+| F4 | Medersa Bou Inania | Analyse systémique |
+| F5 | Festival de Fès | Synthèse analytique |
+
+### 🧠 Compétences clés de cette ville
+- Analyser les dysfonctions d’équipe (Lencioni)
+- Maîtriser l’analyse causale des conflits
+- Appliquer le modèle du fromage suisse (Reason)
+- Diagnostiquer le stress chronique avec Selye
+- Éviter le Groupthink (Janis)
+- Utiliser l’analyse du chemin critique (CPM)
+- Résoudre des dilemmes éthiques complexes
+- Pratiquer la pensée systémique (Senge)
+- Cartographier les parties prenantes (Freeman)`;
+
   const { error: cityErr } = await supabase.from('challenges').upsert({
     id: FES_CHALLENGE_PK,
     city_id: 'fes',
     city_name_fr: 'Fès',
     city_name_ar: 'فاس',
     headline_fr: `🕌 ACTE III - FÈS : CAPITALE SPIRITUELLE ET INTELLECTUELLE`,
-    description_fr: `Fès, plus vieille cité universitaire du monde, vous invite à analyser en profondeur : pourquoi les équipes échouent, comment le stress s’installe, pourquoi les décisions déraillent, et comment tradition et innovation coexistent.`,
+    description_fr: cityDescription,
     sort_order: 3,
     is_published: true,
     city_color: '#1e40af',
@@ -55,7 +90,7 @@ async function importFes() {
     {
       id: MISSION_IDS.F1,
       title_fr: 'Mission F1 : L’Atelier de calligraphie',
-      description_fr: `Mentor: Maître Idris Fassi. Soft Skill: Travail en équipe (analyse). Comprendre pourquoi les équipes durent ou échouent à travers le modèle maître-apprenti et les dysfonctions de Lencioni.`,
+      description_fr: `Lieu: Atelier de calligraphie. Soft skill: Travail en équipe (analyse). Ishaq analyse les équipes avec des maîtres artisans.`,
       questions: [
         {
           type: 'QCM',
@@ -155,7 +190,7 @@ async function importFes() {
             { text_fr: 'Recrutement sur diplômes sans essai', is_error: true },
             { text_fr: '2 jours théorie puis production', is_error: true },
             { text_fr: 'Turnover 80% (conséquence)', is_error: true },
-            { text_fr: 'Rôles clairement définis', is_error: false }
+            { text_fr: 'Structure hiérarchique claire', is_error: false }
           ],
           pos: `Analyse systémique ! Chaque erreur est expliquée avec sa conséquence. Pensée Senge.`,
           neg: `Relisez : structure, spécialisation, feedback, recrutement, progression, turnover.`
@@ -164,7 +199,7 @@ async function importFes() {
           type: 'Classement',
           q: `Classez les 7 éléments par priorité de transmission.`,
           options: [
-            { label_fr: 'Éthique (Priorité 1)' },
+            { label_fr: 'Éthique' },
             { label_fr: 'Philosophie' },
             { label_fr: 'Enseigner' },
             { label_fr: 'Geste' },
@@ -177,7 +212,7 @@ async function importFes() {
         },
         {
           type: 'Texte à trous',
-          q: `Le modèle de Lave & Wenger : Participation __________ __________.`,
+          q: `Complétez les concepts du modèle de Lave & Wenger.`,
           options: [
             { text: 'communauté' }, { text: 'pratique' }, { text: 'participation' }, { text: 'périphérique' }, { text: 'légitime' }, { text: 'observation' }, { text: 'participation' }, { text: 'identité' }
           ],
@@ -209,7 +244,7 @@ async function importFes() {
     {
       id: MISSION_IDS.F2,
       title_fr: 'Mission F2 : Les Tanneries Chouara',
-      description_fr: `Mentor: Saïd (Tanneur). Soft Skill: Gestion du stress (analyse). Diagnostiquer le stress chronique avec le modèle de Selye et le modèle du fromage suisse (Reason).`,
+      description_fr: `Lieu: Tanneries Chouara. Soft skill: Gestion du stress (analyse). Diagnostiquer le stress chronique avec Selye.`,
       questions: [
         {
           type: 'QCM',
@@ -240,7 +275,7 @@ async function importFes() {
         },
         {
           type: 'Scénario en cascade',
-          q: `Analyse d'un accident aux tanneries.`,
+          q: `Analyse d'un accident de travail.`,
           options: {
             steps: [
               {
@@ -267,8 +302,8 @@ async function importFes() {
               {
                 question: `Plan d’amélioration ?`,
                 responses: [
-                  { id: 'A', text: 'Punir les tanneurs' },
-                  { id: 'B', text: 'Changer les chaussures' },
+                  { id: 'A', text: 'Punition' },
+                  { id: 'B', text: 'Changement de bottes' },
                   { id: 'C', text: '4 niveaux : équipement, environnement, formation, culture (signalement sans punition).' }
                 ],
                 correct: 'C',
@@ -300,14 +335,14 @@ async function importFes() {
             { text_fr: 'Pas de gants', is_error: true },
             { text_fr: 'Pause 15 min pour 11h', is_error: true },
             { text_fr: '« Les étirements c’est pour les jeunes »', is_error: true },
-            { text_fr: 'Boire de l\'eau régulièrement', is_error: false }
+            { text_fr: 'Hydratation régulière', is_error: false }
           ],
           pos: `Analyse ergonomique ! Mêmes patterns que burnout mental : pauses, déni, auto-négligence.`,
           neg: `Relisez : pauses, hydratation, protection, durée de pause, étirements.`
         },
         {
           type: 'Texte à trous',
-          q: `Les 3 phases du Syndrome général d’adaptation (Selye).`,
+          q: `Complétez les 3 phases du Syndrome général d’adaptation (Selye).`,
           options: [
             { text: 'alarme' }, { text: 'cortisol' }, { text: 'résistance' }, { text: 'adaptation' }, { text: 'limité' }, { text: 'épuisement' }, { text: 'chronique' }, { text: 'récupération' }
           ],
@@ -317,14 +352,39 @@ async function importFes() {
         },
         {
           type: 'Contre-la-montre',
-          q: `Diagnostics rapides aux tanneries.`,
-          options: [
-            { id: 'A', label_fr: 'Tanneur 14h/j depuis 3 mois. Phase ?' },
-            { id: 'B', label_fr: 'Transition Résistance → Épuisement' }
-          ],
-          correct: 'B',
-          pos: `Analyse temporelle du stress réussie.`,
-          neg: `Ce n'est plus l'alarme, c'est l'épuisement qui guette.`
+          q: `Rapid-fire analysis aux tanneries.`,
+          options: {
+            steps: [
+              {
+                question: `Un tanneur travaille 14h/jour depuis 3 mois sans vacances. À quelle phase Selye ?`,
+                responses: [{id:'A',text:'Alarme'},{id:'B',text:'Transition Résistance → Épuisement'}],
+                correct: 'B',
+                pos: `Bon diagnostic. L’adaptation a ses limites, l’épuisement approche.`,
+                neg: `Ce n’est plus l’alarme. C’est la fin de la résistance.`
+              },
+              {
+                question: `Pourquoi les tanneurs résistent au changement (gants, pauses) ?`,
+                responses: [{id:'A',text:'Habitude + pression + culture + absence d\'alternative'},{id:'B',text:'Entêtement pure'}],
+                correct: 'A',
+                pos: `Analyse multicausale ! Pas juste « ils sont têtus ».`,
+                neg: `Ce n’est pas de l’entêtement. Facteurs : habitude, pression, culture, manque d’alternatives.`
+              },
+              {
+                question: `25 ans vs 55 ans, même planning. Qui est le plus en danger ?`,
+                responses: [{id:'A',text:'Le jeune'},{id:'B',text:'L’ancien (corps usé + accumulation)'}],
+                correct: 'B',
+                pos: `Juste. L’accumulation sur 30 ans use le corps même avec adaptation.`,
+                neg: `L’expérience protège, mais l’usure cumulative est dangereuse. L’ancien est plus à risque.`
+              },
+              {
+                question: `Lien entre stress physique et stress mental de bureau ?`,
+                responses: [{id:'A',text:'Mêmes mécanismes neurobiologiques (cortisol)'},{id:'B',text:'Aucun lien'}],
+                correct: 'A',
+                pos: `Analyse transversale ! Le stress est un phénomène universel, seul le contexte change.`,
+                neg: `Les mécanismes biologiques sont les mêmes. Le cortisol ne fait pas de différence.`
+              }
+            ]
+          }
         },
         {
           type: 'Prise de décision',
@@ -362,7 +422,7 @@ async function importFes() {
     {
       id: MISSION_IDS.F3,
       title_fr: 'Mission F3 : L’Université – Prise de décision analytique',
-      description_fr: `Mentor: Dr. Leila. Soft Skill: Prise de décision (analyse). Éviter le Groupthink, analyser les biais cognitifs et appliquer le processus anti-Groupthink.`,
+      description_fr: `Lieu: Université Sidi Mohamed Ben Abdellah. Soft skill: Prise de décision (analyse). Éviter le Groupthink (Janis).`,
       questions: [
         {
           type: 'QCM',
@@ -379,37 +439,36 @@ async function importFes() {
         },
         {
           type: 'Scénario en cascade',
-          q: `Échec d'investissement e-commerce.`,
+          q: `Analyse d'un échec d'investissement.`,
           options: {
             steps: [
               {
                 question: `Coopérative de 500 artisans : investir 2M DH dans e-commerce. Échec. Phase de collecte d’information ?`,
                 responses: [
-                  { id: 'A', text: 'Budget suffisant' },
-                  { id: 'B', text: 'Données manquantes : compétences digitales (10% connectés), coûts maintenance, concurrence, habitudes clients.' }
+                  { id: 'A', text: 'Suffisante' },
+                  { id: 'B', text: 'Données manquantes : compétences, coûts, concurrence, habitudes clients.' }
                 ],
                 correct: 'B',
                 pos: `Phase 2 Simon (Collecter) bâclée. La décision a échoué avant d’être prise.`,
-                neg: `L’information n’était pas complète. Plusieurs données critiques manquaient.`
+                neg: `L’information n’était pas complète. Plusieurs données critiques manqualient.`
               },
               {
                 question: `Pourquoi le vote 60/40 a échoué ?`,
                 responses: [
-                  { id: 'A', text: 'Malchance' },
-                  { id: 'B', text: 'Biais de disponibilité (un site à succès) + pression du jeunisme + Groupthink.' }
+                  { id: 'A', text: 'Biais de disponibilité + pression du jeunisme + Groupthink.' },
+                  { id: 'B', text: 'Malchance' }
                 ],
-                correct: 'B',
+                correct: 'A',
                 pos: `Analyse psychosociale. Les biais ont influencé le vote, pas la raison.`,
                 neg: `La majorité n’a pas toujours raison. Des biais ont faussé le vote.`
               },
               {
                 question: `Quelle décision aurait dû être prise ?`,
                 responses: [
-                  { id: 'A', text: 'Ne rien faire' },
-                  { id: 'B', text: 'Investir 10M DH' },
-                  { id: 'C', text: 'Phase pilote 6 mois avec 10% du budget pour tester avant de décider pour tous.' }
+                  { id: 'A', text: 'Tout investir' },
+                  { id: 'B', text: 'Phase pilote 6 mois avec 10% du budget pour tester.' }
                 ],
-                correct: 'C',
+                correct: 'B',
                 pos: `Lean Startup ! Tester petit avant d’investir grand. MVP, mesure, pivot ou persévère.`,
                 neg: `Le tout ou rien est risqué. Un test pilote aurait évité la catastrophe.`
               }
@@ -439,7 +498,7 @@ async function importFes() {
             { text_fr: '« Tout le monde veut » (généralisation)', is_error: true },
             { text_fr: '« Mon instinct » (surconfiance)', is_error: true },
             { text_fr: '3M DH sans business plan', is_error: true },
-            { text_fr: 'Analyse de la concurrence', is_error: false }
+            { text_fr: 'Analyse FFOM complète', is_error: false }
           ],
           pos: `Audit méthodologique impeccable ! Vous questionnez la qualité des données, pas seulement leur présence.`,
           neg: `Relisez : taille échantillon, période, biais de complaisance, généralisation, surconfiance, absence de plan.`
@@ -448,7 +507,7 @@ async function importFes() {
           type: 'Classement',
           q: `Classez les 7 facteurs de succès par importance.`,
           options: [
-            { label_fr: 'Qualité (Priorité 1)' },
+            { label_fr: 'Qualité' },
             { label_fr: 'Adaptation' },
             { label_fr: 'Réseau' },
             { label_fr: 'Coûts' },
@@ -461,7 +520,7 @@ async function importFes() {
         },
         {
           type: 'Texte à trous',
-          q: `Les 8 étapes du processus anti-Groupthink.`,
+          q: `Complétez les 8 étapes du processus anti-Groupthink.`,
           options: [
             { text: 'définir' }, { text: 'collecter' }, { text: 'générer' }, { text: 'évaluer' }, { text: 'choisir' }, { text: 'agir' }, { text: 'feedback' }, { text: 'groupthink' }
           ],
@@ -484,14 +543,39 @@ async function importFes() {
         },
         {
           type: 'Contre-la-montre',
-          q: `Détection de biais en un clin d'oeil.`,
-          options: [
-            { id: 'A', label_fr: '« Pas de clients car tout le monde est pauvre ». Biais ?' },
-            { id: 'B', label_fr: 'Biais d’attribution externe' }
-          ],
-          correct: 'B',
-          pos: `Juste. Il attribue l’échec à des facteurs externes plutôt qu’à ses propres actions.`,
-          neg: `C’est un biais d’attribution externe. Il rejette la faute sur l’environnement.`
+          q: `Détection de biais au quart de tour.`,
+          options: {
+            steps: [
+              {
+                question: `« Je n’ai pas de clients car tout le monde est pauvre. » Biais ?`,
+                responses: [{id:'A',text:'Biais d’attribution externe'},{id:'B',text:'Biais de confirmation'}],
+                correct: 'A',
+                pos: `Juste. Il attribue l’échec à des facteurs externes plutôt qu’à ses propres actions.`,
+                neg: `C’est un biais d’attribution externe. Il rejette la faute sur l’environnement.`
+              },
+              {
+                question: `« Je vais demander à 10 amis ce qu’ils pensent. » Problème ?`,
+                responses: [{id:'A',text:'Échantillon parfait'},{id:'B',text:'Biais de sélection (amis = complaisants)'}],
+                correct: 'B',
+                pos: `Biais de sélection. Les amis ne sont pas un échantillon représentatif.`,
+                neg: `Les amis ont tendance à être complaisants. L’échantillon est biaisé.`
+              },
+              {
+                question: `« On a toujours fait comme ça, donc c’est bien. » Biais ?`,
+                responses: [{id:'A',text:'Biais du statu quo'},{id:'B',text:'Biais d\'ancrage'}],
+                correct: 'A',
+                pos: `Biais du statu quo. La tradition n’est pas une justification de qualité.`,
+                neg: `C’est le biais du statu quo : préférer ce qui est familier sans l’évaluer.`
+              },
+              {
+                question: `« J’investis tout mon argent dans ce projet. » Risque ?`,
+                responses: [{id:'A',text:'Confiance totale'},{id:'B',text:'Absence de diversification (risque ruine)'}],
+                correct: 'B',
+                pos: `Risque de ruine. Ne jamais mettre tous ses œufs dans le même panier.`,
+                neg: `C’est un manque de diversification. En cas d’échec, tout est perdu.`
+              }
+            ]
+          }
         },
         {
           type: 'Réponse courte',
@@ -517,7 +601,7 @@ async function importFes() {
     {
       id: MISSION_IDS.F4,
       title_fr: 'Mission F4 : Restauration de la Medersa Bou Inania',
-      description_fr: `Mentor: Architecte Youssef. Soft Skill: Analyse systémique. Gérer la complexité d'une restauration, le chemin critique (CPM) et les dilemmes éthiques.`,
+      description_fr: `Lieu: Medersa Bou Inania. Soft skill: Analyse systémique (Senge). Gérer la complexité et le chemin critique (CPM).`,
       questions: [
         {
           type: 'QCM',
@@ -533,27 +617,27 @@ async function importFes() {
           neg: `Ce n’est pas seulement l’âge. C’est la combinaison de 4 dimensions.`
         },
         {
-          type: 'Appariement',
-          q: `Identifiez le chemin critique (CPM) de la restauration.`,
+          type: 'Rôles d’équipe',
+          q: `Identifiez le chemin critique dans la chaîne d’interdépendances.`,
           options: [
-            { left_fr: 'Étape 1', right_fr: 'Historien' },
-            { left_fr: 'Étape 2', right_fr: 'Chimiste' },
-            { left_fr: 'Étape 3', right_fr: 'Maçon' },
-            { left_fr: 'Étape 4', right_fr: 'Zelligeur' },
-            { left_fr: 'Étape 5', right_fr: 'Sculpteur' }
+            { left_fr: 'Historien', right_fr: 'Étape 1' },
+            { left_fr: 'Chimiste', right_fr: 'Étape 2' },
+            { left_fr: 'Maçon', right_fr: 'Étape 3' },
+            { left_fr: 'Zelligeur', right_fr: 'Étape 4' },
+            { left_fr: 'Sculpteur', right_fr: 'Étape 5' }
           ],
           pos: `Analyse CPM parfaite ! Le retard d’un maillon retarde tout le projet.`,
           neg: `Le chemin critique est la plus longue chaîne d’interdépendances. Recalculez.`
         },
         {
           type: 'Scénario en cascade',
-          q: `Dilemme des pigments toxiques.`,
+          q: `Dilemme des pigments.`,
           options: {
             steps: [
               {
                 question: `Pigments originaux au plomb (toxiques) vs modernes. Type de dilemme ?`,
                 responses: [
-                  { id: 'A', text: 'Problème simple' },
+                  { id: 'A', text: 'Technique simple' },
                   { id: 'B', text: 'Dilemme éthique complexe : deux valeurs légitimes s’opposent (patrimoine vs santé).' }
                 ],
                 correct: 'B',
@@ -563,22 +647,20 @@ async function importFes() {
               {
                 question: `Solution analytique ?`,
                 responses: [
-                  { id: 'A', text: 'Tout plomb' },
-                  { id: 'B', text: 'Tout moderne' },
-                  { id: 'C', text: 'Pigments modernes imitant les originaux + documentation scientifique de la substitution.' }
+                  { id: 'A', text: 'Prioriser la santé (moderne)' },
+                  { id: 'B', text: 'Pigments modernes imitant les originaux + documentation scientifique de la substitution.' }
                 ],
-                correct: 'C',
+                correct: 'B',
                 pos: `3ème voie ! Synthèse entre authenticité (aspect) et sécurité (composition).`,
                 neg: `Ni tout plomb ni tout moderne. Une solution hybride existe.`
               },
               {
                 question: `Qui doit décider ?`,
                 responses: [
-                  { id: 'A', text: 'L\'architecte seul' },
-                  { id: 'B', text: 'Les artisans' },
-                  { id: 'C', text: 'Comité pluridisciplinaire (architecte, chimiste, historien, UNESCO, autorité sanitaire).' }
+                  { id: 'A', text: 'L\'architecte' },
+                  { id: 'B', text: 'Comité pluridisciplinaire (architecte, chimiste, historien, UNESCO, autorité sanitaire).' }
                 ],
-                correct: 'C',
+                correct: 'B',
                 pos: `Gouvernance plurielle. Pas un décideur unique, un collectif légitime.`,
                 neg: `Un seul expert ne peut pas trancher un dilemme aussi complexe.`
               }
@@ -596,14 +678,14 @@ async function importFes() {
             { text_fr: 'Budget sans imprévu', is_error: true },
             { text_fr: '12h/jour', is_error: true },
             { text_fr: 'Décisions par l’architecte seul', is_error: true },
-            { text_fr: 'Utilisation de chaux traditionnelle', is_error: false }
+            { text_fr: 'Matériaux certifiés UNESCO', is_error: false }
           ],
           pos: `Analyse multi-niveaux : technique, managérial, procédural, financier, humain, patrimonial.`,
           neg: `Relisez : phasage, matériaux, span of control, documentation, marge, horaires, gouvernance.`
         },
         {
           type: 'Texte à trous',
-          q: `Les 7 principes de la Charte de Venise.`,
+          q: `Complétez les 7 principes de la Charte de Venise.`,
           options: [
             { text: 'minimalisme' }, { text: 'réversibilité' }, { text: 'compatibilité' }, { text: 'authenticité' }, { text: 'documentation' }, { text: 'phasage' }, { text: 'interdisciplinaire' }
           ],
@@ -615,11 +697,10 @@ async function importFes() {
           type: 'Dialogue de situation',
           q: `Zelligeur refuse techniques modernes. Solution ?`,
           options: [
-            { id: 'A', label_fr: 'Imposer la méthode moderne' },
-            { id: 'B', label_fr: 'Laisser faire l’artisan à l’ancienne' },
-            { id: 'C', label_fr: 'Artisan conserve la surface visible, architecte impose la structure cachée + documentation.' }
+            { id: 'A', label_fr: 'L\'obliger' },
+            { id: 'B', label_fr: 'Artisan conserve la surface visible, architecte impose la structure cachée + documentation.' }
           ],
-          correct: 'C',
+          correct: 'B',
           pos: `Solution systémique ! Répartition des couches de décision selon l’expertise.`,
           neg: `Imposer ou laisser faire totalement ne résout pas. Un compromis structuré est possible.`
         },
@@ -641,14 +722,39 @@ async function importFes() {
         },
         {
           type: 'Contre-la-montre',
-          q: `Diagnostic rapide de chantier.`,
-          options: [
-            { id: 'A', label_fr: 'Carreaux trop serrés. Cause ?' },
-            { id: 'B', label_fr: 'Formation insuffisante sur la dilatation thermique.' }
-          ],
-          correct: 'B',
-          pos: `Cause systémique, pas maladresse. La formation manque.`,
-          neg: `Ce n’est pas de la maladresse. C’est un manque de connaissance technique.`
+          q: `Analyse flash des causes.`,
+          options: {
+            steps: [
+              {
+                question: `Carreaux trop serrés. Cause systémique ?`,
+                responses: [{id:'A',text:'Formation insuffisante sur la dilatation thermique.'},{id:'B',text:'Maladresse'}],
+                correct: 'A',
+                pos: `Cause systémique, pas maladresse. La formation manque.`,
+                neg: `Ce n’est pas de la maladresse. C’est un manque de connaissance technique.`
+              },
+              {
+                question: `Bois de cèdre fissuré. Cause ?`,
+                responses: [{id:'A',text:'Bois de mauvaise qualité'},{id:'B',text:'Mauvais séchage avant pose (humidité résiduelle)'}],
+                correct: 'B',
+                pos: `Cause technique. Le bois n’était pas assez sec.`,
+                neg: `Mauvaise qualité ? Non, mauvaise préparation.`
+              },
+              {
+                question: `3 accidents en 2 mois. Cause ?`,
+                responses: [{id:'A',text:'Absence de système de prévention'},{id:'B',text:'Malchance'}],
+                correct: 'A',
+                pos: `Accumulation de facteurs. Reason encore.`,
+                neg: `Ce n’est pas l’imprudence. C’est l’absence de système de prévention.`
+              },
+              {
+                question: `Budget explose (+40%). Cause ?`,
+                responses: [{id:'A',text:'Mauvais pilotage budgétaire'},{id:'B',text:'Vol de matériaux'}],
+                correct: 'A',
+                pos: `Défaut de gestion de projet. Suivi et marge absents.`,
+                neg: `Ce n’est pas la malveillance. C’est l’absence de pilotage budgétaire.`
+              }
+            ]
+          }
         },
         {
           type: 'Réponse courte',
@@ -674,7 +780,7 @@ async function importFes() {
     {
       id: MISSION_IDS.F5,
       title_fr: 'Mission F5 : Le Festival – Défi Final Fès',
-      description_fr: `Mentor: Le Wali de Fès. Soft Skill: Synthèse analytique. Gérer les priorités complexes, les conflits inter-groupes et l'analyse des parties prenantes (Freeman).`,
+      description_fr: `Lieu: Festival de Fès. Soft skill: Synthèse analytique. Cartographier les parties prenantes (Freeman).`,
       questions: [
         {
           type: 'Prise de décision',
@@ -690,7 +796,7 @@ async function importFes() {
         },
         {
           type: 'Scénario en cascade',
-          q: `Conflit séculaire des corporations.`,
+          q: `Gestion des conflits inter-corporations.`,
           options: {
             steps: [
               {
@@ -706,8 +812,8 @@ async function importFes() {
               {
                 question: `Pourquoi dure-t-il 50 ans ?`,
                 responses: [
-                  { id: 'A', text: 'La rancune' },
-                  { id: 'B', text: 'Absence de structure de résolution : pas de médiation formelle, pas de règles écrites, mémoire collective amplificatrice.' }
+                  { id: 'A', text: 'Haine ancestrale' },
+                  { id: 'B', text: 'Absence de structure de résolution : pas de médiation formelle, pas de règles écrites.' }
                 ],
                 correct: 'B',
                 pos: `Analyse institutionnelle (North). Pas de rancune, mais défaut de règles.`,
@@ -717,10 +823,9 @@ async function importFes() {
                 question: `Solution ?`,
                 responses: [
                   { id: 'A', text: 'Les séparer' },
-                  { id: 'B', text: 'Les forcer' },
-                  { id: 'C', text: 'Comité de l’eau avec représentants + expertise technique + données objectives + charte écrite.' }
+                  { id: 'B', text: 'Comité de l’eau avec représentants + expertise + données + charte écrite.' }
                 ],
-                correct: 'C',
+                correct: 'B',
                 pos: `Créer une institution. La solution structurelle, pas individuelle.`,
                 neg: `Séparer ou forcer ne règle pas le problème structurel. Il faut des règles et des données.`
               }
@@ -737,13 +842,13 @@ async function importFes() {
             { text_fr: 'Artisans 7% (sous-payés)', is_error: true },
             { text_fr: 'Imprévu = 0', is_error: true },
             { text_fr: 'Budget = revenus (zéro marge)', is_error: true },
-            { text_fr: 'Diversification des revenus', is_error: false }
+            { text_fr: 'Fond de roulement 15%', is_error: false }
           ],
           pos: `Audit budgétaire analytique ! Déséquilibres structurels identifiés.`,
           neg: `Relisez : dépendance sponsor, biais d’optimisme, disproportion communication/artisans, absence d’imprévu, zéro marge.`
         },
         {
-          type: 'Appariement',
+          type: 'Rôles d’équipe',
           q: `Attribuez les 5 comités aux 5 groupes de corporations.`,
           options: [
             { left_fr: 'Zelligeurs+Maçons', right_fr: 'Technique' },
@@ -756,8 +861,8 @@ async function importFes() {
           neg: `Réfléchissez aux forces de chaque groupe : technique, conflits, communication, logistique, représentativité.`
         },
         {
-          type: 'Vrai/Faux',
-          q: `Analysez ces affirmations sur la culture et les conflits.`,
+          type: 'Vrai/Faux analytique',
+          q: `Analyse des croyances sur la culture.`,
           options: [
             { text: `« La tradition bloque toujours l’innovation. »`, correct: 'faux', pos: `La tradition EST une innovation ancienne. Le problème est la rigidité, pas la tradition.`, neg: `Faux. La tradition n’est pas l’ennemie de l’innovation, c’est la rigidité.` },
             { text: `« Un festival doit être rentable financièrement. »`, correct: 'faux', pos: `Certains festivals sont des services publics culturels. Le ROI est culturel, pas financier.`, neg: `Non. La culture peut être subventionnée comme service public.` },
@@ -766,18 +871,50 @@ async function importFes() {
         },
         {
           type: 'Contre-la-montre',
-          q: `Gestion d'urgences au festival.`,
-          options: [
-            { id: 'A', label_fr: 'Stand prend feu. Priorité ?' },
-            { id: 'B', label_fr: 'Éteindre le feu (sécurité d’abord)' }
-          ],
-          correct: 'B',
-          pos: `Urgence immédiate avant communication.`,
-          neg: `La sécurité passe avant les médias.`
+          q: `Arbitrages rapides du Wali.`,
+          options: {
+            steps: [
+              {
+                question: `Stand d’artisan prend feu. Priorité ?`,
+                responses: [{id:'A',text:'Sécurité (éteindre)'},{id:'B',text:'Médias'}],
+                correct: 'A',
+                pos: `Urgence immédiate avant communication.`,
+                neg: `La sécurité passe avant les médias.`
+              },
+              {
+                question: `200 visiteurs bloqués (bug billet). Cause profonde ?`,
+                responses: [{id:'A',text:'Absence de plan B (scan papier)'},{id:'B',text:'Serveur'}],
+                correct: 'A',
+                pos: `Absence de redondance. Le plan B est indispensable.`,
+                neg: `Ce n’est pas l’impatience des visiteurs. C’est l’absence de solution de secours.`
+              },
+              {
+                question: `Artisan vend contrefaçon. Action ?`,
+                responses: [{id:'A',text:'Exclusion + transparence'},{id:'B',text:'Ignorer'}],
+                correct: 'A',
+                pos: `Tolérance zéro. Transparence pour préserver la confiance.`,
+                neg: `Ignorer serait une faute. Il faut agir fermement et communiquer.`
+              },
+              {
+                question: `Bénévoles épuisés. Solution ?`,
+                responses: [{id:'A',text:'Rotation + pauses obligatoire'},{id:'B',text:'Pression'}],
+                correct: 'A',
+                pos: `Écouter la fatigue, organiser des pauses. SDT : bien-être au travail.`,
+                neg: `« Ils n’ont qu’à se reposer après » est inhumain et contre-productif.`
+              },
+              {
+                question: `Tension festival vs riverains. Solution ?`,
+                responses: [{id:'A',text:'Dialogue (Comité de liaison)'},{id:'B',text:'Ignorer'}],
+                correct: 'A',
+                pos: `Gestion des parties prenantes (Freeman). Dialogue et concessions.`,
+                neg: `Ignorer les riverains crée des conflits durables. Il faut les intégrer.`
+              }
+            ]
+          }
         },
         {
           type: 'Texte à trous',
-          q: `Le modèle de Freeman (parties prenantes).`,
+          q: `Complétez le modèle de Freeman (parties prenantes).`,
           options: [
             { text: 'identifier' }, { text: 'cartographier' }, { text: 'intérêts' }, { text: 'pouvoir' }, { text: 'légitimité' }, { text: 'urgence' }, { text: 'prioriser' }, { text: 'engager' }
           ],
@@ -789,8 +926,8 @@ async function importFes() {
           type: 'Dialogue de situation',
           q: `Journaliste accuse « Le festival exploite les artisans ». Analyse et réponse.`,
           options: [
-            { id: 'A', label_fr: 'Dénier totalement' },
-            { id: 'B', label_fr: 'Accepter sans discuter' },
+            { id: 'A', label_fr: 'Déni' },
+            { id: 'B', label_fr: 'Acceptation passive' },
             { id: 'C', label_fr: 'Reconnaître le fait (sous-paiement), nuancer (pas intentionnel), proposer solution (fonds de redistribution + siège au conseil).' }
           ],
           correct: 'C',
@@ -804,15 +941,15 @@ async function importFes() {
           neg: `Il manque une des 4 sections ou les recommandations ne sont pas justifiées.`
         },
         {
-          type: 'Énigme',
+          type: 'Énigme ultime',
           q: `« Je décompose ce qui semble simple, je simplifie ce qui semble complexe. À Rabat tu as appris sans moi… Qui suis-je ? »`,
           options: [
-            { id: 'A', label_fr: 'La logique' },
-            { id: 'B', label_fr: 'L’analyse' },
+            { id: 'A', label_fr: 'L’analyse' },
+            { id: 'B', label_fr: 'La logique' },
             { id: 'C', label_fr: 'L’intelligence' },
             { id: 'D', label_fr: 'La vérité' }
           ],
-          correct: 'B',
+          correct: 'A',
           pos: `L’analyse est le pont entre la connaissance et la sagesse. Fès te l’a révélée.`,
           neg: `Relisez : « À Fès tu m’as enfin rencontrée. » C’est l’analyse.`
         }
@@ -831,14 +968,16 @@ async function importFes() {
       title_fr,
       description_fr,
       xp_reward: 1000,
-      sort_order: parseInt(id.slice(-1)) || 1
+      sort_order: parseInt(id.slice(-3), 16) || 1
     });
 
     if (mErr) { console.error(`Error upserting mission ${title_fr}:`, mErr); continue; }
     console.log(`✅ Mission ${title_fr} upserted`);
 
+    // B. Delete existing questions
     await supabase.from('questions').delete().eq('mission_id', id);
 
+    // C. Insert new questions
     const questionsToInsert = questions.map((q, idx) => {
       const type = TYPE_MAPPING[q.type] || 'qcm';
       let optionsData = q.options;
@@ -851,6 +990,10 @@ async function importFes() {
         optionsData = q.options.map(o => ({ label: o.label_fr }));
       } else if (type === 'error_detection') {
         optionsData = q.options.map(o => ({ text_fr: o.text_fr, is_error: o.is_error }));
+      } else if (type === 'vrai_faux') {
+        optionsData = q.options;
+      } else if (type === 'scenario_cascade' || type === 'time_attack') {
+        optionsData = q.options;
       }
 
       return {
@@ -878,7 +1021,7 @@ async function importFes() {
     }
   }
 
-  console.log('🏁 Fès HIGH-FIDELITY import FINISHED!');
+  console.log('🏁 Fès HIGH-FIDELITY v4 import FINISHED!');
 }
 
 importFes();

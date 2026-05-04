@@ -816,7 +816,7 @@ const MissionsList: React.FC<{
             <div
               key={mission.id}
               className={cn(
-                'p-3 rounded-xl border flex items-center justify-between transition-all backdrop-blur-md shadow-sm',
+                'p-4 rounded-xl border flex flex-col gap-2 transition-all backdrop-blur-md shadow-sm',
                 isDone ? '' : 'bg-white/20 border-white/40',
               )}
               style={isDone ? {
@@ -824,33 +824,43 @@ const MissionsList: React.FC<{
                 borderColor: `${themeColor}60`
               } : {}}
             >
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm transition-colors"
-                  style={{
-                    backgroundColor: isDone ? themeColor : `${themeColor}22`,
-                    color: isDone ? 'white' : themeColor
-                  }}
-                >
-                  {isDone ? <Check size={14} strokeWidth={3} /> : idx + 1}
-                </div>
-                <div>
-                  <p className={cn('text-sm font-black', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]')}>
-                    {mission.title_fr}
-                  </p>
-                  <p
-                    className="text-[10px] font-bold opacity-60"
-                    style={{ color: themeColor }}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm transition-colors"
+                    style={{
+                      backgroundColor: isDone ? themeColor : `${themeColor}22`,
+                      color: isDone ? 'white' : themeColor
+                    }}
                   >
-                    +{mission.xp_reward} XP
-                  </p>
+                    {isDone ? <Check size={14} strokeWidth={3} /> : idx + 1}
+                  </div>
+                  <div>
+                    <p className={cn('text-sm font-black', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]')}>
+                      {mission.title_fr}
+                    </p>
+                    <p
+                      className="text-[10px] font-bold opacity-60"
+                      style={{ color: themeColor }}
+                    >
+                      +{mission.xp_reward} XP
+                    </p>
+                  </div>
                 </div>
+                {isDone && (
+                  <div className="flex gap-0.5">
+                    {[...Array(3)].map((_, i) => (
+                      <Star key={i} size={10} className="text-[#D4A43E] fill-[#D4A43E] star-twinkle" style={{ animationDelay: `${i * 0.2}s` }} />
+                    ))}
+                  </div>
+                )}
               </div>
-              {isDone && (
-                <div className="flex gap-0.5">
-                  {[...Array(3)].map((_, i) => (
-                    <Star key={i} size={10} className="text-[#D4A43E] fill-[#D4A43E] star-twinkle" style={{ animationDelay: `${i * 0.2}s` }} />
-                  ))}
+              
+              {mission.description_fr && (
+                <div className="pl-11 pr-2">
+                  <p className="text-[11px] font-medium text-[#4E2510]/70 leading-relaxed italic border-l-2 pl-3" style={{ borderColor: `${themeColor}40` }}>
+                    {mission.description_fr}
+                  </p>
                 </div>
               )}
             </div>

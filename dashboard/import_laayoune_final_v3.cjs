@@ -1,7 +1,8 @@
+require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 
-const supabaseUrl = 'https://rydmefudpczpxrresflx.supabase.co';
-const supabaseKey = 'sb_publishable_SJ7HMAttFOIXccq61FRpMg_A0vpkgQ_';
+const supabaseUrl = process.env.VITE_SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const LAAYOUNE_CHALLENGE_PK = '98b50e2ddc9943efb387052637738f65';
@@ -27,7 +28,12 @@ const TYPE_MAPPING = {
   'Énigme': 'puzzle_riddle',
   'Rôles d’équipe': 'team_roles',
   'Prise de décision': 'scenario_decision',
-  'Réponse courte': 'short_answer'
+  'Réponse courte': 'short_answer',
+  'Création': 'short_answer', // Mapping 'Création' to short_answer or similar
+  'Dialogue créatif': 'scenario_dialogue',
+  'Détection + création': 'error_detection',
+  'QCM créatif': 'qcm',
+  'Création stratégique': 'short_answer'
 };
 
 async function importLaayoune() {
@@ -39,8 +45,8 @@ async function importLaayoune() {
     city_id: 'laayoune',
     city_name_fr: 'Laâyoune',
     city_name_ar: 'العيون',
-    description_fr: "Laâyoune, porte du désert, vous invite à créer là où rien n’existe. Ici, pas de manuels, pas de protocoles tout faits. Vous allez inventer des réponses originales à des problèmes inédits, avec des ressources limitées.",
-    headline_fr: '🐪 ACTE V - LA PORTE DU DÉSERT : LA CRÉATION',
+    description_fr: `Laâyoune, porte du désert, vous invite à créer là où rien n’existe. Ici, pas de manuels, pas de protocoles tout faits. Vous allez inventer des réponses originales à des problèmes inédits, avec des ressources limitées.`,
+    headline_fr: `🐪 ACTE V - LAÂYOUNE : PORTE DU DÉSERT`,
     sort_order: 5,
     is_published: true,
     city_color: '#f59e0b',
@@ -53,774 +59,622 @@ async function importLaayoune() {
   const missionsData = [
     {
       id: MISSION_IDS.L1,
-      title_fr: 'Mission L1 : Base de Protection Civile - Créer l\'Urgence',
-      description_fr: "Mentor: Commandant Hassan. Soft Skill: Gestion du stress (CRÉATION). Inventez des protocoles pour des situations inédites.",
+      title_fr: 'Mission L1 : Base de protection civile',
+      description_fr: `Gestion du stress (création). Ishaq crée des protocoles d’urgence sous contrainte extrême.`,
       questions: [
         {
-          type: 'QCM',
-          q: 'Une tempête de sable d\'un type nouveau bloque toute communication. Vous devez créer un protocole de signalisation visuelle. Quelle est votre première étape créative ?',
+          type: 'Création',
+          q: `Tempête de sable, village isolé (200 pers., plus d’eau depuis 48h). Créez un plan d’intervention en 5 étapes.`,
           options: [
-            { id: 'A', label_fr: 'Attendre que la tempête passe' },
-            { id: 'B', label_fr: 'Diverger : Lister tous les objets colorés ou lumineux disponibles' },
-            { id: 'C', label_fr: 'Lire le manuel de Rabat' },
-            { id: 'D', label_fr: 'Ne rien faire' }
+            { id: 'A', label_fr: 'Attendre la fin de la tempête' },
+            { id: 'B', label_fr: 'Envoyer un seul véhicule immédiatement' },
+            { id: 'C', label_fr: '1) Communication, 2) Préparation, 3) Départ accalmie, 4) Triage, 5) Suivi' }
           ],
-          correct: 'B',
-          pos: 'Parfait ! La création commence par la divergence : lister les ressources disponibles sans jugement.',
-          neg: 'Le manuel de Rabat ne prévoit pas l\'inédit. Vous devez inventer avec ce que vous avez.'
-        },
-        {
-          type: 'Dialogue de situation',
-          q: 'Votre équipe est tétanisée par l\'absence de consignes. Que proposez-vous pour libérer leur créativité sous stress ?',
-          options: [
-            { id: 'A', label_fr: '« C\'est un ordre, trouvez une idée ! »' },
-            { id: 'B', label_fr: '« Imaginons la solution la plus folle, puis voyons comment la rendre réelle. »' },
-            { id: 'C', label_fr: 'Les licencier' }
-          ],
-          correct: 'B',
-          pos: 'Technique du "Provocateur" ! Libérer l\'imaginaire pour briser la paralysie du stress.',
-          neg: 'L\'ordre n\'engendre pas la créativité. Le jeu et l\'hypothèse, si.'
-        },
-        {
-          type: 'Appariement',
-          q: 'Reliez chaque technique de créativité à son usage en urgence.',
-          options: [
-            { left_fr: 'SCAMPER', right_fr: 'Modifier un protocole existant' },
-            { left_fr: 'Brainstorming', right_fr: 'Générer un maximum d\'idées' },
-            { left_fr: 'Pensée Latérale', right_fr: 'Changer d\'angle de vue' },
-            { left_fr: 'Mind Mapping', right_fr: 'Structurer le chaos' }
-          ],
-          pos: 'Boîte à outils créative validée !',
-          neg: 'Révisez vos techniques : SCAMPER est idéal pour adapter l\'existant.'
-        },
-        {
-          type: 'Vrai/Faux',
-          q: '« La créativité est un don inné, on ne peut pas l\'apprendre. »',
-          correct: 'faux',
-          pos: 'Vrai ! C\'est un muscle qui se travaille, surtout dans l\'adversité.',
-          neg: 'Tout le monde est créatif. Laâyoune est là pour vous le prouver.'
-        },
-        {
-          type: 'Classement',
-          q: 'Classez les étapes du processus de création (Graham Wallas).',
-          options: [
-            { label_fr: 'Préparation (Étude du problème)' },
-            { label_fr: 'Incubation (Lâcher prise)' },
-            { label_fr: 'Illumination (L\'idée surgit)' },
-            { label_fr: 'Vérification (Test de l\'idée)' }
-          ],
-          pos: 'Le cycle classique de l\'invention. L\'incubation est souvent la clé.',
-          neg: 'N\'oubliez pas l\'incubation. Le cerveau travaille en arrière-plan.'
+          correct: 'C',
+          pos: `Création géniale ! Redondance, fenêtre d’opportunité, triage, documentation.`,
+          neg: `Attendre = mort. Un seul véhicule = risque de perte. Votre plan doit être robuste.`
         },
         {
           type: 'Scénario en cascade',
-          q: 'Création d\'un kit de survie "Frugal".',
-          options: {
-            steps: [
-              {
-                question: 'Vous avez du sable, des sacs plastiques et du soleil. Comment créer de l\'eau distillée ?',
-                responses: [
-                  { id: 'A', text: 'On ne peut pas' },
-                  { id: 'B', text: 'Utiliser la condensation : trou dans le sable + plante + plastique' }
-                ],
-                correct: 'B'
-              },
-              {
-                question: 'L\'eau est produite mais elle est tiède. Comment la refroidir sans électricité ?',
-                responses: [
-                  { id: 'A', text: 'Souffler dessus' },
-                  { id: 'B', text: 'Évaporation : envelopper dans un linge humide à l\'ombre' }
-                ],
-                correct: 'B'
-              },
-              {
-                question: 'Vous avez créé un protocole. Comment le transmettre simplement ?',
-                responses: [
-                  { id: 'A', text: 'Un rapport de 50 pages' },
-                  { id: 'B', text: 'Un dessin (pictogramme) compréhensible par tous' }
-                ],
-                correct: 'B'
-              }
-            ]
-          },
-          pos: 'Innovation frugale ! "Doing more with less". C\'est l\'esprit de Laâyoune.',
-          neg: 'La complexité est l\'ennemie de l\'urgence. Visez la simplicité ingénieuse.'
+          q: `Q1: Véhicule principal en panne à mi-chemin. Créez une solution.`,
+          options: [
+            { id: 'A', label_fr: 'Attendre un mécanicien' },
+            { id: 'B', label_fr: 'Faire demi-tour' },
+            { id: 'C', label_fr: 'Transférer l’eau dans le véhicule fonctionnel. Le conducteur reste avec radio.' }
+          ],
+          correct: 'C',
+          pos: `Innovation frugale ! Le véhicule en panne devient station radio fixe.`,
+          neg: `Perdre du temps est critique ici.`
         },
         {
-          type: 'Détection d’erreurs',
-          q: 'Identifiez les 3 "tueurs d\'idées" dans une réunion de création.',
+          type: 'Scénario en cascade',
+          q: `Q2: Village atteint, 15 personnes critiques, 900L d’eau. Créez un plan de distribution.`,
           options: [
-            { text_fr: '« On a déjà essayé et ça n\'a pas marché »', is_error: true },
-            { text_fr: '« C\'est trop cher »', is_error: true },
-            { text_fr: '« C\'est pas dans le manuel »', is_error: true },
-            { text_fr: '« Et si on essayait de... »', is_error: false }
+            { id: 'A', label_fr: 'Distribuer également à tous' },
+            { id: 'B', label_fr: 'Niveau 1 (15 critiques): 10L+sels ; Niveau 2 (60 fragiles): 6L ; Niveau 3 (125 stables): 3L.' },
+            { id: 'C', label_fr: 'Tout donner aux malades' }
           ],
-          pos: 'La censure est le poison de la création. À Laâyoune, on l\'interdit.',
-          neg: 'Ces phrases bloquent l\'innovation. Remplacez-les par "Oui, et...".'
+          correct: 'B',
+          pos: `Équité proportionnelle aux besoins. Pas d’égalitarisme simple.`,
+          neg: `Distribuer également ou tout aux malades est injuste ou dangereux.`
+        },
+        {
+          type: 'Scénario en cascade',
+          q: `Q3: Tempête finie. Évacuer ou ravitailler sur place ?`,
+          options: [
+            { id: 'A', label_fr: 'Tout évacuer' },
+            { id: 'B', label_fr: 'Tout ravitailler sur place' },
+            { id: 'C', label_fr: 'Évacuer les 15 critiques, ravitailler les 185 autres, installer radio temporaire.' }
+          ],
+          correct: 'C',
+          pos: `Solution hybride. Le meilleur des deux mondes.`,
+          neg: `Tout évacuer est lourd, tout ravitailler laisse les critiques en danger.`
         },
         {
           type: 'Texte à trous',
-          q: 'La pensée __________ génère des options, la pensée __________ choisit la meilleure.',
-          options: [
-            { text: 'divergente' }, { text: 'convergente' }
-          ],
-          correct: 'divergente, convergente',
-          pos: 'Le double diamant de la création ! Ouvrir puis fermer.',
-          neg: 'Il faut d\'abord diverger avant de converger.'
+          q: `Complétez les 8 piliers de résilience adaptés au désert.`,
+          options: [{id:'1',label_fr:'chameau'},{id:'2',label_fr:'tribu'},{id:'3',label_fr:'vent'},{id:'4',label_fr:'soleil'},{id:'5',label_fr:'sable'},{id:'6',label_fr:'oasis'},{id:'7',label_fr:'étoiles'},{id:'8',label_fr:'silence'}],
+          correct: 'chameau,tribu,vent,soleil,sable,oasis,étoiles,silence',
+          pos: `Création poétique et scientifique ! Chaque métaphore est juste.`,
+          neg: `Révisez : chameau=sens, tribu=relations, vent=humour, soleil=corps, sable=apprentissage, oasis=créativité, étoiles=espoir, silence=spiritualité.`
         },
         {
           type: 'Contre-la-montre',
-          q: 'Besoins vitaux : 10 secondes pour inventer un signal de détresse avec un miroir.',
+          q: `Q1: Radio cassée, base à 40 km. Créez une solution.`,
           options: [
-            { id: 'A', label_fr: 'Le casser' },
-            { id: 'B', label_fr: 'Utiliser le reflet du soleil vers l\'horizon' },
-            { id: 'C', label_fr: 'Se regarder dedans' }
+            { id: 'A', label_fr: 'Envoyer quelqu’un à pied' },
+            { id: 'B', label_fr: 'Signal visuel: feu + tissu mouillé = colonne de fumée. 1 fumée=OK, 3=urgence.' },
+            { id: 'C', label_fr: 'Attendre' }
           ],
           correct: 'B',
-          pos: 'Héliographe improvisé ! Simple et efficace.',
-          neg: 'Le miroir est un outil de com\' longue distance au désert.'
+          pos: `Ingénieux ! La fumée visible à 40 km par temps clair.`,
+          neg: `Trop long ou inefficace.`
         },
         {
-          type: 'Énigme',
-          q: '« Je n\'ai pas besoin d\'argent pour exister, juste d\'un problème et d\'un esprit libre. Plus on me partage, plus je grandis. Qui suis-je ? »',
+          type: 'Contre-la-montre',
+          q: `Q2: Eau contaminée par le sable. Créez un filtre.`,
           options: [
-            { id: 'A', label_fr: 'Le vent' },
-            { id: 'B', label_fr: 'L\'idée' },
-            { id: 'C', label_fr: 'Le sable' }
+            { id: 'A', label_fr: 'Bouteille coupée + tissu + charbon + sable + gravier, puis bouillir.' },
+            { id: 'B', label_fr: 'Boire l’eau sale' },
+            { id: 'C', label_fr: 'Ne pas boire' }
+          ],
+          correct: 'A',
+          pos: `Filtre de survie efficace. Le charbon absorbe les toxines.`,
+          neg: `Boire l’eau sale ou ne pas boire est dangereux.`
+        },
+        {
+          type: 'Contre-la-montre',
+          q: `Q3: Membre en état de choc. Créez un protocole.`,
+          options: [
+            { id: 'A', label_fr: '« Sois fort »' },
+            { id: 'B', label_fr: 'Protocole PAIR: Pause, Accompagnement, Invitation à parler, Retour.' },
+            { id: 'C', label_fr: 'L\'envoyer à l\'hôpital (200 km)' }
           ],
           correct: 'B',
-          pos: 'L\'idée est la seule ressource infinie du désert.',
-          neg: 'C\'est l\'idée qui transforme le désert en oasis.'
+          pos: `Acronyme mémorisable, inspiré de Rogers et Cyrulnik.`,
+          neg: `Inadapté au contexte.`
+        },
+        {
+          type: 'Contre-la-montre',
+          q: `Q4: Équipe épuisée après 20h. Créez un discours de 3 phrases.`,
+          options: [
+            { id: 'A', label_fr: '« C’est un ordre »' },
+            { id: 'B', label_fr: '« Partez si vous êtes fatigués »' },
+            { id: 'C', label_fr: '« On a sauvé 200 vies. Encore 2h, puis 24h de repos. On termine ensemble. »' }
+          ],
+          correct: 'C',
+          pos: `Sens, compétence, affiliation, espoir. SDT parfaite.`,
+          neg: `Démobilise l'équipe.`
+        },
+        {
+          type: 'Détection + création',
+          q: `Trouvez les erreurs du plan d’évacuation V1.0 et créez le V2.0 (8 erreurs).`,
+          options: [
+            { id: 'A', label_fr: 'Garder le plan V1.0' },
+            { id: 'B', label_fr: '1) Départ 5h, 2) +Boussole, 3) 2 véh. min, 4) Sat+Radio, 5) 5L/jour, 6) Kit bivouac, 7) Plans écrits, 8) Formation.' }
+          ],
+          correct: 'B',
+          pos: `Transformation créative. V2 résilient à multi-couches.`,
+          neg: `Relisez chaque erreur et proposez une alternative concrète.`
         }
       ]
     },
     {
       id: MISSION_IDS.L2,
-      title_fr: 'Mission L2 : Coopérative de Femmes - Créer l\'Impact',
-      description_fr: "Mentor: Aminatou. Soft Skill: Travail en équipe (CRÉATION). Inventez de nouveaux modèles de collaboration et de produits.",
+      title_fr: 'Mission L2 : Coopérative de femmes',
+      description_fr: `Travail en équipe (création). Ishaq invente une gouvernance communautaire adaptée et inclusive.`,
       questions: [
         {
-          type: 'QCM',
-          q: 'La coopérative produit du couscous, mais les ventes stagnent. Quelle approche créative adopter ?',
+          type: 'QCM créatif',
+          q: `Créez un modèle de gouvernance pour 25 femmes (80% analphabètes, culture de consensus).`,
           options: [
-            { id: 'A', label_fr: 'Baisser les prix' },
-            { id: 'B', label_fr: 'Design Thinking : Immerger dans le quotidien des clients pour créer un nouveau packaging ou usage' },
-            { id: 'C', label_fr: 'Travailler plus' },
-            { id: 'D', label_fr: 'Attendre les subventions' }
+            { id: 'A', label_fr: 'Démocratie pure (1 vote)' },
+            { id: 'B', label_fr: 'Hiérarchie militaire' },
+            { id: 'C', label_fr: 'Modèle hybride: 3 cercles (Aînées, Expérimentées, Nouvelles). Rotation 6 mois.' }
           ],
-          correct: 'B',
-          pos: 'L\'empathie est le moteur de la création de valeur. Bien vu.',
-          neg: 'Baisser les prix n\'est pas créer. Innover dans l\'usage, si.'
-        },
-        {
-          type: 'Appariement',
-          q: 'Reliez le besoin au concept de produit créé.',
-          options: [
-            { left_fr: 'Cadeau de luxe', right_fr: 'Couscous bio en coffret bois sculpté' },
-            { left_fr: 'Snack rapide', right_fr: 'Barre de céréales au amlou' },
-            { left_fr: 'Écologie', right_fr: 'Sacs en toile recyclée teints au henné' },
-            { left_fr: 'Tourisme', right_fr: 'Atelier "Ma vie de tisseuse" (Expérience)' }
-          ],
-          pos: 'Diversification créative réussie !',
-          neg: 'Pensez à adapter le produit au segment de clientèle.'
-        },
-        {
-          type: 'Dialogue de situation',
-          q: 'Une tisseuse propose une idée absurde : "Vendre de l\'air du désert". Comment réagissez-vous ?',
-          options: [
-            { id: 'A', label_fr: '« C\'est ridicule »' },
-            { id: 'B', label_fr: '« Intéressant. Quel sentiment ou souvenir cet air pourrait-il transporter ? »' },
-            { id: 'C', label_fr: 'Rire d\'elle' }
-          ],
-          correct: 'B',
-          pos: 'Suspension du jugement ! C\'est ainsi que naissent les concepts marketing (ex: parfums d\'ambiance).',
-          neg: 'Ne tuez jamais une idée à sa naissance. Explorez son potentiel.'
-        },
-        {
-          type: 'Classement',
-          q: 'Ordre du Design Thinking.',
-          options: [
-            { label_fr: 'Empathie' },
-            { label_fr: 'Définition du problème' },
-            { label_fr: 'Idéation' },
-            { label_fr: 'Prototypage & Test' }
-          ],
-          pos: 'La boucle de création centrée utilisateur.',
-          neg: 'On ne commence pas par l\'idée, mais par l\'humain.'
-        },
-        {
-          type: 'Vrai/Faux',
-          q: '« Dans une coopérative, la création doit être individuelle pour être originale. »',
-          correct: 'faux',
-          pos: 'Faux ! La co-création (intelligence collective) produit des idées plus riches.',
-          neg: 'Le génie solitaire est un mythe. Le groupe est plus créatif.'
+          correct: 'C',
+          pos: `Création de gouvernance originale ! Respect culturel + progression + autonomie.`,
+          neg: `Vote égalitaire ignore l’expertise. Autocratie tue la motivation.`
         },
         {
           type: 'Scénario en cascade',
-          q: 'Création d\'un nouveau modèle de gouvernance.',
-          options: {
-            steps: [
-              {
-                question: 'Trop de chefs, personne ne décide. Quel modèle créer ?',
-                responses: [
-                  { id: 'A', text: 'Un seul chef suprême' },
-                  { id: 'B', text: 'Une Holacratie : rôles tournants et autonomie par cercle' }
-                ],
-                correct: 'B'
-              },
-              {
-                question: 'Le cercle "Création" veut lancer un produit sans l\'avis du cercle "Finance". Risque ?',
-                responses: [
-                  { id: 'A', text: 'Aucun, c\'est l\'autonomie' },
-                  { id: 'B', text: 'Rupture de stock ou faillite. Il faut créer un lien (Double-Link).' }
-                ],
-                correct: 'B'
-              },
-              {
-                question: 'Comment célébrer les échecs créatifs ?',
-                responses: [
-                  { id: 'A', text: 'En punissant' },
-                  { id: 'B', text: 'En créant le "Mur de l\'Apprentissage" : ce qu\'on a raté et ce qu\'on a appris.' }
-                ],
-                correct: 'B'
-              }
-            ]
-          },
-          pos: 'Gouvernance innovante ! Vous créez le cadre de la création.',
-          neg: 'La dictature tue l\'idée. L\'anarchie la perd. Créez des cercles.'
+          q: `Q1: 5 nouvelles analphabètes. Créez la semaine 1 de formation.`,
+          options: [
+            { id: 'A', label_fr: 'Cours théoriques' },
+            { id: 'B', label_fr: 'Manuels écrits' },
+            { id: 'C', label_fr: 'J1-2: observation ; J3-4: tâches simples ; J5: création d’un objet personnel.' }
+          ],
+          correct: 'C',
+          pos: `Pédagogie sans écrit. Observation, guidage, production personnelle.`,
+          neg: `Inadapté à l’analphabétisme.`
         },
         {
-          type: 'Détection d’erreurs',
-          q: 'Trouvez les 3 erreurs dans ce prototype de produit.',
+          type: 'Scénario en cascade',
+          q: `Q2: Semaine 2 (travailler ensemble).`,
           options: [
-            { text_fr: 'Packaging non recyclable', is_error: true },
-            { text_fr: 'Trop complexe à utiliser seul', is_error: true },
-            { text_fr: 'Coût de production > Prix de vente', is_error: true },
-            { text_fr: 'Répond à un besoin testé', is_error: false }
+            { id: 'A', label_fr: 'Compétition individuelle' },
+            { id: 'B', label_fr: 'Binômes (nouvelle+exp), puis mini-équipe (3 pers), puis célébration.' },
+            { id: 'C', label_fr: 'Travail solo' }
           ],
-          pos: 'Prototype invalidé. Retour à l\'idéation.',
-          neg: 'Un produit doit être viable, désirable et faisable.'
+          correct: 'B',
+          pos: `Progression naturelle : duo, trio, célébration collective.`,
+          neg: `Passer trop vite à l’équipe est brutal.`
+        },
+        {
+          type: 'Scénario en cascade',
+          q: `Q3: Système de suivi post-formation (sans écrit).`,
+          options: [
+            { id: 'A', label_fr: 'Rapport hebdomadaire' },
+            { id: 'B', label_fr: 'Examen final' },
+            { id: 'C', label_fr: 'Tableau mural couleurs (rouge/jaune/vert). Autocollants.' }
+          ],
+          correct: 'C',
+          pos: `Suivi visuel inclusif. Les vertes deviennent tutrices des rouges.`,
+          neg: `L’écrit exclut les membres.`
+        },
+        {
+          type: 'Dialogue créatif',
+          q: `2 femmes de tribus rivales refusent de travailler ensemble. Créez une approche nouvelle.`,
+          options: [
+            { id: 'A', label_fr: 'Les séparer' },
+            { id: 'B', label_fr: 'Médiation classique' },
+            { id: 'C', label_fr: 'Stratégie « Le Pont »: Projet commun irrésistible, but supra-ordonné.' }
+          ],
+          correct: 'C',
+          pos: `Inspiration de Sherif (Robber’s Cave). Objectif supra-ordonné.`,
+          neg: `La parole directe échoue souvent sur les conflits ancestraux.`
         },
         {
           type: 'Texte à trous',
-          q: 'L\'innovation __________ améliore ce qui existe, l\'innovation __________ crée un nouveau marché.',
-          options: [
-            { text: 'incrémentale' }, { text: 'disruptive' }
-          ],
-          correct: 'incrémentale, disruptive',
-          pos: 'Maîtrise des concepts d\'innovation.',
-          neg: 'Incrémentale = petit pas, Disruptive = rupture.'
+          q: `Créez les 8 articles d’une charte adaptée au contexte sahraoui.`,
+          options: [{id:'1',label_fr:'Respect'},{id:'2',label_fr:'Consensus'},{id:'3',label_fr:'Rotation'},{id:'4',label_fr:'Partage'},{id:'5',label_fr:'Pairs'},{id:'6',label_fr:'Aînées'},{id:'7',label_fr:'Célébration'},{id:'8',label_fr:'Transmission'}],
+          correct: 'Respect,Consensus,Rotation,Partage,Pairs,Aînées,Célébration,Transmission',
+          pos: `Charte vivante, orale, respectueuse des valeurs locales.`,
+          neg: `Trop écrit ou occidental serait inadapté.`
         },
         {
-          type: 'Contre-la-montre',
-          q: 'Besoin urgent : 3 noms de marque pour du miel du désert en 15 sec.',
+          type: 'Détection + création',
+          q: `Trouvez les faiblesses commerciales et créez un plan marketing innovant.`,
           options: [
-            { id: 'A', label_fr: 'Miel 1, Miel 2, Miel 3' },
-            { id: 'B', label_fr: 'Or des Dunes, Sahara Nectar, Perle d\'Ambre' },
-            { id: 'C', label_fr: 'Sais pas' }
+            { id: 'A', label_fr: 'Baisse des prix' },
+            { id: 'B', label_fr: 'Instagram (jeunes), Diversification clients, Positionnement Premium.' }
           ],
           correct: 'B',
-          pos: 'Évocateur et poétique. La création, c\'est aussi le langage.',
-          neg: 'Soyez évocateur. Le nom est l\'âme du produit.'
+          pos: `Analyse créative. Les solutions sont adaptées au contexte.`,
+          neg: `Baisser les prix est suicidaire ici.`
         },
         {
-          type: 'Énigme',
-          q: '« Je ne suis pas une usine, pourtant je produis. Je ne suis pas une famille, pourtant je m\'entraide. Je suis le futur de l\'économie sociale. Qui suis-je ? »',
+          type: 'Scénario en cascade',
+          q: `Q1: Créez les critères de sélection des mentores.`,
           options: [
-            { id: 'A', label_fr: 'Une banque' },
-            { id: 'B', label_fr: 'Une coopérative créative' },
-            { id: 'C', label_fr: 'Une boutique' }
+            { id: 'A', label_fr: 'Meilleure tisseuse seulement' },
+            { id: 'B', label_fr: 'Expérience (2 ans), patience, bienveillance, capacité d\'explication orale.' }
           ],
           correct: 'B',
-          pos: 'La coopérative est le terreau de la création collective.',
-          neg: 'C\'est l\'union des forces et des idées.'
+          pos: `La compétence technique ne suffit pas au mentorat.`,
+          neg: `Néglige les qualités relationnelles.`
+        },
+        {
+          type: 'Scénario en cascade',
+          q: `Q2: Créez le programme de mentorat (6 mois).`,
+          options: [
+            { id: 'A', label_fr: '1 semaine intensive' },
+            { id: 'B', label_fr: 'M1-2: observation ; M3-4: supervisée ; M5-6: indépendante.' }
+          ],
+          correct: 'B',
+          pos: `Progression graduée, feedback oral, autonomie croissante.`,
+          neg: `Trop court = inefficace.`
+        },
+        {
+          type: 'Scénario en cascade',
+          q: `Q3: Créez le système d’évaluation (sans écrit).`,
+          options: [
+            { id: 'A', label_fr: 'Examen papier' },
+            { id: 'B', label_fr: 'Rencontre mensuelle orale + évaluation collective par les paires.' }
+          ],
+          correct: 'B',
+          pos: `Oral, collectif, constructif. Pas de paperasse.`,
+          neg: `L’écrit exclut les membres.`
         }
       ]
     },
     {
       id: MISSION_IDS.L3,
-      title_fr: 'Mission L3 : Centre de Santé Nomade - Création Frugale',
-      description_fr: "Mentor: Dr. Sarah. Soft Skill: Prise de décision (CRÉATION). Inventez des solutions de santé avec presque rien.",
+      title_fr: 'Mission L3 : Dispensaire mobile',
+      description_fr: `Prise de décision (création en isolement). Ishaq crée un système de santé décentralisé et frugal.`,
       questions: [
         {
-          type: 'QCM',
-          q: 'Pas de réfrigérateur pour les vaccins dans un camp isolé. Que créez-vous ?',
+          type: 'Prise de décision',
+          q: `30 patients, le médecin ne peut en voir que 15. Créez un système de triage rapide et visuel.`,
           options: [
-            { id: 'A', label_fr: 'Attendre l\'hélicoptère' },
-            { id: 'B', label_fr: 'Un frigo "Pot-in-Pot" (Zeer) : deux pots en terre, du sable humide et évaporation.' },
-            { id: 'C', label_fr: 'Les mettre au soleil' }
+            { id: 'A', label_fr: 'Premier arrivé premier servi' },
+            { id: 'B', label_fr: 'Triage « 3 couleurs »: Rouge (immédiat), Jaune (1h), Vert (attendre). Rubans.' }
           ],
           correct: 'B',
-          pos: 'Jugaad Innovation ! L\'ingéniosité frugale sauve des vies.',
-          neg: 'Le désert offre ses propres solutions de froid. Utilisez l\'évaporation.'
-        },
-        {
-          type: 'Appariement',
-          q: 'Reliez le déchet à la solution de santé créée.',
-          options: [
-            { left_fr: 'Bouteille plastique vide', right_fr: 'Attelle de fortune' },
-            { left_fr: 'Vieux pneu', right_fr: 'Semelles protectrices pour pieds brûlés' },
-            { left_fr: 'Smartphone cassé', right_fr: 'Loupe pour examen cutané' },
-            { left_fr: 'Papier journal', right_fr: 'Isolation thermique pour nouveau-né' }
-          ],
-          pos: 'Recyclage créatif au service de la vie.',
-          neg: 'Rien n\'est un déchet, tout est une ressource.'
-        },
-        {
-          type: 'Dialogue de situation',
-          q: 'Un chef de tribu refuse le vaccin. Quelle solution créative pour le convaincre ?',
-          options: [
-            { id: 'A', label_fr: 'Le menacer' },
-            { id: 'B', label_fr: 'Créer une cérémonie de "Bénédiction de la Santé" avec lui, intégrant le vaccin.' },
-            { id: 'C', label_fr: 'Partir' }
-          ],
-          correct: 'B',
-          pos: 'Syncrétisme créatif. Respecter la culture pour faire passer le progrès.',
-          neg: 'La science sans culture est impuissante. Créez un pont.'
-        },
-        {
-          type: 'Classement',
-          q: 'Étapes de la "Lean Startup" appliquée à la santé.',
-          options: [
-            { label_fr: 'Construire (Solution minimum viable)' },
-            { label_fr: 'Mesurer (Impact sur les patients)' },
-            { label_fr: 'Apprendre (Ce qui marche ou pas)' },
-            { label_fr: 'Pivoter ou Persévérer' }
-          ],
-          pos: 'La méthode agile pour créer des services efficaces.',
-          neg: 'Ne construisez pas tout de suite le grand hôpital. Commencez petit.'
-        },
-        {
-          type: 'Vrai/Faux',
-          q: '« L\'innovation frugale est une solution de pauvre pour les pauvres. »',
-          correct: 'faux',
-          pos: 'Faux ! C\'est une stratégie mondiale (Jugaad) pour l\'efficience et l\'écologie.',
-          neg: 'C\'est l\'intelligence des ressources, utile partout dans le monde.'
+          pos: `Simple, visuel, rapide, transparent.`,
+          neg: `L’ordre d’arrivée ignore l’urgence vitale.`
         },
         {
           type: 'Scénario en cascade',
-          q: 'Inventer un système de triage en cas d\'afflux.',
-          options: {
-            steps: [
-              {
-                question: '50 personnes arrivent. Comment les trier sans matériel ?',
-                responses: [
-                  { id: 'A', text: 'Au hasard' },
-                  { id: 'B', text: 'Système de pierres colorées : Rouge (Vital), Jaune (Urgent), Vert (Stable)' }
-                ],
-                correct: 'B'
-              },
-              {
-                question: 'Les gens ne comprennent pas les couleurs. Autre idée ?',
-                responses: [
-                  { id: 'A', text: 'Crier' },
-                  { id: 'B', text: 'Utiliser des symboles universels : Main sur le coeur (Rouge), Main levée (Jaune), Assis (Vert)' }
-                ],
-                correct: 'B'
-              },
-              {
-                question: 'Le système marche. Comment le pérenniser ?',
-                responses: [
-                  { id: 'A', text: 'Former un membre de chaque tribu' },
-                  { id: 'B', text: 'Garder le secret' }
-                ],
-                correct: 'A'
-              }
-            ]
-          },
-          pos: 'Design de service improvisé. Vous créez de l\'ordre dans le chaos.',
-          neg: 'La méthode est inutile si elle n\'est pas comprise ou transmise.'
+          q: `Q1: Douleur abdominale depuis 3 jours. Créez 5 questions de diagnostic.`,
+          options: [
+            { id: 'A', label_fr: 'Questions vagues' },
+            { id: 'B', label_fr: 'Où ? Depuis quand ? Fièvre ? Nausées ? Antécédents ?' }
+          ],
+          correct: 'B',
+          pos: `Protocole « 5Q » efficace sans instruments.`,
+          neg: `Manquer une question peut être fatal.`
         },
         {
-          type: 'Détection d’erreurs',
-          q: 'Trouvez les 3 erreurs dans cette "Innovation Frugale".',
+          type: 'Scénario en cascade',
+          q: `Q2: Bas droite, 48h, fièvre 38.5, nausées. Diagnostic et plan ?`,
           options: [
-            { text_fr: 'Utilise des piles jetables (difficile à trouver)', is_error: true },
-            { text_fr: 'Nécessite une connexion 5G', is_error: true },
-            { text_fr: 'Notice uniquement en anglais', is_error: true },
-            { text_fr: 'Réparable avec des outils locaux', is_error: false }
+            { id: 'A', label_fr: 'Attendre' },
+            { id: 'B', label_fr: 'Appendicite. À jeun, antidouleur, évacuation urgente (200 km), satellite.' }
           ],
-          pos: 'L\'innovation doit être adaptée au terrain (Contextual Design).',
-          neg: 'Si c\'est high-tech et non local, ce n\'est pas du Jugaad.'
+          correct: 'B',
+          pos: `Diagnostic juste. Plan d’action complet.`,
+          neg: `Attendre ou manger aggraverait l’urgence.`
+        },
+        {
+          type: 'Scénario en cascade',
+          q: `Q3: Route coupée, hélico dans 4h. Plan de stabilisation ?`,
+          options: [
+            { id: 'A', label_fr: 'Attente passive' },
+            { id: 'B', label_fr: 'Semi-assis, monitoring /15min, IV si possible, préparer civière/fumée.' }
+          ],
+          correct: 'B',
+          pos: `Stabilisation en milieu extrême.`,
+          neg: `L’improvisation est dangereuse.`
+        },
+        {
+          type: 'Rôles d’équipe',
+          q: `Créez un programme pour former 10 agents de santé villageois (<500 DH).`,
+          options: [
+            { id: 'A', label_fr: 'Diplôme universitaire' },
+            { id: 'B', label_fr: 'Formation 5j (triage, secours, hygiène) + Kit (rubans, sels, radio).' }
+          ],
+          correct: 'B',
+          pos: `Système de santé décentralisé, économique, durable.`,
+          neg: `Trop cher ou académique serait inapplicable.`
+        },
+        {
+          type: 'Dialogue créatif',
+          q: `Internet intermittent. Créez un système de télémédecine low-tech.`,
+          options: [
+            { id: 'A', label_fr: 'Attendre la fibre' },
+            { id: 'B', label_fr: 'SMS standardisé (5Q) + Photos + Appel vocal sur réseau local.' }
+          ],
+          correct: 'B',
+          pos: `Frugal et efficace. La télémédecine low-tech est possible.`,
+          neg: `Laisse les malades sans soins.`
         },
         {
           type: 'Texte à trous',
-          q: 'Le __________ est l\'ennemi de la création, la __________ est sa meilleure alliée.',
+          q: `Créez un code de 8 principes pour le médecin isolé.`,
+          options: [{id:'1',label_fr:'Nuire'},{id:'2',label_fr:'Référer'},{id:'3',label_fr:'Consentement'},{id:'4',label_fr:'Limites'},{id:'5',label_fr:'Documenter'},{id:'6',label_fr:'Vulnérables'},{id:'7',label_fr:'Santé'},{id:'8',label_fr:'Espoir'}],
+          correct: 'Nuire,Référer,Consentement,Limites,Documenter,Vulnérables,Santé,Espoir',
+          pos: `Principes solides pour l’extrême isolement.`,
+          neg: `Trop technique serait inapplicable.`
+        },
+        {
+          type: 'Détection + création',
+          q: `Trouvez 6 faiblesses du système et créez des solutions.`,
           options: [
-            { text: 'confort' }, { text: 'contrainte' }
+            { id: 'A', label_fr: 'Constat seul' },
+            { id: 'B', label_fr: 'Relais radio, Pharmacie comm., Dossier visuel, Points héliportés.' }
           ],
-          correct: 'confort, contrainte',
-          pos: 'L\'adage de Léonard de Vinci : "L\'art vit de contraintes et meurt de liberté".',
-          neg: 'C\'est parce que c\'est difficile qu\'on devient créatif.'
+          correct: 'B',
+          pos: `Chaque faiblesse devient une opportunité.`,
+          neg: `Proposez des solutions concrètes.`
+        },
+        {
+          type: 'Scénario en cascade',
+          q: `Q1: Épidémie village isolé. Créez un confinement sans murs.`,
+          options: [
+            { id: 'A', label_fr: 'Confinement strict type ville' },
+            { id: 'B', label_fr: 'Distanciation, masques tissu, isolement bâtiment commun.' }
+          ],
+          correct: 'B',
+          pos: `Confinement souple adapté au contexte nomade.`,
+          neg: `Le strict est impossible ici.`
         },
         {
           type: 'Contre-la-montre',
-          q: 'Invention flash : Comment transporter un blessé sans brancard ? (10 sec)',
+          q: `Q1-4: Innovations médicales express (Brancard, Stérilisateur, Attelle, SOS).`,
           options: [
-            { id: 'A', label_fr: 'Le traîner' },
-            { id: 'B', label_fr: 'Deux bâtons + deux chemises boutonnées' },
-            { id: 'C', label_fr: 'Attendre' }
+            { id: 'A', label_fr: 'Improvisation totale' },
+            { id: 'B', label_fr: 'Brancard perches, Solaire boîte, Attelle branche, SOS triangle fumée.' }
           ],
           correct: 'B',
-          pos: 'Ingéniosité de terrain. Bravo.',
-          neg: 'Utilisez vos vêtements, ce sont des outils.'
-        },
-        {
-          type: 'Énigme',
-          q: '« Je transforme la rareté en abondance et le manque en opportunité. Je suis le génie de ceux qui n\'ont rien mais qui savent tout faire. Qui suis-je ? »',
-          options: [
-            { id: 'A', label_fr: 'Le vol' },
-            { id: 'B', label_fr: 'L\'innovation frugale (Jugaad)' },
-            { id: 'C', label_fr: 'La magie' }
-          ],
-          correct: 'B',
-          pos: 'Le Jugaad est l\'âme de la survie créative.',
-          neg: "C'est l'intelligence appliquée aux ressources limitées."
+          pos: `Frugalité et survie validées.`,
+          neg: `Chaque minute compte.`
         }
       ]
     },
     {
       id: MISSION_IDS.L4,
-      title_fr: 'Mission L4 : FabLab du Désert - L\'Innovation Systémique',
-      description_fr: "Mentor: Karim. Soft Skill: Analyse systémique (CRÉATION). Créez des écosystèmes d'innovation technologique adaptés au Sahara.",
+      title_fr: 'Mission L4 : Ferme solaire',
+      description_fr: `Innovation frugale. Ishaq conçoit des solutions énergétiques durables avec des ressources minimales.`,
       questions: [
         {
-          type: 'QCM',
-          q: 'Le FabLab veut créer un drone pour livrer des médicaments. Quel aspect "systémique" créer en premier ?',
+          type: 'Prise de décision',
+          q: `Puits à 5 km, budget 50k DH. Créez un système d’eau solaire.`,
           options: [
-            { id: 'A', label_fr: 'Le moteur du drone' },
-            { id: 'B', label_fr: 'Le réseau de maintenance par les forgerons locaux' },
-            { id: 'C', label_fr: 'Le logiciel de vol' },
-            { id: 'D', label_fr: 'La couleur du drone' }
+            { id: 'A', label_fr: 'Moto-pompe essence' },
+            { id: 'B', label_fr: 'Camions-citernes' },
+            { id: 'C', label_fr: 'Pompe solaire + Réservoir + Gravité + Bornes comm.' }
           ],
-          correct: 'B',
-          pos: 'Pensée systémique ! Une techno n\'existe pas seule, elle a besoin d\'un écosystème de soin.',
-          neg: 'Le drone ne servira à rien s\'il tombe en panne et que personne ne peut le réparer.'
-        },
-        {
-          type: 'Appariement',
-          q: 'Reliez la technologie à son adaptation créative au désert.',
-          options: [
-            { left_fr: 'Impression 3D', right_fr: 'Utiliser du sable fondu (Sintering)' },
-            { left_fr: 'Énergie Solaire', right_fr: 'Panneaux pivotants anti-poussière' },
-            { left_fr: 'Internet', right_fr: 'Réseau Mesh entre tentes' },
-            { left_fr: 'Robotique', right_fr: 'Nettoyeur de puits autonome' }
-          ],
-          pos: 'L\'innovation, c\'est adapter la techno à l\'environnement.',
-          neg: 'La techno standard échoue souvent au Sahara. Adaptez-la.'
-        },
-        {
-          type: 'Dialogue de situation',
-          q: 'Un investisseur dit : "La 3D au désert, c\'est un gadget". Votre argument créatif ?',
-          options: [
-            { id: 'A', label_fr: '« C\'est cool »' },
-            { id: 'B', label_fr: '« C\'est la fin de la dépendance logistique : on imprime la pièce cassée ici, au lieu d\'attendre 1 mois. »' },
-            { id: 'C', label_fr: 'Se taire' }
-          ],
-          correct: 'B',
-          pos: 'Vision stratégique. Vous vendez l\'autonomie, pas le gadget.',
-          neg: 'L\'innovation, c\'est résoudre un problème de flux et de temps.'
-        },
-        {
-          type: 'Vrai/Faux',
-          q: '« L\'innovation systémique signifie qu\'il faut tout changer en même temps. »',
-          correct: 'faux',
-          pos: 'Faux ! Cela signifie changer un élément en comprenant ses impacts sur tout le reste.',
-          neg: 'C\'est la vision des interconnexions, pas le chaos.'
-        },
-        {
-          type: 'Classement',
-          q: 'Étapes pour créer un écosystème d\'innovation.',
-          options: [
-            { label_fr: 'Identifier les acteurs locaux' },
-            { label_fr: 'Créer des connexions entre eux' },
-            { label_fr: 'Lancer un projet pilote' },
-            { label_fr: 'Passer à l\'échelle (Scale-up)' }
-          ],
-          pos: 'Vous construisez un réseau, pas juste un mur.',
-          neg: 'L\'innovation seule meurt. L\'innovation en réseau survit.'
+          correct: 'C',
+          pos: `Frugal, durable, sans carburant.`,
+          neg: `Les solutions fossiles sont trop chères à long terme.`
         },
         {
           type: 'Scénario en cascade',
-          q: 'Création d\'une monnaie locale pour le FabLab.',
-          options: {
-            steps: [
-              {
-                question: 'Les gens n\'ont pas d\'argent pour payer les impressions 3D. Idée ?',
-                responses: [
-                  { id: 'A', text: 'Leur donner gratuitement' },
-                  { id: 'B', text: 'Créer le "Sable-Coin" : monnaie basée sur le temps donné au FabLab' }
-                ],
-                correct: 'B'
-              },
-              {
-                question: 'Le commerçant refuse le Sable-Coin. Comment créer de la valeur pour lui ?',
-                responses: [
-                  { id: 'A', text: 'L\'obliger' },
-                  { id: 'B', text: 'Le FabLab répare ses machines gratuitement en échange de Sable-Coins' }
-                ],
-                correct: 'B'
-              },
-              {
-                question: 'L\'écosystème tourne. Quel est le risque systémique ?',
-                responses: [
-                  { id: 'A', text: 'L\'inflation de Sable-Coins' },
-                  { id: 'B', text: 'Que le FabLab ferme' }
-                ],
-                correct: 'A'
-              }
-            ]
-          },
-          pos: 'Ingénierie sociale et économique. Vous créez un système de confiance.',
-          neg: 'Tout système a ses limites. Anticipez l\'inflation ou la dépréciation.'
+          q: `Q1: Panne solaire pleine chaleur. Diagnostic sans outils ?`,
+          options: [
+            { id: 'A', label_fr: 'Attendre technicien' },
+            { id: 'B', label_fr: 'Visuel (connexions), Propreté (sable), Sentir les surtensions.' }
+          ],
+          correct: 'B',
+          pos: `Diagnostic low-tech. Juste les sens.`,
+          neg: `Laisse le village sans eau trop longtemps.`
         },
         {
-          type: 'Détection d’erreurs',
-          q: 'Trouvez les 3 erreurs dans cette "Smart City" du désert.',
+          type: 'Scénario en cascade',
+          q: `Q2: Créez un système de backup.`,
           options: [
-            { text_fr: 'Importation de gazon (consomme trop d\'eau)', is_error: true },
-            { text_fr: 'Bâtiments en verre (chauffent trop)', is_error: true },
-            { text_fr: 'Dépendance totale au cloud externe', is_error: true },
-            { text_fr: 'Architecture bioclimatique en terre', is_error: false }
+            { id: 'A', label_fr: 'Pas de backup' },
+            { id: 'B', label_fr: 'Batteries supp, Rationnement (frais), Priorité boisson.' }
           ],
-          pos: 'L\'innovation idiote (copy-paste de Dubaï) vs Innovation intelligente.',
-          neg: 'Copier sans adapter est l\'erreur fatale de la création.'
+          correct: 'B',
+          pos: `Gestion de crise rationnelle.`,
+          neg: `L'improvisation aggrave tout.`
+        },
+        {
+          type: 'Scénario en cascade',
+          q: `Q3: Plan de communication panne.`,
+          options: [
+            { id: 'A', label_fr: 'Cacher la panne' },
+            { id: 'B', label_fr: 'Transparence: 24h rép, 2L/pers, priorité enfants.' }
+          ],
+          correct: 'B',
+          pos: `Clair, respectueux, évite la panique.`,
+          neg: `Le manque d'info crée la peur.`
         },
         {
           type: 'Texte à trous',
-          q: 'Le __________ est une solution ponctuelle, le __________ est une solution durable.',
+          q: `Complétez les 7 principes d’innovation frugale.`,
+          options: [{id:'1',label_fr:'Simplicité'},{id:'2',label_fr:'Existant'},{id:'3',label_fr:'Zéro'},{id:'4',label_fr:'Partagé'},{id:'5',label_fr:'Local'},{id:'6',label_fr:'Évolutif'},{id:'7',label_fr:'Contexte'}],
+          correct: 'Simplicité,Existant,Zéro,Partagé,Local,Évolutif,Contexte',
+          pos: `Principes appliqués au désert.`,
+          neg: `Trop théorique.`
+        },
+        {
+          type: 'Rôles d’équipe',
+          q: `Créez l’organigramme d’une startup solaire rurale.`,
           options: [
-            { text: 'pansement' }, { text: 'système' }
+            { id: 'A', label_fr: 'Hiérarchie lourde' },
+            { id: 'B', label_fr: 'CEO, CTO, Commercial terrain, Formateur, Maintenance local.' }
           ],
-          correct: 'pansement, système',
-          pos: 'À Laâyoune, on ne soigne pas les symptômes, on crée des systèmes.',
-          neg: 'Visez la racine, pas la surface.'
+          correct: 'B',
+          pos: `Structure agile adaptée au terrain.`,
+          neg: `Trop de bureaux = trop de coûts.`
+        },
+        {
+          type: 'Dialogue créatif',
+          q: `Chef refuse: « sorcellerie ». Stratégie ?`,
+          options: [
+            { id: 'A', label_fr: 'Argumenter technique' },
+            { id: 'B', label_fr: 'Démonstration mosquée/école, Associer les notables.' }
+          ],
+          correct: 'B',
+          pos: `Preuve par l'exemple, respect des leaders.`,
+          neg: `Le braquer est un échec.`
+        },
+        {
+          type: 'Détection + création',
+          q: `Sable sur panneaux. 3 solutions frugales ?`,
+          options: [
+            { id: 'A', label_fr: 'Nettoyage pro' },
+            { id: 'B', label_fr: 'Brosses vent, Huile végétale, Inclinaison vibrante.' }
+          ],
+          correct: 'B',
+          pos: `Simple, peu coûteux, testable.`,
+          neg: `Trop cher pour le village.`
+        },
+        {
+          type: 'Classement',
+          q: `10 villages, budget pour 5. Matrice ?`,
+          options: [
+            { id: 'A', label_fr: 'Plus peuplé' },
+            { id: 'B', label_fr: 'Matrice: Pop(3), Isolement(2), Éco(2), Engagement(1), Femmes(3).' }
+          ],
+          correct: 'B',
+          pos: `Transparente, multicritère, juste.`,
+          neg: `Critère unique injuste.`
         },
         {
           type: 'Contre-la-montre',
-          q: 'Besoin : Rafraîchir une tente sans clim. 10 sec.',
+          q: `Express: Four solaire, Chargeur, Réfrigérateur (Zeer), Éclairage.`,
           options: [
-            { id: 'A', label_fr: 'Ouvrir les fenêtres' },
-            { id: 'B', label_fr: 'Tour à vent (Malqaf) ou cheminée solaire' },
-            { id: 'C', label_fr: 'Mettre des glaçons' }
+            { id: 'A', label_fr: 'Solutions fossiles' },
+            { id: 'B', label_fr: 'Boîte alu, Panneau recyclé, Pots terre/sable, LED/Solaire.' }
           ],
           correct: 'B',
-          pos: 'Architecture ancestrale redécouverte. Bravo.',
-          neg: 'Le vent est votre allié si vous savez le diriger.'
-        },
-        {
-          type: 'Énigme',
-          q: '« Je suis la main qui fabrique ce que l\'esprit imagine. Je suis l\'usine du futur dans un garage de sable. Qui suis-je ? »',
-          options: [
-            { id: 'A', label_fr: 'Le FabLab' },
-            { id: 'B', label_fr: 'Le rêve' },
-            { id: 'C', label_fr: 'La mine' }
-          ],
-          correct: 'A',
-          pos: 'Le FabLab est le coeur battant de la création technologique locale.',
-          neg: "C'est là que les idées deviennent des objets."
+          pos: `Zéro énergie, impact maximum.`,
+          neg: `Peu durable.`
         }
       ]
     },
     {
       id: MISSION_IDS.L5,
-      title_fr: 'Mission L5 : Plan Laâyoune 2030 - La Synthèse Créative',
-      description_fr: "Mentor: Le Wali de Laâyoune. Soft Skill: Synthèse (CRÉATION). Concevez le futur de la région.",
+      title_fr: 'Mission L5 : Le plan de développement',
+      description_fr: `Synthèse créative. Ishaq élabore une vision stratégique provinciale (Défi Final).`,
       questions: [
         {
-          type: 'QCM',
-          q: 'On vous demande de créer la "Vision 2030". Quelle est votre posture créative ?',
+          type: 'Création stratégique',
+          q: `Créez un plan de développement en 5 axes thématiques.`,
           options: [
-            { id: 'A', label_fr: 'Copier le plan de Casablanca' },
-            { id: 'B', label_fr: 'Synthèse : Combiner patrimoine nomade, énergies vertes et hub technologique.' },
-            { id: 'C', label_fr: 'Ne rien changer' },
-            { id: 'D', label_fr: 'Tout raser pour reconstruire' }
+            { id: 'A', label_fr: 'Plan standard' },
+            { id: 'B', label_fr: 'SOLEIL (Énergie), OASIS (Eau), CARAVANE (Tourisme), TRIBU (Éducation), ÉTOILE (Innovation).' }
           ],
           correct: 'B',
-          pos: 'La création au plus haut niveau : la synthèse harmonieuse de contraires.',
-          neg: 'La copie est paresseuse, la destruction est facile. La synthèse est un art.'
-        },
-        {
-          type: 'Classement',
-          q: 'Classez les priorités pour un futur durable.',
-          options: [
-            { label_fr: 'Éducation & Soft Skills' },
-            { label_fr: 'Eau & Énergie' },
-            { label_fr: 'Infrastructures' },
-            { label_fr: 'Loisirs' }
-          ],
-          pos: 'L\'humain d\'abord. Sans compétences, les murs ne servent à rien.',
-          neg: 'Commencez par le socle : l\'humain et les ressources vitales.'
-        },
-        {
-          type: 'Dialogue de situation',
-          q: 'Un investisseur veut construire un parc d\'attractions gourmand en eau. Comment lui proposez-vous une alternative créative ?',
-          options: [
-            { id: 'A', label_fr: 'Refuser net' },
-            { id: 'B', label_fr: '« Créons un parc de "Land Art" et d\'astronomie : l\'eau est remplacée par la lumière et le sable. »' },
-            { id: 'C', label_fr: 'Accepter' }
-          ],
-          correct: 'B',
-          pos: 'Sublimation du manque ! Vous transformez une faiblesse en un concept unique au monde.',
-          neg: 'Ne dites pas non, dites "mieux". Utilisez les atouts du désert.'
-        },
-        {
-          type: 'Appariement',
-          q: 'Reliez chaque défi à sa solution créative 2030.',
-          options: [
-            { left_fr: 'Chômage jeunes', right_fr: 'Académie des métiers du futur (Drones/Solaire)' },
-            { left_fr: 'Désertification', right_fr: 'Grande muraille verte + Permaculture' },
-            { left_fr: 'Isolement', right_fr: 'Hub logistique maritime et aérien' },
-            { left_fr: 'Santé', right_fr: 'Télémédecine et centres nomades high-tech' }
-          ],
-          pos: 'Vision 2030 cohérente et audacieuse.',
-          neg: 'Chaque défi a une réponse dans l\'innovation systémique.'
+          pos: `Vision créative et cohérente utilisant les atouts locaux.`,
+          neg: `Manque de lien territorial.`
         },
         {
           type: 'Scénario en cascade',
-          q: 'Lancement du Plan Vision 2030.',
-          options: {
-            steps: [
-              {
-                question: 'Comment impliquer la population dans la création du plan ?',
-                responses: [
-                  { id: 'A', text: 'Affichage public' },
-                  { id: 'B', text: 'Ateliers de Co-conception dans chaque quartier' }
-                ],
-                correct: 'B'
-              },
-              {
-                question: 'Une idée géniale sort d\'un enfant de 10 ans. Que faire ?',
-                responses: [
-                  { id: 'A', text: 'L\'ignorer' },
-                  { id: 'B', text: 'L\'intégrer et nommer l\'enfant "Conseiller Junior"' }
-                ],
-                correct: 'B'
-              },
-              {
-                question: 'Le plan est prêt. Quel est le message final ?',
-                responses: [
-                  { id: 'A', text: '« Suivez le guide »' },
-                  { id: 'B', text: '« Nous sommes les créateurs de notre propre futur. »' }
-                ],
-                correct: 'B'
-              }
-            ]
-          },
-          pos: 'Leadership participatif. Vous créez un mouvement, pas juste un document.',
-          neg: 'Le plan appartient à ceux qui le font. Impliquez-les.'
-        },
-        {
-          type: 'Vrai/Faux',
-          q: '« La création s\'arrête quand le plan est écrit. »',
-          correct: 'faux',
-          pos: 'Faux ! L\'exécution est une création continue face aux imprévus.',
-          neg: 'Le plan n\'est que le début. La vie est une création permanente.'
-        },
-        {
-          type: 'Détection d’erreurs',
-          q: 'Identifiez les 3 erreurs de "Pensée Unique" à éviter.',
+          q: `Q1: Budget -50%. Réponse ?`,
           options: [
-            { text_fr: '« Il n\'y a qu\'une seule solution »', is_error: true },
-            { text_fr: '« C\'est impossible ici »', is_error: true },
-            { text_fr: '« On l\'a toujours fait comme ça »', is_error: true },
-            { text_fr: '« Explorons d\'autres voies »', is_error: false }
+            { id: 'A', label_fr: 'Tout réduire' },
+            { id: 'B', label_fr: 'Phasage: SOLEIL + TRIBU génèrent les revenus pour les autres.' }
           ],
-          pos: 'Vous avez tué les saboteurs de la création. Le désert est libre.',
-          neg: 'La pensée unique est le désert de l\'esprit. Fuyez-la.'
+          correct: 'B',
+          pos: `Argument économique d'autofinancement.`,
+          neg: `Tue le projet.`
+        },
+        {
+          type: 'Scénario en cascade',
+          q: `Q2: « Ignore les traditions ». Réponse ?`,
+          options: [
+            { id: 'A', label_fr: 'Nier' },
+            { id: 'B', label_fr: 'CARAVANE valorise culture, TRIBU nomme structure sociale.' }
+          ],
+          correct: 'B',
+          pos: `Diplomatique. On amplifie la tradition.`,
+          neg: `Braque les locaux.`
+        },
+        {
+          type: 'Scénario en cascade',
+          q: `Q3: Jeune sans diplôme: « Et moi ? »`,
+          options: [
+            { id: 'A', label_fr: 'Vague' },
+            { id: 'B', label_fr: 'TRIBU te forme, SOLEIL t\'emploie, ÉTOILE t\'incube.' }
+          ],
+          correct: 'B',
+          pos: `Parcours concret et inspirant.`,
+          neg: `Ne l'aide pas.`
+        },
+        {
+          type: 'Rôles d’équipe',
+          q: `Gouvernance du plan: Décideurs et comités ?`,
+          options: [
+            { id: 'A', label_fr: 'Un seul chef' },
+            { id: 'B', label_fr: 'Stratégique (Wali/Chefs), Technique (Experts), Citoyen (Élus).' }
+          ],
+          correct: 'B',
+          pos: `Participative et transparente.`,
+          neg: `Bloque le projet.`
+        },
+        {
+          type: 'Détection + création',
+          q: `Gestion des 6 risques majeurs.`,
+          options: [
+            { id: 'A', label_fr: 'Ignorer' },
+            { id: 'B', label_fr: 'Contingences: Stock eau, Fonds réserve, Médiation, Maintenance local.' }
+          ],
+          correct: 'B',
+          pos: `Chaque menace a sa réponse préventive.`,
+          neg: `Risque accepté = danger.`
         },
         {
           type: 'Texte à trous',
-          q: 'À Rabat vous avez __________, à Chefchaouen __________, à Fès __________, à Marrakech __________ et ici vous avez __________. ',
+          q: `Théorie du changement Axe Soleil.`,
+          options: [{id:'1',label_fr:'50M'},{id:'2',label_fr:'100'},{id:'3',label_fr:'500'},{id:'4',label_fr:'Baisse'},{id:'5',label_fr:'Autonomie'}],
+          correct: '50M,100,500,Baisse,Autonomie',
+          pos: `Logique Inputs -> Activités -> Outputs -> Outcomes -> Impact.`,
+          neg: `Liens trop faibles.`
+        },
+        {
+          type: 'Dialogue créatif',
+          q: `Mobiliser 1000 habitants en 5 min.`,
           options: [
-            { text: 'découvert' }, { text: 'appliqué' }, { text: 'analysé' }, { text: 'évalué' }, { text: 'créé' }
+            { id: 'A', label_fr: 'Technocratique' },
+            { id: 'B', label_fr: 'Émotionnel/Bénéfices: Le désert devient bénédiction.' }
           ],
-          correct: 'découvert, appliqué, analysé, évalué, créé',
-          pos: 'Le cycle de Bloom est complet ! Vous êtes un concepteur accompli.',
-          neg: 'Révisez votre ascension. Chaque étape était nécessaire.'
+          correct: 'B',
+          pos: `Paroles simples, images fortes, espoir.`,
+          neg: `Ne mobilisera pas.`
         },
         {
           type: 'Contre-la-montre',
-          q: 'Le Wali vous demande : "Définissez Laâyoune 2030 en un mot". 5 sec.',
+          q: `5 Décisions Gouverneur (Crue, Conflit, Éco vs Écolo, Profs, Migrants).`,
           options: [
-            { id: 'A', label_fr: 'Sable' },
-            { id: 'B', label_fr: 'Innovation' },
-            { id: 'C', label_fr: 'Renaissance' }
+            { id: 'A', label_fr: 'Attendre' },
+            { id: 'B', label_fr: 'Action immédiate: Hélico, Médiation, Étude impact, Formation local, SOS.' }
           ],
           correct: 'B',
-          pos: 'Court, puissant, évocateur. C\'est l\'esprit de la synthèse.',
-          neg: 'Un mot doit porter tout un futur.'
+          pos: `Réaction rapide et ciblée.`,
+          neg: `Coûte des vies ou du temps.`
         },
         {
           type: 'Énigme',
-          q: '« Je suis la fin du voyage pour l\'élève, mais le début pour le maître. Je suis le moment où l\'on cesse de suivre pour commencer à tracer. Qui suis-je ? »',
+          q: `Énigme ultime: « Je nais du vide, je donne des ailes... »`,
           options: [
-            { id: 'A', label_fr: 'La retraite' },
-            { id: 'B', label_fr: 'La Création (Maîtrise)' },
-            { id: 'C', label_fr: 'Le retour' }
+            { id: 'A', label_fr: 'Imagination' },
+            { id: 'B', label_fr: 'La créativité' }
           ],
           correct: 'B',
-          pos: 'Félicitations ! Vous avez franchi la Porte du Désert. Direction Dakhla pour la Maîtrise Finale !',
-          neg: "C'est l'acte de créer qui fait de vous un leader."
+          pos: `Sommet de Bloom. Créer l'inexistant.`,
+          neg: `Relisez le thème de la ville.`
         }
       ]
     }
   ];
 
-  for (const mData of missionsData) {
-    const { id, title_fr, description_fr, questions } = mData;
-
-    // A. Upsert Mission
+  // 2. Loop through missions
+  for (const mission of missionsData) {
     const { error: mErr } = await supabase.from('missions').upsert({
-      id,
+      id: mission.id,
       challenge_id: LAAYOUNE_CHALLENGE_PK,
-      title_fr,
-      description_fr,
-      xp_reward: 1000,
-      sort_order: parseInt(id.slice(-1))
+      city_id: 'laayoune',
+      title_fr: mission.title_fr,
+      description_fr: mission.description_fr,
+      sort_order: missionsData.indexOf(mission) + 1
     });
 
-    if (mErr) { console.error(`Error upserting mission ${title_fr}:`, mErr); continue; }
-    console.log(`✅ Mission ${title_fr} upserted`);
+    if (mErr) { console.error(`Mission ${mission.id} Error:`, mErr); continue; }
+    console.log(`✅ Mission ${mission.title_fr} upserted`);
 
-    // B. Delete existing questions for this mission
-    await supabase.from('questions').delete().eq('mission_id', id);
+    // 3. Upsert questions for this mission
+    const questionsToInsert = mission.questions.map((q, idx) => ({
+      mission_id: mission.id,
+      type: TYPE_MAPPING[q.type] || 'qcm',
+      question_text_fr: q.q,
+      options: q.options,
+      correct_answer: q.correct,
+      feedback_positive_fr: q.pos,
+      feedback_negative_fr: q.neg,
+      sort_order: idx + 1
+    }));
 
-    // C. Insert new questions
-    const questionsToInsert = questions.map((q, idx) => {
-      const type = TYPE_MAPPING[q.type] || 'qcm';
-      const questionData = {
-        mission_id: id,
-        type,
-        question_text_fr: q.q,
-        correct_answer: q.correct || null,
-        options: q.options || null,
-        xp_reward: 100,
-        sort_order: idx + 1,
-        feedback_positive_fr: q.pos,
-        feedback_negative_fr: q.neg
-      };
-
-      if (type === 'vrai_faux' && !q.options) {
-        questionData.options = [
-          { id: 'vrai', label_fr: 'VRAI' },
-          { id: 'faux', label_fr: 'FAUX' }
-        ];
-      }
-
-      if (type === 'scenario_cascade') {
-        questionData.options = q.options;
-      }
-
-      return questionData;
+    const { error: qErr } = await supabase.from('questions').upsert(questionsToInsert, { 
+      onConflict: 'mission_id, sort_order' 
     });
 
-    const { error: qErr } = await supabase.from('questions').insert(questionsToInsert);
-    if (qErr) {
-      console.error(`Error inserting questions for ${title_fr}:`, qErr);
-    } else {
-      console.log(`✅ 10 questions for ${id}`);
-    }
+    if (qErr) { console.error(`Questions for ${mission.id} Error:`, qErr); }
+    else { console.log(`✅ 10 questions for ${mission.id}`); }
   }
 
   console.log('🏁 Laâyoune HIGH-FIDELITY import FINISHED!');

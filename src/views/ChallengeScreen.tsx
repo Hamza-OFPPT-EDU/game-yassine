@@ -1012,6 +1012,11 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
                 <p className={cn("font-bold leading-relaxed", isCorrect() ? "text-voyage-primary/80" : "text-voyage-terracotta/80")}>
                   {isCorrect() ? (challenge.feedbackPositive || "C'est la bonne réponse ! +10 XP") : (challenge.feedbackNegative || "Retente ta chance !")}
                 </p>
+                {challenge.explanation_fr && (
+                  <div className={cn("mt-2 p-3 rounded-xl text-sm italic font-medium", isCorrect() ? "bg-voyage-primary/5 text-voyage-primary/70" : "bg-voyage-terracotta/5 text-voyage-terracotta/70")}>
+                    {challenge.explanation_fr}
+                  </div>
+                )}
                 {isCorrect() && (
                    <div className="bg-white/40 backdrop-blur-sm px-4 py-2 rounded-2xl inline-flex items-center gap-2 border border-white/40">
                       <PartyPopper size={18} className="text-voyage-primary" />

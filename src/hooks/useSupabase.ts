@@ -258,17 +258,17 @@ export function useSupabaseQuestions(missionId: string) {
             // Standard array format
             options = q.options.map((opt: any, idx: number) => ({
               id: opt.id || String(idx),
-              text: opt.text_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : ''),
-              label: opt.label || String.fromCharCode(65 + idx),
-              match: opt.match || ''
+              text: opt.text_fr || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : ''),
+              label: opt.label || opt.label_fr || String.fromCharCode(65 + idx),
+              match: opt.match || opt.right_fr || ''
             }));
           } else if (q.options?.pairs) {
             // Matching question format: { pairs: [{ left, right }] }
             options = q.options.pairs.map((p: any, idx: number) => ({
               id: String(idx),
-              text: p.item || p.left || '',
+              text: p.item || p.left || p.left_fr || '',
               label: String.fromCharCode(65 + idx),
-              match: p.match || p.right || ''
+              match: p.match || p.right || p.right_fr || ''
             }));
           } else if (q.options?.bank) {
             // Fill-in-blanks format: { bank: [...] }
@@ -286,6 +286,19 @@ export function useSupabaseQuestions(missionId: string) {
             options = [];
           }
 
+          // Format content for fill-in-blanks if it uses underscores
+          let content = q.presentation_fr ? [q.presentation_fr] : (q.question_fr ? [q.question_fr] : []);
+          if (type === 'fill-in-blanks' && content[0]) {
+            let processed = content[0];
+            let count = 1;
+            // Replace __________ or ... with [1], [2], etc.
+            while (processed.includes('__________') || processed.includes('...')) {
+              processed = processed.replace('__________', `[${count}]`).replace('...', `[${count}]`);
+              count++;
+            }
+            content = [processed];
+          }
+
           return {
             id: q.id,
             type,
@@ -297,7 +310,7 @@ export function useSupabaseQuestions(missionId: string) {
             steps,
             correctOptionId: q.correct_answer,
             hint: q.hint_fr,
-            content: q.presentation_fr ? [q.presentation_fr] : (q.question_fr ? [q.question_fr] : []),
+            content,
             feedbackPositive: q.feedback_positive_fr,
             feedbackNegative: q.feedback_negative_fr,
             presentation_fr: q.presentation_fr,
