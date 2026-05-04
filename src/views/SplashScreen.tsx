@@ -7,7 +7,7 @@ import { useMemo, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Map, Star, Loader2 } from 'lucide-react';
 import { useAssetPreloader } from '../hooks/useAssetPreloader';
-import { CITIES, DEFAULT_AVATAR_URL } from '../types';
+import { getAllAssets } from '../lib/assets';
 
 interface SplashScreenProps {
   onComplete?: () => void;
@@ -18,29 +18,7 @@ const INTRO_CHAR_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/obje
 
 export default function SplashScreen({ onComplete }: SplashScreenProps) {
   // Define assets to preload
-  const assetsToPreload = useMemo(() => {
-    const images = [
-      INTRO_CHAR_URL,
-      DEFAULT_AVATAR_URL,
-      ...CITIES.map(city => city.image),
-    ].map(url => ({ url, type: 'image' as const }));
-
-    const audio = [
-      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/correct.mp3',
-      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/wrong.mp3',
-      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/click.mp3',
-      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/match.mp3',
-      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/success.mp3',
-      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/whoosh.mp3',
-      'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/rabat_intro_voice.mp3',
-    ].map(url => ({ url, type: 'audio' as const }));
-
-    const videos = [
-      { url: SPLASH_VIDEO_URL, type: 'video' as const }
-    ];
-
-    return [...images, ...audio, ...videos];
-  }, []);
+  const assetsToPreload = useMemo(() => getAllAssets(), []);
 
   const { progress, isComplete } = useAssetPreloader(assetsToPreload);
 

@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Maximize2, X, Sparkles } from 'lucide-react';
+import { Maximize2, X, Sparkles, Loader2 } from 'lucide-react';
+import { useAssetPreloader } from '../hooks/useAssetPreloader';
+import { getAllAssets } from '../lib/assets';
+import { useMemo } from 'react';
 
 interface FullscreenPromptProps {
   show: boolean;
@@ -10,6 +13,9 @@ interface FullscreenPromptProps {
 
 export default function FullscreenPrompt({ show, onAccept, onDecline }: FullscreenPromptProps) {
   const acceptRef = useRef<HTMLButtonElement>(null);
+
+  const assets = useMemo(() => getAllAssets(), []);
+  const { progress } = useAssetPreloader(assets);
 
   useEffect(() => {
     if (show) {
@@ -104,11 +110,28 @@ export default function FullscreenPrompt({ show, onAccept, onDecline }: Fullscre
                 </p>
               </div>
 
-              {/* Decorative divider */}
-              <div className="w-full flex items-center gap-3">
-                <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#D4A43E]/30" />
-                <div className="w-1.5 h-1.5 rounded-full bg-[#D4A43E]/50" />
-                <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#D4A43E]/30" />
+              {/* Decorative divider & Progress */}
+              <div className="w-full space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#D4A43E]/30" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#D4A43E]/50" />
+                  <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#D4A43E]/30" />
+                </div>
+                
+                {/* Background preloading indicator */}
+                <div className="flex flex-col items-center gap-1.5">
+                  <div className="flex items-center gap-2 text-[10px] font-bold text-[#C9A96E]/50 uppercase tracking-widest">
+                    <Loader2 size={10} className="animate-spin" />
+                    Chargement des ressources... {progress}%
+                  </div>
+                  <div className="w-32 h-1 bg-white/5 rounded-full overflow-hidden border border-white/5">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${progress}%` }}
+                      className="h-full bg-gradient-to-r from-[#A87D28] to-[#D4A43E]"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Actions */}
