@@ -26,6 +26,8 @@ import VocabularyMatchScreen from './views/VocabularyMatchScreen';
 import FullscreenPrompt from './components/FullscreenPrompt';
 import LoginScreen from './views/LoginScreen';
 import { useAuth } from './hooks/useSupabase';
+import { fetchDynamicAssets } from './lib/assets';
+import { type Asset } from './hooks/useAssetPreloader';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>(Screen.Splash);
@@ -40,13 +42,22 @@ export default function App() {
   const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
   
   const { session, loading: authLoading } = useAuth();
-  const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
+   const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
+  const [dynamicAssets, setDynamicAssets] = useState<Asset[]>([]);
   
   const [userStats, setUserStats] = useState({
     xp: 0,
     stars: 0,
     level: 1,
   });
+
+  useEffect(() => {
+    async function loadDynamicAssets() {
+      const assets = await fetchDynamicAssets();
+      setDynamicAssets(assets);
+    }
+    loadDynamicAssets();
+  }, []);
 
   // Sync stats with profile once loaded
   useEffect(() => {
@@ -170,7 +181,7 @@ export default function App() {
     switch (currentScreen) {
       case Screen.Splash:
         if (!fullscreenShownOnce) return null;
-        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} />;
+        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} />;
       case Screen.Welcome:
         return <WelcomeScreen 
           onStart={() => {
@@ -317,6 +328,7 @@ export default function App() {
             setShowFullscreenPrompt(false);
             setFullscreenShownOnce(true);
           }}
+          extraAssets={dynamicAssets}
         />
       </div>
     </AudioProvider>

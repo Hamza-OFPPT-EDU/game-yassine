@@ -6,19 +6,20 @@
 import { useMemo, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Map, Star, Loader2 } from 'lucide-react';
-import { useAssetPreloader } from '../hooks/useAssetPreloader';
+import { useAssetPreloader, type Asset } from '../hooks/useAssetPreloader';
 import { getAllAssets } from '../lib/assets';
 
 interface SplashScreenProps {
   onComplete?: () => void;
+  extraAssets?: Asset[];
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 const INTRO_CHAR_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif';
 
-export default function SplashScreen({ onComplete }: SplashScreenProps) {
+export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScreenProps) {
   // Define assets to preload
-  const assetsToPreload = useMemo(() => getAllAssets(), []);
+  const assetsToPreload = useMemo(() => getAllAssets(extraAssets), [extraAssets]);
 
   const { progress, isComplete } = useAssetPreloader(assetsToPreload);
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Maximize2, X, Sparkles, Loader2 } from 'lucide-react';
-import { useAssetPreloader } from '../hooks/useAssetPreloader';
+import { useAssetPreloader, type Asset } from '../hooks/useAssetPreloader';
 import { getAllAssets } from '../lib/assets';
 import { useMemo } from 'react';
 
@@ -9,12 +9,13 @@ interface FullscreenPromptProps {
   show: boolean;
   onAccept: () => void;
   onDecline: () => void;
+  extraAssets?: Asset[];
 }
 
-export default function FullscreenPrompt({ show, onAccept, onDecline }: FullscreenPromptProps) {
+export default function FullscreenPrompt({ show, onAccept, onDecline, extraAssets = [] }: FullscreenPromptProps) {
   const acceptRef = useRef<HTMLButtonElement>(null);
 
-  const assets = useMemo(() => getAllAssets(), []);
+  const assets = useMemo(() => getAllAssets(extraAssets), [extraAssets]);
   const { progress } = useAssetPreloader(assets);
 
   useEffect(() => {

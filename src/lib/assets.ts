@@ -1,7 +1,4 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+import { supabase } from './supabase';
 
 export const CORE_ASSETS = {
   videos: [
@@ -27,8 +24,36 @@ export const CORE_ASSETS = {
   ]
 };
 
-export const getAllAssets = () => {
+export const fetchDynamicAssets = async () => {
   const assets: { url: string; type: 'image' | 'audio' | 'video' }[] = [];
+  
+  try {
+    const { data: cities } = await supabase
+      .from('challenges')
+      .select('illustration_url, cinematic_character, icon_name');
+
+    if (cities) {
+      cities.forEach(city => {
+        if (city.illustration_url && city.illustration_url.startsWith('http')) {
+          assets.push({ url: city.illustration_url, type: 'image' });
+        }
+        if (city.cinematic_character && city.cinematic_character.startsWith('http')) {
+          assets.push({ url: city.cinematic_character, type: 'image' });
+        }
+        if (city.icon_name && city.icon_name.startsWith('http')) {
+          assets.push({ url: city.icon_name, type: 'image' });
+        }
+      });
+    }
+  } catch (err) {
+    console.error('Error fetching dynamic assets:', err);
+  }
+
+  return assets;
+};
+
+export const getAllAssets = (dynamicAssets: { url: string; type: 'image' | 'audio' | 'video' }[] = []) => {
+  const assets: { url: string; type: 'image' | 'audio' | 'video' }[] = [...dynamicAssets];
   
   CORE_ASSETS.images.forEach(url => assets.push({ url, type: 'image' }));
   CORE_ASSETS.audio.forEach(url => assets.push({ url, type: 'audio' }));
