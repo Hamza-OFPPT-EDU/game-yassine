@@ -79,20 +79,20 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
         }
 
         const mappedCities = (cityData || []).map((city) => {
-          const cityMissions = (missionData || []).filter(m => m.city_id === city.city_id);
+          const cityMissions = (missionData || []).filter(m => m.city_id === city.id);
           const totalSteps = cityMissions.length || 1;
           const completedInCity = cityMissions.filter(m => completedMissions.includes(m.id)).length;
           
-          const isCompleted = completedCities.includes(city.city_id);
+          const isCompleted = completedCities.includes(city.id);
           let status: 'locked' | 'active' | 'completed' = isCompleted ? 'completed' : 'locked';
           
-          const firstIncomplete = (cityData || []).find(c => !completedCities.includes(c.city_id));
-          if (firstIncomplete && firstIncomplete.city_id === city.city_id) {
+          const firstIncomplete = (cityData || []).find(c => !completedCities.includes(c.id));
+          if (firstIncomplete && firstIncomplete.id === city.id) {
             status = 'active';
           }
 
           return {
-            id: city.city_id,
+            id: city.id,
             name: city.city_name_fr,
             arabicName: city.city_name_ar,
             description: city.description_fr,
@@ -150,50 +150,35 @@ export function useSupabaseMissions(cityId: string) {
         console.log('🎯 Unique challenge_id values:', uniqueChallengeIds);
       }
       
-      // Try fetching with city_id first (exact match)
+      const isUUID = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+
+      let queryCityId = cityId;
+      
+      // If it's not a UUID, try to find the real UUID from challenges table first
+      if (!isUUID(cityId)) {
+        console.log('⚠️ cityId is not a UUID, attempting to resolve from challenges table:', cityId);
+        const { data: cityData } = await supabase
+          .from('challenges')
+          .select('id')
+          .or(`city_id.eq.${cityId},city_name_fr.ilike.${cityId}`)
+          .single();
+        
+        if (cityData) {
+          queryCityId = cityData.id;
+          console.log('✅ Resolved slug "' + cityId + '" to UUID:', queryCityId);
+        }
+      }
+
+      // Try fetching with city_id or challenge_id
       let { data, error } = await supabase
         .from('missions')
         .select('*')
-        .eq('city_id', cityId)
+        .or(`city_id.eq.${queryCityId},challenge_id.eq.${queryCityId}`)
         .order('sort_order', { ascending: true });
-
-      // If no missions found, try case-insensitive match on city_id (ilike)
-      if (!error && (!data || data.length === 0)) {
-        console.log('⚠️ No missions with exact city_id, trying case-insensitive ilike...');
-        const { data: ilikeData, error: ilikeError } = await supabase
-          .from('missions')
-          .select('*')
-          .ilike('city_id', cityId)
-          .order('sort_order', { ascending: true });
-
-        if (!ilikeError && ilikeData && ilikeData.length > 0) {
-          data = ilikeData;
-          console.log('✅ Found missions with ilike(city_id)');
-        } else if (ilikeError) {
-          console.warn('⚠️ ilike query error:', ilikeError);
-        }
-      }
-
-      // If still no missions found, try with challenge_id
-      if (!error && (!data || data.length === 0)) {
-        console.log('⚠️ Still no missions with city_id, trying challenge_id...');
-        const { data: challengeData, error: challengeError } = await supabase
-          .from('missions')
-          .select('*')
-          .eq('challenge_id', cityId)
-          .order('sort_order', { ascending: true });
-        
-        if (!challengeError) {
-          data = challengeData;
-          console.log('✅ Found missions with challenge_id');
-        } else {
-          error = challengeError;
-        }
-      }
 
       if (error) {
         console.error('❌ Error fetching missions:', error);
-        console.log('💾 Query details - Table: missions, Filter: city_id or challenge_id = "' + cityId + '"');
+        console.log('💾 Query details - Table: missions, Filter: city_id or challenge_id = "' + queryCityId + '"');
       } else {
         console.log('✅ Missions fetched:', data?.length || 0, 'found');
         console.log('📋 Missions data:', data);
@@ -261,9 +246,10 @@ export function useSupabaseQuestions(missionId: string) {
             // Standard array format
             options = q.options.map((opt: any, idx: number) => ({
               id: opt.id || String(idx),
-              text: opt.text_fr || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : ''),
+              text: opt.text_fr || opt.left_fr || opt.left || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : ''),
               label: opt.label || opt.label_fr || String.fromCharCode(65 + idx),
-              match: opt.match || opt.right_fr || ''
+              match: opt.match || opt.right_fr || opt.right || '',
+              isError: !!opt.is_error
             }));
           } else if (q.options?.pairs) {
             // Matching question format: { pairs: [{ left, right }] }
@@ -281,16 +267,23 @@ export function useSupabaseQuestions(missionId: string) {
               label: String.fromCharCode(65 + idx)
             }));
           } else if (q.options?.steps) {
-            // Scenario-cascade format: { steps: [...] }
+            // Scenario-cascade format: { steps: [...], options: [...] }
             steps = q.options.steps;
-            options = []; // Empty array for this type
+            options = (q.options.options || []).map((opt: any, idx: number) => ({
+              id: opt.id || String(idx),
+              text: opt.text_fr || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : ''),
+              label: opt.label || opt.label_fr || String.fromCharCode(65 + idx),
+              match: opt.match || opt.right_fr || ''
+            }));
           } else if (!q.options) {
             // No options provided
             options = [];
           }
 
           // Format content for fill-in-blanks if it uses underscores
-          let content = q.presentation_fr ? [q.presentation_fr] : (q.question_fr ? [q.question_fr] : []);
+          let content = q.presentation_fr && q.presentation_fr !== q.question_fr 
+            ? [q.presentation_fr] 
+            : (type === 'fill-in-blanks' && q.question_fr ? [q.question_fr] : []);
           if (type === 'fill-in-blanks' && content[0]) {
             let processed = content[0];
             let count = 1;
@@ -349,6 +342,8 @@ function mapType(dbType: string): any {
     case 'fill-blanks':
     case 'fill_blanks':
     case 'fill-in-blanks':
+    case 'cloze_text':
+    case 'cloze-text':
       return 'fill-in-blanks';
     case 'matching':
       return 'matching';
@@ -366,9 +361,10 @@ function mapType(dbType: string): any {
     case 'short_answer':
       return 'short-answer';
     case 'glitch':
+      return 'glitch';
     case 'error-detection':
     case 'error_detection':
-      return 'glitch';
+      return 'error-detection';
     case 'zellige':
     case 'mosaic':
       return 'zellige';
@@ -377,7 +373,7 @@ function mapType(dbType: string): any {
       return 'team-roles';
     case 'time-attack':
     case 'time_attack':
-      return 'time-attack';
+      return 'multiple-choice';
     default:
       return 'multiple-choice';
   }

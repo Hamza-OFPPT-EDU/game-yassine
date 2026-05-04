@@ -21,7 +21,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowContent(true);
-    }, 5000);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 

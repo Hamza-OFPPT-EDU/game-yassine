@@ -501,48 +501,6 @@ export default function MapJourneyScreen({
                               {displayCity.description}
                             </p>
                           </div>
-
-                          {/* Ce que vous allez apprendre */}
-                          {displayCity.learningOutcomes && (
-                            <div className="space-y-1.5">
-                              <h5 className="text-[10px] font-black uppercase tracking-widest text-voyage-accent opacity-60">🎯 Ce que vous allez apprendre</h5>
-                              <div className="space-y-1">
-                                {Array.isArray(displayCity.learningOutcomes) ? (
-                                  displayCity.learningOutcomes.map((item: string, i: number) => (
-                                    <p key={i} className="text-[#4E2510]/90 text-xs leading-relaxed font-medium flex gap-2">
-                                      <span className="text-voyage-accent">•</span>
-                                      {item}
-                                    </p>
-                                  ))
-                                ) : (
-                                  <p className="text-[#4E2510]/90 text-xs leading-relaxed font-medium">
-                                    {displayCity.learningOutcomes}
-                                  </p>
-                                )}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Compétences Clés */}
-                          {displayCity.keyCompetencies && (
-                            <div className="space-y-1.5">
-                              <h5 className="text-[10px] font-black uppercase tracking-widest text-voyage-accent opacity-60">🧠 Compétences clés</h5>
-                              <div className="grid grid-cols-1 gap-1">
-                                {Array.isArray(displayCity.keyCompetencies) ? (
-                                  displayCity.keyCompetencies.map((item: string, i: number) => (
-                                    <div key={i} className="text-[#4E2510]/90 text-[11px] leading-relaxed font-medium flex gap-2 bg-white/5 p-1.5 rounded-lg border border-white/5">
-                                      <span className="text-voyage-accent">✓</span>
-                                      {item}
-                                    </div>
-                                  ))
-                                ) : (
-                                  <div className="text-[#4E2510]/90 text-[11px] leading-relaxed font-medium whitespace-pre-wrap">
-                                    {displayCity.keyCompetencies}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          )}
                         </motion.div>
                       )}
                     </AnimatePresence>

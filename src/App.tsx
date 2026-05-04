@@ -38,6 +38,7 @@ export default function App() {
   const [selectedLeagueId, setSelectedLeagueId] = useState<string | null>(null);
   const [loadingMissions, setLoadingMissions] = useState(false);
   const [missionSummary, setMissionSummary] = useState<MissionCompletionSummary | null>(null);
+  const [redoQuestionIds, setRedoQuestionIds] = useState<string[] | undefined>(undefined);
   const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(true);
   const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
   
@@ -72,6 +73,7 @@ export default function App() {
 
   /** Navigate to Challenge. */
   const goToChallenge = () => {
+    setRedoQuestionIds(undefined);
     setCurrentScreen(Screen.Challenge);
   };
 
@@ -84,28 +86,27 @@ export default function App() {
     async function fetchFirstMission() {
       if (selectedCity) {
         setLoadingMissions(true);
-        
-        // Try fetching with city_id first
+        const isUUID = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+        let queryCityId = selectedCity.id;
+
+        if (!isUUID(queryCityId)) {
+          const { data: cityData } = await supabase
+            .from('challenges')
+            .select('id')
+            .or(`city_id.eq.${queryCityId},city_name_fr.ilike.${queryCityId}`)
+            .single();
+          
+          if (cityData) {
+            queryCityId = cityData.id;
+          }
+        }
+
+        // Try fetching with city_id or challenge_id
         let { data: missions, error } = await supabase
           .from('missions')
           .select('*')
-          .eq('city_id', selectedCity.id)
+          .or(`city_id.eq.${queryCityId},challenge_id.eq.${queryCityId}`)
           .order('sort_order', { ascending: true });
-        
-        // If no missions found, try with challenge_id
-        if (!error && (!missions || missions.length === 0)) {
-          const { data: challengeData, error: challengeError } = await supabase
-            .from('missions')
-            .select('*')
-            .eq('challenge_id', selectedCity.id)
-            .order('sort_order', { ascending: true });
-          
-          if (!challengeError) {
-            missions = challengeData;
-          } else {
-            error = challengeError;
-          }
-        }
         
         if (!error && missions && missions.length > 0) {
           const nextMission = missions.find(m => !completedMissions.includes(m.id)) || missions[0];
@@ -185,8 +186,7 @@ export default function App() {
       case Screen.Welcome:
         return <WelcomeScreen 
           onStart={() => {
-            if (session) handleStartApp();
-            else setCurrentScreen(Screen.Login);
+            handleStartApp();
           }} 
         />;
       case Screen.Login:
@@ -226,6 +226,7 @@ export default function App() {
             missionTitle={selectedMission.title_fr}
             onComplete={handleMissionComplete}
             onBack={() => setCurrentScreen(Screen.Story)}
+            redoQuestionIds={redoQuestionIds}
           />
         );
       case Screen.GrammarQuest:
@@ -260,8 +261,15 @@ export default function App() {
         return (
           <LevelCompleteModal
             summary={missionSummary}
-            onReplayMission={() => setCurrentScreen(Screen.Challenge)}
+            onReplayMission={() => {
+              setRedoQuestionIds(undefined);
+              setCurrentScreen(Screen.Challenge);
+            }}
             onBackToCity={() => setCurrentScreen(Screen.Map)}
+            onRedoIncorrect={(ids) => {
+              setRedoQuestionIds(ids);
+              setCurrentScreen(Screen.Challenge);
+            }}
           />
         );
       default:

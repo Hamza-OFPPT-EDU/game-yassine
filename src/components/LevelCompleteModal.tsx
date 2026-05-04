@@ -12,9 +12,10 @@ interface LevelCompleteModalProps {
   summary: MissionCompletionSummary | null;
   onReplayMission: () => void;
   onBackToCity: () => void;
+  onRedoIncorrect: (questionIds: string[]) => void;
 }
 
-export default function LevelCompleteModal({ summary, onReplayMission, onBackToCity }: LevelCompleteModalProps) {
+export default function LevelCompleteModal({ summary, onReplayMission, onBackToCity, onRedoIncorrect }: LevelCompleteModalProps) {
   const totalXp = summary?.totalXp ?? 0;
   const totalStars = summary?.totalStars ?? 0;
   const successRate = summary?.successRate ?? 0;
@@ -375,6 +376,25 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                 </motion.div>
                 Rejouer la mission
               </motion.button>
+
+              {summary && summary.questions.filter(q => !q.isCorrect).length > 0 && (
+                <motion.button
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.42 }}
+                  onClick={() => {
+                    const incorrectIds = summary.questions.filter(q => !q.isCorrect).map(q => q.questionId);
+                    onRedoIncorrect(incorrectIds);
+                  }}
+                  className="inline-flex h-[50px] items-center justify-center gap-3 rounded-full border border-rose-200 bg-rose-50/50 px-6 font-black text-rose-700 shadow-sm backdrop-blur-md transition-all hover:bg-rose-100 hover:border-rose-300"
+                >
+                  <RotateCcw size={16} className="text-rose-500" />
+                  Refaire les erreurs
+                </motion.button>
+              )}
+
               <motion.button
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.97 }}

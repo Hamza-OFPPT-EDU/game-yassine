@@ -83,11 +83,17 @@ interface ChallengeScreenProps {
   missionTitle?: string;
   onComplete: (summary: MissionCompletionSummary) => void;
   onBack: () => void;
+  redoQuestionIds?: string[];
 }
 
-export default function ChallengeScreen({ city, missionId, missionTitle, onComplete, onBack }: ChallengeScreenProps) {
+export default function ChallengeScreen({ city, missionId, missionTitle, onComplete, onBack, redoQuestionIds }: ChallengeScreenProps) {
   const { playSound } = useAudio();
-  const { questions, loading: loadingQuestions } = useSupabaseQuestions(missionId);
+  const { questions: allQuestions, loading: loadingQuestions } = useSupabaseQuestions(missionId);
+  
+  // Filter questions if redoQuestionIds is provided
+  const questions = redoQuestionIds && redoQuestionIds.length > 0
+    ? allQuestions.filter(q => redoQuestionIds.includes(q.id))
+    : allQuestions;
   
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
@@ -96,6 +102,7 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
   const [matchingSelections, setMatchingSelections] = useState<{ [key: string]: string }>({});
   const [blanksValues, setBlanksValues] = useState<{ [key: string]: string }>({});
   const [teamRoleValues, setTeamRoleValues] = useState<{ [key: string]: string }>({});
+  const [selectedMultiIds, setSelectedMultiIds] = useState<string[]>([]);
   
   const [showFeedback, setShowFeedback] = useState(false);
   const [showHint, setShowHint] = useState(false);
@@ -173,6 +180,7 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
     setMatchingSelections({});
     setBlanksValues({});
     setTeamRoleValues({});
+    setSelectedMultiIds([]);
     if (challenge?.type === 'zellige') {
       const initialRotations: { [key: string]: string } = {};
       for (let i = 0; i < 9; i++) {
@@ -365,6 +373,7 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
     if (type === 'fill-in-blanks') return Object.keys(blanksValues).length > 0;
     if (type === 'matching') return Object.keys(matchingSelections).length === matchingOptions.length;
     if (type === 'team-roles') return Object.keys(teamRoleValues).length > 0;
+    if (type === 'error-detection') return selectedMultiIds.length > 0;
     if (type === 'zellige') return true; 
     return false;
   };
@@ -372,6 +381,11 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
   const isCorrect = () => {
     if (!challenge) return false;
     const type = challenge.type;
+    if (type === 'error-detection') {
+      const errorIds = normalizedOptions.filter(o => o.isError).map(o => o.id);
+      if (errorIds.length === 0) return true; // No errors to find
+      return errorIds.every(id => selectedMultiIds.includes(id)) && selectedMultiIds.length === errorIds.length;
+    }
     if (type === 'glitch') return selectedWordIdx === parseInt(challenge.correctOptionId || '0');
     if (type === 'ranking') return selectedRankIds.join(',') === challenge.correctOptionId;
     if (type === 'fill-in-blanks') {
@@ -470,9 +484,16 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
       timeSpent,
     };
 
-    if (['multiple-choice', 'true-false', 'scenario-decision', 'scenario-dialogue', 'scenario-cascade', 'puzzle-riddle', 'time-attack'].includes(challenge.type)) {
-      result.givenAnswer = getOptionText(selectedOptionId, challenge.options || []);
-      result.correctAnswer = getOptionText(challenge.correctOptionId, challenge.options || []);
+    if (['multiple-choice', 'true-false', 'scenario-decision', 'scenario-dialogue', 'scenario-cascade', 'puzzle-riddle', 'time-attack', 'error-detection'].includes(challenge.type)) {
+      if (challenge.type === 'error-detection') {
+        const selectedTexts = selectedMultiIds.map(id => normalizedOptions.find(o => o.id === id)?.text).filter(Boolean);
+        const correctTexts = normalizedOptions.filter(o => o.isError).map(o => o.text);
+        result.givenAnswer = selectedTexts.join(', ') || '—';
+        result.correctAnswer = correctTexts.join(', ') || '—';
+      } else {
+        result.givenAnswer = getOptionText(selectedOptionId, challenge.options || []);
+        result.correctAnswer = getOptionText(challenge.correctOptionId, challenge.options || []);
+      }
       return result;
     }
 
@@ -680,6 +701,7 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
               {normalizedOptions.map((opt) => {
                 const isScenarioType = ['scenario-decision', 'scenario-cascade'].includes(challenge.type);
                 const isCorrect = opt.id === challenge.correctOptionId;
+                const isSelected = selectedOptionId === opt.id;
                 
                 return (
                   <button
@@ -691,26 +713,26 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
                     }}
                     className={cn(
                       "w-full flex items-center gap-4 p-5 text-left rounded-2xl border-2 transition-all duration-100 group relative",
-                      selectedOptionId === opt.id 
+                      isSelected 
                         ? "bg-voyage-primary/5 border-voyage-primary shadow-[0_4px_0_0_#8B4513] -translate-y-0.5"
                         : (isScenarioType && isCorrect)
-                          ? "bg-emerald-50 border-emerald-400 border-b-4 hover:bg-emerald-100/50 active:translate-y-0.5 active:border-b-0"
+                          ? "bg-emerald-50 border-emerald-400 border-b-4 hover:bg-emerald-100/50 active:translate-y-0.5 active:border-b-0 ring-4 ring-emerald-400/20 shadow-emerald-200/50 shadow-lg"
                           : "bg-white border-voyage-secondary/30 hover:bg-voyage-secondary/10 border-b-4 active:translate-y-0.5 active:border-b-0"
                     )}
                   >
                     <div className={cn(
                       "w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm border-2 transition-colors",
-                      selectedOptionId === opt.id 
+                      isSelected 
                         ? "bg-voyage-primary border-voyage-primary text-white" 
                         : (isScenarioType && isCorrect)
-                          ? "bg-emerald-500 border-emerald-600 text-white"
+                          ? "bg-emerald-500 border-emerald-600 text-white shadow-emerald-200 shadow-sm"
                           : "bg-white border-voyage-secondary/30 text-voyage-secondary group-hover:border-voyage-primary/30"
                     )}>
                       {opt.label || '?'}
                     </div>
                     <span className={cn(
                       "font-bold text-lg",
-                      selectedOptionId === opt.id 
+                      isSelected 
                         ? "text-voyage-primary" 
                         : (isScenarioType && isCorrect)
                           ? "text-emerald-700"
@@ -718,9 +740,9 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
                     )}>{opt.text}</span>
 
                     {isScenarioType && isCorrect && (
-                      <div className="ml-auto bg-emerald-100 text-emerald-700 px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-tighter border border-emerald-200 flex items-center gap-1 shadow-sm">
-                        <CheckCircle2 size={12} />
-                        Solution
+                      <div className="ml-auto bg-emerald-500 text-white px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-tight border-2 border-emerald-600 flex items-center gap-1.5 shadow-md animate-pulse-slow">
+                        <CheckCircle2 size={12} className="stroke-[3px]" />
+                        Réponse Correcte
                       </div>
                     )}
                   </button>
@@ -746,24 +768,39 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
 
               <div className="space-y-3 pl-18">
                 <p className="text-[10px] font-black text-voyage-secondary uppercase tracking-widest mb-2 opacity-60">Ta réponse :</p>
-                {normalizedOptions.map((opt) => (
-                  <button
-                    key={opt.id}
-                    disabled={showFeedback}
-                    onClick={() => {
-                      playSound('click');
-                      setSelectedOptionId(opt.id);
-                    }}
-                    className={cn(
-                      "w-full p-4 text-left rounded-2xl border-2 transition-all group relative",
-                      selectedOptionId === opt.id 
-                        ? "bg-amber-600 text-white border-amber-600 shadow-[0_4px_0_0_#92400E] -translate-y-0.5"
-                        : "bg-white border-amber-200 text-duo-eel border-b-4 hover:bg-amber-50"
-                    )}
-                  >
-                    <span className="font-bold">{opt.text}</span>
-                  </button>
-                ))}
+                {normalizedOptions.map((opt) => {
+                  const isCorrect = opt.id === challenge.correctOptionId;
+                  const isSelected = selectedOptionId === opt.id;
+                  
+                  return (
+                    <button
+                      key={opt.id}
+                      disabled={showFeedback}
+                      onClick={() => {
+                        playSound('click');
+                        setSelectedOptionId(opt.id);
+                      }}
+                      className={cn(
+                        "w-full p-4 text-left rounded-2xl border-2 transition-all group relative",
+                        isSelected 
+                          ? "bg-amber-600 text-white border-amber-600 shadow-[0_4px_0_0_#92400E] -translate-y-0.5"
+                          : isCorrect
+                            ? "bg-emerald-50 border-emerald-400 border-b-4 hover:bg-emerald-100/50"
+                            : "bg-white border-amber-200 text-duo-eel border-b-4 hover:bg-amber-50"
+                      )}
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <span className="font-bold">{opt.text}</span>
+                        {isCorrect && (
+                          <div className="flex-shrink-0 bg-emerald-500 text-white px-2 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-tight flex items-center gap-1 shadow-sm">
+                            <CheckCircle2 size={10} />
+                            Solution
+                          </div>
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -1031,6 +1068,59 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
                  </button>
                ))}
                <p className="mt-8 text-xs font-black text-duo-wolf uppercase tracking-widest opacity-60">Clique sur le mot qui contient une erreur</p>
+            </div>
+          )}
+
+          {challenge.type === 'error-detection' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 gap-3">
+                {normalizedOptions.map((opt) => {
+                  const isSelected = selectedMultiIds.includes(opt.id);
+                  const isActuallyError = opt.isError;
+                  const showSuccess = showFeedback && isActuallyError;
+                  const showDanger = showFeedback && isSelected && !isActuallyError;
+
+                  return (
+                    <button
+                      key={opt.id}
+                      disabled={showFeedback}
+                      onClick={() => {
+                        playSound('click');
+                        setSelectedMultiIds(prev => 
+                          prev.includes(opt.id) ? prev.filter(id => id !== opt.id) : [...prev, opt.id]
+                        );
+                      }}
+                      className={cn(
+                        "w-full flex items-center justify-between p-5 text-left rounded-2xl border-2 transition-all duration-200",
+                        isSelected 
+                          ? "bg-voyage-primary/5 border-voyage-primary shadow-[0_4px_0_0_#8B4513] -translate-y-0.5"
+                          : "bg-white border-voyage-secondary/30 hover:bg-voyage-secondary/10 border-b-4",
+                        showSuccess && "bg-emerald-50 border-emerald-500 shadow-[0_4px_0_0_#10B981]",
+                        showDanger && "bg-red-50 border-red-500 shadow-[0_4px_0_0_#EF4444]"
+                      )}
+                    >
+                      <span className={cn(
+                        "font-bold text-lg",
+                        isSelected ? "text-voyage-primary" : "text-duo-eel",
+                        showSuccess && "text-emerald-700",
+                        showDanger && "text-red-700"
+                      )}>
+                        {opt.text}
+                      </span>
+                      {isSelected && (
+                        <div className={cn(
+                          "w-6 h-6 rounded-full flex items-center justify-center border-2",
+                          showSuccess ? "bg-emerald-500 border-emerald-600 text-white" : 
+                          showDanger ? "bg-red-500 border-red-600 text-white" :
+                          "bg-voyage-primary border-voyage-primary text-white"
+                        )}>
+                          <Check size={14} strokeWidth={4} />
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           )}
 
