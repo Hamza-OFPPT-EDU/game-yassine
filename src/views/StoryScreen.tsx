@@ -4,7 +4,7 @@
  */
 
 import { motion } from 'motion/react';
-import { X, MoreVertical, MapPin, ArrowRight, User, BookOpen } from 'lucide-react';
+import { X, MoreVertical, MapPin, ArrowRight, User, BookOpen, Sparkles, Clapperboard } from 'lucide-react';
 import { type City, type Mission } from '../types';
 import { useAudio } from '../hooks/useAudio';
 import { getCityTheme } from '../lib/city-theme';
@@ -108,33 +108,60 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
                 <h1 className="font-headline font-black text-3xl text-voyage-primary tracking-tight leading-tight">
                   {mission?.title_fr || "Prêt pour le défi ?"}
                 </h1>
-                {mission?.title_ar && (
-                  <h2 className="font-bold text-2xl text-voyage-accent arabic-font" dir="rtl">
-                    {mission.title_ar}
-                  </h2>
-                )}
+                
+                <div className="flex flex-wrap justify-center gap-2 mt-2">
+                  {mission?.soft_skill_dominant && (
+                    <span className="bg-voyage-accent/10 border border-voyage-accent/20 px-3 py-1 rounded-full text-[10px] font-black text-voyage-accent uppercase tracking-widest flex items-center gap-1.5">
+                      <Sparkles size={12} />
+                      Soft Skill: {mission.soft_skill_dominant}
+                    </span>
+                  )}
+                  {mission?.title_ar && (
+                    <span className="bg-voyage-primary/5 border border-voyage-primary/10 px-3 py-1 rounded-full text-sm font-bold text-voyage-primary arabic-font" dir="rtl">
+                      {mission.title_ar}
+                    </span>
+                  )}
+                </div>
               </div>
 
-              <div className="bg-voyage-accent/5 rounded-3xl p-6 border-2 border-voyage-accent/20 relative">
-                <div className="absolute -top-4 left-6 bg-white border-2 border-voyage-accent/20 px-3 py-1 rounded-full text-[9px] font-black text-voyage-primary uppercase tracking-widest">
-                  {mission?.narration?.intro?.objectif ? "Objectif" : "Objectif"}
-                </div>
-                <p className="text-voyage-primary/80 font-bold leading-relaxed">
-                  {mission?.narration?.intro?.texte || mission?.description_fr || city.description}
-                </p>
-                {mission?.description_ar && (
-                  <p className="text-voyage-accent font-bold text-lg mt-4 arabic-font" dir="rtl">
-                    {mission.description_ar}
-                  </p>
-                )}
-                {mission?.narration?.intro?.consigne && (
-                  <div className="mt-4 pt-4 border-t border-voyage-accent/10">
-                    <p className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.2em] mb-1">Consigne</p>
-                    <p className="text-xs font-bold text-voyage-primary/60 italic">
-                      {mission.narration.intro.consigne}
+              <div className="space-y-4">
+                {/* Scénario Situé */}
+                {mission?.script_opening && (
+                  <div className="bg-white border-2 border-voyage-primary/10 rounded-3xl p-6 shadow-sm relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-voyage-primary/40" />
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="p-1.5 bg-voyage-primary/10 rounded-lg">
+                        <Clapperboard size={14} className="text-voyage-primary" />
+                      </div>
+                      <h3 className="text-[10px] font-black uppercase tracking-widest text-voyage-primary/60">Scénario situé (narration)</h3>
+                    </div>
+                    <p className="text-voyage-primary font-medium text-sm leading-relaxed text-left">
+                      {mission.script_opening}
                     </p>
                   </div>
                 )}
+
+                <div className="bg-voyage-accent/5 rounded-3xl p-6 border-2 border-voyage-accent/20 relative text-left">
+                  <div className="absolute -top-4 left-6 bg-white border-2 border-voyage-accent/20 px-3 py-1 rounded-full text-[9px] font-black text-voyage-primary uppercase tracking-widest">
+                    {mission?.narration?.intro?.objectif ? "Objectif" : "Objectif"}
+                  </div>
+                  <p className="text-voyage-primary/80 font-bold leading-relaxed">
+                    {mission?.narration?.intro?.texte || mission?.description_fr || city.description}
+                  </p>
+                  {mission?.description_ar && (
+                    <p className="text-voyage-accent font-bold text-lg mt-4 arabic-font text-right" dir="rtl">
+                      {mission.description_ar}
+                    </p>
+                  )}
+                  {mission?.narration?.intro?.consigne && (
+                    <div className="mt-4 pt-4 border-t border-voyage-accent/10">
+                      <p className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.2em] mb-1">Consigne</p>
+                      <p className="text-xs font-bold text-voyage-primary/60 italic">
+                        {mission.narration.intro.consigne}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Mentor Dialogue */}

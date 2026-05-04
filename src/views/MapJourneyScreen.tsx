@@ -7,7 +7,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   MapPin, Check, ChevronRight, X, Loader2, Lock,
-  Star, Sparkles, Navigation2, ArrowDown
+  Star, Sparkles, Navigation2, ArrowDown, CheckCircle2
 } from 'lucide-react';
 import { type City } from '../types';
 import { cn } from '../lib/utils';
@@ -487,15 +487,63 @@ export default function MapJourneyScreen({
 
                     <AnimatePresence>
                       {isDescriptionExpanded && (
-                        <motion.p
+                        <motion.div
                           initial={{ height: 0, opacity: 0, marginBottom: 0 }}
-                          animate={{ height: 'auto', opacity: 1, marginBottom: 12 }}
+                          animate={{ height: 'auto', opacity: 1, marginBottom: 20 }}
                           exit={{ height: 0, opacity: 0, marginBottom: 0 }}
                           transition={{ duration: 0.3, ease: 'easeInOut' }}
-                          className="text-[#4E2510]/80 text-sm leading-relaxed font-bold overflow-hidden p-2"
+                          className="overflow-hidden p-3 space-y-6 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-sm"
                         >
-                          {displayCity.description}
-                        </motion.p>
+                          {/* Brief Narratif */}
+                          <div className="space-y-1.5">
+                            <h5 className="text-[10px] font-black uppercase tracking-widest text-voyage-accent opacity-60">📖 Brief Narratif</h5>
+                            <p className="text-[#4E2510] text-sm leading-relaxed font-bold">
+                              {displayCity.description}
+                            </p>
+                          </div>
+
+                          {/* Ce que vous allez apprendre */}
+                          {displayCity.learningOutcomes && (
+                            <div className="space-y-1.5">
+                              <h5 className="text-[10px] font-black uppercase tracking-widest text-voyage-accent opacity-60">🎯 Ce que vous allez apprendre</h5>
+                              <div className="space-y-1">
+                                {Array.isArray(displayCity.learningOutcomes) ? (
+                                  displayCity.learningOutcomes.map((item: string, i: number) => (
+                                    <p key={i} className="text-[#4E2510]/90 text-xs leading-relaxed font-medium flex gap-2">
+                                      <span className="text-voyage-accent">•</span>
+                                      {item}
+                                    </p>
+                                  ))
+                                ) : (
+                                  <p className="text-[#4E2510]/90 text-xs leading-relaxed font-medium">
+                                    {displayCity.learningOutcomes}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Compétences Clés */}
+                          {displayCity.keyCompetencies && (
+                            <div className="space-y-1.5">
+                              <h5 className="text-[10px] font-black uppercase tracking-widest text-voyage-accent opacity-60">🧠 Compétences clés</h5>
+                              <div className="grid grid-cols-1 gap-1">
+                                {Array.isArray(displayCity.keyCompetencies) ? (
+                                  displayCity.keyCompetencies.map((item: string, i: number) => (
+                                    <div key={i} className="text-[#4E2510]/90 text-[11px] leading-relaxed font-medium flex gap-2 bg-white/5 p-1.5 rounded-lg border border-white/5">
+                                      <span className="text-voyage-accent">✓</span>
+                                      {item}
+                                    </div>
+                                  ))
+                                ) : (
+                                  <div className="text-[#4E2510]/90 text-[11px] leading-relaxed font-medium whitespace-pre-wrap">
+                                    {displayCity.keyCompetencies}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
+                        </motion.div>
                       )}
                     </AnimatePresence>
                   </div>
@@ -845,33 +893,39 @@ const MissionsList: React.FC<{
                       color: isDone ? 'white' : themeColor
                     }}
                   >
-                    {isDone ? <Check size={14} strokeWidth={3} /> : idx + 1}
+                    <span className="font-black" style={{ color: themeColor }}>
+                      {idx + 1}
+                    </span>
                   </div>
                   <div>
-                    <p className={cn('text-sm font-black', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]')}>
+                    <h5 className={cn('font-headline font-black text-[13px] leading-tight mb-1', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]')}>
                       {mission.title_fr}
-                    </p>
-                    <p
-                      className="text-[10px] font-bold opacity-60"
-                      style={{ color: themeColor }}
-                    >
-                      +{mission.xp_reward} XP
-                    </p>
+                    </h5>
+                    <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                      {mission.soft_skill_dominant && (
+                        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-voyage-accent/10 border border-voyage-accent/20">
+                          <span className="text-[8px] font-black text-voyage-accent uppercase tracking-wider">Soft Skill:</span>
+                          <span className="text-[9px] font-bold text-voyage-accent">{mission.soft_skill_dominant}</span>
+                        </div>
+                      )}
+                      <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/40 border border-white/40">
+                         <span className="text-[8px] font-black text-[#4E2510]/40 uppercase tracking-wider">Récompense:</span>
+                         <span className="text-[9px] font-bold text-[#4E2510]/70">+{mission.xp_reward} XP</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                {isDone && (
-                  <div className="flex gap-0.5">
-                    {[...Array(3)].map((_, i) => (
-                      <Star key={i} size={10} className="text-[#D4A43E] fill-[#D4A43E] star-twinkle" style={{ animationDelay: `${i * 0.2}s` }} />
-                    ))}
-                  </div>
+                {isDone ? (
+                  <CheckCircle2 size={20} className="text-emerald-600 shrink-0" />
+                ) : (
+                  <ChevronRight size={18} className="text-[#4E2510]/20 shrink-0" />
                 )}
               </div>
               
-              {mission.description_fr && (
-                <div className="pl-11 pr-2">
-                  <p className="text-[11px] font-medium text-[#4E2510]/70 leading-relaxed italic border-l-2 pl-3" style={{ borderColor: `${themeColor}40` }}>
-                    {mission.description_fr}
+              {(mission.script_opening || mission.description_fr) && (
+                <div className="pl-12">
+                   <p className="text-[10px] text-[#4E2510]/60 font-medium line-clamp-1 italic leading-relaxed">
+                    {mission.script_opening?.split('\n')[0] || mission.description_fr}
                   </p>
                 </div>
               )}

@@ -115,7 +115,9 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
             cinematicCharacter: city.cinematic_character,
             color: city.city_color,
             iconName: city.icon_name,
-            iconSize: city.icon_size || 52
+            iconSize: city.icon_size || 52,
+            learningOutcomes: city.learning_outcomes,
+            keyCompetencies: city.pedagogical_theories
           };
         });
         setCities(mappedCities);
@@ -216,9 +218,13 @@ export function useSupabaseMissions(cityId: string) {
 
           return {
             ...m,
+            mission_type: m.mission_type,
+            xp_reward: m.xp_reward || 0,
             mentor_name: mentorName,
             mentor_role: mentorRole,
             script_opening: scriptOpening,
+            script_closing: m.script_closing,
+            soft_skill_dominant: m.soft_skill_dominant,
             narration: m.narration
           };
         });

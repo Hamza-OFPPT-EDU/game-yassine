@@ -250,11 +250,11 @@ export default function ChallengesManager({ onSelectChallenge, onViewCurriculum 
             </Field>
 
             <div className="form-row-2">
-              <Field label="Théories Pédagogiques (JSON/Texte)">
-                <Textarea value={modal.pedagogical_theories} onChange={v => set('pedagogical_theories', v)} placeholder="Théorie de..." rows={2} />
+              <Field label="🎯 Ce que vous allez apprendre" hint="Un point par ligne">
+                <Textarea value={modal.learning_outcomes} onChange={v => set('learning_outcomes', v)} placeholder="Maîtriser le stress...&#10;Travailler en équipe..." rows={4} />
               </Field>
-              <Field label="Résultats d'apprentissage">
-                <Textarea value={modal.learning_outcomes} onChange={v => set('learning_outcomes', v)} placeholder="L'élève saura..." rows={2} />
+              <Field label="🧠 Compétences clés / Théories" hint="Un point par ligne (sera préfixé par ✓ dans le jeu)">
+                <Textarea value={modal.pedagogical_theories} onChange={v => set('pedagogical_theories', v)} placeholder="Matrice d'Eisenhower&#10;Modèle de Belbin..." rows={4} />
               </Field>
             </div>
 
@@ -262,7 +262,7 @@ export default function ChallengesManager({ onSelectChallenge, onViewCurriculum 
               <Field label="Ordre d'affichage">
                 <Input type="number" value={modal.sort_order} onChange={v => set('sort_order', parseInt(v))} min="0" />
               </Field>
-              <Field label=" ">
+              <Field label="Visibilité">
                 <Toggle value={modal.is_published} onChange={v => set('is_published', v)} label="Publié (visible dans le jeu)" />
               </Field>
             </div>

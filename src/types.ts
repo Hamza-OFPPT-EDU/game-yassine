@@ -56,6 +56,8 @@ export type City = {
   color?: string;
   iconName?: string;
   iconSize?: number;
+  learningOutcomes?: string;
+  keyCompetencies?: string;
 };
 
 export type Mission = {
@@ -72,6 +74,7 @@ export type Mission = {
   mentor_role?: string;
   script_opening?: string;
   script_closing?: string;
+  soft_skill_dominant?: string;
   narration?: {
     intro?: { texte: string; consigne?: string; objectif?: string };
     conclusion?: { texte_reussite: string };
