@@ -429,12 +429,24 @@ export default function MapJourneyScreen({
                           </>
                         )}
                       </div>
-                      <h2 className="text-3xl font-headline font-black text-[#4E2510] tracking-tight leading-none">
+                      <h2 className="text-3xl font-headline font-black text-[#4E2510] tracking-tight leading-tight">
                         {displayCity.name}
                       </h2>
-                      <p className="arabic-font text-sm font-black text-[#4E2510]/80">
-                        {displayCity.arabicName}
-                      </p>
+                      {displayCity.headline && (
+                        <p className="text-[10px] font-black uppercase tracking-widest text-voyage-accent opacity-80 -mt-1 mb-1">
+                          {displayCity.headline}
+                        </p>
+                      )}
+                      <div className="flex flex-col">
+                        <p className="arabic-font text-sm font-black text-[#4E2510]/80">
+                          {displayCity.arabicName}
+                        </p>
+                        {displayCity.arabicHeadline && (
+                          <p className="arabic-font text-[10px] font-bold text-voyage-accent/70" dir="rtl">
+                            {displayCity.arabicHeadline}
+                          </p>
+                        )}
+                      </div>
                     </div>
                     {/* Badge progression */}
                     <div
