@@ -20,6 +20,8 @@ export enum Screen {
   Login = 'login',
 }
 
+export const DEFAULT_AVATAR_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg';
+
 export type LeaguePlayer = {
   id: string;
   name: string;

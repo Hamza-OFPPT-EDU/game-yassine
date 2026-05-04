@@ -3,6 +3,7 @@ import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, Trendin
 import { useSupabaseProfile } from '../hooks/useSupabase';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
+import { DEFAULT_AVATAR_URL } from '../types';
 
 interface ProfileScreenProps {
   onBack: () => void;
@@ -48,7 +49,7 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
            <div className="relative group">
               <div className="w-32 h-32 rounded-3xl bg-duo-swan/20 flex items-center justify-center border-4 border-duo-swan relative overflow-hidden group-hover:border-voyage-accent transition-colors">
                 <img 
-                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEnuCj82UkKXzGW0tKpWXPsCMVxp-ze2cDdCMYUcyGp-bxmqiPpfxq6WS0cLA0F_4fHZzo4EBdyjNNcqb9EcIdChW45pSIDd_OMNlxBs2UULMjeZb2S6M0FhkIqKFBdiqI4bNtjf7siSxvoJNR3P4LXULObMP_bndo_xMDfHHGdDqFrQyP4ULR99TUdOXKujPVQ3mYRW1jJmEkXQ4lBCWbjptm_vK9MKgBqWPRBIayk4fWtmzHlrXjpeDW1uLbJwRYWp5wCddpNOM" 
+                   src={profile?.avatar_url || DEFAULT_AVATAR_URL} 
                    alt="Profile" 
                    className="w-full h-full object-cover"
                    referrerPolicy="no-referrer"

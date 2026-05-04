@@ -18,10 +18,10 @@ const MOCK_LEAGUES: League[] = [
     timeLeft: '2j 4h',
     myRank: 4,
     players: [
-      { id: '1', name: 'Zaynab', xp: 2100, avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDa0Qi6bn32DpDzORmMcPM-DSSMBY4VsJPvTEDgA1VhvdMDJ5W1JuO2zyz9ZMLC89u0CbVN3ihJuoBveSKM2GCQy-O8THfaB-rhAO5CjQA_R8WY_c_L46eN34wiwNl_drXpdRsZFUQbBu7TB3JzCLp0TXgc2cFJXPSqqisFG3irKtEALPT0gl0QnP8_BkrZc2i6Fp2pdvd_NuLII2sD7wTQd_-W4xfKAcXdsXc61Hkyfwvoo-4tJ210y5sUkpj3JogzcpI7JNkya7o', rank: 1 },
-      { id: '2', name: 'Omar', xp: 1950, avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDELPthMs2U6y2tJ3Yqx-UU35PQLAwWoRBRNg0EswoS0MmfT09P7VkfT-S2MVhcLrC-E02QjUlaDtcXJlfL41YpCZAFhERe_NSbyVfJfBykmZBD1BXAvn8wElgnn1pEu5GBWjRRwJQjkvavkWkq-hQhCu7vEmRVK2RLf2QBi-674WNaG7M2FFq6W4HI9uXm8GRgNh2Hh-_2DaqkrhH_kKf-e8QmR_nCCOjqmw1Y8ICCliS0wKbACA5hjpAykN8V_SWM_37LYqk0Yfo', rank: 2 },
-      { id: '3', name: 'Yasmine', xp: 1800, avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBEP_TLmyVFjaWaNxAu8UyMUUtTSGatOhatiT0Mp8tAURXHtC8g4ek4E7sSUvqxlsejnI2vH8DUdoNJYV9MFFkQU-Bd9Y-xQw_9d-ZP9EoeuMxD88FgkoEnVrVIV2tUz6UH2oCU_dA99VqtE1hzQkSmtqrqvL1x4Y2bCWMd9MQuE7K6WdoUz7l0e3QWJxbzAkMjgAbctL76dZ28ZuK8N8a3KFZrI6mmkQBigwcpxz6aWoyDHQdFYpUvqpC0q3li40vZ9sFT_gDGXrg', rank: 3 },
-      { id: '4', name: 'Ahmed', xp: 1450, avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDEnuCj82UkKXzGW0tKpWXPsCMVxp-ze2cDdCMYUcyGp-bxmqiPpfxq6WS0cLA0F_4fHZzo4EBdyjNNcqb9EcIdChW45pSIDd_OMNlxBs2UULMjeZb2S6M0FhkIqKFBdiqI4bNtjf7siSxvoJNR3P4LXULObMP_bndo_xMDfHHGdDqFrQyP4ULR99TUdOXKujPVQ3mYRW1jJmEkXQ4lBCWbjptm_vK9MKgBqWPRBIayk4fWtmzHlrXjpeDW1uLbJwRYWp5wCddpNOM', rank: 4, isCurrentUser: true },
+      { id: '1', name: 'Zaynab', xp: 2100, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 1 },
+      { id: '2', name: 'Omar', xp: 1950, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 2 },
+      { id: '3', name: 'Yasmine', xp: 1800, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 3 },
+      { id: '4', name: 'Ahmed', xp: 1450, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 4, isCurrentUser: true },
     ]
   },
   { id: 'silver', name: 'Ligue Argent', tier: 'silver', timeLeft: 'Terminé', myRank: 12, players: [] },

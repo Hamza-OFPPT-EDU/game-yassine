@@ -7,7 +7,7 @@ import { useMemo, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Map, Star, Loader2 } from 'lucide-react';
 import { useAssetPreloader } from '../hooks/useAssetPreloader';
-import { CITIES } from '../types';
+import { CITIES, DEFAULT_AVATAR_URL } from '../types';
 
 interface SplashScreenProps {
   onComplete?: () => void;
@@ -15,7 +15,6 @@ interface SplashScreenProps {
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 const INTRO_CHAR_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif';
-const DEFAULT_AVATAR_URL = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDEnuCj82UkKXzGW0tKpWXPsCMVxp-ze2cDdCMYUcyGp-bxmqiPpfxq6WS0cLA0F_4fHZzo4EBdyjNNcqb9EcIdChW45pSIDd_OMNlxBs2UULMjeZb2S6M0FhkIqKFBdiqI4bNtjf7siSxvoJNR3P4LXULObMP_bndo_xMDfHHGdDqFrQyP4ULR99TUdOXKujPVQ3mYRW1jJmEkXQ4lBCWbjptm_vK9MKgBqWPRBIayk4fWtmzHlrXjpeDW1uLbJwRYWp5wCddpNOM';
 
 export default function SplashScreen({ onComplete }: SplashScreenProps) {
   // Define assets to preload

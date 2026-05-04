@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { CITIES, type Challenge, type City, type Mission } from '../types';
+import { CITIES, type Challenge, type City, type Mission, DEFAULT_AVATAR_URL } from '../types';
 import { Session } from '@supabase/supabase-js';
 
 export function useAuth() {
@@ -431,10 +431,16 @@ export function useSupabaseProfile(userId?: string) {
         .single();
 
       if (!error && data) {
-        setProfile(data);
+        setProfile({
+          ...data,
+          avatar_url: data.avatar_url || DEFAULT_AVATAR_URL
+        });
       } else {
         console.warn('Profile not found for user:', userId);
-        setProfile(null);
+        setProfile({
+          id: userId,
+          avatar_url: DEFAULT_AVATAR_URL
+        });
       }
       setLoading(false);
     }

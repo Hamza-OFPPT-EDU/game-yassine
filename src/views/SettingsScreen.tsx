@@ -10,6 +10,7 @@ import { useSettings, type FontSize } from '../contexts/SettingsContext';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { useAudio } from '../hooks/useAudio';
+import { DEFAULT_AVATAR_URL } from '../types';
 
 interface SettingsScreenProps {
   onBack: () => void;
@@ -50,7 +51,7 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
               <img 
                 alt="User Avatar" 
                 className="w-full h-full object-cover" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEnuCj82UkKXzGW0tKpWXPsCMVxp-ze2cDdCMYUcyGp-bxmqiPpfxq6WS0cLA0F_4fHZzo4EBdyjNNcqb9EcIdChW45pSIDd_OMNlxBs2UULMjeZb2S6M0FhkIqKFBdiqI4bNtjf7siSxvoJNR3P4LXULObMP_bndo_xMDfHHGdDqFrQyP4ULR99TUdOXKujPVQ3mYRW1jJmEkXQ4lBCWbjptm_vK9MKgBqWPRBIayk4fWtmzHlrXjpeDW1uLbJwRYWp5wCddpNOM" 
+                src={DEFAULT_AVATAR_URL} 
                 referrerPolicy="no-referrer"
               />
             </div>
