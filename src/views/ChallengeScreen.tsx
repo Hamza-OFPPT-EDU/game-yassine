@@ -22,6 +22,53 @@ import { useAudio } from '../hooks/useAudio';
 import { useTimer } from '../hooks/useTimer';
 import { TimerBar } from '../components/TimerBar';
 
+// Helper for dynamic theming based on exercise type
+const getThemeConfig = (type: string) => {
+  const t = type.toLowerCase();
+  
+  if (['scenario-decision', 'scenario-dialogue', 'scenario-cascade', 'decision', 'dialogue'].includes(t)) {
+    return {
+      category: 'Narrative',
+      icon: <Clapperboard size={16} />,
+      bgClass: 'bg-amber-50/50',
+      accentColor: 'text-amber-600',
+      borderColor: 'border-amber-200',
+      gradient: 'from-amber-50 to-orange-50'
+    };
+  }
+  
+  if (['zellige', 'puzzle-riddle', 'riddle', 'mosaic', 'glitch'].includes(t)) {
+    return {
+      category: 'Artistic',
+      icon: <Sparkles size={16} />,
+      bgClass: 'bg-teal-50/50',
+      accentColor: 'text-teal-600',
+      borderColor: 'border-teal-200',
+      gradient: 'from-teal-50 to-emerald-50'
+    };
+  }
+  
+  if (['matching', 'ranking', 'team-roles', 'fill-in-blanks', 'sorting-challenge'].includes(t)) {
+    return {
+      category: 'Technical',
+      icon: <LayoutGrid size={16} />,
+      bgClass: 'bg-blue-50/50',
+      accentColor: 'text-blue-600',
+      borderColor: 'border-blue-200',
+      gradient: 'from-blue-50 to-indigo-50'
+    };
+  }
+  
+  return {
+    category: 'Assessment',
+    icon: <Compass size={16} />,
+    bgClass: 'bg-voyage-sand/10',
+    accentColor: 'text-voyage-accent',
+    borderColor: 'border-voyage-secondary/20',
+    gradient: 'from-white to-voyage-sand/10'
+  };
+};
+
 interface ChallengeScreenProps {
   city: City;
   missionId: string;
@@ -525,9 +572,14 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
   }
 
   const progress = ((currentIdx + 1) / questions.length) * 100;
+  const theme = getThemeConfig(challenge?.type || 'multiple-choice');
 
   return (
-    <div className="h-full w-full bg-white flex flex-col relative overflow-hidden">
+    <div className={cn("h-full w-full flex flex-col relative overflow-hidden transition-colors duration-500", theme.bgClass)}>
+      {/* Dynamic Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+      </div>
       <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b-[3px] border-duo-swan px-6 py-4 flex items-center gap-6">
         <button onClick={onBack} className="p-2 hover:bg-duo-swan rounded-xl transition-colors">
           <X size={24} className="text-duo-wolf" />
@@ -566,8 +618,11 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
       
       <main className="grow pt-40 pb-32 px-6 max-w-2xl mx-auto w-full relative z-10 overflow-y-auto scrollbar-hide">
         <div className="mb-8 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-voyage-accent/10 rounded-full border border-voyage-accent/20">
-             <span className="text-[10px] font-black text-voyage-accent uppercase tracking-widest">{challenge.type.replace('-', ' ')}</span>
+          <div className={cn("inline-flex items-center gap-2 px-3 py-1 rounded-full border transition-all", theme.bgClass, theme.borderColor)}>
+             <span className={cn("shrink-0", theme.accentColor)}>{theme.icon}</span>
+             <span className={cn("text-[10px] font-black uppercase tracking-widest", theme.accentColor)}>
+               {theme.category}: {challenge.type.replace('-', ' ')}
+             </span>
           </div>
           
           {challenge.content && challenge.content[0] && challenge.type !== 'fill-in-blanks' && (

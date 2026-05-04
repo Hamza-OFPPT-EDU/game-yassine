@@ -902,6 +902,21 @@ const MissionsList: React.FC<{
                       {mission.title_fr}
                     </h5>
                     <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                      {/* Mission Type Badge */}
+                      <div className={cn(
+                        "flex items-center gap-1 px-2 py-0.5 rounded-full border",
+                        mission.mission_type === 'scenario' ? "bg-amber-100 border-amber-200 text-amber-700" :
+                        mission.mission_type === 'minigame' ? "bg-indigo-100 border-indigo-200 text-indigo-700" :
+                        mission.mission_type === 'dialogue' ? "bg-rose-100 border-rose-200 text-rose-700" :
+                        "bg-blue-100 border-blue-200 text-blue-700"
+                      )}>
+                        <span className="text-[8px] font-black uppercase tracking-wider">
+                          {mission.mission_type === 'scenario' ? '🎬 Scénario' :
+                           mission.mission_type === 'minigame' ? '🧩 Jeu' :
+                           mission.mission_type === 'dialogue' ? '💬 Dialogue' : '📝 Défi'}
+                        </span>
+                      </div>
+
                       {mission.soft_skill_dominant && (
                         <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-voyage-accent/10 border border-voyage-accent/20">
                           <span className="text-[8px] font-black text-voyage-accent uppercase tracking-wider">Soft Skill:</span>
