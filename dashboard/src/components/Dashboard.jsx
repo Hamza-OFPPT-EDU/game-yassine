@@ -33,8 +33,19 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 function NewUserModal({ isOpen, onClose, onSubmit }) {
   const [formData, setFormData] = useState({
-    username: '', password: '', fullName: '', site: '', schoolLevel: ''
+    username: '', password: '', fullName: '', site: '', schoolLevel: '', birthYear: ''
   });
+
+  // Auto-generate password based on name@year
+  useEffect(() => {
+    if (formData.username && formData.birthYear) {
+      const safeUsername = formData.username.trim().toLowerCase().replace(/\s+/g, '_');
+      setFormData(prev => ({ 
+        ...prev, 
+        password: `${safeUsername}@${formData.birthYear}` 
+      }));
+    }
+  }, [formData.username, formData.birthYear]);
   const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
@@ -83,15 +94,27 @@ function NewUserModal({ isOpen, onClose, onSubmit }) {
               />
             </div>
             <div className="flex-1 flex flex-col gap-1">
-              <label className="text-xs font-semibold text-text-muted uppercase">Mot de passe</label>
+              <label className="text-xs font-semibold text-text-muted uppercase">Année de naissance</label>
               <input 
                 required
+                type="number"
+                min="2000"
+                max={new Date().getFullYear()}
                 className="cms-input" 
-                placeholder="ex: yac.b@2010"
-                value={formData.password}
-                onChange={e => setFormData({...formData, password: e.target.value})}
+                placeholder="ex: 2010"
+                value={formData.birthYear}
+                onChange={e => setFormData({...formData, birthYear: e.target.value})}
               />
             </div>
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-xs font-semibold text-text-muted uppercase">Mot de passe (auto-généré)</label>
+            <input 
+              readOnly
+              className="cms-input bg-white/5 opacity-70" 
+              placeholder="Généré automatiquement: login@année"
+              value={formData.password}
+            />
           </div>
           <div className="flex flex-col gap-1">
             <label className="text-xs font-semibold text-text-muted uppercase">Nom complet</label>
@@ -149,13 +172,27 @@ function BulkImportModal({ isOpen, onClose, onSubmit }) {
       
       const usersData = [];
       for (let row of rows) {
-        // Expected format: Nom_Prenom, Password, FullName, Site, SchoolLevel
-        // Or adapt to what makes sense based on columns. Let's assume columns in that order, or try to guess.
-        let [username, password, fullName, site, schoolLevel] = row;
+        // Expected format: Login, Année/Date Naissance, Nom complet, Site, Niveau
+        let [username, birthInfo, fullName, site, schoolLevel] = row;
         
         username = username?.trim();
-        password = password?.trim();
-        if (!username || !password) continue; // Skip invalid rows
+        if (!username) continue; // Skip invalid rows
+
+        // Extract year from birthInfo (can be "2010" or "2010-05-15")
+        let year = '';
+        if (birthInfo) {
+          const trimmed = birthInfo.trim();
+          if (trimmed.length === 4 && !isNaN(trimmed)) {
+            year = trimmed;
+          } else {
+            const d = new Date(trimmed);
+            if (!isNaN(d.getFullYear())) {
+              year = d.getFullYear().toString();
+            }
+          }
+        }
+
+        const password = year ? `${username.toLowerCase()}@${year}` : username.toLowerCase();
         
         usersData.push({
           username,
@@ -167,7 +204,7 @@ function BulkImportModal({ isOpen, onClose, onSubmit }) {
       }
       
       if (usersData.length === 0) {
-        alert("Aucun joueur valide trouvé. Format attendu : username,password,fullName,site,niveau");
+        alert("Aucun joueur valide trouvé. Format attendu : Login, Année/Date Naissance, Nom complet, Site, Niveau");
         setLoading(false);
         return;
       }
@@ -195,12 +232,12 @@ function BulkImportModal({ isOpen, onClose, onSubmit }) {
             <Upload size={20} className="text-primary-light" />
             Importation en masse
           </h2>
-          <p className="text-sm text-text-secondary">Collez votre liste depuis Excel (ou séparé par des virgules/tabulations).<br/>Colonnes : <b>Login, Mot de passe, Nom complet, Site, Niveau</b></p>
+          <p className="text-sm text-text-secondary">Collez votre liste depuis Excel (ou séparé par des virgules/tabulations).<br/>Colonnes : <b>Login, Année Naissance, Nom complet, Site, Niveau</b></p>
         </div>
         <div className="p-6 flex flex-col gap-4">
           <textarea 
             className="cms-input" 
-            placeholder="yacine_b&#9;pass123&#9;Yacine B.&#9;Rabat&#9;3ème AC&#10;sarah_k&#9;pass456&#9;Sarah K.&#9;Casa&#9;2ème AC"
+            placeholder="yacine_b&#9;2010&#9;Yacine B.&#9;Rabat&#9;3ème AC&#10;sarah_k&#9;2011&#9;Sarah K.&#9;Casa&#9;2ème AC"
             rows={10}
             value={text}
             onChange={e => setText(e.target.value)}
