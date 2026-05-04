@@ -41,11 +41,13 @@ async function importChefchaouen() {
     city_name_fr: 'Chefchaouen',
     city_name_ar: 'شفشاون',
     description_fr: `Chefchaouen, ville bleue nichée dans le Rif, vous invite à appliquer concrètement les concepts découverts à Rabat. Ici, pas de théorie : on pratique en montagne, à l’atelier de tissage, au souk, à l’herboristerie et au festival.`,
-    headline_fr: `🏔️ ACTE II - LA PERLE BLEUE : L'APPLICATION`,
+    headline_fr: `La Perle Bleue`,
+    focus_fr: `Application des Soft Skills`,
     sort_order: 2,
     is_published: true,
     city_color: '#3b82f6',
-    icon_name: 'mountain'
+    icon_name: 'mountain',
+    acte_title: 'ACTE II - CHEFCHAOUEN : L’APPLICATION'
   });
 
   if (cityErr) { console.error('City Error:', cityErr); return; }
