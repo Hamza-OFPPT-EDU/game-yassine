@@ -14,7 +14,7 @@ import {
   closestCenter,
 } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import { Lightbulb, TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw, SkipForward } from 'lucide-react';
+import { Lightbulb, TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw, SkipForward, Clapperboard } from 'lucide-react';
 import { type City, type Challenge, type MissionCompletionSummary, type MissionQuestionResult } from '../types';
 import { cn } from '../lib/utils';
 import { useSupabaseQuestions } from '../hooks/useSupabase';
@@ -359,7 +359,7 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
   const canConfirm = () => {
     if (!challenge) return false;
     const type = challenge.type;
-    if (['multiple-choice', 'true-false', 'scenario-decision', 'scenario-dialogue', 'short-answer', 'puzzle-riddle', 'time-attack'].includes(type)) return !!selectedOptionId;
+    if (['multiple-choice', 'true-false', 'scenario-decision', 'scenario-dialogue', 'scenario-cascade', 'short-answer', 'puzzle-riddle', 'time-attack'].includes(type)) return !!selectedOptionId;
     if (type === 'glitch') return selectedWordIdx !== null;
     if (type === 'ranking') return selectedRankIds.length === (challenge.options?.length || 0);
     if (type === 'fill-in-blanks') return Object.keys(blanksValues).length > 0;
@@ -470,7 +470,7 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
       timeSpent,
     };
 
-    if (['multiple-choice', 'true-false', 'scenario-decision', 'scenario-dialogue', 'puzzle-riddle', 'time-attack'].includes(challenge.type)) {
+    if (['multiple-choice', 'true-false', 'scenario-decision', 'scenario-dialogue', 'scenario-cascade', 'puzzle-riddle', 'time-attack'].includes(challenge.type)) {
       result.givenAnswer = getOptionText(selectedOptionId, challenge.options || []);
       result.correctAnswer = getOptionText(challenge.correctOptionId, challenge.options || []);
       return result;
@@ -677,33 +677,55 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
         >
           {['multiple-choice', 'true-false', 'scenario-decision', 'scenario-cascade'].includes(challenge.type) && (
             <div className="space-y-3">
-              {normalizedOptions.map((opt) => (
-                <button
-                  key={opt.id}
-                  disabled={showFeedback}
-                  onClick={() => {
-                    playSound('click');
-                    setSelectedOptionId(opt.id);
-                  }}
-                  className={cn(
-                    "w-full flex items-center gap-4 p-5 text-left rounded-2xl border-2 transition-all duration-100 group relative",
-                    selectedOptionId === opt.id 
-                      ? "bg-voyage-primary/5 border-voyage-primary shadow-[0_4px_0_0_#8B4513] -translate-y-0.5"
-                      : "bg-white border-voyage-secondary/30 hover:bg-voyage-secondary/10 border-b-4 active:translate-y-0.5 active:border-b-0"
-                  )}
-                >
-                  <div className={cn(
-                    "w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm border-2 transition-colors",
-                    selectedOptionId === opt.id ? "bg-voyage-primary border-voyage-primary text-white" : "bg-white border-voyage-secondary/30 text-voyage-secondary group-hover:border-voyage-primary/30"
-                  )}>
-                    {opt.label || '?'}
-                  </div>
-                  <span className={cn(
-                    "font-bold text-lg",
-                    selectedOptionId === opt.id ? "text-voyage-primary" : "text-duo-eel"
-                  )}>{opt.text}</span>
-                </button>
-              ))}
+              {normalizedOptions.map((opt) => {
+                const isScenarioType = ['scenario-decision', 'scenario-cascade'].includes(challenge.type);
+                const isCorrect = opt.id === challenge.correctOptionId;
+                
+                return (
+                  <button
+                    key={opt.id}
+                    disabled={showFeedback}
+                    onClick={() => {
+                      playSound('click');
+                      setSelectedOptionId(opt.id);
+                    }}
+                    className={cn(
+                      "w-full flex items-center gap-4 p-5 text-left rounded-2xl border-2 transition-all duration-100 group relative",
+                      selectedOptionId === opt.id 
+                        ? "bg-voyage-primary/5 border-voyage-primary shadow-[0_4px_0_0_#8B4513] -translate-y-0.5"
+                        : (isScenarioType && isCorrect)
+                          ? "bg-emerald-50 border-emerald-400 border-b-4 hover:bg-emerald-100/50 active:translate-y-0.5 active:border-b-0"
+                          : "bg-white border-voyage-secondary/30 hover:bg-voyage-secondary/10 border-b-4 active:translate-y-0.5 active:border-b-0"
+                    )}
+                  >
+                    <div className={cn(
+                      "w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm border-2 transition-colors",
+                      selectedOptionId === opt.id 
+                        ? "bg-voyage-primary border-voyage-primary text-white" 
+                        : (isScenarioType && isCorrect)
+                          ? "bg-emerald-500 border-emerald-600 text-white"
+                          : "bg-white border-voyage-secondary/30 text-voyage-secondary group-hover:border-voyage-primary/30"
+                    )}>
+                      {opt.label || '?'}
+                    </div>
+                    <span className={cn(
+                      "font-bold text-lg",
+                      selectedOptionId === opt.id 
+                        ? "text-voyage-primary" 
+                        : (isScenarioType && isCorrect)
+                          ? "text-emerald-700"
+                          : "text-duo-eel"
+                    )}>{opt.text}</span>
+
+                    {isScenarioType && isCorrect && (
+                      <div className="ml-auto bg-emerald-100 text-emerald-700 px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-tighter border border-emerald-200 flex items-center gap-1 shadow-sm">
+                        <CheckCircle2 size={12} />
+                        Solution
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           )}
 
