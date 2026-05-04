@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { type Asset } from '../hooks/useAssetPreloader';
 
 export const CORE_ASSETS = {
   videos: [
@@ -25,7 +26,7 @@ export const CORE_ASSETS = {
 };
 
 export const fetchDynamicAssets = async () => {
-  const assets: { url: string; type: 'image' | 'audio' | 'video' }[] = [];
+  const assets: Asset[] = [];
   
   try {
     const { data: cities } = await supabase
@@ -52,8 +53,8 @@ export const fetchDynamicAssets = async () => {
   return assets;
 };
 
-export const getAllAssets = (dynamicAssets: { url: string; type: 'image' | 'audio' | 'video' }[] = []) => {
-  const assets: { url: string; type: 'image' | 'audio' | 'video' }[] = [...dynamicAssets];
+export const getAllAssets = (dynamicAssets: Asset[] = []) => {
+  const assets: Asset[] = [...dynamicAssets];
   
   CORE_ASSETS.images.forEach(url => assets.push({ url, type: 'image' }));
   CORE_ASSETS.audio.forEach(url => assets.push({ url, type: 'audio' }));

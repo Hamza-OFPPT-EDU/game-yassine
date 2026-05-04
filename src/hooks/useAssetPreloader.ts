@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
-type AssetType = 'image' | 'audio' | 'video';
+export type AssetType = 'image' | 'audio' | 'video';
 
-interface Asset {
+export interface Asset {
   url: string;
   type: AssetType;
 }
