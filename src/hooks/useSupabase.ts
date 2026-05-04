@@ -56,43 +56,36 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
 
   useEffect(() => {
     async function fetchData() {
-      // Fetch cities
-      const { data: cityData, error: cityError } = await supabase
-        .from('challenges')
-        .select('*')
-        .order('sort_order', { ascending: true });
+      setLoading(true);
+      try {
+        // Fetch cities
+        const { data: cityData, error: cityError } = await supabase
+          .from('challenges')
+          .select('*')
+          .order('sort_order', { ascending: true });
 
-      // Fetch missions to count steps
-      const { data: missionData, error: missionError } = await supabase
-        .from('missions')
-        .select('id, city_id');
+        // Fetch missions to count steps
+        const { data: missionData, error: missionError } = await supabase
+          .from('missions')
+          .select('id, city_id');
 
-      console.log('📍 Cities data:', cityData);
-      console.log('🎯 Missions data (for counting):', missionData);
+        if (cityError || missionError) throw cityError || missionError;
 
-      if (cityError || missionError) {
-        console.error('Error fetching data:', cityError || missionError);
-        setCities(buildFallbackCities(completedCities));
-      } else {
         if (!cityData || cityData.length === 0) {
-          setCities(buildFallbackCities(completedCities));
+          console.warn('No cities found in database');
+          setCities([]);
           setLoading(false);
           return;
         }
 
-        const mappedCities = (cityData || []).map((city, index) => {
+        const mappedCities = (cityData || []).map((city) => {
           const cityMissions = (missionData || []).filter(m => m.city_id === city.city_id);
-          console.log(`🏙️ City ${city.city_id}:`, { totalMissions: cityMissions.length, missions: cityMissions });
-          
           const totalSteps = cityMissions.length || 1;
           const completedInCity = cityMissions.filter(m => completedMissions.includes(m.id)).length;
           
-          // A city is active if it's the first one that is NOT completed
           const isCompleted = completedCities.includes(city.city_id);
           let status: 'locked' | 'active' | 'completed' = isCompleted ? 'completed' : 'locked';
           
-          // Determine if this city is the current one (active)
-          // The first incomplete city is active
           const firstIncomplete = (cityData || []).find(c => !completedCities.includes(c.city_id));
           if (firstIncomplete && firstIncomplete.city_id === city.city_id) {
             status = 'active';
@@ -121,6 +114,10 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
           };
         });
         setCities(mappedCities);
+      } catch (err) {
+        console.error('Failed to link with database:', err);
+        // We still keep the fallback only as a last resort to prevent app crash
+        setCities(buildFallbackCities(completedCities));
       }
       setLoading(false);
     }
