@@ -79,23 +79,23 @@ const getThemeConfig = (type: string) => {
 
 interface ChallengeScreenProps {
   city: City;
-  missionId: string;
-  missionTitle?: string;
+  mission: Mission;
   onComplete: (summary: MissionCompletionSummary) => void;
   onBack: () => void;
   redoQuestionIds?: string[];
 }
 
-export default function ChallengeScreen({ city, missionId, missionTitle, onComplete, onBack, redoQuestionIds }: ChallengeScreenProps) {
+export default function ChallengeScreen({ city, mission, onComplete, onBack, redoQuestionIds }: ChallengeScreenProps) {
   const { playSound } = useAudio();
-  const { questions: allQuestions, loading: loadingQuestions } = useSupabaseQuestions(missionId);
+  const { questions: allQuestions, loading: loadingQuestions } = useSupabaseQuestions(mission.id);
   
   // Filter questions if redoQuestionIds is provided
   const questions = redoQuestionIds && redoQuestionIds.length > 0
     ? allQuestions.filter(q => redoQuestionIds.includes(q.id))
     : allQuestions;
   
-  const [currentIdx, setCurrentIdx] = useState(0);
+  const [currentIdx, setCurrentIdx] = useState(redoQuestionIds ? 0 : 0);
+  const [currentStepIdx, setCurrentStepIdx] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [selectedWordIdx, setSelectedWordIdx] = useState<number | null>(null);
   const [selectedRankIds, setSelectedRankIds] = useState<string[]>([]);
@@ -106,6 +106,7 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
   
   const [showFeedback, setShowFeedback] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [showCinematic, setShowCinematic] = useState(false);
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
   const [hoverDropId, setHoverDropId] = useState<string | null>(null);
   const [questionResults, setQuestionResults] = useState<MissionQuestionResult[]>([]);
@@ -160,6 +161,10 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
     timeoutHandledRef.current = false;
     handleReset();
     timer.reset(DEFAULT_QUESTION_TIME);
+    setShortAnswer('');
+    setStartTime(Date.now());
+    setAttempts(0);
+    setCurrentStepIdx(0);
     setTimerStartTime(Date.now());
     setIsTimerPaused(false);
   }, [currentIdx]);
@@ -572,7 +577,7 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
 
   // Handle case where challenge data might be incomplete
   if (challenge && (!challenge.options || (Array.isArray(challenge.options) && challenge.options.length === 0))) {
-    const typeNoOptions = ['short-answer', 'puzzle-riddle', 'glitch'];
+    const typeNoOptions = ['short-answer', 'puzzle-riddle', 'glitch', 'scenario-cascade'];
     if (!typeNoOptions.includes(challenge.type)) {
        return (
         <div className="flex flex-col items-center justify-center h-full text-center space-y-6 px-8 bg-white">
@@ -600,6 +605,9 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
     }
   }
 
+  if (!challenge) return null;
+
+
   const progress = ((currentIdx + 1) / questions.length) * 100;
   const theme = getThemeConfig(challenge?.type || 'multiple-choice');
 
@@ -621,8 +629,16 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
         )}
       </div>
       <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b-[3px] border-duo-swan px-6 py-4 flex items-center gap-6">
-        <button onClick={onBack} className="p-2 hover:bg-duo-swan rounded-xl transition-colors">
+        <button onClick={() => { playSound('click'); onBack(); }} className="p-2 hover:bg-duo-swan rounded-xl transition-colors">
           <X size={24} className="text-duo-wolf" />
+        </button>
+
+        <button 
+          onClick={() => { playSound('click'); setShowCinematic(true); }}
+          className="p-2 hover:bg-duo-swan rounded-xl transition-colors shrink-0"
+          title="Contexte de la mission"
+        >
+          <Clapperboard size={22} className="text-voyage-primary" />
         </button>
         
         <div className="grow">
@@ -681,7 +697,11 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
           )}
 
           <div className="space-y-2 text-center">
-            <h2 className="text-2xl font-black text-duo-eel leading-tight tracking-tight">{challenge.question}</h2>
+            <h2 className="text-2xl font-black text-duo-eel leading-tight tracking-tight">
+              {challenge.type === 'scenario-cascade' && challenge.steps && challenge.steps[currentStepIdx] 
+                ? challenge.steps[currentStepIdx].question 
+                : challenge.question}
+            </h2>
             {challenge.arabicQuestion && (
               <h3 className="text-3xl font-bold text-voyage-accent leading-tight arabic-font" dir="rtl">
                 {challenge.arabicQuestion}
@@ -691,16 +711,16 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
         </div>
 
         <motion.div 
-          key={challenge.id}
+          key={challenge?.id || 'empty'}
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           className="space-y-6"
         >
-          {['multiple-choice', 'true-false', 'scenario-decision', 'scenario-cascade'].includes(challenge.type) && (
+          {challenge && ['multiple-choice', 'true-false', 'scenario-decision', 'scenario-cascade'].includes(challenge.type) && (
             <div className="space-y-3">
               {normalizedOptions.map((opt) => {
-                const isScenarioType = ['scenario-decision', 'scenario-cascade'].includes(challenge.type);
-                const isCorrect = opt.id === challenge.correctOptionId;
+                const isScenarioType = challenge && ['scenario-decision', 'scenario-cascade'].includes(challenge.type);
+                const isCorrect = challenge && opt.id === challenge.correctOptionId;
                 const isSelected = selectedOptionId === opt.id;
                 
                 return (
@@ -1261,6 +1281,57 @@ export default function ChallengeScreen({ city, missionId, missionTitle, onCompl
               </motion.button>
             </div>
           </footer>
+        )}
+      </AnimatePresence>
+
+      {/* Cinematic Text Overlay */}
+      <AnimatePresence>
+        {showCinematic && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-md"
+            onClick={() => setShowCinematic(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-white rounded-[2.5rem] p-8 max-w-md w-full shadow-2xl relative"
+              onClick={e => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setShowCinematic(false)}
+                className="absolute top-4 right-4 p-2 hover:bg-black/5 rounded-full"
+              >
+                <X size={20} className="text-duo-wolf" />
+              </button>
+
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-voyage-primary/10 rounded-xl">
+                    <Clapperboard size={20} className="text-voyage-primary" />
+                  </div>
+                  <h3 className="text-xs font-black uppercase tracking-widest text-voyage-primary/60">Contexte de la mission</h3>
+                </div>
+
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-black text-duo-eel leading-tight">{mission.title_fr}</h2>
+                  <p className="text-duo-wolf font-bold leading-relaxed italic">
+                    {mission.cinematic_text || mission.description_fr || "Aucun texte cinématique défini."}
+                  </p>
+                </div>
+
+                <button 
+                  onClick={() => setShowCinematic(false)}
+                  className="w-full py-4 bg-voyage-primary text-white rounded-2xl font-black uppercase tracking-wide shadow-lg shadow-voyage-primary/20"
+                >
+                  J'ai compris
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

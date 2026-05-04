@@ -23,7 +23,7 @@ interface MapJourneyScreenProps {
   stats: { xp: number; stars: number; level: number };
   completedCities: string[];
   completedMissions: string[];
-  onSelectCity: (city: City) => void;
+  onSelectCity: (city: City, mission?: any) => void;
 }
 
 export default function MapJourneyScreen({
@@ -60,6 +60,12 @@ export default function MapJourneyScreen({
       onSelectCity(city);
     }
   };
+
+  const handleSelectMission = (city: City, mission: any) => {
+    playSound('click');
+    onSelectCity(city, mission);
+  };
+
 
   // Hook pour jouer la voix de Rabat automatiquement
   useEffect(() => {
@@ -533,9 +539,10 @@ export default function MapJourneyScreen({
                       isDescriptionExpanded ? "max-h-[28vh]" : "max-h-[45vh]"
                     )}>
                       <MissionsList
-                        cityId={displayCity.id}
+                        city={displayCity}
                         completedMissions={completedMissions}
                         cityTheme={displayCityTheme}
+                        onSelectMission={(m) => handleSelectMission(displayCity, m)}
                       />
                     </div>
                   </div>
@@ -811,13 +818,14 @@ const CityNode: React.FC<{
 
 // ── Liste de missions ─────────────────────────────────────────────────────────
 const MissionsList: React.FC<{
-  cityId: string;
+  city: City;
   completedMissions: string[];
   cityTheme?: any;
+  onSelectMission: (mission: any) => void;
 }> = ({
-  cityId, completedMissions, cityTheme
+  city, completedMissions, cityTheme, onSelectMission
 }) => {
-    const { missions, loading } = useSupabaseMissions(cityId);
+    const { missions, loading } = useSupabaseMissions(city.id);
 
     if (loading) return (
       <div className="flex justify-center py-4">
@@ -831,10 +839,11 @@ const MissionsList: React.FC<{
           const isDone = completedMissions.includes(mission.id);
           const themeColor = cityTheme?.color || '#7B3F1A';
           return (
-            <div
+            <button
               key={mission.id}
+              onClick={() => onSelectMission(mission)}
               className={cn(
-                'p-4 rounded-xl border flex flex-col gap-2 transition-all backdrop-blur-md shadow-sm',
+                'w-full p-4 rounded-xl border flex flex-col gap-2 transition-all backdrop-blur-md shadow-sm text-left hover:scale-[1.02] active:scale-95 cursor-pointer',
                 isDone ? '' : 'bg-white/20 border-white/40',
               )}
               style={isDone ? {
@@ -902,7 +911,7 @@ const MissionsList: React.FC<{
                   </p>
                 </div>
               )}
-            </div>
+            </button>
           );
         }) : (
           <p className="text-xs text-[#A0572B] font-bold italic py-2 text-center opacity-40">

@@ -207,7 +207,10 @@ export function useSupabaseMissions(cityId: string) {
             script_opening: scriptOpening,
             script_closing: m.script_closing,
             soft_skill_dominant: m.soft_skill_dominant,
-            narration: m.narration
+            narration: m.narration,
+            cinematic_text: m.cinematic_text,
+            cinematic_gif_url: m.cinematic_gif_url,
+            cinematic_audio_url: m.cinematic_audio_url
           };
         });
         setMissions(mappedMissions);
@@ -275,17 +278,42 @@ export function useSupabaseQuestions(missionId: string) {
               label: opt.label || opt.label_fr || String.fromCharCode(65 + idx),
               match: opt.match || opt.right_fr || ''
             }));
+            
+            // If no top-level options, try to extract from the first step
+            if (options.length === 0 && steps.length > 0 && steps[0].responses) {
+              options = steps[0].responses.map((opt: any, idx: number) => ({
+                id: opt.id || String(idx),
+                text: opt.text || opt.text_fr || '',
+                label: opt.label || String.fromCharCode(65 + idx)
+              }));
+            }
           } else if (!q.options) {
-            // No options provided
-            options = [];
+            // No options provided - check type for defaults
+            if (type === 'true-false') {
+              options = [
+                { id: 'vrai', text: 'Vrai', label: 'V' },
+                { id: 'faux', text: 'Faux', label: 'F' }
+              ];
+            } else {
+              options = [];
+            }
           }
 
-          // Format content for fill-in-blanks if it uses underscores
+          // Format content for fill-in-blanks if it uses underscores or is missing placeholders
           let content = q.presentation_fr && q.presentation_fr !== q.question_fr 
             ? [q.presentation_fr] 
             : (type === 'fill-in-blanks' && q.question_fr ? [q.question_fr] : []);
-          if (type === 'fill-in-blanks' && content[0]) {
+          
+          if (type === 'fill-in-blanks' && content.length > 0) {
             let processed = content[0];
+            
+            // If it's fill-in-blanks but has no placeholders, and we have options, 
+            // maybe we should append them or log a warning.
+            // For now, let's ensure it has at least one placeholder if options exist.
+            if (!processed.includes('__________') && !processed.includes('...') && !processed.includes('[1]') && options.length > 0) {
+              processed += " __________";
+            }
+
             let count = 1;
             // Replace __________ or ... with [1], [2], etc.
             while (processed.includes('__________') || processed.includes('...')) {
@@ -304,7 +332,7 @@ export function useSupabaseQuestions(missionId: string) {
             arabicQuestion: q.question_ar,
             options,
             steps,
-            correctOptionId: q.correct_answer,
+            correctOptionId: q.correct_answer || (type === 'scenario-cascade' && steps?.length > 0 ? steps[0].correct_response_id : undefined),
             hint: q.hint_fr,
             content,
             feedbackPositive: q.feedback_positive_fr,

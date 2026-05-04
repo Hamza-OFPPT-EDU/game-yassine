@@ -16,6 +16,7 @@ const EMPTY = {
   mentor_name: '', mentor_role: '', script_opening: '', script_closing: '',
   narration: { intro: { texte: '', consigne: '', objectif: '' } },
   soft_skill_dominant: '', bloom_level: '',
+  cinematic_text: '', cinematic_gif_url: '', cinematic_audio_url: '',
 };
 
 export default function MissionsManager({ challenge, onSelectMission, onBack }) {
@@ -206,6 +207,35 @@ export default function MissionsManager({ challenge, onSelectMission, onBack }) 
               <Field label="Description (AR)">
                 <Textarea value={modal.description_ar} onChange={v => set('description_ar', v)} placeholder="يجب على عائلة بن علي…" rows={3} dir="rtl" />
               </Field>
+            </div>
+
+            <div style={{ padding: 15, background: 'rgba(59, 130, 246, 0.05)', borderRadius: 12, border: '1px solid rgba(59, 130, 246, 0.1)', marginBottom: 20 }}>
+              <h3 style={{ fontSize: 14, fontWeight: 800, color: '#3b82f6', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+                🎬 Introduction Cinématique
+              </h3>
+              <div className="form-row-1">
+                <Field label="Texte Cinématique (Narration avant mission)" hint="Texte affiché avec l'image GIF et l'audio">
+                  <Textarea value={modal.cinematic_text} onChange={v => set('cinematic_text', v)} placeholder="Il était une fois à Rabat..." rows={4} />
+                </Field>
+              </div>
+              <div className="form-row-2">
+                <Field label="URL du GIF Cinématique" hint="Par défaut : Guide de voyage.gif">
+                  <Input value={modal.cinematic_gif_url} onChange={v => set('cinematic_gif_url', v)} placeholder="https://..." />
+                  {modal.cinematic_gif_url && (
+                    <div style={{ marginTop: 8, height: 100, borderRadius: 8, overflow: 'hidden', border: '1px solid #ddd' }}>
+                      <img src={modal.cinematic_gif_url} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                  )}
+                </Field>
+                <Field label="URL de l'Audio (MP3)" hint="Audio d'accompagnement de la cinématique">
+                  <Input value={modal.cinematic_audio_url} onChange={v => set('cinematic_audio_url', v)} placeholder="https://..." />
+                  {modal.cinematic_audio_url && (
+                    <div style={{ marginTop: 8 }}>
+                      <audio controls src={modal.cinematic_audio_url} style={{ width: '100%', height: 32 }} />
+                    </div>
+                  )}
+                </Field>
+              </div>
             </div>
 
             <div className="form-row-2">

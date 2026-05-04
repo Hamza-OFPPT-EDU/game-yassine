@@ -7,15 +7,17 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Award, ArrowRight, MapPin, RotateCcw, Star, Clock, SkipForward, ChevronDown } from 'lucide-react';
 import { type MissionCompletionSummary } from '../types';
+import { cn } from '../lib/utils';
 
 interface LevelCompleteModalProps {
   summary: MissionCompletionSummary | null;
   onReplayMission: () => void;
   onBackToCity: () => void;
   onRedoIncorrect: (questionIds: string[]) => void;
+  onContinue?: () => void;
 }
 
-export default function LevelCompleteModal({ summary, onReplayMission, onBackToCity, onRedoIncorrect }: LevelCompleteModalProps) {
+export default function LevelCompleteModal({ summary, onReplayMission, onBackToCity, onRedoIncorrect, onContinue }: LevelCompleteModalProps) {
   const totalXp = summary?.totalXp ?? 0;
   const totalStars = summary?.totalStars ?? 0;
   const successRate = summary?.successRate ?? 0;
@@ -395,21 +397,46 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                 </motion.button>
               )}
 
+              {onContinue && (
+                <motion.button
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.45 }}
+                  onClick={onContinue}
+                  className="inline-flex h-[50px] items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#24160D] to-[#2A1A10] px-8 font-black text-white shadow-[0_16px_30px_rgba(22,14,9,0.2)] transition-all hover:shadow-[0_20px_40px_rgba(22,14,9,0.3)]"
+                >
+                  Continuer
+                  <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+                    <ArrowRight size={16} />
+                  </motion.div>
+                </motion.button>
+              )}
+
               <motion.button
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.97 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.45 }}
+                transition={{ delay: 0.48 }}
                 onClick={onBackToCity}
-                className="inline-flex h-[50px] items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#24160D] to-[#2A1A10] px-6 font-black text-white shadow-[0_16px_30px_rgba(22,14,9,0.2)] transition-all hover:shadow-[0_20px_40px_rgba(22,14,9,0.3)]"
+                className={cn(
+                  "inline-flex h-[50px] items-center justify-center gap-3 rounded-full px-6 font-black transition-all",
+                  onContinue 
+                    ? "bg-white border-2 border-[#D8C5AF] text-[#8A6A49] hover:bg-[#FDF9F4]" 
+                    : "bg-gradient-to-r from-[#24160D] to-[#2A1A10] text-white shadow-[0_16px_30px_rgba(22,14,9,0.2)] hover:shadow-[0_20px_40px_rgba(22,14,9,0.3)]"
+                )}
               >
                 <MapPin size={16} />
                 Retour à la ville
-                <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-                  <ArrowRight size={16} />
-                </motion.div>
+                {!onContinue && (
+                  <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+                    <ArrowRight size={16} />
+                  </motion.div>
+                )}
               </motion.button>
+
             </div>
           </div>
         </div>

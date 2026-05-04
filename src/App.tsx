@@ -18,6 +18,7 @@ import ChallengeScreen from './views/ChallengeScreen';
 import ProfileScreen from './views/ProfileScreen';
 import LevelCompleteModal from './components/LevelCompleteModal';
 import SettingsScreen from './views/SettingsScreen';
+import CinematicIntroScreen from './views/CinematicIntroScreen';
 import GrammarQuestScreen from './views/GrammarQuestScreen';
 import LeagueScreen from './views/LeagueScreen';
 import LeagueDetailScreen from './views/LeagueDetailScreen';
@@ -85,6 +86,11 @@ export default function App() {
   useEffect(() => {
     async function fetchFirstMission() {
       if (selectedCity) {
+        // Avoid overwriting if we already have a valid selectedMission for this city
+        if (selectedMission && (selectedMission.city_id === selectedCity.id || selectedMission.challenge_id === selectedCity.id)) {
+          return;
+        }
+
         setLoadingMissions(true);
         const isUUID = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
         let queryCityId = selectedCity.id;
@@ -167,6 +173,35 @@ export default function App() {
     checkCityCompletion();
   };
 
+  const handleGoToNextMission = async () => {
+    if (!selectedCity) return;
+    
+    setLoadingMissions(true);
+    const { data: missions } = await supabase
+      .from('missions')
+      .select('*')
+      .eq('city_id', selectedCity.id)
+      .order('sort_order', { ascending: true });
+    
+    if (missions && missions.length > 0) {
+      const currentIndex = missions.findIndex(m => m.id === selectedMission?.id);
+      const nextMission = missions[currentIndex + 1];
+      
+      if (nextMission) {
+        setSelectedMission(nextMission);
+        setCurrentScreen(Screen.Story);
+      } else {
+        // No more missions in this city, go back to map
+        setSelectedMission(null);
+        setCurrentScreen(Screen.Map);
+      }
+    } else {
+      setSelectedMission(null);
+      setCurrentScreen(Screen.Map);
+    }
+    setLoadingMissions(false);
+  };
+
   const showNavBar = [Screen.Map, Screen.Profile, Screen.Settings, Screen.GrammarQuest, Screen.League, Screen.LeagueDetail, Screen.LeagueCreate].includes(currentScreen);
 
   if (authLoading || (session && profileLoading)) {
@@ -200,10 +235,23 @@ export default function App() {
             stats={userStats} 
             completedCities={completedCities}
             completedMissions={completedMissions}
-            onSelectCity={(city) => {
+            onSelectCity={(city, mission) => {
               setSelectedCity(city);
+              if (mission) {
+                setSelectedMission(mission);
+              }
               setCurrentScreen(Screen.Story);
             }}
+          />
+        );
+      case Screen.CinematicIntro:
+        if (!selectedCity || !selectedMission) return null;
+        return (
+          <CinematicIntroScreen
+            city={selectedCity}
+            mission={selectedMission}
+            onNext={goToChallenge}
+            onClose={() => { setSelectedMission(null); setCurrentScreen(Screen.Map); }}
           />
         );
       case Screen.Story:
@@ -214,7 +262,7 @@ export default function App() {
             mission={selectedMission || undefined}
             loadingMission={loadingMissions}
             onClose={() => { setSelectedMission(null); setCurrentScreen(Screen.Map); }}
-            onStartChallenge={goToChallenge}
+            onStartChallenge={() => setCurrentScreen(Screen.CinematicIntro)}
           />
         );
       case Screen.Challenge:
@@ -222,10 +270,9 @@ export default function App() {
         return (
           <ChallengeScreen 
             city={selectedCity} 
-            missionId={selectedMission.id}
-            missionTitle={selectedMission.title_fr}
+            mission={selectedMission}
             onComplete={handleMissionComplete}
-            onBack={() => setCurrentScreen(Screen.Story)}
+            onBack={() => setCurrentScreen(Screen.CinematicIntro)}
             redoQuestionIds={redoQuestionIds}
           />
         );
@@ -270,6 +317,7 @@ export default function App() {
               setRedoQuestionIds(ids);
               setCurrentScreen(Screen.Challenge);
             }}
+            onContinue={handleGoToNextMission}
           />
         );
       default:

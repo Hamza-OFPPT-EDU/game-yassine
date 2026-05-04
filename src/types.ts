@@ -18,6 +18,7 @@ export enum Screen {
   LeagueCreate = 'league-create',
   VocabularyMatch = 'vocabulary-match',
   Login = 'login',
+  CinematicIntro = 'cinematic-intro',
 }
 
 export const DEFAULT_AVATAR_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg';
@@ -81,6 +82,9 @@ export type Mission = {
     intro?: { texte: string; consigne?: string; objectif?: string };
     conclusion?: { texte_reussite: string };
   };
+  cinematic_text?: string;
+  cinematic_gif_url?: string;
+  cinematic_audio_url?: string;
 };
 
 export type Challenge = {
