@@ -17,6 +17,7 @@ export enum Screen {
   LeagueDetail = 'league-detail',
   LeagueCreate = 'league-create',
   VocabularyMatch = 'vocabulary-match',
+  Login = 'login',
 }
 
 export type LeaguePlayer = {

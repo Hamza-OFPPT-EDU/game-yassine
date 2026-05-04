@@ -24,6 +24,8 @@ import LeagueDetailScreen from './views/LeagueDetailScreen';
 import LeagueCreateScreen from './views/LeagueCreateScreen';
 import VocabularyMatchScreen from './views/VocabularyMatchScreen';
 import FullscreenPrompt from './components/FullscreenPrompt';
+import LoginScreen from './views/LoginScreen';
+import { useAuth } from './hooks/useSupabase';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>(Screen.Splash);
@@ -36,11 +38,14 @@ export default function App() {
   const [missionSummary, setMissionSummary] = useState<MissionCompletionSummary | null>(null);
   const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(true);
   const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
-  const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile();
+  
+  const { session, loading: authLoading } = useAuth();
+  const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
+  
   const [userStats, setUserStats] = useState({
-    xp: 1450,
-    stars: 120,
-    level: 4,
+    xp: 0,
+    stars: 0,
+    level: 1,
   });
 
   // Sync stats with profile once loaded
@@ -152,13 +157,32 @@ export default function App() {
 
   const showNavBar = [Screen.Map, Screen.Profile, Screen.Settings, Screen.GrammarQuest, Screen.League, Screen.LeagueDetail, Screen.LeagueCreate].includes(currentScreen);
 
+  if (authLoading || (session && profileLoading)) {
+    return (
+      <div className="h-screen w-full bg-[#0f172a] flex flex-col items-center justify-center gap-6">
+        <div className="w-20 h-20 border-4 border-white/10 border-t-white rounded-full animate-spin" />
+        <p className="text-white/40 font-black uppercase tracking-widest text-xs">Chargement du voyage...</p>
+      </div>
+    );
+  }
+
   const renderScreen = () => {
     switch (currentScreen) {
       case Screen.Splash:
         if (!fullscreenShownOnce) return null;
         return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} />;
       case Screen.Welcome:
-        return <WelcomeScreen onStart={handleStartApp} />;
+        return <WelcomeScreen 
+          onStart={() => {
+            if (session) handleStartApp();
+            else setCurrentScreen(Screen.Login);
+          }} 
+        />;
+      case Screen.Login:
+        return <LoginScreen 
+          onBack={() => setCurrentScreen(Screen.Welcome)} 
+          onSuccess={() => setCurrentScreen(Screen.Map)} 
+        />;
       case Screen.Map:
         return (
           <MapJourneyScreen 

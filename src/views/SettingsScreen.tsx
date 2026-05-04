@@ -379,6 +379,22 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
               <Save size={24} className="group-hover:rotate-12 transition-transform" />
             )}
           </motion.button>
+
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={async () => {
+              playSound('click');
+              const { error } = await import('../lib/supabase').then(m => m.supabase.auth.signOut());
+              if (!error) {
+                window.location.reload(); // Hard reload to clear all states
+              }
+            }}
+            className="w-full mt-6 py-4 rounded-2xl font-headline font-black text-slate-400 border-2 border-slate-100 hover:bg-slate-50 transition-all flex flex-col items-center leading-none"
+          >
+            <span className="tracking-tight">SE DÉCONNECTER</span>
+            <span className="text-[10px] opacity-60 font-bold mt-1 tracking-widest">تسجيل الخروج</span>
+          </motion.button>
         </div>
       </main>
     </div>

@@ -6,6 +6,30 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { CITIES, type Challenge, type City, type Mission } from '../types';
+import { Session } from '@supabase/supabase-js';
+
+export function useAuth() {
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setLoading(false);
+    });
+
+    // Listen for changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  return { session, loading };
+}
 
 function buildFallbackCities(completedCities: string[]): City[] {
   const firstIncompleteIndex = CITIES.findIndex((city) => !completedCities.includes(city.id));
@@ -370,36 +394,31 @@ export function useSupabaseSettings() {
   return { settings, loading, getSetting };
 }
 
-export function useSupabaseProfile(userId: string = 'yassine_profile') {
+export function useSupabaseProfile(userId?: string) {
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+
     async function fetchProfile() {
-      // First try to get the profile
+      setLoading(true);
+      // Try to get the profile from player_profiles or app_users
+      // Since we synced app_users to auth.users, we should use app_users as the primary source of truth for the login info
       const { data, error } = await supabase
-        .from('user_profiles')
+        .from('app_users')
         .select('*')
-        .eq('user_id', userId)
+        .eq('id', userId)
         .single();
 
-      if (error && error.code === 'PGRST116') {
-        // Profile doesn't exist, create it
-        const { data: newProfile, error: createError } = await supabase
-          .from('user_profiles')
-          .insert([{ 
-            user_id: userId, 
-            username: 'Yassine',
-            xp: 1450,
-            stars: 120,
-            level: 4
-          }])
-          .select()
-          .single();
-        
-        if (!createError) setProfile(newProfile);
-      } else if (!error) {
+      if (!error && data) {
         setProfile(data);
+      } else {
+        console.warn('Profile not found for user:', userId);
+        setProfile(null);
       }
       setLoading(false);
     }
@@ -408,10 +427,12 @@ export function useSupabaseProfile(userId: string = 'yassine_profile') {
   }, [userId]);
 
   const updateProfile = async (updates: any) => {
+    if (!userId) return false;
+    
     const { data, error } = await supabase
-      .from('user_profiles')
+      .from('app_users')
       .update(updates)
-      .eq('user_id', userId)
+      .eq('id', userId)
       .select()
       .single();
 
