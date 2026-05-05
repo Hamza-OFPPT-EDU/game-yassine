@@ -50,57 +50,78 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="relative z-10 h-full w-full flex flex-col"
+            className="relative z-10 h-full w-full flex flex-col items-center"
           >
-
-            {/* Content (Glassmorphic block) */}
-            <main className="flex-grow flex flex-col items-center justify-center px-6 text-center pt-24">
+            {/* Logo at the top - Increased size (+50%) */}
+            <header className="w-full h-[22vh] flex items-center justify-center pt-4">
               <motion.div
-                initial={{ y: 20, opacity: 0 }}
+                initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="bg-black/30 backdrop-blur-xl border border-white/20 p-6 rounded-[24px] shadow-2xl max-w-[340px] mx-auto w-full flex flex-col items-center"
+                className="h-[80%] max-h-[180px]"
               >
-                <motion.img
-                  src={optimizeSupabaseUrl(PANEAU_URL, 400)}
-                  alt="Panneau"
-                  className="w-full h-auto mb-6 rounded-xl shadow-lg"
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
+                <img
+                  src={optimizeSupabaseUrl(PANEAU_URL, 1000)}
+                  alt="Logo"
+                  className="h-full object-contain drop-shadow-[0_15px_30px_rgba(255,255,255,0.25)]"
                 />
-                <p className="text-white/90 font-bold leading-relaxed text-[17px]">
-                  Développe ton potentiel avec la famille Ben Ali à travers un parcours ludique au cœur du Maroc.
-                </p>
+              </motion.div>
+            </header>
+
+            {/* Content (Glassmorphic block) */}
+            <main className="grow flex flex-col items-center justify-center px-8 text-center pt-10">
+              <motion.div
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                className="bg-black/30 backdrop-blur-[30px] border border-white/10 p-10 rounded-[48px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] max-w-[420px] mx-auto w-full flex flex-col items-center gap-8 relative overflow-hidden"
+              >
+                {/* Glow Effect */}
+                <div className="absolute -top-24 -left-24 w-48 h-48 bg-voyage-accent/20 blur-[60px] rounded-full pointer-events-none" />
+                
+                <div className="space-y-6 relative z-10">
+                  <div className="space-y-2">
+                    <h2 className="arabic-font text-3xl font-black text-voyage-accent drop-shadow-sm">عِش المغامرة، اكتشف مواهبك</h2>
+                    <div className="h-0.5 w-16 bg-voyage-accent/40 mx-auto rounded-full" />
+                  </div>
+                  
+                  <p className="text-white font-medium leading-relaxed text-xl tracking-wide text-center">
+                    Développe ton potentiel avec la <span className="text-voyage-accent font-bold">famille Ben Ali</span> à travers un parcours ludique au cœur du Maroc.
+                  </p>
+                </div>
               </motion.div>
             </main>
 
+
             {/* Buttons (Glassmorphic) */}
-            <section className="px-8 pb-12 pt-6 space-y-4 w-full max-w-md mx-auto shrink-0">
+            <section className="w-full max-w-md px-10 pb-16 pt-8 flex flex-col gap-5 shrink-0">
               <motion.button
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                whileTap={{ scale: 0.95 }}
+                transition={{ delay: 0.7 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   playSound('click');
                   onStart();
                 }}
-                className="w-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xl py-4 rounded-2xl font-black flex items-center justify-center gap-3 shadow-xl hover:bg-white/30 transition-all"
+                className="group w-full bg-white text-slate-950 py-5 rounded-2xl font-black text-xl uppercase tracking-wider flex items-center justify-center gap-4 shadow-[0_20px_40px_rgba(255,255,255,0.2)] hover:shadow-[0_20px_50px_rgba(255,255,255,0.3)] transition-all overflow-hidden"
               >
-                <span className="font-black uppercase tracking-tight">C'est parti !</span>
-                <ArrowRight size={24} strokeWidth={3} />
+                <div className="absolute inset-0 bg-linear-to-r from-transparent via-slate-950/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                <span className="relative z-10">C'est parti</span>
+                <ArrowRight size={26} strokeWidth={3} className="relative z-10 group-hover:translate-x-1 transition-transform" />
               </motion.button>
 
               <motion.button
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: 0.9 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   playSound('click');
                   onStart();
                 }}
-                className="w-full py-4 bg-transparent border-2 border-white/20 backdrop-blur-sm rounded-2xl text-white font-black uppercase tracking-tight hover:bg-white/10 transition-all shadow-lg"
+                className="w-full py-5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl text-white font-black text-lg uppercase tracking-widest hover:bg-white/20 transition-all shadow-lg"
               >
                 Se connecter
               </motion.button>

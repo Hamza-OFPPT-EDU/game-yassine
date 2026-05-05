@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   MapPin, Check, ChevronRight, X, Loader2, Lock,
   Star, Sparkles, Navigation2, ArrowDown, CheckCircle2,
-  Book, Play
+  Book, Play, List
 } from 'lucide-react';
 import { type City } from '../types';
 import { cn } from '../lib/utils';
@@ -16,7 +16,7 @@ import TopAppBar from '../components/TopAppBar';
 import { useAudio } from '../hooks/useAudio';
 import { useSupabaseCities, useSupabaseMissions } from '../hooks/useSupabase';
 import { useAutoScroll } from '../hooks/useAutoScroll';
-import { getCityTheme, resolveCityIcon, optimizeSupabaseUrl } from '../lib/city-theme';
+import { getCityTheme, resolveCityIcon, optimizeSupabaseUrl, resolveAssetUrl } from '../lib/city-theme';
 
 // ── MapJourneyScreen ─────────────────────────────────────────────────────────
 
@@ -34,7 +34,8 @@ export default function MapJourneyScreen({
   const { cities, loading } = useSupabaseCities(completedCities, completedMissions);
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
   const [cinematicCity, setCinematicCity] = useState<City | null>(null);
-  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true);
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [isMissionsExpanded, setIsMissionsExpanded] = useState(false);
 
   // Refs pour scroll automatique
   const activeCityRef = useRef<HTMLDivElement | null>(null);
@@ -51,7 +52,8 @@ export default function MapJourneyScreen({
   const handleShowCitySheet = (city: City) => {
     playSound('whoosh');
     setSelectedCityId(city.id);
-    setIsDescriptionExpanded(true);
+    setIsDescriptionExpanded(false);
+    setIsMissionsExpanded(false);
   };
   const handleLaunchAdventure = (city: City) => {
     playSound('click');
@@ -180,7 +182,7 @@ export default function MapJourneyScreen({
                       />
                       
                       <motion.img
-                        src={optimizeSupabaseUrl(cinematicCity.cinematicCharacter || "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif", 500, 70)}
+                        src={optimizeSupabaseUrl(resolveAssetUrl(cinematicCity.cinematicCharacter, "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif"), 500, 70)}
                         alt="Personnage"
                         animate={{ 
                           y: [0, -8, 0], // Subtle float
@@ -322,23 +324,30 @@ export default function MapJourneyScreen({
             className="relative z-10 flex flex-col-reverse items-center gap-0 py-8"
             style={{ gap: 0 }}
           >
-            {cities.map((city, index) => (
-              <div
-                key={city.id}
-                style={{ marginBottom: index < cities.length - 1 ? '140px' : 0 }}
-                ref={city.status === 'active' ? activeCityRef : null}
-              >
-                <CityNode
-                  city={city}
-                  onSelect={() => handleShowCitySheet(city)}
-                  isSelected={selectedCityId === city.id}
-                  delay={index * 0.12}
-                  index={index}
-                  isScrollTarget={city.status === 'active'}
-                  scrollDone={scrollDone}
-                />
-              </div>
-            ))}
+            {cities.map((city, index) => {
+              const offset = (index % 2 === 0 ? 1 : -1) * 45; // Offset to follow the S-curve
+              return (
+                <div
+                  key={city.id}
+                  style={{ 
+                    marginBottom: index < cities.length - 1 ? '110px' : 0,
+                    transform: `translateX(${offset}px)`
+                  }}
+                  ref={city.status === 'active' ? activeCityRef : null}
+                  className="transition-transform duration-700"
+                >
+                  <CityNode
+                    city={city}
+                    onSelect={() => handleShowCitySheet(city)}
+                    isSelected={selectedCityId === city.id}
+                    delay={index * 0.12}
+                    index={index}
+                    isScrollTarget={city.status === 'active'}
+                    scrollDone={scrollDone}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -533,22 +542,58 @@ export default function MapJourneyScreen({
                     </div>
                   </div>
 
-                  {/* Missions */}
+                  {/* Missions avec Toggle */}
                   <div className="mb-5">
-                    <h4 className="text-[10px] font-black text-[#4E2510] uppercase tracking-widest opacity-50 mb-2">
-                      Missions de la ville
-                    </h4>
-                    <div className={cn(
-                      "space-y-2 overflow-y-auto pr-1 scrollbar-hide transition-all duration-300",
-                      isDescriptionExpanded ? "max-h-[28vh]" : "max-h-[45vh]"
-                    )}>
-                      <MissionsList
-                        city={displayCity}
-                        completedMissions={completedMissions}
-                        cityTheme={displayCityTheme}
-                        onSelectMission={(m) => handleSelectMission(displayCity, m)}
-                      />
-                    </div>
+                    <button
+                      onClick={() => {
+                        playSound('click');
+                        setIsMissionsExpanded(!isMissionsExpanded);
+                      }}
+                      className="w-full flex items-center justify-between p-3 rounded-xl bg-white/20 backdrop-blur-md hover:bg-white/40 transition-all mb-2 group border border-white/30"
+                    >
+                      <div className="flex items-center gap-2">
+                        <List size={14} style={{ color: displayCityTheme.color }} />
+                        <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: displayCityTheme.color }}>
+                          {isMissionsExpanded ? "Réduire les missions" : "Voir les missions de la ville"}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                         {/* Badge count simple */}
+                         <span className="text-[9px] font-black px-2 py-0.5 rounded-lg bg-black/5 text-[#4E2510]/60">
+                           {displayCity.stepNum}/{displayCity.totalSteps}
+                         </span>
+                        <motion.div
+                          animate={{ rotate: isMissionsExpanded ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <ChevronRight size={14} strokeWidth={3} style={{ color: displayCityTheme.color }} className="group-hover:translate-x-0.5 transition-transform" />
+                        </motion.div>
+                      </div>
+                    </button>
+
+                    <AnimatePresence>
+                      {isMissionsExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: 'easeInOut' }}
+                          className="overflow-hidden"
+                        >
+                          <div className={cn(
+                            "space-y-2 overflow-y-auto pr-1 scrollbar-hide transition-all duration-300",
+                            isDescriptionExpanded ? "max-h-[25vh]" : "max-h-[40vh]"
+                          )}>
+                            <MissionsList
+                              city={displayCity}
+                              completedMissions={completedMissions}
+                              cityTheme={displayCityTheme}
+                              onSelectMission={(m) => handleSelectMission(displayCity, m)}
+                            />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   {/* CTA */}
@@ -683,7 +728,7 @@ const CityNode: React.FC<{
           {isActive && (
             <div
               className="absolute rounded-full pointer-events-none border-2 border-dashed ring-spin"
-              style={{ width: 128, height: 128, top: -16, left: -16, borderColor: `${cityTheme.color}66` }}
+              style={{ width: 96, height: 96, top: -8, left: -8, borderColor: `${cityTheme.color}66` }}
             />
           )}
         </>
@@ -693,54 +738,68 @@ const CityNode: React.FC<{
       <button
         onClick={onSelect}
         className={cn(
-          'relative w-24 h-24 rounded-full flex items-center justify-center',
-          'border-[6px] shadow-2xl transition-all duration-300',
-          'focus:outline-none',
-          isLocked && 'opacity-50 cursor-pointer',
-          isSelected && 'ring-4 scale-110',
+          'relative w-20 h-20 rounded-full flex items-center justify-center',
+          'border-[6px] adventure-shadow transition-all duration-500',
+          'focus:outline-none group',
+          isLocked && 'opacity-60 grayscale-[0.5] cursor-pointer',
+          isSelected && 'ring-6 scale-110',
         )}
         style={{
           background: isLocked
-            ? 'linear-gradient(135deg, #C9B99A, #D4C5B0)'
+            ? 'linear-gradient(135deg, #E5D5B8, #C9B99A)'
             : isCompleted
-              ? `linear-gradient(135deg, ${cityTheme.color}CC, ${cityTheme.color})`
-              : `linear-gradient(135deg, ${cityTheme.colorLight || cityTheme.color}CC, ${cityTheme.color})`,
-          borderColor: isLocked ? '#B5A48A' : cityTheme.colorDark || cityTheme.color,
-          ...(isSelected ? { boxShadow: `0 0 0 4px ${cityTheme.color}50` } : {}),
+              ? `linear-gradient(135deg, ${cityTheme.color} 0%, ${cityTheme.colorDark || cityTheme.color} 100%)`
+              : `linear-gradient(135deg, ${cityTheme.colorLight || cityTheme.color} 0%, ${cityTheme.color} 100%)`,
+          borderColor: isLocked ? '#B5A48A' : 'rgba(255, 255, 255, 0.9)',
+          boxShadow: isSelected 
+            ? `0 0 40px ${cityTheme.color}60, inset 0 2px 10px rgba(255,255,255,0.5)` 
+            : `0 15px 35px -5px ${isLocked ? 'rgba(0,0,0,0.1)' : cityTheme.color + '40'}, inset 0 2px 10px rgba(255,255,255,0.3)`,
         }}
       >
-        {/* Cercle intérieur */}
+        {/* Cercle intérieur avec effet de profondeur */}
         <div
-          className='w-16 h-16 rounded-full flex items-center justify-center relative'
+          className='w-14 h-14 rounded-full flex items-center justify-center relative overflow-hidden shadow-inner'
           style={{
             background: isLocked
-              ? `linear-gradient(135deg, ${cityTheme.color}55, ${cityTheme.color}33)`
+              ? `rgba(0, 0, 0, 0.05)`
               : isCompleted
-                ? `linear-gradient(135deg, #F0CC7A, ${cityTheme.color})`
-                : `linear-gradient(135deg, ${cityTheme.colorLight || cityTheme.color}, ${cityTheme.color}CC)`,
+                ? `linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 100%)`
+                : `linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 100%)`,
           }}
         >
           {isCompleted ? (
-            <div className="flex flex-col items-center">
-              <Check size={(city.iconSize || 52) - 4} className="text-white stroke-[3px]" />
-            </div>
-          ) : (
-            <motion.span
-              animate={isLocked ? {} : { y: [0, -4, 0], scale: [1, 1.06, 1] }}
-              transition={{ duration: 3 + Math.random(), repeat: Infinity, ease: 'easeInOut' }}
-              className="leading-none select-none flex items-center justify-center"
-              style={{ opacity: isLocked ? 0.5 : 1 }}
+            <motion.div 
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="flex flex-col items-center"
             >
-              {resolveCityIcon(city, city.iconSize || 52, 'text-white')}
-            </motion.span>
+              <CheckCircle2 size={42} className="text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]" />
+            </motion.div>
+          ) : (
+            <motion.div
+              animate={isLocked ? {} : { 
+                y: [0, -4, 0],
+                rotate: [0, 2, -2, 0]
+              }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+              className="leading-none select-none flex items-center justify-center filter drop-shadow-md"
+              style={{ opacity: isLocked ? 0.4 : 1 }}
+            >
+              {resolveCityIcon(city, 52, 'text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]')}
+            </motion.div>
           )}
+
+          {/* Glass Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 pointer-events-none" />
+          
           {/* Badge cadenas pour villes verrouillées */}
           {isLocked && (
-            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#9B8870] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-              <Lock size={9} className="text-white" />
+            <div className="absolute inset-0 bg-black/5 flex items-center justify-center backdrop-blur-[1px]">
+              <Lock size={24} className="text-[#7B3F1A] drop-shadow-sm" />
             </div>
           )}
         </div>
+
 
         {/* Badge statut haut */}
         {(isActive || isSelected) && (
@@ -791,12 +850,12 @@ const CityNode: React.FC<{
       </button>
 
       {/* Label ville */}
-      <div className="mt-6 text-center space-y-0.5">
+      <div className="mt-4 text-center space-y-0.5">
         <p
           className={cn('font-headline font-black text-sm tracking-tight')}
           style={{ color: isLocked ? '#C9A96E' : cityTheme.colorDark || cityTheme.color }}
         >
-          {city.name}
+          {city.stepLabel || city.name}
         </p>
         <p
           className={cn('arabic-font text-xs font-black')}
@@ -829,7 +888,8 @@ const MissionsList: React.FC<{
 }> = ({
   city, completedMissions, cityTheme, onSelectMission
 }) => {
-    const { missions, loading } = useSupabaseMissions(city.id);
+    const { missions, loading } = useSupabaseMissions(city.id, completedMissions);
+    const { playSound } = useAudio();
 
     if (loading) return (
       <div className="flex justify-center py-4">
@@ -840,81 +900,96 @@ const MissionsList: React.FC<{
     return (
       <div className="space-y-2">
         {missions.length > 0 ? missions.map((mission, idx) => {
-          const isDone = completedMissions.includes(mission.id);
+          const isDone = mission.status === 'completed';
+          const isLocked = mission.status === 'locked';
           const themeColor = cityTheme?.color || '#7B3F1A';
+          
           return (
             <button
               key={mission.id}
-              onClick={() => onSelectMission(mission)}
+              onClick={() => {
+                if (isLocked) {
+                  playSound('wrong');
+                  return;
+                }
+                onSelectMission(mission);
+              }}
+              disabled={isLocked}
               className={cn(
-                'w-full p-4 rounded-xl border flex flex-col gap-2 transition-all backdrop-blur-md shadow-sm text-left hover:scale-[1.02] active:scale-95 cursor-pointer',
-                isDone ? '' : 'bg-white/20 border-white/40',
+                'w-full p-5 rounded-[24px] border-2 flex items-center gap-4 transition-all backdrop-blur-md shadow-sm text-left relative overflow-hidden group',
+                isDone 
+                  ? 'bg-emerald-50/40 border-emerald-200/60 shadow-emerald-900/5' 
+                  : isLocked
+                    ? 'bg-slate-100/50 border-slate-200/60 opacity-60 cursor-not-allowed'
+                    : 'bg-white/40 border-white/60 hover:bg-white/60 shadow-amber-900/5 hover:translate-x-1 active:scale-95 cursor-pointer',
               )}
-              style={isDone ? {
-                backgroundColor: `${themeColor}22`,
-                borderColor: `${themeColor}60`
-              } : {}}
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm transition-colors"
-                    style={{
-                      backgroundColor: isDone ? themeColor : `${themeColor}22`,
-                      color: isDone ? 'white' : themeColor
-                    }}
-                  >
-                    <span className="font-black" style={{ color: themeColor }}>
-                      {idx + 1}
-                    </span>
-                  </div>
-                  <div>
-                    <h5 className={cn('font-headline font-black text-[13px] leading-tight mb-1', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]')}>
-                      {mission.title_fr}
-                    </h5>
-                    <div className="flex flex-wrap items-center gap-2 mt-1.5">
-                      {/* Mission Type Badge */}
-                      <div className={cn(
-                        "flex items-center gap-1 px-2 py-0.5 rounded-full border",
-                        mission.mission_type === 'scenario' ? "bg-amber-100 border-amber-200 text-amber-700" :
-                        mission.mission_type === 'minigame' ? "bg-indigo-100 border-indigo-200 text-indigo-700" :
-                        mission.mission_type === 'dialogue' ? "bg-rose-100 border-rose-200 text-rose-700" :
-                        "bg-blue-100 border-blue-200 text-blue-700"
-                      )}>
-                        <span className="text-[8px] font-black uppercase tracking-wider">
-                          {mission.mission_type === 'scenario' ? '🎬 Scénario' :
-                           mission.mission_type === 'minigame' ? '🧩 Jeu' :
-                           mission.mission_type === 'dialogue' ? '💬 Dialogue' : '📝 Défi'}
-                        </span>
-                      </div>
+              {/* Indicateur de type vertical */}
+              {!isLocked && (
+                <div 
+                  className="absolute left-0 top-0 bottom-0 w-1.5 opacity-60"
+                  style={{ 
+                    backgroundColor: mission.mission_type === 'scenario' ? '#F59E0B' : 
+                                     mission.mission_type === 'minigame' ? '#6366F1' : 
+                                     mission.mission_type === 'dialogue' ? '#F43F5E' : '#3B82F6'
+                  }}
+                />
+              )}
 
-                      {mission.soft_skill_dominant && (
-                        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-voyage-accent/10 border border-voyage-accent/20">
-                          <span className="text-[8px] font-black text-voyage-accent uppercase tracking-wider">Soft Skill:</span>
-                          <span className="text-[9px] font-bold text-voyage-accent">{mission.soft_skill_dominant}</span>
-                        </div>
-                      )}
-                      <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/40 border border-white/40">
-                         <span className="text-[8px] font-black text-[#4E2510]/40 uppercase tracking-wider">Récompense:</span>
-                         <span className="text-[9px] font-bold text-[#4E2510]/70">+{mission.xp_reward} XP</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div
+                className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-sm border-2 transition-transform group-hover:rotate-3"
+                style={{
+                  backgroundColor: isDone ? '#059669' : isLocked ? '#94a3b8' : 'white',
+                  borderColor: isDone ? '#059669' : isLocked ? '#94a3b8' : `${themeColor}40`,
+                  color: isDone ? 'white' : isLocked ? 'white' : themeColor
+                }}
+              >
                 {isDone ? (
-                  <CheckCircle2 size={20} className="text-emerald-600 shrink-0" />
+                  <Check size={24} strokeWidth={3} />
+                ) : isLocked ? (
+                  <Lock size={20} strokeWidth={3} />
                 ) : (
-                  <ChevronRight size={18} className="text-[#4E2510]/20 shrink-0" />
+                  <span className="font-black text-lg">
+                    {idx + 1}
+                  </span>
                 )}
               </div>
-              
-              {(mission.script_opening || mission.description_fr) && (
-                <div className="pl-12">
-                   <p className="text-[10px] text-[#4E2510]/60 font-medium line-clamp-1 italic leading-relaxed">
-                    {mission.script_opening?.split('\n')[0] || mission.description_fr}
-                  </p>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                   <h5 className={cn('font-headline font-black text-sm leading-tight truncate', isDone ? 'text-emerald-900' : 'text-[#4E2510]')}>
+                    {mission.title_fr}
+                  </h5>
                 </div>
-              )}
+                
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className={cn(
+                    "text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md border",
+                    mission.mission_type === 'scenario' ? "bg-amber-100/50 border-amber-200 text-amber-700" :
+                    mission.mission_type === 'minigame' ? "bg-indigo-100/50 border-indigo-200 text-indigo-700" :
+                    mission.mission_type === 'dialogue' ? "bg-rose-100/50 border-rose-200 text-rose-700" :
+                    "bg-blue-100/50 border-blue-200 text-blue-700"
+                  )}>
+                    {mission.mission_type === 'scenario' ? '🎬 Scénario' :
+                     mission.mission_type === 'minigame' ? '🧩 Jeu' :
+                     mission.mission_type === 'dialogue' ? '💬 Dialogue' : '📝 Défi'}
+                  </span>
+
+                  {mission.soft_skill_dominant && (
+                    <span className="text-[8px] font-bold text-[#7B3F1A]/60 uppercase tracking-tighter bg-amber-50 px-1.5 py-0.5 rounded border border-amber-100">
+                      {mission.soft_skill_dominant}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex flex-col items-end gap-1 shrink-0">
+                <div className="flex items-center gap-1 px-2 py-1 rounded-xl bg-amber-50 border border-amber-100 shadow-sm">
+                   <Sparkles size={10} className="text-amber-500" />
+                   <span className="text-[10px] font-black text-amber-600">+{mission.xp_reward}</span>
+                </div>
+                {isDone && <span className="text-[8px] font-black text-emerald-600 uppercase tracking-widest">Complété</span>}
+              </div>
             </button>
           );
         }) : (

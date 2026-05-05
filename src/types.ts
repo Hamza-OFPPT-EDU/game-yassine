@@ -19,6 +19,7 @@ export enum Screen {
   VocabularyMatch = 'vocabulary-match',
   Login = 'login',
   CinematicIntro = 'cinematic-intro',
+  Badges = 'badges',
 }
 
 export const DEFAULT_AVATAR_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg';
@@ -61,6 +62,12 @@ export type City = {
   iconSize?: number;
   learningOutcomes?: string;
   keyCompetencies?: string;
+  headline?: string;
+  arabicHeadline?: string;
+  missionsTitle?: string;
+  arabicMissionsTitle?: string;
+  acteTitle?: string;
+  stepLabel?: string;
 };
 
 export type Mission = {
@@ -85,6 +92,7 @@ export type Mission = {
   cinematic_text?: string;
   cinematic_gif_url?: string;
   cinematic_audio_url?: string;
+  status?: 'locked' | 'active' | 'completed';
 };
 
 export type Challenge = {

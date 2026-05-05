@@ -26,6 +26,7 @@ import LeagueCreateScreen from './views/LeagueCreateScreen';
 import VocabularyMatchScreen from './views/VocabularyMatchScreen';
 import FullscreenPrompt from './components/FullscreenPrompt';
 import LoginScreen from './views/LoginScreen';
+import BadgesScreen from './views/BadgesScreen';
 import { useAuth } from './hooks/useSupabase';
 import { fetchDynamicAssets } from './lib/assets';
 import { type Asset } from './hooks/useAssetPreloader';
@@ -301,7 +302,13 @@ export default function App() {
       case Screen.VocabularyMatch:
         return <VocabularyMatchScreen onBack={() => setCurrentScreen(Screen.Map)} />;
       case Screen.Profile:
-        return <ProfileScreen onBack={() => setCurrentScreen(Screen.Map)} onSettings={() => setCurrentScreen(Screen.Settings)} />;
+        return <ProfileScreen 
+          onBack={() => setCurrentScreen(Screen.Map)} 
+          onSettings={() => setCurrentScreen(Screen.Settings)} 
+          onShowBadges={() => setCurrentScreen(Screen.Badges)}
+        />;
+      case Screen.Badges:
+        return <BadgesScreen onBack={() => setCurrentScreen(Screen.Profile)} />;
       case Screen.Settings:
         return <SettingsScreen onBack={() => setCurrentScreen(Screen.Map)} />;
       case Screen.LevelComplete:

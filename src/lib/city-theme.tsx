@@ -6,6 +6,7 @@ import {
   Gem, Heart, Star, Camera, Music
 } from 'lucide-react';
 import { type City } from '../types';
+import { cn } from './utils';
 
 /**
  * Optimizes a Supabase storage URL using their transformation service.
@@ -27,12 +28,33 @@ export const optimizeSupabaseUrl = (url: string, width = 200, quality = 75) => {
     try {
       // Supabase Image Transformation requires a different path and query params
       const transformed = url.replace('/object/public/', '/render/image/public/');
-      return `${transformed}?width=${width}&quality=${quality}&format=auto`;
+      return `${transformed}?width=${width}&quality=${quality}`;
     } catch (e) {
       return url;
     }
   }
   return url;
+};
+
+/**
+ * Resolves technical asset names (like 'intro_caracter') to full URLs
+ */
+export const resolveAssetUrl = (name: string | undefined, fallback: string) => {
+  if (!name) return fallback;
+  if (name.startsWith('http')) return name;
+  
+  // Mapping for known technical names in dashboard
+  const mapping: Record<string, string> = {
+    'intro_caracter': 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif',
+    'guide': '/assets/game/guide_portrait.png',
+    'dr_amina': '/assets/game/dr_amina_portrait.png',
+    'avatar_map': 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg',
+    'paneau': 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png',
+    'hospital_bg': '/assets/game/hospital_bg.png',
+
+  };
+  
+  return mapping[name] || fallback;
 };
 
 /**
@@ -67,13 +89,20 @@ export const getCityTheme = (city: City | null) => {
  * Resolves an icon for a city (supports Lucide names, emojis, and URLs)
  */
 export const resolveCityIcon = (city: City, size = 72, className = "") => {
-  const iconName = city.iconName || '';
+  const iconName = city.iconName || city.iconUrl || '';
   
   // 1. Image URLs
   if (iconName.startsWith('http')) {
     // Apply Supabase optimization if it's a Supabase URL
-    const optimizedUrl = optimizeSupabaseUrl(iconName, size * 2, 75);
-    return <img src={optimizedUrl} style={{ width: size, height: size, objectFit: 'contain' }} className={className} alt="icon" />;
+    const optimizedUrl = optimizeSupabaseUrl(iconName, size * 2, 85);
+    return (
+      <img 
+        src={optimizedUrl} 
+        style={{ width: size, height: size, objectFit: 'cover' }} 
+        className={cn("rounded-full border-2 border-white/20 shadow-sm", className)} 
+        alt="icon" 
+      />
+    );
   }
 
   // 2. Emojis

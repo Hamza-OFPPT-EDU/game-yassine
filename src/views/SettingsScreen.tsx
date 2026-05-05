@@ -1,57 +1,108 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { User, Sun, Moon, Laptop, Save, Volume2, VolumeX, Music, Bell, Play, ZoomIn } from 'lucide-react';
-import { useSettings, type FontSize } from '../contexts/SettingsContext';
+import { User, Sun, Moon, Laptop, Save, Volume2, VolumeX, Music, Bell, Play, ZoomIn, Loader2, CheckCircle2 } from 'lucide-react';
+import { useSettings, type FontSize, type DisplayMode, type Language } from '../contexts/SettingsContext';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { useAudio } from '../hooks/useAudio';
+import { useSupabaseProfile, useAuth } from '../hooks/useSupabase';
 import { DEFAULT_AVATAR_URL } from '../types';
+import { optimizeSupabaseUrl } from '../lib/city-theme';
 
 interface SettingsScreenProps {
   onBack: () => void;
 }
 
 export default function SettingsScreen({ onBack }: SettingsScreenProps) {
-  const [userName, setUserName] = useState('Ahmed_AlMaghribi');
-  const [displayMode, setDisplayMode] = useState('clair');
-  const [language, setLanguage] = useState('fr');
-  const { fontSize, setFontSize } = useSettings();
-  const { settings: audio, updateSettings: updateAudio, playSound, saveToCloud, loading: audioLoading } = useAudio();
+  const { session } = useAuth();
+  const { profile, updateProfile, loading: profileLoading } = useSupabaseProfile(session?.user?.id);
+  const { 
+    fontSize, setFontSize, 
+    freeExploration, setFreeExploration,
+    displayMode: globalDisplayMode, setDisplayMode: setGlobalDisplayMode,
+    language: globalLanguage, setLanguage: setGlobalLanguage
+  } = useSettings();
+  
+  const { settings: audio, updateSettings: updateAudio, playSound, saveToCloud } = useAudio();
+  
+  const [userName, setUserName] = useState('');
+  const [displayMode, setDisplayMode] = useState<DisplayMode>('light');
+  const [language, setLanguage] = useState<Language>('fr');
   const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  // Sync local state with global/profile state on load
+  useEffect(() => {
+    if (profile) {
+      setUserName(profile.display_name || '');
+    }
+  }, [profile]);
+
+  useEffect(() => {
+    setDisplayMode(globalDisplayMode);
+    setLanguage(globalLanguage);
+  }, [globalDisplayMode, globalLanguage]);
 
   const handleSave = async () => {
     setIsSaving(true);
+    setSaveSuccess(false);
     playSound('click');
-    const success = await saveToCloud();
-    setIsSaving(false);
-    if (success) {
+    
+    try {
+      // 1. Update Profile in Supabase
+      await updateProfile({
+        display_name: userName,
+      });
+
+      // 2. Update Audio Settings in Supabase
+      await saveToCloud();
+
+      // 3. Update Global Context (localStorage)
+      setGlobalDisplayMode(displayMode);
+      setGlobalLanguage(language);
+
+      setSaveSuccess(true);
       playSound('success');
-      alert('Paramètres enregistrés avec succès !');
-    } else {
+      
+      // Clear success message after 3 seconds
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } catch (error) {
+      console.error('Error saving settings:', error);
       alert('Erreur lors de la sauvegarde. Vérifiez votre connexion.');
+    } finally {
+      setIsSaving(false);
     }
+  };
+
+  if (profileLoading) {
+    return (
+      <div className="h-full w-full flex items-center justify-center bg-voyage-sand">
+        <Loader2 className="animate-spin text-voyage-primary" size={40} />
+      </div>
+    );
+  }
+
+  const stats = {
+    xp: profile?.xp || 0,
+    stars: profile?.stars || 0,
+    level: profile?.level || 1
   };
 
   return (
     <div className="h-full w-full bg-voyage-sand flex flex-col overflow-hidden">
-      <TopAppBar stats={{xp: 1450, stars: 120, level: 4}} title="Réglages" onBack={onBack} showProgress={false} />
+      <TopAppBar stats={stats} title="Réglages" onBack={onBack} showProgress={false} />
       
-      <main className="flex-grow overflow-y-auto px-6 py-10 space-y-10 max-w-md mx-auto w-full relative">
+      <main className="flex-grow overflow-y-auto px-6 py-10 space-y-10 max-w-md mx-auto w-full relative scrollbar-hide">
         <div className="absolute inset-0 zellige-pattern pointer-events-none opacity-5" />
 
         {/* Profile Section */}
         <section className="flex flex-col items-center">
           <div className="relative group">
-            <div className="w-32 h-32 rounded-[2rem] overflow-hidden shadow-xl ring-4 ring-white">
+            <div className="w-32 h-32 rounded-[2rem] overflow-hidden shadow-xl ring-4 ring-white bg-white">
               <img 
                 alt="User Avatar" 
                 className="w-full h-full object-cover" 
-                src={DEFAULT_AVATAR_URL} 
+                src={optimizeSupabaseUrl(profile?.avatar_url || DEFAULT_AVATAR_URL, 256, 80)} 
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -73,6 +124,7 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
             <input 
               className="w-full bg-slate-50 border-none rounded-xl px-4 py-4 text-slate-800 focus:ring-2 focus:ring-voyage-primary/10 font-bold text-lg" 
               type="text" 
+              placeholder="Ton pseudo..."
               value={userName} 
               onChange={(e) => setUserName(e.target.value)}
             />
@@ -129,13 +181,16 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
           
           <div className="grid grid-cols-3 gap-3">
             {[
-              { id: 'clair', icon: Sun, label: 'Clair', ar: 'مضيء' },
-              { id: 'sombre', icon: Moon, label: 'Sombre', ar: 'مظلم' },
-              { id: 'systeme', icon: Laptop, label: 'Système', ar: 'النظام' },
+              { id: 'light', icon: Sun, label: 'Clair', ar: 'مضيء' },
+              { id: 'dark', icon: Moon, label: 'Sombre', ar: 'مظلم' },
+              { id: 'system', icon: Laptop, label: 'Système', ar: 'النظام' },
             ].map((mode) => (
               <button
                 key={mode.id}
-                onClick={() => setDisplayMode(mode.id)}
+                onClick={() => {
+                  setDisplayMode(mode.id as DisplayMode);
+                  playSound('click');
+                }}
                 className={cn(
                   "flex flex-col items-center justify-center gap-2 p-5 rounded-2xl transition-all border-2",
                   displayMode === mode.id 
@@ -164,7 +219,10 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
           
           <div className="bg-white rounded-2xl p-2 flex gap-1 shadow-sm border border-slate-50">
             <button 
-              onClick={() => setLanguage('fr')}
+              onClick={() => {
+                setLanguage('fr');
+                playSound('click');
+              }}
               className={cn(
                 "flex-1 py-4 px-6 rounded-xl font-black text-sm uppercase tracking-widest transition-all",
                 language === 'fr' ? "bg-voyage-accent/10 text-voyage-accent" : "text-slate-400 hover:bg-slate-50"
@@ -173,7 +231,10 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
               Français
             </button>
             <button 
-              onClick={() => setLanguage('ar')}
+              onClick={() => {
+                setLanguage('ar');
+                playSound('click');
+              }}
               className={cn(
                 "flex-1 py-4 px-6 rounded-xl font-black text-sm uppercase tracking-widest transition-all",
                 language === 'ar' ? "bg-voyage-accent/10 text-voyage-accent" : "text-slate-400 hover:bg-slate-50"
@@ -181,6 +242,58 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
             >
               العربية
             </button>
+          </div>
+        </section>
+
+        {/* ── Aventure & Exploration ── */}
+        <section className="space-y-5">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-1 rounded-full bg-emerald-500" />
+            <h3 className="text-lg font-headline font-black text-voyage-primary tracking-tight flex items-center gap-2">
+              Aventure & Exploration
+              <span className="font-normal text-slate-300 text-xs">المغامرة والاستكشاف</span>
+            </h3>
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className={cn(
+                  "w-11 h-11 rounded-2xl flex items-center justify-center transition-colors",
+                  freeExploration ? "bg-emerald-500/10" : "bg-slate-100"
+                )}>
+                  <Play size={20} className={freeExploration ? "text-emerald-600" : "text-slate-400"} />
+                </div>
+                <div>
+                  <p className="font-black text-voyage-primary text-sm">Mode Exploration Libre</p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">وضع الاستكشاف الحر</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setFreeExploration(!freeExploration);
+                  playSound('match');
+                }}
+                className={cn(
+                  "relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none border-b-4",
+                  freeExploration
+                    ? "bg-emerald-500 border-emerald-600/60"
+                    : "bg-slate-200 border-slate-300"
+                )}
+              >
+                <motion.span
+                  layout
+                  transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                  className={cn(
+                    "absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md",
+                    freeExploration ? "left-[calc(100%-1.75rem)]" : "left-0.5"
+                  )}
+                />
+              </button>
+            </div>
+            <p className="mt-4 text-[10px] font-medium text-slate-400 leading-relaxed italic">
+              * Activer ce mode déverrouille toutes les villes et missions sans conditions de score ou de progression.
+            </p>
           </div>
         </section>
 
@@ -357,28 +470,56 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
         </section>
 
         {/* Save Button */}
-        <div className="pt-6 pb-4">
+        <div className="pt-6 pb-20">
           <motion.button 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleSave}
             disabled={isSaving}
             className={cn(
-              "w-full py-5 rounded-2xl font-headline font-black text-lg shadow-xl flex items-center justify-center gap-4 group transition-all",
+              "w-full py-5 rounded-2xl font-headline font-black text-lg shadow-xl flex items-center justify-center gap-4 group transition-all relative overflow-hidden",
               isSaving 
                 ? "bg-slate-200 text-slate-400 cursor-wait" 
-                : "bg-voyage-primary text-white shadow-voyage-primary/20 hover:brightness-110"
+                : saveSuccess
+                  ? "bg-emerald-500 text-white"
+                  : "bg-voyage-primary text-white shadow-voyage-primary/20 hover:brightness-110"
             )}
           >
-            <div className="flex flex-col items-center leading-none">
-              <span className="tracking-tight">{isSaving ? 'SAUVEGARDE...' : 'ENREGISTRER LES MODIFICATIONS'}</span>
-              <span className="text-xs opacity-60 font-bold mt-1 tracking-widest">{isSaving ? 'جاري الحفظ...' : 'حفظ التغييرات'}</span>
-            </div>
-            {isSaving ? (
-              <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
-            ) : (
-              <Save size={24} className="group-hover:rotate-12 transition-transform" />
-            )}
+            <AnimatePresence mode="wait">
+              {saveSuccess ? (
+                <motion.div 
+                  key="success"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  className="flex items-center gap-3"
+                >
+                  <CheckCircle2 size={24} />
+                  <div className="flex flex-col items-center leading-none">
+                    <span className="tracking-tight">SAUVEGARDÉ !</span>
+                    <span className="text-xs opacity-60 font-bold mt-1 tracking-widest">تم الحفظ !</span>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div 
+                  key="idle"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  className="flex items-center gap-4"
+                >
+                  <div className="flex flex-col items-center leading-none">
+                    <span className="tracking-tight">{isSaving ? 'SAUVEGARDE...' : 'ENREGISTRER LES MODIFICATIONS'}</span>
+                    <span className="text-xs opacity-60 font-bold mt-1 tracking-widest">{isSaving ? 'جاري الحفظ...' : 'حفظ التغييرات'}</span>
+                  </div>
+                  {isSaving ? (
+                    <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <Save size={24} className="group-hover:rotate-12 transition-transform" />
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.button>
 
           <motion.button 
@@ -388,7 +529,7 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
               playSound('click');
               const { error } = await import('../lib/supabase').then(m => m.supabase.auth.signOut());
               if (!error) {
-                window.location.reload(); // Hard reload to clear all states
+                window.location.reload(); 
               }
             }}
             className="w-full mt-6 py-4 rounded-2xl font-headline font-black text-slate-400 border-2 border-slate-100 hover:bg-slate-50 transition-all flex flex-col items-center leading-none"
@@ -401,3 +542,4 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
     </div>
   );
 }
+

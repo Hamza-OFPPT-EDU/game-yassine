@@ -132,8 +132,60 @@ export default function SettingsPage() {
         </div>
       )}
 
+      {/* Global Toggle Section */}
+      <div className="global-controls-section mb-8">
+        <div className="card-glass p-6 border-primary-light/20 bg-primary-light/5 rounded-2xl">
+          <div className="flex items-center justify-between gap-6">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-2 h-2 rounded-full bg-primary-light animate-pulse"></div>
+                <h3 className="text-lg font-bold text-text-primary">Exploration Libre Globale</h3>
+              </div>
+              <p className="text-sm text-text-muted">
+                Activez ce mode pour débloquer instantanément toutes les villes et missions pour <strong>tous les joueurs</strong>, sans condition de score.
+              </p>
+            </div>
+            <div className="flex items-center gap-4 px-6 py-3 bg-white/5 rounded-xl border border-white/10">
+              <span className={`text-sm font-bold ${settings.find(s => s.key === 'global_free_exploration')?.value === true ? 'text-green-400' : 'text-text-muted'}`}>
+                {settings.find(s => s.key === 'global_free_exploration')?.value === true ? 'ACTIF' : 'INACTIF'}
+              </span>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  className="sr-only peer"
+                  checked={settings.find(s => s.key === 'global_free_exploration')?.value === true}
+                  onChange={async (e) => {
+                    const existing = settings.find(s => s.key === 'global_free_exploration');
+                    if (existing) {
+                      await handleUpdateSetting(existing, e.target.checked);
+                    } else {
+                      // Create new setting
+                      try {
+                        setSaving(true);
+                        await save({
+                          key: 'global_free_exploration',
+                          value: e.target.checked,
+                          description: 'Débloque toutes les villes et missions pour tous les utilisateurs.'
+                        });
+                        setFeedback({ type: 'success', text: "Mode exploration globale initialisé." });
+                        setTimeout(() => setFeedback(null), 3000);
+                      } catch (err) {
+                        setFeedback({ type: 'error', text: "Erreur d'initialisation (vérifiez les droits RLS)." });
+                      } finally {
+                        setSaving(false);
+                      }
+                    }
+                  }}
+                />
+                <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-light"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="settings-grid">
-        {settings.map(s => (
+        {settings.filter(s => s.key !== 'global_free_exploration').map(s => (
           <div key={s.id} className="settings-card">
             <div className="settings-card-header">
               <h3 className="settings-key">{s.key.replace(/_/g, ' ')}</h3>
