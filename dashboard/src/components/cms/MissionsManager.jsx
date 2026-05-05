@@ -16,7 +16,9 @@ const EMPTY = {
   mentor_name: '', mentor_role: '', script_opening: '', script_closing: '',
   narration: { intro: { texte: '', consigne: '', objectif: '' } },
   soft_skill_dominant: '', bloom_level: '',
-  cinematic_text: '', cinematic_gif_url: '', cinematic_audio_url: '',
+  cinematic_text: '', 
+  cinematic_gif_url: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif', 
+  cinematic_audio_url: '',
 };
 
 export default function MissionsManager({ challenge, onSelectMission, onBack }) {
