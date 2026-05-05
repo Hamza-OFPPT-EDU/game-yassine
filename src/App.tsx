@@ -40,8 +40,8 @@ export default function App() {
   const [loadingMissions, setLoadingMissions] = useState(false);
   const [missionSummary, setMissionSummary] = useState<MissionCompletionSummary | null>(null);
   const [redoQuestionIds, setRedoQuestionIds] = useState<string[] | undefined>(undefined);
-  const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(true);
-  const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
+  const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(false);
+  const [fullscreenShownOnce, setFullscreenShownOnce] = useState(true);
   
   const { session, loading: authLoading } = useAuth();
    const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);

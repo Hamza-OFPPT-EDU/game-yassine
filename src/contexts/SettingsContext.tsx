@@ -5,6 +5,8 @@ export type FontSize = 'small' | 'medium' | 'large' | 'extra-large';
 interface SettingsContextType {
   fontSize: FontSize;
   setFontSize: (size: FontSize) => void;
+  freeExploration: boolean;
+  setFreeExploration: (val: boolean) => void;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -12,6 +14,10 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [fontSize, setFontSize] = useState<FontSize>(() => {
     return (localStorage.getItem('voyage-font-size') as FontSize) || 'medium';
+  });
+
+  const [freeExploration, setFreeExploration] = useState<boolean>(() => {
+    return localStorage.getItem('voyage-free-exploration') === 'true';
   });
 
   useEffect(() => {
@@ -27,8 +33,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, [fontSize]);
 
+  useEffect(() => {
+    localStorage.setItem('voyage-free-exploration', String(freeExploration));
+  }, [freeExploration]);
+
   return (
-    <SettingsContext.Provider value={{ fontSize, setFontSize }}>
+    <SettingsContext.Provider value={{ fontSize, setFontSize, freeExploration, setFreeExploration }}>
       {children}
     </SettingsContext.Provider>
   );

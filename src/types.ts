@@ -61,6 +61,10 @@ export type City = {
   iconSize?: number;
   learningOutcomes?: string;
   keyCompetencies?: string;
+  map_x?: number;
+  map_y?: number;
+  map_size?: number;
+  sort_order?: number;
 };
 
 export type Mission = {

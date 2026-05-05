@@ -3,7 +3,7 @@
  */
 
 import React, { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
-import { useSupabaseSettings, useSupabaseProfile } from '../hooks/useSupabase';
+import { useSupabaseSettings, useSupabaseProfile, useAuth } from '../hooks/useSupabase';
 
 export interface AudioSettings {
   soundEffectsEnabled: boolean;
@@ -15,12 +15,12 @@ export interface AudioSettings {
 export type SoundType = 'correct' | 'wrong' | 'click' | 'match' | 'success' | 'whoosh';
 
 const SOUND_FILES: Record<SoundType, string> = {
-  correct: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/correct.mp3',
-  wrong:   'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/wrong.mp3',
-  click:   'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/click.mp3',
-  match:   'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/match.mp3',
-  success: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/success.mp3',
-  whoosh:  'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/whoosh.mp3',
+  correct: '/audio/correct.mp3',
+  wrong:   '/audio/wrong.mp3',
+  click:   '/audio/click.mp3',
+  match:   '/audio/match.mp3',
+  success: '/audio/success.mp3',
+  whoosh:  '/audio/whoosh.mp3',
 };
 
 const BACKGROUND_MUSIC = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/background-theme.mp3';
@@ -60,8 +60,9 @@ function getAudioElement(type: SoundType): HTMLAudioElement {
 }
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
+  const { session } = useAuth();
   const { getSetting, loading: globalSettingsLoading } = useSupabaseSettings();
-  const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile();
+  const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
   const [settings, setSettings] = useState<AudioSettings>(loadSettings);
   const musicRef = useRef<HTMLAudioElement | null>(null);
 

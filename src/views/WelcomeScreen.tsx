@@ -14,7 +14,6 @@ interface WelcomeScreenProps {
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
-const PANEAU_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png';
 
 export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   const { playSound } = useAudio();
@@ -36,11 +35,36 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           muted
           loop
           playsInline
-          className="w-full h-full object-cover opacity-60"
+          className="w-full h-full object-cover opacity-60 scale-105"
         >
           <source src={SPLASH_VIDEO_URL} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
+      </div>
+
+      {/* Floating Particles */}
+      <div className="absolute inset-0 pointer-events-none z-5">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ 
+              opacity: 0,
+              x: Math.random() * 400,
+              y: Math.random() * 800
+            }}
+            animate={{ 
+              opacity: [0, 0.4, 0],
+              y: [null, '-=100'],
+              x: [null, Math.random() > 0.5 ? '+=20' : '-=20']
+            }}
+            transition={{ 
+              duration: 5 + Math.random() * 5,
+              repeat: Infinity,
+              delay: Math.random() * 5
+            }}
+            className="absolute w-1 h-1 bg-[#D4A43E] rounded-full blur-[1px]"
+          />
+        ))}
       </div>
 
       <AnimatePresence>
@@ -52,57 +76,82 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="relative z-10 h-full w-full flex flex-col"
           >
+            {/* Hero section with Logo Image */}
+            <section className="relative w-full shrink-0 flex flex-col items-center justify-center px-6 pt-16 pb-4">
+              <motion.img
+                initial={{ scale: 0.8, y: -40, opacity: 0 }}
+                animate={{ scale: 1, y: 0, opacity: 1 }}
+                transition={{ delay: 0.1, type: "spring", stiffness: 80, damping: 20 }}
+                src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png"
+                alt="Le Voyage des Compétences"
+                className="w-full max-w-[380px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+              />
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 0.8, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="mt-2"
+              >
+                <p className="arabic-font text-[#C9A96E] text-2xl font-black tracking-widest drop-shadow-lg">
+                  رحلة المهارات
+                </p>
+              </motion.div>
+            </section>
 
             {/* Content (Glassmorphic block) */}
-            <main className="flex-grow flex flex-col items-center justify-center px-6 text-center pt-24">
+            <main className="flex-grow flex flex-col items-center justify-center px-6 text-center">
               <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="bg-black/30 backdrop-blur-xl border border-white/20 p-6 rounded-[24px] shadow-2xl max-w-[340px] mx-auto w-full flex flex-col items-center"
+                initial={{ y: 30, opacity: 0, scale: 0.9 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
+                className="relative group"
               >
-                <motion.img
-                  src={optimizeSupabaseUrl(PANEAU_URL, 400)}
-                  alt="Panneau"
-                  className="w-full h-auto mb-6 rounded-xl shadow-lg"
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                />
-                <p className="text-white/90 font-bold leading-relaxed text-[17px]">
-                  Développe ton potentiel avec la famille Ben Ali à travers un parcours ludique au cœur du Maroc.
-                </p>
+                <div className="absolute inset-0 bg-[#D4A43E]/10 blur-3xl rounded-full opacity-50 group-hover:opacity-80 transition-opacity" />
+                <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 p-8 rounded-[40px] shadow-[0_25px_60px_rgba(0,0,0,0.5)] max-w-[340px] mx-auto w-full">
+                  <div className="w-12 h-1 bg-gradient-to-r from-transparent via-[#D4A43E] to-transparent mx-auto mb-6 opacity-60" />
+                  <p className="text-white/90 font-medium leading-relaxed text-[18px] italic">
+                    "Accompagne la <span className="text-[#D4A43E] font-black">famille Ben Ali</span> dans une aventure épique à travers les joyaux du Maroc."
+                  </p>
+                </div>
               </motion.div>
             </main>
 
             {/* Buttons (Glassmorphic) */}
-            <section className="px-8 pb-12 pt-6 space-y-4 w-full max-w-md mx-auto shrink-0">
-              <motion.button
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  playSound('click');
-                  onStart();
-                }}
-                className="w-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xl py-4 rounded-2xl font-black flex items-center justify-center gap-3 shadow-xl hover:bg-white/30 transition-all"
-              >
-                <span className="font-black uppercase tracking-tight">C'est parti !</span>
-                <ArrowRight size={24} strokeWidth={3} />
-              </motion.button>
+            <section className="px-8 pb-16 pt-6 space-y-5 w-full max-w-md mx-auto shrink-0">
+              <div className="relative">
+                <motion.button
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    playSound('click');
+                    onStart();
+                  }}
+                  className="relative overflow-hidden w-full bg-gradient-to-br from-[#D4A43E] to-[#7B3F1A] text-white text-xl py-5 rounded-[24px] font-black flex items-center justify-center gap-3 shadow-[0_15px_35px_rgba(123,63,26,0.4)] border border-white/20 transition-all"
+                >
+                  {/* Shimmer Effect */}
+                  <motion.div
+                    animate={{ x: ['-100%', '200%'] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'linear', repeatDelay: 1 }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                  />
+                  
+                  <span className="font-black uppercase tracking-widest relative z-10">Commencer le Voyage</span>
+                  <ArrowRight size={24} strokeWidth={3} className="relative z-10" />
+                </motion.button>
+              </div>
 
               <motion.button
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                onClick={() => {
-                  playSound('click');
-                  onStart();
-                }}
-                className="w-full py-4 bg-transparent border-2 border-white/20 backdrop-blur-sm rounded-2xl text-white font-black uppercase tracking-tight hover:bg-white/10 transition-all shadow-lg"
+                transition={{ delay: 0.7 }}
+                whileHover={{ background: 'rgba(255,255,255,0.1)' }}
+                onClick={() => playSound('click')}
+                className="w-full py-4 bg-black/20 border-2 border-white/10 backdrop-blur-md rounded-[24px] text-white/70 font-black uppercase tracking-[0.2em] text-xs hover:text-white transition-all shadow-lg"
               >
-                Se connecter
+                Espace Connexion
               </motion.button>
             </section>
           </motion.div>

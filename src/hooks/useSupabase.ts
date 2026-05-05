@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { CITIES, type Challenge, type City, type Mission, DEFAULT_AVATAR_URL } from '../types';
 import { Session } from '@supabase/supabase-js';
+import { useSettings } from '../contexts/SettingsContext';
 
 export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
@@ -51,8 +52,9 @@ function buildFallbackCities(completedCities: string[]): City[] {
 }
 
 export function useSupabaseCities(completedCities: string[], completedMissions: string[]) {
-  const [cities, setCities] = useState<any[]>([]);
+  const [cities, setCities] = useState<City[]>([]);
   const [loading, setLoading] = useState(true);
+  const { freeExploration } = useSettings();
 
   useEffect(() => {
     async function fetchData() {
@@ -97,6 +99,11 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
             status = 'active';
           }
 
+          // Free Exploration override: Unlock all cities
+          if (freeExploration && status === 'locked') {
+            status = 'active';
+          }
+
           return {
             id: city.id,
             name: city.city_name_fr,
@@ -116,7 +123,11 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
             iconName: city.icon_name,
             iconSize: city.icon_size || 52,
             learningOutcomes: city.learning_outcomes,
-            keyCompetencies: city.pedagogical_theories
+            keyCompetencies: city.pedagogical_theories,
+            map_x: city.map_x,
+            map_y: city.map_y,
+            map_size: city.map_size,
+            sort_order: city.sort_order,
           };
         });
         setCities(mappedCities);
@@ -129,7 +140,7 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
     }
 
     fetchData();
-  }, [completedCities, completedMissions]);
+  }, [completedCities, completedMissions, freeExploration]);
 
   return { cities, loading };
 }

@@ -20,7 +20,7 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
   const [userName, setUserName] = useState('Ahmed_AlMaghribi');
   const [displayMode, setDisplayMode] = useState('clair');
   const [language, setLanguage] = useState('fr');
-  const { fontSize, setFontSize } = useSettings();
+  const { fontSize, setFontSize, freeExploration, setFreeExploration } = useSettings();
   const { settings: audio, updateSettings: updateAudio, playSound, saveToCloud, loading: audioLoading } = useAudio();
   const [isSaving, setIsSaving] = useState(false);
 
@@ -181,6 +181,59 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
             >
               العربية
             </button>
+          </div>
+        </section>
+
+        {/* Free Exploration Mode */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-1 rounded-full bg-duo-green" />
+            <h3 className="text-lg font-headline font-black text-voyage-primary tracking-tight flex items-center gap-2">
+              Mode Libre <span className="font-normal text-slate-300 text-xs">الوضع الحر</span>
+            </h3>
+          </div>
+          
+          <div className="bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm">
+            <div className="flex items-center justify-between px-6 py-6">
+              <div className="flex items-center gap-4">
+                <div className={cn(
+                  "w-11 h-11 rounded-2xl flex items-center justify-center transition-colors",
+                  freeExploration ? "bg-duo-green/10" : "bg-slate-100"
+                )}>
+                  <Play size={20} className={freeExploration ? "text-duo-green" : "text-slate-400"} />
+                </div>
+                <div>
+                  <p className="font-black text-voyage-primary text-sm">Déverrouiller tout</p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">فتح جميع المستويات</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setFreeExploration(!freeExploration);
+                  playSound('click');
+                }}
+                className={cn(
+                  "relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none border-b-4",
+                  freeExploration
+                    ? "bg-duo-green border-duo-green-dark"
+                    : "bg-slate-200 border-slate-300"
+                )}
+              >
+                <motion.span
+                  layout
+                  transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                  className={cn(
+                    "absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md",
+                    freeExploration ? "left-[calc(100%-1.75rem)]" : "left-0.5"
+                  )}
+                />
+              </button>
+            </div>
+            <div className="px-6 pb-6 pt-0">
+              <p className="text-[11px] text-slate-400 font-medium leading-relaxed italic">
+                Activez ce mode pour accéder à toutes les villes et missions sans restriction de progression.
+              </p>
+            </div>
           </div>
         </section>
 
