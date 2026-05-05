@@ -122,17 +122,15 @@
 
 /* ── Fond parchemin carte ────────────────────────────────────────────────── */
 .map-bg {
-  background-color: #F5E8C8;
+  background-color: #F9F1E2; /* Lighter parchment */
   background-image:
-    radial-gradient(ellipse at 20% 30%, rgba(123,63,26,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(212,164,62,0.10) 0%, transparent 50%),
     repeating-linear-gradient(
       0deg, transparent, transparent 39px,
-      rgba(123,63,26,0.04) 39px, rgba(123,63,26,0.04) 40px
+      rgba(123,63,26,0.06) 39px, rgba(123,63,26,0.06) 40px
     ),
     repeating-linear-gradient(
       90deg, transparent, transparent 39px,
-      rgba(123,63,26,0.04) 39px, rgba(123,63,26,0.04) 40px
+      rgba(123,63,26,0.06) 39px, rgba(123,63,26,0.06) 40px
     );
 }
 

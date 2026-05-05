@@ -23,7 +23,7 @@ const SOUND_FILES: Record<SoundType, string> = {
   whoosh:  '/audio/whoosh.mp3',
 };
 
-const BACKGROUND_MUSIC = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/background-theme.mp3';
+const BACKGROUND_MUSIC = '/audio/background-theme.mp3';
 const STORAGE_KEY = 'voyage_audio_settings';
 
 const DEFAULT_SETTINGS: AudioSettings = {

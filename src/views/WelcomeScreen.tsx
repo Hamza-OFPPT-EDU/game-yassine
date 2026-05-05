@@ -47,17 +47,17 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            initial={{ 
+            initial={{
               opacity: 0,
               x: Math.random() * 400,
               y: Math.random() * 800
             }}
-            animate={{ 
+            animate={{
               opacity: [0, 0.4, 0],
               y: [null, '-=100'],
               x: [null, Math.random() > 0.5 ? '+=20' : '-=20']
             }}
-            transition={{ 
+            transition={{
               duration: 5 + Math.random() * 5,
               repeat: Infinity,
               delay: Math.random() * 5
@@ -79,12 +79,12 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             {/* Hero section with Logo Image */}
             <section className="relative w-full shrink-0 flex flex-col items-center justify-center px-6 pt-16 pb-4">
               <motion.img
-                initial={{ scale: 0.8, y: -40, opacity: 0 }}
+                initial={{ scale: 0.8, y: -20, opacity: 0 }}
                 animate={{ scale: 1, y: 0, opacity: 1 }}
-                transition={{ delay: 0.1, type: "spring", stiffness: 80, damping: 20 }}
+                transition={{ delay: 0.1, type: "spring", stiffness: 120, damping: 20 }}
                 src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png"
                 alt="Le Voyage des Compétences"
-                className="w-full max-w-[380px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+                className="w-full max-w-[400px] object-contain drop-shadow-2xl"
               />
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -137,7 +137,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
                     transition={{ duration: 3, repeat: Infinity, ease: 'linear', repeatDelay: 1 }}
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
                   />
-                  
+
                   <span className="font-black uppercase tracking-widest relative z-10">Commencer le Voyage</span>
                   <ArrowRight size={24} strokeWidth={3} className="relative z-10" />
                 </motion.button>

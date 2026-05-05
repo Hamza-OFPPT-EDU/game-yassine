@@ -21,12 +21,12 @@ const MOCK_LEAGUES: Record<string, League> = {
     timeLeft: '2j 4h restants',
     myRank: 4,
     players: [
-      { id: '1', name: 'Zaynab', xp: 2100, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 1 },
-      { id: '2', name: 'Omar', xp: 1950, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 2 },
-      { id: '3', name: 'Yasmine', xp: 1800, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 3 },
-      { id: '4', name: 'Ahmed', xp: 1450, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 4, isCurrentUser: true },
-      { id: '5', name: 'Imane', xp: 1200, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 5 },
-      { id: '6', name: 'Karim', xp: 1100, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 6 },
+      { id: '1', name: 'Zaynab', xp: 2100, avatar: '/assets/avatar_user.jpg', rank: 1 },
+      { id: '2', name: 'Omar', xp: 1950, avatar: '/assets/avatar_user.jpg', rank: 2 },
+      { id: '3', name: 'Yasmine', xp: 1800, avatar: '/assets/avatar_user.jpg', rank: 3 },
+      { id: '4', name: 'Ahmed', xp: 1450, avatar: '/assets/avatar_user.jpg', rank: 4, isCurrentUser: true },
+      { id: '5', name: 'Imane', xp: 1200, avatar: '/assets/avatar_user.jpg', rank: 5 },
+      { id: '6', name: 'Karim', xp: 1100, avatar: '/assets/avatar_user.jpg', rank: 6 },
     ]
   },
   silver: {
@@ -36,9 +36,9 @@ const MOCK_LEAGUES: Record<string, League> = {
     timeLeft: 'Saison Terminée',
     myRank: 12,
     players: [
-      { id: 's1', name: 'Mounir', xp: 4500, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 1 },
-      { id: 's2', name: 'Salma', xp: 4200, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 2 },
-      { id: 's3', name: 'Bilal', xp: 3800, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 3 },
+      { id: 's1', name: 'Mounir', xp: 4500, avatar: '/assets/avatar_user.jpg', rank: 1 },
+      { id: 's2', name: 'Salma', xp: 4200, avatar: '/assets/avatar_user.jpg', rank: 2 },
+      { id: 's3', name: 'Bilal', xp: 3800, avatar: '/assets/avatar_user.jpg', rank: 3 },
     ]
   },
   gold: {

@@ -14,6 +14,28 @@ import { type City } from '../types';
 export const optimizeSupabaseUrl = (url: string, width = 200, quality = 75) => {
   if (!url || typeof url !== 'string') return url;
   
+  // Intercept known failing Supabase instance and redirect to local for certain assets
+  if (url.includes('rydmefudpczpxrresflx.supabase.co')) {
+    const fileName = url.split('/').pop()?.split('?')[0] || '';
+    const decodedName = decodeURIComponent(fileName);
+    
+    // Allow videos to pass through if they work on Supabase
+    if (url.match(/\.(mp4|webm|ogv)$/i)) {
+      return url;
+    }
+
+    if (url.match(/\.(mp3|wav|ogg|m4a)$/i)) {
+      return `/audio/${decodedName}`;
+    }
+    
+    // For images/gifs, redirect to local placeholders if they are known to be missing or problematic
+    const name = decodedName === 'paneau.png' ? 'panel.png' : 
+                 decodedName === 'Guide de voayage.gif' ? 'guide_voyage.gif' : 
+                 decodedName === 'avatar-map-user.jpg' ? 'avatar_user.jpg' : 
+                 decodedName === 'fallback-city.jpg' ? 'fallback_city.jpg' : decodedName;
+    return `/assets/${name}`;
+  }
+
   // 1. Never optimize audio or video files
   if (url.match(/\.(mp3|wav|ogg|m4a|mp4|webm|ogv)$/i)) {
     return url;
@@ -21,11 +43,8 @@ export const optimizeSupabaseUrl = (url: string, width = 200, quality = 75) => {
 
   // 2. Only apply to Supabase storage URLs for images
   if (url.includes('supabase.co/storage/v1/object/public/')) {
-    // If it's a gif, we might want to avoid transformation if it breaks animation
     if (url.toLowerCase().endsWith('.gif')) return url;
-    
     try {
-      // Supabase Image Transformation requires a different path and query params
       const transformed = url.replace('/object/public/', '/render/image/public/');
       return `${transformed}?width=${width}&quality=${quality}&format=auto`;
     } catch (e) {
@@ -70,7 +89,7 @@ export const resolveCityIcon = (city: City, size = 72, className = "") => {
   const iconName = city.iconName || '';
   
   // 1. Image URLs
-  if (iconName.startsWith('http')) {
+  if (iconName.startsWith('http') && !iconName.includes('rydmefudpczpxrresflx.supabase.co')) {
     // Apply Supabase optimization if it's a Supabase URL
     const optimizedUrl = optimizeSupabaseUrl(iconName, size * 2, 75);
     return <img src={optimizedUrl} style={{ width: size, height: size, objectFit: 'contain' }} className={className} alt="icon" />;

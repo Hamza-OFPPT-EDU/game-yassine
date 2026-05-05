@@ -15,7 +15,7 @@ interface SplashScreenProps {
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
-const INTRO_CHAR_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif';
+const INTRO_CHAR_URL = '/assets/guide_voyage.gif';
 
 export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScreenProps) {
   // Define assets to preload

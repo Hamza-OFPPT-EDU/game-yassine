@@ -27,7 +27,7 @@ import VocabularyMatchScreen from './views/VocabularyMatchScreen';
 import FullscreenPrompt from './components/FullscreenPrompt';
 import LoginScreen from './views/LoginScreen';
 import { useAuth } from './hooks/useSupabase';
-import { fetchDynamicAssets } from './lib/assets';
+import { fetchDynamicAssets, fetchCityMissionAssets } from './lib/assets';
 import { type Asset } from './hooks/useAssetPreloader';
 
 export default function App() {
@@ -44,8 +44,10 @@ export default function App() {
   const [fullscreenShownOnce, setFullscreenShownOnce] = useState(true);
   
   const { session, loading: authLoading } = useAuth();
-   const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
+  const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
   const [dynamicAssets, setDynamicAssets] = useState<Asset[]>([]);
+  const [loadedCities, setLoadedCities] = useState<string[]>([]);
+  const [loadingCityAssets, setLoadingCityAssets] = useState<string | null>(null);
   
   const [userStats, setUserStats] = useState({
     xp: 0,
@@ -54,12 +56,53 @@ export default function App() {
   });
 
   useEffect(() => {
-    async function loadDynamicAssets() {
-      const assets = await fetchDynamicAssets();
-      setDynamicAssets(assets);
+    async function loadInitialAssets() {
+      // Load core assets + assets for the first city (Rabat)
+      const firstCityId = 'rabat'; 
+      const cityAssets = await fetchDynamicAssets(firstCityId);
+      const missionAssets = await fetchCityMissionAssets(firstCityId);
+      
+      setDynamicAssets([...cityAssets, ...missionAssets]);
+      setLoadedCities([firstCityId]);
     }
-    loadDynamicAssets();
+    loadInitialAssets();
   }, []);
+
+  const preloadCityResources = async (cityId: string) => {
+    if (loadedCities.includes(cityId) || loadingCityAssets === cityId) return;
+
+    setLoadingCityAssets(cityId);
+    try {
+      const cityAssets = await fetchDynamicAssets(cityId);
+      const missionAssets = await fetchCityMissionAssets(cityId);
+      
+      const newAssets = [...cityAssets, ...missionAssets];
+      
+      // Actual preloading logic
+      newAssets.forEach(asset => {
+        if (asset.type === 'image') {
+          const img = new Image();
+          img.src = asset.url;
+        } else if (asset.type === 'audio') {
+          const audio = new Audio();
+          audio.src = asset.url;
+          audio.load();
+        }
+      });
+      
+      setDynamicAssets(prev => {
+        const existingUrls = new Set(prev.map(a => a.url));
+        const uniqueNewAssets = newAssets.filter(a => !existingUrls.has(a.url));
+        return [...prev, ...uniqueNewAssets];
+      });
+      
+      setLoadedCities(prev => [...prev, cityId]);
+    } catch (err) {
+      console.error(`Failed to preload assets for city ${cityId}:`, err);
+    } finally {
+      setLoadingCityAssets(null);
+    }
+  };
 
   // Sync stats with profile once loaded
   useEffect(() => {
@@ -240,6 +283,8 @@ export default function App() {
               if (mission) {
                 setSelectedMission(mission);
               }
+              // Preload resources for this city
+              preloadCityResources(city.id);
               setCurrentScreen(Screen.Story);
             }}
           />

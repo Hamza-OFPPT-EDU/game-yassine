@@ -16,31 +16,31 @@ interface TopAppBarProps {
 
 export default function TopAppBar({ stats, onBack, title = "Le Voyage", showProgress = true }: TopAppBarProps) {
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md px-6 py-2 flex items-center justify-between border-b-[3px] border-voyage-secondary/20 shadow-sm">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white px-6 py-3 flex items-center justify-between border-b border-[#E5D5B8]/30 shadow-sm">
       <div className="flex items-center gap-6">
         {onBack && (
-          <button onClick={onBack} className="p-2 hover:bg-voyage-sand rounded-xl transition-colors">
-            <X size={20} className="text-voyage-primary" />
+          <button onClick={onBack} className="p-2 hover:bg-[#FBF3E3] rounded-xl transition-colors">
+            <X size={20} className="text-[#7B3F1A]" />
           </button>
         )}
-        <h1 className="text-xl font-headline font-black text-voyage-primary-dark tracking-tight">{title}</h1>
+        <h1 className="text-2xl font-headline font-black text-[#4E2510] tracking-tight">{title}</h1>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         {/* XP Badge */}
-        <div className="flex items-center gap-2 bg-voyage-accent/10 px-3 py-1.5 rounded-2xl border border-voyage-accent/30 shadow-sm group hover:scale-105 transition-transform">
-           <div className="w-7 h-7 bg-voyage-accent rounded-lg flex items-center justify-center shadow-sm">
-              <TrendingUp size={18} className="text-white" />
+        <div className="flex items-center gap-2 bg-[#FBF3E3] px-3 py-1.5 rounded-full border border-[#D4A43E]/20 shadow-sm">
+           <div className="w-6 h-6 bg-[#D4A43E]/20 rounded-md flex items-center justify-center">
+              <TrendingUp size={14} className="text-[#D4A43E]" />
            </div>
-           <span className="font-black text-voyage-accent text-sm tracking-tight">{stats.xp}</span>
+           <span className="font-black text-[#7B3F1A] text-sm">{stats.xp}</span>
         </div>
 
         {/* Level Badge */}
-        <div className="flex items-center gap-2 bg-voyage-primary/10 px-3 py-1.5 rounded-2xl border border-voyage-primary/30 shadow-sm group hover:scale-105 transition-transform">
-           <div className="w-7 h-7 bg-voyage-primary rounded-lg flex items-center justify-center shadow-sm">
-              <Star size={18} className="text-white" />
+        <div className="flex items-center gap-2 bg-[#7B3F1A] px-3 py-1.5 rounded-full border border-[#4E2510] shadow-md">
+           <div className="w-6 h-6 bg-white/10 rounded-md flex items-center justify-center">
+              <Star size={14} className="text-white fill-white" />
            </div>
-           <span className="font-black text-voyage-primary text-sm tracking-tight">Niv. {stats.level}</span>
+           <span className="font-black text-white text-sm tracking-tight">Niv. {stats.level}</span>
         </div>
       </div>
     </header>

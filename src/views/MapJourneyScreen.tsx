@@ -68,7 +68,7 @@ export default function MapJourneyScreen({
   // Hook pour jouer la voix de Rabat automatiquement
   useEffect(() => {
     if (cinematicCity && cinematicCity.name === 'Rabat') {
-      const audio = new Audio('https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/rabat_intro_voice.mp3');
+      const audio = new Audio('/audio/rabat_intro_voice.mp3');
       audio.play().catch(err => console.log('Audio playback prevented:', err));
       return () => {
         audio.pause();
@@ -256,22 +256,7 @@ export default function MapJourneyScreen({
       </AnimatePresence>
 
       {/* ── Corps principal ──────────────────────────────────────────────── */}
-      <main className="flex-grow overflow-y-auto relative pt-6 pb-48 scrollbar-hide" ref={scrollContainerRef}>
-
-        {/* Titre décoratif */}
-        <div className="text-center mb-2 pt-16 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-[#C9A96E]/40 rounded-full px-5 py-2 shadow-sm"
-          >
-            <Navigation2 size={14} className="text-[#7B3F1A]" />
-            <span className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest">
-              Carte du Voyage
-            </span>
-            <span className="arabic-font text-[10px] text-[#A0572B] font-black">خريطة الرحلة</span>
-          </motion.div>
-        </div>
+      <main className="flex-grow overflow-y-auto relative pt-16 pb-48 scrollbar-hide" ref={scrollContainerRef}>
 
         {/* ── SVG Path + Nœuds ────────────────────────────────────────────── */}
         <div className="relative max-w-sm mx-auto px-4">
@@ -283,33 +268,24 @@ export default function MapJourneyScreen({
             viewBox={`0 0 320 ${cities.length * 220}`}
             preserveAspectRatio="xMidYMid meet"
           >
-            {/* Ombre du chemin */}
+            {/* Chemin Principal (Dashed) */}
             <path
               d={buildPath(cities, 320)}
               fill="none"
-              stroke="#7B3F1A"
-              strokeWidth="6"
-              strokeOpacity="0.08"
+              stroke="#D4A43E"
+              strokeWidth="4"
+              strokeOpacity="0.25"
               strokeLinecap="round"
-            />
-            {/* Chemin pointillé animé */}
-            <path
-              d={buildPath(cities, 320)}
-              fill="none"
-              stroke="#C9A96E"
-              strokeWidth="3"
-              strokeOpacity="0.5"
-              strokeLinecap="round"
-              strokeDasharray="10 18"
+              strokeDasharray="8 12"
               className="path-dashed"
             />
-            {/* Chemin de base */}
+            {/* Ligne de contour très fine pour l'effet "tracé" */}
             <path
               d={buildPath(cities, 320)}
               fill="none"
               stroke="#7B3F1A"
-              strokeWidth="2"
-              strokeOpacity="0.15"
+              strokeWidth="1.5"
+              strokeOpacity="0.1"
               strokeLinecap="round"
             />
           </svg>
@@ -543,6 +519,7 @@ const CityNode: React.FC<{
   const isCompleted = city.status === 'completed';
   const isActive = city.status === 'active';
   const cityTheme = getCityTheme(city);
+  const progress = (isCompleted ? city.totalSteps : city.stepNum) / city.totalSteps;
 
   return (
     <motion.div
@@ -550,7 +527,7 @@ const CityNode: React.FC<{
       animate={{
         y: 0,
         opacity: 1,
-        scale: isSelected || (isScrollTarget && scrollDone) ? 1.15 : 1
+        scale: isSelected || (isScrollTarget && scrollDone) ? 1.1 : 1
       }}
       transition={{
         delay,
@@ -558,183 +535,141 @@ const CityNode: React.FC<{
       }}
       className="flex flex-col items-center relative"
     >
-      {/* Animation Focus - Aura brillante après scroll */}
-      {isScrollTarget && scrollDone && (
-        <>
-          <motion.div
-            initial={{ opacity: 0, scale: 1.2 }}
-            animate={{ opacity: [0.6, 0.2, 0.6], scale: [1.3, 1.5, 1.3] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="absolute rounded-full pointer-events-none"
-            style={{
-              width: 180,
-              height: 180,
-              top: -42,
-              left: -42,
-              background: `radial-gradient(circle, ${cityTheme.color} 0%, transparent 70%)`,
-              filter: 'blur(20px)',
-            }}
-          />
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0.4, 0.8, 0.4] }}
-            transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
-            className="absolute rounded-full pointer-events-none border-2"
-            style={{
-              width: 150,
-              height: 150,
-              top: -27,
-              left: -27,
-              borderColor: `${cityTheme.color}88`,
-            }}
-          />
-        </>
-      )}
-      {/* Aura extérieure pulsante */}
-      {!isLocked && (
-        <>
-          <div
-            className='absolute rounded-full city-aura pointer-events-none'
-            style={{
-              width: 140,
-              height: 140,
-              top: -22,
-              left: -22,
-              backgroundColor: `${cityTheme.color}40`
-            }}
-          />
-          {isActive && (
-            <div
-              className="absolute rounded-full pointer-events-none border-2 border-dashed ring-spin"
-              style={{ width: 128, height: 128, top: -16, left: -16, borderColor: `${cityTheme.color}66` }}
-            />
-          )}
-        </>
+      {/* Aura pulsante pour la ville active */}
+      {isActive && (
+        <motion.div
+          animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.1, 0.3] }}
+          transition={{ duration: 3, repeat: Infinity }}
+          className="absolute w-32 h-32 rounded-full"
+          style={{ background: `radial-gradient(circle, ${isActive ? '#2C6E7F' : '#D4A43E'} 0%, transparent 70%)` }}
+        />
       )}
 
-      {/* Bouton principal */}
-      <button
-        onClick={onSelect}
-        className={cn(
-          'relative w-24 h-24 rounded-full flex items-center justify-center',
-          'border-[6px] shadow-2xl transition-all duration-300',
-          'focus:outline-none',
-          isLocked && 'opacity-50 cursor-pointer',
-          isSelected && 'ring-4 scale-110',
+      {/* Conteneur principal du nœud */}
+      <div className="relative group cursor-pointer" onClick={onSelect}>
+        
+        {/* Banner "EN COURS" */}
+        {isActive && (
+          <motion.div
+            initial={{ y: 10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="absolute -top-10 left-1/2 -translate-x-1/2 z-20 whitespace-nowrap bg-[#7B3F1A] text-white px-4 py-1.5 rounded-xl border-2 border-white/20 shadow-lg flex items-center gap-1.5"
+          >
+            <span className="text-[10px] font-black tracking-widest">✦ EN COURS</span>
+          </motion.div>
         )}
-        style={{
-          background: isLocked
-            ? 'linear-gradient(135deg, #C9B99A, #D4C5B0)'
-            : isCompleted
-              ? `linear-gradient(135deg, ${cityTheme.color}CC, ${cityTheme.color})`
-              : `linear-gradient(135deg, ${cityTheme.colorLight || cityTheme.color}CC, ${cityTheme.color})`,
-          borderColor: isLocked ? '#B5A48A' : cityTheme.colorDark || cityTheme.color,
-          ...(isSelected ? { boxShadow: `0 0 0 4px ${cityTheme.color}50` } : {}),
-        }}
-      >
-        {/* Cercle intérieur */}
+
+        {/* Le Cercle Extérieur */}
         <div
-          className='w-16 h-16 rounded-full flex items-center justify-center relative'
-          style={{
-            background: isLocked
-              ? `linear-gradient(135deg, ${cityTheme.color}55, ${cityTheme.color}33)`
-              : isCompleted
-                ? `linear-gradient(135deg, #F0CC7A, ${cityTheme.color})`
-                : `linear-gradient(135deg, ${cityTheme.colorLight || cityTheme.color}, ${cityTheme.color}CC)`,
-          }}
-        >
-          {isCompleted ? (
-            <div className="flex flex-col items-center">
-              <Check size={(city.iconSize || 52) - 4} className="text-white stroke-[3px]" />
-            </div>
-          ) : (
-            <motion.span
-              animate={isLocked ? {} : { y: [0, -4, 0], scale: [1, 1.06, 1] }}
-              transition={{ duration: 3 + Math.random(), repeat: Infinity, ease: 'easeInOut' }}
-              className="leading-none select-none flex items-center justify-center"
-              style={{ opacity: isLocked ? 0.5 : 1 }}
-            >
-              {resolveCityIcon(city, city.iconSize || 52, 'text-white')}
-            </motion.span>
+          className={cn(
+            "relative w-32 h-32 rounded-full flex items-center justify-center transition-all duration-500",
+            isLocked ? "bg-[#E5D5B8]/50 border-4 border-[#C9B99A]" : "bg-[#2C6E7F] shadow-xl ring-8 ring-[#2C6E7F]/10"
           )}
-          {/* Badge cadenas pour villes verrouillées */}
+          style={!isLocked && !isActive ? { backgroundColor: cityTheme.color, borderColor: cityTheme.colorDark } : {}}
+        >
+          {/* Progress Ring (uniquement pour l'actif) */}
+          {isActive && (
+            <svg className="absolute inset-0 w-full h-full -rotate-90 p-1">
+              <circle
+                cx="50%"
+                cy="50%"
+                r="46%"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+                strokeOpacity="0.2"
+                strokeDasharray="4 4"
+              />
+              <motion.circle
+                cx="50%"
+                cy="50%"
+                r="46%"
+                fill="none"
+                stroke="#D4A43E"
+                strokeWidth="4"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: progress }}
+                transition={{ duration: 1.5, delay: delay + 0.5 }}
+              />
+            </svg>
+          )}
+
+          {/* Cercle Intérieur (Contient l'icône) */}
+          <div
+            className={cn(
+              "w-24 h-24 rounded-full flex items-center justify-center relative overflow-hidden transition-all duration-300",
+              isLocked ? "bg-[#D1C4B0] opacity-60" : "bg-white/10 backdrop-blur-sm"
+            )}
+          >
+            {/* L'icône de la ville */}
+            <motion.div
+              animate={isLocked ? {} : { y: [0, -4, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="flex items-center justify-center"
+            >
+              {resolveCityIcon(city, 56, isLocked ? "grayscale opacity-50" : "text-white")}
+            </motion.div>
+
+            {/* Overlay de verrouillage */}
+            {isLocked && (
+              <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
+                <div className="bg-white/80 p-2 rounded-full shadow-sm">
+                  <Lock size={16} className="text-[#7B3F1A]" />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Bouton d'action bas (Arrow) */}
+          {isActive && (
+             <motion.div
+               animate={{ y: [0, 5, 0] }}
+               transition={{ duration: 2, repeat: Infinity }}
+               className="absolute -bottom-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg border-2 border-[#E5D5B8] z-30"
+             >
+               <ArrowDown size={20} className="text-[#D4A43E]" />
+             </motion.div>
+          )}
+
+          {/* Badge cadenas (small) pour locked */}
           {isLocked && (
-            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#9B8870] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-              <Lock size={9} className="text-white" />
+            <div className="absolute bottom-2 right-2 w-7 h-7 bg-white rounded-full flex items-center justify-center border-2 border-[#E5D5B8] shadow-md">
+               <Lock size={12} className="text-[#B5A48A]" />
+            </div>
+          )}
+
+          {/* Badge Complété */}
+          {isCompleted && (
+            <div className="absolute -bottom-2 bg-[#D4A43E] text-white p-1.5 rounded-full shadow-lg border-2 border-white">
+              <Check size={16} strokeWidth={4} />
             </div>
           )}
         </div>
+      </div>
 
-        {/* Badge statut haut */}
-        {(isActive || isSelected) && (
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className={cn(
-              'absolute -top-3.5 px-2.5 py-0.5 rounded-full text-[8px] font-black tracking-widest uppercase shadow-md text-white',
-              isSelected ? 'bg-[#D4A43E]' : 'bg-[#7B3F1A]',
-            )}
-          >
-            {isSelected ? '⚡ SÉLECTIONNÉ' : '✦ EN COURS'}
-          </motion.div>
-        )}
-        {isCompleted && !isSelected && (
-          <div className="absolute -top-3 bg-[#D4A43E] text-[#4E2510] px-2.5 py-0.5 rounded-full text-[8px] font-black tracking-widest shadow-md">
-            ✓ TERMINÉ
-          </div>
-        )}
-
-        {/* Badge progression bas */}
-        {!isLocked && (
-          <div
-            className={cn(
-              'absolute -bottom-4 bg-white px-2.5 py-0.5 rounded-full shadow-md border-2 text-[11px] font-black z-20',
-              isCompleted ? 'border-[#D4A43E] text-[#7B3F1A]' : 'border-[#C9A96E] text-[#7B3F1A]',
-            )}
-          >
-            {isCompleted ? city.totalSteps : city.stepNum}/{city.totalSteps}
-          </div>
-        )}
-
-        {/* Étoiles décoratifs pour "complété" */}
-        {isCompleted && (
-          <>
-            <Star
-              size={12}
-              className="absolute -right-1 top-1 text-white fill-white star-twinkle shadow-sm"
-              style={{ animationDelay: '0.3s' }}
-            />
-            <Star
-              size={10}
-              className="absolute -left-1 bottom-2 text-white fill-white star-twinkle shadow-sm"
-              style={{ animationDelay: '0.8s' }}
-            />
-          </>
-        )}
-      </button>
-
-      {/* Label ville */}
-      <div className="mt-6 text-center space-y-0.5">
-        <p
-          className={cn('font-headline font-black text-sm tracking-tight')}
-          style={{ color: isLocked ? '#C9A96E' : cityTheme.colorDark || cityTheme.color }}
-        >
+      {/* Label de la ville */}
+      <div className="mt-8 text-center">
+        <h3 className={cn(
+          "text-lg font-black tracking-tight leading-none mb-1",
+          isLocked ? "text-[#7B3F1A]/40" : "text-[#2C6E7F]"
+        )}>
           {city.name}
-        </p>
-        <p
-          className={cn('arabic-font text-xs font-black')}
-          style={{ color: isLocked ? '#C9A96E' : cityTheme.color, opacity: isLocked ? 0.3 : 0.8 }}
-        >
+        </h3>
+        <p className={cn(
+          "arabic-font text-sm font-bold",
+          isLocked ? "text-[#7B3F1A]/30" : "text-[#7B3F1A]/60"
+        )}>
           {city.arabicName}
         </p>
+
+        {/* Petite barre de progression sous le nom */}
         {!isLocked && (
-          <div className="mt-1.5 w-20 h-1.5 bg-[#C9A96E]/15 rounded-full overflow-hidden border border-[#C9A96E]/20 mx-auto">
+          <div className="mt-2 w-16 h-1.5 bg-[#E5D5B8]/30 rounded-full overflow-hidden mx-auto">
             <motion.div
               initial={{ width: 0 }}
-              animate={{ width: `${(isCompleted ? city.totalSteps : city.stepNum) / city.totalSteps * 100}%` }}
-              transition={{ delay: 0.5, duration: 0.8, ease: 'easeOut' }}
-              className="h-full rounded-full"
-              style={{ background: isCompleted ? 'linear-gradient(90deg, #D4A43E, #A87D28)' : 'linear-gradient(90deg, #A0572B, #7B3F1A)' }}
+              animate={{ width: `${progress * 100}%` }}
+              className="h-full bg-gradient-to-r from-[#D4A43E] to-[#7B3F1A] rounded-full"
             />
           </div>
         )}

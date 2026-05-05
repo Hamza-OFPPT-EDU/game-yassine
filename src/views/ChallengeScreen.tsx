@@ -397,7 +397,9 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
     if (type === 'glitch') return selectedWordIdx === parseInt(challenge.correctOptionId || '0');
     if (type === 'ranking') return selectedRankIds.join(',') === challenge.correctOptionId;
     if (type === 'fill-in-blanks') {
-      const sorted = Object.keys(blanksValues).sort().map(k => blanksValues[k]);
+      const sorted = Object.keys(blanksValues)
+        .sort((a, b) => Number(a) - Number(b))
+        .map(k => blanksValues[k]);
       const correct = challenge.correctOptionId?.split(/[|,,]/).map(s => s.trim()) || [];
       return sorted.join('|') === correct.join('|');
     }
@@ -580,7 +582,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
 
   // Handle case where challenge data might be incomplete
   if (challenge && (!challenge.options || (Array.isArray(challenge.options) && challenge.options.length === 0))) {
-    const typeNoOptions = ['short-answer', 'puzzle-riddle', 'glitch', 'scenario-cascade'];
+    const typeNoOptions = ['short-answer', 'puzzle-riddle', 'glitch', 'scenario-cascade', 'scenario-decision', 'scenario-dialogue', 'zellige', 'team-roles'];
     if (!typeNoOptions.includes(challenge.type)) {
        return (
         <div className="flex flex-col items-center justify-center h-full text-center space-y-6 px-8 bg-white">
@@ -687,7 +689,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
              </span>
           </div>
           
-          {challenge.content && challenge.content[0] && challenge.type !== 'fill-in-blanks' && (
+          {challenge.content && challenge.content[0] && challenge.type !== 'fill-in-blanks' && challenge.content[0] !== challenge.question && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}

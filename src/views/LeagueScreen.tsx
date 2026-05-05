@@ -18,10 +18,10 @@ const MOCK_LEAGUES: League[] = [
     timeLeft: '2j 4h',
     myRank: 4,
     players: [
-      { id: '1', name: 'Zaynab', xp: 2100, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 1 },
-      { id: '2', name: 'Omar', xp: 1950, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 2 },
-      { id: '3', name: 'Yasmine', xp: 1800, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 3 },
-      { id: '4', name: 'Ahmed', xp: 1450, avatar: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg', rank: 4, isCurrentUser: true },
+      { id: '1', name: 'Zaynab', xp: 2100, avatar: '/assets/avatar_user.jpg', rank: 1 },
+      { id: '2', name: 'Omar', xp: 1950, avatar: '/assets/avatar_user.jpg', rank: 2 },
+      { id: '3', name: 'Yasmine', xp: 1800, avatar: '/assets/avatar_user.jpg', rank: 3 },
+      { id: '4', name: 'Ahmed', xp: 1450, avatar: '/assets/avatar_user.jpg', rank: 4, isCurrentUser: true },
     ]
   },
   { id: 'silver', name: 'Ligue Argent', tier: 'silver', timeLeft: 'Terminé', myRank: 12, players: [] },
