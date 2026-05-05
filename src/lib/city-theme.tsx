@@ -8,6 +8,22 @@ import {
 import { type City } from '../types';
 
 /**
+ * Optimizes a Supabase storage URL using their transformation service.
+ * Converts /object/public/ to /render/image/public/ and adds transformation parameters.
+ */
+export const optimizeSupabaseUrl = (url: string, width = 200, quality = 75) => {
+  if (!url || typeof url !== 'string') return url;
+  
+  // Only apply to Supabase storage URLs
+  if (url.includes('supabase.co/storage/v1/object/public/')) {
+    // Supabase Image Transformation requires a different path and query params
+    const transformed = url.replace('/object/public/', '/render/image/public/');
+    return `${transformed}?width=${width}&quality=${quality}`;
+  }
+  return url;
+};
+
+/**
  * Adjusts a hex color brightness
  */
 export const adjustColor = (hex: string, amt: number) => {
@@ -43,7 +59,9 @@ export const resolveCityIcon = (city: City, size = 72, className = "") => {
   
   // 1. Image URLs
   if (iconName.startsWith('http')) {
-    return <img src={iconName} style={{ width: size, height: size, objectFit: 'contain' }} className={className} alt="icon" />;
+    // Apply Supabase optimization if it's a Supabase URL
+    const optimizedUrl = optimizeSupabaseUrl(iconName, size * 2, 75);
+    return <img src={optimizedUrl} style={{ width: size, height: size, objectFit: 'contain' }} className={className} alt="icon" />;
   }
 
   // 2. Emojis

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, Play, Volume2, SkipForward, MapPin, Sparkles } from 'lucide-react';
 import { type City, type Mission } from '../types';
 import { useAudio } from '../hooks/useAudio';
-import { getCityTheme } from '../lib/city-theme';
+import { getCityTheme, optimizeSupabaseUrl } from '../lib/city-theme';
 
 interface CinematicIntroScreenProps {
   city: City;
@@ -19,7 +19,7 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
   const [audioObj, setAudioObj] = useState<HTMLAudioElement | null>(null);
 
   // Default GIF if none provided
-  const cinematicGif = mission.cinematic_gif_url || "/assets/intro_caracter.gif";
+  const cinematicGif = optimizeSupabaseUrl(mission.cinematic_gif_url || "/assets/intro_caracter.gif", 500, 70);
   const cinematicText = mission.cinematic_text || mission.description_fr || "Préparez-vous pour une nouvelle aventure passionnante !";
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
       {/* Background Ambience */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img 
-          src={city.image} 
+          src={optimizeSupabaseUrl(city.image, 1080, 60)} 
           className="w-full h-full object-cover opacity-20 blur-sm scale-110" 
           alt="" 
         />

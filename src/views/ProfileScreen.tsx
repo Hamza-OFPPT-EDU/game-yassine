@@ -3,6 +3,7 @@ import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, Trendin
 import { useSupabaseProfile } from '../hooks/useSupabase';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
+import { optimizeSupabaseUrl } from '../lib/city-theme';
 import { DEFAULT_AVATAR_URL } from '../types';
 
 interface ProfileScreenProps {
@@ -49,7 +50,7 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
            <div className="relative group">
               <div className="w-32 h-32 rounded-3xl bg-duo-swan/20 flex items-center justify-center border-4 border-duo-swan relative overflow-hidden group-hover:border-voyage-accent transition-colors">
                 <img 
-                   src={profile?.avatar_url || DEFAULT_AVATAR_URL} 
+                   src={optimizeSupabaseUrl(profile?.avatar_url || DEFAULT_AVATAR_URL, 256, 80)} 
                    alt="Profile" 
                    className="w-full h-full object-cover"
                    referrerPolicy="no-referrer"

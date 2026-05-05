@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
+import { optimizeSupabaseUrl } from '../lib/city-theme';
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -50,20 +51,9 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="relative z-10 h-full w-full flex flex-col"
           >
-            {/* Hero section with Logo Image */}
-            <section className="relative w-full shrink-0 flex items-center justify-center px-6 pt-12 pb-4">
-              <motion.img
-                initial={{ scale: 0.8, y: -20, opacity: 0 }}
-                animate={{ scale: 1, y: 0, opacity: 1 }}
-                transition={{ delay: 0.1, type: "spring", stiffness: 120, damping: 20 }}
-                src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png"
-                alt="Le Voyage des Compétences"
-                className="w-full max-w-[400px] object-contain drop-shadow-2xl"
-              />
-            </section>
 
             {/* Content (Glassmorphic block) */}
-            <main className="flex-grow flex flex-col items-start justify-center px-6 text-center mt-4">
+            <main className="flex-grow flex flex-col items-center justify-center px-6 text-center pt-24">
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}

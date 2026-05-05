@@ -269,24 +269,41 @@ export function useSupabaseQuestions(missionId: string) {
               text: typeof item === 'string' ? item : (item.text || item.text_fr || ''),
               label: String.fromCharCode(65 + idx)
             }));
-          } else if (q.options?.steps) {
-            // Scenario-cascade format: { steps: [...], options: [...] }
-            steps = q.options.steps;
-            options = (q.options.options || []).map((opt: any, idx: number) => ({
-              id: opt.id || String(idx),
-              text: opt.text_fr || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : ''),
-              label: opt.label || opt.label_fr || String.fromCharCode(65 + idx),
-              match: opt.match || opt.right_fr || ''
-            }));
-            
-            // If no top-level options, try to extract from the first step
-            if (options.length === 0 && steps.length > 0 && steps[0].responses) {
-              options = steps[0].responses.map((opt: any, idx: number) => ({
+          } else if (q.options?.steps || q.options?.errors) {
+            // Handle scenario-cascade (steps) or error-detection (errors)
+            if (q.options.steps) {
+              steps = q.options.steps;
+              options = (q.options.options || []).map((opt: any, idx: number) => ({
                 id: opt.id || String(idx),
-                text: opt.text || opt.text_fr || '',
-                label: opt.label || String.fromCharCode(65 + idx)
+                text: opt.text_fr || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : ''),
+                label: opt.label || opt.label_fr || String.fromCharCode(65 + idx),
+                match: opt.match || opt.right_fr || ''
+              }));
+              
+              // If no top-level options, try to extract from the first step
+              if (options.length === 0 && steps.length > 0 && (steps[0].responses || steps[0].options)) {
+                const stepOptions = steps[0].responses || steps[0].options;
+                options = stepOptions.map((opt: any, idx: number) => ({
+                  id: opt.id || String(idx),
+                  text: opt.text || opt.text_fr || opt.label || opt.label_fr || '',
+                  label: opt.label || String.fromCharCode(65 + idx)
+                }));
+              }
+            } else if (q.options.errors) {
+              options = q.options.errors.map((err: any, idx: number) => ({
+                id: err.id || String(idx),
+                text: err.text_fr || err.text || '',
+                label: String.fromCharCode(65 + idx),
+                isError: !!err.is_error || err.isError || false
               }));
             }
+          } else if (q.options?.order) {
+            // Ranking format: { order: [...] }
+            options = q.options.order.map((item: any, idx: number) => ({
+              id: item.id || String(idx),
+              text: item.text_fr || item.label_fr || item.text || '',
+              label: String.fromCharCode(65 + idx)
+            }));
           } else if (!q.options) {
             // No options provided - check type for defaults
             if (type === 'true-false') {
@@ -300,9 +317,9 @@ export function useSupabaseQuestions(missionId: string) {
           }
 
           // Format content for fill-in-blanks if it uses underscores or is missing placeholders
-          let content = q.presentation_fr && q.presentation_fr !== q.question_fr 
-            ? [q.presentation_fr] 
-            : (type === 'fill-in-blanks' && q.question_fr ? [q.question_fr] : []);
+          let content = q.presentation_fr || q.question_fr 
+            ? [q.presentation_fr || q.question_fr] 
+            : [];
           
           if (type === 'fill-in-blanks' && content.length > 0) {
             let processed = content[0];
@@ -311,7 +328,10 @@ export function useSupabaseQuestions(missionId: string) {
             // maybe we should append them or log a warning.
             // For now, let's ensure it has at least one placeholder if options exist.
             if (!processed.includes('__________') && !processed.includes('...') && !processed.includes('[1]') && options.length > 0) {
-              processed += " __________";
+              // Try to inject enough placeholders for the correct answers
+              const correctAnswers = q.correct_answer?.split(/[|,]/) || [];
+              const placeholderCount = Math.max(1, correctAnswers.length);
+              processed += " " + Array(placeholderCount).fill('__________').join(' ');
             }
 
             let count = 1;
@@ -330,9 +350,9 @@ export function useSupabaseQuestions(missionId: string) {
             title: q.question_fr ? (q.question_fr.length > 40 ? q.question_fr.substring(0, 40) + '...' : q.question_fr) : 'Défi',
             question: q.question_fr,
             arabicQuestion: q.question_ar,
-            options,
+            options: Array.isArray(options) ? options : [],
             steps,
-            correctOptionId: q.correct_answer || (type === 'scenario-cascade' && steps?.length > 0 ? steps[0].correct_response_id : undefined),
+            correctOptionId: q.correct_answer || (type === 'scenario-cascade' && steps?.length > 0 ? (steps[0].correct_response_id || steps[0].correct) : (type === 'ranking' && q.options?.order ? q.options.order.map((o:any) => o.id || '').join(',') : undefined)),
             hint: q.hint_fr,
             content,
             feedbackPositive: q.feedback_positive_fr,

@@ -15,7 +15,7 @@ import TopAppBar from '../components/TopAppBar';
 import { useAudio } from '../hooks/useAudio';
 import { useSupabaseCities, useSupabaseMissions } from '../hooks/useSupabase';
 import { useAutoScroll } from '../hooks/useAutoScroll';
-import { getCityTheme, resolveCityIcon } from '../lib/city-theme';
+import { getCityTheme, resolveCityIcon, optimizeSupabaseUrl } from '../lib/city-theme';
 
 // ── MapJourneyScreen ─────────────────────────────────────────────────────────
 
@@ -179,7 +179,7 @@ export default function MapJourneyScreen({
                       />
                       
                       <motion.img
-                        src={cinematicCity.cinematicCharacter || "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif"}
+                        src={optimizeSupabaseUrl(cinematicCity.cinematicCharacter || "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif", 500, 70)}
                         alt="Personnage"
                         animate={{ 
                           y: [0, -8, 0], // Subtle float

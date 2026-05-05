@@ -7,7 +7,7 @@ import { motion } from 'motion/react';
 import { X, MoreVertical, MapPin, ArrowRight, User, BookOpen, Sparkles, Clapperboard } from 'lucide-react';
 import { type City, type Mission } from '../types';
 import { useAudio } from '../hooks/useAudio';
-import { getCityTheme } from '../lib/city-theme';
+import { getCityTheme, optimizeSupabaseUrl } from '../lib/city-theme';
 
 interface StoryScreenProps {
   city: City;
@@ -53,7 +53,7 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
         className="absolute inset-0 z-0"
       >
         <img
-          src={city.image}
+          src={optimizeSupabaseUrl(city.image, 1000, 70)}
           alt={city.name}
           className="w-full h-full object-cover opacity-30"
           referrerPolicy="no-referrer"

@@ -14,8 +14,8 @@ import {
   closestCenter,
 } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import { Lightbulb, TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw, SkipForward, Clapperboard } from 'lucide-react';
-import { type City, type Challenge, type MissionCompletionSummary, type MissionQuestionResult } from '../types';
+import { Lightbulb, TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw, SkipForward, Clapperboard, Check } from 'lucide-react';
+import { type City, type Challenge, type MissionCompletionSummary, type MissionQuestionResult, type Mission } from '../types';
 import { cn } from '../lib/utils';
 import { useSupabaseQuestions } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
@@ -28,7 +28,7 @@ const getThemeConfig = (type: string) => {
   
   if (['scenario-decision', 'scenario-dialogue', 'scenario-cascade', 'decision', 'dialogue'].includes(t)) {
     return {
-      category: 'Narrative',
+      category: 'Histoire',
       icon: <Clapperboard size={16} />,
       bgClass: 'bg-amber-50/50',
       accentColor: 'text-amber-600',
@@ -41,7 +41,7 @@ const getThemeConfig = (type: string) => {
   
   if (['zellige', 'puzzle-riddle', 'riddle', 'mosaic', 'glitch'].includes(t)) {
     return {
-      category: 'Artistic',
+      category: 'Atelier',
       icon: <Sparkles size={16} />,
       bgClass: 'bg-teal-50/50',
       accentColor: 'text-teal-600',
@@ -54,7 +54,7 @@ const getThemeConfig = (type: string) => {
   
   if (['matching', 'ranking', 'team-roles', 'fill-in-blanks', 'sorting-challenge'].includes(t)) {
     return {
-      category: 'Technical',
+      category: 'Mise en Situation',
       icon: <LayoutGrid size={16} />,
       bgClass: 'bg-blue-50/50',
       accentColor: 'text-blue-600',
@@ -66,7 +66,7 @@ const getThemeConfig = (type: string) => {
   }
   
   return {
-    category: 'Assessment',
+    category: 'Défi',
     icon: <Compass size={16} />,
     bgClass: 'bg-voyage-sand/10',
     accentColor: 'text-voyage-accent',
@@ -110,6 +110,9 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
   const [hoverDropId, setHoverDropId] = useState<string | null>(null);
   const [questionResults, setQuestionResults] = useState<MissionQuestionResult[]>([]);
+  const [shortAnswer, setShortAnswer] = useState('');
+  const [startTime, setStartTime] = useState(Date.now());
+  const [attempts, setAttempts] = useState(0);
   
   // Timer & Skip state
   const DEFAULT_QUESTION_TIME = 30; // seconds
@@ -434,8 +437,8 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
     const totalQuestions = results.length;
 
     return {
-      missionId,
-      missionTitle,
+      missionId: mission.id,
+      missionTitle: mission.title_fr,
       cityId: city.id,
       cityName: city.name,
       questions: results,
@@ -680,7 +683,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
           <div className={cn("inline-flex items-center gap-2 px-3 py-1 rounded-full border transition-all", theme.bgClass, theme.borderColor)}>
              <span className={cn("shrink-0", theme.accentColor)}>{theme.icon}</span>
              <span className={cn("text-[10px] font-black uppercase tracking-widest", theme.accentColor)}>
-               {theme.category}: {challenge.type.replace('-', ' ')}
+               {theme.category}
              </span>
           </div>
           
@@ -688,16 +691,41 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-voyage-accent/5 p-4 rounded-2xl border-2 border-voyage-accent/10 mb-4"
+              className="bg-voyage-accent/5 p-5 rounded-3xl border-2 border-voyage-accent/10 mb-6 shadow-sm"
             >
-              <p className="text-sm font-bold text-voyage-primary/80 leading-relaxed italic">
+              <p className="text-base font-bold text-voyage-primary/90 leading-relaxed italic">
                 {challenge.content[0]}
               </p>
             </motion.div>
           )}
 
-          <div className="space-y-2 text-center">
-            <h2 className="text-2xl font-black text-duo-eel leading-tight tracking-tight">
+          {/* Guide de respiration pour la technique 4-7-8 */}
+          {(challenge.question?.includes('4-7-8') || challenge.presentation_fr?.includes('4-7-8')) && (
+            <div className="flex flex-col items-center justify-center py-6 bg-white/50 rounded-3xl border-2 border-dashed border-voyage-accent/30 mb-6">
+              <motion.div
+                animate={{
+                  scale: [1, 1.4, 1.4, 1],
+                }}
+                transition={{
+                  duration: 19,
+                  times: [0, 4/19, 11/19, 1],
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="w-24 h-24 rounded-full bg-voyage-accent/20 border-4 border-voyage-accent flex items-center justify-center"
+              >
+                <Wind size={32} className="text-voyage-accent" />
+              </motion.div>
+              <div className="mt-4 flex gap-3">
+                <span className="text-[10px] font-black text-voyage-accent uppercase tracking-tighter bg-voyage-accent/10 px-2 py-1 rounded-md">Inspire (4s)</span>
+                <span className="text-[10px] font-black text-voyage-accent uppercase tracking-tighter bg-voyage-accent/10 px-2 py-1 rounded-md">Bloque (7s)</span>
+                <span className="text-[10px] font-black text-voyage-accent uppercase tracking-tighter bg-voyage-accent/10 px-2 py-1 rounded-md">Expire (8s)</span>
+              </div>
+            </div>
+          )}
+
+          <div className="space-y-3 text-center mb-8">
+            <h2 className="text-2xl font-black text-duo-eel leading-tight tracking-tight px-4">
               {challenge.type === 'scenario-cascade' && challenge.steps && challenge.steps[currentStepIdx] 
                 ? challenge.steps[currentStepIdx].question 
                 : challenge.question}
@@ -716,13 +744,17 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
           animate={{ x: 0, opacity: 1 }}
           className="space-y-6"
         >
-          {challenge && ['multiple-choice', 'true-false', 'scenario-decision', 'scenario-cascade'].includes(challenge.type) && (
+          {challenge && ['multiple-choice', 'true-false', 'scenario-decision', 'scenario-cascade', 'decision', 'dialogue', 'time-attack'].includes(challenge.type) && (
             <div className="space-y-3">
               {normalizedOptions.map((opt) => {
-                const isScenarioType = challenge && ['scenario-decision', 'scenario-cascade'].includes(challenge.type);
                 const isCorrect = challenge && opt.id === challenge.correctOptionId;
                 const isSelected = selectedOptionId === opt.id;
+                const showSuccess = showFeedback && isCorrect;
+                const showWrong = showFeedback && isSelected && !isCorrect;
                 
+                // Truncate long labels
+                const displayLabel = opt.label && opt.label.length <= 2 ? opt.label : String.fromCharCode(65 + normalizedOptions.indexOf(opt));
+
                 return (
                   <button
                     key={opt.id}
@@ -735,31 +767,33 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                       "w-full flex items-center gap-4 p-5 text-left rounded-2xl border-2 transition-all duration-100 group relative",
                       isSelected 
                         ? "bg-voyage-primary/5 border-voyage-primary shadow-[0_4px_0_0_#8B4513] -translate-y-0.5"
-                        : (isScenarioType && isCorrect)
+                        : showSuccess
                           ? "bg-emerald-50 border-emerald-400 border-b-4 hover:bg-emerald-100/50 active:translate-y-0.5 active:border-b-0 ring-4 ring-emerald-400/20 shadow-emerald-200/50 shadow-lg"
-                          : "bg-white border-voyage-secondary/30 hover:bg-voyage-secondary/10 border-b-4 active:translate-y-0.5 active:border-b-0"
+                          : showWrong
+                            ? "bg-red-50 border-red-400 border-b-4"
+                            : "bg-white border-voyage-secondary/30 hover:bg-voyage-secondary/10 border-b-4 active:translate-y-0.5 active:border-b-0"
                     )}
                   >
                     <div className={cn(
                       "w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm border-2 transition-colors",
                       isSelected 
                         ? "bg-voyage-primary border-voyage-primary text-white" 
-                        : (isScenarioType && isCorrect)
+                        : showSuccess
                           ? "bg-emerald-500 border-emerald-600 text-white shadow-emerald-200 shadow-sm"
                           : "bg-white border-voyage-secondary/30 text-voyage-secondary group-hover:border-voyage-primary/30"
                     )}>
-                      {opt.label || '?'}
+                      {displayLabel}
                     </div>
                     <span className={cn(
                       "font-bold text-lg",
                       isSelected 
                         ? "text-voyage-primary" 
-                        : (isScenarioType && isCorrect)
+                        : showSuccess
                           ? "text-emerald-700"
                           : "text-duo-eel"
                     )}>{opt.text}</span>
 
-                    {isScenarioType && isCorrect && (
+                    {showSuccess && (
                       <div className="ml-auto bg-emerald-500 text-white px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-tight border-2 border-emerald-600 flex items-center gap-1.5 shadow-md animate-pulse-slow">
                         <CheckCircle2 size={12} className="stroke-[3px]" />
                         Réponse Correcte
@@ -789,37 +823,38 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
               <div className="space-y-3 pl-18">
                 <p className="text-[10px] font-black text-voyage-secondary uppercase tracking-widest mb-2 opacity-60">Ta réponse :</p>
                 {normalizedOptions.map((opt) => {
-                  const isCorrect = opt.id === challenge.correctOptionId;
-                  const isSelected = selectedOptionId === opt.id;
-                  
-                  return (
-                    <button
-                      key={opt.id}
-                      disabled={showFeedback}
-                      onClick={() => {
-                        playSound('click');
-                        setSelectedOptionId(opt.id);
-                      }}
-                      className={cn(
-                        "w-full p-4 text-left rounded-2xl border-2 transition-all group relative",
-                        isSelected 
-                          ? "bg-amber-600 text-white border-amber-600 shadow-[0_4px_0_0_#92400E] -translate-y-0.5"
-                          : isCorrect
-                            ? "bg-emerald-50 border-emerald-400 border-b-4 hover:bg-emerald-100/50"
-                            : "bg-white border-amber-200 text-duo-eel border-b-4 hover:bg-amber-50"
-                      )}
-                    >
-                      <div className="flex items-center justify-between w-full">
-                        <span className="font-bold">{opt.text}</span>
-                        {isCorrect && (
-                          <div className="flex-shrink-0 bg-emerald-500 text-white px-2 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-tight flex items-center gap-1 shadow-sm">
-                            <CheckCircle2 size={10} />
-                            Solution
-                          </div>
+                    const isCorrect = opt.id === challenge.correctOptionId;
+                    const isSelected = selectedOptionId === opt.id;
+                    const showSuccess = showFeedback && isCorrect;
+
+                    return (
+                      <button
+                        key={opt.id}
+                        disabled={showFeedback}
+                        onClick={() => {
+                          playSound('click');
+                          setSelectedOptionId(opt.id);
+                        }}
+                        className={cn(
+                          "w-full p-4 text-left rounded-2xl border-2 transition-all group relative",
+                          isSelected 
+                            ? "bg-amber-600 text-white border-amber-600 shadow-[0_4px_0_0_#92400E] -translate-y-0.5"
+                            : showSuccess
+                              ? "bg-emerald-50 border-emerald-400 border-b-4 hover:bg-emerald-100/50"
+                              : "bg-white border-amber-200 text-duo-eel border-b-4 hover:bg-amber-50"
                         )}
-                      </div>
-                    </button>
-                  );
+                      >
+                        <div className="flex items-center justify-between w-full">
+                          <span className="font-bold">{opt.text}</span>
+                          {showSuccess && (
+                            <div className="flex-shrink-0 bg-emerald-500 text-white px-2 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-tight flex items-center gap-1 shadow-sm">
+                              <CheckCircle2 size={10} />
+                              Solution
+                            </div>
+                          )}
+                        </div>
+                      </button>
+                    );
                 })}
               </div>
             </div>
@@ -828,19 +863,21 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
           {challenge.type === 'fill-in-blanks' && (
             <div className="space-y-10">
               <div className="bg-duo-swan/20 p-8 rounded-[2.5rem] border-2 border-duo-swan leading-loose text-xl text-duo-eel text-center font-bold">
-                {challenge.content?.[0]?.split(/\[\d+\]/).map((part, i, arr) => (
+                {challenge.content?.[0] ? challenge.content[0].split(/\[\d+\]/).map((part, i, arr) => (
                   <span key={i}>
                     {part}
                     {i < arr.length - 1 && (
                       <span className={cn(
-                        "inline-flex min-w-30 h-10 border-b-4 mx-2 rounded-t-lg transition-all px-3 font-black text-voyage-accent bg-white shadow-inner",
-                        blanksValues[String(i+1)] ? "border-voyage-accent text-voyage-accent" : "border-duo-swan text-transparent"
+                        "inline-flex items-center justify-center min-w-[120px] h-11 border-b-4 mx-1.5 rounded-xl transition-all px-4 font-black text-voyage-accent bg-white shadow-sm align-middle mb-1",
+                        blanksValues[String(i+1)] ? "border-voyage-accent text-voyage-accent" : "border-voyage-secondary/20 text-transparent"
                       )}>
-                        {blanksValues[String(i+1)] || "____"}
+                        {blanksValues[String(i+1)] || "...."}
                       </span>
                     )}
                   </span>
-                )) || "Contenu manquant."}
+                )) : (
+                  <div className="italic text-voyage-secondary/50">Prépare-toi à compléter ce texte...</div>
+                )}
               </div>
               <div className="flex flex-wrap gap-3 justify-center">
                 {normalizedOptions.map((opt) => {
@@ -920,7 +957,11 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                           "w-full p-4 rounded-2xl text-left text-sm font-black border-b-4 transition-all",
                           hoverDropId === dropId
                             ? "bg-voyage-accent/15 border-voyage-accent text-voyage-primary"
-                            : "bg-white border-duo-swan text-duo-eel"
+                            : showFeedback
+                              ? isCorrect() 
+                                ? "bg-emerald-50 border-emerald-400 text-emerald-700" 
+                                : "bg-red-50 border-red-400 text-red-700"
+                              : "bg-white border-duo-swan text-duo-eel"
                         )}
                       >
                         <div className="flex flex-col gap-1">
@@ -928,14 +969,26 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                           <span>{target}</span>
                           {linkedSourceTexts.length > 0 && (
                             <div className="mt-2 flex flex-col gap-1">
-                              {linkedSourceTexts.map((sourceText) => (
-                                <span
-                                  key={sourceText}
-                                  className="inline-flex w-fit px-2 py-1 rounded-full bg-voyage-primary/10 text-voyage-primary text-[10px] uppercase tracking-wide"
-                                >
-                                  {sourceText}
-                                </span>
-                              ))}
+                              {linkedSourceTexts.map((sourceText) => {
+                                const sourceIdx = matchingOptions.findIndex(o => o.text === sourceText);
+                                const isMatchCorrect = showFeedback && matchingOptions[sourceIdx]?.match === target;
+                                
+                                return (
+                                  <span
+                                    key={sourceText}
+                                    className={cn(
+                                      "inline-flex w-fit px-2 py-1 rounded-full text-[10px] uppercase tracking-wide border",
+                                      showFeedback
+                                        ? isMatchCorrect 
+                                          ? "bg-emerald-500 text-white border-emerald-600" 
+                                          : "bg-red-500 text-white border-red-600"
+                                        : "bg-voyage-primary/10 text-voyage-primary border-voyage-primary/20"
+                                    )}
+                                  >
+                                    {sourceText}
+                                  </span>
+                                );
+                              })}
                             </div>
                           )}
                         </div>
@@ -1275,7 +1328,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
               </button>
               <motion.button
                 disabled={!canConfirm()} whileTap={{ scale: 0.95 }} onClick={handleConfirm}
-                className={cn("grow text-xl py-5 font-black uppercase tracking-tight", canConfirm() ? "btn-voyage" : "bg-voyage-sand text-voyage-secondary/30 border-transparent cursor-not-allowed border-b-0")}
+                className={cn("grow text-xl py-5 font-black uppercase tracking-tight transition-all", canConfirm() ? "btn-voyage" : "bg-voyage-secondary/20 text-voyage-primary/30 border-voyage-secondary/10 cursor-not-allowed border-b-0")}
               >
                 Vérifier
               </motion.button>
