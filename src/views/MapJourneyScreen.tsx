@@ -7,7 +7,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   MapPin, Check, ChevronRight, X, Loader2, Lock,
-  Star, Sparkles, Navigation2, ArrowDown, CheckCircle2
+  Star, Sparkles, Navigation2, ArrowDown, CheckCircle2,
+  Book, Play
 } from 'lucide-react';
 import { type City } from '../types';
 import { cn } from '../lib/utils';
@@ -501,10 +502,13 @@ export default function MapJourneyScreen({
                           className="overflow-hidden p-3 space-y-6 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-sm"
                         >
                           {/* Brief Narratif */}
-                          <div className="space-y-1.5">
-                            <h5 className="text-[10px] font-black uppercase tracking-widest text-voyage-accent opacity-60">📖 Brief Narratif</h5>
-                            <p className="text-[#4E2510] text-sm leading-relaxed font-bold">
-                              {displayCity.description}
+                          <div className="space-y-2">
+                            <h5 className="text-xs font-black uppercase tracking-widest text-voyage-accent opacity-70 flex items-center gap-2">
+                               <Book size={12} />
+                               📖 Brief Narratif
+                            </h5>
+                            <p className="text-[#4E2510] text-lg leading-relaxed font-bold">
+                               {displayCity.description}
                             </p>
                           </div>
                         </motion.div>
@@ -518,12 +522,12 @@ export default function MapJourneyScreen({
                       <span>Progression</span>
                       <span>{displayCity.stepNum}/{displayCity.totalSteps} missions</span>
                     </div>
-                    <div className="h-2.5 w-full bg-white/20 rounded-full overflow-hidden border border-white/20">
+                    <div className="h-4 w-full bg-white/30 rounded-full overflow-hidden border-2 border-white/40 shadow-inner relative">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${(displayCity.stepNum / displayCity.totalSteps) * 100}%` }}
                         transition={{ duration: 0.8, ease: 'easeOut' }}
-                        className="h-full rounded-full"
+                        className="h-full rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]"
                         style={{ background: `linear-gradient(90deg, ${displayCityTheme.colorLight || displayCityTheme.color}, ${displayCityTheme.color})` }}
                       />
                     </div>
@@ -801,12 +805,12 @@ const CityNode: React.FC<{
           {city.arabicName}
         </p>
         {!isLocked && (
-          <div className="mt-1.5 w-20 h-1.5 bg-[#C9A96E]/15 rounded-full overflow-hidden border border-[#C9A96E]/20 mx-auto">
+          <div className="mt-2 w-24 h-3 bg-[#C9A96E]/15 rounded-full overflow-hidden border-2 border-[#C9A96E]/20 mx-auto shadow-inner">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${(isCompleted ? city.totalSteps : city.stepNum) / city.totalSteps * 100}%` }}
               transition={{ delay: 0.5, duration: 0.8, ease: 'easeOut' }}
-              className="h-full rounded-full"
+              className="h-full rounded-full shadow-lg"
               style={{ background: isCompleted ? 'linear-gradient(90deg, #D4A43E, #A87D28)' : 'linear-gradient(90deg, #A0572B, #7B3F1A)' }}
             />
           </div>

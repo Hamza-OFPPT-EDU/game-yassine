@@ -83,11 +83,17 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
           const totalSteps = cityMissions.length || 1;
           const completedInCity = cityMissions.filter(m => completedMissions.includes(m.id)).length;
           
-          const isCompleted = completedCities.includes(city.id);
+          const isFinished = completedInCity >= totalSteps && totalSteps > 0;
+          const isCompleted = completedCities.includes(city.id) || isFinished;
           let status: 'locked' | 'active' | 'completed' = isCompleted ? 'completed' : 'locked';
           
-          const firstIncomplete = (cityData || []).find(c => !completedCities.includes(c.id));
-          if (firstIncomplete && firstIncomplete.id === city.id) {
+          const firstIncomplete = (cityData || []).find(c => {
+            const cMissions = (missionData || []).filter(m => m.city_id === c.id);
+            const cTotal = cMissions.length || 1;
+            const cCompleted = cMissions.filter(m => completedMissions.includes(m.id)).length;
+            return !completedCities.includes(c.id) && cCompleted < cTotal;
+          });
+          if (!isCompleted && firstIncomplete && firstIncomplete.id === city.id) {
             status = 'active';
           }
 

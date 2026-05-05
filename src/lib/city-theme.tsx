@@ -14,11 +14,23 @@ import { type City } from '../types';
 export const optimizeSupabaseUrl = (url: string, width = 200, quality = 75) => {
   if (!url || typeof url !== 'string') return url;
   
-  // Only apply to Supabase storage URLs
+  // 1. Never optimize audio or video files
+  if (url.match(/\.(mp3|wav|ogg|m4a|mp4|webm|ogv)$/i)) {
+    return url;
+  }
+
+  // 2. Only apply to Supabase storage URLs for images
   if (url.includes('supabase.co/storage/v1/object/public/')) {
-    // Supabase Image Transformation requires a different path and query params
-    const transformed = url.replace('/object/public/', '/render/image/public/');
-    return `${transformed}?width=${width}&quality=${quality}`;
+    // If it's a gif, we might want to avoid transformation if it breaks animation
+    if (url.toLowerCase().endsWith('.gif')) return url;
+    
+    try {
+      // Supabase Image Transformation requires a different path and query params
+      const transformed = url.replace('/object/public/', '/render/image/public/');
+      return `${transformed}?width=${width}&quality=${quality}&format=auto`;
+    } catch (e) {
+      return url;
+    }
   }
   return url;
 };

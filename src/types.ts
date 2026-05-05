@@ -103,6 +103,7 @@ export type Challenge = {
   presentation_fr?: string;
   explanation_fr?: string;
   context_dialogue?: string;
+  illustration_url?: string;
   steps?: {
     question: string;
     responses: { id: string; text: string }[];

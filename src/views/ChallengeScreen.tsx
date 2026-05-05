@@ -645,13 +645,13 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
         </button>
         
         <div className="grow">
-          <div className="h-4 w-full bg-duo-swan rounded-full overflow-hidden border-2 border-duo-swan relative">
+          <div className="h-6 w-full bg-duo-swan rounded-full overflow-hidden border-2 border-duo-swan relative shadow-inner">
             <motion.div 
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
-              className="h-full bg-voyage-primary rounded-full shadow-lg relative"
+              className="h-full bg-voyage-primary rounded-full shadow-[0_0_15px_rgba(45,106,79,0.4)] relative"
             >
-               <div className="absolute top-0.5 left-1 right-1 h-1 bg-white/30 rounded-full" />
+               <div className="absolute top-0.5 left-1 right-1 h-1.5 bg-white/40 rounded-full" />
             </motion.div>
           </div>
         </div>
@@ -691,9 +691,9 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-voyage-accent/5 p-5 rounded-3xl border-2 border-voyage-accent/10 mb-6 shadow-sm"
+              className="bg-voyage-accent/10 p-6 rounded-[32px] border-2 border-voyage-accent/20 mb-6 shadow-md"
             >
-              <p className="text-base font-bold text-voyage-primary/90 leading-relaxed italic">
+              <p className="text-xl font-bold text-voyage-primary/95 leading-relaxed italic">
                 {challenge.content[0]}
               </p>
             </motion.div>
@@ -723,15 +723,31 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
               </div>
             </div>
           )}
+          {challenge.illustration_url && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="mb-8 rounded-[40px] overflow-hidden border-4 border-white shadow-2xl bg-white/50"
+            >
+              <img 
+                src={challenge.illustration_url} 
+                alt="Illustration" 
+                className="w-full h-auto max-h-[300px] object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+              />
+            </motion.div>
+          )}
 
-          <div className="space-y-3 text-center mb-8">
-            <h2 className="text-2xl font-black text-duo-eel leading-tight tracking-tight px-4">
+          <div className="space-y-4 text-center mb-10">
+            <h2 className="text-3xl font-black text-duo-eel leading-tight tracking-tight px-4">
               {challenge.type === 'scenario-cascade' && challenge.steps && challenge.steps[currentStepIdx] 
                 ? challenge.steps[currentStepIdx].question 
                 : challenge.question}
             </h2>
             {challenge.arabicQuestion && (
-              <h3 className="text-3xl font-bold text-voyage-accent leading-tight arabic-font" dir="rtl">
+              <h3 className="text-4xl font-bold text-voyage-accent leading-tight arabic-font" dir="rtl">
                 {challenge.arabicQuestion}
               </h3>
             )}
@@ -785,7 +801,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                       {displayLabel}
                     </div>
                     <span className={cn(
-                      "font-bold text-lg",
+                      "font-bold text-xl",
                       isSelected 
                         ? "text-voyage-primary" 
                         : showSuccess
