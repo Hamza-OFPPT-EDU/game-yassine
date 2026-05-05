@@ -62,7 +62,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
                 className="bg-black/30 backdrop-blur-xl border border-white/20 p-6 rounded-[24px] shadow-2xl max-w-[340px] mx-auto w-full flex flex-col items-center"
               >
                 <motion.img
-                  src={optimizeSupabaseUrl(PANEAU_URL, { width: 400 })}
+                  src={optimizeSupabaseUrl(PANEAU_URL, 400)}
                   alt="Panneau"
                   className="w-full h-auto mb-6 rounded-xl shadow-lg"
                   initial={{ scale: 0.9, opacity: 0 }}
