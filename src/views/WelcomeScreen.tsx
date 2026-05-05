@@ -14,6 +14,7 @@ interface WelcomeScreenProps {
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
+const PANEAU_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png';
 
 export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   const { playSound } = useAudio();
@@ -58,8 +59,16 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="bg-black/30 backdrop-blur-xl border border-white/20 p-6 rounded-[24px] shadow-2xl max-w-[340px] mx-auto w-full"
+                className="bg-black/30 backdrop-blur-xl border border-white/20 p-6 rounded-[24px] shadow-2xl max-w-[340px] mx-auto w-full flex flex-col items-center"
               >
+                <motion.img
+                  src={optimizeSupabaseUrl(PANEAU_URL, { width: 400 })}
+                  alt="Panneau"
+                  className="w-full h-auto mb-6 rounded-xl shadow-lg"
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                />
                 <p className="text-white/90 font-bold leading-relaxed text-[17px]">
                   Développe ton potentiel avec la famille Ben Ali à travers un parcours ludique au cœur du Maroc.
                 </p>

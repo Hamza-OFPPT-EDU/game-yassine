@@ -8,6 +8,7 @@ export const CORE_ASSETS = {
   images: [
     'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif',
     'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg',
+    'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png',
     // Cities (Legacy/Hardcoded fallbacks)
     'https://lh3.googleusercontent.com/aida-public/AB6AXuAam8RrX9i8jv1Ae0Fgass0NakYu4DYy4vs1TeTt8RaBSmEeyC7FlqOTU6HxzaXP5tiC-AB9Q7LKvspWZmXunG5o8cSITPFHp-ZSoTqbSAxCyDKscx5g10ainLsKtaETl0Li32nm3Yc08jBeE8UtVKDCSnOE3SLy5lx9QGg1jz29JjL9RGvQE7LwhO-UP-8nf9RDzsLjDfWMOmljJ4FEPCiJSMJSwtywAZJBIiw0luLvYb8IyPkK1JvG6DfNT-vRE97Da0qYcm23FQ',
     'https://lh3.googleusercontent.com/aida-public/AB6AXuDweOhzNui_6YLrqo-bO0jsnpz0r0vGT_8hDBJblWPy7NwHMaZYO2G_RSwZFkogPXigbBoxH-Z_iojYSblvEeCHT0cAKoBp83ZynjbewafML84nsCdMgflJ7zdwV5QvLbcp2CnzY3EEA-PgAZvIGuvnD_MNCeky6Jgirk4Xe-t8ey1mHkp6xTGLaMTvE8XW28GYk7rmJ8KmlWe9Jne33FTHGAHl-WKb8Ook68QpSTmgk6KGznyu2CC0nyD02Nk7xMCxp5alsOSDbyY',
