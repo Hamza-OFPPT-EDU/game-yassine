@@ -105,7 +105,7 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="max-w-lg space-y-6"
+          className="max-w-md space-y-6"
         >
           <div className="space-y-2">
             <h1 className="text-4xl font-headline font-black tracking-tight leading-tight italic">
@@ -118,7 +118,7 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
 
           <div className="relative group">
             <div className="absolute -inset-4 bg-white/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-            <p className="text-xl font-medium leading-relaxed text-slate-200">
+            <p className="text-sm font-medium leading-relaxed text-slate-200/90">
               {cinematicText}
             </p>
           </div>
