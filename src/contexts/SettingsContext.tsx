@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export type FontSize = 'small' | 'medium' | 'large' | 'extra-large';
+export type DisplayMode = 'light' | 'dark' | 'system';
+export type Language = 'fr' | 'ar';
 
 interface SettingsContextType {
   fontSize: FontSize;

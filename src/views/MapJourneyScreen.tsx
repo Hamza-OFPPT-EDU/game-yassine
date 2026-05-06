@@ -15,7 +15,7 @@ import TopAppBar from '../components/TopAppBar';
 import { useAudio } from '../hooks/useAudio';
 import { useSupabaseCities, useSupabaseMissions } from '../hooks/useSupabase';
 import { useAutoScroll } from '../hooks/useAutoScroll';
-import { getCityTheme, resolveCityIcon, optimizeSupabaseUrl } from '../lib/city-theme';
+import { getCityTheme, resolveCityIcon, optimizeSupabaseUrl, resolveAssetUrl } from '../lib/city-theme';
 
 // ── MapJourneyScreen ─────────────────────────────────────────────────────────
 
@@ -33,7 +33,8 @@ export default function MapJourneyScreen({
   const { cities, loading } = useSupabaseCities(completedCities, completedMissions);
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
   const [cinematicCity, setCinematicCity] = useState<City | null>(null);
-  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true);
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [isMissionsExpanded, setIsMissionsExpanded] = useState(false);
 
   // Refs pour scroll automatique
   const activeCityRef = useRef<HTMLDivElement | null>(null);
@@ -50,7 +51,8 @@ export default function MapJourneyScreen({
   const handleShowCitySheet = (city: City) => {
     playSound('whoosh');
     setSelectedCityId(city.id);
-    setIsDescriptionExpanded(true);
+    setIsDescriptionExpanded(false);
+    setIsMissionsExpanded(false);
   };
   const handleLaunchAdventure = (city: City) => {
     playSound('click');
@@ -734,7 +736,8 @@ const MissionsList: React.FC<{
 }> = ({
   city, completedMissions, cityTheme, onSelectMission
 }) => {
-    const { missions, loading } = useSupabaseMissions(city.id);
+    const { missions, loading } = useSupabaseMissions(city.id, completedMissions);
+    const { playSound } = useAudio();
 
     if (loading) return (
       <div className="flex flex-col items-center justify-center py-10 gap-3">
@@ -746,7 +749,8 @@ const MissionsList: React.FC<{
     return (
       <div className="space-y-3">
         {missions.length > 0 ? missions.map((mission, idx) => {
-          const isDone = completedMissions.includes(mission.id);
+          const isDone = mission.status === 'completed';
+          const isLocked = mission.status === 'locked';
           const themeColor = cityTheme?.color || '#7B3F1A';
           
           return (

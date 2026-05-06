@@ -32,16 +32,20 @@ export function useAuth() {
   return { session, loading };
 }
 
-function buildFallbackCities(completedCities: string[]): City[] {
+function buildFallbackCities(completedCities: string[], freeExploration: boolean = false): City[] {
   const firstIncompleteIndex = CITIES.findIndex((city) => !completedCities.includes(city.id));
 
   return CITIES.map((city, index) => {
     const isCompleted = completedCities.includes(city.id);
-    const status: City['status'] = isCompleted
+    let status: City['status'] = isCompleted
       ? 'completed'
       : firstIncompleteIndex === -1
         ? (index === CITIES.length - 1 ? 'active' : 'locked')
         : (index === firstIncompleteIndex ? 'active' : 'locked');
+
+    if (freeExploration && status === 'locked') {
+      status = 'active';
+    }
 
     return {
       ...city,
@@ -60,6 +64,16 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
     async function fetchData() {
       setLoading(true);
       try {
+        // Fetch global settings
+        const { data: globalSettings } = await supabase
+          .from('app_settings')
+          .select('value')
+          .eq('key', 'global_free_exploration')
+          .single();
+        
+        const isGlobalFreeExploration = globalSettings?.value === true || globalSettings?.value === 'true';
+        const effectiveFreeExploration = freeExploration || isGlobalFreeExploration;
+
         // Fetch cities
         const { data: cityData, error: cityError } = await supabase
           .from('challenges')
@@ -138,7 +152,7 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
       } catch (err) {
         console.error('Failed to link with database:', err);
         // We still keep the fallback only as a last resort to prevent app crash
-        setCities(buildFallbackCities(completedCities));
+        setCities(buildFallbackCities(completedCities, freeExploration));
       }
       setLoading(false);
     }
@@ -149,48 +163,36 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
   return { cities, loading };
 }
 
-export function useSupabaseMissions(cityId: string) {
+export function useSupabaseMissions(cityId: string, completedMissions: string[] = []) {
   const [missions, setMissions] = useState<Mission[]>([]);
   const [loading, setLoading] = useState(true);
+  const { freeExploration } = useSettings();
 
   useEffect(() => {
     async function fetchMissions() {
-      console.log('🔍 Fetching missions for cityId:', cityId);
+      // Fetch global settings
+      const { data: globalSettings } = await supabase
+        .from('app_settings')
+        .select('value')
+        .eq('key', 'global_free_exploration')
+        .single();
       
-      // DIAGNOSTIC: First, fetch ALL missions to see what city_id values exist
-      const { data: allMissions, error: allError } = await supabase
-        .from('missions')
-        .select('id, city_id, challenge_id, title_fr');
-      
-      if (!allError && allMissions) {
-        console.log('📊 ALL MISSIONS IN DATABASE:');
-        console.table(allMissions);
-        const uniqueCityIds = [...new Set(allMissions.map((m: any) => m.city_id))];
-        const uniqueChallengeIds = [...new Set(allMissions.map((m: any) => m.challenge_id))];
-        console.log('🏙️ Unique city_id values:', uniqueCityIds);
-        console.log('🎯 Unique challenge_id values:', uniqueChallengeIds);
-      }
-      
-      const isUUID = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+      const isGlobalFreeExploration = globalSettings?.value === true || globalSettings?.value === 'true';
+      const effectiveFreeExploration = freeExploration || isGlobalFreeExploration;
 
+      const isUUID = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
       let queryCityId = cityId;
       
-      // If it's not a UUID, try to find the real UUID from challenges table first
       if (!isUUID(cityId)) {
-        console.log('⚠️ cityId is not a UUID, attempting to resolve from challenges table:', cityId);
         const { data: cityData } = await supabase
           .from('challenges')
           .select('id')
           .or(`city_id.eq.${cityId},city_name_fr.ilike.${cityId}`)
           .single();
         
-        if (cityData) {
-          queryCityId = cityData.id;
-          console.log('✅ Resolved slug "' + cityId + '" to UUID:', queryCityId);
-        }
+        if (cityData) queryCityId = cityData.id;
       }
 
-      // Try fetching with city_id or challenge_id
       let { data, error } = await supabase
         .from('missions')
         .select('*')
@@ -199,13 +201,19 @@ export function useSupabaseMissions(cityId: string) {
 
       if (error) {
         console.error('❌ Error fetching missions:', error);
-        console.log('💾 Query details - Table: missions, Filter: city_id or challenge_id = "' + queryCityId + '"');
       } else {
-        console.log('✅ Missions fetched:', data?.length || 0, 'found');
-        console.log('📋 Missions data:', data);
-        
-        const mappedMissions = (data || []).map((m: any) => {
-          // Extract mentor info from JSONB profils if flat fields are empty
+        const mappedMissions = (data || []).map((m: any, index: number) => {
+          const isDone = completedMissions.includes(m.id);
+          
+          // Logic for linear mission progression
+          const firstIncompleteIndex = (data || []).findIndex((mission: any) => !completedMissions.includes(mission.id));
+          let status: Mission['status'] = isDone ? 'completed' : 
+                                          (index === firstIncompleteIndex ? 'active' : 'locked');
+          
+          if (effectiveFreeExploration && status === 'locked') {
+            status = 'active';
+          }
+
           let mentorName = m.mentor_name;
           let mentorRole = m.mentor_role;
           if (!mentorName && m.profils && m.profils.length > 0) {
@@ -213,7 +221,6 @@ export function useSupabaseMissions(cityId: string) {
             mentorRole = m.profils[0].profession;
           }
 
-          // Extract script_opening from narration JSONB if flat field is empty
           let scriptOpening = m.script_opening;
           if (!scriptOpening && m.narration?.intro?.texte) {
             scriptOpening = m.narration.intro.texte;
@@ -221,14 +228,11 @@ export function useSupabaseMissions(cityId: string) {
 
           return {
             ...m,
-            mission_type: m.mission_type,
+            status,
             xp_reward: m.xp_reward || 0,
             mentor_name: mentorName,
             mentor_role: mentorRole,
             script_opening: scriptOpening,
-            script_closing: m.script_closing,
-            soft_skill_dominant: m.soft_skill_dominant,
-            narration: m.narration,
             cinematic_text: m.cinematic_text,
             cinematic_gif_url: m.cinematic_gif_url,
             cinematic_audio_url: m.cinematic_audio_url
@@ -240,7 +244,7 @@ export function useSupabaseMissions(cityId: string) {
     }
 
     if (cityId) fetchMissions();
-  }, [cityId]);
+  }, [cityId, completedMissions, freeExploration]);
 
   return { missions, loading };
 }

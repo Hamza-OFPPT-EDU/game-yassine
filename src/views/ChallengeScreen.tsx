@@ -14,13 +14,14 @@ import {
   closestCenter,
 } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import { Lightbulb, TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw, SkipForward, Clapperboard, Check, Wind } from 'lucide-react';
-import { type City, type Challenge, type MissionCompletionSummary, type MissionQuestionResult, type Mission } from '../types';
+import { TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw, SkipForward, Clapperboard, Check, Wind } from 'lucide-react';
+import { type City, type Challenge, type MissionCompletionSummary, type MissionQuestionResult, type Mission, DEFAULT_AVATAR_URL } from '../types';
 import { cn } from '../lib/utils';
 import { useSupabaseQuestions } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
 import { useTimer } from '../hooks/useTimer';
 import { TimerBar } from '../components/TimerBar';
+import { resolveAssetUrl } from '../lib/city-theme';
 
 // Helper for dynamic theming based on exercise type
 const getThemeConfig = (type: string) => {
@@ -105,7 +106,6 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const [selectedMultiIds, setSelectedMultiIds] = useState<string[]>([]);
   
   const [showFeedback, setShowFeedback] = useState(false);
-  const [showHint, setShowHint] = useState(false);
   const [showCinematic, setShowCinematic] = useState(false);
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
   const [hoverDropId, setHoverDropId] = useState<string | null>(null);
@@ -199,7 +199,6 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
       setMatchingSelections({});
     }
     setShowFeedback(false);
-    setShowHint(false);
     setActiveDragId(null);
     setHoverDropId(null);
     hoverFeedbackRef.current = null;
@@ -681,6 +680,18 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
         "grow pt-40 pb-32 px-6 max-w-2xl mx-auto w-full relative z-10 overflow-y-auto scrollbar-hide",
         theme.layout === 'artistic' && "flex flex-col justify-center pt-32"
       )}>
+        {/* Fond atmosphérique dynamique */}
+        {(mission.title_fr?.toLowerCase().includes('hôpital') || mission.title_fr?.toLowerCase().includes('santé')) && (
+          <div className="fixed inset-0 z-0 opacity-20 pointer-events-none">
+            <img 
+              src={resolveAssetUrl('hospital_bg', '')} 
+              alt="Background" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
+          </div>
+        )}
+
         <div className="mb-8 space-y-4">
           <div className={cn("inline-flex items-center gap-2 px-3 py-1 rounded-full border transition-all", theme.bgClass, theme.borderColor)}>
              <span className={cn("shrink-0", theme.accentColor)}>{theme.icon}</span>
@@ -826,17 +837,24 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
           {challenge.type === 'scenario-dialogue' && (
             <div className="space-y-8 py-4">
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center shrink-0 border-2 border-amber-200 shadow-sm">
-                  <User className="text-amber-600" size={28} />
+                <div className="w-16 h-16 rounded-2xl bg-amber-100 flex items-center justify-center shrink-0 border-2 border-amber-200 shadow-md overflow-hidden p-1">
+                  <img 
+                    src={resolveAssetUrl(mission.mentor_name?.toLowerCase().includes('amina') ? 'dr_amina' : 'guide', DEFAULT_AVATAR_URL)} 
+                    alt={mission.mentor_name}
+                    className="w-full h-full object-cover rounded-xl"
+                  />
                 </div>
                 <div className="flex-1">
-                  <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1 block">Mentor</span>
+                  <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1 block">
+                    {mission.mentor_name || 'Mentor'}
+                  </span>
                   <div className="bg-white border-2 border-amber-200 p-5 rounded-2xl rounded-tl-none relative shadow-sm">
                     <div className="absolute -top-2 -left-2 w-4 h-4 bg-white border-t-2 border-l-2 border-amber-200 rotate-45" />
                     <p className="font-bold text-duo-eel leading-relaxed italic">"{challenge.context_dialogue || challenge.question}"</p>
                   </div>
                 </div>
               </div>
+
 
               <div className="space-y-3 pl-18">
                 <p className="text-[10px] font-black text-voyage-secondary uppercase tracking-widest mb-2 opacity-60">Ta réponse :</p>
@@ -1284,15 +1302,6 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
             </div>
           )}
 
-          {showHint && (
-            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="bg-voyage-accent/10 border-2 border-voyage-accent/30 p-6 rounded-4xl flex items-start gap-4">
-              <Lightbulb className="text-voyage-accent shrink-0" size={24} />
-              <div>
-                 <span className="text-[10px] font-black text-voyage-accent uppercase tracking-widest block mb-1">INDICE</span>
-                 <p className="text-voyage-primary font-bold italic">"{challenge.hint || "Rappelle-toi des leçons précédentes !"}"</p>
-              </div>
-            </motion.div>
-          )}
         </motion.div>
       </main>
 
@@ -1329,8 +1338,16 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                 )}
               </div>
             </div>
-            <div className="w-full max-w-2xl px-4">
-               <motion.button whileTap={{ scale: 0.95 }} onClick={handleNext} className={cn("w-full text-xl py-5 font-black uppercase tracking-tight", isCorrect() ? "btn-voyage-primary" : "bg-voyage-terracotta text-white border-b-4 border-voyage-terracotta-dark rounded-2xl")}>
+            <div className="w-full max-w-2xl px-4 flex gap-4">
+               <motion.button 
+                 whileTap={{ scale: 0.95 }} 
+                 onClick={() => { playSound('click'); handleReset(); }}
+                 className="p-5 bg-white/20 border-2 border-white/30 rounded-2xl text-white hover:bg-white/30 transition-colors border-b-4 shrink-0"
+                 title="Réinitialiser l'exercice"
+               >
+                 <RotateCcw size={24} />
+               </motion.button>
+               <motion.button whileTap={{ scale: 0.95 }} onClick={handleNext} className={cn("grow text-xl py-5 font-black uppercase tracking-tight", isCorrect() ? "btn-voyage-primary" : "bg-voyage-terracotta text-white border-b-4 border-voyage-terracotta-dark rounded-2xl")}>
                  {currentIdx === questions.length - 1 ? "VOIR LE RÉSULTAT" : "CONTINUER"}
                </motion.button>
             </div>
@@ -1338,8 +1355,8 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
         ) : (
           <footer className="fixed bottom-0 left-0 w-full z-40 bg-white border-t-[3px] border-voyage-secondary/20 p-6 pb-10 flex justify-center">
             <div className="w-full max-w-2xl flex items-center gap-4 px-4">
-              <button onClick={() => setShowHint(!showHint)} className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4">
-                <Lightbulb size={24} />
+              <button onClick={() => { playSound('click'); handleReset(); }} className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4 tooltip" title="Réinitialiser l'exercice">
+                <RotateCcw size={24} />
               </button>
               <button onClick={handleSkip} className="p-4 bg-voyage-accent/10 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/20 transition-colors border-b-4 tooltip" title="Passer cette question (0 points)">
                 <SkipForward size={24} />

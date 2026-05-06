@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, Play, Volume2, SkipForward, MapPin, Sparkles } from 'lucide-react';
 import { type City, type Mission } from '../types';
 import { useAudio } from '../hooks/useAudio';
-import { getCityTheme, optimizeSupabaseUrl } from '../lib/city-theme';
+import { getCityTheme, optimizeSupabaseUrl, resolveAssetUrl } from '../lib/city-theme';
 
 interface CinematicIntroScreenProps {
   city: City;
@@ -11,6 +11,8 @@ interface CinematicIntroScreenProps {
   onNext: () => void;
   onClose: () => void;
 }
+
+const PANEAU_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png';
 
 export default function CinematicIntroScreen({ city, mission, onNext, onClose }: CinematicIntroScreenProps) {
   const { playSound } = useAudio();
@@ -58,41 +60,75 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
   };
 
   return (
-    <div className="h-screen w-full bg-slate-950 text-white overflow-hidden flex flex-col relative">
-      {/* Background Ambience */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+    <div className="h-screen w-full bg-slate-950 text-white overflow-hidden flex flex-col relative font-sans">
+      {/* Background Ambience with subtle parallax-like scale */}
+      <motion.div 
+        initial={{ scale: 1.15, opacity: 0 }}
+        animate={{ scale: 1.05, opacity: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="absolute inset-0 z-0 overflow-hidden"
+      >
         <img 
           src={optimizeSupabaseUrl(city.image, 1080, 60)} 
-          className="w-full h-full object-cover opacity-20 blur-sm scale-110" 
+          className="w-full h-full object-cover opacity-30 blur-[2px]" 
           alt="" 
         />
-        <div className="absolute inset-0 bg-linear-to-b from-slate-950/80 via-transparent to-slate-950" />
-      </div>
+        <div className="absolute inset-0 bg-linear-to-b from-slate-950/90 via-slate-950/40 to-slate-950" />
+      </motion.div>
 
-      {/* Header */}
-      <header className="relative z-10 p-6 flex justify-between items-center">
-        <button 
-          onClick={() => { playSound('click'); onClose(); }}
-          className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors backdrop-blur-md"
-        >
-          <X size={24} />
-        </button>
+      {/* Header - Fixed */}
+      <header className="relative z-20 p-6 flex flex-col gap-4 items-center shrink-0">
+        <div className="w-full flex justify-between items-center">
+          <motion.button 
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            onClick={() => { playSound('click'); onClose(); }}
+            className="p-3 bg-white/10 hover:bg-white/20 rounded-2xl transition-all backdrop-blur-xl border border-white/10 shadow-lg"
+          >
+            <X size={22} />
+          </motion.button>
 
-        <div className="flex flex-col items-center">
-           <div className="flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full backdrop-blur-md border border-white/10">
-              <MapPin size={12} style={{ color: theme.color }} />
-              <span className="text-[10px] font-black uppercase tracking-widest">{city.name}</span>
-           </div>
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="h-[15vh] max-h-[120px]"
+          >
+            <img 
+              src={optimizeSupabaseUrl(PANEAU_URL, 800)} 
+              alt="Logo" 
+              className="h-full object-contain drop-shadow-lg" 
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+          >
+            {mission.cinematic_audio_url ? (
+              <button 
+                onClick={toggleAudio}
+                className="p-3 bg-white/10 hover:bg-white/20 rounded-2xl transition-all backdrop-blur-xl border border-white/10 shadow-lg"
+              >
+                {isAudioPlaying ? (
+                  <Volume2 size={22} className="text-voyage-accent animate-pulse" />
+                ) : (
+                  <Volume2 size={22} className="opacity-40" />
+                )}
+              </button>
+            ) : <div className="w-12" />}
+          </motion.div>
         </div>
 
-        {mission.cinematic_audio_url ? (
-          <button 
-            onClick={toggleAudio}
-            className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors backdrop-blur-md"
-          >
-            {isAudioPlaying ? <Volume2 size={24} className="text-voyage-accent" /> : <Volume2 size={24} className="opacity-40" />}
-          </button>
-        ) : <div className="w-10" />}
+        <motion.div 
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+           <div className="flex items-center gap-2 px-4 py-1 bg-white/10 rounded-full backdrop-blur-xl border border-white/20 shadow-inner">
+              <MapPin size={12} style={{ color: theme.color }} />
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">{city.name}</span>
+           </div>
+        </motion.div>
       </header>
 
       {/* Main Content */}
@@ -118,57 +154,101 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
           />
         </motion.div>
 
-        {/* Narrative Text */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="max-w-md space-y-6"
-        >
-          <div className="space-y-2">
-            <h1 className="text-4xl font-headline font-black tracking-tight leading-tight italic">
-              {mission.title_fr}
-            </h1>
-            <div className="flex justify-center">
-              <div className="h-1 w-16 bg-white/20 rounded-full" />
+          {/* Narrative Content Card */}
+          <motion.div
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="w-full space-y-8 flex flex-col items-center"
+          >
+            {/* Title Section */}
+            <div className="text-center space-y-4">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.6 }}
+                className="inline-block px-3 py-1 bg-voyage-accent/20 border border-voyage-accent/30 rounded-md mb-2"
+              >
+                <span className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.3em]">
+                  Mission de l'Acte I
+                </span>
+              </motion.div>
+              
+              <h1 className="text-3xl sm:text-4xl font-headline font-black tracking-tight leading-tight italic bg-clip-text text-transparent bg-linear-to-b from-white to-white/60 mb-2">
+                {mission.title_fr}
+              </h1>
+              
+              <motion.h2 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="arabic-font text-2xl font-black text-voyage-accent/80 mb-4"
+              >
+                مهمة جديدة في انتظارك
+              </motion.h2>
+              
+              <div className="flex justify-center">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: 80 }}
+                  transition={{ delay: 1, duration: 0.8 }}
+                  className="h-1 bg-voyage-accent rounded-full shadow-[0_0_15px_rgba(212,164,62,0.6)]" 
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="relative group">
-            <div className="absolute -inset-4 bg-white/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-            <p className="text-sm font-medium leading-relaxed text-slate-200/90">
-              {cinematicText}
-            </p>
-          </div>
-        </motion.div>
+
+            {/* Scrollable Text Area */}
+            <div className="relative w-full">
+              <div className="absolute -inset-6 bg-white/[0.03] backdrop-blur-md rounded-[40px] border border-white/5 shadow-2xl" />
+              
+              <div className="relative px-2 py-4">
+                <div className="max-h-[45vh] overflow-y-auto px-4 custom-scrollbar text-center">
+                  <p className="text-base sm:text-lg font-medium leading-[1.8] text-slate-100/90 tracking-wide drop-shadow-sm">
+                    {cinematicText}
+                  </p>
+                </div>
+                
+                {/* Scroll Indicator (only visible if content is scrollable) */}
+                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-30 animate-bounce">
+                  <SkipForward size={14} className="rotate-90 text-white" />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </main>
 
-      {/* Footer / CTA */}
-      <footer className="relative z-10 p-10 flex flex-col items-center gap-6">
+      {/* Footer / CTA - Fixed */}
+      <footer className="relative z-20 p-8 flex flex-col items-center gap-6 shrink-0 bg-linear-to-t from-slate-950 via-slate-950/80 to-transparent">
         <motion.button
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1.2 }}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05, boxShadow: "0 20px 50px rgba(255,255,255,0.4)" }}
           whileTap={{ scale: 0.95 }}
           onClick={() => { playSound('click'); onNext(); }}
-          className="group relative px-10 py-5 bg-white text-slate-950 rounded-full font-black text-xl uppercase tracking-wider flex items-center gap-3 shadow-[0_20px_40px_rgba(255,255,255,0.3)] hover:shadow-[0_20px_50px_rgba(255,255,255,0.4)] transition-all"
+          className="group relative px-12 py-5 bg-white text-slate-950 rounded-2xl font-black text-xl uppercase tracking-wider flex items-center gap-4 shadow-[0_15px_35px_rgba(255,255,255,0.25)] transition-all overflow-hidden"
         >
-          <span>Commencer la mission</span>
-          <Play size={24} className="group-hover:translate-x-1 transition-transform fill-current" />
+          <div className="absolute inset-0 bg-linear-to-r from-transparent via-slate-950/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+          <span className="relative z-10">C'est parti</span>
+          <Play size={24} className="relative z-10 group-hover:translate-x-1 transition-transform fill-current" />
         </motion.button>
 
-        <div className="flex items-center gap-2 text-white/40 text-[10px] font-black uppercase tracking-[0.2em]">
-          <Sparkles size={12} />
+        <div className="flex items-center gap-3 text-white/30 text-[10px] font-black uppercase tracking-[0.3em]">
+          <div className="h-px w-8 bg-white/10" />
+          <Sparkles size={12} className="text-voyage-accent" />
           <span>Le Voyage Commence</span>
+          <div className="h-px w-8 bg-white/10" />
         </div>
       </footer>
 
       {/* Particle Overlay */}
-      <div className="absolute inset-0 pointer-events-none opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full animate-pulse" />
-        <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-white rounded-full animate-pulse delay-700" />
-        <div className="absolute bottom-1/4 right-1/4 w-1 h-1 bg-white rounded-full animate-pulse delay-1000" />
+      <div className="absolute inset-0 pointer-events-none opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 bg-white rounded-full blur-[1px] animate-pulse" />
+        <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-white rounded-full blur-[1px] animate-pulse delay-300" />
+        <div className="absolute bottom-1/3 left-1/3 w-2 h-2 bg-white rounded-full blur-[2px] animate-pulse delay-700" />
+        <div className="absolute bottom-1/4 right-1/3 w-1 h-1 bg-white rounded-full blur-[1px] animate-pulse delay-1000" />
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import { motion } from 'motion/react';
 import { X, MoreVertical, MapPin, ArrowRight, User, BookOpen, Sparkles, Clapperboard } from 'lucide-react';
 import { type City, type Mission } from '../types';
 import { useAudio } from '../hooks/useAudio';
-import { getCityTheme, optimizeSupabaseUrl } from '../lib/city-theme';
+import { getCityTheme, optimizeSupabaseUrl, resolveCityIcon, resolveAssetUrl } from '../lib/city-theme';
 
 interface StoryScreenProps {
   city: City;
@@ -95,7 +95,9 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
             {/* Mission Type Badge */}
             <div className="flex justify-center">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-voyage-accent/10 rounded-full border-2 border-voyage-accent/20">
-                <BookOpen className="text-voyage-accent" size={14} />
+                <div className="text-voyage-accent">
+                  {resolveCityIcon(city, 14)}
+                </div>
                 <span className="font-headline font-black text-voyage-accent text-[10px] uppercase tracking-widest">
                   Mission {city.stepNum} • {city.name}
                 </span>

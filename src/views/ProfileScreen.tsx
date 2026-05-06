@@ -76,6 +76,7 @@ function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
 interface ProfileScreenProps {
   onBack: () => void;
   onSettings: () => void;
+  onShowBadges: () => void;
 }
 
 export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps) {
@@ -136,6 +137,7 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
       <TopAppBar stats={stats} title="Ton Profil" onBack={onBack} />
       
       <main className="flex-grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 max-w-2xl mx-auto w-full relative z-10 scrollbar-hide">
+
         
         {/* User Profile Card */}
         <section className="relative flex flex-col items-center text-center pt-8 pb-4">
@@ -197,6 +199,7 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
              </motion.div>
            ))}
         </section>
+
 
         {/* Progress Card */}
         <section className="relative overflow-hidden group">

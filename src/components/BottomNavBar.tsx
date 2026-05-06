@@ -58,5 +58,6 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
         );
       })}
     </nav>
+
   );
 }
