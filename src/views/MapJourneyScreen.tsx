@@ -264,8 +264,8 @@ export default function MapJourneyScreen({
           {/* Chemin SVG entre les villes */}
           <svg
             className="absolute inset-0 w-full pointer-events-none"
-            style={{ height: `${cities.length * 220}px` }}
-            viewBox={`0 0 320 ${cities.length * 220}`}
+            style={{ height: `${cities.length * 300}px` }}
+            viewBox={`0 0 320 ${cities.length * 300}`}
             preserveAspectRatio="xMidYMid meet"
           >
             {/* Chemin Principal (Dashed) */}
@@ -273,18 +273,29 @@ export default function MapJourneyScreen({
               d={buildPath(cities, 320)}
               fill="none"
               stroke="#D4A43E"
-              strokeWidth="4"
-              strokeOpacity="0.25"
+              strokeWidth="24"
+              strokeOpacity="0.4"
               strokeLinecap="round"
-              strokeDasharray="8 12"
+              strokeDasharray="48 64"
               className="path-dashed"
-            />
+              style={{
+                filter: 'drop-shadow(0 0 8px rgba(212, 164, 62, 0.3))'
+              }}
+            >
+              <animate
+                attributeName="stroke-dashoffset"
+                from="100"
+                to="0"
+                dur="10s"
+                repeatCount="indefinite"
+              />
+            </path>
             {/* Ligne de contour très fine pour l'effet "tracé" */}
             <path
               d={buildPath(cities, 320)}
               fill="none"
               stroke="#7B3F1A"
-              strokeWidth="1.5"
+              strokeWidth="6"
               strokeOpacity="0.1"
               strokeLinecap="round"
             />
@@ -298,7 +309,7 @@ export default function MapJourneyScreen({
             {cities.map((city, index) => (
               <div
                 key={city.id}
-                style={{ marginBottom: index < cities.length - 1 ? '140px' : 0 }}
+                style={{ marginBottom: index < cities.length - 1 ? '220px' : 0 }}
                 ref={city.status === 'active' ? activeCityRef : null}
               >
                 <CityNode
@@ -485,21 +496,31 @@ function buildPath(cities: City[], width: number): string {
   const cx = width / 2;
   const sorted = [...cities].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
 
+  // The distance between centers of cities in the SVG
+  // This should match the visual height of (Node + Margin)
+  // Node height is ~128px, Margin is 220px. Total ~348px.
+  // But let's use a consistent scale factor that matches our SVG viewBox height.
+  const stepY = 300; 
+  const startY = (sorted.length - 1) * stepY + 150; // Bottom city y
+
   let d = '';
   sorted.forEach((city, idx) => {
     const x = cx + ((city.map_x || 0) * width) / 100;
-    const y = city.map_y || 0;
+    // Calculate y based on index to match flex-col-reverse
+    // Cities[0] is at the bottom, so its y is largest.
+    const y = startY - (idx * stepY);
 
     if (idx === 0) {
       d += `M ${x} ${y}`;
     } else {
       const prev = sorted[idx - 1];
       const prevX = cx + ((prev.map_x || 0) * width) / 100;
-      const prevY = prev.map_y || 0;
+      const prevY = startY - ((idx - 1) * stepY);
       
       const midY = (prevY + y) / 2;
-      // Bezier curve for smooth non-linear path
-      d += ` C ${prevX} ${midY}, ${x} ${midY}, ${x} ${y}`;
+      // Wavy Bezier curve effect
+      const waveOffset = idx % 2 === 0 ? 45 : -45;
+      d += ` C ${prevX + waveOffset} ${midY}, ${x - waveOffset} ${midY}, ${x} ${y}`;
     }
   });
   return d;

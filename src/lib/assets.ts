@@ -3,7 +3,7 @@ import { type Asset } from '../hooks/useAssetPreloader';
 
 export const CORE_ASSETS = {
   videos: [
-    '/assets/splash_video.mp4',
+    'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4',
   ],
   images: [
     '/assets/guide_voyage.gif',

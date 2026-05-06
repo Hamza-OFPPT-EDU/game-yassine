@@ -29,11 +29,18 @@ export const optimizeSupabaseUrl = (url: string, width = 200, quality = 75) => {
     }
     
     // For images/gifs, redirect to local placeholders if they are known to be missing or problematic
-    const name = decodedName === 'paneau.png' ? 'panel.png' : 
-                 decodedName === 'Guide de voayage.gif' ? 'guide_voyage.gif' : 
-                 decodedName === 'avatar-map-user.jpg' ? 'avatar_user.jpg' : 
-                 decodedName === 'fallback-city.jpg' ? 'fallback_city.jpg' : decodedName;
-    return `/assets/${name}`;
+    const legacyAssets: Record<string, string> = {
+      'paneau.png': 'panel.png',
+      'Guide de voayage.gif': 'guide_voyage.gif',
+      'avatar-map-user.jpg': 'avatar_user.jpg',
+      'fallback-city.jpg': 'fallback_city.jpg'
+    };
+
+    if (legacyAssets[decodedName]) {
+      return `/assets/${legacyAssets[decodedName]}`;
+    }
+    
+    // Otherwise, let it through to normal optimization
   }
 
   // 1. Never optimize audio or video files
@@ -88,8 +95,8 @@ export const getCityTheme = (city: City | null) => {
 export const resolveCityIcon = (city: City, size = 72, className = "") => {
   const iconName = city.iconName || '';
   
-  // 1. Image URLs
-  if (iconName.startsWith('http') && !iconName.includes('rydmefudpczpxrresflx.supabase.co')) {
+  // 1. Image URLs (Custom uploads or external links)
+  if (iconName.startsWith('http')) {
     // Apply Supabase optimization if it's a Supabase URL
     const optimizedUrl = optimizeSupabaseUrl(iconName, size * 2, 75);
     return <img src={optimizedUrl} style={{ width: size, height: size, objectFit: 'contain' }} className={className} alt="icon" />;

@@ -150,14 +150,34 @@ export default function MapEditorPage() {
                   <>
                     <div className="edit-fields">
                       <div className="field"><label>ID Technique</label><input value={formData.city_id} onChange={e => setFormData({...formData, city_id: e.target.value})} /></div>
-                      <div className="field full-field"><label>Icône</label>
-                        <div className="icon-grid">
+                      <div className="field full-field">
+                        <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          Icône 
+                          <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Choisissez un preset ou uploadez une image</span>
+                        </label>
+                        <div className="icon-grid" style={{ marginBottom: '16px' }}>
                           {ICON_OPTIONS.map(opt => (
                             <div key={opt.value} className={`icon-option ${formData.icon_name === opt.value ? 'selected' : ''}`} onClick={() => setFormData({...formData, icon_name: opt.value})}>
                               <div className="icon-preview-circle"><span className="emoji-icon">{opt.emoji}</span></div>
                               <span>{opt.label}</span>
                             </div>
                           ))}
+                        </div>
+                        
+                        <div className="custom-icon-upload" style={{ 
+                          padding: '16px', 
+                          background: 'rgba(255,255,255,0.03)', 
+                          borderRadius: '12px',
+                          border: '1px solid var(--border-light)'
+                        }}>
+                          <label style={{ fontSize: '11px', fontWeight: 'bold', marginBottom: '8px', display: 'block', color: 'var(--primary-light)' }}>
+                            <ImageIcon size={12} style={{ marginRight: '6px' }} /> Icône personnalisée (Upload ou Lien)
+                          </label>
+                          <ImageUploader 
+                            value={formData.icon_name?.startsWith('http') ? formData.icon_name : ''} 
+                            onChange={(url) => setFormData({...formData, icon_name: url})}
+                            folder={`city-icons/${formData.city_id || 'new'}`}
+                          />
                         </div>
                       </div>
                       <div className="field"><label>Couleur</label><input type="color" value={formData.city_color || '#735c00'} onChange={e => setFormData({...formData, city_color: e.target.value})} /></div>

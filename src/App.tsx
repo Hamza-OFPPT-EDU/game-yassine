@@ -40,8 +40,8 @@ export default function App() {
   const [loadingMissions, setLoadingMissions] = useState(false);
   const [missionSummary, setMissionSummary] = useState<MissionCompletionSummary | null>(null);
   const [redoQuestionIds, setRedoQuestionIds] = useState<string[] | undefined>(undefined);
-  const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(false);
-  const [fullscreenShownOnce, setFullscreenShownOnce] = useState(true);
+  const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(true);
+  const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
   
   const { session, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
@@ -57,13 +57,17 @@ export default function App() {
 
   useEffect(() => {
     async function loadInitialAssets() {
-      // Load core assets + assets for the first city (Rabat)
-      const firstCityId = 'rabat'; 
-      const cityAssets = await fetchDynamicAssets(firstCityId);
-      const missionAssets = await fetchCityMissionAssets(firstCityId);
-      
-      setDynamicAssets([...cityAssets, ...missionAssets]);
-      setLoadedCities([firstCityId]);
+      // Load core assets + all city icons + assets for the first city (Rabat)
+      const firstCityId = 'Rabat'; 
+      try {
+        const allCitiesAssets = await fetchDynamicAssets(); // Fetches all city icons/illustrations
+        const rabatMissionAssets = await fetchCityMissionAssets(firstCityId);
+        
+        setDynamicAssets([...allCitiesAssets, ...rabatMissionAssets]);
+        setLoadedCities([firstCityId]);
+      } catch (err) {
+        console.error('Failed to load initial Rabat assets:', err);
+      }
     }
     loadInitialAssets();
   }, []);
@@ -386,7 +390,7 @@ export default function App() {
 
   return (
     <AudioProvider>
-      <div className="relative h-screen w-full bg-white overflow-hidden flex flex-col font-sans select-none touch-none">
+      <div className="relative h-screen w-full bg-black overflow-hidden flex flex-col font-sans select-none touch-none">
         <div className="grow overflow-hidden relative">
           <AnimatePresence mode="wait">
             <motion.div
