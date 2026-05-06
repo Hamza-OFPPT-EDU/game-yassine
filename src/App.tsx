@@ -314,6 +314,7 @@ export default function App() {
       case Screen.Welcome:
         return <WelcomeScreen 
           onStart={handleDemoLogin} 
+          onLogin={() => setCurrentScreen(Screen.Login)}
         />;
       case Screen.Login:
         return <LoginScreen 

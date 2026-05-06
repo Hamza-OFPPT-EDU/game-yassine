@@ -10,11 +10,12 @@ import { useAudio } from '../hooks/useAudio';
 
 interface WelcomeScreenProps {
   onStart: () => void;
+  onLogin: () => void;
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
-export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
+export default function WelcomeScreen({ onStart, onLogin }: WelcomeScreenProps) {
   const { playSound } = useAudio();
   const [showContent, setShowContent] = useState(false);
 
@@ -97,7 +98,10 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.6 }}
-                onClick={() => playSound('click')}
+                onClick={() => {
+                  playSound('click');
+                  onLogin();
+                }}
                 className="w-full py-4 bg-transparent border-2 border-white/20 backdrop-blur-sm rounded-2xl text-white font-black uppercase tracking-tight hover:bg-white/10 transition-all shadow-lg"
               >
                 Se connecter
