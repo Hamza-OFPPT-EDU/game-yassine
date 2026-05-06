@@ -587,7 +587,7 @@ const CityNode: React.FC<{
             {city.iconName ? (
               city.iconName.startsWith('http') ? (
                 <img 
-                  src={resolveAssetUrl(city.iconName)} 
+                  src={resolveAssetUrl(city.iconName, '')} 
                   alt={city.name}
                   className={cn(
                     "w-full h-full object-contain transition-transform duration-500 group-hover:scale-110",
