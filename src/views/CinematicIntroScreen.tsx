@@ -18,9 +18,21 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [audioObj, setAudioObj] = useState<HTMLAudioElement | null>(null);
 
-  // Default GIF if none provided
-  const cinematicGif = optimizeSupabaseUrl(mission.cinematic_gif_url || "/assets/intro_caracter.gif", 500, 70);
+  // Default GIF if none provided (checking multiple field names for robustness)
+  const rawGifUrl = mission.cinematic_gif_url || 
+                    (mission as any).cinematic_gif || 
+                    (mission as any).cinematic_character || 
+                    city.cinematicCharacter || 
+                    (city as any).cinematic_character ||
+                    "/assets/intro_caracter.gif";
+                    
+  const cinematicGif = optimizeSupabaseUrl(rawGifUrl, 500, 70);
   const cinematicText = mission.cinematic_text || mission.description_fr || "Préparez-vous pour une nouvelle aventure passionnante !";
+
+  useEffect(() => {
+    console.log("🎬 CinematicIntroScreen mounted for mission:", mission.title_fr);
+    console.log("🖼️ GIF URL resolved to:", cinematicGif);
+  }, [mission.id, cinematicGif]);
 
   useEffect(() => {
     // Auto-play cinematic audio if provided
@@ -94,9 +106,15 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
         >
           <div className="absolute inset-0 bg-white/5 rounded-full blur-3xl" />
           <img 
+            key={mission.id}
             src={cinematicGif} 
             alt="Guide" 
             className="w-64 h-64 object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(255,255,255,0.2)]" 
+            referrerPolicy="no-referrer"
+            onError={(e) => {
+              console.warn("Cinematic GIF load failed, using fallback");
+              e.currentTarget.src = "/assets/intro_caracter.gif";
+            }}
           />
         </motion.div>
 

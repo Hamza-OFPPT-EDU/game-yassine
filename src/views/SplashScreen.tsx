@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Map, Star, Loader2, Sparkles } from 'lucide-react';
 import { useAssetPreloader, type Asset } from '../hooks/useAssetPreloader';
@@ -15,6 +15,8 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
   const [videoStage, setVideoStage] = useState<'video' | 'ui'>('video');
   const assetsToPreload = useMemo(() => getAllAssets(extraAssets), [extraAssets]);
   const { progress, isComplete } = useAssetPreloader(assetsToPreload);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     // Show video for 4 seconds
@@ -48,14 +50,70 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
             className="absolute inset-0 z-50 bg-black flex items-center justify-center"
           >
             <video
+              ref={videoRef}
               autoPlay
               muted
               playsInline
               className="w-full h-full object-cover"
+              onEnded={() => setVideoStage('ui')}
             >
               <source src={SPLASH_VIDEO_URL} type="video/mp4" />
             </video>
             
+            {/* Premium Interaction Block for Fullscreen Request */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              id="fs-block"
+              className="absolute inset-0 flex items-center justify-center z-60 bg-[#0f172a]"
+            >
+               {/* Background Glow */}
+               <div className="absolute w-[500px] h-[500px] bg-[#D4A43E]/10 rounded-full blur-[120px] animate-pulse" />
+               
+               <div className="relative flex flex-col items-center gap-12 px-8 py-16 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[40px] shadow-2xl max-w-[320px] w-full text-center">
+                  {/* Decorative Sparkles */}
+                  <div className="absolute -top-6 -right-6 w-12 h-12 bg-[#D4A43E] rounded-2xl flex items-center justify-center shadow-lg rotate-12">
+                    <Sparkles className="text-white" size={24} fill="currentColor" />
+                  </div>
+
+                  {/* Icon/Logo Placeholder in Block */}
+                  <div className="w-24 h-24 rounded-3xl bg-white flex items-center justify-center shadow-xl border-4 border-[#E5D5B8]">
+                    <Map className="text-[#7B3F1A]" size={48} strokeWidth={2.5} />
+                  </div>
+
+                  <div className="space-y-3">
+                    <h2 className="text-xl font-black text-white uppercase tracking-tighter">
+                      Le Voyage des <span className="text-[#D4A43E]">Soft Skills</span>
+                    </h2>
+                    <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] italic">
+                      Préparez-vous pour l'aventure
+                    </p>
+                  </div>
+
+                  <button 
+                    onClick={() => {
+                      if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen().catch(e => console.warn(e));
+                      }
+                      // Start video and hide block
+                      if (videoRef.current) {
+                        videoRef.current.play().catch(e => console.warn("Video play failed:", e));
+                      }
+                      const block = document.getElementById('fs-block');
+                      if (block) block.style.display = 'none';
+                    }}
+                    className="group relative overflow-hidden w-full bg-gradient-to-br from-[#D4A43E] to-[#7B3F1A] text-white py-5 rounded-2xl font-black text-lg uppercase tracking-widest shadow-xl shadow-[#7B3F1A]/20 transition-all active:scale-95"
+                  >
+                    <motion.div
+                      animate={{ x: ['-100%', '200%'] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                    />
+                    Explorer
+                  </button>
+               </div>
+            </motion.div>
+
             {/* Subtle Skip/Wait hint */}
             <motion.div 
               initial={{ opacity: 0 }}
@@ -105,7 +163,7 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
                 damping: 20,
                 delay: 0.2
               }}
-              className="relative w-44 h-44 mb-10 flex items-center justify-center"
+              className="relative w-36 h-36 mb-8 flex items-center justify-center"
             >
               {/* Pulsing rings */}
               {[...Array(3)].map((_, i) => (
@@ -125,12 +183,12 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
                 />
               ))}
 
-              <div className="w-36 h-36 rounded-[40px] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex items-center justify-center relative border-4 border-[#E5D5B8] overflow-hidden group">
+              <div className="w-28 h-28 rounded-[32px] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex items-center justify-center relative border-4 border-[#E5D5B8] overflow-hidden group">
                 <motion.div
                   animate={{ rotate: [0, 5, -5, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <Map className="text-[#7B3F1A]" size={72} strokeWidth={2.5} />
+                  <Map className="text-[#7B3F1A]" size={56} strokeWidth={2.5} />
                 </motion.div>
                 
                 {/* Shine effect */}
@@ -145,28 +203,28 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.8, type: "spring" }}
-                className="absolute -top-2 -right-2 w-12 h-12 rounded-2xl bg-[#D4A43E] flex items-center justify-center shadow-lg border-b-4 border-[#B58B60]"
+                className="absolute -top-1 -right-1 w-10 h-10 rounded-xl bg-[#D4A43E] flex items-center justify-center shadow-lg border-b-4 border-[#B58B60]"
               >
-                <Sparkles className="text-white" size={24} fill="currentColor" />
+                <Sparkles className="text-white" size={20} fill="currentColor" />
               </motion.div>
             </motion.div>
 
-            {/* Title & Slogan Animation */}
-            <div className="space-y-6 mb-16 relative z-10 w-full">
+            {/* Title & Slogan Animation - Reduced by 30% */}
+            <div className="space-y-4 mb-12 relative z-10 w-full">
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="space-y-2 text-center"
+                className="space-y-1.5 text-center"
               >
-                <h1 className="font-headline font-black text-[25px] text-[#4E2510] tracking-tight">
+                <h1 className="font-headline font-black text-[18px] text-[#4E2510] tracking-tight">
                   Le Voyage des <span className="text-[#D4A43E]">Soft Skills</span>
                 </h1>
                 <motion.p 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6 }}
-                  className="text-[17px] font-black text-[#7B3F1A] arabic-font" 
+                  className="text-[12px] font-black text-[#7B3F1A] arabic-font" 
                   dir="rtl"
                 >
                   رحلة المهارات الناعمة
@@ -177,7 +235,7 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="h-1 w-24 bg-gradient-to-r from-transparent via-[#D4A43E] to-transparent mx-auto"
+                className="h-1 w-16 bg-gradient-to-r from-transparent via-[#D4A43E] to-transparent mx-auto"
               />
             </div>
 

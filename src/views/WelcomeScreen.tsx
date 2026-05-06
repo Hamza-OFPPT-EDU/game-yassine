@@ -76,22 +76,22 @@ export default function WelcomeScreen({ onDemo, onLogin, onRegister }: WelcomeSc
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="relative z-10 h-full w-full flex flex-col pt-[30px] pb-[30px]"
+            className="relative z-10 h-full w-full flex flex-col justify-between pt-[30px] pb-[30px]"
           >
-            {/* Hero section with Logo Image */}
-            <section className="relative w-full shrink-0 flex flex-col items-center justify-center px-6 pt-10 pb-2">
+            {/* Hero section with Logo Image - Reduced top padding and scale */}
+            <section className="relative w-full shrink-0 flex flex-col items-center justify-center px-6 pt-2 pb-2">
               <motion.img
                 initial={{ scale: 0.8, y: -20, opacity: 0 }}
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 transition={{ delay: 0.1, type: "spring", stiffness: 120, damping: 20 }}
                 src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau%20(2).png"
                 alt="Le Voyage des Compétences"
-                className="w-full max-w-[320px] object-contain drop-shadow-2xl"
+                className="w-full max-w-[280px] object-contain drop-shadow-2xl"
               />
             </section>
 
             {/* Content (Glassmorphic block) */}
-            <main className="flex-grow flex flex-col items-center justify-center px-3 text-center">
+            <main className="flex flex-col items-center justify-center px-3 text-center">
               <motion.div
                 initial={{ y: 30, opacity: 0, scale: 0.9 }}
                 animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -99,17 +99,17 @@ export default function WelcomeScreen({ onDemo, onLogin, onRegister }: WelcomeSc
                 className="relative group"
               >
                 <div className="absolute inset-0 bg-[#D4A43E]/10 blur-3xl rounded-full opacity-50 group-hover:opacity-80 transition-opacity" />
-                <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 p-6 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] max-w-[300px] mx-auto w-full">
+                <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 p-6 rounded-[28px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] max-w-[300px] mx-auto w-full">
                   <div className="w-10 h-0.5 bg-gradient-to-r from-transparent via-[#D4A43E] to-transparent mx-auto mb-4 opacity-60" />
-                  <p className="text-white/90 font-medium leading-relaxed text-[14px] italic">
+                  <p className="text-white/90 font-medium leading-relaxed text-[13px] italic">
                     "Accompagne la <span className="text-[#D4A43E] font-black">famille Ben Ali</span> dans une aventure épique à travers les joyaux du Maroc."
                   </p>
                 </div>
               </motion.div>
             </main>
 
-            {/* Buttons (Glassmorphic) */}
-            <section className="px-8 pb-8 pt-4 space-y-3 w-full max-w-md mx-auto shrink-0">
+            {/* Buttons (Glassmorphic) - Reduced spacing */}
+            <section className="px-8 pb-4 pt-2 space-y-3 w-full max-w-md mx-auto shrink-0">
               <motion.button
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -120,7 +120,7 @@ export default function WelcomeScreen({ onDemo, onLogin, onRegister }: WelcomeSc
                   playSound('click');
                   onDemo();
                 }}
-                className="relative overflow-hidden w-full bg-gradient-to-br from-[#D4A43E] to-[#7B3F1A] text-white text-[16px] py-4 rounded-[20px] font-black flex items-center justify-center gap-3 shadow-[0_12px_25px_rgba(123,63,26,0.4)] border border-white/20 transition-all"
+                className="relative overflow-hidden w-full bg-gradient-to-br from-[#D4A43E] to-[#7B3F1A] text-white text-[15px] py-4 rounded-[18px] font-black flex items-center justify-center gap-2 shadow-[0_12px_25px_rgba(123,63,26,0.4)] border border-white/20 transition-all"
               >
                 <motion.div
                   animate={{ x: ['-100%', '200%'] }}
@@ -131,7 +131,7 @@ export default function WelcomeScreen({ onDemo, onLogin, onRegister }: WelcomeSc
                 <ArrowRight size={20} strokeWidth={3} className="relative z-10" />
               </motion.button>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <motion.button
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -140,7 +140,7 @@ export default function WelcomeScreen({ onDemo, onLogin, onRegister }: WelcomeSc
                     playSound('click');
                     onLogin();
                   }}
-                  className="py-3.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-[18px] text-white font-bold uppercase tracking-widest text-[10px] hover:bg-white/20 transition-all"
+                  className="py-3.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-[16px] text-white font-bold uppercase tracking-widest text-[10px] hover:bg-white/20 transition-all"
                 >
                   Connexion
                 </motion.button>
@@ -152,7 +152,7 @@ export default function WelcomeScreen({ onDemo, onLogin, onRegister }: WelcomeSc
                     playSound('click');
                     onRegister();
                   }}
-                  className="py-3.5 bg-[#D4A43E]/20 backdrop-blur-md border border-[#D4A43E]/30 rounded-[18px] text-[#D4A43E] font-black uppercase tracking-widest text-[10px] hover:bg-[#D4A43E]/30 transition-all"
+                  className="py-3.5 bg-[#D4A43E]/20 backdrop-blur-md border border-[#D4A43E]/30 rounded-[16px] text-[#D4A43E] font-black uppercase tracking-widest text-[10px] hover:bg-[#D4A43E]/30 transition-all"
                 >
                   S'inscrire
                 </motion.button>
