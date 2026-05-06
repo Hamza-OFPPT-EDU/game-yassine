@@ -313,9 +313,7 @@ export default function App() {
         return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} />;
       case Screen.Welcome:
         return <WelcomeScreen 
-          onDemo={handleDemoLogin} 
-          onLogin={() => setCurrentScreen(Screen.Login)}
-          onRegister={() => setCurrentScreen(Screen.Register)}
+          onStart={handleDemoLogin} 
         />;
       case Screen.Login:
         return <LoginScreen 

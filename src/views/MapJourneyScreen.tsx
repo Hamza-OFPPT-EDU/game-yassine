@@ -70,7 +70,7 @@ export default function MapJourneyScreen({
   // Hook pour jouer la voix de Rabat automatiquement
   useEffect(() => {
     if (cinematicCity && cinematicCity.name === 'Rabat') {
-      const audio = new Audio('/audio/rabat_intro_voice.mp3');
+      const audio = new Audio('https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/rabat_intro_voice.mp3');
       audio.play().catch(err => console.log('Audio playback prevented:', err));
       return () => {
         audio.pause();
