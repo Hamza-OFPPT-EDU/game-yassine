@@ -31,7 +31,7 @@ const getThemeConfig = (type: string) => {
     return {
       category: 'Histoire',
       icon: <Clapperboard size={16} />,
-      bgClass: 'bg-amber-50/50',
+      bgClass: 'bg-amber-50',
       accentColor: 'text-amber-600',
       borderColor: 'border-amber-200',
       gradient: 'from-amber-50 to-orange-50',
@@ -44,7 +44,7 @@ const getThemeConfig = (type: string) => {
     return {
       category: 'Atelier',
       icon: <Sparkles size={16} />,
-      bgClass: 'bg-teal-50/50',
+      bgClass: 'bg-teal-50',
       accentColor: 'text-teal-600',
       borderColor: 'border-teal-200',
       gradient: 'from-teal-50 to-emerald-50',
@@ -57,7 +57,7 @@ const getThemeConfig = (type: string) => {
     return {
       category: 'Mise en Situation',
       icon: <LayoutGrid size={16} />,
-      bgClass: 'bg-blue-50/50',
+      bgClass: 'bg-blue-50',
       accentColor: 'text-blue-600',
       borderColor: 'border-blue-200',
       gradient: 'from-blue-50 to-indigo-50',
@@ -69,7 +69,7 @@ const getThemeConfig = (type: string) => {
   return {
     category: 'Défi',
     icon: <Compass size={16} />,
-    bgClass: 'bg-voyage-sand/10',
+    bgClass: 'bg-white',
     accentColor: 'text-voyage-accent',
     borderColor: 'border-voyage-secondary/20',
     gradient: 'from-white to-voyage-sand/10',
@@ -618,7 +618,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   return (
     <div className={cn("h-full w-full flex flex-col relative overflow-hidden transition-colors duration-500", theme.bgClass)}>
       {/* Dynamic Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
         {theme.pattern === 'grid' && (
           <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
         )}
@@ -626,10 +626,10 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
           <div className="absolute inset-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 0h20v20H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20zm20-20h20v20H20V0z\' fill=\'%23000\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")', backgroundSize: '40px 40px' }} />
         )}
         {theme.pattern === 'parchment' && (
-          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#8B4513 0.5px, transparent 0.5px)', backgroundSize: '30px 30px' }} />
+          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#8B4513 0.5px, transparent 0.5px)', backgroundSize: '30px 30px' }} />
         )}
         {theme.pattern === 'dots' && (
-          <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+          <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(#000 0.5px, transparent 0.5px)', backgroundSize: '20px 20px' }} />
         )}
       </div>
       <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b-[3px] border-duo-swan px-6 py-4 flex items-center gap-6">
@@ -638,11 +638,11 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
         </button>
 
         <button 
-          onClick={() => { playSound('click'); setShowCinematic(true); }}
+          onClick={() => { playSound('click'); handleReset(); }}
           className="p-2 hover:bg-duo-swan rounded-xl transition-colors shrink-0"
-          title="Contexte de la mission"
+          title="Réinitialiser l'exercice"
         >
-          <Clapperboard size={22} className="text-voyage-primary" />
+          <RotateCcw size={22} className="text-voyage-primary" />
         </button>
         
         <div className="grow">
@@ -1379,7 +1379,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-md"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm"
             onClick={() => setShowCinematic(false)}
           >
             <motion.div

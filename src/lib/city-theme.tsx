@@ -123,7 +123,21 @@ export const resolveCityIcon = (city: City, size = 72, className = "") => {
   if (iconName.startsWith('http')) {
     // Apply Supabase optimization if it's a Supabase URL
     const optimizedUrl = optimizeSupabaseUrl(iconName, size * 2, 75);
-    return <img src={optimizedUrl} style={{ width: size, height: size, objectFit: 'cover' }} className={className} alt="icon" />;
+    return (
+      <img 
+        src={optimizedUrl} 
+        style={{ 
+          width: '100%', 
+          height: '100%', 
+          maxWidth: size, 
+          maxHeight: size, 
+          objectFit: 'contain',
+          display: 'block'
+        }} 
+        className={className} 
+        alt="icon" 
+      />
+    );
   }
 
   // 2. Emojis

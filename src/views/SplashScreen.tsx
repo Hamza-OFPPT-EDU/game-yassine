@@ -60,59 +60,7 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
               <source src={SPLASH_VIDEO_URL} type="video/mp4" />
             </video>
             
-            {/* Premium Interaction Block for Fullscreen Request */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              id="fs-block"
-              className="absolute inset-0 flex items-center justify-center z-60 bg-[#0f172a]"
-            >
-               {/* Background Glow */}
-               <div className="absolute w-[500px] h-[500px] bg-[#D4A43E]/10 rounded-full blur-[120px] animate-pulse" />
-               
-               <div className="relative flex flex-col items-center gap-12 px-8 py-16 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[40px] shadow-2xl max-w-[320px] w-full text-center">
-                  {/* Decorative Sparkles */}
-                  <div className="absolute -top-6 -right-6 w-12 h-12 bg-[#D4A43E] rounded-2xl flex items-center justify-center shadow-lg rotate-12">
-                    <Sparkles className="text-white" size={24} fill="currentColor" />
-                  </div>
 
-                  {/* Icon/Logo Placeholder in Block */}
-                  <div className="w-24 h-24 rounded-3xl bg-white flex items-center justify-center shadow-xl border-4 border-[#E5D5B8]">
-                    <Map className="text-[#7B3F1A]" size={48} strokeWidth={2.5} />
-                  </div>
-
-                  <div className="space-y-3">
-                    <h2 className="text-xl font-black text-white uppercase tracking-tighter">
-                      Le Voyage des <span className="text-[#D4A43E]">Soft Skills</span>
-                    </h2>
-                    <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] italic">
-                      Préparez-vous pour l'aventure
-                    </p>
-                  </div>
-
-                  <button 
-                    onClick={() => {
-                      if (document.documentElement.requestFullscreen) {
-                        document.documentElement.requestFullscreen().catch(e => console.warn(e));
-                      }
-                      // Start video and hide block
-                      if (videoRef.current) {
-                        videoRef.current.play().catch(e => console.warn("Video play failed:", e));
-                      }
-                      const block = document.getElementById('fs-block');
-                      if (block) block.style.display = 'none';
-                    }}
-                    className="group relative overflow-hidden w-full bg-gradient-to-br from-[#D4A43E] to-[#7B3F1A] text-white py-5 rounded-2xl font-black text-lg uppercase tracking-widest shadow-xl shadow-[#7B3F1A]/20 transition-all active:scale-95"
-                  >
-                    <motion.div
-                      animate={{ x: ['-100%', '200%'] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
-                    />
-                    Explorer
-                  </button>
-               </div>
-            </motion.div>
 
             {/* Subtle Skip/Wait hint */}
             <motion.div 

@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
 
 interface WelcomeScreenProps {
@@ -27,19 +27,19 @@ export default function WelcomeScreen({ onStart, onLogin }: WelcomeScreenProps) 
   }, []);
 
   return (
-    <div className="h-full w-full flex flex-col relative overflow-hidden bg-black">
-      {/* Background Video */}
+    <div className="h-full w-full flex flex-col relative overflow-hidden bg-[#0a0f1e] pb-[20px]">
+      {/* Background Video with enhanced overlay */}
       <div className="absolute inset-0 z-0">
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="w-full h-full object-cover opacity-60"
+          className="w-full h-full object-cover opacity-70"
         >
           <source src={SPLASH_VIDEO_URL} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1e]/60 via-transparent to-[#0a0f1e]/90" />
       </div>
 
       <AnimatePresence>
@@ -59,38 +59,43 @@ export default function WelcomeScreen({ onStart, onLogin }: WelcomeScreenProps) 
                 transition={{ delay: 0.1, type: "spring", stiffness: 120, damping: 20 }}
                 src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png"
                 alt="Le Voyage des Compétences"
-                className="w-full max-w-[400px] object-contain drop-shadow-2xl"
+                className="w-full max-w-[380px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
               />
             </section>
 
             {/* Content (Glassmorphic block) */}
-            <main className="flex-grow flex flex-col items-start justify-center px-6 text-center mt-4">
+            <main className="flex-grow flex flex-col items-center justify-center px-8 text-center mt-2">
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="bg-black/30 backdrop-blur-xl border border-white/20 p-6 rounded-[24px] shadow-2xl max-w-[340px] mx-auto w-full"
+                className="bg-white/10 backdrop-blur-2xl border border-white/20 p-8 rounded-[40px] shadow-[0_20px_60px_rgba(0,0,0,0.3)] max-w-[340px] mx-auto w-full relative overflow-hidden group"
               >
-                <p className="text-white/90 font-bold leading-relaxed text-[17px]">
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-[#F4A261]/20 rounded-full blur-2xl group-hover:bg-[#F4A261]/30 transition-colors" />
+                <p className="text-white text-lg font-black leading-tight uppercase tracking-tight mb-2">
+                  Bienvenue Voyageur
+                </p>
+                <p className="text-white/80 font-bold leading-relaxed text-[15px]">
                   Développe ton potentiel avec la famille Ben Ali à travers un parcours ludique au cœur du Maroc.
                 </p>
               </motion.div>
             </main>
 
-            {/* Buttons (Glassmorphic) */}
-            <section className="px-8 pb-12 pt-6 space-y-4 w-full max-w-md mx-auto shrink-0">
+            {/* Buttons (Redesigned for Premium Look) */}
+            <section className="px-8 pb-12 pt-6 space-y-5 w-full max-w-md mx-auto shrink-0">
               <motion.button
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   playSound('click');
                   onStart();
                 }}
-                className="w-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xl py-4 rounded-2xl font-black flex items-center justify-center gap-3 shadow-xl hover:bg-white/30 transition-all"
+                className="w-full bg-gradient-to-br from-[#2D6A4F] to-[#1D3557] text-white py-5 rounded-[28px] font-black text-xl uppercase tracking-wider flex items-center justify-center gap-3 shadow-[0_15px_35px_rgba(45,106,79,0.4)] transition-all"
               >
-                <span className="font-black uppercase tracking-tight">C'est parti !</span>
+                <span>C'est parti !</span>
                 <ArrowRight size={24} strokeWidth={3} />
               </motion.button>
 
@@ -98,12 +103,15 @@ export default function WelcomeScreen({ onStart, onLogin }: WelcomeScreenProps) 
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.6 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   playSound('click');
                   onLogin();
                 }}
-                className="w-full py-4 bg-transparent border-2 border-white/20 backdrop-blur-sm rounded-2xl text-white font-black uppercase tracking-tight hover:bg-white/10 transition-all shadow-lg"
+                className="w-full py-5 bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-[28px] text-white font-black text-sm uppercase tracking-[0.2em] hover:bg-white/20 transition-all shadow-lg flex items-center justify-center gap-2"
               >
+                <Sparkles size={18} className="text-[#F4A261]" fill="currentColor" />
                 Se connecter
               </motion.button>
             </section>
@@ -113,3 +121,4 @@ export default function WelcomeScreen({ onStart, onLogin }: WelcomeScreenProps) 
     </div>
   );
 }
+

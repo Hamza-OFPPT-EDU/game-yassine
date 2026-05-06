@@ -113,7 +113,7 @@ export default function MapJourneyScreen({
             className="fixed inset-0 z-[100]"
             style={{ background: 'linear-gradient(160deg, #4E2510 0%, #7B3F1A 50%, #A0572B 100%)' }}
           >
-            <button 
+            <button
               onClick={() => setCinematicCity(null)}
               className="absolute top-8 right-8 p-3 bg-white/10 hover:bg-white/20 rounded-2xl text-white transition-all z-20 backdrop-blur-md border border-white/20 shadow-xl"
             >
@@ -169,32 +169,32 @@ export default function MapJourneyScreen({
                       className="relative"
                     >
                       {/* Ambient Aura Effect */}
-                      <motion.div 
-                        animate={{ 
+                      <motion.div
+                        animate={{
                           scale: [1, 1.2, 1],
                           opacity: [0.2, 0.5, 0.2]
                         }}
                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute inset-0 bg-voyage-accent/30 blur-[60px] rounded-full scale-110" 
+                        className="absolute inset-0 bg-voyage-accent/30 blur-[60px] rounded-full scale-110"
                       />
-                      
+
                       <motion.img
                         src={cinematicCity.cinematicCharacter || "/assets/intro_caracter.gif"}
                         alt="Personnage"
-                        animate={{ 
+                        animate={{
                           y: [0, -8, 0], // Subtle float
                         }}
-                        transition={{ 
-                          duration: 4, 
-                          repeat: Infinity, 
-                          ease: "easeInOut" 
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut"
                         }}
                         className="w-[345px] h-[345px] mx-auto object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.4)] relative z-10"
                       />
                     </motion.div>
 
                     {/* Narrative Introduction Box */}
-                    <motion.div 
+                    <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4, duration: 0.8 }}
@@ -202,12 +202,12 @@ export default function MapJourneyScreen({
                     >
                       {/* Decorative elements */}
                       <div className="absolute -top-24 -left-24 w-48 h-48 bg-voyage-accent/10 blur-[60px] rounded-full transition-all duration-700" />
-                      
+
                       <div className="flex flex-col items-center gap-2 mb-5">
                         <div className="h-1 w-12 bg-voyage-accent/40 rounded-full" />
                         <p className="text-voyage-accent font-black text-[11px] uppercase tracking-[0.5em] opacity-90">Guide de l'aventure</p>
                       </div>
-                      
+
                       <motion.div
                         initial="hidden"
                         animate="visible"
@@ -384,15 +384,15 @@ export default function MapJourneyScreen({
                 >
                   {/* City Illustration / Banner */}
                   <div className="h-44 w-full relative overflow-hidden">
-                    <img 
-                      src={optimizeSupabaseUrl(displayCity.image || 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/fallback-city.jpg', 600, 80)}
+                    <img
+                      src={optimizeSupabaseUrl(displayCity.image || 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/fallback-city.jpg', 60, 80)}
                       alt={displayCity.name}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
-                    
+
                     {/* Floating Icon over Banner */}
-                    <div 
+                    <div
                       className="absolute bottom-[-20px] left-8 w-20 h-20 rounded-3xl shadow-xl border-4 border-white flex items-center justify-center"
                       style={{ background: displayCityTheme.bgGradient }}
                     >
@@ -416,14 +416,14 @@ export default function MapJourneyScreen({
                     <div className="flex justify-between items-start mb-6">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                           <span className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.2em]">{displayCity.headline || displayCity.focus}</span>
-                           <div className="w-1.5 h-1.5 rounded-full bg-[#D4A43E] animate-pulse" />
-                           {displayCity.acteTitle && (
-                             <>
-                               <div className="w-px h-2 bg-[#D4A43E]/30" />
-                               <span className="text-[10px] font-bold text-[#7B3F1A]/60 italic">{displayCity.acteTitle}</span>
-                             </>
-                           )}
+                          <span className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.2em]">{displayCity.headline || displayCity.focus}</span>
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#D4A43E] animate-pulse" />
+                          {displayCity.acteTitle && (
+                            <>
+                              <div className="w-px h-2 bg-[#D4A43E]/30" />
+                              <span className="text-[10px] font-bold text-[#7B3F1A]/60 italic">{displayCity.acteTitle}</span>
+                            </>
+                          )}
                         </div>
                         <h2 className="text-3xl font-black text-[#4E2510] tracking-tight leading-none">
                           {displayCity.name}
@@ -456,7 +456,7 @@ export default function MapJourneyScreen({
                         <h4 className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-[0.3em]">{displayCity.missionsTitle || "Missions Disponibles"}</h4>
                         <span className="text-[10px] font-black text-[#D4A43E]">{displayCity.stepNum}/{displayCity.totalSteps}</span>
                       </div>
-                      
+
                       <div className={cn(
                         "space-y-2 overflow-y-auto pr-1 scrollbar-hide transition-all duration-300",
                         "max-h-[35vh]"
@@ -508,7 +508,7 @@ function buildPath(cities: City[], width: number): string {
   // This should match the visual height of (Node + Margin)
   // Node height is ~128px, Margin is 220px. Total ~348px.
   // But let's use a consistent scale factor that matches our SVG viewBox height.
-  const stepY = 300; 
+  const stepY = 300;
   const startY = (sorted.length - 1) * stepY + 150; // Bottom city y
 
   let d = '';
@@ -524,7 +524,7 @@ function buildPath(cities: City[], width: number): string {
       const prev = sorted[idx - 1];
       const prevX = cx + ((prev.map_x || 0) * width) / 100;
       const prevY = startY - ((idx - 1) * stepY);
-      
+
       const midY = (prevY + y) / 2;
       // Wavy Bezier curve effect
       const waveOffset = idx % 2 === 0 ? 45 : -45;
@@ -552,177 +552,120 @@ const CityNode: React.FC<{
 
   return (
     <motion.div
-      initial={{ y: 30, opacity: 0, scale: 0.85 }}
-      animate={{
-        y: 0,
-        opacity: 1,
-        scale: (isSelected || (isScrollTarget && scrollDone) ? 1.1 : 1) * (city.map_size || 1)
-      }}
-      transition={{
-        delay,
-        scale: { type: 'spring', stiffness: 300, damping: 22 },
-      }}
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay }}
       className="flex flex-col items-center relative"
     >
-      {/* Aura pulsante pour la ville active */}
+      {/* City State Indicator (Active Aura) */}
       {isActive && (
         <motion.div
-          animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.1, 0.3] }}
-          transition={{ duration: 3, repeat: Infinity }}
-          className="absolute w-32 h-32 rounded-full"
-          style={{ background: `radial-gradient(circle, ${isActive ? '#2C6E7F' : '#D4A43E'} 0%, transparent 70%)` }}
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
+          className="absolute w-28 h-28 bg-voyage-accent/30 rounded-full blur-xl"
         />
       )}
 
-      {/* Conteneur principal du nœud */}
-      <div className="relative group cursor-pointer" onClick={onSelect}>
-        
-        {/* Banner "EN COURS" */}
-        {isActive && (
-          <motion.div
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="absolute -top-10 left-1/2 -translate-x-1/2 z-20 whitespace-nowrap bg-[#7B3F1A] text-white px-4 py-1.5 rounded-xl border-2 border-white/20 shadow-lg flex items-center gap-1.5"
-          >
-            <span className="text-[10px] font-black tracking-widest">✦ EN COURS</span>
-          </motion.div>
-        )}
-
-        {/* Le Cercle Extérieur */}
-        <div
+      {/* Main Node Orb */}
+      <div 
+        className="relative cursor-pointer group"
+        onClick={onSelect}
+      >
+        <motion.div
+          whileHover={{ scale: isLocked ? 1 : 1.1, y: isLocked ? 0 : -5 }}
+          whileTap={{ scale: 0.95 }}
           className={cn(
-            "relative w-32 h-32 rounded-full flex items-center justify-center transition-all duration-500",
-            isLocked ? "bg-[#E5D5B8]/50 border-4 border-[#C9B99A]" : "bg-[#2C6E7F] shadow-xl ring-8 ring-[#2C6E7F]/10"
+            "relative w-[92px] h-[92px] rounded-full flex items-center justify-center transition-all duration-300",
+            "border-4 shadow-lg overflow-hidden",
+            isLocked ? "bg-slate-200 border-slate-300 opacity-60" : "bg-white border-white shadow-voyage-accent/10"
           )}
-          style={!isLocked && !isActive ? { backgroundColor: cityTheme.color, borderColor: cityTheme.colorDark } : {}}
+          style={!isLocked ? { borderColor: isSelected ? '#D4A43E' : 'white' } : {}}
         >
-          {/* Progress Ring (uniquement pour l'actif) */}
-          {isActive && (
-            <svg className="absolute inset-0 w-full h-full -rotate-90 p-1">
+          {/* Background Illustration if exists */}
+          {/* Foreground Icon / Main Image */}
+          <div className="relative z-10 flex items-center justify-center w-full h-full p-2">
+            {city.iconName ? (
+              city.iconName.startsWith('http') ? (
+                <img 
+                  src={resolveAssetUrl(city.iconName)} 
+                  alt={city.name}
+                  className={cn(
+                    "w-full h-full object-contain transition-transform duration-500 group-hover:scale-110",
+                    isLocked ? "grayscale opacity-40" : ""
+                  )}
+                />
+              ) : (
+                resolveCityIcon(city, (city.iconSize || 48), isLocked ? "grayscale opacity-50" : "text-voyage-accent")
+              )
+            ) : (
+              <div className="text-voyage-accent/20">
+                <MapPin size={40} />
+              </div>
+            )}
+          </div>
+
+          {/* Progress Ring Overlay (if active/completed) */}
+          {!isLocked && (
+            <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
               <circle
-                cx="50%"
-                cy="50%"
-                r="46%"
+                cx="50%" cy="50%" r="42"
                 fill="none"
-                stroke="white"
-                strokeWidth="2"
-                strokeOpacity="0.2"
-                strokeDasharray="4 4"
-              />
-              <motion.circle
-                cx="50%"
-                cy="50%"
-                r="46%"
-                fill="none"
-                stroke="#D4A43E"
+                stroke={isCompleted ? "#10B981" : "#D4A43E"}
                 strokeWidth="4"
+                strokeDasharray={264}
+                strokeDashoffset={264 * (1 - progress)}
                 strokeLinecap="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: progress }}
-                transition={{ duration: 1.5, delay: delay + 0.5 }}
+                className="transition-all duration-1000"
               />
             </svg>
           )}
 
-          {/* Cercle Intérieur (Contient l'icône) */}
-          <div
-            className={cn(
-              "w-24 h-24 rounded-full flex items-center justify-center relative overflow-hidden transition-all duration-300",
-              isLocked ? "bg-[#D1C4B0] opacity-60" : "bg-white/10 backdrop-blur-sm"
-            )}
-          >
-            {/* L'image ou l'icône de la ville */}
-            <motion.div
-              animate={isLocked ? {} : { y: [0, -4, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="w-full h-full flex items-center justify-center relative"
-            >
-              {city.image && (
-                <img 
-                  src={optimizeSupabaseUrl(city.image, 200, 70)} 
-                  className={cn(
-                    "absolute inset-0 w-full h-full object-cover",
-                    isLocked ? "grayscale opacity-40" : "opacity-100"
-                  )}
-                  alt={city.name}
-                />
-              )}
-              
-              <div className={cn(
-                "relative z-10 flex items-center justify-center w-full h-full",
-                city.image ? "bg-black/20" : ""
-              )}>
-                {city.iconName?.startsWith('http') ? (
-                  resolveCityIcon(city, (city.iconSize || (city.image ? 48 : 96)), isLocked ? "grayscale opacity-40" : "")
-                ) : (
-                  resolveCityIcon(city, (city.iconSize || (city.image ? 40 : 56)), isLocked ? "grayscale opacity-50" : "text-white")
-                )}
-              </div>
-            </motion.div>
-
-            {/* Overlay de verrouillage */}
-            {isLocked && (
-              <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
-                <div className="bg-white/80 p-2 rounded-full shadow-sm">
-                  <Lock size={16} className="text-[#7B3F1A]" />
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Bouton d'action bas (Arrow) */}
-          {isActive && (
-             <motion.div
-               animate={{ y: [0, 5, 0] }}
-               transition={{ duration: 2, repeat: Infinity }}
-               className="absolute -bottom-4 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg border-2 border-[#E5D5B8] z-30"
-             >
-               <ArrowDown size={20} className="text-[#D4A43E]" />
-             </motion.div>
-          )}
-
-          {/* Badge cadenas (small) pour locked */}
+          {/* Locked Badge Overlay */}
           {isLocked && (
-            <div className="absolute bottom-2 right-2 w-7 h-7 bg-white rounded-full flex items-center justify-center border-2 border-[#E5D5B8] shadow-md">
-               <Lock size={12} className="text-[#B5A48A]" />
+            <div className="absolute inset-0 flex items-center justify-center bg-slate-100/40 backdrop-blur-[1px]">
+              <Lock size={20} className="text-slate-400" />
             </div>
           )}
+        </motion.div>
 
-          {/* Badge Complété */}
-          {isCompleted && (
-            <div className="absolute -bottom-2 bg-[#D4A43E] text-white p-1.5 rounded-full shadow-lg border-2 border-white">
-              <Check size={16} strokeWidth={4} />
-            </div>
-          )}
-        </div>
+        {/* Completion Checkmark */}
+        {isCompleted && (
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="absolute -bottom-1 -right-1 w-7 h-7 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center shadow-md z-20"
+          >
+            <Check size={14} className="text-white font-bold" />
+          </motion.div>
+        )}
       </div>
 
-      {/* Label de la ville */}
-      <div className="mt-8 text-center">
+      {/* City Labels */}
+      <div className="mt-4 text-center">
         <h3 className={cn(
-          "text-lg font-black tracking-tight leading-none mb-1",
-          isLocked ? "text-[#7B3F1A]/40" : "text-[#2C6E7F]"
+          "text-sm font-black tracking-tight leading-none mb-1 uppercase",
+          isLocked ? "text-slate-400" : "text-slate-900"
         )}>
           {city.name}
         </h3>
         <p className={cn(
-          "arabic-font text-sm font-bold",
-          isLocked ? "text-[#7B3F1A]/30" : "text-[#7B3F1A]/60"
+          "arabic-font text-xs font-bold",
+          isLocked ? "text-slate-300" : "text-voyage-accent/80"
         )}>
           {city.arabicName}
         </p>
-
-        {/* Petite barre de progression sous le nom */}
-        {!isLocked && (
-          <div className="mt-2 w-16 h-1.5 bg-[#E5D5B8]/30 rounded-full overflow-hidden mx-auto">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${progress * 100}%` }}
-              className="h-full bg-gradient-to-r from-[#D4A43E] to-[#7B3F1A] rounded-full"
-            />
-          </div>
-        )}
       </div>
+
+      {/* Floating Status Badge (Active) */}
+      {isActive && (
+        <motion.div
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute -top-6 bg-[#D4A43E] text-white text-[8px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 whitespace-nowrap z-30"
+        >
+          MISSION EN COURS
+        </motion.div>
+      )}
     </motion.div>
   );
 };
@@ -752,7 +695,7 @@ const MissionsList: React.FC<{
           const isDone = mission.status === 'completed';
           const isLocked = mission.status === 'locked';
           const themeColor = cityTheme?.color || '#7B3F1A';
-          
+
           return (
             <motion.button
               key={mission.id}
@@ -779,14 +722,14 @@ const MissionsList: React.FC<{
                 >
                   {isDone ? <Check size={18} strokeWidth={3} /> : idx + 1}
                 </div>
-                
+
                 <div>
                   <div className="flex items-center gap-2">
                     <p className={cn('text-sm font-black', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]')}>
                       {mission.title_fr}
                     </p>
                     {mission.is_bonus && (
-                       <Sparkles size={12} className="text-[#D4A43E]" />
+                      <Sparkles size={12} className="text-[#D4A43E]" />
                     )}
                   </div>
                   <div className="flex items-center gap-3 mt-0.5">
@@ -794,7 +737,7 @@ const MissionsList: React.FC<{
                       <Star size={10} fill="#D4A43E" /> +{mission.xp_reward} XP
                     </span>
                     <span className="text-[9px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest">
-                       {mission.estimated_time || '5 min'}
+                      {mission.estimated_time || '5 min'}
                     </span>
                   </div>
                 </div>
@@ -812,16 +755,16 @@ const MissionsList: React.FC<{
                   <ChevronRight size={18} className="text-[#7B3F1A]/20 group-hover:text-[#7B3F1A] transition-colors" />
                 )}
               </div>
-              
+
               {/* Progress background for in-progress missions? (Future use) */}
             </motion.button>
           );
         }) : (
           <div className="py-12 flex flex-col items-center justify-center border-2 border-dashed border-[#E5D5B8] rounded-[30px] opacity-40">
-             <MapPin size={32} className="text-[#7B3F1A] mb-2" />
-             <p className="text-xs font-black text-[#7B3F1A] uppercase tracking-widest">
-                En attente d'expédition...
-             </p>
+            <MapPin size={32} className="text-[#7B3F1A] mb-2" />
+            <p className="text-xs font-black text-[#7B3F1A] uppercase tracking-widest">
+              En attente d'expédition...
+            </p>
           </div>
         )}
       </div>

@@ -70,7 +70,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
   }, [summary?.missionId]);
 
   return (
-    <div className="fixed inset-0 z-[100] bg-[#120E0A]/70 backdrop-blur-2xl px-4 py-5 sm:px-6 flex items-center justify-center">
+    <div className="fixed inset-0 z-[100] bg-amber-50/60 backdrop-blur-md px-4 py-5 sm:px-6 flex items-center justify-center">
       {/* Confettis si 100% ou Leaderboard */}
       <AnimatePresence>
         {(isPerfect || currentView === 'leaderboard') && (

@@ -107,17 +107,17 @@ export default function MissionLeaderboard({ missionId, currentUserId }: Mission
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 1, type: 'spring' }}
-        className="bg-gradient-to-br from-[#7B3F1A] to-[#4E2510] p-8 rounded-[2.5rem] text-center space-y-4 shadow-2xl relative overflow-hidden"
+        className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200/50 p-8 rounded-[2.5rem] text-center space-y-4 shadow-xl relative overflow-hidden"
       >
         <div className="relative z-10">
           <PartyPopper size={48} className="text-[#D4A43E] mx-auto mb-4" />
-          <h3 className="text-2xl font-black text-white italic">"Chaque étape est une victoire sur soi-même !"</h3>
-          <p className="text-white/60 text-sm font-bold uppercase tracking-widest">Continue ton voyage, l'aventure ne fait que commencer.</p>
+          <h3 className="text-2xl font-black text-[#7B3F1A] italic">"Chaque étape est une victoire sur soi-même !"</h3>
+          <p className="text-[#7B3F1A]/60 text-sm font-bold uppercase tracking-widest">Continue ton voyage, l'aventure ne fait que commencer.</p>
         </div>
         
         {/* Decorative background for the quote */}
-        <div className="absolute top-0 right-0 p-4 opacity-10">
-           <Trophy size={120} className="text-white rotate-12" />
+        <div className="absolute top-0 right-0 p-4 opacity-5">
+           <Trophy size={120} className="text-[#D4A43E] rotate-12" />
         </div>
       </motion.div>
     </div>

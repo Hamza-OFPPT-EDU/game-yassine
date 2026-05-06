@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { User, Lock, ArrowRight, Loader2, AlertCircle, Sparkles } from 'lucide-react';
+import { User, Lock, ArrowRight, Loader2, AlertCircle, Sparkles, Map } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAudio } from '../hooks/useAudio';
 
@@ -26,7 +26,6 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
     playSound('click');
 
     try {
-      // Map pseudo to email format
       const email = `${username.trim().toLowerCase()}@voyage.ma`;
       
       const { data, error: authError } = await supabase.auth.signInWithPassword({
@@ -49,109 +48,158 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
   };
 
   return (
-    <div className="h-full w-full flex flex-col relative bg-[#0f172a] text-white overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-amber-500/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[100px]" />
+    <div className="h-full w-full flex flex-col relative bg-[#FFF8F0] text-[#1A1A2E] overflow-hidden font-sans">
+      {/* Dynamic Background with Moroccan Influence */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[60%] h-[60%] bg-[#2D6A4F]/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#F4A261]/10 rounded-full blur-[100px]" />
+        
+        {/* Subtle Moroccan Pattern Overlay */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]" 
+          style={{ 
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 15-15 15-15-15zM0 30l15 15-15 15-15-15zM60 30l15 15-15 15-15-15zM30 60l15 15-15 15-15-15z' fill='%232D6A4F' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+            backgroundSize: '60px 60px'
+          }}
+        />
       </div>
 
-      <header className="relative z-10 px-6 pt-12 pb-6 flex items-center gap-4">
-        <button 
-          onClick={onBack}
-          className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 backdrop-blur-md border border-white/20"
-        >
-          <ArrowRight className="rotate-180" size={20} />
-        </button>
-        <h1 className="text-2xl font-black uppercase tracking-tight">Connexion</h1>
+      <header className="relative z-10 px-6 pt-12 pb-6 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <motion.button 
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={onBack}
+            className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-[#2D6A4F]/10 text-[#2D6A4F]"
+          >
+            <ArrowRight className="rotate-180" size={22} strokeWidth={2.5} />
+          </motion.button>
+          <div>
+            <h1 className="text-2xl font-black uppercase tracking-tighter text-[#1A1A2E]">Connexion</h1>
+            <p className="text-[10px] font-bold text-[#2D6A4F]/60 uppercase tracking-widest">Le Voyage Continue</p>
+          </div>
+        </div>
+
+        <div className="w-12 h-12 rounded-2xl bg-[#2D6A4F] flex items-center justify-center shadow-lg shadow-[#2D6A4F]/20">
+            <Map size={24} className="text-white" />
+        </div>
       </header>
 
-      <main className="relative z-10 flex-grow flex flex-col px-6 pt-12">
+      <main className="relative z-10 flex-grow flex flex-col px-6 justify-center max-w-md mx-auto w-full pb-12">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[32px] p-8 shadow-2xl"
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          className="bg-white/80 backdrop-blur-2xl border-2 border-white rounded-[40px] p-8 shadow-[0_20px_60px_rgba(45,106,79,0.15)] relative overflow-hidden"
         >
-          <div className="flex justify-center mb-10">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
-              <Sparkles size={40} className="text-white" />
-            </div>
+          {/* Top Decorative Sparkle */}
+          <div className="absolute -top-4 -right-4 w-16 h-16 bg-[#F4A261] rounded-3xl flex items-center justify-center shadow-lg rotate-12">
+            <Sparkles className="text-white" size={28} fill="currentColor" />
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] ml-2">Ton Pseudo</label>
-              <div className="relative">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
-                  <User size={20} />
-                </div>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="prenom.nom"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all font-bold text-lg"
-                  disabled={loading}
-                />
-              </div>
+          <div className="space-y-8">
+            <div className="text-center space-y-2">
+              <h2 className="text-xl font-black text-[#1A1A2E] uppercase">Bon retour !</h2>
+              <p className="text-sm font-medium text-[#6B7280]">Entre tes identifiants pour reprendre ton aventure.</p>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] ml-2">Mot de passe</label>
-              <div className="relative">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
-                  <Lock size={20} />
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-[#2D6A4F] uppercase tracking-[0.2em] ml-2">Ton Pseudo de voyageur</label>
+                <div className="relative group">
+                  <div className="absolute left-5 top-1/2 -translate-y-1/2 text-[#2D6A4F]/40 group-focus-within:text-[#2D6A4F] transition-colors">
+                    <User size={20} strokeWidth={2.5} />
+                  </div>
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="prenom.nom"
+                    className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 pl-14 pr-6 focus:outline-none focus:border-[#2D6A4F] focus:ring-4 focus:ring-[#2D6A4F]/5 transition-all font-bold text-[#1A1A2E]"
+                    disabled={loading}
+                  />
                 </div>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all font-bold text-lg"
-                  disabled={loading}
-                />
               </div>
-            </div>
 
-            {error && (
-              <motion.div 
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="flex items-center gap-2 text-red-400 bg-red-500/10 p-4 rounded-xl border border-red-500/20 text-xs font-bold"
-              >
-                <AlertCircle size={16} />
-                {error}
-              </motion.div>
-            )}
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-[#2D6A4F] uppercase tracking-[0.2em] ml-2">Mot de passe secret</label>
+                <div className="relative group">
+                  <div className="absolute left-5 top-1/2 -translate-y-1/2 text-[#2D6A4F]/40 group-focus-within:text-[#2D6A4F] transition-colors">
+                    <Lock size={20} strokeWidth={2.5} />
+                  </div>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 pl-14 pr-6 focus:outline-none focus:border-[#2D6A4F] focus:ring-4 focus:ring-[#2D6A4F]/5 transition-all font-bold text-[#1A1A2E]"
+                    disabled={loading}
+                  />
+                </div>
+              </div>
 
-            <button
-              type="submit"
-              disabled={loading || !username || !password}
-              className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-5 rounded-2xl font-black text-xl uppercase tracking-tighter flex items-center justify-center gap-3 shadow-xl shadow-orange-500/20 hover:shadow-orange-500/40 disabled:opacity-50 transition-all active:scale-[0.98]"
-            >
-              {loading ? (
-                <Loader2 className="animate-spin" size={24} />
-              ) : (
-                <>
-                  Se Connecter
-                  <ArrowRight size={24} strokeWidth={3} />
-                </>
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="flex items-center gap-3 text-[#E76F51] bg-[#E76F51]/10 p-4 rounded-2xl border border-[#E76F51]/20 text-xs font-bold"
+                >
+                  <AlertCircle size={18} />
+                  {error}
+                </motion.div>
               )}
-            </button>
-          </form>
 
-          <button 
-            onClick={onRegister}
-            className="mt-8 w-full text-center text-white/40 font-bold hover:text-white transition-colors text-xs"
-          >
-            Nouveau voyageur ? <span className="text-amber-400 underline decoration-2 underline-offset-4">Crée un compte</span>
-          </button>
+              <motion.button
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                disabled={loading || !username || !password}
+                className="w-full bg-gradient-to-br from-[#2D6A4F] to-[#1D3557] text-white py-5 rounded-3xl font-black text-lg uppercase tracking-wider flex items-center justify-center gap-3 shadow-xl shadow-[#2D6A4F]/30 hover:shadow-[#2D6A4F]/50 disabled:opacity-50 transition-all"
+              >
+                {loading ? (
+                  <Loader2 className="animate-spin" size={24} />
+                ) : (
+                  <>
+                    Explorer le Royaume
+                    <ArrowRight size={22} strokeWidth={3} />
+                  </>
+                )}
+              </motion.button>
+            </form>
+
+            <div className="pt-4 text-center">
+              <button 
+                onClick={onRegister}
+                className="group inline-flex flex-col items-center gap-1"
+              >
+                <span className="text-[11px] font-bold text-[#6B7280]">Pas encore de compte ?</span>
+                <span className="text-sm font-black text-[#F4A261] group-hover:text-[#E76F51] transition-colors flex items-center gap-1">
+                  Rejoins l'aventure maintenant
+                  <ArrowRight size={14} strokeWidth={3} />
+                </span>
+              </button>
+            </div>
+          </div>
         </motion.div>
 
-        <p className="mt-12 text-center text-white/30 text-[10px] font-medium px-8 italic">
-          "Retrouve ta progression et continue ton exploration des merveilles du Royaume."
-        </p>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-10 text-center space-y-4"
+        >
+          <p className="text-[#2D6A4F]/40 text-[10px] font-bold uppercase tracking-[0.2em] italic px-10 leading-relaxed">
+            "Tes badges et ta progression t'attendent pour la suite du voyage."
+          </p>
+          
+          <div className="flex justify-center gap-1.5">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#2D6A4F]/20" />
+            ))}
+          </div>
+        </motion.div>
       </main>
     </div>
   );
 }
+

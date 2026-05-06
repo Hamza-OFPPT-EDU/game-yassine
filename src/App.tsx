@@ -448,7 +448,7 @@ export default function App() {
 
   return (
     <AudioProvider>
-      <div className="relative h-screen w-full bg-black overflow-hidden flex flex-col font-sans select-none touch-none">
+      <div className="relative h-screen w-full bg-slate-50 overflow-hidden flex flex-col font-sans select-none touch-none">
         <div className="grow overflow-hidden relative">
           <AnimatePresence mode="wait">
             <motion.div
