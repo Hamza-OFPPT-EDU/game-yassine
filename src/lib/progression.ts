@@ -33,8 +33,13 @@ function extractNumericImpact(value: unknown): number {
     return value.reduce((sum, item) => sum + extractNumericImpact(item), 0);
   }
 
-  if (value && typeof value === 'object') {
-    return Object.values(value as Record<string, unknown>).reduce((sum, item) => sum + extractNumericImpact(item), 0);
+  if (value && typeof value === 'object' && value !== null) {
+    let total = 0;
+    const values = Object.values(value as Record<string, unknown>);
+    for (const item of values) {
+      total += extractNumericImpact(item);
+    }
+    return total;
   }
 
   return 0;

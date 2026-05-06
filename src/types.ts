@@ -20,6 +20,7 @@ export enum Screen {
   Login = 'login',
   CinematicIntro = 'cinematic-intro',
   Register = 'register',
+  Badges = 'badges',
 }
 
 export const DEFAULT_AVATAR_URL = '/assets/avatar_user.jpg';
@@ -114,6 +115,8 @@ export type Challenge = {
   explanation_fr?: string;
   context_dialogue?: string;
   illustration_url?: string;
+  time_limit_sec?: number;
+  soft_skills_impact?: any;
   steps?: {
     question: string;
     responses: { id: string; text: string }[];

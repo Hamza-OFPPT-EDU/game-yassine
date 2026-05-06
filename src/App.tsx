@@ -19,6 +19,7 @@ import ProfileScreen from './views/ProfileScreen';
 import LevelCompleteModal from './components/LevelCompleteModal';
 import SettingsScreen from './views/SettingsScreen';
 import CinematicIntroScreen from './views/CinematicIntroScreen';
+import BadgesScreen from './views/BadgesScreen';
 import GrammarQuestScreen from './views/GrammarQuestScreen';
 import LeagueScreen from './views/LeagueScreen';
 import LeagueDetailScreen from './views/LeagueDetailScreen';

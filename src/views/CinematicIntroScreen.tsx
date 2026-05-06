@@ -216,7 +216,6 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
               </div>
             </div>
           </motion.div>
-        </div>
       </main>
 
       {/* Footer / CTA - Fixed */}

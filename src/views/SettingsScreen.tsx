@@ -14,18 +14,26 @@ interface SettingsScreenProps {
 }
 
 export default function SettingsScreen({ onBack }: SettingsScreenProps) {
-  const [userName, setUserName] = useState('Ahmed_AlMaghribi');
-  const [displayMode, setDisplayMode] = useState('clair');
-  const [language, setLanguage] = useState('fr');
-  const { fontSize, setFontSize, freeExploration, setFreeExploration } = useSettings();
-  const { settings: audio, updateSettings: updateAudio, playSound, saveToCloud, loading: audioLoading } = useAudio();
+  const { session } = useAuth();
+  const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
+  const { 
+    fontSize, setFontSize, 
+    freeExploration, setFreeExploration,
+    displayMode: globalDisplayMode, setDisplayMode: setGlobalDisplayMode,
+    language: globalLanguage, setLanguage: setGlobalLanguage
+  } = useSettings();
+  
+  const [userName, setUserName] = useState('');
+  const [displayMode, setDisplayMode] = useState<DisplayMode>(globalDisplayMode);
+  const [language, setLanguage] = useState<Language>(globalLanguage);
+  const { settings: audio, updateSettings: updateAudio, playSound, saveToCloud } = useAudio();
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   // Sync local state with global/profile state on load
   useEffect(() => {
     if (profile) {
-      setUserName(profile.display_name || '');
+      setUserName(profile.display_name || profile.full_name || '');
     }
   }, [profile]);
 
@@ -41,9 +49,11 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
     
     try {
       // 1. Update Profile in Supabase
-      await updateProfile({
-        display_name: userName,
-      });
+      if (session?.user?.id) {
+        await updateProfile({
+          display_name: userName,
+        });
+      }
 
       // 2. Update Audio Settings in Supabase
       await saveToCloud();
@@ -534,4 +544,3 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
     </div>
   );
 }
-

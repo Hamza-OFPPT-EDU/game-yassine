@@ -9,6 +9,10 @@ interface SettingsContextType {
   setFontSize: (size: FontSize) => void;
   freeExploration: boolean;
   setFreeExploration: (val: boolean) => void;
+  displayMode: DisplayMode;
+  setDisplayMode: (mode: DisplayMode) => void;
+  language: Language;
+  setLanguage: (lang: Language) => void;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -20,6 +24,14 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const [freeExploration, setFreeExploration] = useState<boolean>(() => {
     return localStorage.getItem('voyage-free-exploration') === 'true';
+  });
+
+  const [displayMode, setDisplayMode] = useState<DisplayMode>(() => {
+    return (localStorage.getItem('voyage-display-mode') as DisplayMode) || 'system';
+  });
+
+  const [language, setLanguage] = useState<Language>(() => {
+    return (localStorage.getItem('voyage-language') as Language) || 'fr';
   });
 
   useEffect(() => {
@@ -39,8 +51,37 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     localStorage.setItem('voyage-free-exploration', String(freeExploration));
   }, [freeExploration]);
 
+  useEffect(() => {
+    localStorage.setItem('voyage-display-mode', displayMode);
+    // Apply theme class to document
+    if (displayMode === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else if (displayMode === 'light') {
+      document.documentElement.classList.remove('dark');
+    } else {
+      // System
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+  }, [displayMode]);
+
+  useEffect(() => {
+    localStorage.setItem('voyage-language', language);
+    // Apply direction if needed
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = language;
+  }, [language]);
+
   return (
-    <SettingsContext.Provider value={{ fontSize, setFontSize, freeExploration, setFreeExploration }}>
+    <SettingsContext.Provider value={{ 
+      fontSize, setFontSize, 
+      freeExploration, setFreeExploration,
+      displayMode, setDisplayMode,
+      language, setLanguage
+    }}>
       {children}
     </SettingsContext.Provider>
   );
