@@ -6,13 +6,12 @@ import ContentPage from './components/ContentPage';
 import MediaLibrary from './components/MediaLibrary';
 import DatabaseExplorer from './components/DatabaseExplorer';
 import SettingsPage from './components/SettingsPage';
-import MapEditorPage from './components/MapEditorPage';
 import CurriculumPreview from './components/cms/CurriculumPreview';
 import ThemeToggle from './components/ThemeToggle';
 import { useChallenges } from './hooks/useContent';
 import {
   LayoutDashboard, Users, Award, FileEdit, Image as ImageIcon, Database,
-  Settings as SettingsIcon, Map as MapIcon
+  Settings as SettingsIcon
 } from 'lucide-react';
 
 const NAV = [
@@ -28,7 +27,6 @@ const NAV = [
     section: 'Gestion de contenu',
     items: [
       { id: 'content',   icon: FileEdit,  label: 'Défis & Missions', badge: 'CMS' },
-      { id: 'map',       icon: MapIcon,   label: 'Carte du Jeu' },
       { id: 'media',     icon: ImageIcon, label: 'Médiathèque' },
       { id: 'database',  icon: Database,  label: 'Base de données' },
       { id: 'settings',  icon: SettingsIcon, label: 'Paramètres' },
@@ -41,7 +39,6 @@ const PAGE_TITLES = {
   players:   { title: 'Joueurs',                  sub: 'Liste et profils détaillés des joueurs' },
   badges:    { title: 'Badges & Récompenses',     sub: 'Analyse des badges obtenus par les joueurs' },
   content:   { title: 'Gestion de contenu',       sub: 'Créer et modifier les défis, missions et questions du jeu' },
-  map:       { title: 'Carte du Jeu',             sub: 'Gérer l\'ordre des villes et la progression visuelle' },
   media:     { title: 'Médiathèque',              sub: 'Explorateur de ressources et téléchargement groupé' },
   database:  { title: 'Base de données',          sub: 'Exploration SQL et structure des tables publiques' },
   settings:  { title: 'Configuration Globale',    sub: 'Personnaliser les multiplicateurs d\'XP et niveaux Bloom' },
@@ -133,7 +130,6 @@ export default function App() {
           {page === 'players'   && <Dashboard setPage={setPage} />}
           {page === 'badges'    && <BadgesPage />}
           {page === 'content'   && <ContentPage />}
-          {page === 'map'       && <MapEditorPage />}
           {page === 'media'     && <MediaLibrary />}
           {page === 'database'  && <DatabaseExplorer />}
           {page === 'settings'  && <SettingsPage />}

@@ -39,6 +39,9 @@
 
 
 @layer base {
+  html {
+    font-size: 94%; /* Réduction globale de 6% */
+  }
   body {
     background-color: #FBF3E3;
     color: #4E2510;

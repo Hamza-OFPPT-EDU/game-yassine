@@ -1,11 +1,6 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import { useMemo, useEffect } from 'react';
-import { motion } from 'motion/react';
-import { Map, Star, Loader2 } from 'lucide-react';
+import { useMemo, useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Map, Star, Loader2, Sparkles } from 'lucide-react';
 import { useAssetPreloader, type Asset } from '../hooks/useAssetPreloader';
 import { getAllAssets } from '../lib/assets';
 
@@ -15,110 +10,234 @@ interface SplashScreenProps {
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
-const INTRO_CHAR_URL = '/assets/guide_voyage.gif';
 
 export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScreenProps) {
-  // Define assets to preload
+  const [videoStage, setVideoStage] = useState<'video' | 'ui'>('video');
   const assetsToPreload = useMemo(() => getAllAssets(extraAssets), [extraAssets]);
-
   const { progress, isComplete } = useAssetPreloader(assetsToPreload);
 
-  // Notify parent when complete (with a small extra delay for smooth transition)
   useEffect(() => {
-    if (isComplete) {
+    // Show video for 4 seconds
+    const videoTimer = setTimeout(() => {
+      setVideoStage('ui');
+    }, 4000);
+
+    return () => clearTimeout(videoTimer);
+  }, []);
+
+  useEffect(() => {
+    // Notify parent when assets are ready AND video is done
+    if (isComplete && videoStage === 'ui') {
       const timer = setTimeout(() => {
         onComplete?.();
-      }, 500);
+      }, 1500); // Give user time to see the animated UI
       return () => clearTimeout(timer);
     }
-  }, [isComplete, onComplete]);
+  }, [isComplete, videoStage, onComplete]);
 
   return (
     <div className="relative h-full w-full flex flex-col items-center justify-center bg-white overflow-hidden">
-      <div className="z-10 flex flex-col items-center text-center px-10">
-        <motion.div 
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="relative w-40 h-40 mb-12 flex items-center justify-center"
-        >
-          {/* Animated Background Rings */}
-          <motion.div 
-            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-0 rounded-full bg-voyage-accent/10"
-          />
-          <motion.div 
-            animate={{ scale: [1.2, 1.4, 1.2], opacity: [0.1, 0.05, 0.1] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute inset-0 rounded-full bg-voyage-accent/5"
-          />
-          
-          <div className="w-32 h-32 rounded-full bg-white shadow-2xl flex items-center justify-center relative border-4 border-voyage-accent/20 overflow-hidden">
-            <Map className="text-voyage-accent" size={64} strokeWidth={2.5} />
-          </div>
-          
-          <motion.div 
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="absolute -top-2 -right-2 w-10 h-10 rounded-2xl bg-voyage-accent flex items-center justify-center shadow-lg border-b-4 border-voyage-accent-dark"
+      <AnimatePresence mode="wait">
+        {videoStage === 'video' ? (
+          <motion.div
+            key="video-stage"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
+            transition={{ duration: 0.8 }}
+            className="absolute inset-0 z-50 bg-black flex items-center justify-center"
           >
-            <Star className="text-white" size={20} fill="currentColor" />
+            <video
+              autoPlay
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src={SPLASH_VIDEO_URL} type="video/mp4" />
+            </video>
+            
+            {/* Subtle Skip/Wait hint */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2 }}
+              className="absolute bottom-10 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 whitespace-nowrap"
+            >
+              <p className="text-white/60 text-[7px] font-bold uppercase tracking-[0.2em] text-center">Initialisation du voyage...</p>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        ) : (
+          <motion.div
+            key="ui-stage"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="relative z-10 flex flex-col items-center justify-center w-full h-full px-10"
+          >
+            {/* Background Decorative Elements */}
+            <div className="absolute inset-0 pointer-events-none">
+              <motion.div 
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                  rotate: [0, 90, 0],
+                  opacity: [0.1, 0.2, 0.1]
+                }}
+                transition={{ duration: 10, repeat: Infinity }}
+                className="absolute -top-20 -left-20 w-80 h-80 bg-voyage-accent/20 rounded-full blur-3xl"
+              />
+              <motion.div 
+                animate={{ 
+                  scale: [1.2, 1, 1.2],
+                  rotate: [0, -90, 0],
+                  opacity: [0.1, 0.15, 0.1]
+                }}
+                transition={{ duration: 12, repeat: Infinity }}
+                className="absolute -bottom-20 -right-20 w-80 h-80 bg-voyage-primary/10 rounded-full blur-3xl"
+              />
+            </div>
 
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="space-y-4"
-        >
-          <h1 className="font-headline font-black text-3xl text-voyage-primary tracking-tight">
-            Le Voyage des Compétences
-          </h1>
-          <p className="text-2xl font-black text-voyage-accent arabic-font" dir="rtl">
-            رحلة المهارات والتعلم
-          </p>
-        </motion.div>
-      </div>
+            {/* Logo Animation */}
+            <motion.div
+              initial={{ scale: 0, rotate: -20, opacity: 0 }}
+              animate={{ scale: 1, rotate: 0, opacity: 1 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+                delay: 0.2
+              }}
+              className="relative w-44 h-44 mb-10 flex items-center justify-center"
+            >
+              {/* Pulsing rings */}
+              {[...Array(3)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  animate={{ 
+                    scale: [1, 1.5 + (i * 0.2), 1],
+                    opacity: [0.2 - (i * 0.05), 0, 0.2 - (i * 0.05)]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity, 
+                    delay: i * 0.5,
+                    ease: "easeInOut" 
+                  }}
+                  className="absolute inset-0 rounded-full bg-voyage-accent"
+                />
+              ))}
 
-      {/* Loading Indicator */}
-      <div className="absolute bottom-24 w-48 space-y-4">
-        <div className="flex items-center justify-between px-1">
-          <div className="flex items-center gap-2">
-            {!isComplete && (
+              <div className="w-36 h-36 rounded-[40px] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex items-center justify-center relative border-4 border-[#E5D5B8] overflow-hidden group">
+                <motion.div
+                  animate={{ rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <Map className="text-[#7B3F1A]" size={72} strokeWidth={2.5} />
+                </motion.div>
+                
+                {/* Shine effect */}
+                <motion.div 
+                  animate={{ x: ['-100%', '200%'] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
+                />
+              </div>
+
               <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.8, type: "spring" }}
+                className="absolute -top-2 -right-2 w-12 h-12 rounded-2xl bg-[#D4A43E] flex items-center justify-center shadow-lg border-b-4 border-[#B58B60]"
               >
-                <Loader2 size={12} className="text-voyage-accent" />
+                <Sparkles className="text-white" size={24} fill="currentColor" />
               </motion.div>
-            )}
-            <p className="text-[10px] font-black text-duo-wolf uppercase tracking-widest">
-              {isComplete ? 'Prêt !' : 'Chargement...'}
-            </p>
-          </div>
-          <p className="text-[10px] font-black text-voyage-accent">
-            {progress}%
-          </p>
-        </div>
-        
-        <div className="h-4 w-full bg-voyage-accent/10 rounded-full overflow-hidden border-2 border-voyage-accent/20 p-0.5">
-          <motion.div 
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ type: "spring", bounce: 0, duration: 0.5 }}
-            className="h-full bg-voyage-primary rounded-full relative"
-          >
-             <div className="absolute top-0.5 left-1 right-1 h-1 bg-white/30 rounded-full" />
+            </motion.div>
+
+            {/* Title & Slogan Animation */}
+            <div className="space-y-6 mb-16 relative z-10 w-full">
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="space-y-2 text-center"
+              >
+                <h1 className="font-headline font-black text-[25px] text-[#4E2510] tracking-tight">
+                  Le Voyage des <span className="text-[#D4A43E]">Soft Skills</span>
+                </h1>
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                  className="text-[17px] font-black text-[#7B3F1A] arabic-font" 
+                  dir="rtl"
+                >
+                  رحلة المهارات الناعمة
+                </motion.p>
+              </motion.div>
+
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+                className="h-1 w-24 bg-gradient-to-r from-transparent via-[#D4A43E] to-transparent mx-auto"
+              />
+            </div>
+
+            {/* Progress Bar Animation */}
+            <motion.div 
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="w-64 space-y-4"
+            >
+              <div className="flex items-center justify-between px-2">
+                <div className="flex items-center gap-2">
+                  {!isComplete && (
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Loader2 size={10} className="text-[#D4A43E]" />
+                    </motion.div>
+                  )}
+                  <p className="text-[8px] font-black text-[#7B3F1A]/60 uppercase tracking-[0.2em]">
+                    {isComplete ? 'Prêt à explorer !' : 'Chargement...'}
+                  </p>
+                </div>
+                <p className="text-[8px] font-black text-[#D4A43E]">
+                  {progress}%
+                </p>
+              </div>
+
+              <div className="h-6 w-full bg-[#E5D5B8]/20 rounded-2xl overflow-hidden border-2 border-[#E5D5B8] p-1 shadow-inner">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ type: "spring", bounce: 0, duration: 0.5 }}
+                  className="h-full bg-gradient-to-r from-[#7B3F1A] to-[#4E2510] rounded-xl relative shadow-lg"
+                >
+                  <motion.div 
+                    animate={{ opacity: [0.3, 0.6, 0.3] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute inset-0 bg-white/20 rounded-xl"
+                  />
+                </motion.div>
+              </div>
+
+              <AnimatePresence>
+                {!isComplete && (
+                    <motion.p 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="text-center text-[7px] font-bold text-[#7B3F1A]/40 italic"
+                    >
+                      Préparation du voyage au Maroc...
+                    </motion.p>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </motion.div>
-        </div>
-        
-        {!isComplete && (
-          <p className="text-center text-[9px] font-bold text-duo-wolf/60 italic">
-            Préparation du voyage au Maroc...
-          </p>
         )}
-      </div>
+      </AnimatePresence>
     </div>
   );
 }

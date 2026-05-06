@@ -19,6 +19,7 @@ export enum Screen {
   VocabularyMatch = 'vocabulary-match',
   Login = 'login',
   CinematicIntro = 'cinematic-intro',
+  Register = 'register',
 }
 
 export const DEFAULT_AVATAR_URL = '/assets/avatar_user.jpg';
@@ -65,6 +66,10 @@ export type City = {
   map_y?: number;
   map_size?: number;
   sort_order?: number;
+  headline?: string;
+  arabicHeadline?: string;
+  missionsTitle?: string;
+  acteTitle?: string;
 };
 
 export type Mission = {

@@ -26,6 +26,7 @@ import LeagueCreateScreen from './views/LeagueCreateScreen';
 import VocabularyMatchScreen from './views/VocabularyMatchScreen';
 import FullscreenPrompt from './components/FullscreenPrompt';
 import LoginScreen from './views/LoginScreen';
+import RegisterScreen from './views/RegisterScreen';
 import { useAuth } from './hooks/useSupabase';
 import { fetchDynamicAssets, fetchCityMissionAssets } from './lib/assets';
 import { type Asset } from './hooks/useAssetPreloader';
@@ -42,7 +43,15 @@ export default function App() {
   const [redoQuestionIds, setRedoQuestionIds] = useState<string[] | undefined>(undefined);
   const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(true);
   const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
-  
+
+  useEffect(() => {
+    // Check if already in fullscreen or previously accepted
+    if (document.fullscreenElement || localStorage.getItem('prefer-fullscreen') === 'true') {
+      setShowFullscreenPrompt(false);
+      setFullscreenShownOnce(true);
+    }
+  }, []);
+
   const { session, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
   const [dynamicAssets, setDynamicAssets] = useState<Asset[]>([]);
@@ -54,6 +63,22 @@ export default function App() {
     stars: 0,
     level: 1,
   });
+
+  useEffect(() => {
+    const handleGlobalClick = () => {
+      if (localStorage.getItem('prefer-fullscreen') === 'true' && !document.fullscreenElement) {
+        const el = document.documentElement;
+        if (el.requestFullscreen) {
+          el.requestFullscreen().catch(() => {});
+        } else if ((el as any).webkitRequestFullscreen) {
+          (el as any).webkitRequestFullscreen();
+        }
+      }
+    };
+
+    window.addEventListener('click', handleGlobalClick);
+    return () => window.removeEventListener('click', handleGlobalClick);
+  }, []);
 
   useEffect(() => {
     async function loadInitialAssets() {
@@ -251,29 +276,56 @@ export default function App() {
 
   const showNavBar = [Screen.Map, Screen.Profile, Screen.Settings, Screen.GrammarQuest, Screen.League, Screen.LeagueDetail, Screen.LeagueCreate].includes(currentScreen);
 
-  if (authLoading || (session && profileLoading)) {
-    return (
-      <div className="h-screen w-full bg-[#0f172a] flex flex-col items-center justify-center gap-6">
-        <div className="w-20 h-20 border-4 border-white/10 border-t-white rounded-full animate-spin" />
-        <p className="text-white/40 font-black uppercase tracking-widest text-xs">Chargement du voyage...</p>
-      </div>
-    );
-  }
+
+
+  /** Handle anonymous demo login. */
+  const handleDemoLogin = async () => {
+    try {
+      // Try official anonymous sign-in
+      const { error } = await supabase.auth.signInAnonymously();
+      if (error) {
+        console.warn("Anonymous sign-in not available or failed:", error.message);
+      }
+    } catch (err) {
+      console.error("Demo login error:", err);
+    } finally {
+      // Always allow starting the app even if auth fails for demo
+      handleStartApp();
+    }
+  };
 
   const renderScreen = () => {
+    if (authLoading || (session && profileLoading)) {
+      if (currentScreen === Screen.Splash) {
+        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} />;
+      }
+      return (
+        <div className="h-screen w-full bg-[#0f172a] flex flex-col items-center justify-center gap-6">
+          <div className="w-20 h-20 border-4 border-white/10 border-t-white rounded-full animate-spin" />
+          <p className="text-white/40 font-black uppercase tracking-widest text-xs">Chargement du voyage...</p>
+        </div>
+      );
+    }
+
     switch (currentScreen) {
       case Screen.Splash:
-        if (!fullscreenShownOnce) return null;
         return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} />;
       case Screen.Welcome:
         return <WelcomeScreen 
-          onStart={() => {
-            handleStartApp();
-          }} 
+          onDemo={handleDemoLogin} 
+          onLogin={() => setCurrentScreen(Screen.Login)}
+          onRegister={() => setCurrentScreen(Screen.Register)}
         />;
       case Screen.Login:
         return <LoginScreen 
           onBack={() => setCurrentScreen(Screen.Welcome)} 
+          onRegister={() => setCurrentScreen(Screen.Register)}
+          onSuccess={() => setCurrentScreen(Screen.Map)} 
+        />;
+      case Screen.Register:
+        return <RegisterScreen 
+          onBack={() => setCurrentScreen(Screen.Welcome)} 
+          onLogin={() => setCurrentScreen(Screen.Login)}
           onSuccess={() => setCurrentScreen(Screen.Map)} 
         />;
       case Screen.Map:
@@ -428,10 +480,12 @@ export default function App() {
           onAccept={() => {
             setShowFullscreenPrompt(false);
             setFullscreenShownOnce(true);
+            localStorage.setItem('prefer-fullscreen', 'true');
           }}
           onDecline={() => {
             setShowFullscreenPrompt(false);
             setFullscreenShownOnce(true);
+            localStorage.setItem('prefer-fullscreen', 'false');
           }}
           extraAssets={dynamicAssets}
         />

@@ -128,6 +128,10 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
             map_y: city.map_y,
             map_size: city.map_size,
             sort_order: city.sort_order,
+            headline: city.headline_fr,
+            arabicHeadline: city.headline_ar,
+            missionsTitle: city.missions_title_fr,
+            acteTitle: city.acte_title,
           };
         });
         setCities(mappedCities);
@@ -363,7 +367,7 @@ export function useSupabaseQuestions(missionId: string) {
           return {
             id: q.id,
             type,
-            xp_reward: q.xp_reward,
+            xp_reward: q.xp_reward || 20,
             title: q.question_fr ? (q.question_fr.length > 40 ? q.question_fr.substring(0, 40) + '...' : q.question_fr) : 'Défi',
             question: q.question_fr,
             arabicQuestion: q.question_ar,
@@ -527,4 +531,84 @@ export function useSupabaseProfile(userId?: string) {
   };
 
   return { profile, loading, updateProfile };
+}
+
+export function useSupabaseBadges(userId?: string) {
+  const [badges, setBadges] = useState<any[]>([]);
+  const [earnedBadges, setEarnedBadges] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchBadges() {
+      setLoading(true);
+      try {
+        const { data: defs, error: defsError } = await supabase
+          .from('badge_definitions')
+          .select('*')
+          .order('created_at', { ascending: true });
+
+        if (defsError) throw defsError;
+        setBadges(defs || []);
+
+        if (userId) {
+          const { data: earned, error: earnedError } = await supabase
+            .from('player_earned_badges')
+            .select('badge_id')
+            .eq('player_id', userId);
+
+          if (!earnedError && earned) {
+            setEarnedBadges(earned.map((b: any) => b.badge_id));
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching badges:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchBadges();
+  }, [userId]);
+
+  return { badges, earnedBadges, loading };
+}
+
+export function useSupabaseMissionLeaderboard(missionId: string) {
+  const [leaderboard, setLeaderboard] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchLeaderboard() {
+      if (!missionId) return;
+      setLoading(true);
+      try {
+        // Fallback to global leaderboard if mission-specific scores aren't available
+        // Or if we don't have a mission_scores table yet, we can use app_users sorted by XP
+        const { data, error } = await supabase
+          .from('app_users')
+          .select('id, full_name, avatar_url, xp, level')
+          .order('xp', { ascending: false })
+          .limit(10);
+
+        if (!error && data) {
+          setLeaderboard(data.map((u, i) => ({
+            id: u.id,
+            name: u.full_name || 'Explorateur',
+            avatar: u.avatar_url || DEFAULT_AVATAR_URL,
+            score: u.xp,
+            level: u.level || 1,
+            rank: i + 1
+          })));
+        }
+      } catch (err) {
+        console.error('Error fetching leaderboard:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchLeaderboard();
+  }, [missionId]);
+
+  return { leaderboard, loading };
 }

@@ -29,12 +29,12 @@ const MOCK_LEAGUES: League[] = [
   { id: 'emerald', name: 'Ligue Émeraude', tier: 'emerald', timeLeft: 'Verrouillé', myRank: 0, players: [] },
 ];
 
-export default function LeagueScreen({ onSelectLeague, onCreateLeague }: LeagueScreenProps) {
+export default function LeagueScreen({ onSelectLeague, onCreateLeague, onBack }: LeagueScreenProps) {
   const stats = { xp: 1450, stars: 120, level: 4 };
 
   return (
     <div className="flex flex-col h-full bg-white relative overflow-hidden">
-      <TopAppBar stats={stats} title="Compétitions" />
+      <TopAppBar stats={stats} title="Compétitions" onBack={onBack} />
       
       <main className="flex-grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 max-w-2xl mx-auto w-full relative z-10 scrollbar-hide">
         

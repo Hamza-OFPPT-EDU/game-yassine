@@ -414,14 +414,20 @@ export default function MapJourneyScreen({
                     <div className="flex justify-between items-start mb-6">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                           <span className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.2em]">{displayCity.focus}</span>
+                           <span className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.2em]">{displayCity.headline || displayCity.focus}</span>
                            <div className="w-1.5 h-1.5 rounded-full bg-[#D4A43E] animate-pulse" />
+                           {displayCity.acteTitle && (
+                             <>
+                               <div className="w-px h-2 bg-[#D4A43E]/30" />
+                               <span className="text-[10px] font-bold text-[#7B3F1A]/60 italic">{displayCity.acteTitle}</span>
+                             </>
+                           )}
                         </div>
                         <h2 className="text-3xl font-black text-[#4E2510] tracking-tight leading-none">
                           {displayCity.name}
                         </h2>
                         <p className="arabic-font text-lg font-black text-[#7B3F1A] opacity-70">
-                          {displayCity.arabicName}
+                          {displayCity.arabicHeadline || displayCity.arabicName}
                         </p>
                       </div>
 
@@ -438,14 +444,14 @@ export default function MapJourneyScreen({
                     {/* Description Section */}
                     <div className="bg-[#7B3F1A]/5 rounded-[24px] p-5 border border-[#7B3F1A]/10 mb-6">
                       <p className="text-[#4E2510]/90 text-sm leading-relaxed font-medium italic">
-                        "{displayCity.description}"
+                        "{displayCity.description || displayCity.arabicDescription}"
                       </p>
                     </div>
 
                     {/* Missions List */}
                     <div className="mb-8">
                       <div className="flex justify-between items-center mb-4 px-1">
-                        <h4 className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-[0.3em]">Missions Disponibles</h4>
+                        <h4 className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-[0.3em]">{displayCity.missionsTitle || "Missions Disponibles"}</h4>
                         <span className="text-[10px] font-black text-[#D4A43E]">{displayCity.stepNum}/{displayCity.totalSteps}</span>
                       </div>
                       
@@ -548,7 +554,7 @@ const CityNode: React.FC<{
       animate={{
         y: 0,
         opacity: 1,
-        scale: isSelected || (isScrollTarget && scrollDone) ? 1.1 : 1
+        scale: (isSelected || (isScrollTarget && scrollDone) ? 1.1 : 1) * (city.map_size || 1)
       }}
       transition={{
         delay,
@@ -623,13 +629,33 @@ const CityNode: React.FC<{
               isLocked ? "bg-[#D1C4B0] opacity-60" : "bg-white/10 backdrop-blur-sm"
             )}
           >
-            {/* L'icône de la ville */}
+            {/* L'image ou l'icône de la ville */}
             <motion.div
               animate={isLocked ? {} : { y: [0, -4, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="flex items-center justify-center"
+              className="w-full h-full flex items-center justify-center relative"
             >
-              {resolveCityIcon(city, 56, isLocked ? "grayscale opacity-50" : "text-white")}
+              {city.image && (
+                <img 
+                  src={optimizeSupabaseUrl(city.image, 200, 70)} 
+                  className={cn(
+                    "absolute inset-0 w-full h-full object-cover",
+                    isLocked ? "grayscale opacity-40" : "opacity-100"
+                  )}
+                  alt={city.name}
+                />
+              )}
+              
+              <div className={cn(
+                "relative z-10 flex items-center justify-center w-full h-full",
+                city.image ? "bg-black/20" : ""
+              )}>
+                {city.iconName?.startsWith('http') ? (
+                  resolveCityIcon(city, (city.iconSize || (city.image ? 48 : 96)), isLocked ? "grayscale opacity-40" : "")
+                ) : (
+                  resolveCityIcon(city, (city.iconSize || (city.image ? 40 : 56)), isLocked ? "grayscale opacity-50" : "text-white")
+                )}
+              </div>
             </motion.div>
 
             {/* Overlay de verrouillage */}

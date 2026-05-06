@@ -10,12 +10,14 @@ import { useAudio } from '../hooks/useAudio';
 import { optimizeSupabaseUrl } from '../lib/city-theme';
 
 interface WelcomeScreenProps {
-  onStart: () => void;
+  onDemo: () => void;
+  onLogin: () => void;
+  onRegister: () => void;
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
-export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
+export default function WelcomeScreen({ onDemo, onLogin, onRegister }: WelcomeScreenProps) {
   const { playSound } = useAudio();
   const [showContent, setShowContent] = useState(false);
 
@@ -74,32 +76,22 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="relative z-10 h-full w-full flex flex-col"
+            className="relative z-10 h-full w-full flex flex-col pt-[30px] pb-[30px]"
           >
             {/* Hero section with Logo Image */}
-            <section className="relative w-full shrink-0 flex flex-col items-center justify-center px-6 pt-16 pb-4">
+            <section className="relative w-full shrink-0 flex flex-col items-center justify-center px-6 pt-10 pb-2">
               <motion.img
                 initial={{ scale: 0.8, y: -20, opacity: 0 }}
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 transition={{ delay: 0.1, type: "spring", stiffness: 120, damping: 20 }}
-                src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png"
+                src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau%20(2).png"
                 alt="Le Voyage des Compétences"
-                className="w-full max-w-[400px] object-contain drop-shadow-2xl"
+                className="w-full max-w-[320px] object-contain drop-shadow-2xl"
               />
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 0.8, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="mt-2"
-              >
-                <p className="arabic-font text-[#C9A96E] text-2xl font-black tracking-widest drop-shadow-lg">
-                  رحلة المهارات
-                </p>
-              </motion.div>
             </section>
 
             {/* Content (Glassmorphic block) */}
-            <main className="flex-grow flex flex-col items-center justify-center px-6 text-center">
+            <main className="flex-grow flex flex-col items-center justify-center px-3 text-center">
               <motion.div
                 initial={{ y: 30, opacity: 0, scale: 0.9 }}
                 animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -107,9 +99,9 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
                 className="relative group"
               >
                 <div className="absolute inset-0 bg-[#D4A43E]/10 blur-3xl rounded-full opacity-50 group-hover:opacity-80 transition-opacity" />
-                <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 p-8 rounded-[40px] shadow-[0_25px_60px_rgba(0,0,0,0.5)] max-w-[340px] mx-auto w-full">
-                  <div className="w-12 h-1 bg-gradient-to-r from-transparent via-[#D4A43E] to-transparent mx-auto mb-6 opacity-60" />
-                  <p className="text-white/90 font-medium leading-relaxed text-[18px] italic">
+                <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 p-6 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] max-w-[300px] mx-auto w-full">
+                  <div className="w-10 h-0.5 bg-gradient-to-r from-transparent via-[#D4A43E] to-transparent mx-auto mb-4 opacity-60" />
+                  <p className="text-white/90 font-medium leading-relaxed text-[14px] italic">
                     "Accompagne la <span className="text-[#D4A43E] font-black">famille Ben Ali</span> dans une aventure épique à travers les joyaux du Maroc."
                   </p>
                 </div>
@@ -117,42 +109,54 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             </main>
 
             {/* Buttons (Glassmorphic) */}
-            <section className="px-8 pb-16 pt-6 space-y-5 w-full max-w-md mx-auto shrink-0">
-              <div className="relative">
-                <motion.button
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    playSound('click');
-                    onStart();
-                  }}
-                  className="relative overflow-hidden w-full bg-gradient-to-br from-[#D4A43E] to-[#7B3F1A] text-white text-xl py-5 rounded-[24px] font-black flex items-center justify-center gap-3 shadow-[0_15px_35px_rgba(123,63,26,0.4)] border border-white/20 transition-all"
-                >
-                  {/* Shimmer Effect */}
-                  <motion.div
-                    animate={{ x: ['-100%', '200%'] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: 'linear', repeatDelay: 1 }}
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
-                  />
-
-                  <span className="font-black uppercase tracking-widest relative z-10">Commencer le Voyage</span>
-                  <ArrowRight size={24} strokeWidth={3} className="relative z-10" />
-                </motion.button>
-              </div>
-
+            <section className="px-8 pb-8 pt-4 space-y-3 w-full max-w-md mx-auto shrink-0">
               <motion.button
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.7 }}
-                whileHover={{ background: 'rgba(255,255,255,0.1)' }}
-                onClick={() => playSound('click')}
-                className="w-full py-4 bg-black/20 border-2 border-white/10 backdrop-blur-md rounded-[24px] text-white/70 font-black uppercase tracking-[0.2em] text-xs hover:text-white transition-all shadow-lg"
+                transition={{ delay: 0.5 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => {
+                  playSound('click');
+                  onDemo();
+                }}
+                className="relative overflow-hidden w-full bg-gradient-to-br from-[#D4A43E] to-[#7B3F1A] text-white text-[16px] py-4 rounded-[20px] font-black flex items-center justify-center gap-3 shadow-[0_12px_25px_rgba(123,63,26,0.4)] border border-white/20 transition-all"
               >
-                Espace Connexion
+                <motion.div
+                  animate={{ x: ['-100%', '200%'] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'linear', repeatDelay: 1 }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                />
+                <span className="font-black uppercase tracking-widest relative z-10">Mode Démo</span>
+                <ArrowRight size={20} strokeWidth={3} className="relative z-10" />
               </motion.button>
+
+              <div className="grid grid-cols-2 gap-3">
+                <motion.button
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                  onClick={() => {
+                    playSound('click');
+                    onLogin();
+                  }}
+                  className="py-3.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-[18px] text-white font-bold uppercase tracking-widest text-[10px] hover:bg-white/20 transition-all"
+                >
+                  Connexion
+                </motion.button>
+                <motion.button
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.7 }}
+                  onClick={() => {
+                    playSound('click');
+                    onRegister();
+                  }}
+                  className="py-3.5 bg-[#D4A43E]/20 backdrop-blur-md border border-[#D4A43E]/30 rounded-[18px] text-[#D4A43E] font-black uppercase tracking-widest text-[10px] hover:bg-[#D4A43E]/30 transition-all"
+                >
+                  S'inscrire
+                </motion.button>
+              </div>
             </section>
           </motion.div>
         )}

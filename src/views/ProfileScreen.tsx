@@ -1,12 +1,77 @@
-import { useState } from 'react';
-import { motion } from 'motion/react';
-import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2 } from 'lucide-react';
-import { useSupabaseProfile } from '../hooks/useSupabase';
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2, Award, Zap, Globe, Lock } from 'lucide-react';
+import { useSupabaseProfile, useSupabaseBadges } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { optimizeSupabaseUrl } from '../lib/city-theme';
 import { DEFAULT_AVATAR_URL } from '../types';
+
+interface BadgeDetailProps {
+  badge: any;
+  isEarned: boolean;
+  onClose: () => void;
+}
+
+function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div 
+        initial={{ scale: 0.9, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.9, y: 20 }}
+        className="bg-white rounded-[40px] w-full max-w-sm overflow-hidden shadow-2xl"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className={cn(
+          "h-48 flex items-center justify-center relative",
+          isEarned ? "bg-gradient-to-br from-[#FFF8F0] to-[#FEF3C7]" : "bg-gray-100 grayscale"
+        )}>
+          {isEarned && (
+            <motion.div 
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,#D4A43E_0%,transparent_70%)]"
+            />
+          )}
+          <img 
+            src={badge.image_url || badge.icon_url || '/assets/badge_placeholder.png'} 
+            className="w-32 h-32 object-contain relative z-10"
+            alt={badge.badge_name}
+          />
+          {!isEarned && <Lock className="text-gray-400 opacity-30 absolute" size={64} />}
+        </div>
+        
+        <div className="p-8 text-center space-y-4">
+          <div className="space-y-1">
+            <h3 className="text-2xl font-black text-[#4E2510]">{badge.badge_name}</h3>
+            <p className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.2em]">{badge.rarity}</p>
+          </div>
+          
+          <p className="text-sm text-[#7B3F1A]/70 leading-relaxed font-medium">
+            {badge.description_fr}
+          </p>
+          
+          <div className="pt-4">
+             <button 
+               onClick={onClose}
+               className="w-full py-4 bg-[#7B3F1A] text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#4E2510] transition-colors"
+             >
+               Fermer
+             </button>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 interface ProfileScreenProps {
   onBack: () => void;
@@ -15,19 +80,34 @@ interface ProfileScreenProps {
 
 export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps) {
   const { profile, loading } = useSupabaseProfile();
+  const { badges: allBadges, earnedBadges, loading: badgesLoading } = useSupabaseBadges(profile?.id);
   const { settings: audio, updateSettings: updateAudio, playSound, saveToCloud } = useAudio();
   const [isSavingAudio, setIsSavingAudio] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [selectedBadge, setSelectedBadge] = useState<any>(null);
   
   const handleToggleAudio = async (patch: any) => {
     updateAudio(patch);
     playSound('click');
     setIsSavingAudio(true);
-    // Debounce or immediate save? Let's do immediate for now as per request
     setTimeout(async () => {
       await saveToCloud();
       setIsSavingAudio(false);
     }, 500);
   };
+
+  const badgeCategories = [
+    { id: 'all', label: 'Tous', icon: Globe },
+    { id: 'cultural', label: 'Culture', icon: Trophy },
+    { id: 'achievement', label: 'Succès', icon: Award },
+    { id: 'challenge', label: 'Défis', icon: Zap },
+    { id: 'multiplayer', label: 'Social', icon: Users },
+  ];
+
+  const filteredBadges = useMemo(() => {
+    if (activeCategory === 'all') return allBadges;
+    return allBadges.filter(b => b.category === activeCategory);
+  }, [allBadges, activeCategory]);
 
   if (loading) return (
     <div className="h-full w-full flex items-center justify-center bg-voyage-sand">
@@ -42,23 +122,16 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
   };
   
   const skills = [
-    { name: 'Communication', label: 'التواصل', level: 2, xp: 75, icon: MessageCircle, color: 'text-voyage-accent', bg: 'bg-voyage-accent/10', border: 'border-voyage-accent/20' },
-    { name: 'Décision', label: 'القرار', level: 1, xp: 40, icon: GitBranch, color: 'text-duo-orange', bg: 'bg-duo-orange/10', border: 'border-duo-orange/20' },
-    { name: 'Travail d\'équipe', label: 'العمل الجماعي', level: 3, xp: 85, icon: Users, color: 'text-voyage-primary', bg: 'bg-voyage-primary/10', border: 'border-voyage-primary/20' },
-    { name: 'Gestion Stress', label: 'إدارة الضغط', level: 1, xp: 20, icon: Brain, color: 'text-duo-red', bg: 'bg-duo-red/10', border: 'border-duo-red/20' },
-  ];
-
-  const badges = [
-    { name: 'Sage de Rabat', icon: Trophy, color: 'text-duo-yellow', count: 12 },
-    { name: 'Explorateur Noir', icon: Shield, color: 'text-duo-eel', count: 5 },
-    { name: 'Expert Dialogue', icon: MessageCircle, color: 'text-voyage-accent', count: 8 },
+    { name: 'Communication', label: 'التواصل', level: Math.floor(stats.xp / 2000) + 1, xp: (stats.xp % 2000) / 20, icon: MessageCircle, color: 'text-voyage-accent', bg: 'bg-voyage-accent/10', border: 'border-voyage-accent/20' },
+    { name: 'Décision', label: 'القرار', level: Math.floor(stats.xp / 2500) + 1, xp: (stats.xp % 2500) / 25, icon: GitBranch, color: 'text-duo-orange', bg: 'bg-duo-orange/10', border: 'border-duo-orange/20' },
+    { name: 'Travail d\'équipe', label: 'العمل الجماعي', level: Math.floor(stats.xp / 1500) + 1, xp: (stats.xp % 1500) / 15, icon: Users, color: 'text-voyage-primary', bg: 'bg-voyage-primary/10', border: 'border-voyage-primary/20' },
+    { name: 'Gestion Stress', label: 'إدارة الضغط', level: Math.floor(stats.xp / 3000) + 1, xp: (stats.xp % 3000) / 30, icon: Brain, color: 'text-duo-red', bg: 'bg-duo-red/10', border: 'border-duo-red/20' },
   ];
 
   return (
     <div className="h-full w-full bg-[#FAFAFA] flex flex-col relative overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#7B3F1A]/10 to-transparent pointer-events-none" />
-      <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#D4A43E]/5 blur-[100px] rounded-full pointer-events-none" />
       
       <TopAppBar stats={stats} title="Ton Profil" onBack={onBack} />
       
@@ -67,7 +140,6 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
         {/* User Profile Card */}
         <section className="relative flex flex-col items-center text-center pt-8 pb-4">
            <div className="relative group">
-              {/* Profile Glow */}
               <div className="absolute inset-0 bg-[#D4A43E]/20 blur-2xl rounded-full scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <motion.div 
@@ -108,7 +180,7 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
            {[
              { icon: Flame, color: 'text-orange-500', bg: 'bg-orange-50', label: 'JOURS', val: '12' },
              { icon: TrendingUp, color: 'text-[#D4A43E]', bg: 'bg-[#D4A43E]/5', label: 'XP TOTAL', val: (stats.xp/1000).toFixed(1) + 'k' },
-             { icon: Trophy, color: 'text-amber-500', bg: 'bg-amber-50', label: 'LIGUE', val: '#4' },
+             { icon: Trophy, color: 'text-amber-500', bg: 'bg-amber-50', label: 'BADGES', val: earnedBadges.length },
            ].map((stat, i) => (
              <motion.div 
                key={i}
@@ -122,12 +194,11 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
                 </div>
                 <span className="font-black text-xl text-[#4E2510]">{stat.val}</span>
                 <span className="text-[9px] font-black text-[#7B3F1A]/50 uppercase tracking-widest">{stat.label}</span>
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-transparent group-hover:bg-[#D4A43E]/20 transition-colors" />
              </motion.div>
            ))}
         </section>
 
-        {/* Progress Card (XP Bar) */}
+        {/* Progress Card */}
         <section className="relative overflow-hidden group">
            <div className="absolute inset-0 bg-gradient-to-br from-[#7B3F1A] to-[#4E2510] rounded-[40px] shadow-2xl" />
            <div className="relative z-10 p-8 space-y-6">
@@ -137,17 +208,16 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
                   <h3 className="text-2xl font-black text-white">Niveau {stats.level + 1}</h3>
                 </div>
                 <div className="text-right">
-                  <span className="block font-black text-white text-xl">{(stats.level + 1) * 1000 - stats.xp} XP</span>
+                  <span className="block font-black text-white text-xl">{Math.max(0, (stats.level + 1) * 1000 - stats.xp)} XP</span>
                   <span className="text-[10px] font-bold text-[#D4A43E]/70 uppercase tracking-widest text-right">Restant</span>
                 </div>
               </div>
               
               <div className="space-y-3">
                 <div className="h-5 w-full bg-black/30 rounded-full overflow-hidden p-1 border border-white/10 relative">
-                  {/* Shimmer effect inside the bar */}
                   <motion.div 
                     initial={{ width: 0 }}
-                    animate={{ width: `${(stats.xp % 1000) / 10}%` }}
+                    animate={{ width: `${Math.min(100, (stats.xp % 1000) / 10)}%` }}
                     transition={{ duration: 1.5, ease: "easeOut" }}
                     className="h-full bg-gradient-to-r from-[#D4A43E] to-[#F59E0B] rounded-full relative overflow-hidden shadow-[0_0_20px_rgba(212,164,62,0.4)]"
                   >
@@ -158,21 +228,122 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
                     />
                   </motion.div>
                 </div>
-                <div className="flex justify-between text-[10px] font-black text-white/40 tracking-widest uppercase">
-                  <span>0 XP</span>
-                  <span>1000 XP</span>
-                </div>
               </div>
            </div>
-           
            <Trophy className="absolute -bottom-6 -right-6 text-white/5 rotate-12" size={160} />
         </section>
+
+        {/* Badges Section - Dynamic with Toggle */}
+        <section className="space-y-6">
+           <div className="flex justify-between items-center px-2">
+             <h2 className="text-2xl font-black text-[#4E2510]">Badges & Médailles</h2>
+             <span className="text-[10px] font-black text-[#D4A43E] bg-[#D4A43E]/10 px-3 py-1 rounded-full border border-[#D4A43E]/20">
+               {earnedBadges.length} OBTENUS
+             </span>
+           </div>
+
+           {/* Toggle Menu */}
+           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide px-1">
+             {badgeCategories.map((cat) => (
+               <button
+                 key={cat.id}
+                 onClick={() => { playSound('click'); setActiveCategory(cat.id); }}
+                 className={cn(
+                   "flex items-center gap-2 px-4 py-2.5 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all shrink-0 border-2",
+                   activeCategory === cat.id 
+                     ? "bg-[#7B3F1A] text-white border-[#7B3F1A] shadow-lg shadow-[#7B3F1A]/20" 
+                     : "bg-white text-[#7B3F1A] border-[#E5D5B8] hover:border-[#D4A43E]"
+                 )}
+               >
+                 <cat.icon size={14} />
+                 {cat.label}
+               </button>
+             ))}
+           </div>
+
+           <div className="bg-white border border-[#E5D5B8] rounded-[40px] p-8 shadow-sm">
+              <AnimatePresence mode="wait">
+                {badgesLoading ? (
+                  <div className="flex flex-col items-center justify-center py-12 gap-4">
+                    <Loader2 className="animate-spin text-[#D4A43E]" size={32} />
+                    <p className="text-[10px] font-black text-[#7B3F1A]/40 uppercase tracking-widest">Chargement des badges...</p>
+                  </div>
+                ) : filteredBadges.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
+                    <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-gray-300">
+                      <Lock size={32} />
+                    </div>
+                    <p className="text-sm font-bold text-[#7B3F1A]/40 uppercase tracking-tight">Aucun badge dans cette catégorie</p>
+                  </div>
+                ) : (
+                  <motion.div 
+                    key={activeCategory}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="grid grid-cols-3 gap-6"
+                  >
+                    {filteredBadges.map((badge) => {
+                      const isEarned = earnedBadges.includes(badge.id);
+                      return (
+                        <motion.div
+                          key={badge.id}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => { playSound('click'); setSelectedBadge(badge); }}
+                          className="flex flex-col items-center gap-3 group relative cursor-pointer"
+                        >
+                          <div className={cn(
+                            "w-20 h-20 rounded-[28px] flex items-center justify-center border-2 shadow-sm transition-all duration-500 relative overflow-hidden",
+                            isEarned 
+                              ? "bg-gradient-to-br from-[#FFF8F0] to-[#FEF3C7] border-[#D4A43E] shadow-[#D4A43E]/20" 
+                              : "bg-gray-50 border-[#E5D5B8]/50 grayscale opacity-40"
+                          )}>
+                            {isEarned && (
+                              <motion.div 
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                                className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,#D4A43E_0%,transparent_70%)]"
+                              />
+                            )}
+                            <img 
+                              src={badge.image_url || badge.icon_url || '/assets/badge_placeholder.png'} 
+                              alt={badge.badge_name}
+                              className="w-12 h-12 object-contain relative z-10"
+                            />
+                            {!isEarned && <Lock className="absolute inset-0 m-auto text-gray-400 opacity-20" size={24} />}
+                          </div>
+                          <div className="text-center space-y-0.5">
+                            <p className={cn("text-[10px] font-black uppercase tracking-tight leading-tight", isEarned ? "text-[#4E2510]" : "text-gray-400")}>
+                              {badge.badge_name}
+                            </p>
+                            <p className="text-[8px] font-bold text-[#D4A43E] uppercase tracking-tighter">
+                              {badge.rarity}
+                            </p>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+           </div>
+        </section>
+
+        <AnimatePresence>
+          {selectedBadge && (
+            <BadgeDetail 
+              badge={selectedBadge} 
+              isEarned={earnedBadges.includes(selectedBadge.id)} 
+              onClose={() => setSelectedBadge(null)} 
+            />
+          )}
+        </AnimatePresence>
 
         {/* Skills Section */}
         <section className="space-y-5">
           <div className="flex justify-between items-center px-2">
             <h2 className="text-2xl font-black text-[#4E2510]">Compétences <span className="text-[10px] font-black text-[#D4A43E] bg-[#D4A43E]/10 px-2 py-0.5 rounded ml-2">SOFT SKILLS</span></h2>
-            <button className="text-[#7B3F1A] font-black text-[10px] uppercase tracking-widest flex items-center gap-1 hover:gap-2 transition-all">Tout voir <ChevronRight size={14}/></button>
           </div>
           <div className="grid grid-cols-2 gap-5">
             {skills.map((skill, idx) => (
@@ -203,30 +374,10 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
           </div>
         </section>
 
-        {/* Audio Settings Section */}
+        {/* Audio Settings */}
         <section className="space-y-5">
-           <div className="flex justify-between items-center px-2">
-             <h2 className="text-2xl font-black text-[#4E2510]">Réglages Audio</h2>
-             {isSavingAudio && (
-               <motion.div 
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="flex items-center gap-2 text-voyage-primary"
-               >
-                 <Loader2 size={14} className="animate-spin" />
-                 <span className="text-[10px] font-black uppercase tracking-widest">Synchronisation...</span>
-               </motion.div>
-             )}
-             {!isSavingAudio && (
-               <div className="flex items-center gap-2 text-duo-green opacity-60">
-                 <CheckCircle2 size={14} />
-                 <span className="text-[10px] font-black uppercase tracking-widest">Enregistré</span>
-               </div>
-             )}
-           </div>
-
+           <h2 className="text-2xl font-black text-[#4E2510] px-2">Réglages Audio</h2>
            <div className="bg-white border border-[#E5D5B8] rounded-[40px] p-6 shadow-sm grid grid-cols-2 gap-4">
-              {/* Sound Effects Toggle */}
               <button 
                 onClick={() => handleToggleAudio({ soundEffectsEnabled: !audio.soundEffectsEnabled })}
                 className={cn(
@@ -241,12 +392,8 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
                   <p className="font-black text-[#4E2510] text-sm uppercase tracking-tight">Effets</p>
                   <p className="text-[9px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest">Sonores</p>
                 </div>
-                {audio.soundEffectsEnabled && (
-                  <motion.div layoutId="audio-active-1" className="absolute top-2 right-2 w-2 h-2 bg-voyage-primary rounded-full" />
-                )}
               </button>
 
-              {/* Music Toggle */}
               <button 
                 onClick={() => handleToggleAudio({ musicEnabled: !audio.musicEnabled })}
                 className={cn(
@@ -261,39 +408,7 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
                   <p className="font-black text-[#4E2510] text-sm uppercase tracking-tight">Musique</p>
                   <p className="text-[9px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest">De fond</p>
                 </div>
-                {audio.musicEnabled && (
-                  <motion.div layoutId="audio-active-2" className="absolute top-2 right-2 w-2 h-2 bg-voyage-accent rounded-full" />
-                )}
               </button>
-           </div>
-        </section>
-
-        {/* Achievements Section */}
-        <section className="space-y-5">
-           <h2 className="text-2xl font-black text-[#4E2510] px-2">Médailles & Succès</h2>
-           <div className="bg-white border border-[#E5D5B8] rounded-[40px] p-8 shadow-sm">
-              <div className="flex flex-col gap-8">
-                 {badges.map((badge, i) => (
-                   <div key={i} className="flex items-center gap-5 group">
-                      <div className={cn("w-20 h-20 rounded-[28px] flex items-center justify-center border-2 border-[#E5D5B8]/50 shadow-sm transition-all duration-300 group-hover:rotate-6", badge.count > 0 ? "bg-[#D4A43E]/5 border-[#D4A43E]/20" : "bg-gray-50 grayscale opacity-40")}>
-                         <badge.icon className={badge.count > 0 ? badge.color : "text-gray-400"} size={36} />
-                      </div>
-                      <div className="flex-grow space-y-3">
-                         <div className="flex justify-between items-end">
-                            <h4 className="font-black text-[#4E2510] text-lg">{badge.name}</h4>
-                            <span className="font-black text-[#D4A43E] text-xs bg-[#D4A43E]/10 px-2 py-0.5 rounded-md">{badge.count}/20</span>
-                         </div>
-                         <div className="h-3 w-full bg-[#F0F0F0] rounded-full overflow-hidden border border-gray-100">
-                            <motion.div 
-                              initial={{ width: 0 }}
-                              animate={{ width: `${(badge.count/20)*100}%` }}
-                              className="h-full bg-gradient-to-r from-[#D4A43E] to-[#F59E0B] rounded-full" 
-                            />
-                         </div>
-                      </div>
-                   </div>
-                 ))}
-              </div>
            </div>
         </section>
 

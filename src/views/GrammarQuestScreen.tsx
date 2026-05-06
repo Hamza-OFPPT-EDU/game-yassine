@@ -4,7 +4,11 @@ import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { useAudio } from '../hooks/useAudio';
 
-export default function GrammarQuestScreen() {
+interface GrammarQuestScreenProps {
+  onBack: () => void;
+}
+
+export default function GrammarQuestScreen({ onBack }: GrammarQuestScreenProps) {
   const { playSound } = useAudio();
   const stats = { xp: 1450, stars: 120, level: 4 };
 
@@ -51,7 +55,7 @@ export default function GrammarQuestScreen() {
 
   return (
     <div className="h-full w-full bg-white flex flex-col relative overflow-hidden">
-      <TopAppBar stats={stats} title="Exploration" />
+      <TopAppBar stats={stats} title="Exploration" onBack={onBack} />
       
       <main className="flex-grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 max-w-2xl mx-auto w-full relative z-10 scrollbar-hide">
         
