@@ -79,7 +79,7 @@ interface ProfileScreenProps {
   onShowBadges: () => void;
 }
 
-export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps) {
+export default function ProfileScreen({ onBack, onSettings, onShowBadges }: ProfileScreenProps) {
   const { session, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading } = useSupabaseProfile(session?.user?.id);
   const { badges: allBadges, earnedBadges, loading: badgesLoading } = useSupabaseBadges(session?.user?.id);
@@ -243,7 +243,15 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
         {/* Badges Section - Dynamic with Toggle */}
         <section className="space-y-6">
            <div className="flex justify-between items-center px-2">
-             <h2 className="text-2xl font-black text-[#4E2510]">Badges & Médailles</h2>
+             <div className="flex flex-col">
+               <h2 className="text-2xl font-black text-[#4E2510]">Badges & Médailles</h2>
+               <button 
+                 onClick={() => { playSound('click'); onShowBadges(); }}
+                 className="text-[10px] font-black text-[#D4A43E] uppercase tracking-widest text-left mt-1 hover:text-[#7B3F1A] transition-colors flex items-center gap-1"
+               >
+                 Voir tout le catalogue <ChevronRight size={10} />
+               </button>
+             </div>
              <span className="text-[10px] font-black text-[#D4A43E] bg-[#D4A43E]/10 px-3 py-1 rounded-full border border-[#D4A43E]/20">
                {earnedBadges.length} OBTENUS
              </span>
