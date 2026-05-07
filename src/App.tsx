@@ -329,6 +329,15 @@ export default function App() {
   };
 
   const renderScreen = () => {
+    // If the fullscreen prompt is showing and hasn't been dismissed yet, don't show the splash screen logic yet
+    if (showFullscreenPrompt) {
+      return (
+        <div className="h-screen w-full bg-[#1e0e06] flex items-center justify-center">
+          {/* We show the prompt background color to keep it seamless */}
+        </div>
+      );
+    }
+
     if (authLoading || (session && profileLoading)) {
       if (currentScreen === Screen.Splash) {
         return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} />;
@@ -485,7 +494,7 @@ export default function App() {
         <div className="grow overflow-hidden relative">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentScreen}
+              key={showFullscreenPrompt ? 'prompt' : currentScreen}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
