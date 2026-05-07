@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2, Award, Zap, Globe, Lock } from 'lucide-react';
-import { useSupabaseProfile, useSupabaseBadges } from '../hooks/useSupabase';
+import { useAuth, useSupabaseProfile, useSupabaseBadges } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
@@ -80,8 +80,9 @@ interface ProfileScreenProps {
 }
 
 export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps) {
-  const { profile, loading } = useSupabaseProfile();
-  const { badges: allBadges, earnedBadges, loading: badgesLoading } = useSupabaseBadges(profile?.id);
+  const { session, loading: authLoading } = useAuth();
+  const { profile, loading: profileLoading } = useSupabaseProfile(session?.user?.id);
+  const { badges: allBadges, earnedBadges, loading: badgesLoading } = useSupabaseBadges(session?.user?.id);
   const { settings: audio, updateSettings: updateAudio, playSound, saveToCloud } = useAudio();
   const [isSavingAudio, setIsSavingAudio] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -110,7 +111,7 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
     return allBadges.filter(b => b.category === activeCategory);
   }, [allBadges, activeCategory]);
 
-  if (loading) return (
+  if (authLoading || profileLoading) return (
     <div className="h-full w-full flex items-center justify-center bg-voyage-sand">
       <Loader2 className="animate-spin text-voyage-primary" size={40} />
     </div>
@@ -170,9 +171,12 @@ export default function ProfileScreen({ onBack, onSettings }: ProfileScreenProps
               <h1 className="text-4xl font-black text-[#4E2510] tracking-tight">
                 {profile?.full_name?.split(' ')[0] || 'Explorateur'}
               </h1>
+              <p className="text-[#7B3F1A]/60 font-bold text-sm tracking-wide">
+                {session?.user?.email || (profile?.username ? `${profile.username}@voyage.ma` : 'Explorateur des Savoirs')}
+              </p>
               <div className="inline-flex items-center gap-2 bg-[#D4A43E]/10 px-4 py-1.5 rounded-full border border-[#D4A43E]/20">
                 <Shield size={14} className="text-[#D4A43E]" />
-                <span className="font-black text-[#7B3F1A] uppercase tracking-[0.2em] text-[10px]">L'Explorateur des Savoirs</span>
+                <span className="font-black text-[#7B3F1A] uppercase tracking-[0.2em] text-[10px]">Niveau {profile?.level || 1}</span>
               </div>
            </div>
         </section>
