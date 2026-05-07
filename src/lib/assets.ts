@@ -27,21 +27,21 @@ export const fetchDynamicAssets = async (cityId?: string) => {
   const assets: Asset[] = [];
   
   try {
-    let query = supabase
+    // 1. Fetch City Assets (from challenges table)
+    let cityQuery = supabase
       .from('challenges')
       .select('illustration_url, cinematic_character, icon_name');
     
     if (cityId) {
-      // If it's a UUID, use eq. Otherwise, try matching slug/name
       const isUUID = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
       if (isUUID(cityId)) {
-        query = query.eq('id', cityId);
+        cityQuery = cityQuery.eq('id', cityId);
       } else {
-        query = query.or(`city_id.eq.${cityId},city_name_fr.ilike.${cityId}`);
+        cityQuery = cityQuery.or(`city_id.eq.${cityId},city_name_fr.ilike.${cityId}`);
       }
     }
 
-    const { data: cities } = await query;
+    const { data: cities } = await cityQuery;
 
     if (cities) {
       cities.forEach(city => {
@@ -56,53 +56,74 @@ export const fetchDynamicAssets = async (cityId?: string) => {
         }
       });
     }
+
+    // 2. Fetch Mission Assets
+    let missionQuery = supabase
+      .from('missions')
+      .select('id, city_id, cinematic_gif_url, cinematic_audio_url');
+
+    if (cityId) {
+      // If we have a cityId, we might need its UUID first if it's a name
+      let queryCityId = cityId;
+      const isUUID = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+      if (!isUUID(cityId)) {
+        const { data: cityData } = await supabase
+          .from('challenges')
+          .select('id')
+          .or(`city_id.eq.${cityId},city_name_fr.ilike.${cityId}`)
+          .single();
+        if (cityData) queryCityId = cityData.id;
+      }
+      missionQuery = missionQuery.or(`city_id.eq.${queryCityId},challenge_id.eq.${queryCityId}`);
+    }
+
+    const { data: missions } = await missionQuery;
+    if (missions) {
+      missions.forEach(m => {
+        if (m.cinematic_gif_url && m.cinematic_gif_url.startsWith('http')) {
+          assets.push({ url: m.cinematic_gif_url, type: 'image' });
+        }
+        if (m.cinematic_audio_url && m.cinematic_audio_url.startsWith('http')) {
+          assets.push({ url: m.cinematic_audio_url, type: 'audio' });
+        }
+      });
+    }
+
+    // 3. Fetch Question Assets (Illustrations)
+    let questionQuery = supabase
+      .from('questions')
+      .select('illustration_url, mission_id');
+
+    if (cityId && missions && missions.length > 0) {
+      const missionIds = missions.map(m => m.id);
+      questionQuery = questionQuery.in('mission_id', missionIds);
+    }
+
+    const { data: questions } = await questionQuery;
+    if (questions) {
+      questions.forEach(q => {
+        if (q.illustration_url && q.illustration_url.startsWith('http')) {
+          assets.push({ url: q.illustration_url, type: 'image' });
+        }
+      });
+    }
+
   } catch (err) {
     console.error('Error fetching dynamic assets:', err);
   }
 
-  return assets;
+  // Remove duplicates
+  const uniqueUrls = new Set<string>();
+  return assets.filter(asset => {
+    if (uniqueUrls.has(asset.url)) return false;
+    uniqueUrls.add(asset.url);
+    return true;
+  });
 };
 
 export const fetchCityMissionAssets = async (cityId: string) => {
-  const assets: Asset[] = [];
-  
-  try {
-    // Resolve UUID if needed
-    let queryCityId = cityId;
-    const isUUID = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
-    
-    if (!isUUID(cityId)) {
-      const { data: cityData } = await supabase
-        .from('challenges')
-        .select('id')
-        .or(`city_id.eq.${cityId},city_name_fr.ilike.${cityId}`)
-        .single();
-      
-      if (cityData) {
-        queryCityId = cityData.id;
-      }
-    }
-
-    const { data: missions } = await supabase
-      .from('missions')
-      .select('cinematic_gif_url, cinematic_audio_url')
-      .or(`city_id.eq.${queryCityId},challenge_id.eq.${queryCityId}`);
-
-    if (missions) {
-      missions.forEach(mission => {
-        if (mission.cinematic_gif_url && mission.cinematic_gif_url.startsWith('http')) {
-          assets.push({ url: mission.cinematic_gif_url, type: 'image' });
-        }
-        if (mission.cinematic_audio_url && mission.cinematic_audio_url.startsWith('http')) {
-          assets.push({ url: mission.cinematic_audio_url, type: 'audio' });
-        }
-      });
-    }
-  } catch (err) {
-    console.error('Error fetching mission assets:', err);
-  }
-
-  return assets;
+  // Now redundant as fetchDynamicAssets handles it, but kept for backward compatibility
+  return fetchDynamicAssets(cityId);
 };
 
 export const getCoreAssets = () => {
@@ -121,3 +142,4 @@ export const getAllAssets = (dynamicAssets: Asset[] = []) => {
   const core = getCoreAssets();
   return [...assets, ...core];
 };
+

@@ -384,7 +384,8 @@ export function useSupabaseQuestions(missionId: string) {
             feedbackNegative: q.feedback_negative_fr,
             presentation_fr: q.presentation_fr,
             explanation_fr: q.explanation_fr,
-            context_dialogue: q.context_dialogue
+            context_dialogue: q.context_dialogue,
+            illustration_url: q.illustration_url
           };
         });
         setQuestions(mappedQuestions);
