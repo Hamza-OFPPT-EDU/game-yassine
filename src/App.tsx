@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from './lib/supabase';
 import { useSupabaseProfile } from './hooks/useSupabase';
 import { motion, AnimatePresence } from 'motion/react';
@@ -145,34 +145,37 @@ export default function App() {
     }
   }, [profile, profileLoading]);
 
-  // Handle Global Intro Music (Splash & Welcome)
+  const introAudioRef = useRef<HTMLAudioElement | null>(null);
+  
+  // Initialize and handle Global Background Music (intro_music)
   useEffect(() => {
-    let introAudio: HTMLAudioElement | null = null;
-    const isIntroScreen = [Screen.Splash, Screen.Welcome].includes(currentScreen);
-
-    if (isIntroScreen) {
-      introAudio = new Audio('/audio/intro_music.mp3');
-      introAudio.loop = true;
-      introAudio.volume = 0.6;
+    if (!introAudioRef.current) {
+      introAudioRef.current = new Audio('/audio/intro_music.mp3');
+      introAudioRef.current.loop = true;
       
       const playAudio = () => {
-        introAudio?.play().catch(() => {
-          // If blocked, wait for next click
+        introAudioRef.current?.play().catch(() => {
           window.addEventListener('click', playAudio, { once: true });
         });
       };
-      
       playAudio();
     }
 
     return () => {
-      if (introAudio) {
-        introAudio.pause();
-        introAudio.src = "";
-        introAudio = null;
+      if (introAudioRef.current) {
+        introAudioRef.current.pause();
+        introAudioRef.current.src = "";
+        introAudioRef.current = null;
       }
-      window.removeEventListener('click', () => {});
     };
+  }, []);
+
+  // Sync volume based on screen changes without restarting
+  useEffect(() => {
+    if (introAudioRef.current) {
+      const isIntroScreen = [Screen.Splash, Screen.Welcome].includes(currentScreen);
+      introAudioRef.current.volume = isIntroScreen ? 0.6 : 0.05;
+    }
   }, [currentScreen]);
 
   /** Navigate to Challenge. */
