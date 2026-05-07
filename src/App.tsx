@@ -145,6 +145,36 @@ export default function App() {
     }
   }, [profile, profileLoading]);
 
+  // Handle Global Intro Music (Splash & Welcome)
+  useEffect(() => {
+    let introAudio: HTMLAudioElement | null = null;
+    const isIntroScreen = [Screen.Splash, Screen.Welcome].includes(currentScreen);
+
+    if (isIntroScreen) {
+      introAudio = new Audio('/audio/intro_music.mp3');
+      introAudio.loop = true;
+      introAudio.volume = 0.6;
+      
+      const playAudio = () => {
+        introAudio?.play().catch(() => {
+          // If blocked, wait for next click
+          window.addEventListener('click', playAudio, { once: true });
+        });
+      };
+      
+      playAudio();
+    }
+
+    return () => {
+      if (introAudio) {
+        introAudio.pause();
+        introAudio.src = "";
+        introAudio = null;
+      }
+      window.removeEventListener('click', () => {});
+    };
+  }, [currentScreen]);
+
   /** Navigate to Challenge. */
   const goToChallenge = () => {
     setRedoQuestionIds(undefined);
