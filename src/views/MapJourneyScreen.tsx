@@ -88,7 +88,7 @@ export default function MapJourneyScreen({
           transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
           className="w-16 h-16 rounded-full border-[6px] border-[#7B3F1A]/20 border-t-[#D4A43E]"
         />
-        <p className="font-headline font-black text-[#7B3F1A] uppercase tracking-widest text-xs opacity-70">
+        <p className="font-headline font-black text-[#7B3F1A] uppercase tracking-widest text-[11px] opacity-70">
           Préparation du voyage...
         </p>
       </div>
@@ -129,7 +129,7 @@ export default function MapJourneyScreen({
                   top: `${8 + Math.random() * 84}%`,
                   left: `${5 + Math.random() * 90}%`,
                   animationDelay: `${Math.random() * 2}s`,
-                  fontSize: `${10 + Math.random() * 14}px`,
+                  fontSize: `${9.5 + Math.random() * 13.3}px`,
                 }}
               >★</motion.div>
             ))}
@@ -152,13 +152,13 @@ export default function MapJourneyScreen({
                   </motion.div>
 
                   <div className="space-y-2.5">
-                    <p className="text-[#D4A43E] font-black uppercase tracking-[0.3em] text-[13px]">
+                    <p className="text-[#D4A43E] font-black uppercase tracking-[0.3em] text-[12px]">
                       Le Voyage des Compétences
                     </p>
-                    <h1 className="text-[43px] font-headline font-black text-white tracking-tight">
+                    <h1 className="text-[41px] font-headline font-black text-white tracking-tight">
                       {cinematicCity.name}
                     </h1>
-                    <p className="arabic-font text-[#C9A96E] text-lg">{cinematicCity.arabicName}</p>
+                    <p className="arabic-font text-[#C9A96E] text-[17px]">{cinematicCity.arabicName}</p>
                   </div>
 
                   <div className="space-y-6">
@@ -205,7 +205,7 @@ export default function MapJourneyScreen({
 
                       <div className="flex flex-col items-center gap-2 mb-5">
                         <div className="h-1 w-12 bg-voyage-accent/40 rounded-full" />
-                        <p className="text-voyage-accent font-black text-[11px] uppercase tracking-[0.5em] opacity-90">Guide de l'aventure</p>
+                        <p className="text-voyage-accent font-black text-[10px] uppercase tracking-[0.5em] opacity-90">Guide de l'aventure</p>
                       </div>
 
                       <motion.div
@@ -218,7 +218,7 @@ export default function MapJourneyScreen({
                             transition: { staggerChildren: 0.015 }
                           }
                         }}
-                        className="text-white/95 text-xl font-medium leading-[1.8] italic font-serif"
+                        className="text-white/95 text-[19px] font-medium leading-[1.8] italic font-serif"
                       >
                         {cinematicCity.cinematicIntro.split('').map((char, index) => (
                           <motion.span
@@ -242,7 +242,7 @@ export default function MapJourneyScreen({
                       playSound('click');
                       const c = cinematicCity; setCinematicCity(null); onSelectCity(c);
                     }}
-                    className="flex items-center justify-center gap-3 text-white text-lg py-4 px-9 rounded-2xl font-black shadow-xl hover:brightness-110 active:scale-95 transition-all w-full"
+                    className="flex items-center justify-center gap-3 text-white text-[17px] py-4 px-9 rounded-2xl font-black shadow-xl hover:brightness-110 active:scale-95 transition-all w-full"
                     style={{
                       background: `linear-gradient(135deg, ${getCityTheme(cinematicCity).colorLight || getCityTheme(cinematicCity).color}, ${getCityTheme(cinematicCity).colorDark || getCityTheme(cinematicCity).color})`,
                       boxShadow: `0 8px 25px ${getCityTheme(cinematicCity).color}50`,
@@ -383,11 +383,11 @@ export default function MapJourneyScreen({
                   }}
                 >
                   {/* City Illustration / Banner */}
-                  <div className="h-44 w-full relative overflow-hidden">
+                  <div className="h-50  w-full relative overflow-hidden">
                     <img
                       src={optimizeSupabaseUrl(displayCity.image || 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/fallback-city.jpg', 60, 80)}
                       alt={displayCity.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-fill"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
 
@@ -416,27 +416,27 @@ export default function MapJourneyScreen({
                     <div className="flex justify-between items-start mb-6">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.2em]">{displayCity.headline || displayCity.focus}</span>
+                          <span className="text-[8.5px] font-black text-[#D4A43E] uppercase tracking-[0.2em]">{displayCity.headline || displayCity.focus}</span>
                           <div className="w-1.5 h-1.5 rounded-full bg-[#D4A43E] animate-pulse" />
                           {displayCity.acteTitle && (
                             <>
                               <div className="w-px h-2 bg-[#D4A43E]/30" />
-                              <span className="text-[10px] font-bold text-[#7B3F1A]/60 italic">{displayCity.acteTitle}</span>
+                              <span className="text-[9.5px] font-bold text-[#7B3F1A]/60 italic">{displayCity.acteTitle}</span>
                             </>
                           )}
                         </div>
-                        <h2 className="text-3xl font-black text-[#4E2510] tracking-tight leading-none">
+                        <h2 className="text-[28px] font-black text-[#4E2510] tracking-tight leading-none">
                           {displayCity.name}
                         </h2>
-                        <p className="arabic-font text-lg font-black text-[#7B3F1A] opacity-70">
+                        <p className="arabic-font text-[17px] font-black text-[#7B3F1A] opacity-70">
                           {displayCity.arabicHeadline || displayCity.arabicName}
                         </p>
                       </div>
 
                       <div className="flex flex-col items-end">
                         <div className="bg-white/50 border border-[#E5D5B8] px-3 py-1.5 rounded-2xl shadow-sm text-right">
-                          <span className="block text-[8px] font-black text-[#7B3F1A]/50 uppercase tracking-widest">Progression</span>
-                          <span className="font-black text-lg text-[#D4A43E]">
+                          <span className="block text-[7.5px] font-black text-[#7B3F1A]/50 uppercase tracking-widest">Progression</span>
+                          <span className="font-black text-[17px] text-[#D4A43E]">
                             {Math.round((displayCity.stepNum / displayCity.totalSteps) * 100)}%
                           </span>
                         </div>
@@ -445,29 +445,60 @@ export default function MapJourneyScreen({
 
                     {/* Description Section */}
                     <div className="bg-[#7B3F1A]/5 rounded-[24px] p-5 border border-[#7B3F1A]/10 mb-6">
-                      <p className="text-[#4E2510]/90 text-sm leading-relaxed font-medium italic">
+                      <p className="text-[#4E2510]/90 text-[13px] leading-relaxed font-medium italic">
                         "{displayCity.description || displayCity.arabicDescription}"
                       </p>
                     </div>
 
-                    {/* Missions List */}
+                    {/* Missions List Toggle */}
                     <div className="mb-8">
-                      <div className="flex justify-between items-center mb-4 px-1">
-                        <h4 className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-[0.3em]">{displayCity.missionsTitle || "Missions Disponibles"}</h4>
-                        <span className="text-[10px] font-black text-[#D4A43E]">{displayCity.stepNum}/{displayCity.totalSteps}</span>
-                      </div>
+                      <button
+                        onClick={() => { playSound('click'); setIsMissionsExpanded(!isMissionsExpanded); }}
+                        className="w-full flex justify-between items-center px-4 py-3 bg-[#7B3F1A]/5 hover:bg-[#7B3F1A]/10 border border-[#7B3F1A]/10 rounded-2xl transition-all group"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={cn(
+                            "p-2 rounded-xl transition-colors",
+                            isMissionsExpanded ? "bg-[#D4A43E] text-white" : "bg-white text-[#D4A43E]"
+                          )}>
+                            <Sparkles size={16} />
+                          </div>
+                          <div className="text-left">
+                            <h4 className="text-[9.5px] font-black text-[#7B3F1A] uppercase tracking-[0.2em] leading-none mb-1">
+                              {displayCity.missionsTitle || "Missions Disponibles"}
+                            </h4>
+                            <p className="text-[8.5px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest">
+                              {displayCity.stepNum}/{displayCity.totalSteps} complétées
+                            </p>
+                          </div>
+                        </div>
+                        <motion.div
+                          animate={{ rotate: isMissionsExpanded ? 180 : 0 }}
+                          className="text-[#7B3F1A]/30 group-hover:text-[#7B3F1A]"
+                        >
+                          <ArrowDown size={20} />
+                        </motion.div>
+                      </button>
 
-                      <div className={cn(
-                        "space-y-2 overflow-y-auto pr-1 scrollbar-hide transition-all duration-300",
-                        "max-h-[35vh]"
-                      )}>
-                        <MissionsList
-                          city={displayCity}
-                          completedMissions={completedMissions}
-                          cityTheme={displayCityTheme}
-                          onSelectMission={(mission) => handleSelectMission(displayCity, mission)}
-                        />
-                      </div>
+                      <AnimatePresence>
+                        {isMissionsExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pt-4 space-y-2 max-h-[35vh] overflow-y-auto pr-1 scrollbar-hide">
+                              <MissionsList
+                                city={displayCity}
+                                completedMissions={completedMissions}
+                                cityTheme={displayCityTheme}
+                                onSelectMission={(mission) => handleSelectMission(displayCity, mission)}
+                              />
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
 
                     {/* CTA Button */}
@@ -567,7 +598,7 @@ const CityNode: React.FC<{
       )}
 
       {/* Main Node Orb */}
-      <div 
+      <div
         className="relative cursor-pointer group"
         onClick={onSelect}
       >
@@ -586,8 +617,8 @@ const CityNode: React.FC<{
           <div className="relative z-10 flex items-center justify-center w-full h-full p-2">
             {city.iconName ? (
               city.iconName.startsWith('http') ? (
-                <img 
-                  src={resolveAssetUrl(city.iconName, '')} 
+                <img
+                  src={resolveAssetUrl(city.iconName, '')}
                   alt={city.name}
                   className={cn(
                     "w-full h-full object-contain transition-transform duration-500 group-hover:scale-110",
@@ -630,7 +661,7 @@ const CityNode: React.FC<{
 
         {/* Completion Checkmark */}
         {isCompleted && (
-          <motion.div 
+          <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             className="absolute -bottom-1 -right-1 w-7 h-7 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center shadow-md z-20"
@@ -643,13 +674,13 @@ const CityNode: React.FC<{
       {/* City Labels */}
       <div className="mt-4 text-center">
         <h3 className={cn(
-          "text-sm font-black tracking-tight leading-none mb-1 uppercase",
+          "text-[13px] font-black tracking-tight leading-none mb-1 uppercase",
           isLocked ? "text-slate-400" : "text-slate-900"
         )}>
           {city.name}
         </h3>
         <p className={cn(
-          "arabic-font text-xs font-bold",
+          "arabic-font text-[11px] font-bold",
           isLocked ? "text-slate-300" : "text-voyage-accent/80"
         )}>
           {city.arabicName}
@@ -661,7 +692,7 @@ const CityNode: React.FC<{
         <motion.div
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute -top-6 bg-[#D4A43E] text-white text-[8px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 whitespace-nowrap z-30"
+          className="absolute -top-6 bg-[#D4A43E] text-white text-[7.5px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 whitespace-nowrap z-30"
         >
           MISSION EN COURS
         </motion.div>
@@ -685,7 +716,7 @@ const MissionsList: React.FC<{
     if (loading) return (
       <div className="flex flex-col items-center justify-center py-10 gap-3">
         <Loader2 className="animate-spin text-[#D4A43E]" size={24} />
-        <span className="text-[10px] font-black text-[#7B3F1A]/40 uppercase tracking-widest">Chargement des défis...</span>
+        <span className="text-[9.5px] font-black text-[#7B3F1A]/40 uppercase tracking-widest">Chargement des défis...</span>
       </div>
     );
 
@@ -725,7 +756,7 @@ const MissionsList: React.FC<{
 
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className={cn('text-sm font-black', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]')}>
+                    <p className={cn('text-[13px] font-black', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]')}>
                       {mission.title_fr}
                     </p>
                     {mission.is_bonus && (
@@ -733,10 +764,10 @@ const MissionsList: React.FC<{
                     )}
                   </div>
                   <div className="flex items-center gap-3 mt-0.5">
-                    <span className="text-[9px] font-black text-[#D4A43E] uppercase tracking-wider flex items-center gap-1">
+                    <span className="text-[8.5px] font-black text-[#D4A43E] uppercase tracking-wider flex items-center gap-1">
                       <Star size={10} fill="#D4A43E" /> +{mission.xp_reward} XP
                     </span>
-                    <span className="text-[9px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest">
+                    <span className="text-[8.5px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest">
                       {mission.estimated_time || '5 min'}
                     </span>
                   </div>
@@ -762,7 +793,7 @@ const MissionsList: React.FC<{
         }) : (
           <div className="py-12 flex flex-col items-center justify-center border-2 border-dashed border-[#E5D5B8] rounded-[30px] opacity-40">
             <MapPin size={32} className="text-[#7B3F1A] mb-2" />
-            <p className="text-xs font-black text-[#7B3F1A] uppercase tracking-widest">
+            <p className="text-[11px] font-black text-[#7B3F1A] uppercase tracking-widest">
               En attente d'expédition...
             </p>
           </div>

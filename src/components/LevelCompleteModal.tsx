@@ -5,12 +5,11 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Award, ArrowRight, MapPin, RotateCcw, Star, Clock, SkipForward, ChevronDown, Trophy, Users, PartyPopper } from 'lucide-react';
+import { Award, ArrowRight, MapPin, RotateCcw, Star, Clock, SkipForward, ChevronDown, Trophy, Users, PartyPopper, CheckCircle2, XCircle, User, Loader2 } from 'lucide-react';
 import { type MissionCompletionSummary } from '../types';
 import { cn } from '../lib/utils';
-import { useSupabaseProfile } from '../hooks/useSupabase';
+import { useSupabaseProfile, useSupabaseMissionLeaderboard } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
-import MissionLeaderboard from './MissionLeaderboard';
 
 interface LevelCompleteModalProps {
   summary: MissionCompletionSummary | null;
@@ -22,8 +21,8 @@ interface LevelCompleteModalProps {
 
 export default function LevelCompleteModal({ summary, onReplayMission, onBackToCity, onRedoIncorrect, onContinue }: LevelCompleteModalProps) {
   const { profile } = useSupabaseProfile();
+  const { leaderboard, loading: loadingLeaderboard } = useSupabaseMissionLeaderboard(summary?.missionId || '');
   const { playSound } = useAudio();
-  const [currentView, setCurrentView] = useState<'results' | 'leaderboard'>('results');
   
   const totalXp = summary?.totalXp ?? 0;
   const totalStars = summary?.totalStars ?? 0;
@@ -71,9 +70,9 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
 
   return (
     <div className="fixed inset-0 z-[100] bg-amber-50/60 backdrop-blur-md px-4 py-5 sm:px-6 flex items-center justify-center">
-      {/* Confettis si 100% ou Leaderboard */}
+      {/* Confettis si 100% */}
       <AnimatePresence>
-        {(isPerfect || currentView === 'leaderboard') && (
+        {isPerfect && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -122,239 +121,122 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.8),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(196,152,93,0.14),transparent_34%)]" />
         
         {/* Navigation Tabs */}
-        <div className="relative z-10 px-6 pt-6 flex justify-between items-center">
-          <div className="flex bg-[#E5D5B8]/20 p-1 rounded-2xl border border-[#E5D5B8]/30 backdrop-blur-md">
-            <button
-              onClick={() => { playSound('click'); setCurrentView('results'); }}
-              className={cn(
-                "flex items-center gap-2 px-6 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all",
-                currentView === 'results' ? "bg-white text-[#7B3F1A] shadow-sm" : "text-[#7B3F1A]/60 hover:text-[#7B3F1A]"
-              )}
-            >
-              <Award size={14} />
-              Résultats
-            </button>
-            <button
-              onClick={() => { playSound('click'); setCurrentView('leaderboard'); }}
-              className={cn(
-                "flex items-center gap-2 px-6 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all",
-                currentView === 'leaderboard' ? "bg-white text-[#7B3F1A] shadow-sm" : "text-[#7B3F1A]/60 hover:text-[#7B3F1A]"
-              )}
-            >
-              <Trophy size={14} />
-              Classement
-            </button>
-          </div>
-
+        {/* Header Summary */}
+        <div className="relative z-10 px-6 pt-8 pb-4 flex flex-col items-center text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex items-center gap-2 px-4 py-2 bg-voyage-primary text-white rounded-full font-black text-[10px] uppercase tracking-widest shadow-lg shadow-voyage-primary/20"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="mb-4 p-4 bg-voyage-primary/10 rounded-full border-2 border-voyage-primary/20"
           >
-            <PartyPopper size={14} />
-            Mission Accomplie !
+            <Trophy size={48} className="text-voyage-primary" />
           </motion.div>
+          <h2 className="text-3xl font-black text-[#24160D] tracking-tight mb-2">
+            Mission Accomplie !
+          </h2>
+          <p className="text-[#A08363] font-black uppercase tracking-[0.2em] text-[11px]">
+            {summary?.missionTitle || 'Résultats du voyage'}
+          </p>
         </div>
 
-        <div className="relative flex-grow overflow-y-auto scrollbar-hide">
-          <AnimatePresence mode="wait">
-            {currentView === 'results' ? (
-              <motion.div
-                key="results"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                className="px-6 pb-28 pt-8 sm:px-8 lg:px-10"
-              >
-                <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-start mb-10">
-                  <div className="space-y-6">
-                    <div className="space-y-3">
-                      <p className="text-[11px] font-black uppercase tracking-[0.34em] text-[#A08363]">Mission terminée</p>
-                      <h2 className="max-w-2xl text-[27px] sm:text-[32px] lg:text-[43px] font-black tracking-tight text-[#24160D]">
-                        {summary?.missionTitle || 'Mission terminée'}
-                      </h2>
-                      <div className="flex flex-wrap items-center gap-3 text-base font-semibold text-[#6A5543]">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1.5 border border-white/70 shadow-sm backdrop-blur-md">
-                          <MapPin size={12} className="text-[#A77C55]" />
-                          {summary?.cityName || 'Ville'}
-                        </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-[#F4EADF]/80 px-3 py-1.5 border border-[#E8D9C8] shadow-sm">
-                          <Star size={12} className="fill-[#B58B60] text-[#B58B60]" />
-                          {summary?.correctCount ?? 0}/{summary?.totalQuestions ?? 0} réponses correctes
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="grid gap-4 sm:grid-cols-3">
-                      <StatTile label="Score final" value={countedXp} suffix="XP" accent="from-[#B58B60] to-[#8A6A49]" />
-                      <StatTile label="Étoiles gagnées" value={countedStars} suffix="★" accent="from-[#8F6B47] to-[#C9A475]" />
-                      <StatTile label="Réussite" value={countedRate} suffix="%" accent="from-[#A87D52] to-[#D1B08C]" />
-                    </div>
-                  </div>
-
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.96, y: 8 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ delay: 0.08 }}
-                    className="rounded-[2rem] border border-white/70 bg-white/55 p-5 shadow-[0_18px_40px_rgba(69,49,33,0.08)] backdrop-blur-xl overflow-hidden relative"
-                  >
-                    {isPerfect && (
-                      <motion.div
-                        initial={{ x: '-100%' }}
-                        animate={{ x: '100%' }}
-                        transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none"
-                      />
-                    )}
-
-                    <div className="relative flex items-center justify-between gap-4">
-                      <div>
-                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#A08363]">Taux de réussite</p>
-                        <p className="mt-1 text-[20px] font-bold text-[#27170E]">{countedRate}% des réponses validées</p>
-                      </div>
-                      <div className="relative h-[151px] w-[151px] shrink-0">
-                        <svg viewBox={`0 0 ${ringSize} ${ringSize}`} className="h-full w-full -rotate-90">
-                          <circle
-                            cx={ringSize / 2}
-                            cy={ringSize / 2}
-                            r={ringRadius}
-                            fill="none"
-                            stroke="rgba(184,160,131,0.18)"
-                            strokeWidth={ringStroke}
-                          />
-                          <motion.circle
-                            cx={ringSize / 2}
-                            cy={ringSize / 2}
-                            r={ringRadius}
-                            fill="none"
-                            stroke="url(#successRing)"
-                            strokeWidth={ringStroke}
-                            strokeLinecap="round"
-                            strokeDasharray={ringCircumference}
-                            strokeDashoffset={ringOffset}
-                            animate={isPerfect ? { filter: ['drop-shadow(0 0 0px #D1B08C)', 'drop-shadow(0 0 12px #D1B08C)', 'drop-shadow(0 0 0px #D1B08C)'] } : {}}
-                            transition={isPerfect ? { duration: 2, repeat: Infinity } : {}}
-                          />
-                          <defs>
-                            <linearGradient id="successRing" x1="0%" y1="0%" x2="100%" y2="100%">
-                              <stop offset="0%" stopColor="#D1B08C" />
-                              <stop offset="100%" stopColor="#8A6A49" />
-                            </linearGradient>
-                          </defs>
-                        </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                          <span className="text-[40px] font-black tracking-tight text-[#22140D]">{countedRate}</span>
-                          <span className="text-[11px] font-black uppercase tracking-[0.28em] text-[#9B7B5D]">réussite</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
+        <div className="relative flex-grow overflow-y-auto scrollbar-hide px-6 pb-40">
+          <div className="max-w-3xl mx-auto space-y-8">
+            
+            {/* Score Section */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-6 rounded-[2rem] shadow-sm text-center">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A08363] mb-2">Score Obtenu</p>
+                <div className="flex items-baseline justify-center gap-2">
+                  <span className="text-5xl font-black text-voyage-primary">{countedXp}</span>
+                  <span className="text-lg font-black text-voyage-primary/60">XP</span>
                 </div>
-
-                <div className="mb-4 flex items-end justify-between gap-4">
-                  <div>
-                    <p className="text-[11px] font-black uppercase tracking-[0.34em] text-[#A08363]">Récapitulatif détaillé</p>
-                    <h3 className="mt-2 text-[21px] font-black tracking-tight text-[#24160D]">Une carte par question</h3>
-                  </div>
-                  <p className="hidden sm:block text-base font-semibold text-[#6D5948]">
-                    {summary?.questions.length ?? 0} éléments analysés
-                  </p>
+              </div>
+              
+              <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-6 rounded-[2rem] shadow-sm text-center">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A08363] mb-2">Précision</p>
+                <div className="flex items-baseline justify-center gap-2">
+                  <span className="text-5xl font-black text-amber-600">{countedRate}</span>
+                  <span className="text-lg font-black text-amber-600/60">%</span>
                 </div>
+              </div>
+            </div>
 
-                <div className="space-y-4">
-                  {(summary?.questions || []).map((questionResult, index) => {
-                    const isSkipped = questionResult.isSkipped;
-                    const isTimedOut = questionResult.isTimedOut;
-                    const statusColor = isSkipped || isTimedOut ? 'bg-blue-500/10 text-blue-700' : (questionResult.isCorrect ? 'bg-emerald-500/10 text-emerald-700' : 'bg-rose-500/10 text-rose-700');
-                    const statusText = isSkipped ? 'Passée' : (isTimedOut ? 'Temps écoulé' : (questionResult.isCorrect ? 'Correct' : 'À revoir'));
-                    const isExpanded = expandedQuestionId === questionResult.questionId;
-                    
+            {/* Ranking Section */}
+            <div className="bg-white/40 backdrop-blur-md rounded-[2.5rem] border border-white/60 shadow-lg overflow-hidden">
+              <div className="px-6 py-4 border-b border-[#E5D5B8]/30 bg-white/30">
+                <h3 className="text-sm font-black text-[#24160D] uppercase tracking-widest flex items-center gap-2">
+                  <Trophy size={16} className="text-amber-500" />
+                  Top 5 - Classement Mondial
+                </h3>
+              </div>
+              
+              {loadingLeaderboard ? (
+                <div className="p-8 flex justify-center">
+                  <Loader2 className="animate-spin text-voyage-primary" />
+                </div>
+              ) : (
+                <div className="divide-y divide-[#E5D5B8]/20">
+                  {leaderboard.slice(0, 5).map((player, idx) => {
+                    const isMe = player.id === profile?.id;
                     return (
-                      <motion.article
-                        key={questionResult.questionId}
-                        layout
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.05 + index * 0.05 }}
-                        className="rounded-[1.7rem] border border-white/75 bg-white/60 overflow-hidden backdrop-blur-xl transition-all group cursor-pointer"
-                        onClick={() => setExpandedQuestionId(isExpanded ? null : questionResult.questionId)}
-                      >
-                        <div className="p-5">
-                          <div className="flex flex-wrap items-start justify-between gap-4">
-                            <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.28em] text-[#9B7B5D]">
-                              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#F2E8DA] text-[#6C5036] font-black">
-                                {index + 1}
-                              </span>
-                              <span>{questionResult.questionType.replace('-', ' ')}</span>
-                            </div>
-                            <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em] ${statusColor} flex items-center gap-1.5`}>
-                              {isTimedOut && <Clock size={12} />}
-                              {isSkipped && <SkipForward size={12} />}
-                              {statusText}
-                            </span>
-                          </div>
-
-                          <h4 className="mt-4 text-[18px] font-semibold leading-relaxed text-[#23150D] sm:text-[19px]">
-                            {questionResult.question}
-                          </h4>
-
-                          <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-                            <div className="flex flex-wrap items-center gap-3 text-base font-black text-[#6D5037]">
-                              {!isSkipped && !isTimedOut && (
-                                <>
-                                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFF8F0] px-3 py-1.5 border border-[#E6D8C8]">
-                                    <Star size={12} className="fill-[#B58B60] text-[#B58B60]" />
-                                    +{questionResult.starsEarned}
-                                  </span>
-                                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFF8F0] px-3 py-1.5 border border-[#E6D8C8]">
-                                    +{questionResult.xpEarned} XP
-                                  </span>
-                                </>
-                              )}
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <ChevronDown size={16} className={cn("text-[#A08363] transition-transform", isExpanded && "rotate-180")} />
-                            </div>
-                          </div>
-
-                          <AnimatePresence>
-                            {isExpanded && (
-                              <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                exit={{ opacity: 0, height: 0 }}
-                                className="overflow-hidden mt-6 pt-6 border-t border-[#E9DDCF] space-y-4"
-                              >
-                                {!isSkipped && !isTimedOut && (
-                                  <div className="grid gap-3 md:grid-cols-2">
-                                    <AnswerPanel label="Votre réponse" value={questionResult.givenAnswer} muted />
-                                    <AnswerPanel label="Réponse correcte" value={questionResult.correctAnswer} />
-                                  </div>
-                                )}
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
+                      <div key={player.id} className={cn("flex items-center gap-4 px-6 py-3", isMe && "bg-voyage-primary/5")}>
+                        <span className="w-6 text-sm font-black text-[#7B3F1A]/40">#{idx + 1}</span>
+                        <div className="relative">
+                          <img src={player.avatar} className="w-10 h-10 rounded-xl border border-white" alt={player.name} />
+                          {isMe && <div className="absolute -top-1 -right-1 w-3 h-3 bg-voyage-primary rounded-full border border-white" />}
                         </div>
-                      </motion.article>
+                        <div className="flex-grow">
+                          <p className={cn("text-sm font-black", isMe ? "text-voyage-primary" : "text-[#4E2510]")}>
+                            {player.name} {isMe && "(Toi)"}
+                          </p>
+                          <p className="text-[9px] font-bold text-[#A08363] uppercase tracking-widest">Niveau {player.level}</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-sm font-black text-[#24160D]">{player.score.toLocaleString()} XP</span>
+                        </div>
+                      </div>
                     );
                   })}
                 </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="leaderboard"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                className="px-6 pb-28 pt-8 sm:px-8 lg:px-10 max-w-3xl mx-auto w-full"
-              >
-                <MissionLeaderboard 
-                   missionId={summary?.missionId || ''} 
-                   currentUserId={profile?.id} 
-                 />
-              </motion.div>
-            )}
-          </AnimatePresence>
+              )}
+            </div>
+
+            {/* Questions Section */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between px-2">
+                <h3 className="text-sm font-black text-[#24160D] uppercase tracking-widest">Détail des questions</h3>
+                <span className="text-[10px] font-black text-[#A08363] uppercase tracking-widest">{summary?.correctCount}/{summary?.totalQuestions} Correctes</span>
+              </div>
+              
+              <div className="grid gap-3">
+                {summary?.questions.map((q, idx) => (
+                  <div 
+                    key={q.questionId}
+                    className="flex items-center gap-4 p-4 bg-white/60 backdrop-blur-md rounded-2xl border border-white/80 shadow-sm"
+                  >
+                    <div className={cn(
+                      "shrink-0 w-8 h-8 rounded-lg flex items-center justify-center",
+                      q.isCorrect ? "bg-emerald-100 text-emerald-600" : "bg-rose-100 text-rose-600"
+                    )}>
+                      {q.isCorrect ? <CheckCircle2 size={18} /> : <XCircle size={18} />}
+                    </div>
+                    <div className="flex-grow">
+                      <p className="text-[13px] font-bold text-[#24160D] leading-tight">
+                        {q.question}
+                      </p>
+                    </div>
+                    {!q.isCorrect && (
+                      <button 
+                        onClick={() => onRedoIncorrect([q.questionId])}
+                        className="text-[9px] font-black uppercase tracking-widest text-voyage-primary bg-voyage-primary/10 px-3 py-1.5 rounded-lg hover:bg-voyage-primary/20 transition-colors"
+                      >
+                        Revoir
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="absolute inset-x-0 bottom-0 border-t border-white/40 bg-[linear-gradient(180deg,rgba(255,250,243,0.62),rgba(248,240,230,0.95))] px-6 py-4 backdrop-blur-2xl sm:px-8 lg:px-10 z-20">
