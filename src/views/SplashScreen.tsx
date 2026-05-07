@@ -131,12 +131,17 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
                 />
               ))}
 
-              <div className="w-28 h-28 rounded-[32px] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex items-center justify-center relative border-4 border-[#E5D5B8] overflow-hidden group">
+              <div className="w-28 h-28 rounded-[32px] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex items-center justify-center relative border-4 border-[#E5D5B8] overflow-hidden group p-4">
                 <motion.div
                   animate={{ rotate: [0, 5, -5, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="w-full h-full flex items-center justify-center"
                 >
-                  <Map className="text-[#7B3F1A]" size={56} strokeWidth={2.5} />
+                  <img 
+                    src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.png" 
+                    alt="Logo"
+                    className="w-full h-full object-contain"
+                  />
                 </motion.div>
                 
                 {/* Shine effect */}
