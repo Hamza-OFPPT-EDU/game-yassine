@@ -34,6 +34,39 @@ export default function LeagueScreen({ onSelectLeague, onCreateLeague, onBack }:
 
   return (
     <div className="flex flex-col h-full bg-white relative overflow-hidden">
+      {/* Celebration Effect */}
+      <div className="fixed inset-0 pointer-events-none z-[100]">
+        {[...Array(25)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ 
+              y: -20, 
+              x: Math.random() * window.innerWidth,
+              rotate: 0,
+              opacity: 1 
+            }}
+            animate={{
+              y: window.innerHeight + 20,
+              x: Math.random() * window.innerWidth + (Math.random() - 0.5) * 200,
+              rotate: Math.random() * 720,
+              opacity: 0
+            }}
+            transition={{
+              duration: 4 + Math.random() * 2,
+              delay: Math.random() * 0.5,
+              ease: 'easeOut'
+            }}
+            className="fixed text-xl"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: -20
+            }}
+          >
+            {['⭐', '✨', '🏆', '💫', '🎊', '🟡'][Math.floor(Math.random() * 6)]}
+          </motion.div>
+        ))}
+      </div>
+
       <TopAppBar stats={stats} title="Compétitions" onBack={onBack} />
       
       <main className="flex-grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 max-w-2xl mx-auto w-full relative z-10 scrollbar-hide">

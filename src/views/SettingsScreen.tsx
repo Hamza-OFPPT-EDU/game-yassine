@@ -26,7 +26,7 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
   const [userName, setUserName] = useState('');
   const [displayMode, setDisplayMode] = useState<DisplayMode>(globalDisplayMode);
   const [language, setLanguage] = useState<Language>(globalLanguage);
-  const { settings: audio, updateSettings: updateAudio, playSound, saveToCloud } = useAudio();
+  const { settings: audio, updateSettings: updateAudio, playSound, playVoice, saveToCloud } = useAudio();
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
@@ -310,6 +310,31 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
           </div>
 
           <div className="bg-white rounded-[2rem] border border-slate-100 divide-y divide-slate-50 overflow-hidden shadow-sm">
+            {/* Slider – Volume Global */}
+            <div className="px-6 py-6 space-y-4 bg-voyage-primary/[0.02]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-voyage-primary/10 flex items-center justify-center text-voyage-primary">
+                    <Volume2 size={20} />
+                  </div>
+                  <div>
+                    <p className="font-black text-voyage-primary text-sm">Volume Global</p>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">مستوى الصوت العام</p>
+                  </div>
+                </div>
+                <span className="text-xs font-black text-voyage-primary bg-voyage-primary/10 px-2 py-1 rounded-lg">{audio.masterVolume}%</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <VolumeX size={16} className="text-slate-300" />
+                <input
+                  type="range" min={0} max={100}
+                  value={audio.masterVolume}
+                  onChange={e => updateAudio({ masterVolume: Number(e.target.value) })}
+                  className="flex-1 accent-voyage-primary h-2 cursor-pointer"
+                />
+                <Volume2 size={16} className="text-voyage-primary" />
+              </div>
+            </div>
 
             {/* Toggle – Effets sonores */}
             <div className="flex items-center justify-between px-6 py-5">
@@ -462,6 +487,73 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                         className="flex-1 accent-voyage-primary h-2 cursor-pointer"
                       />
                       <Volume2 size={16} className="text-voyage-primary shrink-0" />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Toggle – Voix & Narrations */}
+            <div className="flex items-center justify-between px-6 py-5">
+              <div className="flex items-center gap-4">
+                <div className={cn(
+                  "w-11 h-11 rounded-2xl flex items-center justify-center transition-colors",
+                  audio.voicesEnabled ? "bg-voyage-terracotta/10" : "bg-slate-100"
+                )}>
+                  <User size={20} className={audio.voicesEnabled ? "text-voyage-terracotta" : "text-slate-400"} />
+                </div>
+                <div>
+                  <p className="font-black text-voyage-primary text-sm">Voix & Narrations</p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">الصوت والراوي</p>
+                </div>
+              </div>
+              <button
+                onClick={() => updateAudio({ voicesEnabled: !audio.voicesEnabled })}
+                className={cn(
+                  "relative w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none border-b-4",
+                  audio.voicesEnabled
+                    ? "bg-voyage-terracotta border-voyage-terracotta/60"
+                    : "bg-slate-200 border-slate-300"
+                )}
+              >
+                <motion.span
+                  layout
+                  transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                  className={cn(
+                    "absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md",
+                    audio.voicesEnabled ? "left-[calc(100%-1.75rem)]" : "left-0.5"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Slider – Volume des voix */}
+            <AnimatePresence>
+              {audio.voicesEnabled && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-6 pb-5 pt-1 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest">
+                        <VolumeX size={14} />
+                        <span>Volume des voix</span>
+                      </div>
+                      <span className="text-xs font-black text-voyage-terracotta">{audio.voiceVolume}%</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="range" min={0} max={100}
+                        value={audio.voiceVolume}
+                        onChange={e => updateAudio({ voiceVolume: Number(e.target.value) })}
+                        onMouseUp={() => playVoice('https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/rabat_intro_voice.mp3')}
+                        className="flex-1 accent-voyage-terracotta h-2 cursor-pointer"
+                      />
+                      <Volume2 size={16} className="text-voyage-terracotta shrink-0" />
                     </div>
                   </div>
                 </motion.div>

@@ -6,10 +6,13 @@ import React, { createContext, useContext, useState, useCallback, useRef, useEff
 import { useSupabaseSettings, useSupabaseProfile, useAuth } from '../hooks/useSupabase';
 
 export interface AudioSettings {
+  masterVolume: number;
   soundEffectsEnabled: boolean;
   musicEnabled: boolean;
+  voicesEnabled: boolean;
   effectsVolume: number;
   musicVolume: number;
+  voiceVolume: number;
 }
 
 export type SoundType = 'correct' | 'wrong' | 'click' | 'match' | 'success' | 'whoosh';
@@ -27,10 +30,13 @@ const BACKGROUND_MUSIC = '/audio/background-theme.mp3';
 const STORAGE_KEY = 'voyage_audio_settings';
 
 const DEFAULT_SETTINGS: AudioSettings = {
+  masterVolume: 100,
   soundEffectsEnabled: true,
   musicEnabled: true,
+  voicesEnabled: true,
   effectsVolume: 80,
   musicVolume: 50,
+  voiceVolume: 90,
 };
 
 function loadSettings(): AudioSettings {
@@ -45,6 +51,7 @@ interface AudioContextType {
   settings: AudioSettings;
   updateSettings: (patch: Partial<AudioSettings>) => void;
   playSound: (type: SoundType) => void;
+  playVoice: (url: string) => HTMLAudioElement;
   saveToCloud: () => Promise<boolean>;
   loading: boolean;
 }
@@ -90,7 +97,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     }
 
     if (isActuallyEnabled) {
-      musicRef.current.volume = settings.musicVolume / 100;
+      musicRef.current.volume = (settings.musicVolume / 100) * (settings.masterVolume / 100);
       musicRef.current.play().catch(() => {
         // Autoplay might be blocked until user interaction
         const playOnInteraction = () => {
@@ -104,11 +111,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     } else {
       musicRef.current.pause();
     }
-
-    return () => {
-      // Cleanup
-    };
-  }, [settings.musicEnabled, settings.musicVolume, globalSettingsLoading]);
+  }, [settings.musicEnabled, settings.musicVolume, settings.masterVolume, globalSettingsLoading]);
 
   const playSound = useCallback((type: SoundType) => {
     const globalAudio = getSetting('audio_settings');
@@ -118,11 +121,22 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
     try {
       const audio = getAudioElement(type);
-      audio.volume = settings.effectsVolume / 100;
+      audio.volume = (settings.effectsVolume / 100) * (settings.masterVolume / 100);
       audio.currentTime = 0;
       audio.play().catch(() => {});
     } catch (_) {}
   }, [settings, getSetting]);
+
+  const playVoice = useCallback((url: string) => {
+    const audio = new Audio(url);
+    if (!settings.voicesEnabled) {
+      audio.volume = 0;
+    } else {
+      audio.volume = (settings.voiceVolume / 100) * (settings.masterVolume / 100);
+    }
+    audio.play().catch(() => {});
+    return audio;
+  }, [settings]);
 
   const updateSettings = useCallback((patch: Partial<AudioSettings>) => {
     setSettings(prev => ({ ...prev, ...patch }));
@@ -138,6 +152,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       settings, 
       updateSettings, 
       playSound, 
+      playVoice,
       saveToCloud, 
       loading: globalSettingsLoading || profileLoading 
     }}>

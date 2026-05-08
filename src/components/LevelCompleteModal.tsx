@@ -5,7 +5,7 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Award, ArrowRight, MapPin, RotateCcw, Star, Clock, SkipForward, ChevronDown, Trophy, Users, PartyPopper, CheckCircle2, XCircle, User, Loader2 } from 'lucide-react';
+import { Award, ArrowRight, MapPin, RotateCcw, Star, Clock, SkipForward, ChevronDown, Trophy, Users, PartyPopper, CheckCircle2, XCircle, User, Loader2, LogOut } from 'lucide-react';
 import { type MissionCompletionSummary } from '../types';
 import { cn } from '../lib/utils';
 import { useSupabaseProfile, useSupabaseMissionLeaderboard } from '../hooks/useSupabase';
@@ -70,46 +70,44 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
 
   return (
     <div className="fixed inset-0 z-[100] bg-amber-50/60 backdrop-blur-md px-4 py-5 sm:px-6 flex items-center justify-center">
-      {/* Confettis si 100% */}
+      {/* Celebration Confetti - Toujours affiché pour le classement */}
       <AnimatePresence>
-        {isPerfect && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 pointer-events-none z-[101]"
-          >
-            {[...Array(50)].map((_, i) => (
-              <motion.div
-                key={i}
-                initial={{ 
-                  y: -20, 
-                  x: Math.random() * window.innerWidth,
-                  rotate: 0,
-                  opacity: 1 
-                }}
-                animate={{
-                  y: window.innerHeight + 20,
-                  x: Math.random() * window.innerWidth + (Math.random() - 0.5) * 200,
-                  rotate: Math.random() * 720,
-                  opacity: 0
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 2,
-                  delay: Math.random() * 0.5,
-                  ease: 'easeOut'
-                }}
-                className="fixed text-2xl"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: -20
-                }}
-              >
-                {['⭐', '✨', '🎉', '💫', '🎊', '🟡', '🟠'][Math.floor(Math.random() * 7)]}
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 pointer-events-none z-[101]"
+        >
+          {[...Array(isPerfect ? 60 : 30)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ 
+                y: -20, 
+                x: Math.random() * window.innerWidth,
+                rotate: 0,
+                opacity: 1 
+              }}
+              animate={{
+                y: window.innerHeight + 20,
+                x: Math.random() * window.innerWidth + (Math.random() - 0.5) * 200,
+                rotate: Math.random() * 720,
+                opacity: 0
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                delay: Math.random() * 1.5,
+                ease: 'easeOut'
+              }}
+              className="fixed text-2xl"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: -20
+              }}
+            >
+              {['⭐', '✨', '🎉', '💫', '🎊', '🟡', '🟠'][Math.floor(Math.random() * 7)]}
+            </motion.div>
+          ))}
+        </motion.div>
       </AnimatePresence>
 
       <motion.div
@@ -142,20 +140,20 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
           <div className="max-w-3xl mx-auto space-y-8">
             
             {/* Score Section */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-6 rounded-[2rem] shadow-sm text-center">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A08363] mb-2">Score Obtenu</p>
-                <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-5xl font-black text-voyage-primary">{countedXp}</span>
-                  <span className="text-lg font-black text-voyage-primary/60">XP</span>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-4 rounded-[1.5rem] shadow-sm text-center">
+                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-[#A08363] mb-1">Score</p>
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="text-3xl font-black text-voyage-primary">{countedXp}</span>
+                  <span className="text-xs font-black text-voyage-primary/60">XP</span>
                 </div>
               </div>
               
-              <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-6 rounded-[2rem] shadow-sm text-center">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A08363] mb-2">Précision</p>
-                <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-5xl font-black text-amber-600">{countedRate}</span>
-                  <span className="text-lg font-black text-amber-600/60">%</span>
+              <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-4 rounded-[1.5rem] shadow-sm text-center">
+                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-[#A08363] mb-1">Précision</p>
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="text-3xl font-black text-amber-600">{countedRate}</span>
+                  <span className="text-xs font-black text-amber-600/60">%</span>
                 </div>
               </div>
             </div>
@@ -175,27 +173,11 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                 </div>
               ) : (
                 <div className="divide-y divide-[#E5D5B8]/20">
-                  {leaderboard.slice(0, 5).map((player, idx) => {
-                    const isMe = player.id === profile?.id;
-                    return (
-                      <div key={player.id} className={cn("flex items-center gap-4 px-6 py-3", isMe && "bg-voyage-primary/5")}>
-                        <span className="w-6 text-sm font-black text-[#7B3F1A]/40">#{idx + 1}</span>
-                        <div className="relative">
-                          <img src={player.avatar} className="w-10 h-10 rounded-xl border border-white" alt={player.name} />
-                          {isMe && <div className="absolute -top-1 -right-1 w-3 h-3 bg-voyage-primary rounded-full border border-white" />}
-                        </div>
-                        <div className="flex-grow">
-                          <p className={cn("text-sm font-black", isMe ? "text-voyage-primary" : "text-[#4E2510]")}>
-                            {player.name} {isMe && "(Toi)"}
-                          </p>
-                          <p className="text-[9px] font-bold text-[#A08363] uppercase tracking-widest">Niveau {player.level}</p>
-                        </div>
-                        <div className="text-right">
-                          <span className="text-sm font-black text-[#24160D]">{player.score.toLocaleString()} XP</span>
-                        </div>
-                      </div>
-                    );
-                  })}
+                  <LeaderboardList 
+                    players={leaderboard} 
+                    currentUserId={profile?.id} 
+                    missionXp={totalXp} 
+                  />
                 </div>
               )}
             </div>
@@ -240,47 +222,44 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
         </div>
 
         <div className="absolute inset-x-0 bottom-0 border-t border-white/40 bg-[linear-gradient(180deg,rgba(255,250,243,0.62),rgba(248,240,230,0.95))] px-6 py-4 backdrop-blur-2xl sm:px-8 lg:px-10 z-20">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="text-base font-semibold text-[#6D5948]">
-              <span className="font-black text-[#2A1A10]">{countedXp} XP</span> gagnés
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col">
+              <span className="text-[10px] font-black uppercase tracking-widest text-[#A08363]">Total gagné</span>
+              <span className="text-xl font-black text-[#2A1A10]">{countedXp} XP</span>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            
+            <div className="flex items-center gap-3">
               <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+                whileHover={{ scale: 1.1, backgroundColor: '#fff' }}
+                whileTap={{ scale: 0.9 }}
                 onClick={onReplayMission}
-                className="inline-flex h-[50px] items-center justify-center gap-3 rounded-full border border-[#D7C4AD] bg-white/75 px-6 font-black text-[#2A1A10] shadow-sm backdrop-blur-md"
+                className="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-[#D7C4AD] bg-white/50 text-[#A77C55] shadow-sm backdrop-blur-md transition-colors hover:text-amber-600 hover:border-amber-400"
+                title="Rejouer"
               >
-                <RotateCcw size={16} className="text-[#A77C55]" />
-                Rejouer
+                <RotateCcw size={22} strokeWidth={2.5} />
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={onBackToCity}
+                className="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-[#D7C4AD] bg-white/50 text-[#A77C55] shadow-sm backdrop-blur-md transition-colors hover:text-rose-600 hover:border-rose-400"
+                title="Quitter"
+              >
+                <LogOut size={22} strokeWidth={2.5} />
               </motion.button>
 
               {onContinue && (
                 <motion.button
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
+                  whileHover={{ scale: 1.1, x: 5 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={onContinue}
-                  className="inline-flex h-[50px] items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#24160D] to-[#2A1A10] px-8 font-black text-white shadow-xl shadow-black/10"
+                  className="h-12 px-8 flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#24160D] to-[#2A1A10] text-white shadow-lg shadow-black/10"
                 >
-                  Continuer
-                  <ArrowRight size={16} />
+                  <span className="font-black text-xs uppercase tracking-widest">Suivant</span>
+                  <ArrowRight size={20} strokeWidth={3} />
                 </motion.button>
               )}
-
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={onBackToCity}
-                className={cn(
-                  "inline-flex h-[50px] items-center justify-center gap-3 rounded-full px-6 font-black",
-                  onContinue 
-                    ? "bg-white border-2 border-[#D8C5AF] text-[#8A6A49]" 
-                    : "bg-gradient-to-r from-[#24160D] to-[#2A1A10] text-white"
-                )}
-              >
-                <MapPin size={16} />
-                Quitter
-              </motion.button>
             </div>
           </div>
         </div>
@@ -344,5 +323,160 @@ function AnswerPanel({ label, value, muted = false }: { label: string; value: st
       <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#A08363] relative z-10">{label}</p>
       <p className="mt-2 whitespace-pre-line text-base font-semibold leading-relaxed text-[#4A3828] relative z-10">{value || '—'}</p>
     </motion.div>
+  );
+}
+
+function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]; currentUserId?: string; missionXp: number }) {
+  const [displayPlayers, setDisplayPlayers] = useState<any[]>([]);
+  const [animationProgress, setAnimationProgress] = useState(0);
+
+  useEffect(() => {
+    if (players.length > 0) {
+      // Initial state: user has their old score
+      const initial = players.map(p => {
+        if (p.id === currentUserId) {
+          return { ...p, score: Math.max(0, p.score - missionXp) };
+        }
+        return p;
+      }).sort((a, b) => b.score - a.score);
+      
+      setDisplayPlayers(initial);
+
+      // Start animation after a short delay
+      const timer = setTimeout(() => {
+        let start = performance.now();
+        const duration = 2500; // Slightly longer for loto effect
+
+        const animate = (now: number) => {
+          const progress = Math.min((now - start) / duration, 1);
+          setAnimationProgress(progress);
+
+          const currentList = players.map(p => {
+            if (p.id === currentUserId) {
+              const baseScore = Math.max(0, p.score - missionXp);
+              const animatedScore = baseScore + (missionXp * progress);
+              return { ...p, score: Math.round(animatedScore) };
+            }
+            return p;
+          }).sort((a, b) => b.score - a.score);
+
+          setDisplayPlayers(currentList);
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          }
+        };
+
+        requestAnimationFrame(animate);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [players, currentUserId, missionXp]);
+
+  return (
+    <div className="relative">
+      {displayPlayers.slice(0, 5).map((player, idx) => {
+        const isMe = player.id === currentUserId;
+        return (
+          <motion.div 
+            key={player.id} 
+            layout
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ 
+              layout: { 
+                type: 'spring', 
+                stiffness: 350, 
+                damping: 25,
+                mass: 1.5 
+              },
+              opacity: { duration: 0.3 }
+            }}
+            className={cn(
+              "flex items-center gap-4 px-6 py-4 transition-all duration-700", 
+              isMe ? "bg-amber-100/40 border-y border-amber-200/50 shadow-inner z-10" : "bg-transparent"
+            )}
+          >
+            <div className="w-8 flex flex-col items-center">
+               <motion.span 
+                 key={idx}
+                 initial={{ y: 10, opacity: 0 }}
+                 animate={{ y: 0, opacity: 1 }}
+                 className={cn("text-xs font-black", isMe ? "text-amber-600" : "text-[#7B3F1A]/40")}
+               >
+                 #{idx + 1}
+               </motion.span>
+               {isMe && animationProgress < 1 && (
+                 <motion.div
+                   animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                   transition={{ repeat: Infinity, duration: 0.6 }}
+                   className="w-1.5 h-1.5 bg-amber-500 rounded-full mt-1"
+                 />
+               )}
+            </div>
+
+            <div className="relative">
+              <motion.div
+                animate={isMe && animationProgress < 1 ? { 
+                  rotate: [0, -5, 5, 0],
+                  scale: [1, 1.1, 1] 
+                } : {}}
+                transition={{ repeat: Infinity, duration: 0.4 }}
+              >
+                <img src={player.avatar} className="w-11 h-11 rounded-2xl border-2 border-white shadow-sm" alt={player.name} />
+              </motion.div>
+              {isMe && (
+                <motion.div 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white shadow-sm flex items-center justify-center" 
+                >
+                   <Star size={8} className="text-white fill-current" />
+                </motion.div>
+              )}
+            </div>
+
+            <div className="flex-grow">
+              <p className={cn("text-[15px] font-black tracking-tight", isMe ? "text-amber-900" : "text-[#4E2510]")}>
+                {player.name} {isMe && "(Toi)"}
+              </p>
+              <div className="flex items-center gap-2">
+                <p className="text-[10px] font-bold text-[#A08363] uppercase tracking-widest">Niveau {player.level}</p>
+                {isMe && animationProgress < 1 && (
+                   <motion.span 
+                     animate={{ x: [0, 5, 0] }}
+                     transition={{ repeat: Infinity, duration: 0.8 }}
+                     className="text-[9px] font-black text-amber-600 uppercase tracking-tighter"
+                   >
+                     🚀 En pleine remontée !
+                   </motion.span>
+                )}
+              </div>
+            </div>
+
+            <div className="text-right">
+              <div className={cn("flex flex-col items-end", isMe ? "scale-110" : "scale-100")}>
+                <RollingNumber value={player.score} isMe={isMe} />
+                <span className={cn("text-[10px] font-black uppercase tracking-widest", isMe ? "text-amber-600/60" : "text-[#A08363]/40")}>XP</span>
+              </div>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}
+
+function RollingNumber({ value, isMe }: { value: number; isMe: boolean }) {
+  return (
+    <motion.span 
+      key={value}
+      initial={{ y: 15, opacity: 0, filter: 'blur(4px)' }}
+      animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+      className={cn("text-lg font-black font-mono tracking-tighter", isMe ? "text-amber-700" : "text-[#24160D]")}
+    >
+      {value.toLocaleString()}
+    </motion.span>
   );
 }

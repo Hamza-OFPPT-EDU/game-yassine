@@ -584,27 +584,44 @@ export function useSupabaseMissionLeaderboard(missionId: string) {
 
   useEffect(() => {
     async function fetchLeaderboard() {
-      if (!missionId) return;
       setLoading(true);
       try {
-        // Fallback to global leaderboard if mission-specific scores aren't available
-        // Or if we don't have a mission_scores table yet, we can use app_users sorted by XP
+        // Fallback seed data (premium players for comparison)
+        const seedPlayers = [
+          { id: 'seed-1', name: 'Yassine B.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Yassine', score: 25400, level: 12, rank: 0 },
+          { id: 'seed-2', name: 'Sarra M.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarra', score: 18200, level: 10, rank: 0 },
+          { id: 'seed-3', name: 'Amine T.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Amine', score: 12500, level: 8, rank: 0 },
+          { id: 'seed-4', name: 'Sofia K.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sofia', score: 8900, level: 6, rank: 0 },
+          { id: 'seed-5', name: 'Karim L.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Karim', score: 4200, level: 4, rank: 0 },
+        ];
+
         const { data, error } = await supabase
           .from('app_users')
           .select('id, full_name, avatar_url, xp, level')
           .order('xp', { ascending: false })
           .limit(10);
 
-        if (!error && data) {
-          setLeaderboard(data.map((u, i) => ({
+        let finalPlayers = [...seedPlayers];
+
+        if (!error && data && data.length > 0) {
+          const dbPlayers = data.map(u => ({
             id: u.id,
             name: u.full_name || 'Explorateur',
             avatar: u.avatar_url || DEFAULT_AVATAR_URL,
-            score: u.xp,
+            score: u.xp || 0,
             level: u.level || 1,
-            rank: i + 1
-          })));
+            rank: 0
+          }));
+          
+          // Merge and sort
+          finalPlayers = [...dbPlayers, ...seedPlayers]
+            .sort((a, b) => b.score - a.score)
+            // Remove duplicates (if any ID matches, though seed IDs are unique)
+            .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
+            .slice(0, 10);
         }
+
+        setLeaderboard(finalPlayers.map((p, i) => ({ ...p, rank: i + 1 })));
       } catch (err) {
         console.error('Error fetching leaderboard:', err);
       } finally {

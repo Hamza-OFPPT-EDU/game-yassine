@@ -5,6 +5,7 @@ import './index.css';
 import { registerSW } from 'virtual:pwa-register';
 
 import { SettingsProvider } from './contexts/SettingsContext.tsx';
+import { AudioProvider } from './contexts/AudioContext.tsx';
 
 // Register service worker for PWA
 registerSW({ immediate: true });
@@ -12,7 +13,9 @@ registerSW({ immediate: true });
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <SettingsProvider>
-      <App />
+      <AudioProvider>
+        <App />
+      </AudioProvider>
     </SettingsProvider>
   </StrictMode>,
 );

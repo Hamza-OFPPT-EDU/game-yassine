@@ -8,7 +8,7 @@ import { supabase } from './lib/supabase';
 import { useSupabaseProfile } from './hooks/useSupabase';
 import { motion, AnimatePresence } from 'motion/react';
 import { Screen, type City, type Mission, type MissionCompletionSummary } from './types';
-import { AudioProvider } from './contexts/AudioContext';
+import { useAudio } from './contexts/AudioContext';
 import BottomNavBar from './components/BottomNavBar';
 import SplashScreen from './views/SplashScreen';
 import WelcomeScreen from './views/WelcomeScreen';
@@ -170,13 +170,26 @@ export default function App() {
     };
   }, []);
 
+  const { settings } = useAudio();
+  
   // Sync volume based on screen changes without restarting
   useEffect(() => {
     if (introAudioRef.current) {
-      const isIntroScreen = [Screen.Splash, Screen.Welcome].includes(currentScreen);
-      introAudioRef.current.volume = isIntroScreen ? 0.6 : 0.05;
+      const isIntroScreen = [Screen.Splash, Screen.Welcome, Screen.Login, Screen.Register].includes(currentScreen);
+      const baseVolume = isIntroScreen ? 0.6 : 0.05;
+      
+      if (settings.musicEnabled) {
+        introAudioRef.current.volume = baseVolume * (settings.musicVolume / 100) * (settings.masterVolume / 100);
+        // Play if it was paused but should be playing
+        if (introAudioRef.current.paused) {
+          introAudioRef.current.play().catch(() => {});
+        }
+      } else {
+        introAudioRef.current.volume = 0;
+        introAudioRef.current.pause();
+      }
     }
-  }, [currentScreen]);
+  }, [currentScreen, settings.musicVolume, settings.musicEnabled]);
 
   /** Navigate to Challenge. */
   const goToChallenge = () => {
@@ -329,11 +342,23 @@ export default function App() {
   };
 
   const renderScreen = () => {
-    // If the fullscreen prompt is showing and hasn't been dismissed yet, don't show the splash screen logic yet
     if (showFullscreenPrompt) {
       return (
-        <div className="h-screen w-full bg-[#1e0e06] flex items-center justify-center">
-          {/* We show the prompt background color to keep it seamless */}
+        <div className="h-screen w-full bg-[#0a0f1e] flex flex-col items-center justify-center">
+          <FullscreenPrompt
+            show={showFullscreenPrompt}
+            onAccept={() => {
+              setShowFullscreenPrompt(false);
+              setFullscreenShownOnce(true);
+              localStorage.setItem('prefer-fullscreen', 'true');
+            }}
+            onDecline={() => {
+              setShowFullscreenPrompt(false);
+              setFullscreenShownOnce(true);
+              localStorage.setItem('prefer-fullscreen', 'false');
+            }}
+            extraAssets={dynamicAssets}
+          />
         </div>
       );
     }
@@ -357,6 +382,7 @@ export default function App() {
         return <WelcomeScreen 
           onStart={handleDemoLogin} 
           onLogin={() => setCurrentScreen(Screen.Login)}
+          onRegister={() => setCurrentScreen(Screen.Register)}
         />;
       case Screen.Login:
         return <LoginScreen 
@@ -489,8 +515,7 @@ export default function App() {
   };
 
   return (
-    <AudioProvider>
-      <div className="relative h-screen w-full bg-slate-50 overflow-hidden flex flex-col font-sans select-none touch-none">
+    <div className="relative h-screen w-full bg-slate-50 overflow-hidden flex flex-col font-sans select-none touch-none">
         <div className="grow overflow-hidden relative">
           <AnimatePresence mode="wait">
             <motion.div
@@ -523,21 +548,6 @@ export default function App() {
           </div>
         )}
 
-        <FullscreenPrompt
-          show={showFullscreenPrompt}
-          onAccept={() => {
-            setShowFullscreenPrompt(false);
-            setFullscreenShownOnce(true);
-            localStorage.setItem('prefer-fullscreen', 'true');
-          }}
-          onDecline={() => {
-            setShowFullscreenPrompt(false);
-            setFullscreenShownOnce(true);
-            localStorage.setItem('prefer-fullscreen', 'false');
-          }}
-          extraAssets={dynamicAssets}
-        />
       </div>
-    </AudioProvider>
   );
 }

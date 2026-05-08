@@ -11,11 +11,12 @@ import { useAudio } from '../hooks/useAudio';
 interface WelcomeScreenProps {
   onStart: () => void;
   onLogin: () => void;
+  onRegister: () => void;
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
-export default function WelcomeScreen({ onStart, onLogin }: WelcomeScreenProps) {
+export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeScreenProps) {
   const { playSound } = useAudio();
   const [showContent, setShowContent] = useState(false);
 
@@ -82,7 +83,7 @@ export default function WelcomeScreen({ onStart, onLogin }: WelcomeScreenProps) 
             </main>
 
             {/* Buttons (Redesigned for Premium Look) */}
-            <section className="px-8 pb-12 pt-6 space-y-5 w-full max-w-md mx-auto shrink-0">
+            <section className="px-8 pb-10 pt-6 space-y-4 w-full max-w-md mx-auto shrink-0">
               <motion.button
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -93,28 +94,46 @@ export default function WelcomeScreen({ onStart, onLogin }: WelcomeScreenProps) 
                   playSound('click');
                   onStart();
                 }}
-                className="w-full bg-gradient-to-br from-[#2D6A4F] to-[#1D3557] text-white py-5 rounded-[28px] font-black text-xl uppercase tracking-wider flex items-center justify-center gap-3 shadow-[0_15px_35px_rgba(45,106,79,0.4)] transition-all"
+                className="w-full bg-gradient-to-br from-[#2D6A4F] to-[#1D3557] text-white py-4 rounded-[28px] font-black text-lg uppercase tracking-wider flex items-center justify-center gap-3 shadow-[0_15px_35px_rgba(45,106,79,0.4)] transition-all border-b-4 border-black/20"
               >
-                <span>C'est parti !</span>
-                <ArrowRight size={24} strokeWidth={3} />
+                <span>Lancer démo</span>
+                <ArrowRight size={20} strokeWidth={3} />
               </motion.button>
 
-              <motion.button
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  playSound('click');
-                  onLogin();
-                }}
-                className="w-full py-5 bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-[28px] text-white font-black text-sm uppercase tracking-[0.2em] hover:bg-white/20 transition-all shadow-lg flex items-center justify-center gap-2"
-              >
-                <Sparkles size={18} className="text-[#F4A261]" fill="currentColor" />
-                Se connecter
-              </motion.button>
+              <div className="grid grid-cols-2 gap-4">
+                <motion.button
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    playSound('click');
+                    onRegister();
+                  }}
+                  className="py-4 bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-[28px] text-white font-black text-xs uppercase tracking-widest hover:bg-white/20 transition-all shadow-lg flex items-center justify-center gap-2"
+                >
+                  Inscription
+                </motion.button>
+
+                <motion.button
+                  initial={{ x: 20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    playSound('click');
+                    onLogin();
+                  }}
+                  className="py-4 bg-gradient-to-br from-[#7B3F1A] to-[#4E2510] border-b-4 border-black/30 rounded-[28px] text-white font-black text-xs uppercase tracking-widest transition-all shadow-lg flex items-center justify-center gap-2"
+                >
+                  <Sparkles size={16} className="text-[#F4A261]" fill="currentColor" />
+                  Connection
+                </motion.button>
+              </div>
             </section>
+            <div className="h-[20px] shrink-0" />
           </motion.div>
         )}
       </AnimatePresence>

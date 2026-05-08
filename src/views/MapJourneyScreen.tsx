@@ -29,7 +29,7 @@ interface MapJourneyScreenProps {
 export default function MapJourneyScreen({
   stats, completedCities, completedMissions, onSelectCity
 }: MapJourneyScreenProps) {
-  const { playSound } = useAudio();
+  const { playSound, playVoice } = useAudio();
   const { cities, loading } = useSupabaseCities(completedCities, completedMissions);
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
   const [cinematicCity, setCinematicCity] = useState<City | null>(null);
@@ -70,14 +70,13 @@ export default function MapJourneyScreen({
   // Hook pour jouer la voix de Rabat automatiquement
   useEffect(() => {
     if (cinematicCity && cinematicCity.name === 'Rabat') {
-      const audio = new Audio('https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/rabat_intro_voice.mp3');
-      audio.play().catch(err => console.log('Audio playback prevented:', err));
+      const audio = playVoice('https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/rabat_intro_voice.mp3');
       return () => {
         audio.pause();
         audio.currentTime = 0;
       };
     }
-  }, [cinematicCity]);
+  }, [cinematicCity, playVoice]);
 
   // ── Loading ──────────────────────────────────────────────────────────────
   if (loading) {
@@ -711,7 +710,7 @@ const MissionsList: React.FC<{
   city, completedMissions, cityTheme, onSelectMission
 }) => {
     const { missions, loading } = useSupabaseMissions(city.id, completedMissions);
-    const { playSound } = useAudio();
+    const { playSound, playVoice } = useAudio();
 
     if (loading) return (
       <div className="flex flex-col items-center justify-center py-10 gap-3">
