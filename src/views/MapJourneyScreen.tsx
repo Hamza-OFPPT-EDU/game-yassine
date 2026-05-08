@@ -395,7 +395,7 @@ export default function MapJourneyScreen({
                       className="absolute bottom-[-20px] left-8 w-20 h-20 rounded-3xl shadow-xl border-4 border-white flex items-center justify-center"
                       style={{ background: displayCityTheme.bgGradient }}
                     >
-                      {resolveCityIcon(displayCity, 48, 'text-white')}
+                      {resolveCityIcon(displayCity, 80, 'text-white')}
                     </div>
 
                     {/* Close button */}
