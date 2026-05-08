@@ -119,7 +119,7 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
                   playSound('click');
                   onStart();
                 }}
-                className="w-full bg-gradient-to-br from-[#2D6A4F] to-[#1D3557] text-white py-4 rounded-[28px] font-black text-lg uppercase tracking-wider flex items-center justify-center gap-3 shadow-[0_15px_35px_rgba(45,106,79,0.4)] transition-all border-b-4 border-black/20"
+                className="w-full bg-[#F1Dbb1] text-[#4E2510] py-4 rounded-[28px] font-black text-lg uppercase tracking-wider flex items-center justify-center gap-3 shadow-[0_15px_35px_rgba(241,219,177,0.4)] transition-all border-b-4 border-[#B58B60]/40"
               >
                 <span>Lancer démo</span>
                 <ArrowRight size={20} strokeWidth={3} />
