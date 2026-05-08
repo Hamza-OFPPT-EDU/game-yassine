@@ -384,7 +384,7 @@ export default function MapJourneyScreen({
                   {/* City Illustration / Banner */}
                   <div className="h-50 w-full relative overflow-hidden">
                     <img
-                      src={optimizeSupabaseUrl(displayCity.image || 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/fallback-city.jpg', 60, 80)}
+                      src={optimizeSupabaseUrl(displayCity.image || 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/fallback-city.jpg', 800, 80)}
                       alt={displayCity.name}
                       className="w-full h-full object-cover"
                     />
