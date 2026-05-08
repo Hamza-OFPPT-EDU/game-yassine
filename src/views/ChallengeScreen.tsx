@@ -1395,8 +1395,17 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
         ) : (
           <footer className="fixed bottom-0 left-0 w-full z-40 bg-white border-t-[3px] border-voyage-secondary/20 p-6 pb-10 flex justify-center">
             <div className="w-full max-w-2xl flex items-center gap-4 px-4">
-              <button onClick={() => { playEffect('click'); setShowSoundModal(true); }} className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4 tooltip" title="Réglages audio">
-                <Volume2 size={24} />
+              <button 
+                onClick={() => { 
+                  playSound('click'); 
+                  handleReset(); 
+                  timer.reset(DEFAULT_QUESTION_TIME);
+                  setTimerStartTime(Date.now());
+                }} 
+                className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4 tooltip" 
+                title="Refaire l'exercice"
+              >
+                <RotateCcw size={24} />
               </button>
               <button onClick={() => { playSound('click'); setShowExplanationModal(true); }} className="p-4 bg-voyage-accent/10 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/20 transition-colors border-b-4 tooltip" title="Obtenir un indice">
                 <Lightbulb size={24} />

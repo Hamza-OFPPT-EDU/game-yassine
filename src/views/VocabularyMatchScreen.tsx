@@ -5,7 +5,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, Check, Star, Volume2, Save, CheckCircle2, TrendingUp, Apple, Sun, Droplets, Info, X, VolumeX, Music, Bell, Play, User } from 'lucide-react';
+import { ArrowLeft, Check, Star, Volume2, Save, CheckCircle2, TrendingUp, Apple, Sun, Droplets, Info, X, VolumeX, Music, Bell, Play, User, RotateCcw } from 'lucide-react';
 import { type City } from '../types';
 import { cn } from '../lib/utils';
 import { useAudio } from '../contexts/AudioContext';
