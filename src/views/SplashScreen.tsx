@@ -59,11 +59,11 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
             >
               <source src={SPLASH_VIDEO_URL} type="video/mp4" />
             </video>
-            
+
 
 
             {/* Subtle Skip/Wait hint */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 2 }}
@@ -81,8 +81,8 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
           >
             {/* Background Decorative Elements */}
             <div className="absolute inset-0 pointer-events-none">
-              <motion.div 
-                animate={{ 
+              <motion.div
+                animate={{
                   scale: [1, 1.2, 1],
                   rotate: [0, 90, 0],
                   opacity: [0.1, 0.2, 0.1]
@@ -90,8 +90,8 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
                 transition={{ duration: 10, repeat: Infinity }}
                 className="absolute -top-20 -left-20 w-80 h-80 bg-voyage-accent/20 rounded-full blur-3xl"
               />
-              <motion.div 
-                animate={{ 
+              <motion.div
+                animate={{
                   scale: [1.2, 1, 1.2],
                   rotate: [0, -90, 0],
                   opacity: [0.1, 0.15, 0.1]
@@ -105,7 +105,7 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
             <motion.div
               initial={{ scale: 0, rotate: -20, opacity: 0 }}
               animate={{ scale: 1, rotate: 0, opacity: 1 }}
-              transition={{ 
+              transition={{
                 type: "spring",
                 stiffness: 260,
                 damping: 20,
@@ -117,15 +117,15 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
               {[...Array(3)].map((_, i) => (
                 <motion.div
                   key={i}
-                  animate={{ 
+                  animate={{
                     scale: [1, 1.5 + (i * 0.2), 1],
                     opacity: [0.2 - (i * 0.05), 0, 0.2 - (i * 0.05)]
                   }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity, 
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
                     delay: i * 0.5,
-                    ease: "easeInOut" 
+                    ease: "easeInOut"
                   }}
                   className="absolute inset-0 rounded-full bg-voyage-accent"
                 />
@@ -137,15 +137,15 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   className="w-full h-full flex items-center justify-center"
                 >
-                  <img 
-                    src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.png" 
+                  <img
+                    src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.png"
                     alt="Logo"
                     className="w-full h-full object-contain"
                   />
                 </motion.div>
-                
+
                 {/* Shine effect */}
-                <motion.div 
+                <motion.div
                   animate={{ x: ['-100%', '200%'] }}
                   transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
@@ -173,11 +173,11 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
                 <h1 className="font-headline font-black text-[18px] text-[#4E2510] tracking-tight">
                   Le Voyage des <span className="text-[#D4A43E]">Soft Skills</span>
                 </h1>
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6 }}
-                  className="text-[12px] font-black text-[#7B3F1A] arabic-font" 
+                  className="text-[12px] font-black text-[#7B3F1A] arabic-font"
                   dir="rtl"
                 >
                   رحلة المهارات الناعمة
@@ -193,7 +193,7 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
             </div>
 
             {/* Progress Bar Animation */}
-            <motion.div 
+            <motion.div
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.7 }}
@@ -225,7 +225,7 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
                   transition={{ type: "spring", bounce: 0, duration: 0.5 }}
                   className="h-full bg-gradient-to-r from-[#7B3F1A] to-[#4E2510] rounded-xl relative shadow-lg"
                 >
-                  <motion.div 
+                  <motion.div
                     animate={{ opacity: [0.3, 0.6, 0.3] }}
                     transition={{ duration: 2, repeat: Infinity }}
                     className="absolute inset-0 bg-white/20 rounded-xl"
@@ -235,14 +235,14 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
 
               <AnimatePresence>
                 {!isComplete && (
-                    <motion.p 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="text-center text-[7px] font-bold text-[#7B3F1A]/40 italic"
-                    >
-                      Préparation du voyage au Maroc...
-                    </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="text-center text-[7px] font-bold text-[#7B3F1A]/40 italic"
+                  >
+                    Préparation du voyage au Maroc...
+                  </motion.p>
                 )}
               </AnimatePresence>
             </motion.div>

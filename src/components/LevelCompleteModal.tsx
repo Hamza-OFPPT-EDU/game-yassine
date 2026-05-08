@@ -5,7 +5,7 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Award, ArrowRight, MapPin, RotateCcw, Star, Clock, SkipForward, ChevronDown, Trophy, Users, PartyPopper, CheckCircle2, XCircle, User, Loader2, LogOut } from 'lucide-react';
+import { Award, ArrowRight, MapPin, RotateCcw, Star, Clock, SkipForward, ChevronDown, Trophy, Users, PartyPopper, CheckCircle2, XCircle, User, Loader2, LogOut, AlertTriangle } from 'lucide-react';
 import { type MissionCompletionSummary } from '../types';
 import { cn } from '../lib/utils';
 import { useSupabaseProfile, useSupabaseMissionLeaderboard } from '../hooks/useSupabase';
@@ -33,6 +33,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
   const [countedStars, setCountedStars] = useState(0);
   const [countedRate, setCountedRate] = useState(0);
   const [expandedQuestionId, setExpandedQuestionId] = useState<string | null>(null);
+  const [showQuitConfirm, setShowQuitConfirm] = useState(false);
 
   useEffect(() => {
     let frame = 0;
@@ -242,7 +243,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={onBackToCity}
+                onClick={() => setShowQuitConfirm(true)}
                 className="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-[#D7C4AD] bg-white/50 text-[#A77C55] shadow-sm backdrop-blur-md transition-colors hover:text-rose-600 hover:border-rose-400"
                 title="Quitter"
               >
@@ -264,6 +265,49 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
           </div>
         </div>
       </motion.div>
+
+      {/* Confirmation Quitter */}
+      <AnimatePresence>
+        {showQuitConfirm && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[110] flex items-center justify-center px-4 bg-[#1e1510]/60 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="bg-white rounded-[2.5rem] p-8 max-w-sm w-full shadow-[0_20px_70px_rgba(0,0,0,0.3)] text-center border-2 border-voyage-accent/10"
+            >
+              <div className="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-rose-500 shadow-inner">
+                <AlertTriangle size={40} />
+              </div>
+              
+              <h3 className="text-2xl font-black text-[#2A1A10] mb-3">Vraiment partir ?</h3>
+              <p className="text-slate-500 font-bold text-sm mb-8 leading-relaxed">
+                Êtes-vous sûr de vouloir quitter le classement et retourner à la ville ?
+              </p>
+              
+              <div className="space-y-3">
+                <button
+                  onClick={onBackToCity}
+                  className="w-full py-4 bg-rose-500 hover:bg-rose-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-lg shadow-rose-500/20 active:scale-95"
+                >
+                  Oui, quitter
+                </button>
+                <button
+                  onClick={() => setShowQuitConfirm(false)}
+                  className="w-full py-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-2xl font-black uppercase tracking-widest text-xs transition-all active:scale-95"
+                >
+                  Non, rester ici
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
