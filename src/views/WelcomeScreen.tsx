@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, Sparkles, Volume2 } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
@@ -21,8 +21,12 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
   const { playSound } = useAudio();
   const [showContent, setShowContent] = useState(false);
   const [showSoundModal, setShowSoundModal] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+    }
     const timer = setTimeout(() => {
       setShowContent(true);
     }, 5000);
@@ -34,6 +38,7 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
       {/* Background Video with enhanced overlay */}
       <div className="absolute inset-0 z-0">
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop

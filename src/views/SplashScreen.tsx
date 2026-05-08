@@ -38,12 +38,12 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
   }, [isComplete, videoStage, onComplete]);
 
   return (
-    <div 
+    <div
       className="relative h-full w-full flex flex-col items-center justify-center bg-white overflow-hidden cursor-pointer"
       onClick={() => {
         if (videoRef.current) {
-          videoRef.current.muted = false;
-          videoRef.current.play().catch(() => {});
+          videoRef.current.muted = true;
+          videoRef.current.play().catch(() => { });
         }
       }}
     >
@@ -60,6 +60,7 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
             <video
               ref={videoRef}
               autoPlay
+              muted
               playsInline
               className="w-full h-full object-cover"
               onEnded={() => setVideoStage('ui')}
@@ -68,14 +69,13 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
             </video>
 
             {/* Subtle Skip/Wait hint */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 2 }}
               className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
             >
               <p className="text-white/60 text-[7px] font-black uppercase tracking-[0.2em] text-center">Initialisation du voyage...</p>
-              <p className="text-voyage-accent/40 text-[6px] font-black uppercase tracking-[0.1em] animate-pulse">Appuyez n'importe où pour le son</p>
             </motion.div>
           </motion.div>
         ) : (
