@@ -685,13 +685,13 @@ const CityNode: React.FC<{
       <div className="mt-4 text-center">
         <h3 className={cn(
           "text-[13px] font-black tracking-tight leading-none mb-1 uppercase",
-          isLocked ? "text-slate-400" : "text-slate-900"
+          isLocked ? "text-slate-500" : "text-slate-900"
         )}>
           {city.name}
         </h3>
         <p className={cn(
           "arabic-font text-[11px] font-bold",
-          isLocked ? "text-slate-300" : "text-voyage-accent/80"
+          isLocked ? "text-slate-400" : "text-voyage-accent/100"
         )}>
           {city.arabicName}
         </p>
