@@ -382,11 +382,11 @@ export default function MapJourneyScreen({
                   }}
                 >
                   {/* City Illustration / Banner */}
-                  <div className="h-50  w-full relative overflow-hidden">
+                  <div className="h-50 w-full relative overflow-hidden">
                     <img
                       src={optimizeSupabaseUrl(displayCity.image || 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/fallback-city.jpg', 60, 80)}
                       alt={displayCity.name}
-                      className="w-full h-full object-fill"
+                      className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
 
