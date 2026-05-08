@@ -38,6 +38,7 @@ export default function VocabularyMatchScreen({ onBack }: VocabularyMatchScreenP
   const [showSuccess, setShowSuccess] = useState(false);
   const [showHintModal, setShowHintModal] = useState(false);
   const [showSoundModal, setShowSoundModal] = useState(false);
+  const [isSavingAudio, setIsSavingAudio] = useState(false);
   const { settings: audio, updateSettings: updateAudio, playSound: playEffect, saveToCloud: saveAudioToCloud } = useAudio();
   
   const containerRef = useRef<HTMLDivElement>(null);
@@ -476,19 +477,44 @@ export default function VocabularyMatchScreen({ onBack }: VocabularyMatchScreenP
                   <button 
                     onClick={async () => {
                       try {
-                        await saveAudioToCloud();
-                        playEffect('success');
-                        setShowSoundModal(false);
-                      } catch (e) {
-                        console.error(e);
-                        setShowSoundModal(false);
-                      }
-                    }}
-                    className="btn-voyage-primary w-full py-4 flex items-center justify-center gap-3"
-                  >
-                    <Save size={20} />
-                    ENREGISTRER LES RÉGLAGES
-                  </button>
++                        setIsSavingAudio(true);
+                         await saveAudioToCloud();
+                         playEffect('success');
+-                        setShowSoundModal(false);
++                        // Show green state for a brief moment
++                        setTimeout(() => {
++                          setShowSoundModal(false);
++                          setIsSavingAudio(false);
++                        }, 800);
+                       } catch (e) {
+                         console.error(e);
++                        setIsSavingAudio(false);
+                         setShowSoundModal(false);
+                       }
+                     }}
+-                    className="btn-voyage-primary w-full py-4 flex items-center justify-center gap-3"
+-                  >
+-                    <Save size={20} />
+-                    ENREGISTRER LES RÉGLAGES
++                    className={cn(
++                      "w-full py-4 flex items-center justify-center gap-3 transition-all duration-300 rounded-2xl font-black uppercase tracking-wide",
++                      isSavingAudio 
++                        ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20 border-b-4 border-emerald-700" 
++                        : "btn-voyage-primary"
++                    )}
++                  >
++                    {isSavingAudio ? (
++                      <>
++                        <CheckCircle2 size={20} />
++                        RÉGLAGES ENREGISTRÉS !
++                      </>
++                    ) : (
++                      <>
++                        <Save size={20} />
++                        ENREGISTRER LES RÉGLAGES
++                      </>
++                    )}
+                   </button>
                   <button 
                     onClick={() => setShowSoundModal(false)}
                     className="w-full py-4 text-slate-400 font-black uppercase tracking-widest text-xs hover:text-slate-600 transition-colors"
