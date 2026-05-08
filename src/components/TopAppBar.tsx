@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { ArrowLeft, Star, TrendingUp, X } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowLeft, Star, TrendingUp, X, Volume2 } from 'lucide-react';
 import { cn } from '../lib/utils';
+import AudioSettingsModal from './AudioSettingsModal';
 
 
 interface TopAppBarProps {
@@ -15,6 +17,8 @@ interface TopAppBarProps {
 }
 
 export default function TopAppBar({ stats, onBack, title = "Le Voyage", showProgress = true }: TopAppBarProps) {
+  const [showSoundModal, setShowSoundModal] = useState(false);
+
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white px-6 py-3 flex items-center justify-between border-b border-[#E5D5B8]/30 shadow-sm">
       <div className="flex items-center gap-6">
@@ -27,6 +31,15 @@ export default function TopAppBar({ stats, onBack, title = "Le Voyage", showProg
       </div>
 
       <div className="flex items-center gap-3">
+        {/* Sound Control */}
+        <button 
+          onClick={() => setShowSoundModal(true)}
+          className="p-2.5 bg-white border-2 border-[#E5D5B8]/50 text-[#7B3F1A] rounded-xl hover:bg-[#FBF3E3] transition-all shadow-sm group"
+          title="Réglages Audio"
+        >
+          <Volume2 size={20} className="group-hover:scale-110 transition-transform" />
+        </button>
+
         {/* XP Badge */}
         <div className="flex items-center gap-2 bg-[#FBF3E3] px-3 py-1.5 rounded-full border border-[#D4A43E]/20 shadow-sm">
            <div className="w-6 h-6 bg-[#D4A43E]/20 rounded-md flex items-center justify-center">
@@ -43,6 +56,11 @@ export default function TopAppBar({ stats, onBack, title = "Le Voyage", showProg
            <span className="font-black text-white text-sm tracking-tight">Niv. {stats.level}</span>
         </div>
       </div>
+
+      <AudioSettingsModal 
+        isOpen={showSoundModal} 
+        onClose={() => setShowSoundModal(false)} 
+      />
     </header>
   );
 }

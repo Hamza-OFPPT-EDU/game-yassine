@@ -5,8 +5,9 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Volume2 } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
+import AudioSettingsModal from '../components/AudioSettingsModal';
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -19,6 +20,7 @@ const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/ob
 export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeScreenProps) {
   const { playSound } = useAudio();
   const [showContent, setShowContent] = useState(false);
+  const [showSoundModal, setShowSoundModal] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -52,6 +54,24 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="relative z-10 h-full w-full flex flex-col"
           >
+            {/* Floating Audio Control */}
+            <div className="absolute top-6 right-6 z-50">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setShowSoundModal(true)}
+                className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-2xl transition-all"
+                title="Réglages Audio"
+              >
+                <Volume2 size={24} />
+              </motion.button>
+            </div>
+
+            <AudioSettingsModal 
+              isOpen={showSoundModal} 
+              onClose={() => setShowSoundModal(false)} 
+            />
+
             {/* Hero section with Logo Image */}
             <section className="relative w-full shrink-0 flex items-center justify-center px-6 pt-12 pb-4">
               <motion.img

@@ -1,8 +1,10 @@
 import { motion } from 'motion/react';
 import { Trophy, Timer, ChevronRight, Star, Plus, Shield, Zap, TrendingUp } from 'lucide-react';
+import { useState } from 'react';
 import { cn } from '../lib/utils';
 import type { League } from '../types';
 import TopAppBar from '../components/TopAppBar';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 interface LeagueScreenProps {
   onSelectLeague: (id: string) => void;
@@ -31,6 +33,7 @@ const MOCK_LEAGUES: League[] = [
 
 export default function LeagueScreen({ onSelectLeague, onCreateLeague, onBack }: LeagueScreenProps) {
   const stats = { xp: 1450, stars: 120, level: 4 };
+  const [showExitModal, setShowExitModal] = useState(false);
 
   return (
     <div className="flex flex-col h-full bg-white relative overflow-hidden">
@@ -67,7 +70,21 @@ export default function LeagueScreen({ onSelectLeague, onCreateLeague, onBack }:
         ))}
       </div>
 
-      <TopAppBar stats={stats} title="Compétitions" onBack={onBack} />
+      <TopAppBar 
+        stats={stats} 
+        title="Compétitions" 
+        onBack={() => setShowExitModal(true)} 
+      />
+      
+      <ConfirmationModal
+        isOpen={showExitModal}
+        onClose={() => setShowExitModal(false)}
+        onConfirm={onBack}
+        title="Quitter le classement ?"
+        message="Es-tu sûr de vouloir quitter la page des compétitions ?"
+        confirmLabel="Oui, quitter"
+        cancelLabel="Non, rester"
+      />
       
       <main className="flex-grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 max-w-2xl mx-auto w-full relative z-10 scrollbar-hide">
         

@@ -5,8 +5,10 @@
 
 import { motion } from 'motion/react';
 import { ArrowLeft, Trophy, Medal, Timer, TrendingUp } from 'lucide-react';
+import { useState } from 'react';
 import { cn } from '../lib/utils';
 import type { League } from '../types';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 interface LeagueDetailScreenProps {
   leagueId: string;
@@ -53,14 +55,25 @@ const MOCK_LEAGUES: Record<string, League> = {
 
 export default function LeagueDetailScreen({ leagueId, onBack }: LeagueDetailScreenProps) {
   const league = MOCK_LEAGUES[leagueId] || MOCK_LEAGUES.bronze;
+  const [showExitModal, setShowExitModal] = useState(false);
 
   return (
     <div className="flex flex-col h-full bg-voyage-sand pb-32">
+      <ConfirmationModal
+        isOpen={showExitModal}
+        onClose={() => setShowExitModal(false)}
+        onConfirm={onBack}
+        title="Quitter la ligue ?"
+        message="Voulez-vous vraiment revenir à la liste des compétitions ?"
+        confirmLabel="Oui, quitter"
+        cancelLabel="Non, rester"
+      />
+
       {/* Header */}
       <header className="px-6 pt-12 pb-8 bg-white border-b border-voyage-accent/10 relative overflow-hidden">
         <div className="flex items-center gap-4 mb-6 relative z-10">
           <button 
-            onClick={onBack}
+            onClick={() => setShowExitModal(true)}
             className="p-2 hover:bg-voyage-accent/10 rounded-full transition-colors text-voyage-primary"
           >
             <ArrowLeft size={24} />

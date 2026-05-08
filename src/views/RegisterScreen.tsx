@@ -1,8 +1,9 @@
 import React, { useState } from 'react'; 
 import { motion } from 'motion/react';
-import { User, Lock, ArrowRight, Loader2, AlertCircle, Sparkles, ChevronDown, Map } from 'lucide-react';
+import { User, Lock, ArrowRight, Loader2, AlertCircle, Sparkles, ChevronDown, Map, Volume2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAudio } from '../hooks/useAudio';
+import AudioSettingsModal from '../components/AudioSettingsModal';
 
 interface RegisterScreenProps {
   onBack: () => void;
@@ -21,6 +22,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showSoundModal, setShowSoundModal] = useState(false);
 
   const username = (firstName && lastName) 
     ? `${firstName.trim().toLowerCase()}.${lastName.trim().toLowerCase()}`.replace(/\s+/g, '')
@@ -101,9 +103,25 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
           </div>
         </div>
 
-        <div className="w-12 h-12 rounded-2xl bg-[#F4A261] flex items-center justify-center shadow-lg shadow-[#F4A261]/20">
-            <Sparkles size={24} className="text-white" fill="currentColor" />
+        <div className="flex items-center gap-3">
+          <motion.button 
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setShowSoundModal(true)}
+            className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-[#2D6A4F]/10 text-[#2D6A4F]"
+            title="Réglages Audio"
+          >
+            <Volume2 size={22} strokeWidth={2.5} />
+          </motion.button>
+          <div className="w-12 h-12 rounded-2xl bg-[#F4A261] flex items-center justify-center shadow-lg shadow-[#F4A261]/20">
+              <Sparkles size={24} className="text-white" fill="currentColor" />
+          </div>
         </div>
+
+        <AudioSettingsModal 
+          isOpen={showSoundModal} 
+          onClose={() => setShowSoundModal(false)} 
+        />
       </header>
 
       <main className="relative z-10 flex-grow flex flex-col px-6 max-w-md mx-auto w-full">
