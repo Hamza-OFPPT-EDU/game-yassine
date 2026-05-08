@@ -390,12 +390,13 @@ export default function MapJourneyScreen({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
 
-                    {/* Floating Icon over Banner */}
-                    <div
-                      className="absolute bottom-[-20px] left-8 w-20 h-20 rounded-3xl shadow-xl border-4 border-white flex items-center justify-center"
-                      style={{ background: displayCityTheme.bgGradient }}
-                    >
-                      {resolveCityIcon(displayCity, 80, 'text-white')}
+                    {/* Floating Icon over Banner - Now using the CityOrb for consistency */}
+                    <div className="absolute bottom-[-30px] left-8 z-10 scale-[0.85] origin-bottom-left">
+                      <CityOrb 
+                        city={displayCity} 
+                        isSelected={false} 
+                        size="w-[92px] h-[92px]"
+                      />
                     </div>
 
                     {/* Close button */}
@@ -564,6 +565,97 @@ function buildPath(cities: City[], width: number): string {
   return d;
 }
 
+// ── Composant Orb de ville (Réutilisable) ─────────────────────────────────────
+const CityOrb: React.FC<{
+  city: City;
+  isSelected?: boolean;
+  size?: string;
+  onClick?: () => void;
+  isLocked?: boolean;
+}> = ({ city, isSelected = false, size = "w-[92px] h-[92px]", onClick, isLocked: manualIsLocked }) => {
+  const isLocked = manualIsLocked ?? (city.status === 'locked');
+  const isCompleted = city.status === 'completed';
+  const isActive = city.status === 'active';
+  const progress = (isCompleted ? city.totalSteps : city.stepNum) / city.totalSteps;
+
+  return (
+    <div className="relative group" onClick={onClick}>
+      {/* Active Aura */}
+      {isActive && (
+        <motion.div
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
+          className="absolute inset-0 bg-voyage-accent/30 rounded-full blur-xl -z-10"
+        />
+      )}
+
+      <motion.div
+        whileHover={onClick && !isLocked ? { scale: 1.1, y: -5 } : {}}
+        whileTap={onClick && !isLocked ? { scale: 0.95 } : {}}
+        className={cn(
+          "relative rounded-full flex items-center justify-center transition-all duration-300",
+          "border-4 shadow-lg overflow-hidden",
+          size,
+          isLocked ? "bg-slate-200 border-slate-300 opacity-60" : "bg-white border-white shadow-voyage-accent/10"
+        )}
+        style={!isLocked ? { borderColor: isSelected ? '#D4A43E' : 'white' } : {}}
+      >
+        <div className="relative z-10 flex items-center justify-center w-full h-full p-2">
+          {city.iconName ? (
+            city.iconName.startsWith('http') ? (
+              <img
+                src={resolveAssetUrl(city.iconName, '')}
+                alt={city.name}
+                className={cn(
+                  "w-full h-full object-contain transition-transform duration-500 group-hover:scale-110",
+                  isLocked ? "grayscale opacity-40" : ""
+                )}
+              />
+            ) : (
+              resolveCityIcon(city, (city.iconSize || 48), isLocked ? "grayscale opacity-50" : "text-voyage-accent")
+            )
+          ) : (
+            <div className="text-voyage-accent/20">
+              <MapPin size={40} />
+            </div>
+          )}
+        </div>
+
+        {!isLocked && (
+          <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
+            <circle
+              cx="50%" cy="50%" r="42"
+              fill="none"
+              stroke={isCompleted ? "#10B981" : "#D4A43E"}
+              strokeWidth="4"
+              strokeDasharray={264}
+              strokeDashoffset={264 * (1 - progress)}
+              strokeLinecap="round"
+              className="transition-all duration-1000"
+            />
+          </svg>
+        )}
+
+        {isLocked && (
+          <div className="absolute inset-0 flex items-center justify-center bg-slate-100/40 backdrop-blur-[1px]">
+            <Lock size={20} className="text-slate-400" />
+          </div>
+        )}
+      </motion.div>
+
+      {isCompleted && (
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          className="absolute -bottom-1 -right-1 w-7 h-7 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center shadow-md z-20"
+        >
+          <Check size={14} className="text-white font-bold" />
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
 // ── Composant Nœud de ville ────────────────────────────────────────────────────
 const CityNode: React.FC<{
   city: City;
@@ -573,12 +665,8 @@ const CityNode: React.FC<{
   index: number;
   isScrollTarget?: boolean;
   scrollDone?: boolean;
-}> = ({ city, onSelect, isSelected, delay, isScrollTarget = false, scrollDone = false }) => {
+}> = ({ city, onSelect, isSelected, delay, index, isScrollTarget = false, scrollDone = false }) => {
   const isLocked = city.status === 'locked';
-  const isCompleted = city.status === 'completed';
-  const isActive = city.status === 'active';
-  const cityTheme = getCityTheme(city);
-  const progress = (isCompleted ? city.totalSteps : city.stepNum) / city.totalSteps;
 
   return (
     <motion.div
@@ -587,88 +675,11 @@ const CityNode: React.FC<{
       transition={{ delay }}
       className="flex flex-col items-center relative"
     >
-      {/* City State Indicator (Active Aura) */}
-      {isActive && (
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
-          transition={{ duration: 2.5, repeat: Infinity }}
-          className="absolute w-28 h-28 bg-voyage-accent/30 rounded-full blur-xl"
-        />
-      )}
-
-      {/* Main Node Orb */}
-      <div
-        className="relative cursor-pointer group"
+      <CityOrb 
+        city={city} 
+        isSelected={isSelected} 
         onClick={onSelect}
-      >
-        <motion.div
-          whileHover={{ scale: isLocked ? 1 : 1.1, y: isLocked ? 0 : -5 }}
-          whileTap={{ scale: 0.95 }}
-          className={cn(
-            "relative w-[92px] h-[92px] rounded-full flex items-center justify-center transition-all duration-300",
-            "border-4 shadow-lg overflow-hidden",
-            isLocked ? "bg-slate-200 border-slate-300 opacity-60" : "bg-white border-white shadow-voyage-accent/10"
-          )}
-          style={!isLocked ? { borderColor: isSelected ? '#D4A43E' : 'white' } : {}}
-        >
-          {/* Background Illustration if exists */}
-          {/* Foreground Icon / Main Image */}
-          <div className="relative z-10 flex items-center justify-center w-full h-full p-2">
-            {city.iconName ? (
-              city.iconName.startsWith('http') ? (
-                <img
-                  src={resolveAssetUrl(city.iconName, '')}
-                  alt={city.name}
-                  className={cn(
-                    "w-full h-full object-contain transition-transform duration-500 group-hover:scale-110",
-                    isLocked ? "grayscale opacity-40" : ""
-                  )}
-                />
-              ) : (
-                resolveCityIcon(city, (city.iconSize || 48), isLocked ? "grayscale opacity-50" : "text-voyage-accent")
-              )
-            ) : (
-              <div className="text-voyage-accent/20">
-                <MapPin size={40} />
-              </div>
-            )}
-          </div>
-
-          {/* Progress Ring Overlay (if active/completed) */}
-          {!isLocked && (
-            <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
-              <circle
-                cx="50%" cy="50%" r="42"
-                fill="none"
-                stroke={isCompleted ? "#10B981" : "#D4A43E"}
-                strokeWidth="4"
-                strokeDasharray={264}
-                strokeDashoffset={264 * (1 - progress)}
-                strokeLinecap="round"
-                className="transition-all duration-1000"
-              />
-            </svg>
-          )}
-
-          {/* Locked Badge Overlay */}
-          {isLocked && (
-            <div className="absolute inset-0 flex items-center justify-center bg-slate-100/40 backdrop-blur-[1px]">
-              <Lock size={20} className="text-slate-400" />
-            </div>
-          )}
-        </motion.div>
-
-        {/* Completion Checkmark */}
-        {isCompleted && (
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="absolute -bottom-1 -right-1 w-7 h-7 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center shadow-md z-20"
-          >
-            <Check size={14} className="text-white font-bold" />
-          </motion.div>
-        )}
-      </div>
+      />
 
       {/* City Labels */}
       <div className="mt-4 text-center">
@@ -687,7 +698,7 @@ const CityNode: React.FC<{
       </div>
 
       {/* Floating Status Badge (Active) */}
-      {isActive && (
+      {city.status === 'active' && (
         <motion.div
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
