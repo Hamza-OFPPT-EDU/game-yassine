@@ -391,10 +391,10 @@ export default function MapJourneyScreen({
                     <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
 
                     {/* Floating Icon over Banner - Now using the CityOrb for consistency */}
-                    <div className="absolute bottom-[-30px] left-8 z-10 scale-[0.85] origin-bottom-left">
-                      <CityOrb 
-                        city={displayCity} 
-                        isSelected={false} 
+                    <div className="absolute bottom-[-9px] left-8 z-10 scale-[0.85] origin-bottom-left">
+                      <CityOrb
+                        city={displayCity}
+                        isSelected={false}
                         size="w-[92px] h-[92px]"
                       />
                     </div>
@@ -675,9 +675,9 @@ const CityNode: React.FC<{
       transition={{ delay }}
       className="flex flex-col items-center relative"
     >
-      <CityOrb 
-        city={city} 
-        isSelected={isSelected} 
+      <CityOrb
+        city={city}
+        isSelected={isSelected}
         onClick={onSelect}
       />
 
