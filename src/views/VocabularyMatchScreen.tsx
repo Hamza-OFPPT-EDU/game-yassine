@@ -5,7 +5,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, Check, Star, Volume2, Save, CheckCircle2, TrendingUp, Apple, Sun, Droplets, Info, X, VolumeX, Music, Bell, Play, User, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Check, Star, Volume2, Save, CheckCircle2, TrendingUp, Apple, Sun, Droplets, Info, X, VolumeX, Music, Bell, Play, User, RotateCcw, Lightbulb } from 'lucide-react';
 import { type City } from '../types';
 import { cn } from '../lib/utils';
 import { useAudio } from '../contexts/AudioContext';
@@ -41,6 +41,7 @@ export default function VocabularyMatchScreen({ onBack }: VocabularyMatchScreenP
   const [showHintModal, setShowHintModal] = useState(false);
   const [showSoundModal, setShowSoundModal] = useState(false);
   const [isSavingAudio, setIsSavingAudio] = useState(false);
+  const stats = { xp: 120 };
   const { settings: audio, updateSettings: updateAudio, playSound: playEffect, saveToCloud: saveAudioToCloud } = useAudio();
   
   const containerRef = useRef<HTMLDivElement>(null);
@@ -251,11 +252,11 @@ export default function VocabularyMatchScreen({ onBack }: VocabularyMatchScreenP
       <div className="fixed bottom-0 left-0 w-full p-6 bg-white/80 backdrop-blur-xl flex justify-center items-center gap-4 z-50 border-t border-slate-100">
          <div className="w-full max-w-2xl flex items-center gap-4">
            <button 
-             onClick={() => { playEffect('click'); setShowSoundModal(true); }} 
+             onClick={() => { playEffect('click'); setMatches({}); setSelectedLeft(null); setShowSuccess(false); }} 
              className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4"
-             title="Réglages audio"
+             title="Refaire l'exercice"
            >
-             <Volume2 size={24} />
+             <RotateCcw size={24} />
            </button>
            <button 
              onClick={() => { setShowHintModal(true); }} 

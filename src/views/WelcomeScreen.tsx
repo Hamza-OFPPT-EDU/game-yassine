@@ -72,9 +72,9 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
               </motion.button>
             </div>
 
-            <AudioSettingsModal 
-              isOpen={showSoundModal} 
-              onClose={() => setShowSoundModal(false)} 
+            <AudioSettingsModal
+              isOpen={showSoundModal}
+              onClose={() => setShowSoundModal(false)}
             />
 
             {/* Hero section with Logo Image */}
@@ -108,7 +108,7 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
             </main>
 
             {/* Buttons (Redesigned for Premium Look) */}
-            <section className="px-8 pb-10 pt-6 space-y-4 w-full max-w-md mx-auto shrink-0">
+            <section className="px-8 pb-20 pt-6 space-y-4 w-full max-w-md mx-auto shrink-0">
               <motion.button
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
