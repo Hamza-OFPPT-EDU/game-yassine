@@ -14,8 +14,9 @@ import {
   closestCenter,
 } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import { TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw, SkipForward, Clapperboard, Check, Wind } from 'lucide-react';
+import { TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw, SkipForward, Clapperboard, Check, Wind, Lightbulb, Volume2, VolumeX, Music, Bell, Play, Save } from 'lucide-react';
 import { type City, type Challenge, type MissionCompletionSummary, type MissionQuestionResult, type Mission, DEFAULT_AVATAR_URL } from '../types';
+import { RABAT_EXPLANATIONS } from '../constants/explanations';
 import { cn } from '../lib/utils';
 import { useSupabaseQuestions } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
@@ -113,6 +114,9 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const [shortAnswer, setShortAnswer] = useState('');
   const [startTime, setStartTime] = useState(Date.now());
   const [attempts, setAttempts] = useState(0);
+  const [showExplanationModal, setShowExplanationModal] = useState(false);
+  const [showSoundModal, setShowSoundModal] = useState(false);
+  const { settings: audio, updateSettings: updateAudio, playSound: playEffect, playVoice, saveToCloud: saveAudioToCloud } = useAudio();
   
   // Timer & Skip state
   const DEFAULT_QUESTION_TIME = 30; // seconds
@@ -451,7 +455,33 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
     };
   };
 
-  // Skip button handler
+  // Helper to get explanation from JSON or DB
+  const getExplanation = () => {
+    if (!challenge) return null;
+
+    // Try to find in JSON first (fallback for Rabat)
+    if (city.id.toLowerCase() === 'rabat') {
+      const cityData = RABAT_EXPLANATIONS["Rabat"];
+      if (cityData) {
+        // Find mission code (R1, R2, etc.) based on title
+        let missionCode = "";
+        if (mission.title_fr?.toUpperCase().includes("HÔPITAL") || mission.title_fr?.toUpperCase().includes("IBN SINA")) missionCode = "R1";
+        else if (mission.title_fr?.toUpperCase().includes("MINISTÈRE")) missionCode = "R2";
+        else if (mission.title_fr?.toUpperCase().includes("UNIVERSITÉ")) missionCode = "R3";
+        else if (mission.title_fr?.toUpperCase().includes("ONG ESPOIR") || mission.title_fr?.toUpperCase().includes("ENTREPRENEURIAT")) missionCode = "R4";
+        else if (mission.title_fr?.toUpperCase().includes("WILAYA") || mission.title_fr?.toUpperCase().includes("DÉFI FINAL")) missionCode = "R5";
+
+        if (missionCode && cityData[missionCode]) {
+          const exerciseKey = String(currentIdx + 1);
+          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
+          if (explanation) return explanation;
+        }
+      }
+    }
+
+    // Fallback to database value
+    return challenge.explanation_fr || challenge.hint || "Pense aux principes de soft skills vus précédemment.";
+  };
 
   const buildQuestionResult = (): MissionQuestionResult | null => {
     if (!challenge) return null;
@@ -638,11 +668,11 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
         </button>
 
         <button 
-          onClick={() => { playSound('click'); handleReset(); }}
+          onClick={() => { playEffect('click'); setShowSoundModal(true); }}
           className="p-2 hover:bg-duo-swan rounded-xl transition-colors shrink-0"
-          title="Réinitialiser l'exercice"
+          title="Réglages audio"
         >
-          <RotateCcw size={22} className="text-voyage-primary" />
+          <Volume2 size={22} className="text-voyage-primary" />
         </button>
         
         <div className="grow">
@@ -1340,13 +1370,21 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
             </div>
             <div className="w-full max-w-2xl px-4 flex gap-4">
                <motion.button 
-                 whileTap={{ scale: 0.95 }} 
-                 onClick={() => { playSound('click'); handleReset(); }}
-                 className="p-5 bg-white/20 border-2 border-white/30 rounded-2xl text-white hover:bg-white/30 transition-colors border-b-4 shrink-0"
-                 title="Réinitialiser l'exercice"
-               >
-                 <RotateCcw size={24} />
-               </motion.button>
+                  whileTap={{ scale: 0.95 }} 
+                  onClick={() => { playEffect('click'); setShowSoundModal(true); }}
+                  className="p-5 bg-white/20 border-2 border-white/30 rounded-2xl text-white hover:bg-white/30 transition-colors border-b-4 shrink-0"
+                  title="Réglages audio"
+                >
+                  <Volume2 size={24} />
+                </motion.button>
+               <motion.button 
+                  whileTap={{ scale: 0.95 }} 
+                  onClick={() => { playSound('click'); setShowExplanationModal(true); }}
+                  className="p-5 bg-voyage-accent/20 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/30 transition-colors border-b-4 shrink-0"
+                  title="Obtenir une explication"
+                >
+                  <Lightbulb size={24} />
+                </motion.button>
                <motion.button whileTap={{ scale: 0.95 }} onClick={handleNext} className={cn("grow text-xl py-5 font-black uppercase tracking-tight", isCorrect() ? "btn-voyage-primary" : "bg-voyage-terracotta text-white border-b-4 border-voyage-terracotta-dark rounded-2xl")}>
                  {currentIdx === questions.length - 1 ? "VOIR LE RÉSULTAT" : "CONTINUER"}
                </motion.button>
@@ -1355,8 +1393,11 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
         ) : (
           <footer className="fixed bottom-0 left-0 w-full z-40 bg-white border-t-[3px] border-voyage-secondary/20 p-6 pb-10 flex justify-center">
             <div className="w-full max-w-2xl flex items-center gap-4 px-4">
-              <button onClick={() => { playSound('click'); handleReset(); }} className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4 tooltip" title="Réinitialiser l'exercice">
-                <RotateCcw size={24} />
+              <button onClick={() => { playEffect('click'); setShowSoundModal(true); }} className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4 tooltip" title="Réglages audio">
+                <Volume2 size={24} />
+              </button>
+              <button onClick={() => { playSound('click'); setShowExplanationModal(true); }} className="p-4 bg-voyage-accent/10 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/20 transition-colors border-b-4 tooltip" title="Obtenir un indice">
+                <Lightbulb size={24} />
               </button>
               <button onClick={handleSkip} className="p-4 bg-voyage-accent/10 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/20 transition-colors border-b-4 tooltip" title="Passer cette question (0 points)">
                 <SkipForward size={24} />
@@ -1369,6 +1410,217 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
               </motion.button>
             </div>
           </footer>
+        )}
+      </AnimatePresence>
+
+      {/* Explanation Modal */}
+      <AnimatePresence>
+        {showExplanationModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md"
+            onClick={() => setShowExplanationModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 30 }}
+              className="bg-white rounded-[2.5rem] p-8 max-w-lg w-full shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative border-2 border-voyage-accent/20"
+              onClick={e => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setShowExplanationModal(false)}
+                className="absolute top-6 right-6 p-2 hover:bg-black/5 rounded-full transition-colors"
+              >
+                <X size={20} className="text-duo-wolf" />
+              </button>
+
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-voyage-accent/10 rounded-2xl flex items-center justify-center border-b-4 border-voyage-accent/20">
+                    <Lightbulb size={32} className="text-voyage-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-voyage-accent/60">Coup de pouce pédagogique</h3>
+                    <h2 className="text-2xl font-black text-duo-eel">Indice & Explication</h2>
+                  </div>
+                </div>
+
+                <div className="bg-voyage-sand/30 p-6 rounded-3xl border-2 border-dashed border-voyage-accent/20">
+                  <p className="text-lg font-bold text-duo-eel leading-relaxed text-center italic">
+                    "{getExplanation()}"
+                  </p>
+                </div>
+
+                <div className="flex justify-center pt-2">
+                   <button 
+                    onClick={() => setShowExplanationModal(false)}
+                    className="btn-voyage-accent px-10 py-4 w-full"
+                  >
+                    CONTINUER L'EXERCICE
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Audio Settings Modal */}
+      <AnimatePresence>
+        {showSoundModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[120] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md"
+            onClick={() => setShowSoundModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 30 }}
+              className="bg-white rounded-[2.5rem] p-8 max-w-lg w-full shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative border-2 border-voyage-accent/20 overflow-y-auto max-h-[90vh] scrollbar-hide"
+              onClick={e => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setShowSoundModal(false)}
+                className="absolute top-6 right-6 p-2 hover:bg-black/5 rounded-full transition-colors"
+              >
+                <X size={20} className="text-duo-wolf" />
+              </button>
+
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-voyage-accent/10 rounded-2xl flex items-center justify-center border-b-4 border-voyage-accent/20">
+                    <Volume2 size={32} className="text-voyage-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-voyage-accent/60">Réglages immersifs</h3>
+                    <h2 className="text-2xl font-black text-duo-eel">Audio & Son</h2>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  {/* Master Volume */}
+                  <div className="p-6 bg-slate-50 rounded-3xl space-y-4">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-3">
+                         <Volume2 size={18} className="text-voyage-primary" />
+                         <span className="font-black text-voyage-primary text-sm uppercase tracking-tight">Volume Global</span>
+                      </div>
+                      <span className="text-xs font-black text-voyage-primary">{audio.masterVolume}%</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <VolumeX size={16} className="text-slate-300" />
+                      <input
+                        type="range" min={0} max={100}
+                        value={audio.masterVolume}
+                        onChange={e => updateAudio({ masterVolume: Number(e.target.value) })}
+                        className="flex-1 accent-voyage-primary h-2 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Effects Toggle */}
+                  <div className="flex items-center justify-between p-6 bg-white border border-slate-100 rounded-3xl">
+                    <div className="flex items-center gap-4">
+                      <Bell size={20} className={audio.soundEffectsEnabled ? "text-voyage-accent" : "text-slate-400"} />
+                      <span className="font-black text-voyage-primary text-sm">Effets Sonores</span>
+                    </div>
+                    <button
+                      onClick={() => updateAudio({ soundEffectsEnabled: !audio.soundEffectsEnabled })}
+                      className={cn(
+                        "relative w-14 h-7 rounded-full transition-colors duration-300 border-b-4",
+                        audio.soundEffectsEnabled ? "bg-voyage-accent border-voyage-accent/60" : "bg-slate-200 border-slate-300"
+                      )}
+                    >
+                      <motion.span
+                        layout
+                        className={cn(
+                          "absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md",
+                          audio.soundEffectsEnabled ? "left-[calc(100%-1.75rem)]" : "left-0.5"
+                        )}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Music Toggle */}
+                  <div className="flex items-center justify-between p-6 bg-white border border-slate-100 rounded-3xl">
+                    <div className="flex items-center gap-4">
+                      <Music size={20} className={audio.musicEnabled ? "text-voyage-primary" : "text-slate-400"} />
+                      <span className="font-black text-voyage-primary text-sm">Musique de fond</span>
+                    </div>
+                    <button
+                      onClick={() => updateAudio({ musicEnabled: !audio.musicEnabled })}
+                      className={cn(
+                        "relative w-14 h-7 rounded-full transition-colors duration-300 border-b-4",
+                        audio.musicEnabled ? "bg-voyage-primary border-voyage-primary/60" : "bg-slate-200 border-slate-300"
+                      )}
+                    >
+                      <motion.span
+                        layout
+                        className={cn(
+                          "absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md",
+                          audio.musicEnabled ? "left-[calc(100%-1.75rem)]" : "left-0.5"
+                        )}
+                      />
+                    </button>
+                  </div>
+
+                   {/* Voice Toggle */}
+                   <div className="flex items-center justify-between p-6 bg-white border border-slate-100 rounded-3xl">
+                    <div className="flex items-center gap-4">
+                      <User size={20} className={audio.voicesEnabled ? "text-voyage-terracotta" : "text-slate-400"} />
+                      <span className="font-black text-voyage-primary text-sm">Voix & Narrations</span>
+                    </div>
+                    <button
+                      onClick={() => updateAudio({ voicesEnabled: !audio.voicesEnabled })}
+                      className={cn(
+                        "relative w-14 h-7 rounded-full transition-colors duration-300 border-b-4",
+                        audio.voicesEnabled ? "bg-voyage-terracotta border-voyage-terracotta/60" : "bg-slate-200 border-slate-300"
+                      )}
+                    >
+                      <motion.span
+                        layout
+                        className={cn(
+                          "absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md",
+                          audio.voicesEnabled ? "left-[calc(100%-1.75rem)]" : "left-0.5"
+                        )}
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-3 pt-4">
+                  <button 
+                    onClick={async () => {
+                      try {
+                        await saveAudioToCloud();
+                        playEffect('success');
+                        setShowSoundModal(false);
+                      } catch (e) {
+                        console.error(e);
+                        setShowSoundModal(false);
+                      }
+                    }}
+                    className="btn-voyage-primary w-full py-4 flex items-center justify-center gap-3"
+                  >
+                    <Save size={20} />
+                    ENREGISTRER LES RÉGLAGES
+                  </button>
+                  <button 
+                    onClick={() => setShowSoundModal(false)}
+                    className="w-full py-4 text-slate-400 font-black uppercase tracking-widest text-xs hover:text-slate-600 transition-colors"
+                  >
+                    Fermer sans sauvegarder
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
 

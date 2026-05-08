@@ -129,7 +129,7 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
               key={mission.id}
               src={cinematicGif}
               alt="Guide"
-              className="w-64 h-64 object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(212,164,62,0.15)]"
+              className="w-80 h-80 object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(212,164,62,0.15)]"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 console.warn("Cinematic GIF load failed, using fallback");

@@ -5,7 +5,8 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, CheckCircle2, Info, Apple, Sun, Droplets, Star } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Info, Apple, Sun, Droplets, Star, Volume2, Lightbulb, X, VolumeX, Music, Bell, Save, Play, User } from 'lucide-react';
+import { useAudio } from '../hooks/useAudio';
 import { cn } from '../lib/utils';
 
 interface VocabularyMatchScreenProps {
@@ -35,6 +36,9 @@ export default function VocabularyMatchScreen({ onBack }: VocabularyMatchScreenP
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   const [matches, setMatches] = useState<Record<string, string>>({}); // leftId -> rightId
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showHintModal, setShowHintModal] = useState(false);
+  const [showSoundModal, setShowSoundModal] = useState(false);
+  const { settings: audio, updateSettings: updateAudio, playSound: playEffect, saveToCloud: saveAudioToCloud } = useAudio();
   
   const containerRef = useRef<HTMLDivElement>(null);
   const [positions, setPositions] = useState<Record<string, { x: number, y: number }>>({});
@@ -226,23 +230,37 @@ export default function VocabularyMatchScreen({ onBack }: VocabularyMatchScreenP
       </main>
 
       {/* Action Bar */}
-      <div className="fixed bottom-0 left-0 w-full p-6 bg-white/80 backdrop-blur-xl flex flex-col items-center gap-4 z-50 border-t border-slate-100">
-         <button 
-           disabled={Object.keys(matches).length < LEFT_ITEMS.length}
-           onClick={() => setShowSuccess(true)}
-           className={cn(
-             "w-full max-w-md py-4 px-8 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center gap-3 transition-all active:scale-95",
-             Object.keys(matches).length === LEFT_ITEMS.length 
-               ? "bg-voyage-primary text-white shadow-voyage-primary/30" 
-               : "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
-           )}
-         >
-           <span>Valider les paires</span>
-           <CheckCircle2 size={24} />
-         </button>
-         <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">
-           {Object.keys(matches).length}/{LEFT_ITEMS.length} Pairs Matched
-         </p>
+      <div className="fixed bottom-0 left-0 w-full p-6 bg-white/80 backdrop-blur-xl flex justify-center items-center gap-4 z-50 border-t border-slate-100">
+         <div className="w-full max-w-2xl flex items-center gap-4">
+           <button 
+             onClick={() => { playEffect('click'); setShowSoundModal(true); }} 
+             className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4"
+             title="Réglages audio"
+           >
+             <Volume2 size={24} />
+           </button>
+           <button 
+             onClick={() => { setShowHintModal(true); }} 
+             className="p-4 bg-voyage-accent/10 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/20 transition-colors border-b-4"
+             title="Obtenir un indice"
+           >
+             <Lightbulb size={24} />
+           </button>
+           <motion.button 
+             disabled={Object.keys(matches).length < LEFT_ITEMS.length}
+             whileTap={{ scale: Object.keys(matches).length === LEFT_ITEMS.length ? 0.95 : 1 }}
+             onClick={() => setShowSuccess(true)}
+             className={cn(
+               "grow py-4 px-8 rounded-2xl font-black text-lg shadow-lg flex items-center justify-center gap-3 transition-all",
+               Object.keys(matches).length === LEFT_ITEMS.length 
+                 ? "bg-voyage-primary text-white shadow-voyage-primary/30 border-b-4 border-voyage-primary-dark" 
+                 : "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
+             )}
+           >
+             <span>Vérifier</span>
+             <CheckCircle2 size={24} />
+           </motion.button>
+         </div>
       </div>
 
       {/* Grand Success Overlay */}
@@ -269,6 +287,216 @@ export default function VocabularyMatchScreen({ onBack }: VocabularyMatchScreenP
               >
                 Continuer
               </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Hint Modal */}
+      <AnimatePresence>
+        {showHintModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md"
+            onClick={() => setShowHintModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 30 }}
+              className="bg-white rounded-[2.5rem] p-8 max-w-lg w-full shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative border-2 border-voyage-accent/20"
+              onClick={e => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setShowHintModal(false)}
+                className="absolute top-6 right-6 p-2 hover:bg-black/5 rounded-full transition-colors"
+              >
+                <X size={20} className="text-duo-wolf" />
+              </button>
+
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-voyage-accent/10 rounded-2xl flex items-center justify-center border-b-4 border-voyage-accent/20">
+                    <Lightbulb size={32} className="text-voyage-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-voyage-accent/60">Coup de pouce pédagogique</h3>
+                    <h2 className="text-2xl font-black text-duo-eel">Indice & Explication</h2>
+                  </div>
+                </div>
+
+                <div className="bg-voyage-sand/30 p-6 rounded-3xl border-2 border-dashed border-voyage-accent/20">
+                  <p className="text-lg font-bold text-duo-eel leading-relaxed text-center italic">
+                    "Identifiez les relations logiques entre les concepts. Par exemple, la 'Pomme' est un type de 'Fruit'. Chaque élément de gauche appartient à une seule catégorie de droite."
+                  </p>
+                </div>
+
+                <div className="flex justify-center pt-2">
+                   <button 
+                    onClick={() => setShowHintModal(false)}
+                    className="btn-voyage-accent px-10 py-4 w-full"
+                  >
+                    J'AI COMPRIS
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* Audio Settings Modal */}
+      <AnimatePresence>
+        {showSoundModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[120] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md"
+            onClick={() => setShowSoundModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 30 }}
+              className="bg-white rounded-[2.5rem] p-8 max-w-lg w-full shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative border-2 border-voyage-accent/20 overflow-y-auto max-h-[90vh] scrollbar-hide"
+              onClick={e => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setShowSoundModal(false)}
+                className="absolute top-6 right-6 p-2 hover:bg-black/5 rounded-full transition-colors"
+              >
+                <X size={20} className="text-duo-wolf" />
+              </button>
+
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-voyage-accent/10 rounded-2xl flex items-center justify-center border-b-4 border-voyage-accent/20">
+                    <Volume2 size={32} className="text-voyage-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-voyage-accent/60">Réglages immersifs</h3>
+                    <h2 className="text-2xl font-black text-duo-eel">Audio & Son</h2>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  {/* Master Volume */}
+                  <div className="p-6 bg-slate-50 rounded-3xl space-y-4">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-3">
+                         <Volume2 size={18} className="text-voyage-primary" />
+                         <span className="font-black text-voyage-primary text-sm uppercase tracking-tight">Volume Global</span>
+                      </div>
+                      <span className="text-xs font-black text-voyage-primary">{audio.masterVolume}%</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <VolumeX size={16} className="text-slate-300" />
+                      <input
+                        type="range" min={0} max={100}
+                        value={audio.masterVolume}
+                        onChange={e => updateAudio({ masterVolume: Number(e.target.value) })}
+                        className="flex-1 accent-voyage-primary h-2 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Effects Toggle */}
+                  <div className="flex items-center justify-between p-6 bg-white border border-slate-100 rounded-3xl">
+                    <div className="flex items-center gap-4">
+                      <Bell size={20} className={audio.soundEffectsEnabled ? "text-voyage-accent" : "text-slate-400"} />
+                      <span className="font-black text-voyage-primary text-sm">Effets Sonores</span>
+                    </div>
+                    <button
+                      onClick={() => updateAudio({ soundEffectsEnabled: !audio.soundEffectsEnabled })}
+                      className={cn(
+                        "relative w-14 h-7 rounded-full transition-colors duration-300 border-b-4",
+                        audio.soundEffectsEnabled ? "bg-voyage-accent border-voyage-accent/60" : "bg-slate-200 border-slate-300"
+                      )}
+                    >
+                      <motion.span
+                        layout
+                        className={cn(
+                          "absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md",
+                          audio.soundEffectsEnabled ? "left-[calc(100%-1.75rem)]" : "left-0.5"
+                        )}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Music Toggle */}
+                  <div className="flex items-center justify-between p-6 bg-white border border-slate-100 rounded-3xl">
+                    <div className="flex items-center gap-4">
+                      <Music size={20} className={audio.musicEnabled ? "text-voyage-primary" : "text-slate-400"} />
+                      <span className="font-black text-voyage-primary text-sm">Musique de fond</span>
+                    </div>
+                    <button
+                      onClick={() => updateAudio({ musicEnabled: !audio.musicEnabled })}
+                      className={cn(
+                        "relative w-14 h-7 rounded-full transition-colors duration-300 border-b-4",
+                        audio.musicEnabled ? "bg-voyage-primary border-voyage-primary/60" : "bg-slate-200 border-slate-300"
+                      )}
+                    >
+                      <motion.span
+                        layout
+                        className={cn(
+                          "absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md",
+                          audio.musicEnabled ? "left-[calc(100%-1.75rem)]" : "left-0.5"
+                        )}
+                      />
+                    </button>
+                  </div>
+
+                   {/* Voice Toggle */}
+                   <div className="flex items-center justify-between p-6 bg-white border border-slate-100 rounded-3xl">
+                    <div className="flex items-center gap-4">
+                      <User size={20} className={audio.voicesEnabled ? "text-voyage-terracotta" : "text-slate-400"} />
+                      <span className="font-black text-voyage-primary text-sm">Voix & Narrations</span>
+                    </div>
+                    <button
+                      onClick={() => updateAudio({ voicesEnabled: !audio.voicesEnabled })}
+                      className={cn(
+                        "relative w-14 h-7 rounded-full transition-colors duration-300 border-b-4",
+                        audio.voicesEnabled ? "bg-voyage-terracotta border-voyage-terracotta/60" : "bg-slate-200 border-slate-300"
+                      )}
+                    >
+                      <motion.span
+                        layout
+                        className={cn(
+                          "absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md",
+                          audio.voicesEnabled ? "left-[calc(100%-1.75rem)]" : "left-0.5"
+                        )}
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-3 pt-4">
+                  <button 
+                    onClick={async () => {
+                      try {
+                        await saveAudioToCloud();
+                        playEffect('success');
+                        setShowSoundModal(false);
+                      } catch (e) {
+                        console.error(e);
+                        setShowSoundModal(false);
+                      }
+                    }}
+                    className="btn-voyage-primary w-full py-4 flex items-center justify-center gap-3"
+                  >
+                    <Save size={20} />
+                    ENREGISTRER LES RÉGLAGES
+                  </button>
+                  <button 
+                    onClick={() => setShowSoundModal(false)}
+                    className="w-full py-4 text-slate-400 font-black uppercase tracking-widest text-xs hover:text-slate-600 transition-colors"
+                  >
+                    Fermer sans sauvegarder
+                  </button>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         )}

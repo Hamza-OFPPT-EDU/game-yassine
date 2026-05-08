@@ -28,7 +28,7 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
   }, []);
 
   return (
-    <div className="h-full w-full flex flex-col relative overflow-hidden bg-[#0a0f1e] pb-[20px]">
+    <div className="h-full w-full flex flex-col relative overflow-hidden bg-[#0a0f1e] pb-[10px]">
       {/* Background Video with enhanced overlay */}
       <div className="absolute inset-0 z-0">
         <video
@@ -133,7 +133,7 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
                 </motion.button>
               </div>
             </section>
-            <div className="h-[20px] shrink-0" />
+            <div className="h-[10px] shrink-0" />
           </motion.div>
         )}
       </AnimatePresence>
