@@ -145,7 +145,7 @@ export default function SplashScreen({ onComplete, extraAssets = [], canContinue
                   className="w-full h-full flex items-center justify-center"
                 >
                   <img
-                    src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.jpg"
+                    src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.png"
                     alt="Logo"
                     className="w-full h-full object-contain"
                   />

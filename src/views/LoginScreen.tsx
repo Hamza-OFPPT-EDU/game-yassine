@@ -131,7 +131,7 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
                   <input
                     type="text"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value.toLowerCase())}
                     placeholder="prenom.nom"
                     className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 pl-14 pr-6 focus:outline-none focus:border-[#2D6A4F] focus:ring-4 focus:ring-[#2D6A4F]/5 transition-all font-bold text-[#1A1A2E]"
                     disabled={loading}

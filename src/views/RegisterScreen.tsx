@@ -50,9 +50,9 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
         options: {
           data: {
             username: username,
-            full_name: `${firstName} ${lastName}`,
-            first_name: firstName,
-            last_name: lastName,
+            full_name: `${firstName.trim().toLowerCase()} ${lastName.trim().toLowerCase()}`,
+            first_name: firstName.trim().toLowerCase(),
+            last_name: lastName.trim().toLowerCase(),
             gender: gender,
             avatar_url: gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL,
             group_name: group,
