@@ -3,6 +3,7 @@ import { Trophy, Timer, ChevronRight, Star, Plus, Shield, Zap, TrendingUp } from
 import { useState } from 'react';
 import { cn } from '../lib/utils';
 import type { League } from '../types';
+import { AVATAR_MALE_URL, AVATAR_FEMALE_URL } from '../types';
 import TopAppBar from '../components/TopAppBar';
 import ConfirmationModal from '../components/ConfirmationModal';
 
@@ -20,10 +21,10 @@ const MOCK_LEAGUES: League[] = [
     timeLeft: '2j 4h',
     myRank: 4,
     players: [
-      { id: '1', name: 'Zaynab', xp: 2100, avatar: '/assets/avatar_user.jpg', rank: 1 },
-      { id: '2', name: 'Omar', xp: 1950, avatar: '/assets/avatar_user.jpg', rank: 2 },
-      { id: '3', name: 'Yasmine', xp: 1800, avatar: '/assets/avatar_user.jpg', rank: 3 },
-      { id: '4', name: 'Ahmed', xp: 1450, avatar: '/assets/avatar_user.jpg', rank: 4, isCurrentUser: true },
+      { id: '1', name: 'Zaynab', xp: 2100, avatar: AVATAR_FEMALE_URL, rank: 1 },
+      { id: '2', name: 'Omar', xp: 1950, avatar: AVATAR_MALE_URL, rank: 2 },
+      { id: '3', name: 'Yasmine', xp: 1800, avatar: AVATAR_FEMALE_URL, rank: 3 },
+      { id: '4', name: 'Ahmed', xp: 1450, avatar: AVATAR_MALE_URL, rank: 4, isCurrentUser: true },
     ]
   },
   { id: 'silver', name: 'Ligue Argent', tier: 'silver', timeLeft: 'Terminé', myRank: 12, players: [] },

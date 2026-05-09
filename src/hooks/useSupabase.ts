@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { CITIES, type Challenge, type City, type Mission, DEFAULT_AVATAR_URL } from '../types';
+import { CITIES, type Challenge, type City, type Mission, DEFAULT_AVATAR_URL, AVATAR_MALE_URL, AVATAR_FEMALE_URL } from '../types';
 import { Session } from '@supabase/supabase-js';
 import { useSettings } from '../contexts/SettingsContext';
 
@@ -501,9 +501,10 @@ export function useSupabaseProfile(userId?: string) {
         .single();
 
       if (!error && data) {
+        const genderDefault = data.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
         setProfile({
           ...data,
-          avatar_url: data.avatar_url || DEFAULT_AVATAR_URL
+          avatar_url: data.avatar_url || genderDefault
         });
       } else {
         console.warn('Profile not found for user:', userId);
@@ -597,7 +598,7 @@ export function useSupabaseMissionLeaderboard(missionId: string) {
 
         const { data, error } = await supabase
           .from('app_users')
-          .select('id, full_name, avatar_url, xp, level')
+          .select('id, full_name, avatar_url, xp, level, gender')
           .order('xp', { ascending: false })
           .limit(20);
 
@@ -607,7 +608,7 @@ export function useSupabaseMissionLeaderboard(missionId: string) {
           const dbPlayers = data.map(u => ({
             id: u.id,
             name: u.full_name || 'Explorateur',
-            avatar: u.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.id}`,
+            avatar: u.avatar_url || (u.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL),
             score: u.xp || 0,
             level: u.level || 1,
             rank: 0

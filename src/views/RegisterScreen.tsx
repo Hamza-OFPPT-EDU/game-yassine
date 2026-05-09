@@ -4,6 +4,7 @@ import { User, Lock, ArrowRight, Loader2, AlertCircle, Sparkles, ChevronDown, Ma
 import { supabase } from '../lib/supabase';
 import { useAudio } from '../hooks/useAudio';
 import AudioSettingsModal from '../components/AudioSettingsModal';
+import { AVATAR_MALE_URL, AVATAR_FEMALE_URL } from '../types';
 
 interface RegisterScreenProps {
   onBack: () => void;
@@ -53,6 +54,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
             first_name: firstName,
             last_name: lastName,
             gender: gender,
+            avatar_url: gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL,
             group_name: group,
             birth_date: birthDate
           }

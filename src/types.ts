@@ -23,7 +23,9 @@ export enum Screen {
   Badges = 'badges',
 }
 
-export const DEFAULT_AVATAR_URL = '/assets/avatar_user.jpg';
+export const AVATAR_MALE_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-homme.png';
+export const AVATAR_FEMALE_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-femme.png';
+export const DEFAULT_AVATAR_URL = AVATAR_MALE_URL;
 
 export type LeaguePlayer = {
   id: string;
