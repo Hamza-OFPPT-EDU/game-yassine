@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2, Award, Zap, Globe, Lock, MapPin } from 'lucide-react';
+import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2, Award, Zap, Globe, Lock, MapPin, LogOut } from 'lucide-react';
 import { useAuth, useSupabaseProfile } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
 import TopAppBar from '../components/TopAppBar';
@@ -442,6 +442,28 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, comple
               </button>
            </div>
         </section>
+        
+        {/* Logout Button */}
+        <div className="pt-8 pb-32">
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={async () => {
+              playSound('click');
+              const { error } = await import('../lib/supabase').then(m => m.supabase.auth.signOut());
+              if (!error) {
+                window.location.reload(); 
+              }
+            }}
+            className="w-full py-5 rounded-3xl font-black text-[#7B3F1A]/60 border-2 border-[#E5D5B8] hover:bg-[#7B3F1A]/5 transition-all flex items-center justify-center gap-3 shadow-sm active:shadow-none"
+          >
+            <LogOut size={22} className="text-[#7B3F1A]/40" />
+            <div className="flex flex-col items-center leading-none">
+              <span className="tracking-tight text-lg uppercase text-[#7B3F1A]">Se déconnecter</span>
+              <span className="text-[10px] opacity-40 font-bold mt-1 tracking-widest uppercase">تسجيل الخروج</span>
+            </div>
+          </motion.button>
+        </div>
 
       </main>
     </div>
