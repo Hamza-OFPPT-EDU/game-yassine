@@ -15,7 +15,6 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
     { id: 'league', icon: Trophy, label: 'Ligues' },
     { id: 'journey', icon: MapIcon, label: 'Parcours' },
     { id: 'profile', icon: User, label: 'Profil' },
-    { id: 'settings', icon: Settings, label: 'Réglages' },
   ];
 
   return (

@@ -159,28 +159,48 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, comple
                    className="w-full h-full object-cover rounded-[32px]"
                    referrerPolicy="no-referrer"
                  />
+                 {/* Settings button hidden as requested */}
+               {/* 
+               <motion.button 
+                 whileHover={{ scale: 1.1, rotate: 15 }}
+                 whileTap={{ scale: 0.9 }}
+                 onClick={onSettings}
+                 className="absolute -bottom-2 -right-2 w-12 h-12 bg-white border-2 border-[#E5D5B8] rounded-2xl flex items-center justify-center shadow-xl cursor-pointer z-20 hover:border-[#D4A43E] transition-colors"
+               >
+                 <Settings size={24} className="text-[#7B3F1A]" />
+               </motion.button>
+               */}
               </motion.div>
-              
-              <motion.button 
-                whileHover={{ scale: 1.1, rotate: 15 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={onSettings}
-                className="absolute -bottom-2 -right-2 w-12 h-12 bg-white border-2 border-[#E5D5B8] rounded-2xl flex items-center justify-center shadow-xl cursor-pointer z-20 hover:border-[#D4A43E] transition-colors"
-              >
-                <Settings size={24} className="text-[#7B3F1A]" />
-              </motion.button>
            </div>
            
-           <div className="mt-8 space-y-2">
+           <div className="mt-8 space-y-3 text-center">
               <h1 className="text-4xl font-black text-[#4E2510] tracking-tight">
-                {profile?.full_name?.split(' ')[0] || 'Explorateur'}
+                {profile?.full_name || 'Explorateur'}
               </h1>
-              <p className="text-[#7B3F1A]/60 font-bold text-sm tracking-wide">
-                {session?.user?.email || (profile?.username ? `${profile.username}@voyage.ma` : 'Explorateur des Savoirs')}
-              </p>
-              <div className="inline-flex items-center gap-2 bg-[#D4A43E]/10 px-4 py-1.5 rounded-full border border-[#D4A43E]/20">
-                <Shield size={14} className="text-[#D4A43E]" />
-                <span className="font-black text-[#7B3F1A] uppercase tracking-[0.2em] text-[10px]">Niveau {profile?.level || 1}</span>
+              
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-[#7B3F1A]/60 font-bold text-sm tracking-wide">
+                  {profile?.username ? `@${profile.username}` : (session?.user?.email || 'Explorateur des Savoirs')}
+                </p>
+                
+                <div className="flex items-center gap-3">
+                  <div className="inline-flex items-center gap-2 bg-[#D4A43E]/10 px-4 py-1.5 rounded-full border border-[#D4A43E]/20">
+                    <Shield size={14} className="text-[#D4A43E]" />
+                    <span className="font-black text-[#7B3F1A] uppercase tracking-[0.2em] text-[10px]">Niveau {profile?.level || 1}</span>
+                  </div>
+                  
+                  <div className="inline-flex items-center gap-2 bg-[#7B3F1A]/5 px-4 py-1.5 rounded-full border border-[#7B3F1A]/10">
+                    <span className="font-black text-[#7B3F1A] uppercase tracking-widest text-[10px]">
+                      {profile?.group_name || 'GROUPE NON DÉFINI'}
+                    </span>
+                  </div>
+                </div>
+
+                {profile?.birth_date && (
+                  <p className="text-[10px] font-black text-[#7B3F1A]/40 uppercase tracking-[0.3em] mt-1">
+                    Né le {new Date(profile.birth_date).toLocaleDateString('fr-FR')}
+                  </p>
+                )}
               </div>
            </div>
         </section>

@@ -22,7 +22,7 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
   const { playSound } = useAudio();
   const { getSetting } = useSupabaseSettings();
   const welcomeConfig = getSetting('welcome_screen_content') || {};
-  
+
   const [showContent, setShowContent] = useState(false);
   const [showSoundModal, setShowSoundModal] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -102,13 +102,13 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
                 className="bg-white/10 backdrop-blur-2xl border border-white/20 p-8 rounded-[40px] shadow-[0_20px_60px_rgba(0,0,0,0.3)] max-w-[340px] mx-auto w-full relative overflow-hidden group"
               >
                 <div className="absolute -top-10 -right-10 w-24 h-24 bg-[#F4A261]/20 rounded-full blur-2xl group-hover:bg-[#F4A261]/30 transition-colors" />
-                <p 
+                <p
                   className="text-white text-lg font-black leading-tight uppercase tracking-tight mb-2"
                   style={welcomeConfig.titleStyle}
                 >
                   {welcomeConfig.title || "Bienvenue Voyageur"}
                 </p>
-                <p 
+                <p
                   className="text-white/80 font-bold leading-relaxed text-[15px]"
                   style={welcomeConfig.subtitleStyle}
                 >
