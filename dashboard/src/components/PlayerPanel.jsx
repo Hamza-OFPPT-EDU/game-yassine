@@ -1,6 +1,6 @@
 import { usePlayerDetail } from '../hooks/useData';
-import { X, MapPin, Star, Award, Zap, Key, User, Trash2, AlertTriangle } from 'lucide-react';
-import { useState } from 'react';
+import { X, MapPin, Star, Award, Zap, Key, User, Trash2, AlertTriangle, Edit2, Save, RotateCcw, CheckCircle2, Circle } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const CITY_EMOJIS = {
   rabat: '🏛️', chefchaouen: '🔵', fes: '🕌', marrakech: '🌿', laayoune: '🌊', dakhla: '🏜️',
@@ -27,15 +27,49 @@ function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
 }
 
-export default function PlayerPanel({ player, onClose, onDelete }) {
+export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
   const { detail, loading } = usePlayerDetail(player?.id);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({
+    username: '', fullName: '', site: '', schoolLevel: '', password: ''
+  });
+  const [saveLoading, setSaveLoading] = useState(false);
+  
   const open = !!player;
+
+  useEffect(() => {
+    if (player) {
+      setEditForm({
+        username: player.username || '',
+        fullName: player.display_name || '',
+        site: player.site || '',
+        schoolLevel: player.school_level || '',
+        password: player.password || ''
+      });
+      setIsEditing(false);
+      setShowConfirmDelete(false);
+    }
+  }, [player]);
 
   const handleDelete = async () => {
     if (onDelete && player) {
       await onDelete(player.id);
       onClose();
+    }
+  };
+
+  const handleUpdate = async () => {
+    if (onUpdate && player) {
+      setSaveLoading(true);
+      try {
+        await onUpdate(player.id, editForm);
+        setIsEditing(false);
+      } catch (err) {
+        alert("Erreur lors de la mise à jour : " + (err.message || "Erreur inconnue"));
+      } finally {
+        setSaveLoading(false);
+      }
     }
   };
 
@@ -48,7 +82,17 @@ export default function PlayerPanel({ player, onClose, onDelete }) {
             <div className="panel-header">
               <div className="panel-avatar">{getInitials(player.display_name)}</div>
               <div className="panel-info">
-                <div className="panel-name">{player.display_name || 'Joueur'}</div>
+                {isEditing ? (
+                  <input 
+                    className="cms-input-minimal" 
+                    value={editForm.fullName}
+                    onChange={e => setEditForm({...editForm, fullName: e.target.value})}
+                    placeholder="Nom complet"
+                    autoFocus
+                  />
+                ) : (
+                  <div className="panel-name">{player.display_name || 'Joueur'}</div>
+                )}
                 <div className="panel-type">{player.profile_type || 'Le Stratège'}</div>
                 <div className="panel-meta">
                   <div className="panel-meta-item">
@@ -65,9 +109,25 @@ export default function PlayerPanel({ player, onClose, onDelete }) {
                   </div>
                 </div>
               </div>
-              <button className="panel-close" onClick={onClose}>
-                <X size={16} />
-              </button>
+              <div className="panel-actions-top">
+                {!isEditing ? (
+                  <button className="btn-icon" onClick={() => setIsEditing(true)} title="Modifier le compte">
+                    <Edit2 size={14} />
+                  </button>
+                ) : (
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button className="btn-icon text-danger" onClick={() => setIsEditing(false)}>
+                      <RotateCcw size={14} />
+                    </button>
+                    <button className="btn-icon text-success" onClick={handleUpdate} disabled={saveLoading}>
+                      <Save size={14} />
+                    </button>
+                  </div>
+                )}
+                <button className="panel-close" onClick={onClose}>
+                  <X size={16} />
+                </button>
+              </div>
             </div>
 
             <div className="panel-body">
@@ -77,11 +137,51 @@ export default function PlayerPanel({ player, onClose, onDelete }) {
                 <div className="credential-grid">
                   <div className="credential-item">
                     <span className="credential-label">Utilisateur</span>
-                    <span className="credential-value">{player.username || '—'}</span>
+                    {isEditing ? (
+                      <input 
+                        className="cms-input-minimal" 
+                        value={editForm.username}
+                        onChange={e => setEditForm({...editForm, username: e.target.value})}
+                      />
+                    ) : (
+                      <span className="credential-value">{player.username || '—'}</span>
+                    )}
                   </div>
                   <div className="credential-item">
                     <span className="credential-label">Mot de passe</span>
-                    <span className="credential-value">{player.password || '—'}</span>
+                    {isEditing ? (
+                      <input 
+                        className="cms-input-minimal" 
+                        value={editForm.password}
+                        onChange={e => setEditForm({...editForm, password: e.target.value})}
+                      />
+                    ) : (
+                      <span className="credential-value">{player.password || '—'}</span>
+                    )}
+                  </div>
+                  <div className="credential-item">
+                    <span className="credential-label">Site / Ville</span>
+                    {isEditing ? (
+                      <input 
+                        className="cms-input-minimal" 
+                        value={editForm.site}
+                        onChange={e => setEditForm({...editForm, site: e.target.value})}
+                      />
+                    ) : (
+                      <span className="credential-value">{player.site || '—'}</span>
+                    )}
+                  </div>
+                  <div className="credential-item">
+                    <span className="credential-label">Niveau scolaire</span>
+                    {isEditing ? (
+                      <input 
+                        className="cms-input-minimal" 
+                        value={editForm.schoolLevel}
+                        onChange={e => setEditForm({...editForm, schoolLevel: e.target.value})}
+                      />
+                    ) : (
+                      <span className="credential-value">{player.school_level || '—'}</span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -106,26 +206,44 @@ export default function PlayerPanel({ player, onClose, onDelete }) {
 
                   {/* City Journey */}
                   <div className="panel-section">
-                    <h4><MapPin size={12} style={{display:'inline', marginRight:4}} />Voyage par ville</h4>
+                    <h4><MapPin size={12} style={{display:'inline', marginRight:4}} />Schéma d'avancement</h4>
                     {detail?.cities?.length === 0 ? (
                       <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Aucune ville commencée</p>
                     ) : (
                       <div className="city-journey">
                         {detail?.cities?.map(city => (
-                          <div key={city.id} className="city-item">
-                            <div className={`city-icon ${city.status}`}>
-                              {CITY_EMOJIS[city.city_id] || '🏙️'}
-                            </div>
-                            <div className="city-info">
-                              <div className="city-name">{city.city_name_fr}</div>
-                              <div className="city-missions">
-                                {city.missions_completed}/{city.missions_total} missions · {city.xp_earned} XP
+                          <div key={city.id} className="city-progress-container">
+                            <div className="city-item">
+                              <div className={`city-icon ${city.status}`}>
+                                {CITY_EMOJIS[city.city_id] || '🏙️'}
                               </div>
+                              <div className="city-info">
+                                <div className="city-name">{city.city_name_fr}</div>
+                                <div className="city-missions">
+                                  {city.missions_completed}/{city.missions_total} missions · {city.xp_earned} XP
+                                </div>
+                              </div>
+                              <span className={`city-status ${city.status}`}>
+                                <span className={`city-dot ${city.status}`} />
+                                {city.status === 'done' ? 'Terminé' : city.status === 'current' ? 'En cours' : 'Verrouillé'}
+                              </span>
                             </div>
-                            <span className={`city-status ${city.status}`}>
-                              <span className={`city-dot ${city.status}`} />
-                              {city.status === 'done' ? 'Terminé' : city.status === 'current' ? 'En cours' : 'Verrouillé'}
-                            </span>
+                            
+                            {/* Detailed Missions View */}
+                            <div className="mission-schema-list">
+                              {[...Array(city.missions_total)].map((_, i) => {
+                                const isMissionDone = i < city.missions_completed;
+                                const isCurrent = i === city.missions_completed && city.status === 'current';
+                                
+                                return (
+                                  <div key={i} className={`mission-schema-item ${isMissionDone ? 'done' : isCurrent ? 'active' : 'locked'}`}>
+                                    {isMissionDone ? <CheckCircle2 size={12} /> : <Circle size={12} />}
+                                    <span>Mission {i + 1}</span>
+                                    {isMissionDone && <span className="m-badge">100%</span>}
+                                  </div>
+                                );
+                              })}
+                            </div>
                           </div>
                         ))}
                       </div>

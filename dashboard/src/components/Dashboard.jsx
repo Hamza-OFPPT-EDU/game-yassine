@@ -4,7 +4,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, Cell,
   LineChart, Line, CartesianGrid,
 } from 'recharts';
-import { Users, Award, Zap, TrendingUp, Search, RefreshCw, ChevronRight, Plus, X, Upload } from 'lucide-react';
+import { Users, Award, Zap, TrendingUp, Search, RefreshCw, ChevronRight, Plus, X, Upload, ArrowUp, ArrowDown, Filter, Trash2 } from 'lucide-react';
 import { useStats, usePlayers, useSkillDistribution, useCityStats } from '../hooks/useData';
 import PlayerPanel from './PlayerPanel';
 import ThemeToggle from './ThemeToggle';
@@ -257,7 +257,7 @@ function BulkImportModal({ isOpen, onClose, onSubmit }) {
 
 export default function Dashboard({ setPage }) {
   const { stats, loading: statsLoading } = useStats();
-  const { players, loading: playersLoading, createUser, deleteUser, createUsersBulk } = usePlayers();
+  const { players, loading: playersLoading, createUser, deleteUser, deleteUsersBulk, createUsersBulk, updateUser } = usePlayers();
   const { data: skillData } = useSkillDistribution();
   const { data: cityData } = useCityStats();
 
@@ -266,29 +266,101 @@ export default function Dashboard({ setPage }) {
   const [showBulkImportModal, setShowBulkImportModal] = useState(false);
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedIds, setSelectedIds] = useState(new Set());
+  const [sortConfig, setSortConfig] = useState({ key: 'created_at', direction: 'desc' });
+  const [filters, setFilters] = useState({ site: 'All', schoolLevel: 'All' });
   const itemsPerPage = 10;
+
+  // Extract unique values for filters
+  const sites = ['All', ...new Set(players.map(p => p.site).filter(Boolean))];
+  const levels = ['All', ...new Set(players.map(p => p.school_level).filter(Boolean))];
 
   const filtered = players.filter(p => {
     const s = search.toLowerCase();
-    return (
+    const matchesSearch = (
       (p.display_name || '').toLowerCase().includes(s) ||
       (p.username || '').toLowerCase().includes(s) ||
       (p.site || '').toLowerCase().includes(s) ||
       (p.school_level || '').toLowerCase().includes(s) ||
       (p.profile_type || '').toLowerCase().includes(s)
     );
+
+    const matchesSite = filters.site === 'All' || p.site === filters.site;
+    const matchesLevel = filters.schoolLevel === 'All' || p.school_level === filters.schoolLevel;
+
+    return matchesSearch && matchesSite && matchesLevel;
+  });
+
+  // Apply sorting
+  const sorted = [...filtered].sort((a, b) => {
+    if (!sortConfig.key) return 0;
+    
+    let aVal = a[sortConfig.key];
+    let bVal = b[sortConfig.key];
+
+    // Handle nested display_name if needed, but here they are flat in players list
+    if (sortConfig.key === 'display_name') {
+      aVal = (aVal || '').toLowerCase();
+      bVal = (bVal || '').toLowerCase();
+    }
+
+    if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
+    if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
+    return 0;
   });
 
   // Calculate pagination
-  const totalItems = filtered.length;
+  const totalItems = sorted.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedPlayers = filtered.slice(startIndex, startIndex + itemsPerPage);
+  const paginatedPlayers = sorted.slice(startIndex, startIndex + itemsPerPage);
 
-  // Reset to page 1 when search changes
+  // Reset to page 1 when search or filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [search]);
+    setSelectedIds(new Set()); 
+  }, [search, filters]);
+
+  const requestSort = (key) => {
+    let direction = 'desc';
+    if (sortConfig.key === key && sortConfig.direction === 'desc') {
+      direction = 'asc';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const getSortIcon = (key) => {
+    if (sortConfig.key !== key) return <RefreshCw size={12} style={{ opacity: 0.2 }} />;
+    return sortConfig.direction === 'desc' ? <ArrowDown size={12} /> : <ArrowUp size={12} />;
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size === paginatedPlayers.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(paginatedPlayers.map(p => p.id)));
+    }
+  };
+
+  const toggleSelect = (id, e) => {
+    e.stopPropagation();
+    const next = new Set(selectedIds);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    setSelectedIds(next);
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedIds.size === 0) return;
+    if (window.confirm(`Êtes-vous sûr de vouloir supprimer ${selectedIds.size} joueurs ? Cette action est irréversible.`)) {
+      try {
+        await deleteUsersBulk(Array.from(selectedIds));
+        setSelectedIds(new Set());
+      } catch (err) {
+        alert("Erreur lors de la suppression groupée.");
+      }
+    }
+  };
 
   const radarData = skillData.map(s => ({ subject: s.skill, A: s.avg }));
 
@@ -308,6 +380,7 @@ export default function Dashboard({ setPage }) {
         player={selectedPlayer} 
         onClose={() => setSelectedPlayer(null)} 
         onDelete={deleteUser}
+        onUpdate={updateUser}
       />
 
       {/* Stats Grid */}
@@ -427,15 +500,42 @@ export default function Dashboard({ setPage }) {
             <h3>Joueurs & Progression</h3>
           </div>
           <div className="topbar-actions">
-            <div className="search-bar">
-              <Search size={14} className="search-icon" />
-              <input
-                type="text"
-                placeholder="Rechercher un joueur..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-              />
+            <div className="filter-group">
+              <div className="search-bar">
+                <Search size={14} className="search-icon" />
+                <input
+                  type="text"
+                  placeholder="Rechercher..."
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                />
+              </div>
+              
+              <select 
+                className="cms-select"
+                value={filters.site}
+                onChange={e => setFilters({...filters, site: e.target.value})}
+              >
+                <option value="All">Tous les sites</option>
+                {sites.filter(s => s !== 'All').map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+
+              <select 
+                className="cms-select"
+                value={filters.schoolLevel}
+                onChange={e => setFilters({...filters, schoolLevel: e.target.value})}
+              >
+                <option value="All">Tous les niveaux</option>
+                {levels.filter(l => l !== 'All').map(l => <option key={l} value={l}>{l}</option>)}
+              </select>
             </div>
+            
+            {selectedIds.size > 0 && (
+              <button className="btn-danger-outline" onClick={handleBulkDelete} style={{ gap: '6px', display: 'flex', alignItems: 'center' }}>
+                <Trash2 size={16} /> Supprimer ({selectedIds.size})
+              </button>
+            )}
+
             <button className="btn-ghost" onClick={() => setShowBulkImportModal(true)} style={{ gap: '6px', display: 'flex', alignItems: 'center' }}>
               <Upload size={16} /> Importer
             </button>
@@ -458,13 +558,21 @@ export default function Dashboard({ setPage }) {
             <table>
               <thead>
                 <tr>
-                  <th>Joueur</th>
+                  <th style={{ width: '40px' }}>
+                    <input 
+                      type="checkbox" 
+                      className="cms-checkbox"
+                      checked={paginatedPlayers.length > 0 && selectedIds.size === paginatedPlayers.length}
+                      onChange={toggleSelectAll}
+                    />
+                  </th>
+                  <th>Joueur <button className="sort-btn" onClick={() => requestSort('display_name')}>{getSortIcon('display_name')}</button></th>
                   <th>Identifiants</th>
-                  <th>Niveau</th>
-                  <th>XP</th>
-                  <th>Streak</th>
+                  <th>Niveau <button className="sort-btn" onClick={() => requestSort('level')}>{getSortIcon('level')}</button></th>
+                  <th>XP <button className="sort-btn" onClick={() => requestSort('xp')}>{getSortIcon('xp')}</button></th>
+                  <th>Streak <button className="sort-btn" onClick={() => requestSort('streak_days')}>{getSortIcon('streak_days')}</button></th>
                   <th>Type de profil</th>
-                  <th>Inscrit le</th>
+                  <th>Inscrit le <button className="sort-btn" onClick={() => requestSort('created_at')}>{getSortIcon('created_at')}</button></th>
                   <th></th>
                 </tr>
               </thead>
@@ -476,7 +584,20 @@ export default function Dashboard({ setPage }) {
                   });
 
                   return (
-                    <tr key={player.id} onClick={() => setSelectedPlayer(player)} style={{ animationDelay: `${i * 0.04}s` }}>
+                    <tr 
+                      key={player.id} 
+                      onClick={() => setSelectedPlayer(player)} 
+                      style={{ animationDelay: `${i * 0.04}s` }}
+                      className={selectedIds.has(player.id) ? 'selected' : ''}
+                    >
+                      <td onClick={e => e.stopPropagation()}>
+                        <input 
+                          type="checkbox" 
+                          className="cms-checkbox"
+                          checked={selectedIds.has(player.id)}
+                          onChange={e => toggleSelect(player.id, e)}
+                        />
+                      </td>
                       <td>
                         <div className="player-info">
                           <div className="player-avatar">{getInitials(player.display_name)}</div>

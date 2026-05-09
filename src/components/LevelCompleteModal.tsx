@@ -420,94 +420,116 @@ function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]
 
   return (
     <div className="relative">
-      {displayPlayers.slice(0, 5).map((player, idx) => {
-        const isMe = player.id === currentUserId;
-        return (
-          <motion.div 
-            key={player.id} 
-            layout
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ 
-              layout: { 
-                type: 'spring', 
-                stiffness: 350, 
-                damping: 25,
-                mass: 1.5 
-              },
-              opacity: { duration: 0.3 }
-            }}
-            className={cn(
-              "flex items-center gap-4 px-6 py-4 transition-all duration-700", 
-              isMe ? "bg-amber-100/40 border-y border-amber-200/50 shadow-inner z-10" : "bg-transparent"
-            )}
-          >
-            <div className="w-8 flex flex-col items-center">
-               <motion.span 
-                 key={idx}
-                 initial={{ y: 10, opacity: 0 }}
-                 animate={{ y: 0, opacity: 1 }}
-                 className={cn("text-xs font-black", isMe ? "text-amber-600" : "text-[#7B3F1A]/40")}
-               >
-                 #{idx + 1}
-               </motion.span>
-               {isMe && animationProgress < 1 && (
-                 <motion.div
-                   animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-                   transition={{ repeat: Infinity, duration: 0.6 }}
-                   className="w-1.5 h-1.5 bg-amber-500 rounded-full mt-1"
-                 />
-               )}
-            </div>
+      {(() => {
+        const topN = displayPlayers.slice(0, 10);
+        const myIndex = displayPlayers.findIndex(p => p.id === currentUserId);
+        const isUserInTopN = myIndex >= 0 && myIndex < 10;
+        
+        let finalDisplay = [...topN];
+        if (!isUserInTopN && myIndex >= 0) {
+          finalDisplay.push(displayPlayers[myIndex]);
+        }
 
-            <div className="relative">
-              <motion.div
-                animate={isMe && animationProgress < 1 ? { 
-                  rotate: [0, -5, 5, 0],
-                  scale: [1, 1.1, 1] 
-                } : {}}
-                transition={{ repeat: Infinity, duration: 0.4 }}
-              >
-                <img src={player.avatar} className="w-11 h-11 rounded-2xl border-2 border-white shadow-sm" alt={player.name} />
-              </motion.div>
-              {isMe && (
-                <motion.div 
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white shadow-sm flex items-center justify-center" 
-                >
-                   <Star size={8} className="text-white fill-current" />
-                </motion.div>
+        return finalDisplay.map((player, idx) => {
+          const isMe = player.id === currentUserId;
+          const actualRank = isMe ? myIndex + 1 : (idx < 10 ? idx + 1 : myIndex + 1);
+          const showSeparator = !isUserInTopN && isMe;
+
+          return (
+            <div key={player.id}>
+              {showSeparator && (
+                <div className="px-6 py-2 bg-[#F6EFE6] flex items-center justify-center gap-2">
+                  <div className="h-px flex-grow bg-[#D7C4AD]" />
+                  <span className="text-[9px] font-black text-[#A08363] uppercase tracking-[0.3em]">Ta Position</span>
+                  <div className="h-px flex-grow bg-[#D7C4AD]" />
+                </div>
               )}
-            </div>
-
-            <div className="flex-grow">
-              <p className={cn("text-[15px] font-black tracking-tight", isMe ? "text-amber-900" : "text-[#4E2510]")}>
-                {player.name} {isMe && "(Toi)"}
-              </p>
-              <div className="flex items-center gap-2">
-                <p className="text-[10px] font-bold text-[#A08363] uppercase tracking-widest">Niveau {player.level}</p>
-                {isMe && animationProgress < 1 && (
-                   <motion.span 
-                     animate={{ x: [0, 5, 0] }}
-                     transition={{ repeat: Infinity, duration: 0.8 }}
-                     className="text-[9px] font-black text-amber-600 uppercase tracking-tighter"
-                   >
-                     🚀 En pleine remontée !
-                   </motion.span>
+              <motion.div 
+                layout
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ 
+                  layout: { 
+                    type: 'spring', 
+                    stiffness: 350, 
+                    damping: 25,
+                    mass: 1.5 
+                  },
+                  opacity: { duration: 0.3 }
+                }}
+                className={cn(
+                  "flex items-center gap-4 px-6 py-4 transition-all duration-700", 
+                  isMe ? "bg-amber-100/40 border-y border-amber-200/50 shadow-inner z-10" : "bg-transparent"
                 )}
-              </div>
-            </div>
+              >
+                <div className="w-8 flex flex-col items-center">
+                   <motion.span 
+                     key={actualRank}
+                     initial={{ y: 10, opacity: 0 }}
+                     animate={{ y: 0, opacity: 1 }}
+                     className={cn("text-xs font-black", isMe ? "text-amber-600" : "text-[#7B3F1A]/40")}
+                   >
+                     #{actualRank}
+                   </motion.span>
+                   {isMe && animationProgress < 1 && (
+                     <motion.div
+                       animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                       transition={{ repeat: Infinity, duration: 0.6 }}
+                       className="w-1.5 h-1.5 bg-amber-500 rounded-full mt-1"
+                     />
+                   )}
+                </div>
 
-            <div className="text-right">
-              <div className={cn("flex flex-col items-end", isMe ? "scale-110" : "scale-100")}>
-                <RollingNumber value={player.score} isMe={isMe} />
-                <span className={cn("text-[10px] font-black uppercase tracking-widest", isMe ? "text-amber-600/60" : "text-[#A08363]/40")}>XP</span>
-              </div>
+                <div className="relative">
+                  <motion.div
+                    animate={isMe && animationProgress < 1 ? { 
+                      rotate: [0, -5, 5, 0],
+                      scale: [1, 1.1, 1] 
+                    } : {}}
+                    transition={{ repeat: Infinity, duration: 0.4 }}
+                  >
+                    <img src={player.avatar} className="w-11 h-11 rounded-2xl border-2 border-white shadow-sm" alt={player.name} />
+                  </motion.div>
+                  {isMe && (
+                    <motion.div 
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white shadow-sm flex items-center justify-center" 
+                    >
+                       <Star size={8} className="text-white fill-current" />
+                    </motion.div>
+                  )}
+                </div>
+
+                <div className="flex-grow">
+                  <p className={cn("text-[15px] font-black tracking-tight", isMe ? "text-amber-900" : "text-[#4E2510]")}>
+                    {player.name} {isMe && "(Toi)"}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-[10px] font-bold text-[#A08363] uppercase tracking-widest">Niveau {player.level}</p>
+                    {isMe && animationProgress < 1 && (
+                       <motion.span 
+                         animate={{ x: [0, 5, 0] }}
+                         transition={{ repeat: Infinity, duration: 0.8 }}
+                         className="text-[9px] font-black text-amber-600 uppercase tracking-tighter"
+                       >
+                         🚀 En pleine remontée !
+                       </motion.span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <div className={cn("flex flex-col items-end", isMe ? "scale-110" : "scale-100")}>
+                    <RollingNumber value={player.score} isMe={isMe} />
+                    <span className={cn("text-[10px] font-black uppercase tracking-widest", isMe ? "text-amber-600/60" : "text-[#A08363]/40")}>XP</span>
+                  </div>
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
-        );
-      })}
+          );
+        });
+      })()}
     </div>
   );
 }

@@ -119,14 +119,52 @@ export function usePlayers() {
   };
 
   const deleteUser = async (playerId) => {
-    // Delete profile (will cascade if FKs are set to cascade, but let's be safe)
-    // Actually, let's delete app_user first if it has no children, 
-    // or player_profile since it's the parent of progress.
     const { error: pError } = await supabase.from('player_profiles').delete().eq('id', playerId);
     if (pError) throw pError;
 
     const { error: uError } = await supabase.from('app_users').delete().eq('id', playerId);
     if (uError) throw uError;
+
+    await fetchPlayers();
+  };
+
+  const deleteUsersBulk = async (playerIds) => {
+    if (!playerIds || playerIds.length === 0) return;
+    
+    const { error: pError } = await supabase.from('player_profiles').delete().in('id', playerIds);
+    if (pError) throw pError;
+
+    const { error: uError } = await supabase.from('app_users').delete().in('id', playerIds);
+    if (uError) throw uError;
+
+    await fetchPlayers();
+  };
+
+  const updateUser = async (playerId, updates) => {
+    // 1. Update app_users
+    const { error: uError } = await supabase
+      .from('app_users')
+      .update({
+        username: updates.username,
+        full_name: updates.fullName,
+        site: updates.site,
+        school_level: updates.schoolLevel,
+        // password can also be updated if provided
+        ...(updates.password ? { password: updates.password } : {})
+      })
+      .eq('id', playerId);
+
+    if (uError) throw uError;
+
+    // 2. Update player_profiles (display_name)
+    const { error: pError } = await supabase
+      .from('player_profiles')
+      .update({
+        display_name: updates.fullName || updates.username
+      })
+      .eq('id', playerId);
+
+    if (pError) throw pError;
 
     await fetchPlayers();
   };
@@ -180,7 +218,7 @@ export function usePlayers() {
     return { added: newUsers.length, skipped: usersData.length - newUsers.length };
   };
 
-  return { players, loading, fetchPlayers, createUser, deleteUser, createUsersBulk };
+  return { players, loading, fetchPlayers, createUser, deleteUser, deleteUsersBulk, updateUser, createUsersBulk };
 }
 
 export function usePlayerDetail(playerId) {

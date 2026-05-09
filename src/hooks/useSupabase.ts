@@ -599,7 +599,7 @@ export function useSupabaseMissionLeaderboard(missionId: string) {
           .from('app_users')
           .select('id, full_name, avatar_url, xp, level')
           .order('xp', { ascending: false })
-          .limit(10);
+          .limit(20);
 
         let finalPlayers = [...seedPlayers];
 
@@ -607,18 +607,17 @@ export function useSupabaseMissionLeaderboard(missionId: string) {
           const dbPlayers = data.map(u => ({
             id: u.id,
             name: u.full_name || 'Explorateur',
-            avatar: u.avatar_url || DEFAULT_AVATAR_URL,
+            avatar: u.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.id}`,
             score: u.xp || 0,
             level: u.level || 1,
             rank: 0
           }));
           
-          // Merge and sort
+          // Merge and sort, keeping only top 15
           finalPlayers = [...dbPlayers, ...seedPlayers]
             .sort((a, b) => b.score - a.score)
-            // Remove duplicates (if any ID matches, though seed IDs are unique)
             .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
-            .slice(0, 10);
+            .slice(0, 15);
         }
 
         setLeaderboard(finalPlayers.map((p, i) => ({ ...p, rank: i + 1 })));

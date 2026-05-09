@@ -31,7 +31,7 @@ export default function MissionLeaderboard({ missionId, currentUserId }: Mission
       </div>
 
       <div className="bg-white/40 backdrop-blur-md rounded-[2.5rem] border border-white/60 shadow-xl overflow-hidden">
-        <div className="divide-y divide-[#E5D5B8]/30">
+        <div className="divide-y divide-[#E5D5B8]/30 max-h-[600px] overflow-y-auto custom-scrollbar">
           {leaderboard.map((player, index) => {
             const isMe = player.id === currentUserId;
             const isTop3 = index < 3;
