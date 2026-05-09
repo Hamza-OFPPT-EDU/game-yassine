@@ -633,3 +633,55 @@ export function useSupabaseMissionLeaderboard(missionId: string) {
 
   return { leaderboard, loading };
 }
+
+export function useSupabaseAssetConfigs(bucketId: string) {
+  const [configs, setConfigs] = useState<Record<string, any>>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchConfigs() {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('asset_configs')
+          .select('*')
+          .eq('bucket_id', bucketId);
+
+        if (!error && data) {
+          const configMap: Record<string, any> = {};
+          data.forEach(c => {
+            configMap[c.file_name] = c;
+          });
+          setConfigs(configMap);
+        }
+      } catch (err) {
+        console.error('Error fetching asset configs:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (bucketId) fetchConfigs();
+  }, [bucketId]);
+
+  const getAssetStyle = (url: string) => {
+    if (!url) return {};
+    try {
+      const fileName = url.split('/').pop()?.split('?')[0];
+      if (!fileName) return {};
+      const config = configs[fileName];
+      if (!config) return {};
+
+      return {
+        backgroundColor: config.bg_color || 'transparent',
+        opacity: config.opacity ?? 1,
+        borderRadius: config.border_radius || '0px',
+        boxShadow: config.shadow || 'none'
+      };
+    } catch (e) {
+      return {};
+    }
+  };
+
+  return { configs, loading, getAssetStyle };
+}

@@ -29,7 +29,7 @@ import FullscreenPrompt from './components/FullscreenPrompt';
 import LoginScreen from './views/LoginScreen';
 import RegisterScreen from './views/RegisterScreen';
 import { useAuth } from './hooks/useSupabase';
-import { fetchDynamicAssets, fetchCityMissionAssets } from './lib/assets';
+import { fetchDynamicAssets, fetchCityMissionAssets, getCoreAssets } from './lib/assets';
 import { type Asset } from './hooks/useAssetPreloader';
 
 export default function App() {
@@ -58,6 +58,7 @@ export default function App() {
   const [dynamicAssets, setDynamicAssets] = useState<Asset[]>([]);
   const [loadedCities, setLoadedCities] = useState<string[]>([]);
   const [loadingCityAssets, setLoadingCityAssets] = useState<string | null>(null);
+  const [isRabatLoaded, setIsRabatLoaded] = useState(false);
   
   const [userStats, setUserStats] = useState({
     xp: 0,
@@ -82,56 +83,45 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    async function loadInitialAssets() {
-      // Load core assets + all city icons + assets for the first city (Rabat)
-      const firstCityId = 'Rabat'; 
+    async function loadResourcesSequentially() {
       try {
-        const allCitiesAssets = await fetchDynamicAssets(); // Fetches all city icons/illustrations
-        const rabatMissionAssets = await fetchCityMissionAssets(firstCityId);
+        // 1. Load Core Assets (Logo, Sounds, Video)
+        const coreAssets = getCoreAssets();
+        setDynamicAssets(prev => [...prev, ...coreAssets]);
         
-        setDynamicAssets([...allCitiesAssets, ...rabatMissionAssets]);
-        setLoadedCities([firstCityId]);
+        // 2. Load Rabat Assets
+        const rabatAssets = await fetchDynamicAssets('Rabat');
+        setDynamicAssets(prev => {
+          const existingUrls = new Set(prev.map(a => a.url));
+          const uniqueRabat = rabatAssets.filter(a => !existingUrls.has(a.url));
+          return [...prev, ...uniqueRabat];
+        });
+        setLoadedCities(prev => [...prev, 'Rabat']);
+        setIsRabatLoaded(true);
+
+        // 3. Load other cities successively
+        const otherCities = ['Chefchaouen', 'Fès', 'Marrakech', 'Laâyoune', 'Dakhla'];
+        for (const city of otherCities) {
+          // Small delay between cities to not overwhelm the network
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          const cityAssets = await fetchDynamicAssets(city);
+          setDynamicAssets(prev => {
+            const existingUrls = new Set(prev.map(a => a.url));
+            const uniqueCity = cityAssets.filter(a => !existingUrls.has(a.url));
+            return [...prev, ...uniqueCity];
+          });
+          setLoadedCities(prev => [...prev, city]);
+        }
       } catch (err) {
-        console.error('Failed to load initial Rabat assets:', err);
+        console.error('Error in sequential asset loading:', err);
       }
     }
-    loadInitialAssets();
+    loadResourcesSequentially();
   }, []);
 
   const preloadCityResources = async (cityId: string) => {
     if (loadedCities.includes(cityId) || loadingCityAssets === cityId) return;
-
-    setLoadingCityAssets(cityId);
-    try {
-      const cityAssets = await fetchDynamicAssets(cityId);
-      const missionAssets = await fetchCityMissionAssets(cityId);
-      
-      const newAssets = [...cityAssets, ...missionAssets];
-      
-      // Actual preloading logic
-      newAssets.forEach(asset => {
-        if (asset.type === 'image') {
-          const img = new Image();
-          img.src = asset.url;
-        } else if (asset.type === 'audio') {
-          const audio = new Audio();
-          audio.src = asset.url;
-          audio.load();
-        }
-      });
-      
-      setDynamicAssets(prev => {
-        const existingUrls = new Set(prev.map(a => a.url));
-        const uniqueNewAssets = newAssets.filter(a => !existingUrls.has(a.url));
-        return [...prev, ...uniqueNewAssets];
-      });
-      
-      setLoadedCities(prev => [...prev, cityId]);
-    } catch (err) {
-      console.error(`Failed to preload assets for city ${cityId}:`, err);
-    } finally {
-      setLoadingCityAssets(null);
-    }
+    // (Existing logic can stay as a fallback if needed, but the sequential loop will handle most)
   };
 
   // Sync stats with profile once loaded
@@ -342,30 +332,11 @@ export default function App() {
   };
 
   const renderScreen = () => {
-    if (showFullscreenPrompt) {
-      return (
-        <div className="h-screen w-full bg-[#0a0f1e] flex flex-col items-center justify-center">
-          <FullscreenPrompt
-            show={showFullscreenPrompt}
-            onAccept={() => {
-              setShowFullscreenPrompt(false);
-              setFullscreenShownOnce(true);
-              localStorage.setItem('prefer-fullscreen', 'true');
-            }}
-            onDecline={() => {
-              setShowFullscreenPrompt(false);
-              setFullscreenShownOnce(true);
-              localStorage.setItem('prefer-fullscreen', 'false');
-            }}
-            extraAssets={dynamicAssets}
-          />
-        </div>
-      );
-    }
+    const screenContent = () => {
 
     if (authLoading || (session && profileLoading)) {
       if (currentScreen === Screen.Splash) {
-        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} />;
+        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} canContinue={isRabatLoaded} />;
       }
       return (
         <div className="h-screen w-full bg-[#0f172a] flex flex-col items-center justify-center gap-6">
@@ -377,7 +348,7 @@ export default function App() {
 
     switch (currentScreen) {
       case Screen.Splash:
-        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} />;
+        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} canContinue={isRabatLoaded} />;
       case Screen.Welcome:
         return <WelcomeScreen 
           onStart={handleDemoLogin} 
@@ -496,8 +467,34 @@ export default function App() {
           />
         );
       default:
-        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} />;
-    }
+        return null;
+      }
+    };
+
+    return (
+      <div className="relative h-full w-full">
+        {screenContent()}
+        
+        {showFullscreenPrompt && (
+          <div className="absolute inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+            <FullscreenPrompt 
+              show={showFullscreenPrompt}
+              onAccept={() => {
+                setShowFullscreenPrompt(false);
+                setFullscreenShownOnce(true);
+                localStorage.setItem('prefer-fullscreen', 'true');
+              }}
+              onDecline={() => {
+                setShowFullscreenPrompt(false);
+                setFullscreenShownOnce(true);
+                localStorage.setItem('prefer-fullscreen', 'false');
+              }}
+              extraAssets={dynamicAssets}
+            />
+          </div>
+        )}
+      </div>
+    );
   };
 
   const getActiveTab = () => {

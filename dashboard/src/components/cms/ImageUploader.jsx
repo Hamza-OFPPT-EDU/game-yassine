@@ -13,7 +13,7 @@ const MAX_SIZE_MB = 5;
  *   onChange     {fn}       Called with the new public URL after upload
  *   folder       {string}   Sub-folder inside the bucket (e.g. city id)
  */
-export default function ImageUploader({ value, onChange, folder = 'general' }) {
+export default function ImageUploader({ value, onChange, folder = 'general', bucket = 'challenge-illustrations' }) {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
@@ -26,14 +26,14 @@ export default function ImageUploader({ value, onChange, folder = 'general' }) {
   const inputRef = useRef(null);
 
   const getPublicUrl = (path) => {
-    const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+    const { data } = supabase.storage.from(bucket).getPublicUrl(path);
     return data.publicUrl;
   };
 
   const fetchLibraryFiles = useCallback(async () => {
     setLoadingLibrary(true);
     try {
-      const { data, error } = await supabase.storage.from(BUCKET).list('', {
+      const { data, error } = await supabase.storage.from(bucket).list('', {
         limit: 100,
         sortBy: { column: 'created_at', order: 'desc' }
       });
@@ -54,7 +54,7 @@ export default function ImageUploader({ value, onChange, folder = 'general' }) {
     } finally {
       setLoadingLibrary(false);
     }
-  }, []);
+  }, [bucket]);
 
   useEffect(() => {
     if (mode === 'library') {
@@ -87,7 +87,7 @@ export default function ImageUploader({ value, onChange, folder = 'general' }) {
       setProgress(30);
 
       const { error: uploadError } = await supabase.storage
-        .from(BUCKET)
+        .from(bucket)
         .upload(filename, file, {
           cacheControl: '3600',
           upsert: false,
@@ -108,7 +108,7 @@ export default function ImageUploader({ value, onChange, folder = 'general' }) {
       setUploading(false);
       setTimeout(() => setProgress(0), 800);
     }
-  }, [folder, onChange]);
+  }, [folder, onChange, bucket]);
 
   const handleFileInput = (e) => {
     const file = e.target.files?.[0];
@@ -128,9 +128,9 @@ export default function ImageUploader({ value, onChange, folder = 'general' }) {
     if (value) {
       try {
         const url = new URL(value);
-        const parts = url.pathname.split(`/object/public/${BUCKET}/`);
+        const parts = url.pathname.split(`/object/public/${bucket}/`);
         if (parts.length === 2) {
-          await supabase.storage.from(BUCKET).remove([parts[1]]);
+          await supabase.storage.from(bucket).remove([parts[1]]);
         }
       } catch (_) {}
     }

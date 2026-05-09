@@ -7,11 +7,12 @@ import { getAllAssets } from '../lib/assets';
 interface SplashScreenProps {
   onComplete?: () => void;
   extraAssets?: Asset[];
+  canContinue?: boolean;
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
-export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScreenProps) {
+export default function SplashScreen({ onComplete, extraAssets = [], canContinue = true }: SplashScreenProps) {
   const [videoStage, setVideoStage] = useState<'video' | 'ui'>('video');
   const assetsToPreload = useMemo(() => getAllAssets(extraAssets), [extraAssets]);
   const { progress, isComplete } = useAssetPreloader(assetsToPreload);
@@ -28,14 +29,14 @@ export default function SplashScreen({ onComplete, extraAssets = [] }: SplashScr
   }, []);
 
   useEffect(() => {
-    // Notify parent when assets are ready AND video is done
-    if (isComplete && videoStage === 'ui') {
+    // Notify parent when assets are ready AND video is done AND canContinue is true
+    if (isComplete && videoStage === 'ui' && canContinue) {
       const timer = setTimeout(() => {
         onComplete?.();
       }, 1500); // Give user time to see the animated UI
       return () => clearTimeout(timer);
     }
-  }, [isComplete, videoStage, onComplete]);
+  }, [isComplete, videoStage, onComplete, canContinue]);
 
   return (
     <div

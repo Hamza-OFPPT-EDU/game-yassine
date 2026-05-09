@@ -19,6 +19,36 @@ interface LevelCompleteModalProps {
   onContinue?: () => void;
 }
 
+const BADGE_MAP: Record<string, { name: string; url: string }> = {
+  // Rabat
+  '550e8400-e29b-41d4-a716-446655441111': { name: 'Abzim', url: 'Abzim.png' },
+  '550e8400-e29b-41d4-a716-446655442222': { name: 'Aghraf', url: 'Aghraf.png' },
+  '550e8400-e29b-41d4-a716-446655443333': { name: 'Chebbka', url: 'Chebbka.png' },
+  '550e8400-e29b-41d4-a716-446655444444': { name: 'Fnous', url: 'Fnous.png' },
+  '550e8400-e29b-41d4-a716-446655445555': { name: 'Ibzimen', url: 'Ibzimen.png' },
+  // Chefchaouen
+  '98b50e2d-dc99-43ef-b387-052637738c01': { name: 'Khalkhal Mawj', url: 'Khalkhal%20Mawj.png' },
+  '98b50e2d-dc99-43ef-b387-052637738c02': { name: 'khalkhal', url: 'khalkhal.png' },
+  '98b50e2d-dc99-43ef-b387-052637738c03': { name: 'khit-Roh', url: 'khit-Roh.png' },
+  '98b50e2d-dc99-43ef-b387-052637738c04': { name: 'Khmissa', url: 'Khmissa.png' },
+  '98b50e2d-dc99-43ef-b387-052637738c05': { name: 'Mdama bahar', url: 'Mdama%20bahar.png' },
+  // Fès
+  '550e8400-e29b-41d4-a716-44665544f111': { name: 'Mdama', url: 'Mdama.png' },
+  '550e8400-e29b-41d4-a716-44665544f222': { name: 'Mharma', url: 'Mharma.png' },
+  '550e8400-e29b-41d4-a716-44665544f333': { name: 'Mniqqa', url: 'Mniqqa.png' },
+  '550e8400-e29b-41d4-a716-44665544f444': { name: 'Qabt', url: 'Qabt.png' },
+  '550e8400-e29b-41d4-a716-44665544f555': { name: 'Sertia Atlantik', url: 'Sertia%20Atlantik.png' },
+  // Marrakech
+  '98b50e2d-dc99-43ef-b387-052637738a01': { name: 'Sertla', url: 'Sertla.png' },
+  '98b50e2d-dc99-43ef-b387-052637738a02': { name: 'Tabraat', url: 'Tabraat.png' },
+  '98b50e2d-dc99-43ef-b387-052637738a03': { name: 'Tasfift', url: 'Tasfift.png' },
+  '98b50e2d-dc99-43ef-b387-052637738a04': { name: 'Tazrabt Sahara', url: 'Tazrabt%20Sahara.png' },
+  '98b50e2d-dc99-43ef-b387-052637738a05': { name: 'Tazrabt', url: 'Tazrabt.png' },
+  // Dakhla
+  'f83e1989-e001-470a-bda4-722124c346f1': { name: 'Tifinagh', url: 'Tifinagh.png' },
+  '0f576c5b-6cba-4efc-a85d-ddc0aa307dc3': { name: 'Tizerzai', url: 'Tizerzai.png' }
+};
+
 export default function LevelCompleteModal({ summary, onReplayMission, onBackToCity, onRedoIncorrect, onContinue }: LevelCompleteModalProps) {
   const { profile } = useSupabaseProfile();
   const { leaderboard, loading: loadingLeaderboard } = useSupabaseMissionLeaderboard(summary?.missionId || '');
@@ -28,6 +58,19 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
   const totalStars = summary?.totalStars ?? 0;
   const successRate = summary?.successRate ?? 0;
   const isPerfect = successRate === 100;
+
+  const badge = useMemo(() => summary?.missionId ? BADGE_MAP[summary.missionId] : null, [summary?.missionId]);
+
+  // Play success sound and vibrate when badge is found
+  useEffect(() => {
+    if (badge && summary) {
+      playSound('success');
+      // Trigger device vibration if supported
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        navigator.vibrate([100, 50, 100]);
+      }
+    }
+  }, [badge, summary, playSound]);
 
   const [countedXp, setCountedXp] = useState(0);
   const [countedStars, setCountedStars] = useState(0);
@@ -125,9 +168,46 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="mb-4 p-4 bg-voyage-primary/10 rounded-full border-2 border-voyage-primary/20"
+            className="mb-4 relative"
           >
-            <Trophy size={48} className="text-voyage-primary" />
+            {(() => {
+              if (badge) {
+                return (
+                  <div className="relative flex flex-col items-center">
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-voyage-primary mb-2">Badge Débloqué !</p>
+                    <div className="relative">
+                      <motion.div 
+                         animate={{ rotate: 360 }}
+                         transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                         className="absolute inset-0 bg-voyage-primary/10 rounded-full blur-2xl"
+                      />
+                      <motion.img 
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        animate={{ 
+                          scale: [0.5, 1.2, 1],
+                          opacity: 1,
+                          rotate: [0, -5, 5, -5, 5, 0],
+                          x: [0, -2, 2, -2, 2, 0]
+                        }}
+                        transition={{ 
+                          duration: 0.6,
+                          times: [0, 0.4, 0.6, 0.7, 0.8, 0.9, 1],
+                          ease: "easeOut"
+                        }}
+                        src={`https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/${encodeURIComponent(badge.url)}`}
+                        alt={badge.name}
+                        className="w-28 h-28 object-contain relative z-10 drop-shadow-2xl"
+                      />
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <div className="p-4 bg-voyage-primary/10 rounded-full border-2 border-voyage-primary/20">
+                  <Trophy size={48} className="text-voyage-primary" />
+                </div>
+              );
+            })()}
           </motion.div>
           <h2 className="text-3xl font-black text-[#24160D] tracking-tight mb-2">
             Mission Accomplie !

@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Trophy, Shield, Star, MessageCircle, Brain, Users, GitBranch, ChevronLeft, Loader2, Lock } from 'lucide-react';
-import { useAuth, useSupabaseBadges, useSupabaseProfile } from '../hooks/useSupabase';
+import { useAuth, useSupabaseBadges, useSupabaseProfile, useSupabaseAssetConfigs } from '../hooks/useSupabase';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { optimizeSupabaseUrl } from '../lib/city-theme';
@@ -23,7 +23,10 @@ const ICON_MAP: Record<string, any> = {
 export default function BadgesScreen({ onBack }: BadgesScreenProps) {
   const { session } = useAuth();
   const { profile } = useSupabaseProfile(session?.user?.id);
-  const { badges, earnedBadges, loading } = useSupabaseBadges(session?.user?.id);
+  const { badges, earnedBadges, loading: badgesLoading } = useSupabaseBadges(session?.user?.id);
+  const { getAssetStyle, loading: configsLoading } = useSupabaseAssetConfigs('badges');
+
+  const loading = badgesLoading || configsLoading;
 
   const stats = {
     xp: profile?.xp || 0,
@@ -102,7 +105,10 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                       )}
                     >
                       {/* Badge Icon Container */}
-                      <div className={cn("w-20 h-20 rounded-full flex items-center justify-center border-b-4 shadow-sm transition-transform bg-voyage-primary/10 border-voyage-primary/20 overflow-hidden relative mb-2")}>
+                      <div 
+                        className={cn("w-20 h-20 rounded-full flex items-center justify-center border-b-4 shadow-sm transition-transform bg-voyage-primary/10 border-voyage-primary/20 overflow-hidden relative mb-2")}
+                        style={isEarned ? getAssetStyle(badge.image_url) : {}}
+                      >
                         {badge.image_url && badge.image_url.startsWith('http') ? (
                           <img 
                             src={optimizeSupabaseUrl(badge.image_url, 160, 85)} 

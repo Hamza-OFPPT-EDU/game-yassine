@@ -214,6 +214,7 @@ export default function BadgesManager() {
                 value={modal.image_url}
                 onChange={v => set('image_url', v)}
                 folder="badges"
+                bucket="badges"
               />
             </Field>
 

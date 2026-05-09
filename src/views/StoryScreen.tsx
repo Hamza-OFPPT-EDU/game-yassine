@@ -127,21 +127,7 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
               </div>
 
               <div className="space-y-4">
-                {/* Scénario Situé */}
-                {mission?.script_opening && (
-                  <div className="bg-white border-2 border-voyage-primary/10 rounded-3xl p-6 shadow-sm relative overflow-hidden group">
-                    <div className="absolute top-0 left-0 w-1 h-full bg-voyage-primary/40" />
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="p-1.5 bg-voyage-primary/10 rounded-lg">
-                        <Clapperboard size={14} className="text-voyage-primary" />
-                      </div>
-                      <h3 className="text-[10px] font-black uppercase tracking-widest text-voyage-primary/60">Scénario situé (narration)</h3>
-                    </div>
-                    <p className="text-voyage-primary font-medium text-sm leading-relaxed text-left">
-                      {mission.script_opening}
-                    </p>
-                  </div>
-                )}
+                {/* Scénario Situé supprimé selon demande */}
 
                 <div className="bg-voyage-accent/5 rounded-3xl p-6 border-2 border-voyage-accent/20 relative text-left">
                   <div className="absolute -top-4 left-6 bg-white border-2 border-voyage-accent/20 px-3 py-1 rounded-full text-[9px] font-black text-voyage-primary uppercase tracking-widest">

@@ -184,6 +184,162 @@ export default function SettingsPage() {
         </div>
       </div>
 
+      {/* Welcome Screen Config Section */}
+      <div className="welcome-config-section mb-8">
+        <div className="card-glass p-8 border-primary-light/10 bg-white/5 rounded-[32px] shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary-light/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+          
+          <div className="flex items-center gap-4 mb-8">
+            <div className="p-3 bg-primary-light/10 rounded-2xl">
+              <RefreshCw size={24} className="text-primary-light" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-text-primary tracking-tight">🎨 Personnalisation de l'Accueil</h3>
+              <p className="text-sm text-text-muted">Modifiez les textes et styles de l'écran WelcomeScreen du jeu</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Form Side */}
+            <div className="space-y-8">
+              {/* Title Config */}
+              <div className="space-y-4">
+                <label className="text-xs font-black uppercase tracking-widest text-primary-light/60">Titre Principal</label>
+                <input 
+                  type="text"
+                  className="cms-input w-full"
+                  placeholder="Bienvenue Voyageur"
+                  value={settings.find(s => s.key === 'welcome_screen_content')?.value?.title || ''}
+                  onChange={(e) => {
+                    const existing = settings.find(s => s.key === 'welcome_screen_content');
+                    const newValue = { 
+                      ...(existing?.value || { title: '', subtitle: '', titleStyle: {}, subtitleStyle: {} }),
+                      title: e.target.value 
+                    };
+                    if (existing) handleUpdateSetting(existing, newValue);
+                    else save({ key: 'welcome_screen_content', value: newValue, description: 'Contenu et styles de WelcomeScreen' });
+                  }}
+                />
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <label className="text-[10px] font-bold text-text-muted mb-1 block">Couleur</label>
+                    <input 
+                      type="color"
+                      className="w-full h-10 rounded-lg bg-transparent border border-white/10 cursor-pointer"
+                      value={settings.find(s => s.key === 'welcome_screen_content')?.value?.titleStyle?.color || '#ffffff'}
+                      onChange={(e) => {
+                        const existing = settings.find(s => s.key === 'welcome_screen_content');
+                        const newValue = { 
+                          ...(existing?.value || {}),
+                          titleStyle: { ...(existing?.value?.titleStyle || {}), color: e.target.value }
+                        };
+                        handleUpdateSetting(existing, newValue);
+                      }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-[10px] font-bold text-text-muted mb-1 block">Taille (rem)</label>
+                    <input 
+                      type="number" step="0.1"
+                      className="cms-input w-full"
+                      value={parseFloat(settings.find(s => s.key === 'welcome_screen_content')?.value?.titleStyle?.fontSize) || 1.1}
+                      onChange={(e) => {
+                        const existing = settings.find(s => s.key === 'welcome_screen_content');
+                        const newValue = { 
+                          ...(existing?.value || {}),
+                          titleStyle: { ...(existing?.value?.titleStyle || {}), fontSize: `${e.target.value}rem` }
+                        };
+                        handleUpdateSetting(existing, newValue);
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Subtitle Config */}
+              <div className="space-y-4">
+                <label className="text-xs font-black uppercase tracking-widest text-primary-light/60">Sous-titre (Description)</label>
+                <textarea 
+                  className="cms-input w-full h-24 resize-none"
+                  placeholder="Développe ton potentiel..."
+                  value={settings.find(s => s.key === 'welcome_screen_content')?.value?.subtitle || ''}
+                  onChange={(e) => {
+                    const existing = settings.find(s => s.key === 'welcome_screen_content');
+                    const newValue = { 
+                      ...(existing?.value || {}),
+                      subtitle: e.target.value 
+                    };
+                    handleUpdateSetting(existing, newValue);
+                  }}
+                />
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <label className="text-[10px] font-bold text-text-muted mb-1 block">Couleur</label>
+                    <input 
+                      type="color"
+                      className="w-full h-10 rounded-lg bg-transparent border border-white/10 cursor-pointer"
+                      value={settings.find(s => s.key === 'welcome_screen_content')?.value?.subtitleStyle?.color || '#ffffffcc'}
+                      onChange={(e) => {
+                        const existing = settings.find(s => s.key === 'welcome_screen_content');
+                        const newValue = { 
+                          ...(existing?.value || {}),
+                          subtitleStyle: { ...(existing?.value?.subtitleStyle || {}), color: e.target.value }
+                        };
+                        handleUpdateSetting(existing, newValue);
+                      }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-[10px] font-bold text-text-muted mb-1 block">Taille (rem)</label>
+                    <input 
+                      type="number" step="0.1"
+                      className="cms-input w-full"
+                      value={parseFloat(settings.find(s => s.key === 'welcome_screen_content')?.value?.subtitleStyle?.fontSize) || 0.9}
+                      onChange={(e) => {
+                        const existing = settings.find(s => s.key === 'welcome_screen_content');
+                        const newValue = { 
+                          ...(existing?.value || {}),
+                          subtitleStyle: { ...(existing?.value?.subtitleStyle || {}), fontSize: `${e.target.value}rem` }
+                        };
+                        handleUpdateSetting(existing, newValue);
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Preview Side */}
+            <div className="bg-black/40 rounded-[24px] border border-white/10 p-8 flex flex-col items-center justify-center relative min-h-[300px]">
+              <div className="absolute top-4 left-4 flex gap-1">
+                <div className="w-2 h-2 rounded-full bg-red-500/50"></div>
+                <div className="w-2 h-2 rounded-full bg-amber-500/50"></div>
+                <div className="w-2 h-2 rounded-full bg-green-500/50"></div>
+              </div>
+              <span className="absolute top-4 right-6 text-[10px] font-bold text-white/20 uppercase tracking-widest">Aperçu direct</span>
+              
+              <div className="max-w-[280px] text-center space-y-4">
+                <div className="w-16 h-16 bg-primary-light/20 rounded-2xl mx-auto flex items-center justify-center mb-6 border border-primary-light/30">
+                  <span className="text-2xl">🧭</span>
+                </div>
+                <h4 style={{ 
+                  color: settings.find(s => s.key === 'welcome_screen_content')?.value?.titleStyle?.color || 'white',
+                  fontSize: settings.find(s => s.key === 'welcome_screen_content')?.value?.titleStyle?.fontSize || '1.125rem'
+                }} className="font-black uppercase tracking-tight">
+                  {settings.find(s => s.key === 'welcome_screen_content')?.value?.title || 'Bienvenue Voyageur'}
+                </h4>
+                <p style={{ 
+                  color: settings.find(s => s.key === 'welcome_screen_content')?.value?.subtitleStyle?.color || 'rgba(255,255,255,0.8)',
+                  fontSize: settings.find(s => s.key === 'welcome_screen_content')?.value?.subtitleStyle?.fontSize || '0.9375rem'
+                }} className="font-bold leading-relaxed">
+                  {settings.find(s => s.key === 'welcome_screen_content')?.value?.subtitle || 'Développe ton potentiel avec la famille Ben Ali...'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="settings-grid">
         {settings.filter(s => s.key !== 'global_free_exploration').map(s => (
           <div key={s.id} className="settings-card">

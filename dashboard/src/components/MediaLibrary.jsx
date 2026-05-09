@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase';
 import { 
   Download, Image as ImageIcon, Search, CheckSquare, Square, 
   Grid, List as ListIcon, RefreshCw, Trash2, 
-  Upload, Link, Film, Check, ExternalLink
+  Upload, Link, Film, Check, ExternalLink, Award
 } from 'lucide-react';
 
 const BUCKETS = [
@@ -32,6 +32,8 @@ export default function MediaLibrary() {
     border_radius: '0',
     shadow: 'none'
   });
+  const [badgeModal, setBadgeModal] = useState(null); // { file_url, name, description }
+  const [creatingBadge, setCreatingBadge] = useState(false);
 
   const fetchConfigs = async () => {
     const { data, error } = await supabase.from('asset_configs').select('*').eq('bucket_id', currentBucket);
@@ -203,6 +205,32 @@ export default function MediaLibrary() {
     setTimeout(() => setCopiedUrl(null), 2000);
   };
 
+  const handleCreateBadge = async () => {
+    if (!badgeModal.name || !badgeModal.description) {
+      alert('Le nom et la description sont obligatoires');
+      return;
+    }
+    setCreatingBadge(true);
+    try {
+      const { error } = await supabase.from('badge_definitions').insert({
+        badge_name: badgeModal.name,
+        name_fr: badgeModal.name,
+        description_fr: badgeModal.description,
+        image_url: badgeModal.file_url,
+        category: 'achievement',
+        rarity: 'common'
+      });
+      if (error) throw error;
+      alert('Badge créé avec succès !');
+      setBadgeModal(null);
+    } catch (err) {
+      console.error('Error creating badge:', err);
+      alert('Erreur : ' + err.message);
+    } finally {
+      setCreatingBadge(false);
+    }
+  };
+
   const isVideo = (name) => {
     return /\.(mp4|webm|ogg|mov)$/i.test(name);
   };
@@ -364,6 +392,15 @@ export default function MediaLibrary() {
                         >
                           {copiedUrl === file.url ? <Check size={14} className="text-green-500" /> : <Link size={14} />}
                         </button>
+                        {currentBucket === 'badges' && (
+                           <button 
+                             className="btn-icon-sm text-yellow-400" 
+                             title="Créer un badge" 
+                             onClick={(e) => { e.stopPropagation(); setBadgeModal({ file_url: file.url, name: '', description: '' }); }}
+                           >
+                             <Award size={14} />
+                           </button>
+                         )}
                         <button 
                           className="btn-icon-sm text-red-400" 
                           title="Supprimer" 
@@ -421,6 +458,15 @@ export default function MediaLibrary() {
                          >
                            {copiedUrl === file.url ? <Check size={14} className="text-green-500" /> : <Link size={14} />}
                          </button>
+                         {currentBucket === 'badges' && (
+                            <button 
+                              className="btn-icon" 
+                              title="Créer un badge" 
+                              onClick={(e) => { e.stopPropagation(); setBadgeModal({ file_url: file.url, name: '', description: '' }); }}
+                            >
+                              <Award size={14} className="text-yellow-400" />
+                            </button>
+                          )}
                          <a href={file.url} target="_blank" rel="noreferrer" className="btn-icon" onClick={e => e.stopPropagation()}>
                            <ExternalLink size={14} />
                          </a>
@@ -534,6 +580,66 @@ export default function MediaLibrary() {
           </div>
         </>
       )}
+
+      {/* Create Badge Modal */}
+      {badgeModal && (
+         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setBadgeModal(null)} />
+           <div className="bg-[#1e293b] border border-white/10 rounded-2xl w-full max-w-md p-6 relative shadow-2xl fade-in">
+             <div className="flex items-center gap-3 mb-6">
+               <div className="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-500">
+                 <Award size={24} />
+               </div>
+               <div>
+                 <h3 className="text-lg font-bold text-white">Nouveau Badge</h3>
+                 <p className="text-xs text-white/50">Création à partir de l'image sélectionnée</p>
+               </div>
+             </div>
+ 
+             <div className="mb-6 flex justify-center">
+               <div className="w-24 h-24 rounded-xl bg-black/20 p-2 border border-white/5">
+                 <img src={badgeModal.file_url} alt="Preview" className="w-full h-full object-contain" />
+               </div>
+             </div>
+ 
+             <div className="space-y-4">
+               <div>
+                 <label className="text-xs font-bold text-white/40 uppercase tracking-widest block mb-2">Nom du badge *</label>
+                 <input 
+                   type="text" 
+                   value={badgeModal.name}
+                   onChange={e => setBadgeModal({...badgeModal, name: e.target.value})}
+                   placeholder="Ex: Maître du Désert"
+                   className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:border-yellow-500/50 outline-none transition-all"
+                   autoFocus
+                 />
+               </div>
+               <div>
+                 <label className="text-xs font-bold text-white/40 uppercase tracking-widest block mb-2">Description (FR) *</label>
+                 <textarea 
+                   value={badgeModal.description}
+                   onChange={e => setBadgeModal({...badgeModal, description: e.target.value})}
+                   placeholder="Ex: Obtenu après avoir terminé les missions de Dakhla."
+                   className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:border-yellow-500/50 outline-none transition-all min-h-[80px]"
+                 />
+               </div>
+             </div>
+ 
+             <div className="flex gap-3 mt-8">
+               <button className="flex-1 py-3 rounded-xl font-bold text-white/60 hover:bg-white/5 transition-all" onClick={() => setBadgeModal(null)}>
+                 Annuler
+               </button>
+               <button 
+                 className={`flex-1 py-3 rounded-xl font-bold text-black transition-all ${creatingBadge ? 'bg-yellow-500/50 cursor-wait' : 'bg-yellow-500 hover:bg-yellow-400 active:scale-95'}`}
+                 onClick={handleCreateBadge}
+                 disabled={creatingBadge}
+               >
+                 {creatingBadge ? 'Création...' : 'Créer le Badge'}
+               </button>
+             </div>
+           </div>
+         </div>
+       )}
     </div>
   );
 }

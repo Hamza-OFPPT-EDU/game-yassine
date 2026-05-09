@@ -19,6 +19,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState<'F' | 'H'>('H');
   const [group, setGroup] = useState(GROUPS[0]);
+  const [birthDate, setBirthDate] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,8 +31,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!firstName || !lastName || !password) {
-      setError("Veuillez remplir tous les champs.");
+    if (!firstName || !lastName || !password || !birthDate) {
+      setError("Veuillez remplir tous les champs, y compris ta date de naissance.");
       return;
     }
 
@@ -52,7 +53,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
             first_name: firstName,
             last_name: lastName,
             gender: gender,
-            group_name: group
+            group_name: group,
+            birth_date: birthDate
           }
         }
       });
@@ -205,6 +207,22 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   </select>
                   <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2D6A4F]/40 pointer-events-none" />
                 </div>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-[#2D6A4F] uppercase tracking-widest ml-2">Ta date de naissance</label>
+              <div className="relative group">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#2D6A4F]/40 group-focus-within:text-[#2D6A4F] transition-colors pointer-events-none">
+                  <Sparkles size={18} strokeWidth={2.5} />
+                </div>
+                <input
+                  type="date"
+                  value={birthDate}
+                  onChange={(e) => setBirthDate(e.target.value)}
+                  className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3.5 pl-11 pr-4 focus:outline-none focus:border-[#2D6A4F] focus:ring-4 focus:ring-[#2D6A4F]/5 transition-all font-bold text-sm"
+                  disabled={loading}
+                />
               </div>
             </div>
 
