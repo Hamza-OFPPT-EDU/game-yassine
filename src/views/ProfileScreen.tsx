@@ -1,12 +1,13 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2, Award, Zap, Globe, Lock } from 'lucide-react';
-import { useAuth, useSupabaseProfile, useSupabaseBadges } from '../hooks/useSupabase';
+import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2, Award, Zap, Globe, Lock, MapPin } from 'lucide-react';
+import { useAuth, useSupabaseProfile } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { optimizeSupabaseUrl } from '../lib/city-theme';
 import { DEFAULT_AVATAR_URL } from '../types';
+import { BADGE_MAP, getBadgeUrl } from '../lib/badges';
 
 interface BadgeDetailProps {
   badge: any;
@@ -42,7 +43,7 @@ function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
             />
           )}
           <img 
-            src={badge.image_url || badge.icon_url || '/assets/badge_placeholder.png'} 
+            src={getBadgeUrl(badge.url) || '/assets/badge_placeholder.png'} 
             className="w-32 h-32 object-contain relative z-10"
             alt={badge.badge_name}
           />
@@ -77,15 +78,16 @@ interface ProfileScreenProps {
   onBack: () => void;
   onSettings: () => void;
   onShowBadges: () => void;
+  completedMissions: string[];
 }
 
-export default function ProfileScreen({ onBack, onSettings, onShowBadges }: ProfileScreenProps) {
+export default function ProfileScreen({ onBack, onSettings, onShowBadges, completedMissions }: ProfileScreenProps) {
   const { session, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading } = useSupabaseProfile(session?.user?.id);
-  const { badges: allBadges, earnedBadges, loading: badgesLoading } = useSupabaseBadges(session?.user?.id);
-  const { settings: audio, updateSettings: updateAudio, playSound, saveToCloud } = useAudio();
+  const { playSound } = useAudio();
+  const { settings: audio, updateSettings: updateAudio, saveToCloud } = useAudio();
   const [isSavingAudio, setIsSavingAudio] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [activeCity, setActiveCity] = useState<string>('Tous');
   const [selectedBadge, setSelectedBadge] = useState<any>(null);
   
   const handleToggleAudio = async (patch: any) => {
@@ -98,18 +100,20 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges }: Prof
     }, 500);
   };
 
-  const badgeCategories = [
-    { id: 'all', label: 'Tous', icon: Globe },
-    { id: 'cultural', label: 'Culture', icon: Trophy },
-    { id: 'achievement', label: 'Succès', icon: Award },
-    { id: 'challenge', label: 'Défis', icon: Zap },
-    { id: 'multiplayer', label: 'Social', icon: Users },
-  ];
+  const cities = ['Tous', 'Rabat', 'Chefchaouen', 'Fès', 'Marrakech', 'Dakhla'];
+
+  const allGameBadges = useMemo(() => {
+    return Object.entries(BADGE_MAP).map(([id, data]) => ({
+      id,
+      ...data,
+      isEarned: completedMissions.includes(id)
+    }));
+  }, [completedMissions]);
 
   const filteredBadges = useMemo(() => {
-    if (activeCategory === 'all') return allBadges;
-    return allBadges.filter(b => b.category === activeCategory);
-  }, [allBadges, activeCategory]);
+    if (activeCity === 'Tous') return allGameBadges;
+    return allGameBadges.filter(b => b.city === activeCity);
+  }, [allGameBadges, activeCity]);
 
   if (authLoading || profileLoading) return (
     <div className="h-full w-full flex items-center justify-center bg-voyage-sand">
@@ -186,7 +190,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges }: Prof
            {[
              { icon: Flame, color: 'text-orange-500', bg: 'bg-orange-50', label: 'JOURS', val: '12' },
              { icon: TrendingUp, color: 'text-[#D4A43E]', bg: 'bg-[#D4A43E]/5', label: 'XP TOTAL', val: (stats.xp/1000).toFixed(1) + 'k' },
-             { icon: Trophy, color: 'text-amber-500', bg: 'bg-amber-50', label: 'BADGES', val: earnedBadges.length },
+             { icon: Trophy, color: 'text-amber-500', bg: 'bg-amber-50', label: 'BADGES', val: allGameBadges.filter(b => b.isEarned).length },
            ].map((stat, i) => (
              <motion.div 
                key={i}
@@ -244,62 +248,54 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges }: Prof
         <section className="space-y-6">
            <div className="flex justify-between items-center px-2">
              <div className="flex flex-col">
-               <h2 className="text-2xl font-black text-[#4E2510]">Badges & Médailles</h2>
-               <button 
-                 onClick={() => { playSound('click'); onShowBadges(); }}
-                 className="text-[10px] font-black text-[#D4A43E] uppercase tracking-widest text-left mt-1 hover:text-[#7B3F1A] transition-colors flex items-center gap-1"
-               >
-                 Voir tout le catalogue <ChevronRight size={10} />
-               </button>
+               <h2 className="text-2xl font-black text-[#4E2510]">Badges des Missions</h2>
+               <p className="text-[10px] font-black text-[#D4A43E] uppercase tracking-widest text-left mt-1">
+                  Collectionne les trésors du Maroc
+               </p>
              </div>
              <span className="text-[10px] font-black text-[#D4A43E] bg-[#D4A43E]/10 px-3 py-1 rounded-full border border-[#D4A43E]/20">
-               {earnedBadges.length} OBTENUS
+               {allGameBadges.filter(b => b.isEarned).length} / {allGameBadges.length} OBTENUS
              </span>
            </div>
 
-           {/* Toggle Menu */}
+           {/* Toggle Menu - Cities */}
            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide px-1">
-             {badgeCategories.map((cat) => (
+             {cities.map((city) => (
                <button
-                 key={cat.id}
-                 onClick={() => { playSound('click'); setActiveCategory(cat.id); }}
+                 key={city}
+                 onClick={() => { playSound('click'); setActiveCity(city); }}
                  className={cn(
                    "flex items-center gap-2 px-4 py-2.5 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all shrink-0 border-2",
-                   activeCategory === cat.id 
+                   activeCity === city 
                      ? "bg-[#7B3F1A] text-white border-[#7B3F1A] shadow-lg shadow-[#7B3F1A]/20" 
                      : "bg-white text-[#7B3F1A] border-[#E5D5B8] hover:border-[#D4A43E]"
                  )}
                >
-                 <cat.icon size={14} />
-                 {cat.label}
+                 <MapPin size={14} />
+                 {city}
                </button>
              ))}
            </div>
 
            <div className="bg-white border border-[#E5D5B8] rounded-[40px] p-8 shadow-sm">
               <AnimatePresence mode="wait">
-                {badgesLoading ? (
-                  <div className="flex flex-col items-center justify-center py-12 gap-4">
-                    <Loader2 className="animate-spin text-[#D4A43E]" size={32} />
-                    <p className="text-[10px] font-black text-[#7B3F1A]/40 uppercase tracking-widest">Chargement des badges...</p>
-                  </div>
-                ) : filteredBadges.length === 0 ? (
+                {filteredBadges.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
                     <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-gray-300">
                       <Lock size={32} />
                     </div>
-                    <p className="text-sm font-bold text-[#7B3F1A]/40 uppercase tracking-tight">Aucun badge dans cette catégorie</p>
+                    <p className="text-sm font-bold text-[#7B3F1A]/40 uppercase tracking-tight">Aucun badge dans cette ville</p>
                   </div>
                 ) : (
                   <motion.div 
-                    key={activeCategory}
+                    key={activeCity}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     className="grid grid-cols-3 gap-6"
                   >
                     {filteredBadges.map((badge) => {
-                      const isEarned = earnedBadges.includes(badge.id);
+                      const isEarned = badge.isEarned;
                       return (
                         <motion.div
                           key={badge.id}
@@ -322,18 +318,18 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges }: Prof
                               />
                             )}
                             <img 
-                              src={badge.image_url || badge.icon_url || '/assets/badge_placeholder.png'} 
-                              alt={badge.badge_name}
+                              src={getBadgeUrl(badge.url)} 
+                              alt={badge.name}
                               className="w-12 h-12 object-contain relative z-10"
                             />
                             {!isEarned && <Lock className="absolute inset-0 m-auto text-gray-400 opacity-20" size={24} />}
                           </div>
                           <div className="text-center space-y-0.5">
                             <p className={cn("text-[10px] font-black uppercase tracking-tight leading-tight", isEarned ? "text-[#4E2510]" : "text-gray-400")}>
-                              {badge.badge_name}
+                              {badge.name}
                             </p>
                             <p className="text-[8px] font-bold text-[#D4A43E] uppercase tracking-tighter">
-                              {badge.rarity}
+                              {badge.city}
                             </p>
                           </div>
                         </motion.div>
@@ -348,8 +344,8 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges }: Prof
         <AnimatePresence>
           {selectedBadge && (
             <BadgeDetail 
-              badge={selectedBadge} 
-              isEarned={earnedBadges.includes(selectedBadge.id)} 
+              badge={{ badge_name: selectedBadge.name, url: selectedBadge.url, rarity: selectedBadge.city, description_fr: `Badge obtenu lors de votre mission à ${selectedBadge.city}.` }} 
+              isEarned={selectedBadge.isEarned} 
               onClose={() => setSelectedBadge(null)} 
             />
           )}

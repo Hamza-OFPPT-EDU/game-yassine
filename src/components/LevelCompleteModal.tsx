@@ -19,35 +19,7 @@ interface LevelCompleteModalProps {
   onContinue?: () => void;
 }
 
-const BADGE_MAP: Record<string, { name: string; url: string }> = {
-  // Rabat
-  '550e8400-e29b-41d4-a716-446655441111': { name: 'Abzim', url: 'Abzim.png' },
-  '550e8400-e29b-41d4-a716-446655442222': { name: 'Aghraf', url: 'Aghraf.png' },
-  '550e8400-e29b-41d4-a716-446655443333': { name: 'Chebbka', url: 'Chebbka.png' },
-  '550e8400-e29b-41d4-a716-446655444444': { name: 'Fnous', url: 'Fnous.png' },
-  '550e8400-e29b-41d4-a716-446655445555': { name: 'Ibzimen', url: 'Ibzimen.png' },
-  // Chefchaouen
-  '98b50e2d-dc99-43ef-b387-052637738c01': { name: 'Khalkhal Mawj', url: 'Khalkhal%20Mawj.png' },
-  '98b50e2d-dc99-43ef-b387-052637738c02': { name: 'khalkhal', url: 'khalkhal.png' },
-  '98b50e2d-dc99-43ef-b387-052637738c03': { name: 'khit-Roh', url: 'khit-Roh.png' },
-  '98b50e2d-dc99-43ef-b387-052637738c04': { name: 'Khmissa', url: 'Khmissa.png' },
-  '98b50e2d-dc99-43ef-b387-052637738c05': { name: 'Mdama bahar', url: 'Mdama%20bahar.png' },
-  // Fès
-  '550e8400-e29b-41d4-a716-44665544f111': { name: 'Mdama', url: 'Mdama.png' },
-  '550e8400-e29b-41d4-a716-44665544f222': { name: 'Mharma', url: 'Mharma.png' },
-  '550e8400-e29b-41d4-a716-44665544f333': { name: 'Mniqqa', url: 'Mniqqa.png' },
-  '550e8400-e29b-41d4-a716-44665544f444': { name: 'Qabt', url: 'Qabt.png' },
-  '550e8400-e29b-41d4-a716-44665544f555': { name: 'Sertia Atlantik', url: 'Sertia%20Atlantik.png' },
-  // Marrakech
-  '98b50e2d-dc99-43ef-b387-052637738a01': { name: 'Sertla', url: 'Sertla.png' },
-  '98b50e2d-dc99-43ef-b387-052637738a02': { name: 'Tabraat', url: 'Tabraat.png' },
-  '98b50e2d-dc99-43ef-b387-052637738a03': { name: 'Tasfift', url: 'Tasfift.png' },
-  '98b50e2d-dc99-43ef-b387-052637738a04': { name: 'Tazrabt Sahara', url: 'Tazrabt%20Sahara.png' },
-  '98b50e2d-dc99-43ef-b387-052637738a05': { name: 'Tazrabt', url: 'Tazrabt.png' },
-  // Dakhla
-  'f83e1989-e001-470a-bda4-722124c346f1': { name: 'Tifinagh', url: 'Tifinagh.png' },
-  '0f576c5b-6cba-4efc-a85d-ddc0aa307dc3': { name: 'Tizerzai', url: 'Tizerzai.png' }
-};
+import { BADGE_MAP, getBadgeUrl } from '../lib/badges';
 
 export default function LevelCompleteModal({ summary, onReplayMission, onBackToCity, onRedoIncorrect, onContinue }: LevelCompleteModalProps) {
   const { profile } = useSupabaseProfile();
@@ -194,7 +166,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                           times: [0, 0.4, 0.6, 0.7, 0.8, 0.9, 1],
                           ease: "easeOut"
                         }}
-                        src={`https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/${encodeURIComponent(badge.url)}`}
+                        src={getBadgeUrl(badge.url)}
                         alt={badge.name}
                         className="w-28 h-28 object-contain relative z-10 drop-shadow-2xl"
                       />

@@ -58,7 +58,7 @@ export default function App() {
   const [dynamicAssets, setDynamicAssets] = useState<Asset[]>([]);
   const [loadedCities, setLoadedCities] = useState<string[]>([]);
   const [loadingCityAssets, setLoadingCityAssets] = useState<string | null>(null);
-  const [isRabatLoaded, setIsRabatLoaded] = useState(false);
+  const [isCoreLoaded, setIsCoreLoaded] = useState(false);
   
   const [userStats, setUserStats] = useState({
     xp: 0,
@@ -85,11 +85,15 @@ export default function App() {
   useEffect(() => {
     async function loadResourcesSequentially() {
       try {
-        // 1. Load Core Assets (Logo, Sounds, Video)
+        // 1. Load Core Assets (Logo, Sounds, Video) - Priority
         const coreAssets = getCoreAssets();
-        setDynamicAssets(prev => [...prev, ...coreAssets]);
+        setDynamicAssets(coreAssets);
+        setIsCoreLoaded(true); 
         
-        // 2. Load Rabat Assets
+        // Give time for SplashScreen to finish transition before starting background heavy loads
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
+        // 2. Load Rabat Assets in background
         const rabatAssets = await fetchDynamicAssets('Rabat');
         setDynamicAssets(prev => {
           const existingUrls = new Set(prev.map(a => a.url));
@@ -97,13 +101,11 @@ export default function App() {
           return [...prev, ...uniqueRabat];
         });
         setLoadedCities(prev => [...prev, 'Rabat']);
-        setIsRabatLoaded(true);
 
-        // 3. Load other cities successively
+        // 3. Load other cities successively in background
         const otherCities = ['Chefchaouen', 'Fès', 'Marrakech', 'Laâyoune', 'Dakhla'];
         for (const city of otherCities) {
-          // Small delay between cities to not overwhelm the network
-          await new Promise(resolve => setTimeout(resolve, 2000));
+          await new Promise(resolve => setTimeout(resolve, 3000));
           const cityAssets = await fetchDynamicAssets(city);
           setDynamicAssets(prev => {
             const existingUrls = new Set(prev.map(a => a.url));
@@ -336,7 +338,7 @@ export default function App() {
 
     if (authLoading || (session && profileLoading)) {
       if (currentScreen === Screen.Splash) {
-        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} canContinue={isRabatLoaded} />;
+        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} canContinue={isCoreLoaded} />;
       }
       return (
         <div className="h-screen w-full bg-[#0f172a] flex flex-col items-center justify-center gap-6">
@@ -348,7 +350,7 @@ export default function App() {
 
     switch (currentScreen) {
       case Screen.Splash:
-        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} canContinue={isRabatLoaded} />;
+        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} canContinue={isCoreLoaded} />;
       case Screen.Welcome:
         return <WelcomeScreen 
           onStart={handleDemoLogin} 
@@ -445,6 +447,7 @@ export default function App() {
           onBack={() => setCurrentScreen(Screen.Map)} 
           onSettings={() => setCurrentScreen(Screen.Settings)} 
           onShowBadges={() => setCurrentScreen(Screen.Badges)}
+          completedMissions={completedMissions}
         />;
       case Screen.Badges:
         return <BadgesScreen onBack={() => setCurrentScreen(Screen.Profile)} />;

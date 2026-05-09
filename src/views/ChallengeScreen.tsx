@@ -1373,14 +1373,6 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
             <div className="w-full max-w-2xl px-4 flex gap-4">
                <motion.button 
                   whileTap={{ scale: 0.95 }} 
-                  onClick={() => { playEffect('click'); setShowSoundModal(true); }}
-                  className="p-5 bg-white/20 border-2 border-white/30 rounded-2xl text-white hover:bg-white/30 transition-colors border-b-4 shrink-0"
-                  title="Réglages audio"
-                >
-                  <Volume2 size={24} />
-                </motion.button>
-               <motion.button 
-                  whileTap={{ scale: 0.95 }} 
                   onClick={() => { playSound('click'); setShowExplanationModal(true); }}
                   className="p-5 bg-voyage-accent/20 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/30 transition-colors border-b-4 shrink-0"
                   title="Obtenir une explication"

@@ -25,7 +25,6 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
   
   const [userName, setUserName] = useState('');
   const [displayMode, setDisplayMode] = useState<DisplayMode>(globalDisplayMode);
-  const [language, setLanguage] = useState<Language>(globalLanguage);
   const { settings: audio, updateSettings: updateAudio, playSound, playVoice, saveToCloud } = useAudio();
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -39,8 +38,7 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
 
   useEffect(() => {
     setDisplayMode(globalDisplayMode);
-    setLanguage(globalLanguage);
-  }, [globalDisplayMode, globalLanguage]);
+  }, [globalDisplayMode]);
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -60,7 +58,6 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
 
       // 3. Update Global Context (localStorage)
       setGlobalDisplayMode(displayMode);
-      setGlobalLanguage(language);
 
       setSaveSuccess(true);
       playSound('success');
@@ -209,42 +206,6 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
           </div>
         </section>
 
-        {/* Language Settings */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-1 rounded-full bg-voyage-terracotta" />
-            <h3 className="text-lg font-headline font-black text-voyage-primary tracking-tight flex items-center gap-2">
-              Langue d'affichage <span className="font-normal text-slate-300 text-xs">لغة العرض</span>
-            </h3>
-          </div>
-          
-          <div className="bg-white rounded-2xl p-2 flex gap-1 shadow-sm border border-slate-50">
-            <button 
-              onClick={() => {
-                setLanguage('fr');
-                playSound('click');
-              }}
-              className={cn(
-                "flex-1 py-4 px-6 rounded-xl font-black text-sm uppercase tracking-widest transition-all",
-                language === 'fr' ? "bg-voyage-accent/10 text-voyage-accent" : "text-slate-400 hover:bg-slate-50"
-              )}
-            >
-              Français
-            </button>
-            <button 
-              onClick={() => {
-                setLanguage('ar');
-                playSound('click');
-              }}
-              className={cn(
-                "flex-1 py-4 px-6 rounded-xl font-black text-sm uppercase tracking-widest transition-all",
-                language === 'ar' ? "bg-voyage-accent/10 text-voyage-accent" : "text-slate-400 hover:bg-slate-50"
-              )}
-            >
-              العربية
-            </button>
-          </div>
-        </section>
 
         {/* Free Exploration Mode */}
         <section className="space-y-4">

@@ -21,6 +21,7 @@ export const CORE_ASSETS = {
     '/audio/success.mp3',
     '/audio/whoosh.mp3',
     '/audio/rabat_intro_voice.mp3',
+    '/audio/intro_music.mp3',
   ]
 };
 
