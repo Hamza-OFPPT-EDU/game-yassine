@@ -522,6 +522,7 @@ export function useSupabaseProfile(userId?: string) {
   const updateProfile = async (updates: any) => {
     if (!userId) return false;
     
+    // 1. Update app_users
     const { data, error } = await supabase
       .from('app_users')
       .update(updates)
@@ -531,6 +532,21 @@ export function useSupabaseProfile(userId?: string) {
 
     if (!error) {
       setProfile(data);
+
+      // 2. Sync with player_profiles for dashboard consistency
+      const profileUpdates: any = {};
+      if (updates.xp !== undefined) profileUpdates.xp = updates.xp;
+      if (updates.level !== undefined) profileUpdates.level = updates.level;
+      if (updates.full_name !== undefined) profileUpdates.display_name = updates.full_name;
+      if (updates.streak_days !== undefined) profileUpdates.streak_days = updates.streak_days;
+
+      if (Object.keys(profileUpdates).length > 0) {
+        await supabase
+          .from('player_profiles')
+          .update(profileUpdates)
+          .eq('id', userId);
+      }
+
       return true;
     }
     return false;

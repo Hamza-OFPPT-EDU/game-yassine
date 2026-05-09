@@ -242,23 +242,24 @@ export default function App() {
 
     const wasAlreadyCompleted = completedMissions.includes(summary.missionId);
     if (!wasAlreadyCompleted) {
+      const nextXp = userStats.xp + summary.totalXp;
+      // Level calculation: 1 level every 1000 XP
+      const nextLevel = Math.floor(nextXp / 1000) + 1;
+      
       const newStats = {
-        xp: userStats.xp + summary.totalXp,
+        xp: nextXp,
         stars: userStats.stars + summary.totalStars,
-        level: userStats.level 
+        level: nextLevel
       };
       
       setCompletedMissions((prev) => [...prev, summary.missionId]);
-      setUserStats(prev => ({
-        ...prev,
-        xp: newStats.xp,
-        stars: newStats.stars
-      }));
+      setUserStats(newStats);
 
-      // Persist to Supabase
+      // Persist to Supabase (updates both app_users and player_profiles via useSupabaseProfile)
       updateProfile({
         xp: newStats.xp,
-        stars: newStats.stars
+        stars: newStats.stars,
+        level: newStats.level
       });
     }
 
