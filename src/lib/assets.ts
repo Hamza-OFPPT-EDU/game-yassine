@@ -6,7 +6,7 @@ export const CORE_ASSETS = {
     'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4',
   ],
   images: [
-    'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.png',
+    'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.jpg',
     '/assets/guide_voyage.gif',
     '/assets/avatar_user.jpg',
     '/assets/panel.png',
