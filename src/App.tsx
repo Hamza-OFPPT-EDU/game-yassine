@@ -91,7 +91,7 @@ export default function App() {
         setIsCoreLoaded(true); 
         
         // Give time for SplashScreen to finish transition before starting background heavy loads
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
         // 2. Load Rabat Assets in background
         const rabatAssets = await fetchDynamicAssets('Rabat');

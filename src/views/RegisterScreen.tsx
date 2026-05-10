@@ -42,19 +42,23 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
     playSound('click');
 
     try {
-      const email = `${username}@voyage.ma`;
+      const lowerFirstName = firstName.trim().toLowerCase();
+      const lowerLastName = lastName.trim().toLowerCase();
+      const lowerUsername = `${lowerFirstName}.${lowerLastName}`.replace(/\s+/g, '');
+      const avatarUrl = gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
+      const email = `${lowerUsername}@voyage.ma`;
       
       const { data, error: authError } = await supabase.auth.signUp({
         email,
         password: password.trim(),
         options: {
           data: {
-            username: username,
-            full_name: `${firstName.trim().toLowerCase()} ${lastName.trim().toLowerCase()}`,
-            first_name: firstName.trim().toLowerCase(),
-            last_name: lastName.trim().toLowerCase(),
+            username: lowerUsername,
+            full_name: `${lowerFirstName} ${lowerLastName}`,
+            first_name: lowerFirstName,
+            last_name: lowerLastName,
             gender: gender,
-            avatar_url: gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL,
+            avatar_url: avatarUrl,
             group_name: group,
             birth_date: birthDate
           }
@@ -62,23 +66,23 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
       });
 
       if (authError) {
-        setError(authError.message === "User already registered" ? "Ce profil existe déjà (pseudo: " + username + ")" : authError.message);
+        setError(authError.message === "User already registered" ? "Ce profil existe déjà (pseudo: " + lowerUsername + ")" : authError.message);
         playSound('wrong');
       } else if (data.user) {
         // Manually sync with app_users and player_profiles to ensure dashboard visibility
         const userId = data.user.id;
-        const fullName = `${firstName.trim().toLowerCase()} ${lastName.trim().toLowerCase()}`;
+        const fullName = `${lowerFirstName} ${lowerLastName}`;
         
         try {
           // 1. Insert into app_users
           await supabase.from('app_users').upsert({
             id: userId,
-            username: username.trim().toLowerCase(),
+            username: lowerUsername,
             full_name: fullName,
-            first_name: firstName.trim().toLowerCase(),
-            last_name: lastName.trim().toLowerCase(),
+            first_name: lowerFirstName,
+            last_name: lowerLastName,
             gender: gender,
-            avatar_url: gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL,
+            avatar_url: avatarUrl,
             site: group,
             group_name: group,
             birth_date: birthDate,

@@ -20,10 +20,10 @@ export default function SplashScreen({ onComplete, extraAssets = [], canContinue
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Show video for 4 seconds
+    // Show video for 3 seconds
     const videoTimer = setTimeout(() => {
       setVideoStage('ui');
-    }, 4000);
+    }, 3000);
 
     return () => clearTimeout(videoTimer);
   }, []);
