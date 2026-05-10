@@ -3,117 +3,152 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, Save, Trophy, Users, ShieldCheck } from 'lucide-react';
-import { cn } from '../lib/utils';
+import { ArrowLeft, Trophy, Sparkles, Loader2, Shield, Users, Target } from 'lucide-react';
+import { useLeagues } from '../hooks/useLeagues';
+import { useAuth } from '../hooks/useSupabase';
 
 interface LeagueCreateScreenProps {
   onBack: () => void;
   onCreated: () => void;
 }
 
+const TIERS = [
+  { id: 'bronze', name: 'Bronze', color: 'text-amber-600', bg: 'bg-amber-100', border: 'border-amber-200' },
+  { id: 'silver', name: 'Argent', color: 'text-slate-400', bg: 'bg-slate-100', border: 'border-slate-200' },
+  { id: 'gold', name: 'Or', color: 'text-voyage-primary', bg: 'bg-voyage-primary/10', border: 'border-voyage-primary' },
+];
+
 export default function LeagueCreateScreen({ onBack, onCreated }: LeagueCreateScreenProps) {
+  const { session } = useAuth();
+  const { createLeague } = useLeagues(session?.user?.id);
   const [name, setName] = useState('');
-  const [tier, setTier] = useState<'bronze' | 'silver' | 'gold'>('bronze');
+  const [selectedTier, setSelectedTier] = useState(TIERS[0].id);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim()) {
+      setError("Donne un nom à ta compétition !");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    try {
+      await createLeague(name, selectedTier);
+      onCreated();
+    } catch (err: any) {
+      setError(err.message || "Une erreur est survenue.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="flex flex-col h-full bg-voyage-sand pb-32">
-      {/* Header */}
-      <header className="px-6 pt-12 pb-6 bg-white border-b border-voyage-accent/10 sticky top-0 z-10">
-        <div className="flex items-center gap-4">
-          <button 
-            onClick={onBack}
-            className="p-2 hover:bg-voyage-accent/10 rounded-full transition-colors text-voyage-primary"
-          >
-            <ArrowLeft size={24} />
-          </button>
-          <div>
-            <h1 className="text-xl font-black text-voyage-primary font-headline">Créer une Ligue</h1>
-            <p className="text-slate-500 text-xs">Configurez votre propre compétition</p>
-          </div>
+    <div className="flex flex-col h-full bg-[#FFF8F0] relative overflow-hidden font-sans">
+      {/* Decorative Background */}
+      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-voyage-accent/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-voyage-primary/20 rounded-full blur-3xl" />
+      </div>
+
+      <header className="relative z-10 px-6 pt-12 pb-6 flex items-center gap-4">
+        <motion.button 
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={onBack}
+          className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-voyage-accent/10 text-voyage-accent"
+        >
+          <ArrowLeft size={22} strokeWidth={2.5} />
+        </motion.button>
+        <div>
+          <h1 className="text-2xl font-black uppercase tracking-tighter text-[#1A1A2E]">Nouvelle Ligue</h1>
+          <p className="text-[10px] font-bold text-voyage-accent/60 uppercase tracking-widest">Crée ton groupe</p>
         </div>
       </header>
 
-      <main className="flex-grow p-6 space-y-8 overflow-y-auto">
-        {/* Name input */}
-        <section className="space-y-3">
-          <label className="text-xs uppercase tracking-widest font-black text-slate-400 block ml-1">
-            Nom de la ligue
-          </label>
-          <div className="relative">
-            <input 
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Ex: Les Guerriers de l'Atlas"
-              className="w-full bg-white border border-voyage-accent/20 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-voyage-primary focus:border-transparent outline-none transition-all text-voyage-primary font-bold"
-            />
-            <Trophy className="absolute right-4 top-1/2 -translate-y-1/2 text-voyage-accent opacity-50" size={20} />
-          </div>
-        </section>
-
-        {/* Tier selection */}
-        <section className="space-y-3">
-          <label className="text-xs uppercase tracking-widest font-black text-slate-400 block ml-1">
-            Niveau de la ligue (Tier)
-          </label>
-          <div className="grid grid-cols-3 gap-3">
-            {(['bronze', 'silver', 'gold'] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTier(t)}
-                className={cn(
-                  "p-4 rounded-2xl border transition-all flex flex-col items-center gap-2",
-                  tier === t 
-                    ? "bg-voyage-primary border-voyage-primary text-white shadow-lg" 
-                    : "bg-white border-voyage-accent/10 text-slate-400 grayscale"
-                )}
-              >
-                <Trophy size={24} />
-                <span className="text-[10px] font-black uppercase tracking-tighter">{t}</span>
-              </button>
-            ))}
-          </div>
-        </section>
-
-        {/* Perks Section */}
-        <section className="space-y-4">
-          <label className="text-xs uppercase tracking-widest font-black text-slate-400 block ml-1">
-            Avantages de l'administrateur
-          </label>
-          <div className="space-y-3">
-            {[
-              { icon: Users, label: "Invitation de membres illimitée", desc: "Invitez vos amis par lien ou QR code." },
-              { icon: ShieldCheck, label: "Modération avancée", desc: "Contrôlez qui participe à votre ligue." }
-            ].map((perk, i) => (
-              <div key={i} className="flex gap-4 p-4 bg-white rounded-2xl border border-voyage-accent/10">
-                <div className="w-10 h-10 rounded-xl bg-voyage-accent/10 flex items-center justify-center text-voyage-accent shrink-0">
-                  <perk.icon size={20} />
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-voyage-primary">{perk.label}</h4>
-                  <p className="text-[10px] text-slate-500">{perk.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Submit Button */}
-        <button
-          disabled={!name}
-          onClick={onCreated}
-          className={cn(
-            "w-full py-5 rounded-2xl font-black text-lg shadow-xl transition-all flex items-center justify-center gap-4",
-            name 
-              ? "bg-voyage-primary text-white hover:scale-105 active:scale-95" 
-              : "bg-slate-200 text-slate-400 cursor-not-allowed"
-          )}
+      <main className="relative z-10 flex-grow px-6 max-w-md mx-auto w-full pt-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white/80 backdrop-blur-xl border-2 border-white rounded-[40px] p-8 shadow-xl shadow-voyage-accent/5"
         >
-          <span>Créer la ligue</span>
-          <Save size={20} />
-        </button>
+          <form onSubmit={handleCreate} className="space-y-8">
+            <div className="space-y-3">
+              <label className="text-xs font-black text-voyage-accent uppercase tracking-widest ml-1 flex items-center gap-2">
+                <Users size={14} /> Nom de la compétition
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Ex: Les Guerriers du Sahara"
+                className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 px-6 outline-none focus:border-voyage-accent transition-all font-bold text-lg"
+                disabled={loading}
+              />
+            </div>
+
+            <div className="space-y-3">
+              <label className="text-xs font-black text-voyage-accent uppercase tracking-widest ml-1 flex items-center gap-2">
+                <Target size={14} /> Niveau de difficulté
+              </label>
+              <div className="grid grid-cols-3 gap-3">
+                {TIERS.map((tier) => (
+                  <button
+                    key={tier.id}
+                    type="button"
+                    onClick={() => setSelectedTier(tier.id)}
+                    className={`flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all ${
+                      selectedTier === tier.id 
+                        ? `${tier.border} ${tier.bg} shadow-md` 
+                        : 'border-slate-100 bg-white opacity-40 grayscale'
+                    }`}
+                  >
+                    <Trophy className={tier.color} size={24} />
+                    <span className={`text-[10px] font-black uppercase tracking-tighter ${tier.color}`}>{tier.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {error && (
+              <p className="text-red-500 text-xs font-bold text-center bg-red-50 py-3 rounded-xl border border-red-100 italic">
+                "{error}"
+              </p>
+            )}
+
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              type="submit"
+              disabled={loading || !name.trim()}
+              className="w-full bg-gradient-to-br from-voyage-accent to-voyage-primary text-white py-5 rounded-3xl font-black text-lg uppercase tracking-tight flex items-center justify-center gap-3 shadow-xl shadow-voyage-accent/20 disabled:opacity-50"
+            >
+              {loading ? (
+                <Loader2 className="animate-spin" size={24} />
+              ) : (
+                <>
+                  Lancer la Ligue
+                  <Sparkles size={20} fill="currentColor" />
+                </>
+              )}
+            </motion.button>
+          </form>
+        </motion.div>
+
+        <div className="mt-8 grid grid-cols-2 gap-4">
+           <div className="p-4 bg-white/40 rounded-2xl border border-white/60">
+              <Shield className="text-voyage-accent mb-2" size={20} />
+              <p className="text-[10px] font-bold text-[#1A1A2E]/60 leading-tight">Tu seras l'administrateur de ce groupe.</p>
+           </div>
+           <div className="p-4 bg-white/40 rounded-2xl border border-white/60">
+              <Trophy className="text-voyage-primary mb-2" size={20} />
+              <p className="text-[10px] font-bold text-[#1A1A2E]/60 leading-tight">Les membres seront classés par leur XP total.</p>
+           </div>
+        </div>
       </main>
     </div>
   );
