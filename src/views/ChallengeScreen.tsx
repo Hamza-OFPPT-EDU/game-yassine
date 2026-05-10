@@ -23,7 +23,6 @@ import { useAudio } from '../hooks/useAudio';
 import { useTimer } from '../hooks/useTimer';
 import { TimerBar } from '../components/TimerBar';
 import { resolveAssetUrl } from '../lib/city-theme';
-import { resolveAssetUrl } from '../lib/city-theme';
 
 // Helper for dynamic theming based on exercise type
 const getThemeConfig = (type: string) => {

@@ -9,7 +9,6 @@ import { ArrowLeft, Check, Star, Volume2, Save, CheckCircle2, TrendingUp, Apple,
 import { type City } from '../types';
 import { cn } from '../lib/utils';
 import { useAudio } from '../contexts/AudioContext';
-import { type City } from '../types';
 
 interface VocabularyMatchScreenProps {
   onBack: () => void;
@@ -38,7 +37,6 @@ export default function VocabularyMatchScreen({ onBack }: VocabularyMatchScreenP
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   const [matches, setMatches] = useState<Record<string, string>>({}); // leftId -> rightId
   const [showSuccess, setShowSuccess] = useState(false);
-  const [showHintModal, setShowHintModal] = useState(false);
   const [showHintModal, setShowHintModal] = useState(false);
   const [isSavingAudio, setIsSavingAudio] = useState(false);
   const stats = { xp: 120 };

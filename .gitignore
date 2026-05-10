@@ -8,3 +8,6 @@ coverage/
 !.env.example
 scratch/
 .vscode/
+
+# Local Netlify folder
+.netlify
