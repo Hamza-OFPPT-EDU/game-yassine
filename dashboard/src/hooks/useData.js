@@ -338,3 +338,126 @@ export function useCityStats() {
 
   return { data, loading };
 }
+export function usePlayerActivity(playerId) {
+  const [activity, setActivity] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!playerId) { setActivity([]); return; }
+    setLoading(true);
+
+    async function fetch() {
+      const { data, error } = await supabase
+        .from('player_activity_logs')
+        .select('*')
+        .eq('user_id', playerId)
+        .order('started_at', { ascending: false });
+
+      if (!error && data) {
+        setActivity(data);
+      }
+      setLoading(false);
+    }
+
+    fetch();
+  }, [playerId]);
+
+  return { activity, loading };
+}
+
+export function usePlayerDailyStats(playerId) {
+  const [stats, setStats] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!playerId) { setStats([]); return; }
+    setLoading(true);
+
+    async function fetch() {
+      const { data, error } = await supabase
+        .from('player_daily_stats')
+        .select('*')
+        .eq('user_id', playerId)
+        .order('date', { ascending: false });
+
+      if (!error && data) {
+        setStats(data);
+      }
+      setLoading(false);
+    }
+
+    fetch();
+  }, [playerId]);
+
+  return { stats, loading };
+}
+
+export function useGlobalAnalytics() {
+  const [data, setData] = useState({
+    timeByActivity: [],
+    timeByGroup: [],
+    topPlayersByTime: []
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetch() {
+      setLoading(true);
+      try {
+        const [logsRes, usersRes] = await Promise.all([
+          supabase.from('player_activity_logs').select('activity_type, duration_seconds, user_id'),
+          supabase.from('app_users').select('id, full_name, site, school_level')
+        ]);
+
+        const logs = logsRes.data || [];
+        const users = usersRes.data || [];
+
+        // 1. Time by Activity Type
+        const byType = {};
+        logs.forEach(l => {
+          byType[l.activity_type] = (byType[l.activity_type] || 0) + (l.duration_seconds || 0);
+        });
+        const timeByActivity = Object.entries(byType).map(([name, value]) => ({ 
+          name: name.replace('_session', '').replace('_', ' '), 
+          value: Math.round(value / 60) 
+        }));
+
+        // 2. Time by Group (Site)
+        const bySite = {};
+        logs.forEach(l => {
+          const user = users.find(u => u.id === l.user_id);
+          const site = user?.site || 'Inconnu';
+          bySite[site] = (bySite[site] || 0) + (l.duration_seconds || 0);
+        });
+        const timeByGroup = Object.entries(bySite).map(([name, value]) => ({ 
+          name, 
+          value: Math.round(value / 3600) // Hours for groups
+        }));
+
+        // 3. Top Players by Time
+        const byPlayer = {};
+        logs.forEach(l => {
+          byPlayer[l.user_id] = (byPlayer[l.user_id] || 0) + (l.duration_seconds || 0);
+        });
+        const topPlayersByTime = Object.entries(byPlayer)
+          .map(([id, value]) => {
+            const user = users.find(u => u.id === id);
+            return {
+              id,
+              name: user?.full_name || 'Anonyme',
+              minutes: Math.round(value / 60)
+            };
+          })
+          .sort((a, b) => b.minutes - a.minutes)
+          .slice(0, 10);
+
+        setData({ timeByActivity, timeByGroup, topPlayersByTime });
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetch();
+  }, []);
+
+  return { data, loading };
+}

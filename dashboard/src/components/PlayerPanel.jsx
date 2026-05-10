@@ -1,5 +1,5 @@
-import { usePlayerDetail, usePlayerHistory } from '../hooks/useData';
-import { X, MapPin, Star, Award, Zap, Key, User, Trash2, AlertTriangle, Edit2, Save, RotateCcw, CheckCircle2, Circle, Clock, History, ChevronDown, ChevronUp, RefreshCw } from 'lucide-react';
+import { usePlayerDetail, usePlayerHistory, usePlayerActivity, usePlayerDailyStats } from '../hooks/useData';
+import { X, MapPin, Star, Award, Zap, Key, User, Trash2, AlertTriangle, Edit2, Save, RotateCcw, CheckCircle2, Circle, Clock, History, ChevronDown, ChevronUp, RefreshCw, BarChart3, Activity } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useState, useEffect } from 'react';
 
@@ -31,6 +31,8 @@ function formatDate(dateStr) {
 export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
   const { detail, loading } = usePlayerDetail(player?.id);
   const { history, loading: historyLoading } = usePlayerHistory(player?.id);
+  const { activity, loading: activityLoading } = usePlayerActivity(player?.id);
+  const { stats: dailyStats, loading: dailyLoading } = usePlayerDailyStats(player?.id);
   const [expandedHistory, setExpandedHistory] = useState(null);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -204,6 +206,60 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
                     </div>
                     <div className="xp-bar-wrap">
                       <div className="xp-bar-fill" style={{ width: `${player.xp % 100}%` }} />
+                    </div>
+                  </div>
+
+                  {/* Engagement Stats */}
+                  <div className="panel-section">
+                    <h4><Clock size={12} style={{display:'inline', marginRight:4}} />Suivi du temps</h4>
+                    <div className="engagement-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+                      <div className="engagement-card" style={{ padding: 10 }}>
+                        <div className="eng-label" style={{ fontSize: 10 }}>Total Jeu</div>
+                        <div className="eng-value" style={{ fontSize: 16 }}>
+                          {Math.floor((dailyStats?.reduce((acc, s) => acc + (s.game_time_seconds || 0), 0) || 0) / 60)}m
+                        </div>
+                      </div>
+                      <div className="engagement-card" style={{ padding: 10 }}>
+                        <div className="eng-label" style={{ fontSize: 10 }}>Villes</div>
+                        <div className="eng-value" style={{ fontSize: 16 }}>
+                          {Math.floor((dailyStats?.reduce((acc, s) => acc + (s.city_time_seconds || 0), 0) || 0) / 60)}m
+                        </div>
+                      </div>
+                      <div className="engagement-card" style={{ padding: 10 }}>
+                        <div className="eng-label" style={{ fontSize: 10 }}>Exercices</div>
+                        <div className="eng-value" style={{ fontSize: 16 }}>
+                          {Math.floor((dailyStats?.reduce((acc, s) => acc + (s.exercise_time_seconds || 0), 0) || 0) / 60)}m
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Daily Log */}
+                  <div className="panel-section">
+                    <h4><Activity size={12} style={{display:'inline', marginRight:4}} />Journal quotidien</h4>
+                    <div className="daily-log-list" style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                      {dailyStats?.length === 0 ? (
+                        <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Aucune donnée quotidienne</p>
+                      ) : (
+                        dailyStats.slice(0, 7).map(day => (
+                          <div key={day.date} className="daily-log-item" style={{ 
+                            display: 'flex', 
+                            justifyContent: 'space-between', 
+                            alignItems: 'center',
+                            padding: '8px 12px',
+                            background: 'var(--bg-card)',
+                            border: '1px solid var(--border-light)',
+                            borderRadius: 8,
+                            fontSize: 12
+                          }}>
+                            <div style={{ fontWeight: 600 }}>{formatDate(day.date)}</div>
+                            <div style={{ display: 'flex', gap: 12 }}>
+                              <span title="Temps de jeu">🎮 {Math.round(day.game_time_seconds / 60)}m</span>
+                              <span title="Temps exercices">✏️ {Math.round(day.exercise_time_seconds / 60)}m</span>
+                            </div>
+                          </div>
+                        ))
+                      )}
                     </div>
                   </div>
 

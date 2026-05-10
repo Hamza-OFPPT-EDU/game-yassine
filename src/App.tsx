@@ -6,6 +6,8 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { supabase } from './lib/supabase';
 import { useSupabaseProfile, saveMissionResult } from './hooks/useSupabase';
+import { useActivityTracker } from './hooks/useActivityTracker';
+import { useLeagues } from './hooks/useLeagues';
 import { motion, AnimatePresence } from 'motion/react';
 import { Screen, type City, type Mission, type MissionCompletionSummary, AVATAR_MALE_URL, AVATAR_FEMALE_URL } from './types';
 import { generateDemoIdentity } from './lib/demo-utils';
@@ -60,6 +62,10 @@ export default function App() {
 
   const { session, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
+  
+  // Track user activities and time spent
+  useActivityTracker(session?.user?.id, currentScreen, selectedCity?.id || null);
+
   const [dynamicAssets, setDynamicAssets] = useState<Asset[]>([]);
   const [loadedCities, setLoadedCities] = useState<string[]>([]);
   const [loadingCityAssets, setLoadingCityAssets] = useState<string | null>(null);

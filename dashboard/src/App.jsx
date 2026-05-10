@@ -7,12 +7,13 @@ import MediaLibrary from './components/MediaLibrary';
 import DatabaseExplorer from './components/DatabaseExplorer';
 import SettingsPage from './components/SettingsPage';
 import MapEditorPage from './components/MapEditorPage';
+import EngagementPage from './components/EngagementPage';
 import CurriculumPreview from './components/cms/CurriculumPreview';
 import ThemeToggle from './components/ThemeToggle';
 import { useChallenges } from './hooks/useContent';
 import {
   LayoutDashboard, Users, Award, FileEdit, Image as ImageIcon, Database,
-  Settings as SettingsIcon, Map as MapIcon
+  Settings as SettingsIcon, Map as MapIcon, Activity
 } from 'lucide-react';
 
 const NAV = [
@@ -20,6 +21,7 @@ const NAV = [
     section: 'Analytique',
     items: [
       { id: 'dashboard', icon: LayoutDashboard, label: 'Tableau de bord' },
+      { id: 'engagement', icon: Activity,         label: 'Engagement' },
       { id: 'players',   icon: Users,           label: 'Joueurs' },
       { id: 'badges',    icon: Award,           label: 'Badges' },
     ]
@@ -39,6 +41,7 @@ const NAV = [
 const PAGE_TITLES = {
   dashboard: { title: 'Tableau de bord',          sub: 'Vue générale de l\'avancement des joueurs' },
   players:   { title: 'Joueurs',                  sub: 'Liste et profils détaillés des joueurs' },
+  engagement:{ title: 'Engagement & Analytique',  sub: 'Analyse du temps passé et de l\'activité réelle' },
   badges:    { title: 'Badges & Récompenses',     sub: 'Analyse des badges obtenus par les joueurs' },
   content:   { title: 'Gestion de contenu',       sub: 'Créer et modifier les défis, missions et questions du jeu' },
   map:       { title: 'Carte du Jeu',             sub: 'Gérer l\'ordre des villes et la progression visuelle' },
@@ -130,6 +133,7 @@ export default function App() {
 
         <main className="page-content">
           {page === 'dashboard' && <Dashboard setPage={setPage} />}
+          {page === 'engagement' && <EngagementPage />}
           {page === 'players'   && <Dashboard setPage={setPage} />}
           {page === 'badges'    && <BadgesPage />}
           {page === 'content'   && <ContentPage />}
