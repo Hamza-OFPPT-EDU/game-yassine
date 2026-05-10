@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { supabase } from './useSupabase';
+import { supabase } from '../lib/supabase';
 import { Screen } from '../types';
 
 /**
