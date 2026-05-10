@@ -36,15 +36,6 @@ export default function SplashScreen({ onComplete, onProgress, progress: externa
     return () => clearTimeout(videoTimer);
   }, []);
 
-  useEffect(() => {
-    // Notify parent when assets are ready AND video is done AND canContinue is true
-    if (isComplete && videoStage === 'ui' && canContinue) {
-      const timer = setTimeout(() => {
-        onComplete?.();
-      }, 1500); // Give user time to see the animated UI
-      return () => clearTimeout(timer);
-    }
-  }, [isComplete, videoStage, onComplete, canContinue]);
 
   return (
     <div
@@ -207,60 +198,7 @@ export default function SplashScreen({ onComplete, onProgress, progress: externa
               />
             </div>
 
-            {/* Progress Bar Animation */}
-            <motion.div
-              initial={{ y: 40, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.7 }}
-              className="w-64 space-y-4"
-            >
-              <div className="flex items-center justify-between px-2">
-                <div className="flex items-center gap-2">
-                  {!isComplete && (
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                    >
-                      <Loader2 size={10} className="text-[#D4A43E]" />
-                    </motion.div>
-                  )}
-                  <p className="text-[8px] font-black text-[#7B3F1A]/60 uppercase tracking-[0.2em]">
-                    {isComplete ? 'Prêt à explorer !' : 'Chargement...'}
-                  </p>
-                </div>
-                <p className="text-[8px] font-black text-[#D4A43E]">
-                  {progress}%
-                </p>
-              </div>
-
-              <div className="h-6 w-full bg-[#E5D5B8]/20 rounded-2xl overflow-hidden border-2 border-[#E5D5B8] p-1 shadow-inner">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${progress}%` }}
-                  transition={{ type: "spring", bounce: 0, duration: 0.5 }}
-                  className="h-full bg-gradient-to-r from-[#7B3F1A] to-[#4E2510] rounded-xl relative shadow-lg"
-                >
-                  <motion.div
-                    animate={{ opacity: [0.3, 0.6, 0.3] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="absolute inset-0 bg-white/20 rounded-xl"
-                  />
-                </motion.div>
-              </div>
-
-              <AnimatePresence>
-                {!isComplete && (
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="text-center text-[7px] font-bold text-[#7B3F1A]/40 italic"
-                  >
-                    Préparation du voyage au Maroc...
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </motion.div>
+            <div className="h-20" />
           </motion.div>
         )}
       </AnimatePresence>

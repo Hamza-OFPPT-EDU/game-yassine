@@ -64,19 +64,28 @@ export default function App() {
   const allAssets = useMemo(() => getAllAssets(dynamicAssets), [dynamicAssets]);
   const { progress, isComplete } = useAssetPreloader(allAssets);
 
+  const [splashComplete, setSplashComplete] = useState(false);
+  
   useEffect(() => {
-    // 30% -> Fullscreen Prompt
+    const timer = setTimeout(() => {
+      setSplashComplete(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    // 30% -> Fullscreen Prompt (kept for utility)
     if (progress >= 30 && !fullscreenShownOnce && !showFullscreenPrompt) {
       if (!document.fullscreenElement && localStorage.getItem('prefer-fullscreen') !== 'false') {
         setShowFullscreenPrompt(true);
       }
     }
 
-    // 50% -> Switch to Welcome Screen
-    if (progress >= 50 && currentScreen === Screen.Splash) {
+    // Switch to Welcome Screen only after 5s splash is complete
+    if (splashComplete && currentScreen === Screen.Splash) {
       setCurrentScreen(Screen.Welcome);
     }
-  }, [progress, fullscreenShownOnce, showFullscreenPrompt, currentScreen]);
+  }, [splashComplete, progress, fullscreenShownOnce, showFullscreenPrompt, currentScreen]);
   
   const [userStats, setUserStats] = useState({
     xp: 0,
@@ -362,29 +371,17 @@ export default function App() {
 
     if (authLoading || (session && profileLoading)) {
       if (currentScreen === Screen.Splash) {
-        return <SplashScreen 
-          onComplete={() => setCurrentScreen(Screen.Welcome)} 
-          progress={progress}
-          extraAssets={dynamicAssets} 
-          canContinue={progress >= 100} // This is just for safety, the progress logic above handles it
-        />;
+        return <SplashScreen />;
       }
-      return (
-        <div className="h-screen w-full bg-[#0f172a] flex flex-col items-center justify-center gap-6">
-          <div className="w-20 h-20 border-4 border-white/10 border-t-white rounded-full animate-spin" />
-          <p className="text-white/40 font-black uppercase tracking-widest text-xs">Chargement du voyage...</p>
-        </div>
-      );
+      // If we are NOT on Splash (e.g. we were already in the app but profile is reloading), 
+      // we still might want a silent background or a very subtle indicator, 
+      // but the user wants silent initialization at start.
+      return null; 
     }
 
     switch (currentScreen) {
       case Screen.Splash:
-        return <SplashScreen 
-          onComplete={() => setCurrentScreen(Screen.Welcome)} 
-          progress={progress}
-          extraAssets={dynamicAssets} 
-          canContinue={progress >= 100} 
-        />;
+        return <SplashScreen />;
       case Screen.Welcome:
         return <WelcomeScreen 
           onStart={handleDemoLogin} 

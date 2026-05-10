@@ -30,10 +30,8 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
     if (videoRef.current) {
       videoRef.current.muted = true;
     }
-    const timer = setTimeout(() => {
-      setShowContent(true);
-    }, 5000);
-    return () => clearTimeout(timer);
+    // Show content immediately or with a very short fade-in
+    setShowContent(true);
   }, []);
 
   return (
