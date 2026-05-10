@@ -45,10 +45,11 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
 
   // Group badges by category if needed, or just show them all
   const categories = [
-    { id: 'cultural', label: 'Culture & Patrimoine', labelAr: 'الثقافة والتراث' },
-    { id: 'achievement', label: 'Exploits', labelAr: 'الإنجازات' },
-    { id: 'challenge', label: 'Défis', labelAr: 'التحديات' },
-    { id: 'multiplayer', label: 'Compétition', labelAr: 'المنافسة' },
+    { id: 'decision', label: 'Prise de Décision', labelAr: 'اتخاذ القرار' },
+    { id: 'communication', label: 'Communication', labelAr: 'التواصل' },
+    { id: 'equipe', label: 'Travail d\'Équipe', labelAr: 'العمل الجماعي' },
+    { id: 'excellence', label: 'Excellence & Maîtrise', labelAr: 'التميز والإتقان' },
+    { id: 'stress', label: 'Gestion du Stress', labelAr: 'إدارة الضغط' },
   ];
 
   return (
@@ -73,7 +74,7 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
 
       <main className="flex-grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 scrollbar-hide">
         {categories.map((cat, catIdx) => {
-          const catBadges = badges.filter(b => b.category === cat.id);
+          const catBadges = badges.filter(b => (b.skill || '').toLowerCase() === cat.id);
           if (catBadges.length === 0) return null;
 
           return (
@@ -88,52 +89,52 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
 
               <div className="grid grid-cols-2 gap-4">
                 {catBadges.map((badge, idx) => {
-                  const isEarned = earnedBadges.includes(badge.id);
+                  const isEarned = earnedBadges.includes(badge.badge_id || badge.id);
                   const Icon = ICON_MAP[badge.icon_name] || Trophy;
                   
-                  return (
-                    <motion.div
-                      key={badge.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: (catIdx * 0.2) + (idx * 0.05) }}
-                      className={cn(
-                        "relative p-5 rounded-3xl border-2 border-b-4 flex flex-col items-center text-center gap-3 transition-all",
-                        isEarned 
-                          ? "bg-white border-voyage-primary/20 shadow-sm" 
-                          : "bg-voyage-primary/5 border-transparent opacity-60 grayscale"
-                      )}
-                    >
-                      {/* Badge Icon Container */}
-                      <div 
-                        className={cn("w-20 h-20 rounded-full flex items-center justify-center border-b-4 shadow-sm transition-transform bg-voyage-primary/10 border-voyage-primary/20 overflow-hidden relative mb-2")}
-                        style={isEarned ? getAssetStyle(badge.image_url) : {}}
+                    return (
+                      <motion.div
+                        key={badge.badge_id || badge.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: (catIdx * 0.2) + (idx * 0.05) }}
+                        className={cn(
+                          "relative p-5 rounded-3xl border-2 border-b-4 flex flex-col items-center text-center gap-3 transition-all",
+                          isEarned 
+                            ? "bg-white border-voyage-primary/20 shadow-sm" 
+                            : "bg-voyage-primary/5 border-transparent opacity-60 grayscale"
+                        )}
                       >
-                        {badge.image_url && badge.image_url.startsWith('http') ? (
-                          <img 
-                            src={optimizeSupabaseUrl(badge.image_url, 160, 85)} 
-                            alt={badge.badge_name} 
-                            className="w-full h-full object-cover" 
-                          />
-                        ) : (
-                          <span className="text-4xl">{badge.image_url || '🏆'}</span>
-                        )}
-                        
-                        {!isEarned && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-2xl">
-                            <Lock size={24} className="text-white/60" />
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="space-y-1">
-                        <h3 className={cn("font-black text-sm leading-tight", isEarned ? "text-voyage-primary" : "text-voyage-primary/40")}>
-                          {badge.badge_name}
-                        </h3>
-                        <p className="text-[9px] font-bold text-voyage-primary/40 arabic-font leading-none">
-                          {badge.badge_name_ar || badge.description_ar}
-                        </p>
-                      </div>
+                        {/* Badge Icon Container */}
+                        <div 
+                          className={cn("w-20 h-20 rounded-full flex items-center justify-center border-b-4 shadow-sm transition-transform bg-voyage-primary/10 border-voyage-primary/20 overflow-hidden relative mb-2")}
+                          style={isEarned ? getAssetStyle(badge.image_url) : {}}
+                        >
+                          {badge.image_url && badge.image_url.startsWith('http') ? (
+                            <img 
+                              src={optimizeSupabaseUrl(badge.image_url, 160, 85)} 
+                              alt={badge.name_fr || badge.badge_name} 
+                              className="w-full h-full object-cover" 
+                            />
+                          ) : (
+                            <span className="text-4xl">{badge.image_url || '🏆'}</span>
+                          )}
+                          
+                          {!isEarned && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-2xl">
+                              <Lock size={24} className="text-white/60" />
+                            </div>
+                          )}
+                        </div>
+  
+                        <div className="space-y-1">
+                          <h3 className={cn("font-black text-sm leading-tight", isEarned ? "text-voyage-primary" : "text-voyage-primary/40")}>
+                            {badge.name_fr || badge.badge_name}
+                          </h3>
+                          <p className="text-[9px] font-bold text-voyage-primary/40 arabic-font leading-none">
+                            {badge.name_ar || badge.badge_name_ar || badge.description_ar}
+                          </p>
+                        </div>
 
                       {isEarned && (
                         <div className="mt-1 px-3 py-1 bg-voyage-accent/10 rounded-full">

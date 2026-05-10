@@ -1,13 +1,13 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2, Award, Zap, Globe, Lock, MapPin, LogOut } from 'lucide-react';
-import { useAuth, useSupabaseProfile } from '../hooks/useSupabase';
+import { useAuth, useSupabaseProfile, useSupabaseBadges } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { optimizeSupabaseUrl } from '../lib/city-theme';
 import { DEFAULT_AVATAR_URL } from '../types';
-import { BADGE_MAP, getBadgeUrl } from '../lib/badges';
+import { getBadgeUrl } from '../lib/badges';
 
 interface BadgeDetailProps {
   badge: any;
@@ -43,7 +43,7 @@ function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
             />
           )}
           <img 
-            src={getBadgeUrl(badge.url) || '/assets/badge_placeholder.png'} 
+            src={badge.url || '/assets/badge_placeholder.png'} 
             className="w-32 h-32 object-contain relative z-10"
             alt={badge.badge_name}
           />
@@ -84,6 +84,7 @@ interface ProfileScreenProps {
 export default function ProfileScreen({ onBack, onSettings, onShowBadges, completedMissions }: ProfileScreenProps) {
   const { session, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading } = useSupabaseProfile(session?.user?.id);
+  const { badges, earnedBadges, loading: badgesLoading } = useSupabaseBadges(session?.user?.id);
   const { playSound } = useAudio();
   const { settings: audio, updateSettings: updateAudio, saveToCloud } = useAudio();
   const [isSavingAudio, setIsSavingAudio] = useState(false);
@@ -103,12 +104,14 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, comple
   const cities = ['Tous', 'Rabat', 'Chefchaouen', 'Fès', 'Marrakech', 'Dakhla'];
 
   const allGameBadges = useMemo(() => {
-    return Object.entries(BADGE_MAP).map(([id, data]) => ({
-      id,
-      ...data,
-      isEarned: completedMissions.includes(id)
+    return badges.map(b => ({
+      id: b.badge_id,
+      name: b.name_fr,
+      url: b.image_url,
+      city: b.city || 'Inconnu',
+      isEarned: earnedBadges.includes(b.badge_id)
     }));
-  }, [completedMissions]);
+  }, [badges, earnedBadges]);
 
   const filteredBadges = useMemo(() => {
     if (activeCity === 'Tous') return allGameBadges;
@@ -338,7 +341,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, comple
                               />
                             )}
                             <img 
-                              src={getBadgeUrl(badge.url)} 
+                              src={badge.url} 
                               alt={badge.name}
                               className="w-12 h-12 object-contain relative z-10"
                             />

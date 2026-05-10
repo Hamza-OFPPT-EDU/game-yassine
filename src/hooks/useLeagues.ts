@@ -42,9 +42,6 @@ export function useLeagues(userId?: string) {
           *,
           league_members (
             user_id,
-            points_earned,
-            cities_completed,
-            badges_earned,
             app_users (
               id,
               full_name,
@@ -65,7 +62,7 @@ export function useLeagues(userId?: string) {
             id: m.app_users.id,
             name: m.app_users.full_name || 'Explorateur',
             avatar: m.app_users.avatar_url || (m.app_users.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL),
-            xp: m.points_earned || 0, // In competition, we use points_earned instead of total XP
+            xp: m.app_users.xp || 0, // Fallback to total XP
             rank: 0,
             isCurrentUser: m.app_users.id === userId,
             citiesCompleted: m.cities_completed || 0,

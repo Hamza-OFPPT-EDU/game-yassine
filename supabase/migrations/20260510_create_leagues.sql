@@ -17,6 +17,9 @@ CREATE TABLE IF NOT EXISTS public.league_members (
   league_id uuid NOT NULL REFERENCES public.leagues(id) ON DELETE CASCADE,
   user_id varchar(255) NOT NULL,
   joined_at timestamp with time zone DEFAULT now(),
+  points_earned integer DEFAULT 0,
+  cities_completed integer DEFAULT 0,
+  badges_earned integer DEFAULT 0,
   
   CONSTRAINT league_members_unique_entry UNIQUE(league_id, user_id)
 );

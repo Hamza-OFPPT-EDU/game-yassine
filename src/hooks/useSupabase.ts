@@ -492,25 +492,60 @@ export function useSupabaseProfile(userId?: string) {
 
     async function fetchProfile() {
       setLoading(true);
-      // Try to get the profile from player_profiles or app_users
-      // Since we synced app_users to auth.users, we should use app_users as the primary source of truth for the login info
-      const { data, error } = await supabase
-        .from('app_users')
-        .select('*')
-        .eq('id', userId)
-        .single();
+      try {
+        // 1. Try to get the profile from app_users (primary)
+        const { data: appUser, error: appUserError } = await supabase
+          .from('app_users')
+          .select('*')
+          .eq('id', userId)
+          .single();
 
-      if (!error && data) {
-        const genderDefault = data.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
-        setProfile({
-          ...data,
-          avatar_url: data.avatar_url || genderDefault
-        });
-      } else {
-        console.warn('Profile not found for user:', userId);
+        // 2. Also get from player_profiles for fallback stats
+        const { data: playerProfile } = await supabase
+          .from('player_profiles')
+          .select('xp, level, display_name')
+          .eq('id', userId)
+          .single();
+
+        // 3. Also get auth metadata for ultimate fallback of identity (critical for demo/signup sync delays)
+        const { data: authData } = await supabase.auth.getUser();
+        const meta = authData?.user?.user_metadata || {};
+
+        if (!appUserError && appUser) {
+          const genderDefault = appUser.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
+          setProfile({
+            ...appUser,
+            // Ensure stats are up-to-date with player_profiles if there's a discrepancy
+            xp: Math.max(appUser.xp || 0, playerProfile?.xp || 0),
+            level: Math.max(appUser.level || 1, playerProfile?.level || 1),
+            avatar_url: appUser.avatar_url || genderDefault
+          });
+        } else {
+          console.warn('Profile not found in app_users, using fallbacks for user:', userId);
+          const genderDefault = meta.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
+          setProfile({
+            id: userId,
+            full_name: playerProfile?.display_name || meta.full_name || meta.first_name || 'Explorateur',
+            username: meta.username || '',
+            first_name: meta.first_name || '',
+            last_name: meta.last_name || '',
+            gender: meta.gender || 'H',
+            group_name: meta.group_name || 'GROUPE NON DÉFINI',
+            birth_date: meta.birth_date || null,
+            xp: playerProfile?.xp || 0,
+            level: playerProfile?.level || 1,
+            stars: 0,
+            avatar_url: meta.avatar_url || genderDefault
+          });
+        }
+      } catch (err) {
+        console.error("Error fetching profile details:", err);
         setProfile({
           id: userId,
-          avatar_url: DEFAULT_AVATAR_URL
+          full_name: 'Explorateur',
+          avatar_url: DEFAULT_AVATAR_URL,
+          xp: 0,
+          level: 1
         });
       }
       setLoading(false);

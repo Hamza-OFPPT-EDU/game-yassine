@@ -14,11 +14,12 @@ interface WelcomeScreenProps {
   onStart: () => void;
   onLogin: () => void;
   onRegister: () => void;
+  isDemoLoading?: boolean;
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
-export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeScreenProps) {
+export default function WelcomeScreen({ onStart, onLogin, onRegister, isDemoLoading = false }: WelcomeScreenProps) {
   const { playSound, openSettings } = useAudio();
   const { getSetting } = useSupabaseSettings();
   const welcomeConfig = getSetting('welcome_screen_content') || {};
@@ -118,13 +119,38 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
                 onClick={() => {
+                  if (isDemoLoading) return;
                   playSound('click');
                   onStart();
                 }}
-                className="w-full"
+                className="w-full relative overflow-hidden group"
               >
-                <span>Lancer démo</span>
-                <ArrowRight size={20} strokeWidth={3} />
+                <AnimatePresence mode="wait">
+                  {isDemoLoading ? (
+                    <motion.div
+                      key="loading"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center gap-3"
+                    >
+                      <Loader2 className="animate-spin" size={20} />
+                      <span>Préparation du voyage...</span>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="normal"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center justify-center gap-2 w-full"
+                    >
+                      <Sparkles size={20} className="text-[#F4A261] animate-pulse" fill="currentColor" />
+                      <span className="font-black">Lancer un démo</span>
+                      <ArrowRight size={20} strokeWidth={3} className="ml-auto group-hover:translate-x-1 transition-transform" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </GameButton>
 
               <div className="grid grid-cols-2 gap-4">

@@ -173,14 +173,18 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
             {/* CTA Action */}
             <div className="pt-4">
               <motion.button
-                whileTap={{ scale: loadingMission ? 1 : 0.95 }}
+                whileHover={!(loadingMission || !mission) ? { scale: 1.02, y: -2 } : {}}
+                whileTap={!(loadingMission || !mission) ? { y: 4, borderBottomWidth: 2 } : {}}
                 onClick={() => { playSound('click'); onStartChallenge(); }}
                 disabled={loadingMission || !mission}
-                className={`w-full text-xl py-5 flex items-center justify-center gap-3 rounded-2xl font-black text-white shadow-lg transition-all ${loadingMission || !mission ? 'opacity-60 cursor-not-allowed' : 'hover:brightness-110 active:scale-95'
-                  }`}
+                className={cn(
+                  "w-full text-xl py-5 flex items-center justify-center gap-3 rounded-[28px] font-black text-white shadow-xl transition-all border-b-[6px]",
+                  (loadingMission || !mission) ? 'opacity-60 cursor-not-allowed' : 'hover:brightness-110'
+                )}
                 style={{
-                  background: `linear-gradient(135deg, ${getCityTheme(city).colorLight || getCityTheme(city).color}, ${getCityTheme(city).colorDark || getCityTheme(city).color})`,
-                  boxShadow: `0 8px 25px ${getCityTheme(city).color}50`,
+                  backgroundColor: getCityTheme(city).color,
+                  borderBottomColor: getCityTheme(city).colorDark || getCityTheme(city).color,
+                  boxShadow: `0 8px 25px ${getCityTheme(city).color}40`,
                 }}
               >
                 {loadingMission ? (

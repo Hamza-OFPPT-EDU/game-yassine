@@ -7,7 +7,9 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { supabase } from './lib/supabase';
 import { useSupabaseProfile, saveMissionResult } from './hooks/useSupabase';
 import { motion, AnimatePresence } from 'motion/react';
-import { Screen, type City, type Mission, type MissionCompletionSummary } from './types';
+import { Screen, type City, type Mission, type MissionCompletionSummary, AVATAR_MALE_URL, AVATAR_FEMALE_URL } from './types';
+import { generateDemoIdentity } from './lib/demo-utils';
+import DemoCredentialsModal from './components/DemoCredentialsModal';
 import { useAudio } from './contexts/AudioContext';
 import BottomNavBar from './components/BottomNavBar';
 import SplashScreen from './views/SplashScreen';
@@ -44,6 +46,9 @@ export default function App() {
   const [redoQuestionIds, setRedoQuestionIds] = useState<string[] | undefined>(undefined);
   const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(false);
   const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
+  const [demoCredentials, setDemoCredentials] = useState<{ fullName: string; username: string; password: string } | null>(null);
+  const [isDemoLoading, setIsDemoLoading] = useState(false);
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   useEffect(() => {
     // Check if already in fullscreen or previously accepted
@@ -348,21 +353,81 @@ export default function App() {
 
   const showNavBar = [Screen.Map, Screen.Profile, Screen.Settings, Screen.GrammarQuest, Screen.League, Screen.LeagueDetail, Screen.LeagueCreate].includes(currentScreen);
 
-
-
-  /** Handle anonymous demo login. */
+  /** Handle anonymous demo login with identity generation. */
   const handleDemoLogin = async () => {
     try {
-      // Try official anonymous sign-in
-      const { error } = await supabase.auth.signInAnonymously();
-      if (error) {
-        console.warn("Anonymous sign-in not available or failed:", error.message);
+      setIsDemoLoading(true);
+      const identity = generateDemoIdentity();
+      
+      // Create a real account for the demo user
+      const { data, error: authError } = await supabase.auth.signUp({
+        email: identity.email,
+        password: identity.password,
+        options: {
+          data: {
+            username: identity.username,
+            full_name: identity.fullName,
+            first_name: identity.firstName,
+            last_name: identity.lastName,
+            gender: identity.gender,
+            avatar_url: identity.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL,
+            group_name: 'DEMO',
+            birth_date: `${identity.year - 20}-01-01` // Random 20yo
+          }
+        }
+      });
+
+      if (authError) {
+        console.warn("Demo sign-up failed, falling back to simple start:", authError.message);
+        handleStartApp();
+        return;
+      }
+
+      if (data.user) {
+        const userId = data.user.id;
+        const avatarUrl = identity.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
+        
+        // Manual sync with app_users and player_profiles
+        try {
+          await supabase.from('app_users').upsert({
+            id: userId,
+            username: identity.username,
+            full_name: identity.fullName,
+            first_name: identity.firstName,
+            last_name: identity.lastName,
+            gender: identity.gender,
+            avatar_url: avatarUrl,
+            group_name: 'DEMO',
+            xp: 0,
+            stars: 0,
+            level: 1,
+            created_at: new Date().toISOString()
+          });
+
+          await supabase.from('player_profiles').upsert({
+            id: userId,
+            display_name: identity.fullName,
+            xp: 0,
+            level: 1,
+            profile_type: 'Le Stratège',
+            created_at: new Date().toISOString()
+          });
+        } catch (syncError) {
+          console.error("Demo sync error:", syncError);
+        }
+
+        // Set credentials to show in modal
+        setDemoCredentials({
+          fullName: identity.fullName,
+          username: identity.username,
+          password: identity.password
+        });
+        setShowDemoModal(true);
       }
     } catch (err) {
-      console.error("Demo login error:", err);
+      console.error('Demo login error:', err);
     } finally {
-      // Always allow starting the app even if auth fails for demo
-      handleStartApp();
+      setIsDemoLoading(false);
     }
   };
 
@@ -373,9 +438,6 @@ export default function App() {
       if (currentScreen === Screen.Splash) {
         return <SplashScreen />;
       }
-      // If we are NOT on Splash (e.g. we were already in the app but profile is reloading), 
-      // we still might want a silent background or a very subtle indicator, 
-      // but the user wants silent initialization at start.
       return null; 
     }
 
@@ -387,6 +449,7 @@ export default function App() {
           onStart={handleDemoLogin} 
           onLogin={() => setCurrentScreen(Screen.Login)}
           onRegister={() => setCurrentScreen(Screen.Register)}
+          isDemoLoading={isDemoLoading}
         />;
       case Screen.Login:
         return <LoginScreen 
@@ -528,6 +591,15 @@ export default function App() {
             />
           </div>
         )}
+
+        <DemoCredentialsModal 
+          isOpen={showDemoModal}
+          credentials={demoCredentials}
+          onConfirm={() => {
+            setShowDemoModal(false);
+            handleStartApp();
+          }}
+        />
       </div>
     );
   };
