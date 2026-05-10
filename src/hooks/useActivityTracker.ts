@@ -35,10 +35,10 @@ export function useActivityTracker(userId: string | undefined, currentScreen: Sc
     let contextType = 'game_session';
     let contextId = null;
 
-    if (currentScreen === Screen.CityDetail || currentScreen === Screen.CinematicIntro || currentScreen === Screen.MissionIntro) {
+    if (currentScreen === Screen.Story || currentScreen === Screen.CinematicIntro) {
       contextType = 'city_session';
       contextId = selectedCityId;
-    } else if (currentScreen === Screen.Challenge) {
+    } else if (currentScreen === Screen.Challenge || currentScreen === Screen.GrammarQuest || currentScreen === Screen.VocabularyMatch) {
       contextType = 'exercise_session';
       contextId = selectedCityId; // Ideally mission_id but city_id is okay for now
     } else if (currentScreen === Screen.Map) {

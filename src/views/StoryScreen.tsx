@@ -8,6 +8,7 @@ import { X, MoreVertical, MapPin, ArrowRight, User, BookOpen, Sparkles, Clapperb
 import { type City, type Mission } from '../types';
 import { useAudio } from '../hooks/useAudio';
 import { getCityTheme, optimizeSupabaseUrl, resolveCityIcon, resolveAssetUrl } from '../lib/city-theme';
+import { cn } from '../lib/utils';
 
 interface StoryScreenProps {
   city: City;

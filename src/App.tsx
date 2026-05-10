@@ -14,6 +14,7 @@ import { generateDemoIdentity } from './lib/demo-utils';
 import DemoCredentialsModal from './components/DemoCredentialsModal';
 import { useAudio } from './contexts/AudioContext';
 import BottomNavBar from './components/BottomNavBar';
+import { Loader2 } from 'lucide-react';
 import SplashScreen from './views/SplashScreen';
 import WelcomeScreen from './views/WelcomeScreen';
 import MapJourneyScreen from './views/MapJourneyScreen';
