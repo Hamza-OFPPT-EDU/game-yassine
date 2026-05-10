@@ -68,12 +68,17 @@ export function useLeagues(userId?: string) {
           })).sort((a, b) => b.xp - a.xp)
           .map((p, i) => ({ ...p, rank: i + 1 }));
 
+        const endsAt = l.ends_at ? new Date(l.ends_at) : null;
+        const now = new Date();
+        const daysLeft = endsAt ? Math.ceil((endsAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)) : 0;
+        const timeLeft = daysLeft > 0 ? `${daysLeft}j restants` : 'Fini';
+
         return {
           id: l.id,
           name: l.name,
           tier: l.tier || 'bronze',
           players,
-          timeLeft: 'Actif',
+          timeLeft,
           myRank: players.find(p => p.isCurrentUser)?.rank || 0,
           creator_id: l.creator_id
         } as League & { creator_id?: string };

@@ -53,14 +53,14 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
     <div className="h-full w-full flex flex-col relative bg-[#FFF8F0] text-[#1A1A2E] overflow-hidden font-sans">
       {/* Dynamic Background with Moroccan Influence */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] right-[-5%] w-[60%] h-[60%] bg-[#2D6A4F]/10 rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] right-[-5%] w-[60%] h-[60%] bg-[#7B3F1A]/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#F4A261]/10 rounded-full blur-[100px]" />
         
         {/* Subtle Moroccan Pattern Overlay */}
         <div 
           className="absolute inset-0 opacity-[0.03]" 
           style={{ 
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 15-15 15-15-15zM0 30l15 15-15 15-15-15zM60 30l15 15-15 15-15-15zM30 60l15 15-15 15-15-15z' fill='%232D6A4F' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 15-15 15-15-15zM0 30l15 15-15 15-15-15zM60 30l15 15-15 15-15-15zM30 60l15 15-15 15-15-15z' fill='%237B3F1A' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
             backgroundSize: '60px 60px'
           }}
         />
@@ -72,13 +72,13 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={onBack}
-            className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-[#2D6A4F]/10 text-[#2D6A4F]"
+            className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-[#7B3F1A]/10 text-[#7B3F1A]"
           >
             <ArrowRight className="rotate-180" size={22} strokeWidth={2.5} />
           </motion.button>
           <div>
             <h1 className="text-2xl font-black uppercase tracking-tighter text-[#1A1A2E]">Connexion</h1>
-            <p className="text-[10px] font-bold text-[#2D6A4F]/60 uppercase tracking-widest">Le Voyage Continue</p>
+            <p className="text-[10px] font-bold text-[#7B3F1A]/60 uppercase tracking-widest">Le Voyage Continue</p>
           </div>
         </div>
 
@@ -87,12 +87,12 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setShowSoundModal(true)}
-            className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-[#2D6A4F]/10 text-[#2D6A4F]"
+            className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-[#7B3F1A]/10 text-[#7B3F1A]"
             title="Réglages Audio"
           >
             <Volume2 size={22} strokeWidth={2.5} />
           </motion.button>
-          <div className="w-12 h-12 rounded-2xl bg-[#2D6A4F] flex items-center justify-center shadow-lg shadow-[#2D6A4F]/20">
+          <div className="w-12 h-12 rounded-2xl bg-[#7B3F1A] flex items-center justify-center shadow-lg shadow-[#7B3F1A]/20">
               <Map size={24} className="text-white" />
           </div>
         </div>
@@ -123,9 +123,9 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
 
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-[#2D6A4F] uppercase tracking-[0.2em] ml-2">Ton Pseudo de voyageur</label>
+                <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-[0.2em] ml-2">Ton Pseudo de voyageur</label>
                 <div className="relative group">
-                  <div className="absolute left-5 top-1/2 -translate-y-1/2 text-[#2D6A4F]/40 group-focus-within:text-[#2D6A4F] transition-colors">
+                  <div className="absolute left-5 top-1/2 -translate-y-1/2 text-[#7B3F1A]/40 group-focus-within:text-[#7B3F1A] transition-colors">
                     <User size={20} strokeWidth={2.5} />
                   </div>
                   <input
@@ -133,16 +133,16 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
                     value={username}
                     onChange={(e) => setUsername(e.target.value.toLowerCase())}
                     placeholder="prenom.nom"
-                    className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 pl-14 pr-6 focus:outline-none focus:border-[#2D6A4F] focus:ring-4 focus:ring-[#2D6A4F]/5 transition-all font-bold text-[#1A1A2E]"
+                    className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 pl-14 pr-6 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-[#1A1A2E]"
                     disabled={loading}
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-[#2D6A4F] uppercase tracking-[0.2em] ml-2">Mot de passe secret</label>
+                <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-[0.2em] ml-2">Mot de passe secret</label>
                 <div className="relative group">
-                  <div className="absolute left-5 top-1/2 -translate-y-1/2 text-[#2D6A4F]/40 group-focus-within:text-[#2D6A4F] transition-colors">
+                  <div className="absolute left-5 top-1/2 -translate-y-1/2 text-[#7B3F1A]/40 group-focus-within:text-[#7B3F1A] transition-colors">
                     <Lock size={20} strokeWidth={2.5} />
                   </div>
                   <input
@@ -150,7 +150,7 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 pl-14 pr-6 focus:outline-none focus:border-[#2D6A4F] focus:ring-4 focus:ring-[#2D6A4F]/5 transition-all font-bold text-[#1A1A2E]"
+                    className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 pl-14 pr-6 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-[#1A1A2E]"
                     disabled={loading}
                   />
                 </div>
@@ -172,7 +172,7 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={loading || !username || !password}
-                className="w-full bg-gradient-to-br from-[#2D6A4F] to-[#1D3557] text-white py-5 rounded-3xl font-black text-lg uppercase tracking-wider flex items-center justify-center gap-3 shadow-xl shadow-[#2D6A4F]/30 hover:shadow-[#2D6A4F]/50 disabled:opacity-50 transition-all"
+                className="w-full bg-gradient-to-br from-[#7B3F1A] to-[#4E2510] text-white py-5 rounded-3xl font-black text-lg uppercase tracking-wider flex items-center justify-center gap-3 shadow-xl shadow-[#7B3F1A]/30 hover:shadow-[#7B3F1A]/50 disabled:opacity-50 transition-all border-b-4 border-black/20"
               >
                 {loading ? (
                   <Loader2 className="animate-spin" size={24} />
@@ -206,13 +206,13 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
           transition={{ delay: 0.5 }}
           className="mt-10 text-center space-y-4"
         >
-          <p className="text-[#2D6A4F]/40 text-[10px] font-bold uppercase tracking-[0.2em] italic px-10 leading-relaxed">
+          <p className="text-[#7B3F1A]/40 text-[10px] font-bold uppercase tracking-[0.2em] italic px-10 leading-relaxed">
             "Tes badges et ta progression t'attendent pour la suite du voyage."
           </p>
           
           <div className="flex justify-center gap-1.5">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#2D6A4F]/20" />
+              <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#7B3F1A]/20" />
             ))}
           </div>
         </motion.div>

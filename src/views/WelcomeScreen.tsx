@@ -9,6 +9,7 @@ import { ArrowRight, Sparkles, Volume2 } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
 import { useSupabaseSettings } from '../hooks/useSupabase';
 import AudioSettingsModal from '../components/AudioSettingsModal';
+import GameButton from '../components/GameButton';
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -119,53 +120,53 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
 
             {/* Buttons (Redesigned for Premium Look) */}
             <section className="px-8 pb-20 pt-6 space-y-4 w-full max-w-md mx-auto shrink-0">
-              <motion.button
+              <GameButton
+                variant="secondary"
+                size="lg"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   playSound('click');
                   onStart();
                 }}
-                className="w-full bg-[#F1Dbb1] text-[#4E2510] py-4 rounded-[28px] font-black text-lg uppercase tracking-wider flex items-center justify-center gap-3 shadow-[0_15px_35px_rgba(241,219,177,0.4)] transition-all border-b-4 border-[#B58B60]/40"
+                className="w-full"
               >
                 <span>Lancer démo</span>
                 <ArrowRight size={20} strokeWidth={3} />
-              </motion.button>
+              </GameButton>
 
               <div className="grid grid-cols-2 gap-4">
-                <motion.button
+                <GameButton
+                  variant="glass"
+                  size="md"
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                   onClick={() => {
                     playSound('click');
                     onRegister();
                   }}
-                  className="py-4 bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-[28px] text-white font-black text-xs uppercase tracking-widest hover:bg-white/20 transition-all shadow-lg flex items-center justify-center gap-2"
+                  className="w-full"
                 >
                   Inscription
-                </motion.button>
+                </GameButton>
 
-                <motion.button
+                <GameButton
+                  variant="primary"
+                  size="md"
                   initial={{ x: 20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.6 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                   onClick={() => {
                     playSound('click');
                     onLogin();
                   }}
-                  className="py-4 bg-gradient-to-br from-[#7B3F1A] to-[#4E2510] border-b-4 border-black/30 rounded-[28px] text-white font-black text-xs uppercase tracking-widest transition-all shadow-lg flex items-center justify-center gap-2"
+                  className="w-full"
                 >
                   <Sparkles size={16} className="text-[#F4A261]" fill="currentColor" />
                   Connection
-                </motion.button>
+                </GameButton>
               </div>
             </section>
             <div className="h-[10px] shrink-0" />

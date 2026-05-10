@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export type AssetType = 'image' | 'audio' | 'video';
 
@@ -8,6 +8,7 @@ export interface Asset {
 }
 
 export function useAssetPreloader(assets: Asset[]) {
+  const loadedUrls = useRef<Set<string>>(new Set());
   const [progress, setProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,14 +21,19 @@ export function useAssetPreloader(assets: Asset[]) {
     }
 
     let mounted = true;
-    let loadedCount = 0;
+    // Count how many of the currently requested assets are already loaded
+    let loadedCount = assets.filter(a => loadedUrls.current.has(a.url)).length;
 
-    const updateProgress = () => {
-      loadedCount++;
+    const updateProgress = (url: string) => {
+      if (url && !loadedUrls.current.has(url)) {
+        loadedUrls.current.add(url);
+        loadedCount++;
+      }
+      
       if (mounted) {
         const newProgress = Math.round((loadedCount / assets.length) * 100);
         setProgress(newProgress);
-        if (loadedCount === assets.length) {
+        if (loadedCount >= assets.length) {
           setIsComplete(true);
         }
       }
@@ -35,30 +41,38 @@ export function useAssetPreloader(assets: Asset[]) {
 
     const handleError = (url: string) => {
       console.error(`Failed to load asset: ${url}`);
-      // We still update progress to not block the app indefinitely
-      updateProgress();
+      updateProgress(url);
     };
 
     assets.forEach((asset) => {
+      if (loadedUrls.current.has(asset.url)) return;
+
       if (asset.type === 'image') {
         const img = new Image();
         img.src = asset.url;
-        img.onload = updateProgress;
+        img.onload = () => updateProgress(asset.url);
         img.onerror = () => handleError(asset.url);
       } else if (asset.type === 'audio') {
         const audio = new Audio();
         audio.src = asset.url;
-        audio.oncanplaythrough = updateProgress;
+        audio.oncanplaythrough = () => updateProgress(asset.url);
         audio.onerror = () => handleError(asset.url);
         audio.load();
       } else if (asset.type === 'video') {
         const video = document.createElement('video');
         video.src = asset.url;
-        video.oncanplaythrough = updateProgress;
+        video.oncanplaythrough = () => updateProgress(asset.url);
         video.onerror = () => handleError(asset.url);
         video.load();
       }
     });
+
+    // Set initial progress for already loaded assets
+    if (mounted) {
+      const initialProgress = Math.round((loadedCount / assets.length) * 100);
+      setProgress(initialProgress);
+      if (loadedCount >= assets.length) setIsComplete(true);
+    }
 
     return () => {
       mounted = false;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { supabase } from './lib/supabase';
 import { useSupabaseProfile, saveMissionResult } from './hooks/useSupabase';
 import { motion, AnimatePresence } from 'motion/react';
@@ -29,8 +29,8 @@ import FullscreenPrompt from './components/FullscreenPrompt';
 import LoginScreen from './views/LoginScreen';
 import RegisterScreen from './views/RegisterScreen';
 import { useAuth } from './hooks/useSupabase';
-import { fetchDynamicAssets, fetchCityMissionAssets, getCoreAssets } from './lib/assets';
-import { type Asset } from './hooks/useAssetPreloader';
+import { fetchDynamicAssets, fetchCityMissionAssets, getCoreAssets, getAllAssets } from './lib/assets';
+import { useAssetPreloader, type Asset } from './hooks/useAssetPreloader';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>(Screen.Splash);
@@ -42,7 +42,7 @@ export default function App() {
   const [loadingMissions, setLoadingMissions] = useState(false);
   const [missionSummary, setMissionSummary] = useState<MissionCompletionSummary | null>(null);
   const [redoQuestionIds, setRedoQuestionIds] = useState<string[] | undefined>(undefined);
-  const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(true);
+  const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(false);
   const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
 
   useEffect(() => {
@@ -59,6 +59,24 @@ export default function App() {
   const [loadedCities, setLoadedCities] = useState<string[]>([]);
   const [loadingCityAssets, setLoadingCityAssets] = useState<string | null>(null);
   const [isCoreLoaded, setIsCoreLoaded] = useState(false);
+
+  // Global preloader
+  const allAssets = useMemo(() => getAllAssets(dynamicAssets), [dynamicAssets]);
+  const { progress, isComplete } = useAssetPreloader(allAssets);
+
+  useEffect(() => {
+    // 30% -> Fullscreen Prompt
+    if (progress >= 30 && !fullscreenShownOnce && !showFullscreenPrompt) {
+      if (!document.fullscreenElement && localStorage.getItem('prefer-fullscreen') !== 'false') {
+        setShowFullscreenPrompt(true);
+      }
+    }
+
+    // 50% -> Switch to Welcome Screen
+    if (progress >= 50 && currentScreen === Screen.Splash) {
+      setCurrentScreen(Screen.Welcome);
+    }
+  }, [progress, fullscreenShownOnce, showFullscreenPrompt, currentScreen]);
   
   const [userStats, setUserStats] = useState({
     xp: 0,
@@ -344,7 +362,12 @@ export default function App() {
 
     if (authLoading || (session && profileLoading)) {
       if (currentScreen === Screen.Splash) {
-        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} canContinue={isCoreLoaded} />;
+        return <SplashScreen 
+          onComplete={() => setCurrentScreen(Screen.Welcome)} 
+          progress={progress}
+          extraAssets={dynamicAssets} 
+          canContinue={progress >= 100} // This is just for safety, the progress logic above handles it
+        />;
       }
       return (
         <div className="h-screen w-full bg-[#0f172a] flex flex-col items-center justify-center gap-6">
@@ -356,7 +379,12 @@ export default function App() {
 
     switch (currentScreen) {
       case Screen.Splash:
-        return <SplashScreen onComplete={() => setCurrentScreen(Screen.Welcome)} extraAssets={dynamicAssets} canContinue={isCoreLoaded} />;
+        return <SplashScreen 
+          onComplete={() => setCurrentScreen(Screen.Welcome)} 
+          progress={progress}
+          extraAssets={dynamicAssets} 
+          canContinue={progress >= 100} 
+        />;
       case Screen.Welcome:
         return <WelcomeScreen 
           onStart={handleDemoLogin} 
@@ -498,6 +526,7 @@ export default function App() {
                 setFullscreenShownOnce(true);
                 localStorage.setItem('prefer-fullscreen', 'false');
               }}
+              progress={progress}
               extraAssets={dynamicAssets}
             />
           </div>

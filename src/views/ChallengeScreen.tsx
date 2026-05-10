@@ -59,10 +59,10 @@ const getThemeConfig = (type: string) => {
     return {
       category: 'Mise en Situation',
       icon: <LayoutGrid size={16} />,
-      bgClass: 'bg-blue-50',
-      accentColor: 'text-blue-600',
-      borderColor: 'border-blue-200',
-      gradient: 'from-blue-50 to-indigo-50',
+      bgClass: 'bg-voyage-sand',
+      accentColor: 'text-voyage-primary',
+      borderColor: 'border-voyage-secondary/30',
+      gradient: 'from-voyage-sand to-voyage-parchment',
       layout: 'technical',
       pattern: 'grid'
     };

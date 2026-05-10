@@ -16,6 +16,7 @@ import { useAudio } from '../hooks/useAudio';
 import { useSupabaseCities, useSupabaseMissions } from '../hooks/useSupabase';
 import { useAutoScroll } from '../hooks/useAutoScroll';
 import { getCityTheme, resolveCityIcon, optimizeSupabaseUrl, resolveAssetUrl } from '../lib/city-theme';
+import GameButton from '../components/GameButton';
 
 // ── MapJourneyScreen ─────────────────────────────────────────────────────────
 
@@ -502,11 +503,11 @@ export default function MapJourneyScreen({
                     </div>
 
                     {/* CTA Button */}
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                    <GameButton
+                      variant="primary"
+                      size="lg"
                       onClick={() => handleLaunchAdventure(displayCity)}
-                      className="w-full relative overflow-hidden bg-gradient-to-r from-[#D4A43E] to-[#7B3F1A] text-white py-5 rounded-[24px] font-black flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(123,63,26,0.3)] transition-all"
+                      className="w-full mt-2"
                     >
                       <motion.div
                         animate={{ x: ['-100%', '200%'] }}
@@ -517,7 +518,7 @@ export default function MapJourneyScreen({
                         {displayCity.status === 'completed' ? 'Relever de nouveau' : 'Lancer l\'aventure'}
                       </span>
                       <ChevronRight size={22} strokeWidth={3} className="relative z-10" />
-                    </motion.button>
+                    </GameButton>
                   </div>
                 </div>
               </motion.div>

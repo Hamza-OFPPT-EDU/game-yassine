@@ -9,14 +9,17 @@ interface FullscreenPromptProps {
   show: boolean;
   onAccept: () => void;
   onDecline: () => void;
+  progress?: number;
   extraAssets?: Asset[];
 }
 
-export default function FullscreenPrompt({ show, onAccept, onDecline, extraAssets = [] }: FullscreenPromptProps) {
+export default function FullscreenPrompt({ show, onAccept, onDecline, progress: externalProgress, extraAssets = [] }: FullscreenPromptProps) {
   const acceptRef = useRef<HTMLButtonElement>(null);
 
   const assets = useMemo(() => getAllAssets(extraAssets), [extraAssets]);
-  const { progress } = useAssetPreloader(assets);
+  const { progress: internalProgress } = useAssetPreloader(assets);
+  
+  const progress = externalProgress !== undefined ? externalProgress : internalProgress;
 
   useEffect(() => {
     if (show) {

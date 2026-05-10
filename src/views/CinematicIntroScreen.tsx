@@ -4,6 +4,7 @@ import { X, Play, Volume2, SkipForward, MapPin, Sparkles } from 'lucide-react';
 import { type City, type Mission } from '../types';
 import { useAudio } from '../hooks/useAudio';
 import { getCityTheme, optimizeSupabaseUrl, resolveAssetUrl } from '../lib/city-theme';
+import GameButton from '../components/GameButton';
 
 interface CinematicIntroScreenProps {
   city: City;
@@ -208,19 +209,19 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
 
       {/* Footer / CTA - Fixed at bottom */}
       <footer className="fixed bottom-0 left-0 right-0 z-40 p-8 pb-10 flex flex-col items-center gap-6 bg-linear-to-t from-slate-50 via-slate-50/90 to-transparent pointer-events-none">
-        <motion.button
+        <GameButton
+          variant="primary"
+          size="lg"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1.2 }}
-          whileHover={{ scale: 1.05, boxShadow: "0 20px 50px rgba(255,255,255,0.4)" }}
-          whileTap={{ scale: 0.95 }}
           onClick={() => { playSound('click'); onNext(); }}
-          className="pointer-events-auto group relative px-12 py-5 bg-voyage-primary text-white rounded-2xl font-black text-xl uppercase tracking-wider flex items-center gap-4 shadow-xl hover:brightness-110 transition-all overflow-hidden"
+          className="pointer-events-auto px-12 group"
         >
           <div className="absolute inset-0 bg-linear-to-r from-transparent via-slate-950/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
           <span className="relative z-10">Lancer la mission</span>
           <Play size={24} className="relative z-10 group-hover:translate-x-1 transition-transform fill-current" />
-        </motion.button>
+        </GameButton>
 
         <div className="flex items-center gap-3 text-slate-300 text-[10px] font-black uppercase tracking-[0.3em]">
           <div className="h-px w-8 bg-slate-200" />

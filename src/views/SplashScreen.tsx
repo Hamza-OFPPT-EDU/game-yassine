@@ -6,16 +6,24 @@ import { getAllAssets } from '../lib/assets';
 
 interface SplashScreenProps {
   onComplete?: () => void;
+  onProgress?: (progress: number) => void;
+  progress?: number;
   extraAssets?: Asset[];
   canContinue?: boolean;
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
-export default function SplashScreen({ onComplete, extraAssets = [], canContinue = true }: SplashScreenProps) {
+export default function SplashScreen({ onComplete, onProgress, progress: externalProgress, extraAssets = [], canContinue = true }: SplashScreenProps) {
   const [videoStage, setVideoStage] = useState<'video' | 'ui'>('video');
   const assetsToPreload = useMemo(() => getAllAssets(extraAssets), [extraAssets]);
-  const { progress, isComplete } = useAssetPreloader(assetsToPreload);
+  const { progress: internalProgress, isComplete } = useAssetPreloader(assetsToPreload);
+  
+  const progress = externalProgress !== undefined ? externalProgress : internalProgress;
+
+  useEffect(() => {
+    onProgress?.(progress);
+  }, [progress, onProgress]);
 
   const videoRef = useRef<HTMLVideoElement>(null);
 

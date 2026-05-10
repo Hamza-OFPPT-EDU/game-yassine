@@ -6,11 +6,10 @@ export const CORE_ASSETS = {
     'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4',
   ],
   images: [
-    'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.jpg',
+    'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.png',
     '/assets/guide_voyage.gif',
     '/assets/avatar_user.jpg',
     '/assets/panel.png',
-    // Cities (Legacy/Hardcoded fallbacks)
     '/assets/fallback_city.jpg',
   ],
   audio: [
@@ -131,9 +130,28 @@ export const fetchCityMissionAssets = async (cityId: string) => {
 export const getCoreAssets = () => {
   const assets: Asset[] = [];
   
-  CORE_ASSETS.images.forEach(url => assets.push({ url, type: 'image' }));
+  // 1. Prioritize Logo
+  assets.push({ url: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.png', type: 'image' });
+  
+  // 2. Prioritize Intro Video
+  assets.push({ url: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4', type: 'video' });
+  
+  // 3. Add remaining core images
+  CORE_ASSETS.images.forEach(url => {
+    if (url !== 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.png') {
+      assets.push({ url, type: 'image' });
+    }
+  });
+
+  // 4. Add audio
   CORE_ASSETS.audio.forEach(url => assets.push({ url, type: 'audio' }));
-  CORE_ASSETS.videos.forEach(url => assets.push({ url, type: 'video' }));
+
+  // 5. Add other videos (if any)
+  CORE_ASSETS.videos.forEach(url => {
+    if (url !== 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4') {
+      assets.push({ url, type: 'video' });
+    }
+  });
   
   return assets;
 };
