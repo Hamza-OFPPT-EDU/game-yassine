@@ -11,15 +11,13 @@ import { useSupabaseSettings } from '../hooks/useSupabase';
 import GameButton from '../components/GameButton';
 
 interface WelcomeScreenProps {
-  onStart: () => void;
   onLogin: () => void;
   onRegister: () => void;
-  isDemoLoading?: boolean;
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
-export default function WelcomeScreen({ onStart, onLogin, onRegister, isDemoLoading = false }: WelcomeScreenProps) {
+export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProps) {
   const { playSound, openSettings } = useAudio();
   const { getSetting } = useSupabaseSettings();
   const welcomeConfig = getSetting('welcome_screen_content') || {};
@@ -110,81 +108,40 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister, isDemoLoad
               </motion.div>
             </main>
 
-            {/* Buttons (Redesigned for Premium Look) */}
             <section className="px-8 pb-20 pt-6 space-y-4 w-full max-w-md mx-auto shrink-0">
               <GameButton
-                variant="secondary"
+                variant="primary"
                 size="lg"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
                 onClick={() => {
-                  if (isDemoLoading) return;
                   playSound('click');
-                  onStart();
+                  onLogin();
                 }}
                 className="w-full relative overflow-hidden group"
               >
-                <AnimatePresence mode="wait">
-                  {isDemoLoading ? (
-                    <motion.div
-                      key="loading"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="flex items-center gap-3"
-                    >
-                      <Loader2 className="animate-spin" size={20} />
-                      <span>Préparation du voyage...</span>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="normal"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="flex items-center justify-center gap-2 w-full"
-                    >
-                      <Sparkles size={20} className="text-[#F4A261] animate-pulse" fill="currentColor" />
-                      <span className="font-black">Lancer un démo</span>
-                      <ArrowRight size={20} strokeWidth={3} className="ml-auto group-hover:translate-x-1 transition-transform" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div className="flex items-center justify-center gap-2 w-full">
+                  <Sparkles size={20} className="text-[#F4A261] animate-pulse" fill="currentColor" />
+                  <span className="font-black text-xl">Se Connecter</span>
+                  <ArrowRight size={20} strokeWidth={3} className="ml-auto group-hover:translate-x-1 transition-transform" />
+                </div>
               </GameButton>
 
-              <div className="grid grid-cols-2 gap-4">
-                <GameButton
-                  variant="glass"
-                  size="md"
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  onClick={() => {
-                    playSound('click');
-                    onRegister();
-                  }}
-                  className="w-full"
-                >
-                  Inscription
-                </GameButton>
-
-                <GameButton
-                  variant="primary"
-                  size="md"
-                  initial={{ x: 20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.6 }}
-                  onClick={() => {
-                    playSound('click');
-                    onLogin();
-                  }}
-                  className="w-full"
-                >
-                  <Sparkles size={16} className="text-[#F4A261]" fill="currentColor" />
-                  Connection
-                </GameButton>
-              </div>
+              <GameButton
+                variant="glass"
+                size="lg"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                onClick={() => {
+                  playSound('click');
+                  onRegister();
+                }}
+                className="w-full"
+              >
+                <span className="font-bold">Créer un compte</span>
+              </GameButton>
             </section>
             <div className="h-[10px] shrink-0" />
           </motion.div>

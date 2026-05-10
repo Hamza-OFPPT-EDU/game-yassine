@@ -6,6 +6,7 @@ import {
 } from 'recharts';
 import { Users, Award, Zap, TrendingUp, Search, RefreshCw, ChevronRight, Plus, X, Upload, ArrowUp, ArrowDown, Filter, Trash2 } from 'lucide-react';
 import { useStats, usePlayers, useSkillDistribution, useCityStats } from '../hooks/useData';
+import { useBadges } from '../hooks/useContent';
 import PlayerPanel from './PlayerPanel';
 import ThemeToggle from './ThemeToggle';
 
@@ -260,6 +261,7 @@ export default function Dashboard({ setPage }) {
   const { players, loading: playersLoading, createUser, deleteUser, deleteUsersBulk, createUsersBulk, updateUser } = usePlayers();
   const { data: skillData } = useSkillDistribution();
   const { data: cityData } = useCityStats();
+  const { badges, loading: badgesLoading } = useBadges();
 
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [showNewUserModal, setShowNewUserModal] = useState(false);
@@ -472,22 +474,92 @@ export default function Dashboard({ setPage }) {
         {/* Badges Collection Card */}
         <div className="card fade-in">
           <div className="card-header">
-            <div className="card-title">
+            <div className="card-title" onClick={() => setPage('badges')} style={{ cursor: 'pointer' }}>
               <div className="card-icon">🏅</div>
               <h3>Référentiel Badges</h3>
             </div>
+            <button className="btn-ghost sm" onClick={() => setPage('badges')}>Voir tout</button>
           </div>
-          <div className="card-body" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '200px', textAlign: 'center' }}>
-            <Award size={64} color="#f59e0b" style={{ marginBottom: 16, opacity: 0.8 }} />
-            <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)' }}>
-              {statsLoading ? '—' : 18} Badges
-            </div>
-            <div style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 20 }}>
-              Collection complète définie
-            </div>
-            <button className="btn-ghost" onClick={() => setPage('badges')} style={{ width: '100%' }}>
-              Voir la collection
-            </button>
+          <div className="card-body" style={{ padding: '12px' }}>
+            {badgesLoading ? (
+              <div className="loading-sm" style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="spinner-sm" />
+              </div>
+            ) : badges.length === 0 ? (
+              <div className="empty-state" style={{ height: 200 }}>
+                <Award size={48} opacity={0.2} />
+                <p>Aucun badge défini</p>
+              </div>
+            ) : (
+              <div className="badges-mini-grid" style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(3, 1fr)', 
+                gap: '8px',
+                maxHeight: '200px',
+                overflowY: 'auto',
+                paddingRight: '4px'
+              }}>
+                {badges.map(badge => (
+                  <div key={badge.id} className="badge-mini-item" style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    padding: '10px 6px',
+                    borderRadius: '12px',
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-light)',
+                    textAlign: 'center',
+                    transition: 'all 0.2s',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }} onClick={() => setPage('badges')}>
+                    <div style={{ 
+                      width: '40px', 
+                      height: '40px', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      marginBottom: '6px'
+                    }}>
+                      {badge.image_url ? (
+                        <img src={badge.image_url} alt={badge.badge_name} style={{ 
+                          width: '100%', 
+                          height: '100%', 
+                          objectFit: 'contain',
+                          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
+                        }} />
+                      ) : (
+                        <span style={{ fontSize: '24px' }}>{badge.icon_url || '🏅'}</span>
+                      )}
+                    </div>
+                    <span style={{ 
+                      fontSize: '10px', 
+                      fontWeight: 700, 
+                      color: 'var(--text-primary)',
+                      lineHeight: 1.1,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      width: '100%'
+                    }}>
+                      {badge.badge_name}
+                    </span>
+                    {badge.rarity === 'legendary' && (
+                      <div style={{ 
+                        position: 'absolute', 
+                        top: 0, 
+                        left: 0, 
+                        right: 0, 
+                        height: '2px', 
+                        background: 'linear-gradient(90deg, #eab308, #fef08a, #eab308)' 
+                      }} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

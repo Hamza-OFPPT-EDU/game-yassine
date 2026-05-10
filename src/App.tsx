@@ -10,8 +10,7 @@ import { useActivityTracker } from './hooks/useActivityTracker';
 import { useLeagues } from './hooks/useLeagues';
 import { motion, AnimatePresence } from 'motion/react';
 import { Screen, type City, type Mission, type MissionCompletionSummary, AVATAR_MALE_URL, AVATAR_FEMALE_URL } from './types';
-import { generateDemoIdentity } from './lib/demo-utils';
-import DemoCredentialsModal from './components/DemoCredentialsModal';
+
 import { useAudio } from './contexts/AudioContext';
 import BottomNavBar from './components/BottomNavBar';
 import { Loader2 } from 'lucide-react';
@@ -49,9 +48,7 @@ export default function App() {
   const [redoQuestionIds, setRedoQuestionIds] = useState<string[] | undefined>(undefined);
   const [showFullscreenPrompt, setShowFullscreenPrompt] = useState(false);
   const [fullscreenShownOnce, setFullscreenShownOnce] = useState(false);
-  const [demoCredentials, setDemoCredentials] = useState<{ fullName: string; username: string; password: string } | null>(null);
-  const [isDemoLoading, setIsDemoLoading] = useState(false);
-  const [showDemoModal, setShowDemoModal] = useState(false);
+
 
   useEffect(() => {
     // Check if already in fullscreen or previously accepted
@@ -101,7 +98,57 @@ export default function App() {
         setCurrentScreen(Screen.Welcome);
       }
     }
-  }, [splashComplete, progress, fullscreenShownOnce, showFullscreenPrompt, currentScreen, session]);
+  }, [splashComplete, currentScreen, session]);
+
+  /**
+   * Robust synchronization of auth user metadata with app_users and player_profiles tables.
+   * This ensures that any logged-in user is correctly registered as a player.
+   */
+  const syncUserProfile = async (user: any) => {
+    if (!user) return;
+    
+    const meta = user.user_metadata || {};
+    const fullName = meta.full_name || `${meta.first_name || ''} ${meta.last_name || ''}`.trim() || 'Explorateur';
+    const avatarUrl = meta.avatar_url || (meta.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL);
+    
+    console.log("Syncing user profile for:", user.id, fullName);
+
+    try {
+      // 1. Sync app_users (The main game data table)
+      await supabase.from('app_users').upsert({
+        id: user.id,
+        username: meta.username || user.email?.split('@')[0] || 'voyageur',
+        full_name: fullName,
+        first_name: meta.first_name || '',
+        last_name: meta.last_name || '',
+        gender: meta.gender || 'H',
+        avatar_url: avatarUrl,
+        group_name: meta.group_name || 'DEMO',
+        birth_date: meta.birth_date || null,
+        // Don't overwrite existing stats if record exists
+      }, { onConflict: 'id', ignoreDuplicates: true });
+
+      // 2. Sync player_profiles (The dashboard/social table)
+      await supabase.from('player_profiles').upsert({
+        id: user.id,
+        display_name: fullName,
+        profile_type: 'Le Stratège',
+        // Don't overwrite existing stats if record exists
+      }, { onConflict: 'id', ignoreDuplicates: true });
+
+      // Trigger profile reload in useSupabaseProfile hook if needed
+      // (The hook already listens to userId changes)
+    } catch (error) {
+      console.error("Profile sync failed:", error);
+    }
+  };
+
+  // Auto-sync effect whenever session changes
+  useEffect(() => {
+    if (session?.user) {
+      syncUserProfile(session.user);
+    }
+  }, [session?.user?.id]);
   
   const [userStats, setUserStats] = useState({
     xp: 0,
@@ -364,98 +411,8 @@ export default function App() {
 
   const showNavBar = [Screen.Map, Screen.Profile, Screen.Settings, Screen.GrammarQuest, Screen.League, Screen.LeagueDetail, Screen.LeagueCreate].includes(currentScreen);
 
-  /** Handle anonymous demo login with identity generation. */
-  const handleDemoLogin = async () => {
-    try {
-      setIsDemoLoading(true);
-      console.log("Starting demo login process...");
-      const identity = generateDemoIdentity();
-      
-      // Create a real account for the demo user
-      const { data, error: authError } = await supabase.auth.signUp({
-        email: identity.email,
-        password: identity.password,
-        options: {
-          data: {
-            username: identity.username,
-            full_name: identity.fullName,
-            first_name: identity.firstName,
-            last_name: identity.lastName,
-            gender: identity.gender,
-            avatar_url: identity.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL,
-            group_name: 'DEMO',
-            birth_date: `${identity.year - 20}-01-01` // Random 20yo
-          }
-        }
-      });
 
-      if (authError) {
-        console.error("Demo sign-up error:", authError.message);
-        // If it's a "User already registered" error, we might have a collision or session issue
-        if (authError.message.includes("already registered")) {
-           // Try logging in instead? Or just proceed
-           console.warn("User already exists, proceeding to app...");
-        } else {
-           handleStartApp();
-           return;
-        }
-      }
 
-      const user = data.user || (await supabase.auth.getUser()).data.user;
-
-      if (user) {
-        console.log("Demo user account verified:", user.id);
-        const userId = user.id;
-        const avatarUrl = identity.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
-        
-        // Manual sync with app_users and player_profiles
-        try {
-          await supabase.from('app_users').upsert({
-            id: userId,
-            username: identity.username,
-            full_name: identity.fullName,
-            first_name: identity.firstName,
-            last_name: identity.lastName,
-            gender: identity.gender,
-            avatar_url: avatarUrl,
-            group_name: 'DEMO',
-            xp: 0,
-            stars: 0,
-            level: 1,
-            created_at: new Date().toISOString()
-          }, { onConflict: 'id' });
-
-          await supabase.from('player_profiles').upsert({
-            id: userId,
-            display_name: identity.fullName,
-            xp: 0,
-            level: 1,
-            profile_type: 'Le Stratège',
-            created_at: new Date().toISOString()
-          }, { onConflict: 'id' });
-        } catch (syncError) {
-          console.error("Demo sync error (non-fatal):", syncError);
-        }
-
-        // Set credentials to show in modal
-        setDemoCredentials({
-          fullName: identity.fullName,
-          username: identity.username,
-          password: identity.password
-        });
-        setShowDemoModal(true);
-        console.log("Demo credentials modal should now be visible.");
-      } else {
-        console.warn("No user data returned from signUp, falling back.");
-        handleStartApp();
-      }
-    } catch (err) {
-      console.error('Unexpected demo login error:', err);
-      handleStartApp();
-    } finally {
-      setIsDemoLoading(false);
-    }
-  };
 
   const renderScreen = () => {
     const screenContent = () => {
@@ -472,10 +429,8 @@ export default function App() {
         return <SplashScreen />;
       case Screen.Welcome:
         return <WelcomeScreen 
-          onStart={handleDemoLogin} 
           onLogin={() => setCurrentScreen(Screen.Login)}
           onRegister={() => setCurrentScreen(Screen.Register)}
-          isDemoLoading={isDemoLoading}
         />;
       case Screen.Login:
         return <LoginScreen 
@@ -563,12 +518,17 @@ export default function App() {
       case Screen.VocabularyMatch:
         return <VocabularyMatchScreen onBack={() => setCurrentScreen(Screen.Map)} />;
       case Screen.Profile:
-        return <ProfileScreen 
-          onBack={() => setCurrentScreen(Screen.Map)} 
-          onSettings={() => setCurrentScreen(Screen.Settings)} 
-          onShowBadges={() => setCurrentScreen(Screen.Badges)}
-          completedMissions={completedMissions}
-        />;
+        return (
+          <ProfileScreen 
+            onBack={() => setCurrentScreen(Screen.Map)}
+            onSettings={() => setCurrentScreen(Screen.Settings)}
+            onShowBadges={() => setCurrentScreen(Screen.Badges)}
+            onLogout={() => {
+              setCurrentScreen(Screen.Welcome);
+            }}
+            completedMissions={completedMissions}
+          />
+        );
       case Screen.Badges:
         return <BadgesScreen onBack={() => setCurrentScreen(Screen.Profile)} />;
       case Screen.Settings:
@@ -669,14 +629,7 @@ export default function App() {
           </div>
         )}
 
-        <DemoCredentialsModal 
-          isOpen={showDemoModal}
-          credentials={demoCredentials}
-          onConfirm={() => {
-            setShowDemoModal(false);
-            handleStartApp();
-          }}
-        />
+
       </div>
   );
 }

@@ -1,13 +1,18 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2, Award, Zap, Globe, Lock, MapPin, LogOut } from 'lucide-react';
-import { useAuth, useSupabaseProfile, useSupabaseBadges } from '../hooks/useSupabase';
+import { useAuth, useSupabaseProfile, useSupabaseBadges, useSupabaseUserHistory } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { optimizeSupabaseUrl } from '../lib/city-theme';
 import { DEFAULT_AVATAR_URL } from '../types';
 import { getBadgeUrl } from '../lib/badges';
+import { 
+  AreaChart, Area, BarChart, Bar, RadarChart, Radar, PolarGrid, 
+  PolarAngleAxis, PolarRadiusAxis, LineChart, Line, XAxis, YAxis, 
+  CartesianGrid, Tooltip, ResponsiveContainer 
+} from 'recharts';
 
 interface BadgeDetailProps {
   badge: any;
@@ -78,14 +83,65 @@ interface ProfileScreenProps {
   onBack: () => void;
   onSettings: () => void;
   onShowBadges: () => void;
+  onLogout: () => void;
   completedMissions: string[];
 }
 
-export default function ProfileScreen({ onBack, onSettings, onShowBadges, completedMissions }: ProfileScreenProps) {
-  const { session, loading: authLoading } = useAuth();
+export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogout, completedMissions }: ProfileScreenProps) {
+  const { session, loading: authLoading, signOut } = useAuth();
   const { profile, loading: profileLoading } = useSupabaseProfile(session?.user?.id);
   const { badges, earnedBadges, loading: badgesLoading } = useSupabaseBadges(session?.user?.id);
+  const { history, loading: historyLoading } = useSupabaseUserHistory(session?.user?.id);
   const { playSound } = useAudio();
+
+  const chartData = useMemo(() => {
+    if (!history || history.length === 0) return { 
+      xp: [{ date: '', xp: 0 }], 
+      skills: [{ name: 'Com', value: 0 }, { name: 'Déc', value: 0 }, { name: 'Eq', value: 0 }, { name: 'Str', value: 0 }], 
+      success: [{ name: '', score: 0 }], 
+      activity: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map(day => ({ day, count: 0 })) 
+    };
+
+    // 1. XP Progress
+    let totalXp = 0;
+    const xpData = history.map(h => {
+      totalXp += h.xp || 0;
+      return { 
+        date: new Date(h.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }), 
+        xp: totalXp 
+      };
+    });
+
+    // 2. Skills Radar
+    const skillMap: Record<string, number> = {};
+    history.forEach(h => {
+      const skill = h.missions?.soft_skill_dominant || 'Général';
+      skillMap[skill] = (skillMap[skill] || 0) + (h.xp || 0);
+    });
+    const skillData = Object.entries(skillMap).map(([name, value]) => ({ name, value }));
+
+    // 3. Success Rate (last 10 missions)
+    const successData = history.slice(-10).map(h => ({
+      name: h.missions?.title_fr?.substring(0, 10) || 'Mission',
+      score: h.score || 0
+    }));
+
+    // 4. Activity (Daily missions count)
+    const dayMap: Record<string, number> = {};
+    history.forEach(h => {
+      const day = new Date(h.created_at).toLocaleDateString('fr-FR', { weekday: 'short' });
+      const formattedDay = day.charAt(0).toUpperCase() + day.slice(1, 3);
+      dayMap[formattedDay] = (dayMap[formattedDay] || 0) + 1;
+    });
+    
+    const daysFr = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+    const activityData = daysFr.map(day => ({
+      day,
+      count: dayMap[day] || 0
+    }));
+
+    return { xp: xpData, skills: skillData, success: successData, activity: activityData };
+  }, [history]);
   const { settings: audio, updateSettings: updateAudio, saveToCloud } = useAudio();
   const [isSavingAudio, setIsSavingAudio] = useState(false);
   const [activeCity, setActiveCity] = useState<string>('Tous');
@@ -231,6 +287,131 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, comple
            ))}
         </section>
 
+
+        {/* Engagement & Analytics Section */}
+        <section className="space-y-6">
+           <div className="flex justify-between items-end px-2">
+             <div className="flex flex-col">
+               <h2 className="text-2xl font-black text-[#4E2510]">Engagement</h2>
+               <p className="text-[10px] font-black text-[#D4A43E] uppercase tracking-widest text-left mt-1">
+                  Analyse de tes performances
+               </p>
+             </div>
+             <TrendingUp size={20} className="text-[#D4A43E] mb-1" />
+           </div>
+
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* XP Progression Chart */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-white border border-[#E5D5B8] rounded-[40px] p-6 shadow-sm space-y-4"
+              >
+                <div className="flex justify-between items-center">
+                  <h4 className="text-xs font-black text-[#7B3F1A] uppercase tracking-widest">Progression XP</h4>
+                  <Zap size={14} className="text-[#D4A43E]" />
+                </div>
+                <div className="h-48 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={chartData.xp}>
+                      <defs>
+                        <linearGradient id="colorXp" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#D4A43E" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#D4A43E" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F0F0F0" />
+                      <XAxis dataKey="date" hide />
+                      <YAxis hide />
+                      <Tooltip 
+                        contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', fontSize: '10px', fontWeight: 'bold' }}
+                      />
+                      <Area type="monotone" dataKey="xp" stroke="#D4A43E" strokeWidth={3} fillOpacity={1} fill="url(#colorXp)" />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </motion.div>
+
+              {/* Skills Radar Chart */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="bg-white border border-[#E5D5B8] rounded-[40px] p-6 shadow-sm space-y-4"
+              >
+                <div className="flex justify-between items-center">
+                  <h4 className="text-xs font-black text-[#7B3F1A] uppercase tracking-widest">Soft Skills</h4>
+                  <Brain size={14} className="text-[#7B3F1A]" />
+                </div>
+                <div className="h-48 w-full flex items-center justify-center">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData.skills}>
+                      <PolarGrid stroke="#F0F0F0" />
+                      <PolarAngleAxis dataKey="name" tick={{ fontSize: 8, fontWeight: 'bold', fill: '#7B3F1A' }} />
+                      <Radar name="XP" dataKey="value" stroke="#7B3F1A" fill="#7B3F1A" fillOpacity={0.4} />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </div>
+              </motion.div>
+
+              {/* Success Rate Chart */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="bg-white border border-[#E5D5B8] rounded-[40px] p-6 shadow-sm space-y-4"
+              >
+                <div className="flex justify-between items-center">
+                  <h4 className="text-xs font-black text-[#7B3F1A] uppercase tracking-widest">Taux de Succès</h4>
+                  <Star size={14} className="text-amber-500" />
+                </div>
+                <div className="h-48 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={chartData.success}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F0F0F0" />
+                      <XAxis dataKey="name" hide />
+                      <YAxis domain={[0, 100]} hide />
+                      <Tooltip 
+                        contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', fontSize: '10px', fontWeight: 'bold' }}
+                      />
+                      <Line type="stepAfter" dataKey="score" stroke="#7B3F1A" strokeWidth={3} dot={{ fill: '#7B3F1A', r: 4 }} activeDot={{ r: 6 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </motion.div>
+
+              {/* Activity Chart */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="bg-white border border-[#E5D5B8] rounded-[40px] p-6 shadow-sm space-y-4"
+              >
+                <div className="flex justify-between items-center">
+                  <h4 className="text-xs font-black text-[#7B3F1A] uppercase tracking-widest">Activité Hebdo</h4>
+                  <Flame size={14} className="text-orange-500" />
+                </div>
+                <div className="h-48 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={chartData.activity}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F0F0F0" />
+                      <XAxis dataKey="day" tick={{ fontSize: 10, fontWeight: 'bold', fill: '#7B3F1A' }} axisLine={false} tickLine={false} />
+                      <YAxis hide />
+                      <Tooltip 
+                        cursor={{ fill: '#F59E0B', opacity: 0.1 }}
+                        contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', fontSize: '10px', fontWeight: 'bold' }}
+                      />
+                      <Bar dataKey="count" fill="#D4A43E" radius={[10, 10, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </motion.div>
+           </div>
+        </section>
 
         {/* Progress Card */}
         <section className="relative overflow-hidden group">
@@ -453,10 +634,8 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, comple
             whileTap={{ scale: 0.98 }}
             onClick={async () => {
               playSound('click');
-              const { error } = await import('../lib/supabase').then(m => m.supabase.auth.signOut());
-              if (!error) {
-                window.location.reload(); 
-              }
+              await signOut();
+              onLogout();
             }}
             className="w-full py-5 rounded-3xl font-black text-[#7B3F1A]/60 border-2 border-[#E5D5B8] hover:bg-[#7B3F1A]/5 transition-all flex items-center justify-center gap-3 shadow-sm active:shadow-none"
           >

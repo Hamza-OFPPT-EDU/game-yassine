@@ -67,42 +67,6 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
         setError(authError.message === "User already registered" ? "Ce profil existe déjà (pseudo: " + lowerUsername + ")" : authError.message);
         playSound('wrong');
       } else if (data.user) {
-        // Manually sync with app_users and player_profiles to ensure dashboard visibility
-        const userId = data.user.id;
-        const fullName = `${lowerFirstName} ${lowerLastName}`;
-        
-        try {
-          // 1. Insert into app_users
-          await supabase.from('app_users').upsert({
-            id: userId,
-            username: lowerUsername,
-            full_name: fullName,
-            first_name: lowerFirstName,
-            last_name: lowerLastName,
-            gender: gender,
-            avatar_url: avatarUrl,
-            site: group,
-            group_name: group,
-            birth_date: birthDate,
-            xp: 0,
-            stars: 0,
-            level: 1,
-            created_at: new Date().toISOString()
-          });
-
-          // 2. Insert into player_profiles (used by dashboard)
-          await supabase.from('player_profiles').upsert({
-            id: userId,
-            display_name: fullName,
-            xp: 0,
-            level: 1,
-            profile_type: 'Le Stratège',
-            created_at: new Date().toISOString()
-          });
-        } catch (syncError) {
-          console.error("Manual sync error:", syncError);
-        }
-
         playSound('success');
         onSuccess();
       }

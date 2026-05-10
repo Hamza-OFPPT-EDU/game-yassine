@@ -29,7 +29,7 @@ export function useAuth() {
     return () => subscription.unsubscribe();
   }, []);
 
-  return { session, loading };
+  return { session, loading, signOut };
 }
 
 function buildFallbackCities(completedCities: string[], freeExploration: boolean = false): City[] {
@@ -723,6 +723,53 @@ export function useSupabaseMissionLeaderboard(missionId: string) {
   }, [missionId]);
 
   return { leaderboard, loading };
+}
+
+export function useSupabaseUserHistory(userId?: string) {
+  const [history, setHistory] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+
+    async function fetchHistory() {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('mission_history')
+          .select(`
+            id, 
+            xp, 
+            score, 
+            stars, 
+            created_at,
+            missions (
+              id,
+              title_fr,
+              city_id,
+              soft_skill_dominant
+            )
+          `)
+          .eq('user_id', userId)
+          .order('created_at', { ascending: true });
+
+        if (!error && data) {
+          setHistory(data);
+        }
+      } catch (err) {
+        console.error('Error fetching history:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchHistory();
+  }, [userId]);
+
+  return { history, loading };
 }
 
 export function useSupabaseAssetConfigs(bucketId: string) {

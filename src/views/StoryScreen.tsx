@@ -171,21 +171,19 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
               </div>
             </div>
 
-            {/* CTA Action */}
             <div className="pt-4">
               <motion.button
-                whileHover={!(loadingMission || !mission) ? { scale: 1.02, y: -2 } : {}}
-                whileTap={!(loadingMission || !mission) ? { y: 4, borderBottomWidth: 2 } : {}}
+                whileHover={!(loadingMission || !mission) ? { scale: 1.02, y: -2, brightness: 1.1 } : {}}
+                whileTap={!(loadingMission || !mission) ? { scale: 0.98, y: 0 } : {}}
                 onClick={() => { playSound('click'); onStartChallenge(); }}
                 disabled={loadingMission || !mission}
                 className={cn(
-                  "w-full text-xl py-5 flex items-center justify-center gap-3 rounded-[28px] font-black text-white shadow-xl transition-all border-b-[6px]",
-                  (loadingMission || !mission) ? 'opacity-60 cursor-not-allowed' : 'hover:brightness-110'
+                  "w-full text-xl py-5.5 flex items-center justify-center gap-3 rounded-[32px] font-black text-white shadow-2xl transition-all border-b-4 border-black/20",
+                  (loadingMission || !mission) ? 'opacity-50 cursor-not-allowed' : 'hover:brightness-110 active:shadow-inner'
                 )}
                 style={{
-                  backgroundColor: getCityTheme(city).color,
-                  borderBottomColor: getCityTheme(city).colorDark || getCityTheme(city).color,
-                  boxShadow: `0 8px 25px ${getCityTheme(city).color}40`,
+                  background: `linear-gradient(135deg, ${getCityTheme(city).color}, ${getCityTheme(city).colorDark || getCityTheme(city).color})`,
+                  boxShadow: `0 12px 30px ${getCityTheme(city).color}50`,
                 }}
               >
                 {loadingMission ? (
