@@ -9,7 +9,7 @@ import { ArrowLeft, Check, Star, Volume2, Save, CheckCircle2, TrendingUp, Apple,
 import { type City } from '../types';
 import { cn } from '../lib/utils';
 import { useAudio } from '../contexts/AudioContext';
-import AudioSettingsModal from '../components/AudioSettingsModal';
+import { type City } from '../types';
 
 interface VocabularyMatchScreenProps {
   onBack: () => void;
@@ -39,10 +39,10 @@ export default function VocabularyMatchScreen({ onBack }: VocabularyMatchScreenP
   const [matches, setMatches] = useState<Record<string, string>>({}); // leftId -> rightId
   const [showSuccess, setShowSuccess] = useState(false);
   const [showHintModal, setShowHintModal] = useState(false);
-  const [showSoundModal, setShowSoundModal] = useState(false);
+  const [showHintModal, setShowHintModal] = useState(false);
   const [isSavingAudio, setIsSavingAudio] = useState(false);
   const stats = { xp: 120 };
-  const { settings: audio, updateSettings: updateAudio, playSound: playEffect, saveToCloud: saveAudioToCloud } = useAudio();
+  const { settings: audio, updateSettings: updateAudio, playSound: playEffect, saveToCloud: saveAudioToCloud, openSettings } = useAudio();
   
   const containerRef = useRef<HTMLDivElement>(null);
   const [positions, setPositions] = useState<Record<string, { x: number, y: number }>>({});
@@ -122,7 +122,7 @@ export default function VocabularyMatchScreen({ onBack }: VocabularyMatchScreenP
         </div>
         <div className="flex items-center gap-3">
           <button 
-            onClick={() => setShowSoundModal(true)}
+            onClick={openSettings}
             className="p-2.5 bg-white border-2 border-voyage-accent/30 text-voyage-primary rounded-xl hover:bg-voyage-sand transition-all shadow-sm group"
             title="Réglages Audio"
           >
@@ -134,10 +134,6 @@ export default function VocabularyMatchScreen({ onBack }: VocabularyMatchScreenP
           </div>
         </div>
 
-        <AudioSettingsModal 
-          isOpen={showSoundModal} 
-          onClose={() => setShowSoundModal(false)} 
-        />
       </header>
 
       {/* Main Canvas */}

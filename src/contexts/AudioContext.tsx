@@ -54,6 +54,9 @@ interface AudioContextType {
   playVoice: (url: string) => HTMLAudioElement;
   saveToCloud: () => Promise<boolean>;
   loading: boolean;
+  isSettingsOpen: boolean;
+  openSettings: () => void;
+  closeSettings: () => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -66,12 +69,19 @@ function getAudioElement(type: SoundType): HTMLAudioElement {
   return audioCache[type]!;
 }
 
+// Global modal component to be rendered at the root of the app
+import AudioSettingsModal from '../components/AudioSettingsModal';
+
 export function AudioProvider({ children }: { children: React.ReactNode }) {
   const { session } = useAuth();
   const { getSetting, loading: globalSettingsLoading } = useSupabaseSettings();
   const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
   const [settings, setSettings] = useState<AudioSettings>(loadSettings);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const musicRef = useRef<HTMLAudioElement | null>(null);
+
+  const openSettings = useCallback(() => setIsSettingsOpen(true), []);
+  const closeSettings = useCallback(() => setIsSettingsOpen(false), []);
 
   // Sync with Supabase Profile
   useEffect(() => {
@@ -154,9 +164,16 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       playSound, 
       playVoice,
       saveToCloud, 
-      loading: globalSettingsLoading || profileLoading 
+      loading: globalSettingsLoading || profileLoading,
+      isSettingsOpen,
+      openSettings,
+      closeSettings
     }}>
       {children}
+      <AudioSettingsModal 
+        isOpen={isSettingsOpen} 
+        onClose={closeSettings} 
+      />
     </AudioContext.Provider>
   );
 }

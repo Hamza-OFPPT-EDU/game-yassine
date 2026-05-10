@@ -6,9 +6,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, Sparkles, Volume2 } from 'lucide-react';
-import { useAudio } from '../hooks/useAudio';
+import { useAudio } from '../contexts/AudioContext';
 import { useSupabaseSettings } from '../hooks/useSupabase';
-import AudioSettingsModal from '../components/AudioSettingsModal';
 import GameButton from '../components/GameButton';
 
 interface WelcomeScreenProps {
@@ -20,12 +19,11 @@ interface WelcomeScreenProps {
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
 export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeScreenProps) {
-  const { playSound } = useAudio();
+  const { playSound, openSettings } = useAudio();
   const { getSetting } = useSupabaseSettings();
   const welcomeConfig = getSetting('welcome_screen_content') || {};
 
   const [showContent, setShowContent] = useState(false);
-  const [showSoundModal, setShowSoundModal] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -69,18 +67,13 @@ export default function WelcomeScreen({ onStart, onLogin, onRegister }: WelcomeS
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => setShowSoundModal(true)}
+                onClick={openSettings}
                 className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-2xl transition-all"
                 title="Réglages Audio"
               >
                 <Volume2 size={24} />
               </motion.button>
             </div>
-
-            <AudioSettingsModal
-              isOpen={showSoundModal}
-              onClose={() => setShowSoundModal(false)}
-            />
 
             {/* Hero section with Logo Image */}
             <section className="relative w-full shrink-0 flex items-center justify-center px-6 pt-12 pb-4">

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { User, Lock, ArrowRight, Loader2, AlertCircle, Sparkles, Map, Volume2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import { useAudio } from '../hooks/useAudio';
-import AudioSettingsModal from '../components/AudioSettingsModal';
+import { useAudio } from '../contexts/AudioContext';
 
 interface LoginScreenProps {
   onBack: () => void;
@@ -12,12 +11,11 @@ interface LoginScreenProps {
 }
 
 export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScreenProps) {
-  const { playSound } = useAudio();
+  const { playSound, openSettings } = useAudio();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showSoundModal, setShowSoundModal] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,7 +84,7 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
           <motion.button 
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            onClick={() => setShowSoundModal(true)}
+            onClick={openSettings}
             className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-[#7B3F1A]/10 text-[#7B3F1A]"
             title="Réglages Audio"
           >
@@ -96,11 +94,6 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
               <Map size={24} className="text-white" />
           </div>
         </div>
-
-        <AudioSettingsModal 
-          isOpen={showSoundModal} 
-          onClose={() => setShowSoundModal(false)} 
-        />
       </header>
 
       <main className="relative z-10 flex-grow flex flex-col px-6 justify-center max-w-md mx-auto w-full pb-12">

@@ -708,27 +708,113 @@ export function useSupabaseAssetConfigs(bucketId: string) {
  * Persists detailed mission history and updates city progress.
  */
 export async function saveMissionResult(summary: any, userId: string, isCorrection: boolean = false) {
-    // 3. Update League Progress (if player is in any competitions)
+  try {
+    // 1. Update Mission History
+    await supabase.from('mission_history').insert({
+      user_id: userId,
+      mission_id: summary.missionId,
+      score: summary.score,
+      xp: summary.totalXp,
+      stars: summary.totalStars,
+      is_correction: isCorrection
+    });
+
+    // 2. Update User Global Stats
+    const { data: profile } = await supabase
+      .from('app_users')
+      .select('xp, level')
+      .eq('id', userId)
+      .single();
+
+    if (profile) {
+      const newXp = (profile.xp || 0) + summary.totalXp;
+      const newLevel = Math.floor(newXp / 1000) + 1;
+      
+      await supabase
+        .from('app_users')
+        .update({ xp: newXp, level: newLevel })
+        .eq('id', userId);
+        
+      await supabase
+        .from('player_profiles')
+        .update({ xp: newXp, level: newLevel })
+        .eq('id', userId);
+    }
+
+    // 3. Update City Progress
+    const { data: existingProgress } = await supabase
+      .from('player_city_progress')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('city_id', summary.cityId)
+      .single();
+
+    if (existingProgress) {
+       // Update logic (e.g. if all missions done)
+       const { data: missions } = await supabase
+         .from('missions')
+         .select('id')
+         .eq('city_id', summary.cityId);
+         
+       const { data: completedMissions } = await supabase
+         .from('mission_history')
+         .select('mission_id')
+         .eq('user_id', userId);
+         
+       const completedIds = new Set(completedMissions?.map(m => m.mission_id) || []);
+       const allDone = missions?.every(m => completedIds.has(m.id)) || false;
+       
+       if (allDone && existingProgress.status !== 'done') {
+         await supabase
+           .from('player_city_progress')
+           .update({ status: 'done', completed_at: new Date().toISOString() })
+           .eq('id', existingProgress.id);
+         
+         // Mark for league update
+         existingProgress.status = 'done'; 
+       }
+    } else {
+       await supabase.from('player_city_progress').insert({
+         user_id: userId,
+         city_id: summary.cityId,
+         status: 'active'
+       });
+    }
+
+    // 4. Update League Progress (if player is in any competitions)
     const { data: userLeagues } = await supabase
       .from('league_members')
-      .select('league_id, cities_completed')
+      .select('league_id, cities_completed, points_earned, badges_earned')
       .eq('user_id', userId);
 
     if (userLeagues && userLeagues.length > 0) {
       for (const membership of userLeagues) {
-        // Increment points in all leagues the user belongs to
-        await supabase
-          .from('league_members')
-          .update({
-            points_earned: supabase.rpc('increment_league_points', { amount: summary.totalXp, row_id: userId, l_id: membership.league_id }),
-            // Check if city count should increase
-            cities_completed: (existingProgress && existingProgress.status === 'done') 
-              ? (membership.cities_completed + 1) 
-              : membership.cities_completed,
-            badges_earned: summary.totalStars >= 10 ? (membership.badges_earned || 0) + 1 : (membership.badges_earned || 0)
-          })
-          .eq('user_id', userId)
-          .eq('league_id', membership.league_id);
+        // Increment points via RPC for atomicity
+        await supabase.rpc('increment_league_points', { 
+          amount: summary.totalXp, 
+          user_id_param: userId, 
+          league_id_param: membership.league_id 
+        });
+
+        // Update other stats if city was just finished
+        if (existingProgress?.status === 'done') {
+           await supabase
+            .from('league_members')
+            .update({
+              cities_completed: (membership.cities_completed || 0) + 1,
+              badges_earned: summary.totalStars >= 10 ? (membership.badges_earned || 0) + 1 : (membership.badges_earned || 0)
+            })
+            .eq('user_id', userId)
+            .eq('league_id', membership.league_id);
+        } else if (summary.totalStars >= 10) {
+           await supabase
+            .from('league_members')
+            .update({
+              badges_earned: (membership.badges_earned || 0) + 1
+            })
+            .eq('user_id', userId)
+            .eq('league_id', membership.league_id);
+        }
       }
     }
 

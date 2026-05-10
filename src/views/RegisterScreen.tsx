@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { User, Lock, ArrowRight, Loader2, AlertCircle, Sparkles, ChevronDown, Map, Volume2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import { useAudio } from '../hooks/useAudio';
-import AudioSettingsModal from '../components/AudioSettingsModal';
+import { useAudio } from '../contexts/AudioContext';
 import { AVATAR_MALE_URL, AVATAR_FEMALE_URL } from '../types';
 
 interface RegisterScreenProps {
@@ -15,7 +14,7 @@ interface RegisterScreenProps {
 const GROUPS = ['GE 101', 'GE 102', 'GE 103', 'GEOCF201', 'GEOCF202', 'GEOCF301', 'GEOCM201'];
 
 export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterScreenProps) {
-  const { playSound } = useAudio();
+  const { playSound, openSettings } = useAudio();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState<'F' | 'H'>('H');
@@ -24,7 +23,6 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showSoundModal, setShowSoundModal] = useState(false);
 
   const username = (firstName && lastName) 
     ? `${firstName.trim().toLowerCase()}.${lastName.trim().toLowerCase()}`.replace(/\s+/g, '')
@@ -151,7 +149,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
           <motion.button 
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            onClick={() => setShowSoundModal(true)}
+            onClick={openSettings}
             className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-[#7B3F1A]/10 text-[#7B3F1A]"
             title="Réglages Audio"
           >
@@ -161,11 +159,6 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
               <Sparkles size={24} className="text-white" fill="currentColor" />
           </div>
         </div>
-
-        <AudioSettingsModal 
-          isOpen={showSoundModal} 
-          onClose={() => setShowSoundModal(false)} 
-        />
       </header>
 
       <main className="relative z-10 flex-grow flex flex-col px-6 max-w-md mx-auto w-full">

@@ -23,7 +23,7 @@ import { useAudio } from '../hooks/useAudio';
 import { useTimer } from '../hooks/useTimer';
 import { TimerBar } from '../components/TimerBar';
 import { resolveAssetUrl } from '../lib/city-theme';
-import AudioSettingsModal from '../components/AudioSettingsModal';
+import { resolveAssetUrl } from '../lib/city-theme';
 
 // Helper for dynamic theming based on exercise type
 const getThemeConfig = (type: string) => {
@@ -116,9 +116,8 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const [startTime, setStartTime] = useState(Date.now());
   const [attempts, setAttempts] = useState(0);
   const [showExplanationModal, setShowExplanationModal] = useState(false);
-  const [showSoundModal, setShowSoundModal] = useState(false);
   const [isSavingAudio, setIsSavingAudio] = useState(false);
-  const { settings: audio, updateSettings: updateAudio, playSound: playEffect, playVoice, saveToCloud: saveAudioToCloud } = useAudio();
+  const { settings: audio, updateSettings: updateAudio, playSound: playEffect, playVoice, saveToCloud: saveAudioToCloud, openSettings } = useAudio();
   
   // Timer & Skip state
   const DEFAULT_QUESTION_TIME = 30; // seconds
@@ -670,7 +669,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
         </button>
 
         <button 
-          onClick={() => { playEffect('click'); setShowSoundModal(true); }}
+          onClick={openSettings}
           className="p-2 hover:bg-duo-swan rounded-xl transition-colors shrink-0"
           title="Réglages audio"
         >
@@ -1471,10 +1470,6 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
         )}
       </AnimatePresence>
 
-      <AudioSettingsModal 
-        isOpen={showSoundModal} 
-        onClose={() => setShowSoundModal(false)} 
-      />
 
       {/* Cinematic Text Overlay */}
       <AnimatePresence>
