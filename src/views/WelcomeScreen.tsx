@@ -5,7 +5,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, Sparkles, Volume2 } from 'lucide-react';
+import { ArrowRight, Sparkles, Volume2, Loader2 } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { useSupabaseSettings } from '../hooks/useSupabase';
 import GameButton from '../components/GameButton';

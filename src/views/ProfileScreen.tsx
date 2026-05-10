@@ -162,17 +162,17 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, comple
                    className="w-full h-full object-cover rounded-[32px]"
                    referrerPolicy="no-referrer"
                  />
-                 {/* Settings button hidden as requested */}
-               {/* 
-               <motion.button 
-                 whileHover={{ scale: 1.1, rotate: 15 }}
-                 whileTap={{ scale: 0.9 }}
-                 onClick={onSettings}
-                 className="absolute -bottom-2 -right-2 w-12 h-12 bg-white border-2 border-[#E5D5B8] rounded-2xl flex items-center justify-center shadow-xl cursor-pointer z-20 hover:border-[#D4A43E] transition-colors"
-               >
-                 <Settings size={24} className="text-[#7B3F1A]" />
-               </motion.button>
-               */}
+                 <motion.button 
+                   whileHover={{ scale: 1.1, rotate: 15 }}
+                   whileTap={{ scale: 0.9 }}
+                   onClick={() => {
+                     playSound('click');
+                     onSettings();
+                   }}
+                   className="absolute -bottom-2 -right-2 w-12 h-12 bg-white border-2 border-[#E5D5B8] rounded-2xl flex items-center justify-center shadow-xl cursor-pointer z-20 hover:border-[#D4A43E] transition-colors"
+                 >
+                   <Settings size={24} className="text-[#7B3F1A]" />
+                 </motion.button>
               </motion.div>
            </div>
            

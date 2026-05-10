@@ -12,36 +12,18 @@ export function useLeagues(userId?: string) {
   const [loading, setLoading] = useState(true);
 
   const fetchLeagues = useCallback(async () => {
-    if (!userId) {
-      setLoading(false);
-      return;
-    }
-    
     setLoading(true);
     try {
-      // 1. Fetch memberships for this user
-      const { data: membershipData, error: membershipError } = await supabase
-        .from('league_members')
-        .select('league_id')
-        .eq('user_id', userId);
-
-      if (membershipError) throw membershipError;
-
-      const myLeagueIds = (membershipData || []).map(m => m.league_id);
-
-      if (myLeagueIds.length === 0) {
-        setLeagues([]);
-        setLoading(false);
-        return;
-      }
-
-      // 2. Fetch full league details with all members
+      // 1. Fetch ALL leagues first
       const { data: leaguesData, error: leaguesError } = await supabase
         .from('leagues')
         .select(`
           *,
           league_members (
             user_id,
+            points_earned,
+            cities_completed,
+            badges_earned,
             app_users (
               id,
               full_name,
@@ -50,8 +32,7 @@ export function useLeagues(userId?: string) {
               gender
             )
           )
-        `)
-        .in('id', myLeagueIds);
+        `);
 
       if (leaguesError) throw leaguesError;
 
@@ -62,7 +43,7 @@ export function useLeagues(userId?: string) {
             id: m.app_users.id,
             name: m.app_users.full_name || 'Explorateur',
             avatar: m.app_users.avatar_url || (m.app_users.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL),
-            xp: m.app_users.xp || 0, // Fallback to total XP
+            xp: m.points_earned || 0,
             rank: 0,
             isCurrentUser: m.app_users.id === userId,
             citiesCompleted: m.cities_completed || 0,
@@ -81,6 +62,8 @@ export function useLeagues(userId?: string) {
           timeLeft = hours > 24 ? `${Math.ceil(hours / 24)}j restants` : `${hours}h ${mins}m`;
         }
 
+        const isJoined = userId ? players.some(p => p.id === userId) : false;
+
         return {
           id: l.id,
           name: l.name,
@@ -88,8 +71,9 @@ export function useLeagues(userId?: string) {
           players,
           timeLeft,
           myRank: players.find(p => p.isCurrentUser)?.rank || 0,
-          creator_id: l.creator_id
-        } as League & { creator_id?: string };
+          creator_id: l.creator_id,
+          isJoined // Custom property for UI
+        } as League & { creator_id?: string, isJoined: boolean };
       });
 
       setLeagues(mappedLeagues);

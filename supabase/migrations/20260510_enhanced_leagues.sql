@@ -36,19 +36,48 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- 5. Seed some existing players into these leagues (if any exist)
+-- 5. Create dummy players if none exist
+DO $$
+BEGIN
+    IF (SELECT count(*) FROM public.app_users) < 10 THEN
+        INSERT INTO public.app_users (id, full_name, avatar_url, xp, gender)
+        VALUES 
+        ('user_dummy_1', 'Karim Alami', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Karim', 4500, 'M'),
+        ('user_dummy_2', 'Sanae Idrissi', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sanae', 3800, 'F'),
+        ('user_dummy_3', 'Youssef Benani', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Youssef', 5200, 'M'),
+        ('user_dummy_4', 'Layla Mansouri', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Layla', 2900, 'F'),
+        ('user_dummy_5', 'Omar Tazi', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Omar', 6100, 'M'),
+        ('user_dummy_6', 'Driss Filali', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Driss', 1500, 'M'),
+        ('user_dummy_7', 'Salma Amrani', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Salma', 4200, 'F'),
+        ('user_dummy_8', 'Mehdi Chraibi', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mehdi', 3300, 'M'),
+        ('user_dummy_9', 'Ines Berrada', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ines', 2700, 'F'),
+        ('user_dummy_10', 'Amine Slaoui', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Amine', 4800, 'M')
+        ON CONFLICT (id) DO NOTHING;
+    END IF;
+END $$;
+
+-- 6. Seed players into these leagues
 DO $$
 DECLARE
     user_record RECORD;
     league_record RECORD;
-    counter integer := 0;
 BEGIN
     FOR user_record IN (SELECT id FROM public.app_users LIMIT 50) LOOP
         -- Distribute users across the 5 leagues
-        SELECT id INTO league_record FROM public.leagues ORDER BY random() LIMIT 1;
-        
-        INSERT INTO public.league_members (league_id, user_id, points_earned, cities_completed)
-        VALUES (league_record.id, user_record.id, floor(random() * 5000), floor(random() * 4))
-        ON CONFLICT DO NOTHING;
+        -- Each user joins 1-2 random leagues
+        FOR league_record IN (SELECT id FROM public.leagues ORDER BY random() LIMIT 2) LOOP
+            INSERT INTO public.league_members (league_id, user_id, points_earned, cities_completed, badges_earned)
+            VALUES (
+                league_record.id, 
+                user_record.id, 
+                floor(random() * 8000), 
+                floor(random() * 8), 
+                floor(random() * 12)
+            )
+            ON CONFLICT (league_id, user_id) DO UPDATE SET
+                points_earned = EXCLUDED.points_earned,
+                cities_completed = EXCLUDED.cities_completed,
+                badges_earned = EXCLUDED.badges_earned;
+        END LOOP;
     END LOOP;
 END $$;

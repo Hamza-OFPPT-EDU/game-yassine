@@ -88,9 +88,13 @@ export default function App() {
 
     // Switch to Welcome Screen only after 5s splash is complete
     if (splashComplete && currentScreen === Screen.Splash) {
-      setCurrentScreen(Screen.Welcome);
+      if (session) {
+        setCurrentScreen(Screen.Map);
+      } else {
+        setCurrentScreen(Screen.Welcome);
+      }
     }
-  }, [splashComplete, progress, fullscreenShownOnce, showFullscreenPrompt, currentScreen]);
+  }, [splashComplete, progress, fullscreenShownOnce, showFullscreenPrompt, currentScreen, session]);
   
   const [userStats, setUserStats] = useState({
     xp: 0,
@@ -357,6 +361,7 @@ export default function App() {
   const handleDemoLogin = async () => {
     try {
       setIsDemoLoading(true);
+      console.log("Starting demo login process...");
       const identity = generateDemoIdentity();
       
       // Create a real account for the demo user
@@ -378,13 +383,22 @@ export default function App() {
       });
 
       if (authError) {
-        console.warn("Demo sign-up failed, falling back to simple start:", authError.message);
-        handleStartApp();
-        return;
+        console.error("Demo sign-up error:", authError.message);
+        // If it's a "User already registered" error, we might have a collision or session issue
+        if (authError.message.includes("already registered")) {
+           // Try logging in instead? Or just proceed
+           console.warn("User already exists, proceeding to app...");
+        } else {
+           handleStartApp();
+           return;
+        }
       }
 
-      if (data.user) {
-        const userId = data.user.id;
+      const user = data.user || (await supabase.auth.getUser()).data.user;
+
+      if (user) {
+        console.log("Demo user account verified:", user.id);
+        const userId = user.id;
         const avatarUrl = identity.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
         
         // Manual sync with app_users and player_profiles
@@ -402,7 +416,7 @@ export default function App() {
             stars: 0,
             level: 1,
             created_at: new Date().toISOString()
-          });
+          }, { onConflict: 'id' });
 
           await supabase.from('player_profiles').upsert({
             id: userId,
@@ -411,9 +425,9 @@ export default function App() {
             level: 1,
             profile_type: 'Le Stratège',
             created_at: new Date().toISOString()
-          });
+          }, { onConflict: 'id' });
         } catch (syncError) {
-          console.error("Demo sync error:", syncError);
+          console.error("Demo sync error (non-fatal):", syncError);
         }
 
         // Set credentials to show in modal
@@ -423,9 +437,14 @@ export default function App() {
           password: identity.password
         });
         setShowDemoModal(true);
+        console.log("Demo credentials modal should now be visible.");
+      } else {
+        console.warn("No user data returned from signUp, falling back.");
+        handleStartApp();
       }
     } catch (err) {
-      console.error('Demo login error:', err);
+      console.error('Unexpected demo login error:', err);
+      handleStartApp();
     } finally {
       setIsDemoLoading(false);
     }
@@ -434,11 +453,11 @@ export default function App() {
   const renderScreen = () => {
     const screenContent = () => {
 
-    if (authLoading || (session && profileLoading)) {
+    if (authLoading) {
       if (currentScreen === Screen.Splash) {
         return <SplashScreen />;
       }
-      return null; 
+      return <div className="h-full w-full flex items-center justify-center bg-[#0a0f1e]"><Loader2 className="animate-spin text-white" size={40} /></div>; 
     }
 
     switch (currentScreen) {
@@ -567,39 +586,9 @@ export default function App() {
         return null;
       }
     };
-
     return (
       <div className="relative h-full w-full">
         {screenContent()}
-        
-        {showFullscreenPrompt && (
-          <div className="absolute inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-            <FullscreenPrompt 
-              show={showFullscreenPrompt}
-              onAccept={() => {
-                setShowFullscreenPrompt(false);
-                setFullscreenShownOnce(true);
-                localStorage.setItem('prefer-fullscreen', 'true');
-              }}
-              onDecline={() => {
-                setShowFullscreenPrompt(false);
-                setFullscreenShownOnce(true);
-                localStorage.setItem('prefer-fullscreen', 'false');
-              }}
-              progress={progress}
-              extraAssets={dynamicAssets}
-            />
-          </div>
-        )}
-
-        <DemoCredentialsModal 
-          isOpen={showDemoModal}
-          credentials={demoCredentials}
-          onConfirm={() => {
-            setShowDemoModal(false);
-            handleStartApp();
-          }}
-        />
       </div>
     );
   };
@@ -652,6 +641,35 @@ export default function App() {
           </div>
         )}
 
+        {/* Global Overlays */}
+        {showFullscreenPrompt && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+            <FullscreenPrompt 
+              show={showFullscreenPrompt}
+              onAccept={() => {
+                setShowFullscreenPrompt(false);
+                setFullscreenShownOnce(true);
+                localStorage.setItem('prefer-fullscreen', 'true');
+              }}
+              onDecline={() => {
+                setShowFullscreenPrompt(false);
+                setFullscreenShownOnce(true);
+                localStorage.setItem('prefer-fullscreen', 'false');
+              }}
+              progress={progress}
+              extraAssets={dynamicAssets}
+            />
+          </div>
+        )}
+
+        <DemoCredentialsModal 
+          isOpen={showDemoModal}
+          credentials={demoCredentials}
+          onConfirm={() => {
+            setShowDemoModal(false);
+            handleStartApp();
+          }}
+        />
       </div>
   );
 }

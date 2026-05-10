@@ -167,87 +167,102 @@ export default function LeagueDetailScreen({ leagueId, onBack }: LeagueDetailScr
            </div>
 
            <div className="divide-y divide-voyage-accent/5">
-              {league.players.map((player) => (
-                <div 
-                  key={player.id} 
-                  className={cn(
-                    "flex items-center justify-between p-5 transition-all",
-                    player.isCurrentUser ? "bg-voyage-primary/5 border-l-4 border-voyage-primary" : "hover:bg-slate-50"
-                  )}
-                >
-                   <div className="flex items-center gap-4">
-                      <div className={cn(
-                        "w-8 h-8 rounded-full flex items-center justify-center text-sm font-black",
-                        player.rank === 1 ? "bg-yellow-400 text-white shadow-md" :
-                        player.rank === 2 ? "bg-slate-300 text-white" :
-                        player.rank === 3 ? "bg-amber-600 text-white" : "text-duo-wolf/40"
-                      )}>
-                         {player.rank}
-                      </div>
-                      <div className="relative">
-                         <div className="w-12 h-12 rounded-2xl border-2 border-white shadow-sm overflow-hidden bg-voyage-sand">
-                            <img src={player.avatar} alt={player.name} className="w-full h-full object-cover" />
-                         </div>
-                         {player.rank === 1 && (
-                            <div className="absolute -top-2 -right-2 bg-yellow-400 text-white rounded-full p-1 shadow-sm border border-white">
-                               <Trophy size={10} fill="currentColor" />
-                            </div>
-                         )}
-                      </div>
-                      <div>
-                         <h3 className={cn(
-                           "font-black text-sm uppercase tracking-tight",
-                           player.isCurrentUser ? "text-voyage-primary" : "text-duo-eel"
-                         )}>
-                            {player.name} {player.isCurrentUser && "(Moi)"}
-                         </h3>
-                         <div className="flex flex-col gap-1 mt-1">
-                            <div className="flex items-center gap-2">
-                               <div className="flex items-center gap-1">
-                                  <Medal className="text-duo-orange" size={10} fill="currentColor" />
-                                  <span className="text-[10px] font-black text-duo-orange uppercase">Lvl {Math.floor(player.xp / 1000) + 1}</span>
-                               </div>
-                               <div className="w-1 h-1 rounded-full bg-slate-200" />
-                               <div className="flex items-center gap-1">
-                                  <Star className="text-amber-500" size={10} fill="currentColor" />
-                                  <span className="text-[10px] font-black text-amber-500 uppercase">{player.badgesEarned || 0} Badges</span>
-                               </div>
-                            </div>
-                            {/* City Progress Indicator */}
-                            <div className="flex items-center gap-2 mt-0.5 bg-voyage-sand/30 px-2 py-1 rounded-lg border border-voyage-accent/5">
-                               <Navigation2 size={10} className="text-voyage-accent -rotate-45" />
-                               <span className="text-[9px] font-black text-voyage-accent uppercase tracking-widest">
-                                  {player.citiesCompleted === 0 ? 'Rabat' : 
-                                   player.citiesCompleted === 1 ? 'Chefchaouen' : 
-                                   player.citiesCompleted === 2 ? 'Fès' : 
-                                   player.citiesCompleted === 3 ? 'Marrakech' : 
-                                   player.citiesCompleted === 4 ? 'Essaouira' : 
-                                   player.citiesCompleted === 5 ? 'Agadir' : 
-                                   player.citiesCompleted === 6 ? 'Laâyoune' : 'Dakhla'}
-                               </span>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
+            <div className="divide-y divide-voyage-accent/5">
+               {league.players.map((player) => (
+                 <motion.div 
+                   key={player.id} 
+                   initial={{ opacity: 0, x: -20 }}
+                   animate={{ opacity: 1, x: 0 }}
+                   className={cn(
+                     "flex items-center justify-between p-5 transition-all relative overflow-hidden",
+                     player.isCurrentUser ? "bg-voyage-primary/[0.03] border-l-4 border-voyage-primary" : "hover:bg-slate-50/50"
+                   )}
+                 >
+                    <div className="flex items-center gap-4 relative z-10">
+                       <div className={cn(
+                         "w-8 h-8 rounded-full flex items-center justify-center text-sm font-black shadow-sm",
+                         player.rank === 1 ? "bg-gradient-to-br from-yellow-300 to-yellow-500 text-white" :
+                         player.rank === 2 ? "bg-gradient-to-br from-slate-200 to-slate-400 text-white" :
+                         player.rank === 3 ? "bg-gradient-to-br from-amber-500 to-amber-700 text-white" : "bg-slate-50 text-slate-300 border border-slate-100"
+                       )}>
+                          {player.rank}
+                       </div>
+                       
+                       <div className="relative">
+                          <div className={cn(
+                            "w-14 h-14 rounded-2xl border-2 shadow-sm overflow-hidden bg-voyage-sand p-0.5",
+                            player.isCurrentUser ? "border-voyage-primary/30" : "border-white"
+                          )}>
+                             <img src={player.avatar} alt={player.name} className="w-full h-full object-cover rounded-xl" />
+                          </div>
+                          {player.rank === 1 && (
+                             <motion.div 
+                               animate={{ rotate: [0, 10, -10, 0] }}
+                               transition={{ repeat: Infinity, duration: 2 }}
+                               className="absolute -top-2 -right-2 bg-yellow-400 text-white rounded-full p-1.5 shadow-md border-2 border-white"
+                             >
+                                <Trophy size={12} fill="currentColor" />
+                             </motion.div>
+                          )}
+                       </div>
 
-                   <div className="text-right">
-                      <div className="text-sm font-black text-duo-eel uppercase tracking-tighter">
-                         {player.xp.toLocaleString()} XP
-                      </div>
-                      {player.rank <= 3 ? (
-                        <div className="flex items-center gap-1 justify-end text-voyage-primary">
-                           <TrendingUp size={10} />
-                           <span className="text-[8px] font-black uppercase tracking-widest">Promotion</span>
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-1 justify-end text-duo-wolf/30">
-                           <Minus size={10} />
-                           <span className="text-[8px] font-black uppercase tracking-widest">Stable</span>
-                        </div>
-                      )}
-                   </div>
-                </div>
-              ))}
+                       <div className="space-y-1">
+                          <h3 className={cn(
+                            "font-black text-sm uppercase tracking-tight flex items-center gap-2",
+                            player.isCurrentUser ? "text-voyage-primary" : "text-slate-700"
+                          )}>
+                             {player.name}
+                             {player.isCurrentUser && (
+                               <span className="bg-voyage-primary text-white text-[8px] px-2 py-0.5 rounded-full">MOI</span>
+                             )}
+                          </h3>
+                          
+                          <div className="flex items-center gap-2">
+                             {/* Badge Count */}
+                             <div className="flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-100">
+                                <Star className="text-amber-500" size={10} fill="currentColor" />
+                                <span className="text-[9px] font-black text-amber-600 uppercase tracking-tighter">{player.badgesEarned || 0} Bijoux</span>
+                             </div>
+                             
+                             {/* Progress Tag */}
+                             <div className="flex items-center gap-1 bg-voyage-accent/5 px-2 py-0.5 rounded-md border border-voyage-accent/10">
+                                <Navigation2 size={8} className="text-voyage-accent -rotate-45" />
+                                <span className="text-[9px] font-black text-voyage-accent uppercase tracking-tighter">
+                                   {player.citiesCompleted || 0}/8 Villes
+                                </span>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+
+                    <div className="text-right relative z-10">
+                       <div className="flex flex-col items-end">
+                          <span className="text-base font-black text-slate-800 tracking-tighter leading-none">
+                             {player.xp.toLocaleString()}
+                          </span>
+                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Points</span>
+                       </div>
+                       
+                       {player.rank <= 3 ? (
+                         <div className="flex items-center gap-1 justify-end text-emerald-500 mt-1">
+                            <TrendingUp size={10} />
+                            <span className="text-[8px] font-black uppercase tracking-widest">Top 3</span>
+                         </div>
+                       ) : (
+                         <div className="flex items-center gap-1 justify-end text-slate-300 mt-1">
+                            <Minus size={10} />
+                            <span className="text-[8px] font-black uppercase tracking-widest">Stable</span>
+                         </div>
+                       )}
+                    </div>
+
+                    {/* Decorative subtle gradient for current user */}
+                    {player.isCurrentUser && (
+                      <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-voyage-primary/[0.03] to-transparent pointer-events-none" />
+                    )}
+                 </motion.div>
+               ))}
+            </div>
            </div>
         </section>
 

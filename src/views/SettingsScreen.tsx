@@ -5,7 +5,7 @@ import { useSettings, type FontSize, type DisplayMode, type Language } from '../
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { useAudio } from '../hooks/useAudio';
-import { useSupabaseProfile, useAuth } from '../hooks/useSupabase';
+import { useSupabaseProfile, useAuth, useOrganizations } from '../hooks/useSupabase';
 import { DEFAULT_AVATAR_URL } from '../types';
 import { optimizeSupabaseUrl } from '../lib/city-theme';
 
@@ -16,6 +16,7 @@ interface SettingsScreenProps {
 export default function SettingsScreen({ onBack }: SettingsScreenProps) {
   const { session } = useAuth();
   const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
+  const { organizations, loading: orgsLoading } = useOrganizations();
   const { 
     fontSize, setFontSize, 
     freeExploration, setFreeExploration,
@@ -23,7 +24,10 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
     language: globalLanguage, setLanguage: setGlobalLanguage
   } = useSettings();
   
-  const [userName, setUserName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [birthDate, setBirthDate] = useState('');
+  const [organizationId, setOrganizationId] = useState('');
   const [displayMode, setDisplayMode] = useState<DisplayMode>(globalDisplayMode);
   const { settings: audio, updateSettings: updateAudio, playSound, playVoice, saveToCloud } = useAudio();
   const [isSaving, setIsSaving] = useState(false);
@@ -32,7 +36,10 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
   // Sync local state with global/profile state on load
   useEffect(() => {
     if (profile) {
-      setUserName(profile.display_name || profile.full_name || '');
+      setFirstName(profile.first_name || '');
+      setLastName(profile.last_name || '');
+      setBirthDate(profile.birth_date || '');
+      setOrganizationId(profile.organization_id || '');
     }
   }, [profile]);
 
@@ -49,7 +56,11 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
       // 1. Update Profile in Supabase
       if (session?.user?.id) {
         await updateProfile({
-          display_name: userName,
+          first_name: firstName,
+          last_name: lastName,
+          birth_date: birthDate,
+          organization_id: organizationId || null,
+          full_name: `${firstName} ${lastName}`.trim() || profile.full_name
         });
       }
 
@@ -112,20 +123,65 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
           <p className="text-slate-400 font-bold text-xs uppercase tracking-widest mt-1">إعدادات الملف الشخصي</p>
         </section>
 
-        {/* Username Entry */}
+        {/* User Details Entry */}
         <section className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-50 space-y-6">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <div className="flex justify-between items-end">
+                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">Prénom</label>
+                <span className="text-[10px] font-bold text-voyage-accent opacity-60">الاسم</span>
+              </div>
+              <input 
+                className="w-full bg-slate-50 border-none rounded-xl px-4 py-4 text-slate-800 focus:ring-2 focus:ring-voyage-primary/10 font-bold text-sm" 
+                type="text" 
+                placeholder="Votre prénom"
+                value={firstName} 
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between items-end">
+                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">Nom</label>
+                <span className="text-[10px] font-bold text-voyage-accent opacity-60">النسب</span>
+              </div>
+              <input 
+                className="w-full bg-slate-50 border-none rounded-xl px-4 py-4 text-slate-800 focus:ring-2 focus:ring-voyage-primary/10 font-bold text-sm" 
+                type="text" 
+                placeholder="Votre nom"
+                value={lastName} 
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+          </div>
+
           <div className="space-y-2">
             <div className="flex justify-between items-end">
-              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">Nom d'utilisateur</label>
-              <span className="text-[10px] font-bold text-voyage-accent opacity-60">اسم المستخدم</span>
+              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">Date de naissance</label>
+              <span className="text-[10px] font-bold text-voyage-accent opacity-60">تاريخ الازدياد</span>
             </div>
             <input 
-              className="w-full bg-slate-50 border-none rounded-xl px-4 py-4 text-slate-800 focus:ring-2 focus:ring-voyage-primary/10 font-bold text-lg" 
-              type="text" 
-              placeholder="Ton pseudo..."
-              value={userName} 
-              onChange={(e) => setUserName(e.target.value)}
+              className="w-full bg-slate-50 border-none rounded-xl px-4 py-4 text-slate-800 focus:ring-2 focus:ring-voyage-primary/10 font-bold text-sm" 
+              type="date" 
+              value={birthDate} 
+              onChange={(e) => setBirthDate(e.target.value)}
             />
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex justify-between items-end">
+              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">Groupe / Organisation</label>
+              <span className="text-[10px] font-bold text-voyage-accent opacity-60">المجموعة</span>
+            </div>
+            <select 
+              className="w-full bg-slate-50 border-none rounded-xl px-4 py-4 text-slate-800 focus:ring-2 focus:ring-voyage-primary/10 font-bold text-sm appearance-none" 
+              value={organizationId} 
+              onChange={(e) => setOrganizationId(e.target.value)}
+            >
+              <option value="">Sélectionnez un groupe...</option>
+              {organizations.map(org => (
+                <option key={org.id} value={org.id}>{org.name}</option>
+              ))}
+            </select>
           </div>
         </section>
 

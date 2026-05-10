@@ -496,7 +496,7 @@ export function useSupabaseProfile(userId?: string) {
         // 1. Try to get the profile from app_users (primary)
         const { data: appUser, error: appUserError } = await supabase
           .from('app_users')
-          .select('*')
+          .select('*, organizations(name)')
           .eq('id', userId)
           .single();
 
@@ -515,6 +515,8 @@ export function useSupabaseProfile(userId?: string) {
           const genderDefault = appUser.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
           setProfile({
             ...appUser,
+            // Map join data
+            group_name: appUser.organizations?.name || 'GROUPE NON DÉFINI',
             // Ensure stats are up-to-date with player_profiles if there's a discrepancy
             xp: Math.max(appUser.xp || 0, playerProfile?.xp || 0),
             level: Math.max(appUser.level || 1, playerProfile?.level || 1),
@@ -532,6 +534,7 @@ export function useSupabaseProfile(userId?: string) {
             gender: meta.gender || 'H',
             group_name: meta.group_name || 'GROUPE NON DÉFINI',
             birth_date: meta.birth_date || null,
+            organization_id: meta.organization_id || null,
             xp: playerProfile?.xp || 0,
             level: playerProfile?.level || 1,
             stars: 0,
@@ -557,22 +560,33 @@ export function useSupabaseProfile(userId?: string) {
   const updateProfile = async (updates: any) => {
     if (!userId) return false;
     
+    // Create a copy without join data for DB update
+    const dbUpdates = { ...updates };
+    delete dbUpdates.organizations; 
+    delete dbUpdates.group_name;
+
     // 1. Update app_users
     const { data, error } = await supabase
       .from('app_users')
-      .update(updates)
+      .update(dbUpdates)
       .eq('id', userId)
-      .select()
+      .select('*, organizations(name)')
       .single();
 
     if (!error) {
-      setProfile(data);
+      setProfile({
+        ...data,
+        group_name: data.organizations?.name || 'GROUPE NON DÉFINI'
+      });
 
       // 2. Sync with player_profiles for dashboard consistency
       const profileUpdates: any = {};
       if (updates.xp !== undefined) profileUpdates.xp = updates.xp;
       if (updates.level !== undefined) profileUpdates.level = updates.level;
       if (updates.full_name !== undefined) profileUpdates.display_name = updates.full_name;
+      if (updates.first_name !== undefined && updates.last_name !== undefined) {
+         profileUpdates.display_name = `${updates.first_name} ${updates.last_name}`.trim();
+      }
       if (updates.streak_days !== undefined) profileUpdates.streak_days = updates.streak_days;
 
       if (Object.keys(profileUpdates).length > 0) {
@@ -584,10 +598,35 @@ export function useSupabaseProfile(userId?: string) {
 
       return true;
     }
+    console.error('Update profile error:', error);
     return false;
   };
 
   return { profile, loading, updateProfile };
+}
+
+export function useOrganizations() {
+  const [organizations, setOrganizations] = useState<{id: string, name: string}[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchOrgs() {
+      try {
+        const { data, error } = await supabase
+          .from('organizations')
+          .select('id, name')
+          .order('name');
+        if (!error && data) setOrganizations(data);
+      } catch (err) {
+        console.error('Error fetching organizations:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchOrgs();
+  }, []);
+
+  return { organizations, loading };
 }
 
 export function useSupabaseBadges(userId?: string) {
