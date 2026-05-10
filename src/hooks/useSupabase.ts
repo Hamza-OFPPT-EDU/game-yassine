@@ -700,5 +700,77 @@ export function useSupabaseAssetConfigs(bucketId: string) {
     }
   };
 
+
   return { configs, loading, getAssetStyle };
+}
+
+/**
+ * Persists detailed mission history and updates city progress.
+ */
+export async function saveMissionResult(summary: any, userId: string, isCorrection: boolean = false) {
+  if (!userId) return false;
+
+  try {
+    // 1. Log to act_results (Detailed History)
+    // Map current schema to the available one in Supabase
+    const { error: historyError } = await supabase.from('act_results').insert({
+      player_id: userId,
+      mission_id: summary.missionId,
+      mission_title: summary.missionTitle || 'Mission',
+      city_id: summary.cityId,
+      xp_earned: summary.totalXp,
+      stars_earned: summary.totalStars,
+      correct_count: summary.correctCount,
+      total_questions: summary.totalQuestions,
+      success_rate: summary.successRate,
+      time_spent: summary.questions.reduce((acc: number, q: any) => acc + (q.timeSpent || 0), 0),
+      details: summary.questions, // JSONB
+      is_correction: isCorrection,
+      created_at: new Date().toISOString()
+    });
+
+    if (historyError) {
+      console.warn('History log failed (may need table migration):', historyError.message);
+    }
+
+    // 2. Update player_city_progress (Dashboard View)
+    const { data: existingProgress } = await supabase
+      .from('player_city_progress')
+      .select('*')
+      .eq('player_id', userId)
+      .eq('city_id', summary.cityId)
+      .maybeSingle();
+
+    if (existingProgress) {
+      const missionsCompleted = isCorrection 
+        ? existingProgress.missions_completed 
+        : (existingProgress.missions_completed + 1);
+      
+      await supabase
+        .from('player_city_progress')
+        .update({
+          missions_completed: Math.min(missionsCompleted, existingProgress.missions_total || 99),
+          xp_earned: (existingProgress.xp_earned || 0) + summary.totalXp,
+          status: missionsCompleted >= (existingProgress.missions_total || 5) ? 'done' : 'current',
+          last_played_at: new Date().toISOString()
+        })
+        .eq('id', existingProgress.id);
+    } else {
+      await supabase.from('player_city_progress').insert({
+        player_id: userId,
+        city_id: summary.cityId,
+        city_name_fr: summary.cityName || summary.cityId,
+        missions_completed: isCorrection ? 0 : 1,
+        missions_total: 5, // Default estimate
+        xp_earned: summary.totalXp,
+        status: 'current',
+        last_played_at: new Date().toISOString()
+      });
+    }
+
+    return true;
+  } catch (err) {
+    console.error('Error in saveMissionResult:', err);
+    return false;
+  }
 }

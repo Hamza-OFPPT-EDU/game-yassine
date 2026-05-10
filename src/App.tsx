@@ -5,7 +5,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from './lib/supabase';
-import { useSupabaseProfile } from './hooks/useSupabase';
+import { useSupabaseProfile, saveMissionResult } from './hooks/useSupabase';
 import { motion, AnimatePresence } from 'motion/react';
 import { Screen, type City, type Mission, type MissionCompletionSummary } from './types';
 import { useAudio } from './contexts/AudioContext';
@@ -261,6 +261,11 @@ export default function App() {
         stars: newStats.stars,
         level: newStats.level
       });
+
+      // Log detailed history to act_results and update player_city_progress
+      if (session?.user?.id) {
+        saveMissionResult(summary, session.user.id, !!redoQuestionIds);
+      }
     }
 
     async function checkCityCompletion() {

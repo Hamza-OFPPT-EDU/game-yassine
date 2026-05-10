@@ -1,5 +1,6 @@
-import { usePlayerDetail } from '../hooks/useData';
-import { X, MapPin, Star, Award, Zap, Key, User, Trash2, AlertTriangle, Edit2, Save, RotateCcw, CheckCircle2, Circle } from 'lucide-react';
+import { usePlayerDetail, usePlayerHistory } from '../hooks/useData';
+import { X, MapPin, Star, Award, Zap, Key, User, Trash2, AlertTriangle, Edit2, Save, RotateCcw, CheckCircle2, Circle, Clock, History, ChevronDown, ChevronUp, RefreshCw } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import { useState, useEffect } from 'react';
 
 const CITY_EMOJIS = {
@@ -29,6 +30,8 @@ function formatDate(dateStr) {
 
 export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
   const { detail, loading } = usePlayerDetail(player?.id);
+  const { history, loading: historyLoading } = usePlayerHistory(player?.id);
+  const [expandedHistory, setExpandedHistory] = useState(null);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
@@ -296,27 +299,137 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
                     )}
                   </div>
 
-                  {/* Actions Section */}
-                  <div className="panel-section" style={{ borderTop: '1px solid var(--border-light)', paddingTop: 16 }}>
-                    {!showConfirmDelete ? (
-                      <button 
-                        className="btn-danger-outline" 
-                        style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
-                        onClick={() => setShowConfirmDelete(true)}
-                      >
-                        <Trash2 size={16} /> Supprimer le joueur
-                      </button>
+                  {/* History Section */}
+                  <div className="panel-section">
+                    <h4><History size={12} style={{display:'inline', marginRight:4}} />Historique d'activité ({history?.length || 0})</h4>
+                    {historyLoading ? (
+                      <div className="loading-small">Chargement de l'historique...</div>
+                    ) : history?.length === 0 ? (
+                      <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Aucun historique disponible</p>
                     ) : (
-                      <div className="delete-confirmation">
-                        <div style={{ color: 'var(--danger)', fontSize: 12, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
-                          <AlertTriangle size={14} /> Êtes-vous sûr ? Cette action est irréversible.
-                        </div>
-                        <div style={{ display: 'flex', gap: 8 }}>
-                          <button className="btn-secondary" style={{ flex: 1 }} onClick={() => setShowConfirmDelete(false)}>Annuler</button>
-                          <button className="btn-danger" style={{ flex: 1 }} onClick={handleDelete}>Confirmer</button>
-                        </div>
+                      <div className="history-list">
+                        {history.map(item => (
+                          <div key={item.id} className="history-item-wrapper">
+                            <div 
+                              className={`history-item ${expandedHistory === item.id ? 'expanded' : ''}`}
+                              onClick={() => setExpandedHistory(expandedHistory === item.id ? null : item.id)}
+                            >
+                              <div className="history-main">
+                                <div className="history-icon">
+                                  {item.success_rate >= 80 ? '🎯' : item.success_rate >= 50 ? '📈' : '⚠️'}
+                                </div>
+                                <div className="history-info">
+                                  <div className="history-title">
+                                    {item.mission_title}
+                                    {item.is_correction && <span className="correction-tag">Correction</span>}
+                                  </div>
+                                  <div className="history-meta">
+                                    {formatDate(item.created_at)} · {Math.round(item.time_spent / 60)} min · {item.xp_earned} XP
+                                  </div>
+                                </div>
+                                <div className="history-score">
+                                  {item.correct_count}/{item.total_questions}
+                                  {expandedHistory === item.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                                </div>
+                              </div>
+                              
+                              {expandedHistory === item.id && (
+                                <div className="history-details">
+                                  <div className="history-stats-mini">
+                                    <div className="h-stat">
+                                      <span>Précision</span>
+                                      <strong style={{ color: item.success_rate >= 80 ? 'var(--success)' : 'var(--warning)' }}>
+                                        {Math.round(item.success_rate)}%
+                                      </strong>
+                                    </div>
+                                    <div className="h-stat">
+                                      <span>Vitesse</span>
+                                      <strong>{Math.round(item.time_spent / (item.total_questions || 1))}s / q</strong>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="history-log">
+                                    {(item.details || []).map((q, idx) => (
+                                      <div key={idx} className={`log-row ${q.isCorrect ? 'correct' : 'incorrect'}`}>
+                                        <div className="log-q">Q{idx + 1}: {q.question}</div>
+                                        <div className="log-a">
+                                          <span>Réponse: <strong>{q.givenAnswer || '—'}</strong></span>
+                                          {!q.isCorrect && (
+                                            <span className="log-correct">Attendu: <strong>{q.correctAnswer}</strong></span>
+                                          )}
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     )}
+                  </div>
+
+                  {/* Statistics Summary */}
+                  <div className="panel-section">
+                    <h4><Clock size={12} style={{display:'inline', marginRight:4}} />Statistiques d'engagement</h4>
+                    <div className="engagement-grid">
+                      <div className="engagement-card">
+                        <div className="eng-label">Temps total</div>
+                        <div className="eng-value">
+                          {Math.floor((history?.reduce((acc, h) => acc + (h.time_spent || 0), 0) || 0) / 60)} min
+                        </div>
+                      </div>
+                      <div className="engagement-card">
+                        <div className="eng-label">Réussite moy.</div>
+                        <div className="eng-value">
+                          {history?.length > 0 
+                            ? Math.round(history.reduce((acc, h) => acc + (h.success_rate || 0), 0) / history.length)
+                            : 0}%
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Actions Section */}
+                  <div className="panel-section" style={{ borderTop: '1px solid var(--border-light)', paddingTop: 16 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      <button 
+                        className="btn-ghost" 
+                        style={{ width: '100%', justifyContent: 'center', color: 'var(--warning)' }}
+                        onClick={async () => {
+                          if (confirm("Réinitialiser toute la progression du joueur ?")) {
+                            await supabase.from('player_city_progress').delete().eq('player_id', player.id);
+                            await supabase.from('act_results').delete().eq('player_id', player.id);
+                            await supabase.from('player_profiles').update({ xp: 0, level: 1, streak_days: 0 }).eq('id', player.id);
+                            await supabase.from('app_users').update({ xp: 0, level: 1 }).eq('id', player.id);
+                            window.location.reload();
+                          }
+                        }}
+                      >
+                        <RefreshCw size={14} /> Réinitialiser la progression
+                      </button>
+
+                      {!showConfirmDelete ? (
+                        <button 
+                          className="btn-danger-outline" 
+                          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+                          onClick={() => setShowConfirmDelete(true)}
+                        >
+                          <Trash2 size={16} /> Supprimer le joueur
+                        </button>
+                      ) : (
+                        <div className="delete-confirmation">
+                          <div style={{ color: 'var(--danger)', fontSize: 12, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+                            <AlertTriangle size={14} /> Êtes-vous sûr ? Cette action est irréversible.
+                          </div>
+                          <div style={{ display: 'flex', gap: 8 }}>
+                            <button className="btn-secondary" style={{ flex: 1 }} onClick={() => setShowConfirmDelete(false)}>Annuler</button>
+                            <button className="btn-danger" style={{ flex: 1 }} onClick={handleDelete}>Confirmer</button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </>
               )}

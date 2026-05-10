@@ -250,6 +250,33 @@ export function usePlayerDetail(playerId) {
   return { detail, loading };
 }
 
+export function usePlayerHistory(playerId) {
+  const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!playerId) { setHistory([]); return; }
+    setLoading(true);
+
+    async function fetchHistory() {
+      const { data, error } = await supabase
+        .from('act_results')
+        .select('*')
+        .eq('player_id', playerId)
+        .order('created_at', { ascending: false });
+
+      if (!error && data) {
+        setHistory(data);
+      }
+      setLoading(false);
+    }
+
+    fetchHistory();
+  }, [playerId]);
+
+  return { history, loading };
+}
+
 export function useSkillDistribution() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
