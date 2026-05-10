@@ -34,6 +34,8 @@ export type LeaguePlayer = {
   avatar: string;
   rank: number;
   isCurrentUser?: boolean;
+  citiesCompleted: number;
+  badgesEarned: number;
 };
 
 export type League = {

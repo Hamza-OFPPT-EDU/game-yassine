@@ -88,12 +88,12 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
 
               <div className="grid grid-cols-2 gap-4">
                 {catBadges.map((badge, idx) => {
-                  const isEarned = earnedBadges.includes(badge.badge_id);
+                  const isEarned = earnedBadges.includes(badge.id);
                   const Icon = ICON_MAP[badge.icon_name] || Trophy;
                   
                   return (
                     <motion.div
-                      key={badge.badge_id}
+                      key={badge.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: (catIdx * 0.2) + (idx * 0.05) }}
@@ -112,7 +112,7 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                         {badge.image_url && badge.image_url.startsWith('http') ? (
                           <img 
                             src={optimizeSupabaseUrl(badge.image_url, 160, 85)} 
-                            alt={badge.name_fr} 
+                            alt={badge.badge_name} 
                             className="w-full h-full object-cover" 
                           />
                         ) : (
@@ -128,10 +128,10 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
 
                       <div className="space-y-1">
                         <h3 className={cn("font-black text-sm leading-tight", isEarned ? "text-voyage-primary" : "text-voyage-primary/40")}>
-                          {badge.name_fr}
+                          {badge.badge_name}
                         </h3>
                         <p className="text-[9px] font-bold text-voyage-primary/40 arabic-font leading-none">
-                          {badge.name_ar}
+                          {badge.badge_name_ar || badge.description_ar}
                         </p>
                       </div>
 

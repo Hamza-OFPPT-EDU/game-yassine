@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS public.badge_definitions CASCADE;
 CREATE TABLE public.badge_definitions (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   badge_name varchar(255) NOT NULL UNIQUE,
+  badge_name_ar varchar(255),
   description_fr text NOT NULL,
   description_ar text,
   requirement text,
@@ -42,30 +43,30 @@ CREATE POLICY "player_earned_badges_read" ON public.player_earned_badges FOR SEL
 CREATE POLICY "player_earned_badges_insert" ON public.player_earned_badges FOR INSERT WITH CHECK (true);
 
 -- 6. Insert Cultural Badges (19) with verified storage URLs
-INSERT INTO public.badge_definitions (id, badge_name, description_fr, icon_url, category, rarity, image_url)
+INSERT INTO public.badge_definitions (id, badge_name, badge_name_ar, description_fr, icon_url, category, rarity, image_url)
 VALUES
-  ('550e8400-e29b-41d4-a716-446655441111', 'Abzim', 'Bijou traditionnel de Rabat', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Abzim.png'),
-  ('550e8400-e29b-41d4-a716-446655442222', 'Aghraf', 'Bijou traditionnel de Rabat', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Aghraf.png'),
-  ('550e8400-e29b-41d4-a716-446655443333', 'Chebbka', 'Bijou traditionnel de Rabat', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Chebbka.png'),
-  ('550e8400-e29b-41d4-a716-446655444444', 'Fnous', 'Bijou traditionnel de Rabat', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Fnous.png'),
-  ('550e8400-e29b-41d4-a716-446655445555', 'Ibzimen', 'Bijou traditionnel de Rabat', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Ibzimen.png'),
-  ('98b50e2d-dc99-43ef-b387-052637738c01', 'Khalkhal Mawj', 'Bijou traditionnel de Chefchaouen', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Khalkhal%20Mawj.png'),
-  ('98b50e2d-dc99-43ef-b387-052637738c02', 'khalkhal', 'Bijou traditionnel de Chefchaouen', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/khalkhal.png'),
-  ('98b50e2d-dc99-43ef-b387-052637738c03', 'khit-Roh', 'Bijou traditionnel de Chefchaouen', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/khit-Roh.png'),
-  ('98b50e2d-dc99-43ef-b387-052637738c04', 'Khmissa', 'Bijou traditionnel de Chefchaouen', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Khmissa.png'),
-  ('98b50e2d-dc99-43ef-b387-052637738c05', 'Mdama bahar', 'Bijou traditionnel de Chefchaouen', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Mdama%20bahar.png'),
-  ('550e8400-e29b-41d4-a716-44665544f111', 'Mdama', 'Bijou traditionnel de Fès', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Mdama.png'),
-  ('550e8400-e29b-41d4-a716-44665544f222', 'Mharma', 'Bijou traditionnel de Fès', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Mharma.png'),
-  ('550e8400-e29b-41d4-a716-44665544f333', 'Mniqqa', 'Bijou traditionnel de Fès', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Mniqqa.png'),
-  ('550e8400-e29b-41d4-a716-44665544f444', 'Qabt', 'Bijou traditionnel de Fès', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Qabt.png'),
-  ('550e8400-e29b-41d4-a716-44665544f555', 'Sertia Atlantik', 'Bijou traditionnel de Fès', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Sertia%20Atlantik.png'),
-  ('98b50e2d-dc99-43ef-b387-052637738a01', 'Sertla', 'Bijou traditionnel de Marrakech', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Sertla.png'),
-  ('98b50e2d-dc99-43ef-b387-052637738a02', 'Tabraat', 'Bijou traditionnel de Marrakech', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tabraat.png'),
-  ('98b50e2d-dc99-43ef-b387-052637738a03', 'Tasfift', 'Bijou traditionnel de Marrakech', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tasfift.png'),
-  ('98b50e2d-dc99-43ef-b387-052637738a04', 'Tazrabt Sahara', 'Bijou traditionnel de Marrakech', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tazrabt%20Sahara.png'),
-  ('98b50e2d-dc99-43ef-b387-052637738a05', 'Tazrabt', 'Bijou traditionnel de Marrakech', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tazrabt.png'),
-  ('f83e1989-e001-470a-bda4-722124c346f1', 'Tifinagh', 'Bijou traditionnel de Dakhla', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tifinagh.png'),
-  ('0f576c5b-6cba-4efc-a85d-ddc0aa307dc3', 'Tizerzai', 'Bijou traditionnel de Dakhla', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tizerzai.png');
+  ('550e8400-e29b-41d4-a716-446655441111', 'Abzim', 'أبزيم', 'Bijou traditionnel de Rabat', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Abzim.png'),
+  ('550e8400-e29b-41d4-a716-446655442222', 'Aghraf', 'أغراف', 'Bijou traditionnel de Rabat', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Aghraf.png'),
+  ('550e8400-e29b-41d4-a716-446655443333', 'Chebbka', 'شبكة', 'Bijou traditionnel de Rabat', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Chebbka.png'),
+  ('550e8400-e29b-41d4-a716-446655444444', 'Fnous', 'فنوس', 'Bijou traditionnel de Rabat', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Fnous.png'),
+  ('550e8400-e29b-41d4-a716-446655445555', 'Ibzimen', 'إبزيمن', 'Bijou traditionnel de Rabat', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Ibzimen.png'),
+  ('98b50e2d-dc99-43ef-b387-052637738c01', 'Khalkhal Mawj', 'خلخال موج', 'Bijou traditionnel de Chefchaouen', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Khalkhal%20Mawj.png'),
+  ('98b50e2d-dc99-43ef-b387-052637738c02', 'khalkhal', 'خلخال', 'Bijou traditionnel de Chefchaouen', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/khalkhal.png'),
+  ('98b50e2d-dc99-43ef-b387-052637738c03', 'khit-Roh', 'خيط الروح', 'Bijou traditionnel de Chefchaouen', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/khit-Roh.png'),
+  ('98b50e2d-dc99-43ef-b387-052637738c04', 'Khmissa', 'خميسة', 'Bijou traditionnel de Chefchaouen', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Khmissa.png'),
+  ('98b50e2d-dc99-43ef-b387-052637738c05', 'Mdama bahar', 'مدامة بحر', 'Bijou traditionnel de Chefchaouen', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Mdama%20bahar.png'),
+  ('550e8400-e29b-41d4-a716-44665544f111', 'Mdama', 'مدامة', 'Bijou traditionnel de Fès', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Mdama.png'),
+  ('550e8400-e29b-41d4-a716-44665544f222', 'Mharma', 'محرمة', 'Bijou traditionnel de Fès', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Mharma.png'),
+  ('550e8400-e29b-41d4-a716-44665544f333', 'Mniqqa', 'منيقة', 'Bijou traditionnel de Fès', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Mniqqa.png'),
+  ('550e8400-e29b-41d4-a716-44665544f444', 'Qabt', 'قبط', 'Bijou traditionnel de Fès', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Qabt.png'),
+  ('550e8400-e29b-41d4-a716-44665544f555', 'Sertia Atlantik', 'سرتية أطلانتيك', 'Bijou traditionnel de Fès', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Sertia%20Atlantik.png'),
+  ('98b50e2d-dc99-43ef-b387-052637738a01', 'Sertla', 'سرتلة', 'Bijou traditionnel de Marrakech', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Sertla.png'),
+  ('98b50e2d-dc99-43ef-b387-052637738a02', 'Tabraat', 'تبرأت', 'Bijou traditionnel de Marrakech', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tabraat.png'),
+  ('98b50e2d-dc99-43ef-b387-052637738a03', 'Tasfift', 'تسفيفت', 'Bijou traditionnel de Marrakech', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tasfift.png'),
+  ('98b50e2d-dc99-43ef-b387-052637738a04', 'Tazrabt Sahara', 'تزربت صحراء', 'Bijou traditionnel de Marrakech', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tazrabt%20Sahara.png'),
+  ('98b50e2d-dc99-43ef-b387-052637738a05', 'Tazrabt', 'تزربت', 'Bijou traditionnel de Marrakech', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tazrabt.png'),
+  ('f83e1989-e001-470a-bda4-722124c346f1', 'Tifinagh', 'تيفيناغ', 'Bijou traditionnel de Dakhla', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tifinagh.png'),
+  ('0f576c5b-6cba-4efc-a85d-ddc0aa307dc3', 'Tizerzai', 'تيزرزاي', 'Bijou traditionnel de Dakhla', '🏅', 'cultural', 'rare', 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/Tizerzai.png');
 
 -- 7. Insert Multiplayer Badges (from previous schema)
 INSERT INTO public.badge_definitions (badge_name, description_fr, icon_url, category, rarity)

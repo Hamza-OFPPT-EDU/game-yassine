@@ -4,7 +4,7 @@
  */
 
 import { motion } from 'motion/react';
-import { Trophy, Timer, ArrowLeft, Star, TrendingUp, TrendingDown, Minus, Shield, Trash2, LogOut, Copy, Check, Medal } from 'lucide-react';
+import { Trophy, Timer, ArrowLeft, Star, TrendingUp, TrendingDown, Minus, Shield, Trash2, LogOut, Copy, Check, Medal, Navigation2 } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import { cn } from '../lib/utils';
 import { useLeagues } from '../hooks/useLeagues';
@@ -201,10 +201,30 @@ export default function LeagueDetailScreen({ leagueId, onBack }: LeagueDetailScr
                          )}>
                             {player.name} {player.isCurrentUser && "(Moi)"}
                          </h3>
-                         <div className="flex items-center gap-2 mt-0.5">
-                            <div className="flex items-center gap-1">
-                               <Medal className="text-duo-orange" size={10} fill="currentColor" />
-                               <span className="text-[10px] font-black text-duo-orange uppercase">Explorateur</span>
+                         <div className="flex flex-col gap-1 mt-1">
+                            <div className="flex items-center gap-2">
+                               <div className="flex items-center gap-1">
+                                  <Medal className="text-duo-orange" size={10} fill="currentColor" />
+                                  <span className="text-[10px] font-black text-duo-orange uppercase">Lvl {Math.floor(player.xp / 1000) + 1}</span>
+                               </div>
+                               <div className="w-1 h-1 rounded-full bg-slate-200" />
+                               <div className="flex items-center gap-1">
+                                  <Star className="text-amber-500" size={10} fill="currentColor" />
+                                  <span className="text-[10px] font-black text-amber-500 uppercase">{player.badgesEarned || 0} Badges</span>
+                               </div>
+                            </div>
+                            {/* City Progress Indicator */}
+                            <div className="flex items-center gap-2 mt-0.5 bg-voyage-sand/30 px-2 py-1 rounded-lg border border-voyage-accent/5">
+                               <Navigation2 size={10} className="text-voyage-accent -rotate-45" />
+                               <span className="text-[9px] font-black text-voyage-accent uppercase tracking-widest">
+                                  {player.citiesCompleted === 0 ? 'Rabat' : 
+                                   player.citiesCompleted === 1 ? 'Chefchaouen' : 
+                                   player.citiesCompleted === 2 ? 'Fès' : 
+                                   player.citiesCompleted === 3 ? 'Marrakech' : 
+                                   player.citiesCompleted === 4 ? 'Essaouira' : 
+                                   player.citiesCompleted === 5 ? 'Agadir' : 
+                                   player.citiesCompleted === 6 ? 'Laâyoune' : 'Dakhla'}
+                               </span>
                             </div>
                          </div>
                       </div>
