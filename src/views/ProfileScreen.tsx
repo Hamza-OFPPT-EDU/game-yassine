@@ -255,7 +255,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                   
                   <div className="inline-flex items-center gap-2 bg-[#7B3F1A]/5 px-4 py-1.5 rounded-full border border-[#7B3F1A]/10">
                     <span className="font-black text-[#7B3F1A] uppercase tracking-widest text-[10px]">
-                      {profile?.group_name || 'GROUPE NON DÉFINI'}
+                      {profile?.group_name || 'SPÉCIALITÉ NON DÉFINIE'}
                     </span>
                   </div>
                 </div>
@@ -517,7 +517,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                             "w-20 h-20 rounded-[28px] flex items-center justify-center border-2 shadow-sm transition-all duration-500 relative overflow-hidden",
                             isEarned 
                               ? "bg-gradient-to-br from-[#FFF8F0] to-[#FEF3C7] border-[#D4A43E] shadow-[#D4A43E]/20" 
-                              : "bg-gray-50 border-[#E5D5B8]/50 grayscale opacity-40"
+                              : "bg-gray-50 border-[#E5D5B8]/30 grayscale opacity-40"
                           )}>
                             {isEarned && (
                               <motion.div 
@@ -526,12 +526,22 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                                 className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,#D4A43E_0%,transparent_70%)]"
                               />
                             )}
-                            <img 
-                              src={badge.url} 
-                              alt={badge.name}
-                              className="w-12 h-12 object-contain relative z-10"
-                            />
-                            {!isEarned && <Lock className="absolute inset-0 m-auto text-gray-400 opacity-20" size={24} />}
+                            
+                            {badge.url ? (
+                              <img 
+                                src={optimizeSupabaseUrl(badge.url, 160, 85)} 
+                                alt={badge.name}
+                                className="w-12 h-12 object-contain relative z-10"
+                              />
+                            ) : (
+                              <span className="text-3xl relative z-10">🏆</span>
+                            )}
+
+                            {!isEarned && (
+                              <div className="absolute inset-0 flex items-center justify-center bg-black/5 z-20">
+                                <Lock size={20} className="text-[#7B3F1A]/50" />
+                              </div>
+                            )}
                           </div>
                           <div className="text-center space-y-0.5">
                             <p className={cn("text-[10px] font-black uppercase tracking-tight leading-tight", isEarned ? "text-[#4E2510]" : "text-gray-400")}>

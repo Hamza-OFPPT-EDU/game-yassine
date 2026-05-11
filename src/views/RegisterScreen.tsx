@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState, useMemo } from 'react'; 
 import { motion } from 'motion/react';
 import { User, Lock, ArrowRight, Loader2, AlertCircle, Sparkles, ChevronDown, Map, Volume2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -11,27 +11,32 @@ interface RegisterScreenProps {
   onSuccess: () => void;
 }
 
-const GROUPS = ['GE 101', 'GE 102', 'GE 103', 'GEOCF201', 'GEOCF202', 'GEOCF301', 'GEOCM201'];
+
 
 export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterScreenProps) {
   const { playSound, openSettings } = useAudio();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState<'F' | 'H'>('H');
-  const [group, setGroup] = useState(GROUPS[0]);
+  const [specialty, setSpecialty] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const username = (firstName && lastName) 
-    ? `${firstName.trim().toLowerCase()}.${lastName.trim().toLowerCase()}`.replace(/\s+/g, '')
-    : '';
+  const username = useMemo(() => {
+    const f = firstName.trim().toLowerCase().replace(/\s+/g, '');
+    const l = lastName.trim().toLowerCase().replace(/\s+/g, '');
+    if (!f && !l) return 'voyageur' + Math.floor(1000 + Math.random() * 9000);
+    if (!f) return l;
+    if (!l) return f;
+    return `${f}.${l}`;
+  }, [firstName, lastName]);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!firstName || !lastName || !password || !birthDate) {
-      setError("Veuillez remplir tous les champs, y compris ta date de naissance.");
+    if (!password) {
+      setError("Le mot de passe est requis pour créer ton compte.");
       return;
     }
 
@@ -42,7 +47,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
     try {
       const lowerFirstName = firstName.trim().toLowerCase();
       const lowerLastName = lastName.trim().toLowerCase();
-      const lowerUsername = `${lowerFirstName}.${lowerLastName}`.replace(/\s+/g, '');
+      const lowerUsername = username;
       const avatarUrl = gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
       const email = `${lowerUsername}@voyage.ma`;
       
@@ -57,7 +62,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
             last_name: lowerLastName,
             gender: gender,
             avatar_url: avatarUrl,
-            group_name: group,
+            group_name: specialty,
             birth_date: birthDate
           }
         }
@@ -194,17 +199,16 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                 </div>
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ml-2">Groupe</label>
-                <div className="relative">
-                  <select
-                    value={group}
-                    onChange={(e) => setGroup(e.target.value)}
-                    className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 pl-4 pr-10 appearance-none focus:outline-none focus:border-[#7B3F1A] font-bold text-xs text-[#1A1A2E]"
+                <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ml-2">Spécialité</label>
+                <div className="relative group">
+                  <input
+                    type="text"
+                    value={specialty}
+                    onChange={(e) => setSpecialty(e.target.value)}
+                    placeholder="ex: Dév Digital"
+                    className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 px-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm"
                     disabled={loading}
-                  >
-                    {GROUPS.map(g => <option key={g} value={g}>{g}</option>)}
-                  </select>
-                  <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7B3F1A]/40 pointer-events-none" />
+                  />
                 </div>
               </div>
             </div>
@@ -257,7 +261,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              disabled={loading || !username || !password}
+              disabled={loading || !password}
               className="w-full bg-gradient-to-br from-[#7B3F1A] to-[#4E2510] text-white py-4.5 rounded-3xl font-black text-lg uppercase tracking-tight flex items-center justify-center gap-3 shadow-xl shadow-[#7B3F1A]/20 hover:shadow-[#7B3F1A]/40 disabled:opacity-50 transition-all mt-4 border-b-4 border-black/20"
             >
               {loading ? (

@@ -8,6 +8,7 @@ import { supabase } from '../lib/supabase';
 import { CITIES, type Challenge, type City, type Mission, DEFAULT_AVATAR_URL, AVATAR_MALE_URL, AVATAR_FEMALE_URL } from '../types';
 import { Session } from '@supabase/supabase-js';
 import { useSettings } from '../contexts/SettingsContext';
+import { pickRewardBadge } from '../lib/progression';
 
 export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
@@ -939,6 +940,30 @@ export async function saveMissionResult(summary: any, userId: string, isCorrecti
             })
             .eq('user_id', userId)
             .eq('league_id', membership.league_id);
+        }
+      }
+    }
+
+    // 5. Grant Badge if mission is passed successfully (at least 70% success)
+    const successRate = summary.successRate || (summary.totalQuestions > 0 ? Math.round((summary.correctCount / summary.totalQuestions) * 100) : 0);
+    if (successRate >= 70) {
+      const badge = await pickRewardBadge({
+        playerId: userId,
+        cityName: summary.cityName,
+        cityId: summary.cityId,
+        missionTitle: summary.missionTitle
+      });
+
+      if (badge) {
+        const { error: badgeError } = await supabase.from('player_earned_badges').insert({
+          player_id: userId,
+          badge_id: badge.id
+        });
+        
+        if (badgeError) {
+          console.warn('Could not grant badge:', badgeError);
+        } else {
+          console.log(`Badge granted: ${badge.badge_name}`);
         }
       }
     }
