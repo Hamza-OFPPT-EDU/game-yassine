@@ -29,6 +29,10 @@ export function useAuth() {
     return () => subscription.unsubscribe();
   }, []);
 
+  const signOut = async () => {
+    await supabase.auth.signOut();
+  };
+
   return { session, loading, signOut };
 }
 
@@ -507,7 +511,7 @@ export function useSupabaseProfile(userId?: string) {
           .eq('id', userId)
           .single();
 
-        // 3. Also get auth metadata for ultimate fallback of identity (critical for demo/signup sync delays)
+        // 3. Also get auth metadata for ultimate fallback of identity (critical for signup sync delays)
         const { data: authData } = await supabase.auth.getUser();
         const meta = authData?.user?.user_metadata || {};
 

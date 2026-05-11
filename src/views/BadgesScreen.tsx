@@ -45,11 +45,10 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
 
   // Group badges by category if needed, or just show them all
   const categories = [
-    { id: 'decision', label: 'Prise de Décision', labelAr: 'اتخاذ القرار' },
-    { id: 'communication', label: 'Communication', labelAr: 'التواصل' },
-    { id: 'equipe', label: 'Travail d\'Équipe', labelAr: 'العمل الجماعي' },
-    { id: 'excellence', label: 'Excellence & Maîtrise', labelAr: 'التميز والإتقان' },
-    { id: 'stress', label: 'Gestion du Stress', labelAr: 'إدارة الضغط' },
+    { id: 'cultural', label: 'Héritage & Culture', labelAr: 'التراث والثقافة' },
+    { id: 'achievement', label: 'Accomplissements', labelAr: 'الإنجازات' },
+    { id: 'challenge', label: 'Défis Relevés', labelAr: 'التحديات المجتازة' },
+    { id: 'multiplayer', label: 'Esprit d\'Équipe', labelAr: 'روح الفريق' },
   ];
 
   return (
@@ -74,7 +73,7 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
 
       <main className="flex-grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 scrollbar-hide">
         {categories.map((cat, catIdx) => {
-          const catBadges = badges.filter(b => (b.skill || '').toLowerCase() === cat.id);
+          const catBadges = badges.filter(b => (b.category || '').toLowerCase() === cat.id);
           if (catBadges.length === 0) return null;
 
           return (
@@ -89,12 +88,17 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
 
               <div className="grid grid-cols-2 gap-4">
                 {catBadges.map((badge, idx) => {
-                  const isEarned = earnedBadges.includes(badge.badge_id || badge.id);
-                  const Icon = ICON_MAP[badge.icon_name] || Trophy;
+                  const isEarned = earnedBadges.includes(badge.id);
+                  
+                  // Resolve image URL
+                  let imageUrl = badge.image_url;
+                  if (imageUrl && !imageUrl.startsWith('http')) {
+                    imageUrl = `https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/${imageUrl}`;
+                  }
                   
                     return (
                       <motion.div
-                        key={badge.badge_id || badge.id}
+                        key={badge.id}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: (catIdx * 0.2) + (idx * 0.05) }}
@@ -108,16 +112,16 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                         {/* Badge Icon Container */}
                         <div 
                           className={cn("w-20 h-20 rounded-full flex items-center justify-center border-b-4 shadow-sm transition-transform bg-voyage-primary/10 border-voyage-primary/20 overflow-hidden relative mb-2")}
-                          style={isEarned ? getAssetStyle(badge.image_url) : {}}
+                          style={isEarned ? getAssetStyle(imageUrl) : {}}
                         >
-                          {badge.image_url && badge.image_url.startsWith('http') ? (
+                          {imageUrl ? (
                             <img 
-                              src={optimizeSupabaseUrl(badge.image_url, 160, 85)} 
-                              alt={badge.name_fr || badge.badge_name} 
+                              src={optimizeSupabaseUrl(imageUrl, 160, 85)} 
+                              alt={badge.badge_name} 
                               className="w-full h-full object-cover" 
                             />
                           ) : (
-                            <span className="text-4xl">{badge.image_url || '🏆'}</span>
+                            <span className="text-4xl">{badge.icon_url || '🏆'}</span>
                           )}
                           
                           {!isEarned && (
@@ -129,10 +133,10 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
   
                         <div className="space-y-1">
                           <h3 className={cn("font-black text-sm leading-tight", isEarned ? "text-voyage-primary" : "text-voyage-primary/40")}>
-                            {badge.name_fr || badge.badge_name}
+                            {badge.badge_name}
                           </h3>
                           <p className="text-[9px] font-bold text-voyage-primary/40 arabic-font leading-none">
-                            {badge.name_ar || badge.badge_name_ar || badge.description_ar}
+                            {badge.badge_name_ar || badge.description_ar}
                           </p>
                         </div>
 
@@ -142,10 +146,10 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                         </div>
                       )}
                       
-                      {!isEarned && badge.points && (
+                      {!isEarned && (badge.xp_requirement || badge.points) && (
                          <div className="mt-1 flex items-center gap-1">
                             <Star size={10} className="fill-voyage-primary/20 text-voyage-primary/20" />
-                            <span className="text-[10px] font-black text-voyage-primary/30 uppercase">{badge.points} XP</span>
+                            <span className="text-[10px] font-black text-voyage-primary/30 uppercase">{badge.xp_requirement || badge.points} XP</span>
                          </div>
                       )}
                     </motion.div>

@@ -123,7 +123,7 @@ export default function App() {
         last_name: meta.last_name || '',
         gender: meta.gender || 'H',
         avatar_url: avatarUrl,
-        group_name: meta.group_name || 'DEMO',
+        group_name: meta.group_name || 'Général',
         birth_date: meta.birth_date || null,
         // Don't overwrite existing stats if record exists
       }, { onConflict: 'id', ignoreDuplicates: true });
@@ -513,6 +513,7 @@ export default function App() {
           <LeagueDetailScreen 
             leagueId={selectedLeagueId || 'bronze'} 
             onBack={() => setCurrentScreen(Screen.League)} 
+            onShowBadges={() => setCurrentScreen(Screen.Badges)}
           />
         );
       case Screen.VocabularyMatch:

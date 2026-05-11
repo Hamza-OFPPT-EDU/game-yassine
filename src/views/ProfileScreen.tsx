@@ -7,7 +7,7 @@ import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { optimizeSupabaseUrl } from '../lib/city-theme';
 import { DEFAULT_AVATAR_URL } from '../types';
-import { getBadgeUrl } from '../lib/badges';
+import { getBadgeUrl, BADGE_MAP } from '../lib/badges';
 import { 
   AreaChart, Area, BarChart, Bar, RadarChart, Radar, PolarGrid, 
   PolarAngleAxis, PolarRadiusAxis, LineChart, Line, XAxis, YAxis, 
@@ -48,7 +48,7 @@ function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
             />
           )}
           <img 
-            src={badge.url || '/assets/badge_placeholder.png'} 
+            src={optimizeSupabaseUrl(badge.url || '', 300, 85) || '/assets/badge_placeholder.png'} 
             className="w-32 h-32 object-contain relative z-10"
             alt={badge.badge_name}
           />
@@ -160,13 +160,18 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
   const cities = ['Tous', 'Rabat', 'Chefchaouen', 'Fès', 'Marrakech', 'Dakhla'];
 
   const allGameBadges = useMemo(() => {
-    return badges.map(b => ({
-      id: b.badge_id,
-      name: b.name_fr,
-      url: b.image_url,
-      city: b.city || 'Inconnu',
-      isEarned: earnedBadges.includes(b.badge_id)
-    }));
+    return badges.map(b => {
+      const staticInfo = (BADGE_MAP as any)[b.id];
+      return {
+        id: b.id,
+        name: b.badge_name,
+        url: b.image_url || (staticInfo ? getBadgeUrl(staticInfo.url) : null),
+        city: staticInfo?.city || (b.category === 'cultural' ? 'Culture' : 'Succès'),
+        isEarned: earnedBadges.includes(b.id),
+        description_fr: b.description_fr,
+        rarity: b.rarity
+      };
+    });
   }, [badges, earnedBadges]);
 
   const filteredBadges = useMemo(() => {
@@ -548,7 +553,12 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
         <AnimatePresence>
           {selectedBadge && (
             <BadgeDetail 
-              badge={{ badge_name: selectedBadge.name, url: selectedBadge.url, rarity: selectedBadge.city, description_fr: `Badge obtenu lors de votre mission à ${selectedBadge.city}.` }} 
+              badge={{ 
+                badge_name: selectedBadge.name, 
+                url: selectedBadge.url, 
+                rarity: selectedBadge.rarity || selectedBadge.city, 
+                description_fr: selectedBadge.description_fr || `Badge obtenu lors de votre mission à ${selectedBadge.city}.` 
+              }} 
               isEarned={selectedBadge.isEarned} 
               onClose={() => setSelectedBadge(null)} 
             />

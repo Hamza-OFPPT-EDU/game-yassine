@@ -15,9 +15,10 @@ import ConfirmationModal from '../components/ConfirmationModal';
 interface LeagueDetailScreenProps {
   leagueId: string;
   onBack: () => void;
+  onShowBadges?: () => void;
 }
 
-export default function LeagueDetailScreen({ leagueId, onBack }: LeagueDetailScreenProps) {
+export default function LeagueDetailScreen({ leagueId, onBack, onShowBadges }: LeagueDetailScreenProps) {
   const { session } = useAuth();
   const { leagues, loading, leaveLeague, deleteLeague } = useLeagues(session?.user?.id);
   const [showExitModal, setShowExitModal] = useState(false);
@@ -219,10 +220,18 @@ export default function LeagueDetailScreen({ leagueId, onBack }: LeagueDetailScr
                           
                           <div className="flex items-center gap-2">
                              {/* Badge Count */}
-                             <div className="flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-100">
+                             <motion.button 
+                                whileHover={player.isCurrentUser && onShowBadges ? { scale: 1.05 } : {}}
+                                whileTap={player.isCurrentUser && onShowBadges ? { scale: 0.95 } : {}}
+                                onClick={() => player.isCurrentUser && onShowBadges?.()}
+                                className={cn(
+                                  "flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-100 transition-all",
+                                  player.isCurrentUser && onShowBadges ? "cursor-pointer hover:bg-amber-100 hover:border-amber-200" : ""
+                                )}
+                              >
                                 <Star className="text-amber-500" size={10} fill="currentColor" />
                                 <span className="text-[9px] font-black text-amber-600 uppercase tracking-tighter">{player.badgesEarned || 0} Bijoux</span>
-                             </div>
+                             </motion.button>
                              
                              {/* Progress Tag */}
                              <div className="flex items-center gap-1 bg-voyage-accent/5 px-2 py-0.5 rounded-md border border-voyage-accent/10">
