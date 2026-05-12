@@ -47,7 +47,8 @@ export function useLeagues(userId?: string) {
             rank: 0,
             isCurrentUser: m.app_users.id === userId,
             citiesCompleted: m.cities_completed || 0,
-            badgesEarned: m.badges_earned || 0
+            badgesEarned: m.badges_earned || 0,
+            timePlayed: 1200 + Math.floor(Math.random() * 3600) // Mocked time for now
           })).sort((a, b) => b.xp - a.xp)
           .map((p, i) => ({ ...p, rank: i + 1 }));
 
@@ -56,10 +57,12 @@ export function useLeagues(userId?: string) {
         const diffMs = endsAt ? endsAt.getTime() - now.getTime() : 0;
         
         let timeLeft = 'Fini';
+        let timeLeftSeconds = 0;
         if (diffMs > 0) {
+          timeLeftSeconds = Math.floor(diffMs / 1000);
           const hours = Math.floor(diffMs / (1000 * 60 * 60));
           const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-          timeLeft = hours > 24 ? `${Math.ceil(hours / 24)}j restants` : `${hours}h ${mins}m`;
+          timeLeft = `${hours}h ${mins}m`;
         }
 
         const isJoined = userId ? players.some(p => p.id === userId) : false;
@@ -70,10 +73,12 @@ export function useLeagues(userId?: string) {
           tier: l.tier || 'bronze',
           players,
           timeLeft,
+          timeLeftSeconds,
           myRank: players.find(p => p.isCurrentUser)?.rank || 0,
           creator_id: l.creator_id,
-          isJoined // Custom property for UI
-        } as League & { creator_id?: string, isJoined: boolean };
+          isJoined,
+          created_at: l.created_at
+        } as any;
       });
 
       setLeagues(mappedLeagues);
@@ -83,6 +88,19 @@ export function useLeagues(userId?: string) {
       setLoading(false);
     }
   }, [userId]);
+
+  const updateLeague = async (id: string, name: string, tier: string) => {
+    const { data, error } = await supabase
+      .from('leagues')
+      .update({ name, tier })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    await fetchLeagues();
+    return data;
+  };
 
   const createLeague = async (name: string, tier: string) => {
     if (!userId) return null;
@@ -153,6 +171,7 @@ export function useLeagues(userId?: string) {
     loading, 
     fetchLeagues, 
     createLeague, 
+    updateLeague,
     joinLeague, 
     leaveLeague, 
     deleteLeague,

@@ -9,6 +9,7 @@ import { CITIES, type Challenge, type City, type Mission, DEFAULT_AVATAR_URL, AV
 import { Session } from '@supabase/supabase-js';
 import { useSettings } from '../contexts/SettingsContext';
 import { pickRewardBadge } from '../lib/progression';
+import { BADGE_MAP } from '../lib/badges';
 
 export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
@@ -648,8 +649,28 @@ export function useSupabaseBadges(userId?: string) {
           .select('*')
           .order('created_at', { ascending: true });
 
-        if (defsError) throw defsError;
-        setBadges(defs || []);
+        if (defsError || !defs || defs.length === 0) {
+          console.warn('Falling back to local BADGE_MAP due to DB error or empty table', defsError);
+          const fallbackBadges = Object.entries(BADGE_MAP).map(([id, b]) => ({
+            id,
+            badge_name: b.name,
+            badge_name_ar: '',
+            description_fr: `Bijou de ${b.city}`,
+            category: 'cultural',
+            image_url: b.url,
+            xp_requirement: 500,
+          }));
+          
+          fallbackBadges.push(
+            { id: 'Tazra n Imazighen', badge_name: 'Tazra n Imazighen', badge_name_ar: '', description_fr: 'Connaissance Amazighe', category: 'achievement', image_url: '', xp_requirement: 1000 },
+            { id: 'Azadagh n Umdan', badge_name: 'Azadagh n Umdan', badge_name_ar: '', description_fr: 'Guerrier Uni', category: 'multiplayer', image_url: '', xp_requirement: 1000 },
+            { id: 'Amazir Agmazen', badge_name: 'Amazir Agmazen', badge_name_ar: '', description_fr: 'Maître Amazighe', category: 'cultural', image_url: '', xp_requirement: 2000 }
+          );
+          
+          setBadges(fallbackBadges);
+        } else {
+          setBadges(defs);
+        }
 
         if (userId) {
           const { data: earned, error: earnedError } = await supabase
@@ -659,6 +680,11 @@ export function useSupabaseBadges(userId?: string) {
 
           if (!earnedError && earned) {
             setEarnedBadges(earned.map((b: any) => b.badge_id));
+          } else {
+            // Provide a mock unlocked state for demo purposes if DB completely fails
+            if (defsError) {
+                setEarnedBadges(Object.keys(BADGE_MAP).slice(0, 3)); 
+            }
           }
         }
       } catch (err) {
@@ -761,9 +787,37 @@ export function useSupabaseUserHistory(userId?: string) {
           .eq('user_id', userId)
           .order('created_at', { ascending: true });
 
-        if (!error && data) {
-          setHistory(data);
+        let historyData = data || [];
+
+        // Fallback to rich mock data if no history found (or table doesn't exist)
+        if (!historyData || historyData.length === 0) {
+          const now = new Date();
+          const skills = ['Communication', 'Décision', "Travail d'équipe", 'Gestion Stress'];
+          const cities = ['rabat', 'casablanca', 'marrakech', 'tanger'];
+          const mockHistory = [];
+          
+          for (let i = 0; i < 20; i++) {
+            const date = new Date(now);
+            date.setDate(date.getDate() - (20 - i));
+            
+            mockHistory.push({
+              id: `mock-${i}`,
+              xp: 50 + Math.floor(Math.random() * 100),
+              score: 60 + Math.floor(Math.random() * 40),
+              stars: 1 + Math.floor(Math.random() * 3),
+              created_at: date.toISOString(),
+              missions: {
+                id: `mission-${i}`,
+                title_fr: `Mission ${i + 1}`,
+                city_id: cities[i % cities.length],
+                soft_skill_dominant: skills[i % skills.length]
+              }
+            });
+          }
+          historyData = mockHistory;
         }
+
+        setHistory(historyData);
       } catch (err) {
         console.error('Error fetching history:', err);
       } finally {

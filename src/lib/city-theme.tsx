@@ -51,6 +51,9 @@ export const optimizeSupabaseUrl = (url: string, width = 200, quality = 75) => {
 
   // 2. Only apply to Supabase storage URLs for images
   if (url.includes('supabase.co/storage/v1/object/public/')) {
+    // Skip optimization for badges bucket if it's causing issues (transformation service might be off for this bucket/project)
+    if (url.includes('/public/badges/')) return url;
+
     // Check if it's a GIF (ignoring query params)
     const isGif = url.split('?')[0].toLowerCase().endsWith('.gif');
     if (isGif) return url;

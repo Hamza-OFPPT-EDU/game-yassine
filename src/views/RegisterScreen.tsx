@@ -18,7 +18,9 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState<'F' | 'H'>('H');
+  const [establishment, setEstablishment] = useState('');
   const [specialty, setSpecialty] = useState('');
+  const [academicLevel, setAcademicLevel] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -62,7 +64,10 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
             last_name: lowerLastName,
             gender: gender,
             avatar_url: avatarUrl,
-            group_name: specialty,
+            group_name: specialty, // Keep mapping specialty to group_name for backward compatibility
+            establishment: establishment,
+            specialty: specialty,
+            academic_level: academicLevel,
             birth_date: birthDate
           }
         }
@@ -199,17 +204,46 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                 </div>
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ml-2">Spécialité</label>
-                <div className="relative group">
-                  <input
-                    type="text"
-                    value={specialty}
-                    onChange={(e) => setSpecialty(e.target.value)}
-                    placeholder="ex: Dév Digital"
-                    className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 px-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm"
-                    disabled={loading}
-                  />
-                </div>
+                <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ml-2 flex items-center gap-1">
+                  Établissement <span className="text-[#7B3F1A]/40 lowercase font-bold text-[8px]">(Optionnel)</span>
+                </label>
+                <input
+                  type="text"
+                  value={establishment}
+                  onChange={(e) => setEstablishment(e.target.value)}
+                  placeholder="ex: OFPPT"
+                  className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 px-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm"
+                  disabled={loading}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ml-2 flex items-center gap-1">
+                  Spécialité <span className="text-[#7B3F1A]/40 lowercase font-bold text-[8px]">(Optionnel)</span>
+                </label>
+                <input
+                  type="text"
+                  value={specialty}
+                  onChange={(e) => setSpecialty(e.target.value)}
+                  placeholder="ex: Dév Digital"
+                  className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 px-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm"
+                  disabled={loading}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ml-2 flex items-center gap-1">
+                  Niveau <span className="text-[#7B3F1A]/40 lowercase font-bold text-[8px]">(Optionnel)</span>
+                </label>
+                <input
+                  type="text"
+                  value={academicLevel}
+                  onChange={(e) => setAcademicLevel(e.target.value)}
+                  placeholder="ex: 1ère année"
+                  className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 px-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm"
+                  disabled={loading}
+                />
               </div>
             </div>
 

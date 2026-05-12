@@ -125,14 +125,26 @@ export default function BadgesManager() {
                             badge.rarity === 'uncommon' ? 'linear-gradient(135deg, #064e3b 0%, #022c22 100%)' :
                             'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
               }}>
-                {badge.image_url ? (
-                  <img src={badge.image_url} alt={badge.badge_name} className="badge-img" />
-                ) : (
-                  <div className="badge-placeholder">
-                    <Award size={40} opacity={0.3} />
-                    <span style={{ fontSize: 24 }}>{badge.icon_url || '🏅'}</span>
-                  </div>
-                )}
+                {(() => {
+                  let imgUrl = badge.image_url;
+                  if (!imgUrl || !imgUrl.startsWith('http')) {
+                    let fileName = imgUrl || badge.badge_name;
+                    if (fileName && !fileName.toLowerCase().endsWith('.png')) fileName += '.png';
+                    if (fileName) {
+                       const cleanPath = decodeURIComponent(fileName);
+                       imgUrl = `https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/${encodeURIComponent(cleanPath)}`;
+                    }
+                  }
+                  
+                  return imgUrl ? (
+                    <img src={imgUrl} alt={badge.badge_name} className="badge-img" />
+                  ) : (
+                    <div className="badge-placeholder">
+                      <Award size={40} opacity={0.3} />
+                      <span style={{ fontSize: 24 }}>{badge.icon_url || '🏅'}</span>
+                    </div>
+                  );
+                })()}
                 <div className={`badge-rarity-tag`} style={{ backgroundColor: getRarityColor(badge.rarity) }}>
                   {badge.rarity?.toUpperCase()}
                 </div>

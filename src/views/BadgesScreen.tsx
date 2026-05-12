@@ -90,10 +90,16 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                 {catBadges.map((badge, idx) => {
                   const isEarned = earnedBadges.includes(badge.id);
                   
-                  // Resolve image URL
+                  // Resolve image URL dynamically based on badge name as requested
                   let imageUrl = badge.image_url;
-                  if (imageUrl && !imageUrl.startsWith('http')) {
-                    imageUrl = `https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/${imageUrl}`;
+                  if (!imageUrl || !imageUrl.startsWith('http')) {
+                    // Reconstruct filename from badge_name if image_url is missing or just a partial path
+                    let fileName = imageUrl || badge.badge_name;
+                    if (!fileName.toLowerCase().endsWith('.png')) {
+                      fileName += '.png';
+                    }
+                    const cleanPath = decodeURIComponent(fileName);
+                    imageUrl = `https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/${encodeURIComponent(cleanPath)}`;
                   }
                   
                     return (

@@ -43,6 +43,7 @@ export default function App() {
   const [completedMissions, setCompletedMissions] = useState<string[]>([]);
   const [completedCities, setCompletedCities] = useState<string[]>([]);
   const [selectedLeagueId, setSelectedLeagueId] = useState<string | null>(null);
+  const [editingLeagueId, setEditingLeagueId] = useState<string | null>(null);
   const [loadingMissions, setLoadingMissions] = useState(false);
   const [missionSummary, setMissionSummary] = useState<MissionCompletionSummary | null>(null);
   const [redoQuestionIds, setRedoQuestionIds] = useState<string[] | undefined>(undefined);
@@ -502,12 +503,25 @@ export default function App() {
               setSelectedLeagueId(id);
               setCurrentScreen(Screen.LeagueDetail);
             }}
-            onCreateLeague={() => setCurrentScreen(Screen.LeagueCreate)}
+            onCreateLeague={() => {
+              setEditingLeagueId(null);
+              setCurrentScreen(Screen.LeagueCreate);
+            }}
+            onEditLeague={(id) => {
+              setEditingLeagueId(id);
+              setCurrentScreen(Screen.LeagueCreate);
+            }}
             onBack={() => setCurrentScreen(Screen.Map)} 
           />
         );
       case Screen.LeagueCreate:
-        return <LeagueCreateScreen onBack={() => setCurrentScreen(Screen.League)} onCreated={() => setCurrentScreen(Screen.League)} />;
+        return (
+          <LeagueCreateScreen 
+            leagueId={editingLeagueId || undefined}
+            onBack={() => setCurrentScreen(Screen.League)} 
+            onCreated={() => setCurrentScreen(Screen.League)} 
+          />
+        );
       case Screen.LeagueDetail:
         return (
           <LeagueDetailScreen 

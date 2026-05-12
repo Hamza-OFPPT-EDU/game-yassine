@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, Trophy, Sparkles, Loader2, Shield, Users, Target } from 'lucide-react';
 import { useLeagues } from '../hooks/useLeagues';
 import { useAuth } from '../hooks/useSupabase';
 
 interface LeagueCreateScreenProps {
+  leagueId?: string; // Optional: for editing
   onBack: () => void;
   onCreated: () => void;
 }
@@ -20,15 +21,25 @@ const TIERS = [
   { id: 'gold', name: 'Or', color: 'text-voyage-primary', bg: 'bg-voyage-primary/10', border: 'border-voyage-primary' },
 ];
 
-export default function LeagueCreateScreen({ onBack, onCreated }: LeagueCreateScreenProps) {
+export default function LeagueCreateScreen({ leagueId, onBack, onCreated }: LeagueCreateScreenProps) {
   const { session } = useAuth();
-  const { createLeague } = useLeagues(session?.user?.id);
+  const { leagues, createLeague, updateLeague } = useLeagues(session?.user?.id);
   const [name, setName] = useState('');
   const [selectedTier, setSelectedTier] = useState(TIERS[0].id);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleCreate = async (e: React.FormEvent) => {
+  useEffect(() => {
+    if (leagueId) {
+      const existing = leagues.find(l => l.id === leagueId);
+      if (existing) {
+        setName(existing.name);
+        setSelectedTier(existing.tier);
+      }
+    }
+  }, [leagueId, leagues]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) {
       setError("Donne un nom à ta compétition !");
@@ -38,7 +49,11 @@ export default function LeagueCreateScreen({ onBack, onCreated }: LeagueCreateSc
     setLoading(true);
     setError(null);
     try {
-      await createLeague(name, selectedTier);
+      if (leagueId) {
+        await updateLeague(leagueId, name, selectedTier);
+      } else {
+        await createLeague(name, selectedTier);
+      }
       onCreated();
     } catch (err: any) {
       setError(err.message || "Une erreur est survenue.");
@@ -48,13 +63,7 @@ export default function LeagueCreateScreen({ onBack, onCreated }: LeagueCreateSc
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#FFF8F0] relative overflow-hidden font-sans">
-      {/* Decorative Background */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-voyage-accent/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-voyage-primary/20 rounded-full blur-3xl" />
-      </div>
-
+    <div className="flex flex-col h-full bg-[#FAFAFA] relative overflow-hidden font-sans">
       <header className="relative z-10 px-6 pt-12 pb-6 flex items-center gap-4">
         <motion.button 
           whileHover={{ scale: 1.1 }}
@@ -65,8 +74,12 @@ export default function LeagueCreateScreen({ onBack, onCreated }: LeagueCreateSc
           <ArrowLeft size={22} strokeWidth={2.5} />
         </motion.button>
         <div>
-          <h1 className="text-2xl font-black uppercase tracking-tighter text-[#1A1A2E]">Nouvelle Ligue</h1>
-          <p className="text-[10px] font-bold text-voyage-accent/60 uppercase tracking-widest">Crée ton groupe</p>
+          <h1 className="text-2xl font-black uppercase tracking-tighter text-[#1A1A2E]">
+            {leagueId ? 'Modifier la Ligue' : 'Nouvelle Ligue'}
+          </h1>
+          <p className="text-[10px] font-bold text-voyage-accent/60 uppercase tracking-widest">
+            {leagueId ? 'Ajuste tes paramètres' : 'Crée ton groupe'}
+          </p>
         </div>
       </header>
 
@@ -74,9 +87,9 @@ export default function LeagueCreateScreen({ onBack, onCreated }: LeagueCreateSc
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/80 backdrop-blur-xl border-2 border-white rounded-[40px] p-8 shadow-xl shadow-voyage-accent/5"
+          className="bg-white border-2 border-slate-50 rounded-[40px] p-8 shadow-xl"
         >
-          <form onSubmit={handleCreate} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-3">
               <label className="text-xs font-black text-voyage-accent uppercase tracking-widest ml-1 flex items-center gap-2">
                 <Users size={14} /> Nom de la compétition
@@ -103,7 +116,7 @@ export default function LeagueCreateScreen({ onBack, onCreated }: LeagueCreateSc
                     onClick={() => setSelectedTier(tier.id)}
                     className={`flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all ${
                       selectedTier === tier.id 
-                        ? `${tier.border} ${tier.bg} shadow-md` 
+                        ? `${tier.border} ${tier.bg} shadow-sm` 
                         : 'border-slate-100 bg-white opacity-40 grayscale'
                     }`}
                   >
@@ -131,24 +144,13 @@ export default function LeagueCreateScreen({ onBack, onCreated }: LeagueCreateSc
                 <Loader2 className="animate-spin" size={24} />
               ) : (
                 <>
-                  Lancer la Ligue
+                  {leagueId ? 'Enregistrer' : 'Lancer la Ligue'}
                   <Sparkles size={20} fill="currentColor" />
                 </>
               )}
             </motion.button>
           </form>
         </motion.div>
-
-        <div className="mt-8 grid grid-cols-2 gap-4">
-           <div className="p-4 bg-white/40 rounded-2xl border border-white/60">
-              <Shield className="text-voyage-accent mb-2" size={20} />
-              <p className="text-[10px] font-bold text-[#1A1A2E]/60 leading-tight">Tu seras l'administrateur de ce groupe.</p>
-           </div>
-           <div className="p-4 bg-white/40 rounded-2xl border border-white/60">
-              <Trophy className="text-voyage-primary mb-2" size={20} />
-              <p className="text-[10px] font-bold text-[#1A1A2E]/60 leading-tight">Les membres seront classés par leur XP total.</p>
-           </div>
-        </div>
       </main>
     </div>
   );

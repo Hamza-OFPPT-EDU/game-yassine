@@ -162,10 +162,14 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
   const allGameBadges = useMemo(() => {
     return badges.map(b => {
       const staticInfo = (BADGE_MAP as any)[b.id];
+      let rawUrl = b.image_url || (staticInfo ? staticInfo.url : null) || b.badge_name;
+      if (rawUrl && !rawUrl.toLowerCase().endsWith('.png') && !rawUrl.startsWith('http')) {
+        rawUrl += '.png';
+      }
       return {
         id: b.id,
         name: b.badge_name,
-        url: b.image_url || (staticInfo ? getBadgeUrl(staticInfo.url) : null),
+        url: getBadgeUrl(rawUrl),
         city: staticInfo?.city || (b.category === 'cultural' ? 'Culture' : 'Succès'),
         isEarned: earnedBadges.includes(b.id),
         description_fr: b.description_fr,
