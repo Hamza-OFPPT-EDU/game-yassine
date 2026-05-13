@@ -77,7 +77,8 @@ export function useLeagues(userId?: string) {
           myRank: players.find(p => p.isCurrentUser)?.rank || 0,
           creator_id: l.creator_id,
           isJoined,
-          created_at: l.created_at
+          created_at: l.created_at,
+          ends_at: l.ends_at
         } as any;
       });
 
@@ -102,31 +103,49 @@ export function useLeagues(userId?: string) {
     return data;
   };
 
-  const createLeague = async (name: string, tier: string) => {
-    if (!userId) return null;
+  const createLeague = async (name: string, tier: string, points: number = 0, cities: number = 0, badges: number = 0) => {
+    if (!userId) {
+      throw new Error("Tu dois être connecté pour créer une compétition.");
+    }
     const { data: league, error } = await supabase
       .from('leagues')
-      .insert({ name, tier, creator_id: userId })
+      .insert({ 
+        name, 
+        tier, 
+        creator_id: userId,
+        ends_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+      })
       .select()
       .single();
 
     if (error) throw error;
 
-    // Add creator as member automatically
+    // Add creator as member automatically with their current stats
     await supabase.from('league_members').insert({
       league_id: league.id,
-      user_id: userId
+      user_id: userId,
+      points_earned: points,
+      cities_completed: cities,
+      badges_earned: badges
     });
 
     await fetchLeagues();
     return league;
   };
 
-  const joinLeague = async (leagueId: string) => {
-    if (!userId) return;
+  const joinLeague = async (leagueId: string, points: number = 0, cities: number = 0, badges: number = 0) => {
+    if (!userId) {
+      throw new Error("Tu dois être connecté pour rejoindre une compétition.");
+    }
     const { error } = await supabase
       .from('league_members')
-      .upsert({ league_id: leagueId, user_id: userId });
+      .upsert({ 
+        league_id: leagueId, 
+        user_id: userId,
+        points_earned: points,
+        cities_completed: cities,
+        badges_earned: badges
+      });
     
     if (error) throw error;
     await fetchLeagues();

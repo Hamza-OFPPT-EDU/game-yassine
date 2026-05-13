@@ -21,6 +21,7 @@ export enum Screen {
   CinematicIntro = 'cinematic-intro',
   Register = 'register',
   Badges = 'badges',
+  Duel = 'duel',
 }
 
 export const AVATAR_MALE_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-homme.png';

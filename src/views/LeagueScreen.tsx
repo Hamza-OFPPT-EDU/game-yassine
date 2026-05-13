@@ -8,13 +8,15 @@ import TopAppBar from '../components/TopAppBar';
 import ConfirmationModal from '../components/ConfirmationModal';
 
 interface LeagueScreenProps {
+  userStats: { xp: number; stars: number; level: number; cities: number; badges: number };
   onSelectLeague: (id: string) => void;
   onCreateLeague: () => void;
   onEditLeague: (id: string) => void;
+  onEnterDuel: () => void;
   onBack: () => void;
 }
 
-export default function LeagueScreen({ onSelectLeague, onCreateLeague, onEditLeague, onBack }: LeagueScreenProps) {
+export default function LeagueScreen({ userStats, onSelectLeague, onCreateLeague, onEditLeague, onEnterDuel, onBack }: LeagueScreenProps) {
   const { session } = useAuth();
   const { leagues, loading, joinLeague, deleteLeague } = useLeagues(session?.user?.id);
   const [showExitModal, setShowExitModal] = useState(false);
@@ -32,14 +34,18 @@ export default function LeagueScreen({ onSelectLeague, onCreateLeague, onEditLea
 
   const handleAction = async (e: React.MouseEvent, type: 'join' | 'select' | 'delete' | 'edit', leagueId: string) => {
     e.stopPropagation();
-    if (type === 'join') {
-      await joinLeague(leagueId);
-    } else if (type === 'select') {
-      onSelectLeague(leagueId);
-    } else if (type === 'delete') {
-      await deleteLeague(leagueId);
-    } else if (type === 'edit') {
-      onEditLeague(leagueId);
+    try {
+      if (type === 'join') {
+        await joinLeague(leagueId, userStats.xp, userStats.cities, userStats.badges);
+      } else if (type === 'select') {
+        onSelectLeague(leagueId);
+      } else if (type === 'delete') {
+        await deleteLeague(leagueId);
+      } else if (type === 'edit') {
+        onEditLeague(leagueId);
+      }
+    } catch (err: any) {
+      alert(err.message || "Une erreur est survenue.");
     }
   };
 
@@ -65,6 +71,27 @@ export default function LeagueScreen({ onSelectLeague, onCreateLeague, onEditLea
         
         {/* Search & Create Header */}
         <div className="flex flex-col gap-4">
+          {/* Duel Mode Entry */}
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={onEnterDuel}
+            className="w-full bg-gradient-to-br from-blue-600 to-red-600 p-[2px] rounded-[2rem] shadow-xl shadow-blue-600/20 overflow-hidden group"
+          >
+            <div className="bg-white/95 backdrop-blur-sm rounded-[1.9rem] p-6 flex items-center justify-between group-hover:bg-transparent transition-all">
+              <div className="flex items-center gap-5 text-left">
+                <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center border border-blue-100 group-hover:bg-white transition-all">
+                   <Zap size={28} className="text-blue-600 group-hover:scale-110 transition-transform" />
+                </div>
+                <div>
+                   <h3 className="font-black text-voyage-primary group-hover:text-white transition-colors text-base uppercase tracking-tight">Duel de Compétition</h3>
+                   <p className="text-[10px] font-bold text-slate-400 group-hover:text-white/80 transition-colors uppercase tracking-widest mt-0.5">Tir à la corde • Temps réel</p>
+                </div>
+              </div>
+              <ChevronRight className="text-red-600 group-hover:text-white transition-all group-hover:translate-x-2" size={24} strokeWidth={3} />
+            </div>
+          </motion.button>
+
           <div className="flex items-center gap-3">
              <div className="relative flex-grow">
                 <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />

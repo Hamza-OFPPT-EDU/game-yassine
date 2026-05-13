@@ -5,7 +5,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { supabase } from './lib/supabase';
-import { useSupabaseProfile, saveMissionResult } from './hooks/useSupabase';
+import { useSupabaseProfile, saveMissionResult, useSupabaseBadges } from './hooks/useSupabase';
 import { useActivityTracker } from './hooks/useActivityTracker';
 import { useLeagues } from './hooks/useLeagues';
 import { motion, AnimatePresence } from 'motion/react';
@@ -29,9 +29,10 @@ import LeagueScreen from './views/LeagueScreen';
 import LeagueDetailScreen from './views/LeagueDetailScreen';
 import LeagueCreateScreen from './views/LeagueCreateScreen';
 import VocabularyMatchScreen from './views/VocabularyMatchScreen';
-import FullscreenPrompt from './components/FullscreenPrompt';
-import LoginScreen from './views/LoginScreen';
 import RegisterScreen from './views/RegisterScreen';
+import LoginScreen from './views/LoginScreen';
+import DuelCompetitionScreen from './views/DuelCompetitionScreen';
+import FullscreenPrompt from './components/FullscreenPrompt';
 import { useAuth } from './hooks/useSupabase';
 import { fetchDynamicAssets, fetchCityMissionAssets, getCoreAssets, getAllAssets } from './lib/assets';
 import { useAssetPreloader, type Asset } from './hooks/useAssetPreloader';
@@ -61,6 +62,7 @@ export default function App() {
 
   const { session, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
+  const { earnedBadges } = useSupabaseBadges(session?.user?.id);
   
   // Track user activities and time spent
   useActivityTracker(session?.user?.id, currentScreen, selectedCity?.id || null);
@@ -499,6 +501,11 @@ export default function App() {
       case Screen.League:
         return (
           <LeagueScreen 
+            userStats={{
+              ...userStats,
+              cities: completedCities.length,
+              badges: earnedBadges.length
+            }}
             onSelectLeague={(id) => {
               setSelectedLeagueId(id);
               setCurrentScreen(Screen.LeagueDetail);
@@ -511,12 +518,18 @@ export default function App() {
               setEditingLeagueId(id);
               setCurrentScreen(Screen.LeagueCreate);
             }}
+            onEnterDuel={() => setCurrentScreen(Screen.Duel)}
             onBack={() => setCurrentScreen(Screen.Map)} 
           />
         );
       case Screen.LeagueCreate:
         return (
           <LeagueCreateScreen 
+            userStats={{
+              ...userStats,
+              cities: completedCities.length,
+              badges: earnedBadges.length
+            }}
             leagueId={editingLeagueId || undefined}
             onBack={() => setCurrentScreen(Screen.League)} 
             onCreated={() => setCurrentScreen(Screen.League)} 
@@ -528,6 +541,7 @@ export default function App() {
             leagueId={selectedLeagueId || 'bronze'} 
             onBack={() => setCurrentScreen(Screen.League)} 
             onShowBadges={() => setCurrentScreen(Screen.Badges)}
+            onContinueAdventure={() => setCurrentScreen(Screen.Map)}
           />
         );
       case Screen.VocabularyMatch:
@@ -546,6 +560,13 @@ export default function App() {
         );
       case Screen.Badges:
         return <BadgesScreen onBack={() => setCurrentScreen(Screen.Profile)} />;
+      case Screen.Duel:
+        return (
+          <DuelCompetitionScreen 
+            onBack={() => setCurrentScreen(Screen.League)} 
+            onHome={() => setCurrentScreen(Screen.Map)} 
+          />
+        );
       case Screen.Settings:
         return <SettingsScreen onBack={() => setCurrentScreen(Screen.Map)} />;
       case Screen.LevelComplete:

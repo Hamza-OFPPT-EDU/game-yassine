@@ -16,9 +16,10 @@ interface LeagueDetailScreenProps {
   leagueId: string;
   onBack: () => void;
   onShowBadges?: () => void;
+  onContinueAdventure?: () => void;
 }
 
-export default function LeagueDetailScreen({ leagueId, onBack, onShowBadges }: LeagueDetailScreenProps) {
+export default function LeagueDetailScreen({ leagueId, onBack, onShowBadges, onContinueAdventure }: LeagueDetailScreenProps) {
   const { session } = useAuth();
   const { leagues, loading, leaveLeague, deleteLeague } = useLeagues(session?.user?.id);
   const [showExitModal, setShowExitModal] = useState(false);
@@ -151,18 +152,33 @@ export default function LeagueDetailScreen({ leagueId, onBack, onShowBadges }: L
                  </div>
               </div>
 
-              <div className="flex gap-2">
-                 <button 
-                   onClick={handleCopyLink}
-                   className="flex-grow bg-white text-voyage-primary py-3 rounded-2xl flex items-center justify-center gap-2 font-black text-[10px] uppercase tracking-widest shadow-lg"
-                 >
-                    {copied ? <Check size={14} /> : <Copy size={14} />}
-                    {copied ? 'Lien Copié' : 'Inviter des amis'}
-                 </button>
-                 {isCreator ? (
-                    <button onClick={() => setShowActionModal('delete')} className="bg-red-500/20 hover:bg-red-500/30 border border-white/10 px-4 rounded-2xl flex items-center justify-center"><Trash2 size={18} /></button>
-                 ) : (
-                    <button onClick={() => setShowActionModal('leave')} className="bg-white/10 hover:bg-white/20 border border-white/10 px-4 rounded-2xl flex items-center justify-center"><LogOut size={18} /></button>
+              <div className="flex flex-col gap-2">
+                 <div className="flex gap-2">
+                    <button 
+                      onClick={handleCopyLink}
+                      className="flex-grow bg-white text-voyage-primary py-3 rounded-2xl flex items-center justify-center gap-2 font-black text-[10px] uppercase tracking-widest shadow-lg"
+                    >
+                       {copied ? <Check size={14} /> : <Copy size={14} />}
+                       {copied ? 'Lien Copié' : 'Inviter des amis'}
+                    </button>
+                    {isCreator ? (
+                       <button onClick={() => setShowActionModal('delete')} className="bg-red-500/20 hover:bg-red-500/30 border border-white/10 px-4 rounded-2xl flex items-center justify-center"><Trash2 size={18} /></button>
+                    ) : (
+                       <button onClick={() => setShowActionModal('leave')} className="bg-white/10 hover:bg-white/20 border border-white/10 px-4 rounded-2xl flex items-center justify-center"><LogOut size={18} /></button>
+                    )}
+                 </div>
+                 
+                 {onContinueAdventure && (
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={onContinueAdventure}
+                      className="w-full bg-gradient-to-r from-yellow-400 to-amber-500 text-voyage-primary py-4 rounded-2xl flex items-center justify-center gap-3 font-black text-xs uppercase tracking-[0.1em] shadow-xl shadow-amber-900/20 border-b-4 border-amber-600 active:border-b-0 active:translate-y-1 transition-all"
+                    >
+                       <Zap size={18} fill="currentColor" />
+                       Continuer l'aventure
+                       <ArrowRight size={18} />
+                    </motion.button>
                  )}
               </div>
            </div>

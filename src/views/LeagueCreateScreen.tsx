@@ -10,6 +10,7 @@ import { useLeagues } from '../hooks/useLeagues';
 import { useAuth } from '../hooks/useSupabase';
 
 interface LeagueCreateScreenProps {
+  userStats: { xp: number; stars: number; level: number; cities: number; badges: number };
   leagueId?: string; // Optional: for editing
   onBack: () => void;
   onCreated: () => void;
@@ -21,7 +22,7 @@ const TIERS = [
   { id: 'gold', name: 'Or', color: 'text-voyage-primary', bg: 'bg-voyage-primary/10', border: 'border-voyage-primary' },
 ];
 
-export default function LeagueCreateScreen({ leagueId, onBack, onCreated }: LeagueCreateScreenProps) {
+export default function LeagueCreateScreen({ userStats, leagueId, onBack, onCreated }: LeagueCreateScreenProps) {
   const { session } = useAuth();
   const { leagues, createLeague, updateLeague } = useLeagues(session?.user?.id);
   const [name, setName] = useState('');
@@ -52,7 +53,7 @@ export default function LeagueCreateScreen({ leagueId, onBack, onCreated }: Leag
       if (leagueId) {
         await updateLeague(leagueId, name, selectedTier);
       } else {
-        await createLeague(name, selectedTier);
+        await createLeague(name, selectedTier, userStats.xp, userStats.cities, userStats.badges);
       }
       onCreated();
     } catch (err: any) {
