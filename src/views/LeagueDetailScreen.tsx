@@ -17,9 +17,10 @@ interface LeagueDetailScreenProps {
   onBack: () => void;
   onShowBadges?: () => void;
   onContinueAdventure?: () => void;
+  userStats: { xp: number; stars: number; level: number; cities: number; badges: number };
 }
 
-export default function LeagueDetailScreen({ leagueId, onBack, onShowBadges, onContinueAdventure }: LeagueDetailScreenProps) {
+export default function LeagueDetailScreen({ leagueId, onBack, onShowBadges, onContinueAdventure, userStats }: LeagueDetailScreenProps) {
   const { session } = useAuth();
   const { leagues, loading, leaveLeague, deleteLeague } = useLeagues(session?.user?.id);
   const [showExitModal, setShowExitModal] = useState(false);
@@ -30,7 +31,7 @@ export default function LeagueDetailScreen({ leagueId, onBack, onShowBadges, onC
 
   const league = useMemo(() => leagues.find(l => l.id === leagueId), [leagues, leagueId]);
   const isCreator = league?.creator_id === session?.user?.id;
-  const stats = { xp: 0, stars: 0, level: 1 }; 
+  const stats = userStats; 
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(`Rejoins ma ligue ${league?.name} ! ID: ${league?.id}`);
