@@ -48,34 +48,38 @@ export default function DuelCompetitionScreen({ onBack, onHome }: DuelCompetitio
       setLoading(true);
       try {
         // 1. Find Rabat's city UUID
-        const { data: cityData } = await supabase
+        const { data: cityData, error: cityError } = await supabase
           .from('challenges')
           .select('id')
           .or('id.eq.rabat,name_fr.ilike.Rabat')
           .single();
 
+        if (cityError) console.warn("City lookup error:", cityError);
         const rabatId = cityData?.id || 'rabat';
 
         // 2. Fetch missions for Rabat
-        const { data: missions } = await supabase
+        const { data: missions, error: missionsError } = await supabase
           .from('missions')
           .select('id')
           .eq('city_id', rabatId);
+
+        if (missionsError) console.warn("Missions lookup error:", missionsError);
 
         if (missions && missions.length > 0) {
           const missionIds = missions.map(m => m.id);
 
           // 3. Fetch questions for these missions
+          // Try selecting all columns first to avoid mismatch errors if we're not sure about the schema
           const { data, error } = await supabase
             .from('questions')
-            .select('id, question_fr, options')
+            .select('*') 
             .in('mission_id', missionIds)
             .limit(30);
 
-          if (!error && data) {
+          if (!error && data && data.length > 0) {
             const mapped: Question[] = data.map(q => ({
               id: q.id,
-              situation: q.question_fr,
+              situation: q.question_fr || q.text || q.title || "Défi Soft Skills",
               options: (q.options || []).map((o: any) => ({
                 id: o.id || Math.random().toString(),
                 text: o.text || '',
@@ -86,11 +90,21 @@ export default function DuelCompetitionScreen({ onBack, onHome }: DuelCompetitio
             if (mapped.length > 0) {
               setAllExercises(mapped);
               setCurrentQuestion(mapped[0]);
+            } else {
+              console.warn("No valid questions found in data, using mocks.");
+              setAllExercises(MOCK_QUESTIONS);
             }
+          } else {
+            if (error) console.error("Questions fetch error (400?):", error);
+            setAllExercises(MOCK_QUESTIONS);
           }
+        } else {
+          console.warn("No missions found for Rabat, using mocks.");
+          setAllExercises(MOCK_QUESTIONS);
         }
       } catch (err) {
-        console.error("Error fetching exercises:", err);
+        console.error("Critical error fetching exercises:", err);
+        setAllExercises(MOCK_QUESTIONS);
       }
       setLoading(false);
     }

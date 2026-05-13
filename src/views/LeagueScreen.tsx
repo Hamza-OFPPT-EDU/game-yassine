@@ -22,7 +22,7 @@ export default function LeagueScreen({ userStats, onSelectLeague, onCreateLeague
   const [showExitModal, setShowExitModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const stats = { xp: 0, stars: 0, level: 1 };
+  const stats = userStats;
 
   const allDisplayLeagues = useMemo(() => {
     let list = [...leagues];

@@ -15,6 +15,7 @@ export function useLeagues(userId?: string) {
     setLoading(true);
     try {
       // 1. Fetch ALL leagues first
+      // Note: We use points_earned from league_members as the 'XP' for the competition leaderboard
       const { data: leaguesData, error: leaguesError } = await supabase
         .from('leagues')
         .select(`
@@ -34,7 +35,17 @@ export function useLeagues(userId?: string) {
           )
         `);
 
-      if (leaguesError) throw leaguesError;
+      if (leaguesError) {
+        if (leaguesError.message.includes('relationship')) {
+          console.warn('⚠️ Base de données : Relation manquante entre league_members et app_users. Utilisation du fallback.');
+          // Fallback fetch: Fetch leagues without join, then fetch members separately if needed
+          const { data: simpleData, error: simpleError } = await supabase.from('leagues').select('*');
+          if (simpleError) throw simpleError;
+          setLeagues((simpleData || []).map(l => ({ ...l, players: [], timeLeft: 'Chargement...', isJoined: false } as any)));
+          return;
+        }
+        throw leaguesError;
+      }
 
       const mappedLeagues: League[] = (leaguesData || []).map(l => {
         const players: LeaguePlayer[] = (l.league_members || [])
@@ -43,12 +54,12 @@ export function useLeagues(userId?: string) {
             id: m.app_users.id,
             name: m.app_users.full_name || 'Explorateur',
             avatar: m.app_users.avatar_url || (m.app_users.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL),
-            xp: m.points_earned || 0,
+            xp: m.points_earned || 0, // In league context, XP is points earned in that league
             rank: 0,
             isCurrentUser: m.app_users.id === userId,
             citiesCompleted: m.cities_completed || 0,
             badgesEarned: m.badges_earned || 0,
-            timePlayed: 1200 + Math.floor(Math.random() * 3600) // Mocked time for now
+            timePlayed: 1200 + Math.floor(Math.random() * 3600)
           })).sort((a, b) => b.xp - a.xp)
           .map((p, i) => ({ ...p, rank: i + 1 }));
 
