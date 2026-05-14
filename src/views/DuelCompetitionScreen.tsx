@@ -4,6 +4,7 @@ import { Home, Timer, Send, Instagram, ChevronRight, CheckCircle2, AlertCircle, 
 import { cn } from '../lib/utils';
 import { useAudio } from '../contexts/AudioContext';
 import { supabase } from '../lib/supabase';
+import { AVATAR_MALE_URL, AVATAR_FEMALE_URL } from '../types';
 
 interface Question {
   id: string;
@@ -29,9 +30,10 @@ const MOCK_QUESTIONS: Question[] = [
 interface DuelCompetitionScreenProps {
   onBack: () => void;
   onHome: () => void;
+  userProfile?: any;
 }
 
-export default function DuelCompetitionScreen({ onBack, onHome }: DuelCompetitionScreenProps) {
+export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: DuelCompetitionScreenProps) {
   const { playSound } = useAudio();
   const [team1Score, setTeam1Score] = useState(2);
   const [team2Score, setTeam2Score] = useState(3);
@@ -42,6 +44,27 @@ export default function DuelCompetitionScreen({ onBack, onHome }: DuelCompetitio
   const [allExercises, setAllExercises] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState<Question>(MOCK_QUESTIONS[0]);
+  const [opponentProfile, setOpponentProfile] = useState<any>(null);
+
+  useEffect(() => {
+    async function fetchOpponent() {
+      try {
+        const { data } = await supabase
+          .from('app_users')
+          .select('*')
+          .neq('id', userProfile?.id || '')
+          .limit(10);
+        
+        if (data && data.length > 0) {
+          const randomIdx = Math.floor(Math.random() * data.length);
+          setOpponentProfile(data[randomIdx]);
+        }
+      } catch (err) {
+        console.warn("Failed to fetch opponent:", err);
+      }
+    }
+    fetchOpponent();
+  }, [userProfile?.id]);
 
   useEffect(() => {
     async function fetchExercises() {
@@ -155,8 +178,58 @@ export default function DuelCompetitionScreen({ onBack, onHome }: DuelCompetitio
 
   return (
     <div className="flex flex-col h-full bg-[#FAFAFA] relative overflow-hidden font-sans">
+      {/* Players Avatars Floaters */}
+      <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-30 pointer-events-none">
+        {/* Current User */}
+        <motion.div 
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          className="flex items-center gap-3 bg-white/90 backdrop-blur-md p-1.5 pr-4 rounded-full border border-blue-100 shadow-lg pointer-events-auto"
+        >
+          <div className="w-10 h-10 rounded-full border-2 border-blue-500 overflow-hidden bg-blue-50">
+            <img 
+              src={userProfile?.avatar_url || (userProfile?.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL)} 
+              alt="Moi" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[8px] font-black text-blue-600 uppercase tracking-tighter">Équipe 1</span>
+            <span className="text-[10px] font-black text-slate-800 truncate max-w-[80px]">{userProfile?.full_name?.split(' ')[0] || 'Moi'}</span>
+          </div>
+        </motion.div>
+
+        {/* VS Badge */}
+        <motion.div 
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="w-8 h-8 bg-voyage-primary rounded-lg flex items-center justify-center border-2 border-white shadow-md rotate-45"
+        >
+          <span className="text-white font-black text-[10px] -rotate-45">VS</span>
+        </motion.div>
+
+        {/* Opponent */}
+        <motion.div 
+          initial={{ x: 50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          className="flex items-center flex-row-reverse gap-3 bg-white/90 backdrop-blur-md p-1.5 pl-4 rounded-full border border-red-100 shadow-lg pointer-events-auto"
+        >
+          <div className="w-10 h-10 rounded-full border-2 border-red-500 overflow-hidden bg-red-50">
+            <img 
+              src={opponentProfile?.avatar_url || (opponentProfile?.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL)} 
+              alt="Adversaire" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="flex flex-col items-end">
+            <span className="text-[8px] font-black text-red-600 uppercase tracking-tighter">Équipe 2</span>
+            <span className="text-[10px] font-black text-slate-800 truncate max-w-[80px]">{opponentProfile?.full_name?.split(' ')[0] || 'Adversaire'}</span>
+          </div>
+        </motion.div>
+      </div>
+
       {/* Top Header */}
-      <header className="px-6 pt-12 pb-4 flex items-center justify-between z-20">
+      <header className="px-6 pt-24 pb-4 flex items-center justify-between z-20">
         <button 
           onClick={onHome}
           className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-100 shadow-sm text-voyage-primary font-black text-[10px] uppercase tracking-widest"
@@ -166,17 +239,17 @@ export default function DuelCompetitionScreen({ onBack, onHome }: DuelCompetitio
         </button>
         
         <div className="text-center">
-          <h1 className="text-[10px] font-black text-voyage-primary uppercase tracking-widest">Soft Skills Training : 💪</h1>
-          <p className="text-[8px] font-bold text-voyage-accent uppercase tracking-tighter">Gestion du temps et du stress</p>
+          <h1 className="text-[10px] font-black text-voyage-primary uppercase tracking-widest">Duel en direct ⚔️</h1>
+          <p className="text-[8px] font-bold text-voyage-accent uppercase tracking-tighter">Que le meilleur gagne !</p>
         </div>
 
         <div className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-100 shadow-sm">
           <div className="flex flex-col items-center">
-            <span className="text-[8px] font-black text-blue-500 uppercase">T1: {team1Score}</span>
+            <span className="text-[10px] font-black text-blue-500 uppercase">{team1Score}</span>
           </div>
           <div className="w-[1px] h-4 bg-slate-200 mx-1" />
           <div className="flex flex-col items-center">
-            <span className="text-[8px] font-black text-red-500 uppercase">T2: {team2Score}</span>
+            <span className="text-[10px] font-black text-red-500 uppercase">{team2Score}</span>
           </div>
         </div>
       </header>
@@ -338,7 +411,7 @@ export default function DuelCompetitionScreen({ onBack, onHome }: DuelCompetitio
       </main>
 
       {/* Footer Navigation & Actions */}
-      <div className="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white via-white to-white/80 backdrop-blur-md border-t border-slate-100 z-30">
+      <div className="fixed bottom-0 left-0 right-0 p-6 pb-12 bg-gradient-to-t from-white via-white to-white/80 backdrop-blur-md border-t border-slate-100 z-30">
         <div className="max-w-md mx-auto space-y-4">
           
           <div className="flex items-center justify-between px-4">

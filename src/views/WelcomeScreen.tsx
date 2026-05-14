@@ -103,12 +103,16 @@ export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProp
                   className="text-white/80 font-bold leading-relaxed text-[15px]"
                   style={welcomeConfig.subtitleStyle}
                 >
-                  {welcomeConfig.subtitle || "Développe ton potentiel avec la famille Ben Ali à travers un parcours ludique au cœur du Maroc."}
+                  {welcomeConfig.subtitle || (
+                    <>
+                      Développe ton potentiel avec la <span className="text-voyage-primary font-black">famille Boulyali</span> à travers un parcours ludique au cœur du Maroc.
+                    </>
+                  )}
                 </p>
               </motion.div>
             </main>
 
-            <section className="px-8 pb-20 pt-6 space-y-4 w-full max-w-md mx-auto shrink-0">
+            <section className="px-8 pb-36 pt-6 space-y-4 w-full max-w-md mx-auto shrink-0">
               <GameButton
                 variant="primary"
                 size="lg"

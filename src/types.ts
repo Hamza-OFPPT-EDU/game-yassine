@@ -45,7 +45,12 @@ export type League = {
   tier: 'bronze' | 'silver' | 'gold' | 'emerald' | 'diamond';
   players: LeaguePlayer[];
   timeLeft: string;
+  timeLeftSeconds?: number;
   myRank: number;
+  creator_id?: string;
+  isJoined?: boolean;
+  created_at?: string;
+  ends_at?: string;
 };
 
 export type City = {

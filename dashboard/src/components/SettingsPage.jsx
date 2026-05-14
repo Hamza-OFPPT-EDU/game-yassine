@@ -340,6 +340,110 @@ export default function SettingsPage() {
         </div>
       </div>
 
+      {/* Developer Info Section */}
+      <div className="dev-info-config-section mb-8">
+        <div className="card-glass p-8 border-primary-light/10 bg-white/5 rounded-[32px] shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary-light/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+          
+          <div className="flex items-center gap-4 mb-8">
+            <div className="p-3 bg-primary-light/10 rounded-2xl">
+              <Users size={24} className="text-primary-light" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-text-primary tracking-tight">👨‍💻 Informations Développeur</h3>
+              <p className="text-sm text-text-muted">Gérez les informations affichées dans le profil utilisateur</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Form Side */}
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest text-primary-light/60">Nom du Développeur</label>
+                <input 
+                  type="text"
+                  className="cms-input w-full"
+                  value={settings.find(s => s.key === 'developer_info')?.value?.name || ''}
+                  onChange={(e) => {
+                    const existing = settings.find(s => s.key === 'developer_info');
+                    const newValue = { ...(existing?.value || {}), name: e.target.value };
+                    if (existing) handleUpdateSetting(existing, newValue);
+                    else save({ key: 'developer_info', value: newValue, description: 'Infos développeur' });
+                  }}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest text-primary-light/60">URL Photo (Avatar)</label>
+                <input 
+                  type="text"
+                  className="cms-input w-full"
+                  value={settings.find(s => s.key === 'developer_info')?.value?.photo_url || ''}
+                  onChange={(e) => {
+                    const existing = settings.find(s => s.key === 'developer_info');
+                    const newValue = { ...(existing?.value || {}), photo_url: e.target.value };
+                    handleUpdateSetting(existing, newValue);
+                  }}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest text-primary-light/60">Lien LinkedIn</label>
+                <input 
+                  type="text"
+                  className="cms-input w-full"
+                  value={settings.find(s => s.key === 'developer_info')?.value?.linkedin_url || ''}
+                  onChange={(e) => {
+                    const existing = settings.find(s => s.key === 'developer_info');
+                    const newValue = { ...(existing?.value || {}), linkedin_url: e.target.value };
+                    handleUpdateSetting(existing, newValue);
+                  }}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest text-primary-light/60">URL Photo QR Code (LinkedIn)</label>
+                <input 
+                  type="text"
+                  className="cms-input w-full"
+                  value={settings.find(s => s.key === 'developer_info')?.value?.qr_code_url || ''}
+                  onChange={(e) => {
+                    const existing = settings.find(s => s.key === 'developer_info');
+                    const newValue = { ...(existing?.value || {}), qr_code_url: e.target.value };
+                    handleUpdateSetting(existing, newValue);
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Preview Side */}
+            <div className="bg-black/40 rounded-[24px] border border-white/10 p-8 flex flex-col items-center justify-center relative min-h-[300px] text-center">
+              <span className="absolute top-4 right-6 text-[10px] font-bold text-white/20 uppercase tracking-widest">Aperçu Profil</span>
+              
+              <div className="w-24 h-24 rounded-full border-4 border-primary-light/30 overflow-hidden mb-4">
+                <img 
+                  src={settings.find(s => s.key === 'developer_info')?.value?.photo_url || 'https://via.placeholder.com/150'} 
+                  className="w-full h-full object-cover"
+                  alt="Dev Preview"
+                />
+              </div>
+              <h4 className="text-xl font-black text-white mb-2">
+                {settings.find(s => s.key === 'developer_info')?.value?.name || 'Nom Développeur'}
+              </h4>
+              
+              <div className="mt-4 p-2 bg-white rounded-xl">
+                <img 
+                  src={settings.find(s => s.key === 'developer_info')?.value?.qr_code_url || 'https://via.placeholder.com/100'} 
+                  className="w-24 h-24 object-contain"
+                  alt="QR Preview"
+                />
+              </div>
+              <p className="text-[10px] font-bold text-white/40 mt-2 uppercase tracking-widest">QR Code LinkedIn</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="settings-grid">
         {settings.filter(s => s.key !== 'global_free_exploration').map(s => (
           <div key={s.id} className="settings-card">

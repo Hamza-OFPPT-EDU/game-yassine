@@ -160,7 +160,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Ben Ali"
+                  placeholder="Boulyali"
                   className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 px-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm"
                   disabled={loading}
                 />

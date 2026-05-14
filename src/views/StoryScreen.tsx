@@ -90,7 +90,7 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
           initial={{ y: '100%' }}
           animate={{ y: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 120 }}
-          className="bg-white rounded-t-[3rem] p-8 pb-12 shadow-[0_-20px_50px_rgba(0,0,0,0.1)] border-t-2 border-voyage-accent/20 max-h-[85vh] overflow-y-auto scrollbar-hide"
+          className="bg-white rounded-t-[3rem] p-8 pb-24 shadow-[0_-20px_50px_rgba(0,0,0,0.1)] border-t-2 border-voyage-accent/20 max-h-[85vh] overflow-y-auto scrollbar-hide"
         >
           <div className="max-w-md mx-auto space-y-8">
             {/* Mission Type Badge */}

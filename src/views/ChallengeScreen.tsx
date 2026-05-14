@@ -1383,7 +1383,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
             </div>
           </motion.footer>
         ) : (
-          <footer className="fixed bottom-0 left-0 w-full z-40 bg-white border-t-[3px] border-voyage-secondary/20 p-6 pb-10 flex justify-center">
+          <footer className="fixed bottom-0 left-0 w-full z-40 bg-white border-t-[3px] border-voyage-secondary/20 p-6 pb-14 flex justify-center">
             <div className="w-full max-w-2xl flex items-center gap-4 px-4">
               <button 
                 onClick={() => { 

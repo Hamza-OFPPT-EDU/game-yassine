@@ -132,9 +132,9 @@ export default function LeagueScreen({ userStats, onSelectLeague, onCreateLeague
         ) : allDisplayLeagues.length > 0 ? (
           <div className="grid gap-4 pb-10">
             {allDisplayLeagues.map((league) => {
-              const isJoined = (league as any).isJoined;
-              const isCreator = (league as any).creator_id === session?.user?.id;
-              const timeLeftSeconds = (league as any).timeLeftSeconds || 0;
+              const isJoined = league.isJoined;
+              const isCreator = league.creator_id === session?.user?.id;
+              const timeLeftSeconds = league.timeLeftSeconds || 0;
               const totalSeconds = 24 * 3600;
               const progress = Math.max(0, Math.min(100, (timeLeftSeconds / totalSeconds) * 100));
 
@@ -218,8 +218,9 @@ export default function LeagueScreen({ userStats, onSelectLeague, onCreateLeague
                   </div>
 
                   {/* Creator Actions */}
+                  {/* Creator Actions */}
                   {isCreator && (
-                    <div className="absolute top-4 right-16 flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                    <div className="absolute top-4 right-16 flex gap-2 opacity-100 transition-all">
                        <button 
                          onClick={(e) => handleAction(e, 'edit', league.id)}
                          className="p-2 bg-slate-50 text-slate-500 rounded-xl hover:bg-slate-100 transition-all"

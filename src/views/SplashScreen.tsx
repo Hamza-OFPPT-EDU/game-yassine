@@ -28,10 +28,10 @@ export default function SplashScreen({ onComplete, onProgress, progress: externa
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Show video for 3 seconds
+    // Show video for 4 seconds
     const videoTimer = setTimeout(() => {
       setVideoStage('ui');
-    }, 3000);
+    }, 4000);
 
     return () => clearTimeout(videoTimer);
   }, []);
@@ -169,7 +169,7 @@ export default function SplashScreen({ onComplete, onProgress, progress: externa
             </motion.div>
 
             {/* Title & Slogan Animation - Reduced by 30% */}
-            <div className="space-y-4 mb-12 relative z-10 w-full">
+            <div className="space-y-4 mb-8 relative z-10 w-full">
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -198,7 +198,36 @@ export default function SplashScreen({ onComplete, onProgress, progress: externa
               />
             </div>
 
-            <div className="h-20" />
+            {/* Loading Progress Bar */}
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1 }}
+              className="w-full max-w-[200px] space-y-3"
+            >
+              <div className="relative h-1.5 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-50">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ type: "spring", bounce: 0, duration: 0.5 }}
+                  className="absolute inset-0 bg-gradient-to-r from-[#B58B60] via-[#D4A43E] to-[#B58B60] bg-[length:200%_100%]"
+                />
+                <motion.div
+                  animate={{ x: ['-100%', '200%'] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                />
+              </div>
+              <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-[#7B3F1A]/60">
+                <div className="flex items-center gap-1.5">
+                  <Loader2 size={8} className="animate-spin" />
+                  <span>Chargement des ressources</span>
+                </div>
+                <span>{Math.round(progress)}%</span>
+              </div>
+            </motion.div>
+
+            <div className="h-12" />
           </motion.div>
         )}
       </AnimatePresence>

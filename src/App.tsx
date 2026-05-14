@@ -76,32 +76,59 @@ export default function App() {
   const allAssets = useMemo(() => getAllAssets(dynamicAssets), [dynamicAssets]);
   const { progress, isComplete } = useAssetPreloader(allAssets);
 
+  const [splashStarted, setSplashStarted] = useState(false);
   const [splashComplete, setSplashComplete] = useState(false);
   
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSplashComplete(true);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
+  const splashTimerRef = useRef<boolean>(false);
 
   useEffect(() => {
-    // 30% -> Fullscreen Prompt (kept for utility)
-    if (progress >= 30 && !fullscreenShownOnce && !showFullscreenPrompt) {
-      if (!document.fullscreenElement && localStorage.getItem('prefer-fullscreen') !== 'false') {
+    // Only start splash timer once fullscreen prompt is handled
+    if (fullscreenShownOnce && !splashTimerRef.current) {
+      splashTimerRef.current = true;
+      setSplashStarted(true);
+      const timer = setTimeout(() => {
+        setSplashComplete(true);
+      }, 5000);
+      return () => {
+        // We don't clear the timer here because we want it to finish even if the component re-renders
+        // or Strict Mode re-mounts it.
+      };
+    }
+  }, [fullscreenShownOnce]);
+
+  // Fullscreen Prompt Logic
+  useEffect(() => {
+    if (!fullscreenShownOnce && !showFullscreenPrompt) {
+      const isPreferFalse = localStorage.getItem('prefer-fullscreen') === 'false';
+      const isFullscreen = !!document.fullscreenElement;
+      
+      if (!isFullscreen && !isPreferFalse) {
         setShowFullscreenPrompt(true);
-      }
-    }
-
-    // Switch to Welcome Screen only after 5s splash is complete
-    if (splashComplete && currentScreen === Screen.Splash) {
-      if (session) {
-        setCurrentScreen(Screen.Map);
       } else {
-        setCurrentScreen(Screen.Welcome);
+        // Fullscreen is already active or user declined previously, proceed to splash
+        setFullscreenShownOnce(true);
       }
     }
-  }, [splashComplete, currentScreen, session]);
+  }, [fullscreenShownOnce, showFullscreenPrompt]);
+
+  // Screen Switching Logic
+  useEffect(() => {
+    if (!splashComplete) return;
+
+    // Transition from Splash to Welcome Screen
+    if (currentScreen === Screen.Splash) {
+      setCurrentScreen(Screen.Welcome);
+    }
+    
+    // Auto-redirect to Map only if user is already on Welcome/Login/Register and a session is detected
+    // We add a small delay to let the user see the Welcome screen as requested
+    if (session && [Screen.Welcome, Screen.Login, Screen.Register].includes(currentScreen)) {
+      const timer = setTimeout(() => {
+        setCurrentScreen(Screen.Map);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [splashComplete, currentScreen, session, authLoading]);
 
   /**
    * Robust synchronization of auth user metadata with app_users and player_profiles tables.
@@ -420,11 +447,12 @@ export default function App() {
   const renderScreen = () => {
     const screenContent = () => {
 
-    if (authLoading) {
-      if (currentScreen === Screen.Splash) {
-        return <SplashScreen />;
-      }
-      return <div className="h-full w-full flex items-center justify-center bg-[#0a0f1e]"><Loader2 className="animate-spin text-white" size={40} /></div>; 
+    if (!fullscreenShownOnce) {
+      return <div className="h-full w-full bg-voyage-sand" />;
+    }
+
+    if (authLoading && ![Screen.Splash, Screen.Welcome, Screen.Login, Screen.Register].includes(currentScreen)) {
+      return <div className="h-full w-full flex items-center justify-center bg-voyage-sand"><Loader2 className="animate-spin text-voyage-primary" size={40} /></div>; 
     }
 
     switch (currentScreen) {
@@ -539,6 +567,11 @@ export default function App() {
         return (
           <LeagueDetailScreen 
             leagueId={selectedLeagueId || 'bronze'} 
+            userStats={{
+              ...userStats,
+              cities: completedCities.length,
+              badges: earnedBadges.length
+            }}
             onBack={() => setCurrentScreen(Screen.League)} 
             onShowBadges={() => setCurrentScreen(Screen.Badges)}
             onContinueAdventure={() => setCurrentScreen(Screen.Map)}
@@ -563,6 +596,7 @@ export default function App() {
       case Screen.Duel:
         return (
           <DuelCompetitionScreen 
+            userProfile={profile}
             onBack={() => setCurrentScreen(Screen.League)} 
             onHome={() => setCurrentScreen(Screen.Map)} 
           />
@@ -611,16 +645,16 @@ export default function App() {
   };
 
   return (
-    <div className="relative h-screen w-full bg-slate-50 overflow-hidden flex flex-col font-sans select-none touch-none">
+    <div className="relative h-screen w-full bg-white overflow-hidden flex flex-col font-sans select-none touch-none">
         <div className="grow overflow-hidden relative">
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             <motion.div
               key={showFullscreenPrompt ? 'prompt' : currentScreen}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              className="h-full w-full"
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              className="absolute inset-0"
             >
               {renderScreen()}
             </motion.div>
@@ -645,8 +679,8 @@ export default function App() {
         )}
 
         {/* Global Overlays */}
-        {showFullscreenPrompt && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+        <AnimatePresence>
+          {showFullscreenPrompt && (
             <FullscreenPrompt 
               show={showFullscreenPrompt}
               onAccept={() => {
@@ -662,8 +696,8 @@ export default function App() {
               progress={progress}
               extraAssets={dynamicAssets}
             />
-          </div>
-        )}
+          )}
+        </AnimatePresence>
 
 
       </div>

@@ -208,7 +208,7 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
       </main>
 
       {/* Footer / CTA - Fixed at bottom */}
-      <footer className="fixed bottom-0 left-0 right-0 z-40 p-8 pb-10 flex flex-col items-center gap-6 bg-linear-to-t from-slate-50 via-slate-50/90 to-transparent pointer-events-none">
+      <footer className="fixed bottom-0 left-0 right-0 z-40 p-8 pb-14 flex flex-col items-center gap-6 bg-linear-to-t from-slate-50 via-slate-50/90 to-transparent pointer-events-none">
         <GameButton
           variant="primary"
           size="lg"

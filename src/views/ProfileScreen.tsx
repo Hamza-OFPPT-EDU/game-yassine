@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2, Award, Zap, Globe, Lock, MapPin, LogOut } from 'lucide-react';
-import { useAuth, useSupabaseProfile, useSupabaseBadges, useSupabaseUserHistory } from '../hooks/useSupabase';
+import { useAuth, useSupabaseProfile, useSupabaseBadges, useSupabaseUserHistory, useSupabaseSettings } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
@@ -67,10 +67,99 @@ function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
           
           <div className="pt-4">
              <button 
-               onClick={onClose}
-               className="w-full py-4 bg-[#7B3F1A] text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#4E2510] transition-colors"
+                onClick={onClose}
+                className="w-full py-4 bg-[#7B3F1A] text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#4E2510] transition-colors"
              >
                Fermer
+             </button>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+interface DevModalProps {
+  devInfo: {
+    name: string;
+    photo_url: string;
+    linkedin_url: string;
+    qr_code_url: string;
+  };
+  onClose: () => void;
+}
+
+function DevModal({ devInfo, onClose }: DevModalProps) {
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md"
+      onClick={onClose}
+    >
+      <motion.div 
+        initial={{ scale: 0.9, y: 50, rotate: -2 }}
+        animate={{ scale: 1, y: 0, rotate: 0 }}
+        exit={{ scale: 0.9, y: 50, opacity: 0 }}
+        className="bg-white rounded-[48px] w-full max-w-md overflow-hidden shadow-[0_32px_64px_-15px_rgba(0,0,0,0.5)] relative"
+        onClick={e => e.stopPropagation()}
+      >
+        <button 
+          onClick={onClose}
+          className="absolute top-6 right-6 z-20 p-2 bg-black/5 hover:bg-black/10 rounded-full transition-colors"
+        >
+          <Globe size={20} className="text-[#4E2510]/40" />
+        </button>
+
+        <div className="h-40 bg-[#4E2510] relative">
+          <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+          <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
+            <div className="w-32 h-32 rounded-[32px] border-8 border-white overflow-hidden shadow-xl bg-white">
+              <img 
+                src={devInfo.photo_url || DEFAULT_AVATAR_URL} 
+                className="w-full h-full object-cover"
+                alt="Developer"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="p-10 pt-20 text-center space-y-6">
+          <div className="space-y-1">
+            <h3 className="text-3xl font-black text-[#4E2510] tracking-tight">{devInfo.name || 'Développeur'}</h3>
+            <p className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.3em]">Concepteur & Développeur</p>
+          </div>
+
+          <p className="text-sm text-[#7B3F1A]/70 leading-relaxed font-medium px-4">
+            Passionné par la création d'expériences numériques innovantes et éducatives. Retrouvez-moi sur LinkedIn pour échanger !
+          </p>
+
+          <div className="flex flex-col items-center gap-4 py-4">
+            <motion.a 
+              href={devInfo.linkedin_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-4 bg-white rounded-[32px] border-4 border-[#D4A43E]/20 shadow-lg relative group overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-[#D4A43E]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <img 
+                src={devInfo.qr_code_url || 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encodeURIComponent(devInfo.linkedin_url || '')} 
+                className="w-32 h-32 object-contain relative z-10"
+                alt="LinkedIn QR"
+              />
+            </motion.a>
+            <span className="text-[9px] font-black text-[#D4A43E] uppercase tracking-widest animate-pulse">Scannez pour visiter</span>
+          </div>
+
+          <div className="pt-2">
+             <button 
+                onClick={onClose}
+                className="w-full py-5 bg-[#4E2510] text-white rounded-[24px] font-black text-xs uppercase tracking-widest shadow-lg shadow-[#4E2510]/20 active:shadow-none transition-all active:scale-95"
+             >
+               Retour au jeu
              </button>
           </div>
         </div>
@@ -92,7 +181,19 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
   const { profile, loading: profileLoading } = useSupabaseProfile(session?.user?.id);
   const { badges, earnedBadges, loading: badgesLoading } = useSupabaseBadges(session?.user?.id);
   const { history, loading: historyLoading } = useSupabaseUserHistory(session?.user?.id);
-  const { playSound } = useAudio();
+  const { settings, loading: settingsLoading, getSetting } = useSupabaseSettings();
+  const { settings: audio, updateSettings: updateAudio, saveToCloud, playSound } = useAudio();
+  const [selectedBadge, setSelectedBadge] = useState<any>(null);
+  const [activeCity, setActiveCity] = useState('rabat');
+  const [showDevModal, setShowDevModal] = useState(false);
+  const [isSavingAudio, setIsSavingAudio] = useState(false);
+
+  const devInfo = getSetting('developer_info') || {
+    name: 'Hamza',
+    photo_url: '',
+    linkedin_url: 'https://www.linkedin.com/in/hamza-ofppt',
+    qr_code_url: ''
+  };
 
   const chartData = useMemo(() => {
     if (!history || history.length === 0) return { 
@@ -142,11 +243,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
 
     return { xp: xpData, skills: skillData, success: successData, activity: activityData };
   }, [history]);
-  const { settings: audio, updateSettings: updateAudio, saveToCloud } = useAudio();
-  const [isSavingAudio, setIsSavingAudio] = useState(false);
-  const [activeCity, setActiveCity] = useState<string>('Tous');
-  const [selectedBadge, setSelectedBadge] = useState<any>(null);
-  
+
   const handleToggleAudio = async (patch: any) => {
     updateAudio(patch);
     playSound('click');
@@ -651,6 +748,30 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
            </div>
         </section>
         
+        {/* Developer Info Button */}
+        <div className="pt-4">
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              playSound('click');
+              setShowDevModal(true);
+            }}
+            className="w-full py-6 rounded-[32px] font-black text-[#D4A43E] border-2 border-[#D4A43E]/30 bg-[#D4A43E]/5 hover:bg-[#D4A43E]/10 transition-all flex items-center justify-between px-8 shadow-sm group"
+          >
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-[#D4A43E] rounded-2xl text-white shadow-lg shadow-[#D4A43E]/20 group-hover:rotate-12 transition-transform">
+                <Users size={20} />
+              </div>
+              <div className="text-left">
+                <span className="block text-sm font-black uppercase tracking-tight text-[#4E2510]">Connaître le développeur</span>
+                <span className="block text-[10px] font-bold text-[#D4A43E] uppercase tracking-widest mt-0.5">Design & Développement</span>
+              </div>
+            </div>
+            <ChevronRight size={20} className="text-[#D4A43E]/60 group-hover:translate-x-1 transition-transform" />
+          </motion.button>
+        </div>
+        
         {/* Logout Button */}
         <div className="pt-8 pb-32">
           <motion.button 
@@ -670,6 +791,15 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
             </div>
           </motion.button>
         </div>
+
+        <AnimatePresence>
+          {showDevModal && (
+            <DevModal 
+              devInfo={devInfo}
+              onClose={() => setShowDevModal(false)}
+            />
+          )}
+        </AnimatePresence>
 
       </main>
     </div>
