@@ -58,7 +58,10 @@ function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
         <div className="p-8 text-center space-y-4">
           <div className="space-y-1">
             <h3 className="text-2xl font-black text-[#4E2510]">{badge.badge_name}</h3>
-            <p className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.2em]">{badge.rarity}</p>
+            <p className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.2em]">
+              {badge.rarity}
+              {!isEarned && badge.xp_requirement > 0 && ` • Déverrouillage à ${badge.xp_requirement} XP`}
+            </p>
           </div>
           
           <p className="text-sm text-[#7B3F1A]/70 leading-relaxed font-medium">
@@ -276,18 +279,24 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
         else city = 'Succès';
       }
 
+      // Logic for unlocking by XP if defined
+      const playerXp = profile?.xp || 0;
+      const xpRequirement = b.xp_requirement || 0;
+      const isUnlockedByXp = xpRequirement > 0 && playerXp >= xpRequirement;
+
       return {
         id: b.id,
         name: name,
         nameAr: nameAr,
         url: getBadgeUrl(rawUrl),
         city: city,
-        isEarned: earnedBadges.includes(b.id),
+        isEarned: earnedBadges.includes(b.id) || isUnlockedByXp,
+        xp_requirement: xpRequirement,
         description_fr: b.description_fr || (staticInfo ? `Bijou traditionnel de la ville de ${staticInfo.city}.` : ''),
         rarity: b.rarity
       };
     });
-  }, [badges, earnedBadges]);
+  }, [badges, earnedBadges, profile?.xp]);
 
   const filteredBadges = useMemo(() => {
     if (activeCity === 'Tous') return allGameBadges;
@@ -574,14 +583,14 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
         <section className="space-y-6">
            <div className="flex items-center justify-between px-2">
               <div>
-                <h2 className="text-[10px] font-black text-[#7B3F1A]/40 uppercase tracking-[0.2em]">Mes Badges & Succès</h2>
+                <h2 className="text-[10px] font-black text-[#7B3F1A]/40 uppercase tracking-[0.2em]">Médiathèque des Bijoux</h2>
                 <p className="text-[8px] font-bold text-[#D4A43E] uppercase tracking-widest mt-0.5">
-                  Collection des bijoux de compétences
+                  Collection des trésors déverrouillés par tes exploits
                 </p>
               </div>
               <div className="flex flex-col items-end gap-1">
                 <span className="text-[10px] font-black text-[#D4A43E] bg-[#D4A43E]/10 px-3 py-1 rounded-full border border-[#D4A43E]/20">
-                  {allGameBadges.filter(b => b.isEarned).length} / {allGameBadges.length} DÉVEROUILLÉS
+                  {allGameBadges.filter(b => b.isEarned).length} / {allGameBadges.length} ACQUIS
                 </span>
               </div>
             </div>
@@ -682,17 +691,24 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                             )}
 
                             {!isEarned && (
-                              <div className="absolute inset-0 flex items-center justify-center bg-black/5 z-20">
-                                <Lock size={20} className="text-[#7B3F1A]/50" />
+                              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/5 z-20 gap-1">
+                                <Lock size={16} className="text-[#7B3F1A]/50" />
+                                {badge.xp_requirement > 0 && (
+                                  <span className="text-[6px] font-black text-[#7B3F1A]/40 uppercase tracking-tighter">{badge.xp_requirement} XP</span>
+                                )}
                               </div>
                             )}
                           </div>
                           <div className="text-center space-y-0.5 px-1">
                             <p className={cn("text-[10px] font-black uppercase tracking-tight leading-tight", isEarned ? "text-[#4E2510]" : "text-gray-400")}>
                               {badge.name}
-                              {badge.nameAr && <span className="block text-[8px] opacity-60 font-bold mt-0.5">{badge.nameAr}</span>}
                             </p>
-                            <p className="text-[8px] font-bold text-[#D4A43E] uppercase tracking-tighter">
+                            {badge.nameAr && (
+                              <p className="text-[9px] font-bold text-[#7B3F1A]/40 arabic-font leading-none mb-1">
+                                {badge.nameAr}
+                              </p>
+                            )}
+                            <p className="text-[8px] font-black text-[#D4A43E] uppercase tracking-tighter">
                               {badge.city}
                             </p>
                           </div>
@@ -712,6 +728,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                 badge_name: selectedBadge.name, 
                 url: selectedBadge.url, 
                 rarity: selectedBadge.rarity || selectedBadge.city, 
+                xp_requirement: selectedBadge.xp_requirement,
                 description_fr: selectedBadge.description_fr || `Badge obtenu lors de votre mission à ${selectedBadge.city}.` 
               }} 
               isEarned={selectedBadge.isEarned} 
