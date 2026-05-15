@@ -5,43 +5,43 @@ export const RABAT_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Pense à la durée et à l’intensité. Un événement imprévu et proche (comme une présentation imminente) provoque une réaction corporelle soudaine. Laquelle des trois est brève et intense ?"
+          "explication": "Reconnaître les différents types de stress (aigu, chronique, positif). Indication : Un stress bref et intense lié à un événement précis comme une présentation imminente est un stress aigu."
         },
         "2": {
           "type": "Vrai/Faux",
-          "explication": "Le stress n’est pas toujours négatif : il peut booster la performance. Deuxièmement, gérer son stress est une compétence acquise. Troisièmement, le stress n’est pas un signe de faiblesse – tout le monde le ressent."
+          "explication": "Démystifier les idées reçues sur le stress. Indication : Le stress positif motive (FAUX le stress est toujours mauvais) ; la gestion du stress s’apprend (VRAI) ; le stress n’est pas un signe de faiblesse (FAUX)."
         },
         "3": {
           "type": "Appariement",
-          "explication": "Observe ce qui se passe dans le corps (cœur, tête), ce qui relève des émotions (tristesse, larmes) et ce qui est un comportement visible (isolement, alimentation). Chaque symptôme se range dans une de ces trois cases."
+          "explication": "Classer les symptômes du stress en trois catégories : physique, émotionnel, comportemental. Indication : Cœur qui bat vite → physique ; pleurer → émotionnel ; manger trop → comportemental ; mal de tête → physique ; tristesse → émotionnel ; isolement → comportemental."
         },
         "4": {
           "type": "Dialogue de situation",
-          "explication": "Face à une personne paniquée, ta propre attitude influence la sienne. Le calme, le contact visuel avec l’enfant et une voix posée agissent comme un apaisant naturel. Quelle option montre ces trois éléments ?"
+          "explication": "Utiliser la co‑régulation émotionnelle pour calmer une personne paniquée. Indication : Approchez‑vous calmement, agenouillez‑vous vers l’enfant, parlez doucement à la maman – votre calme se transmet."
         },
         "5": {
           "type": "Texte à trous",
-          "explication": "La technique 4-7-8 repose sur une inspiration par le nez, un blocage, une expiration par la bouche, et une répétition. Associe chaque nombre à l’action correspondante dans l’ordre indiqué."
+          "explication": "Maîtriser la technique de respiration 4-7-8 pour réduire le stress rapidement. Indication : Inspire par le nez 4s, bloque 7s, expire par la bouche 8s, répète 3 fois – active le système parasympathique."
         },
         "6": {
           "type": "Contre-la-montre",
-          "explication": "Le but est de pratiquer, pas de réussir du premier coup. La régularité crée l’efficacité. Toute réponse est bonne car l’important est d’avoir essayé."
+          "explication": "Pratiquer régulièrement une technique anti‑stress. Indication : Toute réponse est acceptée – l’essai est déjà une victoire, la pratique régulière développe les effets."
         },
         "7": {
           "type": "Scénario en cascade",
-          "explication": "Dans le deuil, la première action est souvent de ne rien dire, juste d’être présent. Ensuite, laisser pleurer sans jugement. Enfin, valider l’émotion et laisser la personne s’exprimer si elle le souhaite."
+          "explication": "Accompagner une person en deuil par présence silencieuse, respect des larmes, écoute active et validation. Indication : Asseyez‑vous en silence, tendez un mouchoir, puis dites « Elle comptait beaucoup pour toi. Raconte‑moi si tu veux. »"
         },
         "8": {
           "type": "Détection d’erreurs",
-          "explication": "Le burnout vient d’un cumul de facteurs : absence de coupure, manque de sommeil, pas de repos hebdomadaire, alimentation déséquilibrée et absence d’activités de détente. Compte ceux qui manquent dans le planning."
+          "explication": "Identifier les facteurs de burnout (épuisement professionnel). Indication : Aucune pause, sommeil insuffisant, aucun jour de repos, nutrition catastrophique, zéro loisir/sport – voilà les 5 causes."
         },
         "9": {
           "type": "Prise de décision",
-          "explication": "La fatigue extrême altère le jugement et augmente les risques d’erreur médicale. Que ferait un professionnel responsable pour protéger le patient tout en préservant l’équipe ?"
+          "explication": "Reconnaître ses limites pour protéger les patients. Indication : Un médecin épuisé commet 3 fois plus d’erreurs – la meilleure décision est de passer le relais à un collègue frais."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Ce qui nait dans la poitrine (battements), grandit dans les pensées (ruminations), peut être dangereux si on le fuit, et devient une force si on l’apprivoise. Docteur Amina le gère chaque jour."
+          "explication": "Comprendre que le stress, bien géré, devient une force. Indication : Il naît dans la poitrine, grandit dans les pensées, dangereux si fui, puissant si apprivoisé – c’est le stress."
         }
       }
     },
@@ -50,43 +50,43 @@ export const RABAT_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Classe la décision selon le budget et l’horizon temporel. 500 000 DH et 2-3 ans d’impact : ni une petite dépense quotidienne, ni un investissement gigantesque de long terme. Quelle catégorie se situe au milieu ?"
+          "explication": "Classer une décision selon son budget et son impact temporel. Indication : Budget moyen (500K DH) et impact 2‑3 ans → décision tactique (ni opérationnelle, ni stratégique)."
         },
         "2": {
           "type": "Classement",
-          "explication": "Pour prendre une décision, il faut d’abord cerner le vrai problème, ensuite rassembler les informations, puis proposer des solutions, les comparer, choisir, et enfin agir. Mets les étapes dans cet ordre logique."
+          "explication": "Maîtriser les 6 étapes du processus décisionnel de Simon. Indication : Ordre logique : identifier le problème, collecter les infos, générer les options, évaluer, choisir, mettre en œuvre et suivre."
         },
         "3": {
           "type": "Dialogue de situation",
-          "explication": "Face à un citoyen en colère, l’écoute active, des excuses sincères, une prise de notes et une promesse de suivi désamorcent la tension. Quelle option montre cette attitude ?"
+          "explication": "Gérer un citoyen mécontent par l’écoute active et l’engagement. Indication : Excusez‑vous, écoutez, notez tout, promettez un suivi – l’écoute résout 80 % du problème."
         },
         "4": {
           "type": "Vrai/Faux",
-          "explication": "Une bonne décision n’est pas forcément rapide ; intuition et logique se complètent ; ne pas choisir, c’est encore choisir (laisser faire). Vrai ou faux ?"
+          "explication": "Distinguer les idées reçues sur la décision. Indication : Bonnes décisions ≠ rapides (FAUX) ; intuition et logique se complètent (FAUX l’intuition n’est pas > logique) ; ne pas décider = décider (VRAI)."
         },
         "5": {
           "type": "Classement",
-          "explication": "Matrice d’Eisenhower : ce qui est à la fois urgent et important vient en premier. Classe les tâches du plus urgent/important au moins urgent/important."
+          "explication": "Utiliser la matrice d’Eisenhower pour prioriser des tâches. Indication : Urgent + important d’abord (email Ministre, appel journaliste), puis urgent (préparer réunion), puis important non urgent (réserver salle, fournitures), enfin le reste."
         },
         "6": {
           "type": "Texte à trous",
-          "explication": "Trois biais : le premier chiffre entendu (ancrage), la tendance à chercher ce qui confirme nos idées (confirmation), et le fait de juger par des souvenirs récents (disponibilité). Place-les bien."
+          "explication": "Identifier trois biais cognitifs (ancrage, confirmation, disponibilité). Indication : Ancrage (1er chiffre), confirmation (chercher ce qui confirme), disponibilité (juger par souvenirs récents)."
         },
         "7": {
           "type": "Scénario en cascade",
-          "explication": "Quand un collèche commet une erreur, commence par en parler en privé. S’il nie, montre des preuves calmement. S’il reconnaît mais veut cacher, propose-lui de se dénoncer lui-même. Quelle option respecte cette progression ?"
+          "explication": "Résoudre un dilemme éthique par le dialogue privé, les preuves et l’intégrité. Indication : Parlez d’abord à Karim, montrez les preuves calmement, puis proposez‑lui de se dénoncer lui‑même."
         },
         "8": {
           "type": "Détection d’erreurs",
-          "explication": "Les erreurs classiques : décision trop rapide, absence de mise en concurrence, oubli des utilisateurs, délai irréaliste, pas de test préalable. Retrouve les cinq."
+          "explication": "Repérer les erreurs classiques de décision en projet. Indication : Budget trop rapide, pas d’appel d’offres, absence de consultation des employés, délai irréaliste, aucun test pilote."
         },
         "9": {
           "type": "Prise de décision",
-          "explication": "Pour allouer un budget, le leader participatif demande l’avis de ceux qui seront concernés. Quelle option donne la parole aux employés ?"
+          "explication": "Adopter un leadership participatif pour allouer un budget. Indication : Demandez l’avis de tous les employés par un vote démocratique – l’engagement est ainsi garanti."
         },
         "10": {
           "type": "Réponse courte",
-          "explication": "Construis ton propre plan : choisis une décision personnelle difficile, applique les six étapes de Simon, et nomme un biais cognitif que tu risques de rencontrer."
+          "explication": "Appliquer les 6 étapes Simon à une décision personnelle, en anticipant un biais. Indication : Choisissez une décision réelle, suivez les étapes, et nommez un biais (ex : ancrage, confirmation, disponibilité)."
         }
       }
     },
@@ -95,43 +95,43 @@ export const RABAT_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Quel rôle Belbin génère beaucoup d’idées mais ne les concrétise pas ? Ce n’est ni le leader (organise), ni l’analyste (évalue), ni le réalisateur (exécute)."
+          "explication": "Reconnaître les rôles Belbin dans une équipe. Indication : Une personne qui génère 10 idées mais ne les exécute jamais incarne le rôle Créatif."
         },
         "2": {
           "type": "Rôles d’équipe",
-          "explication": "Associe chaque personne à son rôle : Karim (analyse), Sarah (apaise), Omar (dirige), Nadia (innove), Hassan (exécute)."
+          "explication": "Distribuer les rôles Belbin selon les forces de chacun. Indication : Karim → Analyste, Sarah → Harmonisateur, Omar → Leader, Nadia → Créatif, Hassan → Réalisateur."
         },
         "3": {
           "type": "Dialogue de situation",
-          "explication": "Une attaque personnelle (« tes idées sont n’importe quoi ») doit être reformulée en demande constructive. Quelle phrase transforme la critique en question sur les améliorations techniques ?"
+          "explication": "Médier un conflit d’équipe par reformulation constructive. Indication : Demandez à Karim de reformuler sa critique en améliorations techniques sur les idées de Nadia."
         },
         "4": {
           "type": "Vrai/Faux",
-          "explication": "La diversité des profils est-elle meilleure ? Le leader doit-il toujours avoir raison ? Les conflits sont-ils toujours mauvais ? Réfléchis à chaque idée reçue."
+          "explication": "Distinguer les mythes sur les équipes performantes. Indication : Diversité cognitive = +35 % performance (FAUX mêmes profils) ; leader admet ses erreurs (FAUX doit toujours avoir raison) ; conflit d’idées = sain (FAUX toujours mauvais)."
         },
         "5": {
           "type": "Texte à trous",
-          "explication": "La CNV comporte quatre étapes : décrire les faits (sans jugement), exprimer son sentiment, dire son besoin, formuler une demande concrète. Associe les mots aux étapes."
+          "explication": "Maîtriser les 4 étapes de la Communication Non‑Violente (CNV). Indication : Observation (faits sans jugement), Sentiment (avec « je »), Besoin, Demande concrète."
         },
         "6": {
           "type": "Scénario en cascade",
-          "explication": "Un membre passif doit être abordé en privé with bienveillance. Si une difficulté personnelle est révélée, propose du soutien pratique. Pour la confidentialité, dis juste qu’il traverse une période difficile."
+          "explication": "Gérer un membre passif par bienveillance, soutien et confidentialité. Indication : Parlez‑lui en privé, proposez de l’aide face à sa difficulté personnelle, puis dites simplement à l’équipe qu’il traverse une période difficile."
         },
         "7": {
           "type": "Classement",
-          "explication": "Tuckman : on commence par se former (Forming), puis on se confronte (Storming), ensuite on établit des règles (Norming), après on performe (Performing), enfin on se sépare (Adjourning)."
+          "explication": "Ordonner les 5 phases de vie d’une équipe (Tuckman). Indication : Forming, Storming, Norming, Performing, Adjourning."
         },
         "8": {
           "type": "Appariement",
-          "explication": "DESC signifie : Décrire les faits, Exprimer son ressenti, Suggérer une solution, Conséquences. Associe chaque lettre à sa signification."
+          "explication": "Utiliser la méthode DESC pour un feedback sans conflit. Indication : D → Décrire les faits ; E → Exprimer son ressenti ; S → Suggérer une solution ; C → Conséquences."
         },
         "9": {
           "type": "Prise de décision",
-          "explication": "Un design créatif demande une personne créative. Une analyse de données appelle un analyste. Un rapport à terminer rapidement convient à un réalisateur. Un conflit a besoin d’un harmonisateur. Une présentation stratégique revient au leader."
+          "explication": "Déléguer les tâches selon les profils Belbin. Indication : Design → Créatif (Nadia) ; données → Analyste (Karim) ; rapport → Réalisateur (Hassan) ; conflit → Harmonisateur (Sarah) ; présentation → Leader (Omar)."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Seule, rien ; à deux, force ; à plusieurs, légende. Si elle se brise, tout s’effondre. C’est le ciment invisible de toute équipe. Devine."
+          "explication": "Identifier le ciment invisible de toute équipe : la confiance. Indication : Seule, elle est rien ; à deux, force ; à plusieurs, légende. Si elle se brise, tout s’effondre."
         }
       }
     },
@@ -140,43 +140,43 @@ export const RABAT_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Un employé qui travaille 14h/jour depuis 6 mois, a perdu toute motivation et se sent vide : est-ce un stress aigu, une anxiété passagère, un burnout ou une fatigue normale ? Le burnout est un épuisement chronique avec cynisme."
+          "explication": "Diagnostiquer un burnout (épuisement émotionnel, cynisme, inefficacité). Indication : 14h/jour pendant 6 mois, perte de motivation, vide émotionnel → burnout."
         },
         "2": {
           "type": "Appariement",
-          "explication": "Distinguer les stratégies saines (parler, sport, aide pro, méditer) des stratégies d’évitement (alcool, déni, isolement, blâme)."
+          "explication": "Distinguer les stratégies de coping adaptatives (saines) des inadaptatives (évitement). Indication : Adaptatif : parler, sport, aide pro, méditer. Inadaptatif : alcool, déni, isolement, blâme."
         },
         "3": {
           "type": "Dialogue de situation",
-          "explication": "Annoncer 4 licenciements sur 10 : l’email ou la réunion collective peuvent humilier. La meilleure approche respecte la dignité individuelle puis la transparence collective."
+          "explication": "Annoncer une mauvaise nouvelle avec dignité et transparence. Indication : Réunissez d’abord individuellement les licenciés, puis organisez une réunion collective transparente."
         },
         "4": {
           "type": "Contre-la-montre",
-          "explication": "Trois questions rapides : nom de la respiration 4-7-8, nombre de dimensions du burnout (Maslach), adaptatif ou inadaptatif pour l’isolement ?"
+          "explication": "Connaître les techniques anti‑stress et les modèles de burnout. Indication : Respiration 4‑7‑8, 3 dimensions du burnout (Maslach), isolement = coping inadaptatif."
         },
         "5": {
           "type": "Texte à trous",
-          "explication": "Les huit piliers de Cyrulnik : sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité. Complète la liste."
+          "explication": "Mémoriser les 8 piliers de la résilience (Cyrulnik). Indication : sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité."
         },
         "6": {
           "type": "Détection d’erreurs",
-          "explication": "Un plan d’urgence peut contenir des erreurs graves : mentir, travailler 16h/jour, baisser les salaires unilatéralement, supplier un financeur, embaucher en CDI, sacrifier sa santé. Lesquelles sont présentes ?"
+          "explication": "Repérer les erreurs classiques d’un plan d’urgence en ONG. Indication : mentir, 16h/jour, salaire -50% unilatéral, supplier, embauche CDI, sacrifice de santé."
         },
         "7": {
           "type": "Scénario en cascade",
-          "explication": "Recadrer « j’ai échoué » → « un événement n’est pas un échec si tu apprends ». Recadrer « je suis nulle » → dissocier la personne de ses actes. Recadrer « j’ai ruiné la vie de 10 personnes » → rappeler les aspects positifs et les facteurs externes."
+          "explication": "Recadrer des pensées négatives (Beck) pour restaurer la confiance. Indication : « J’ai échoué » → « tu as appris » ; « je suis nulle » → dissocier personne et action ; « j’ai ruiné 10 vies » → rappeler les aspects positifs et les facteurs externes."
         },
         "8": {
           "type": "Prise de décision",
-          "explication": "Budget coupé de 60% : fermer ? tout miser sur une seule alternative (crowdfunding) ? pivoter intelligemment (réduire, recentrer, diversifier) ?"
+          "explication": "Effectuer un pivot stratégique intelligent en période de crise. Indication : Réduisez à 5 employés, recentrez sur 2 projets forts, diversifiez les financeurs."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Message aux employés : sois transparent sur la situation, montre de l’empathie, propose des options, donne une vision d’avenir, et montre ton engagement personnel."
+          "explication": "Communiquer une restructuration avec empathie, transparence et vision. Indication : Le message doit contenir : transparence, empathie, options, vision, engagement personnel."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "« Je suis plus forte quand tu me casses et me reconstruis. Les enfants l’ont naturellement, les adultes doivent la réapprendre. » C’est la capacité à rebondir après un choc."
+          "explication": "Identifier la résilience. Indication : « Je suis plus forte quand tu me casses et me reconstruis. Les enfants l’ont naturellement, les adultes doivent la réapprendre. »"
         }
       }
     },
@@ -185,43 +185,43 @@ export const RABAT_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "Prise de décision",
-          "explication": "Crise sanitaire, 200 personnes à l’hôpital. La première priorité est de sauver des vies. Que doit faire le Wali en premier : parler aux médias, voir la famille, envoyer plus de médecins, ou réfléchir ?"
+          "explication": "Prioriser la sauvegarde des vies en situation de crise. Indication : Envoyez plus de médecins à l’hôpital (sauver des vies) avant toute communication."
         },
         "2": {
           "type": "Rôles d’équipe",
-          "explication": "Pour une cellule de crise, attribue à chaque profil sa spécialité : (1) expérience décisionnelle, (2) compétence médicale, (3) enquête policière, (4) communication, (5) figure morale respectée, (6) analyse de données."
+          "explication": "Constituer une cellule de crise avec des profils complémentaires. Indication : Chef (Fatima), Médical (Dr. Karim), Enquêteur (Capitaine Hassan), Porte‑parole (Sarah), Empathie (Imam), Données (Youssef)."
         },
         "3": {
           "type": "Scénario en cascade",
-          "explication": "Face aux journalistes : dis ce que tu sais et ce que tu cherches, donne les chiffres with empathie, et réponds à l’accusation par la compréhension et le recentrage sur l’action."
+          "explication": "Communiquer en crise avec transparence, empathie et recentrage sur l’action. Indication : Dites ce que vous savez/ignorez, donnez les chiffres avec compassion, reconnaissez la colère puis recentrez sur l’action."
         },
         "4": {
           "type": "Détection d’erreurs",
-          "explication": "Le rapport contient des données suspectes (100% homme), une projection non justifiée, une conclusion sur 10 témoignages, des accusations sans preuve, et une promesse intenable. Repère ces cinq erreurs."
+          "explication": "Analyser un rapport erroné en évitant les pièges fréquents. Indication : Données suspectes (100% homme), projection non justifiée, conclusion hâtive (10 témoignages), accusation sans preuve, promesse intenable (24h)."
         },
         "5": {
           "type": "Contre-la-montre",
-          "explication": "Cinq décisions rapides : un agent paniqué → d’abord le calmer ; enfant peur de l’hôpital → posture et voix douce ; politicien attaque → ignorer ; gaffe de la porte-parole → analyse collective ; fatigue extrême → passer le relais."
+          "explication": "Prendre 5 décisions rapides sous pression en utilisant les acquis précédents. Indication : Panique → 4-7-8 ; enfant → s’agenouiller ; opposant → ignorer ; gaffe → analyse collective ; fatigue → passer le relais."
         },
         "6": {
           "type": "Appariement",
-          "explication": "Trois piliers de l’autodétermination : autonomie (liberté de gérer), compétence (reconnaissance de l’expertise), affiliation (sentiment d’appartenance). Associe chaque pilier à l’exemple correspondant."
+          "explication": "Appliquer les trois piliers de l’autodétermination (SDT). Indication : Autonomie → « gère comme tu le sens » ; Compétence → « célèbre l’expertise » ; Affiliation → « repas d’équipe »."
         },
         "7": {
           "type": "Scénario en cascade",
-          "explication": "Dilemme éthique : le ministre veut cacher un fabricant influent. Premier conseil : dialoguer d’abord. S’il menace, explique les conséquences de la dissimulation. S’il reste ferme, choisis la vérité publique."
+          "explication": "Résoudre un dilemme éthique avec intégrité. Indication : Dialoguez d’abord, montrez les risques de la dissimulation, puis, si nécessaire, dites la vérité publiquement."
         },
         "8": {
           "type": "Réponse courte",
-          "explication": "Rédige un plan d’action pour tes 100 premiers jours comme Wali : définis 3 priorités, choisis ton équipe, mets en place des systèmes de prévention, et prévois une communication citoyenne transparente."
+          "explication": "Élaborer un plan d’action 100 jours structuré. Indication : 3 priorités claires, équipe précisée, prévention concrète, communication citoyenne engagée."
         },
         "9": {
           "type": "Rôles d’équipe",
-          "explication": "Distribue 8 tâches à 6 membres : la conférence de presse et les réseaux sociaux reviennent à la spécialiste com’, la visite à l’hôpital à la figure d’empathie, la fermeture de la source à l’enquêteur, le rapport au ministère et les leçons apprises à la chef expérimentée, le suivi des données au data scientist, la coordination médicale au docteur."
+          "explication": "Déléguer des tâches de crise selon les expertises. Indication : Conf presse et réseaux sociaux → Sarah ; visite hôpital → Imam ; fermeture source → Hassan ; rapport et leçons apprises → Fatima ; data → Youssef ; coordination hôpitaux → Dr. Karim."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "« Je naîtrai quand tu équilibreras la tête (raison), le cœur (empathie) et les mains (action). Entre stress et calme, moi et nous, maintenant et demain. » C’est ce qui guide le leader accompli."
+          "explication": "Identifier la sagesse comme équilibre entre raison, empathie et action. Indication : « Je naîtrai quand tu équilibreras la tête, le cœur et les mains. Entre stress et calme, moi et nous, maintenant et demain. »"
         }
       }
     }
