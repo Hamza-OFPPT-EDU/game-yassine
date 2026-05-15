@@ -184,7 +184,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
   const { settings, loading: settingsLoading, getSetting } = useSupabaseSettings();
   const { settings: audio, updateSettings: updateAudio, saveToCloud, playSound } = useAudio();
   const [selectedBadge, setSelectedBadge] = useState<any>(null);
-  const [activeCity, setActiveCity] = useState('rabat');
+  const [activeCity, setActiveCity] = useState('Tous');
   const [showDevModal, setShowDevModal] = useState(false);
   const [isSavingAudio, setIsSavingAudio] = useState(false);
 
@@ -254,7 +254,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
     }, 500);
   };
 
-  const cities = ['Tous', 'Rabat', 'Chefchaouen', 'Fès', 'Marrakech', 'Dakhla'];
+  const cities = ['Tous', 'Rabat', 'Chefchaouen', 'Fès', 'Marrakech', 'Dakhla', 'Culture', 'Succès'];
 
   const allGameBadges = useMemo(() => {
     return badges.map(b => {
@@ -277,7 +277,9 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
 
   const filteredBadges = useMemo(() => {
     if (activeCity === 'Tous') return allGameBadges;
-    return allGameBadges.filter(b => b.city === activeCity);
+    return allGameBadges.filter(b => 
+      b.city?.toLowerCase() === activeCity.toLowerCase()
+    );
   }, [allGameBadges, activeCity]);
 
   if (authLoading || profileLoading) return (
@@ -633,6 +635,16 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                                 src={optimizeSupabaseUrl(badge.url, 160, 85)} 
                                 alt={badge.name}
                                 className="w-12 h-12 object-contain relative z-10"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).style.display = 'none';
+                                  const parent = (e.target as HTMLImageElement).parentElement;
+                                  if (parent) {
+                                    const fallback = document.createElement('span');
+                                    fallback.className = 'text-3xl relative z-10';
+                                    fallback.innerText = '🏆';
+                                    parent.appendChild(fallback);
+                                  }
+                                }}
                               />
                             ) : (
                               <span className="text-3xl relative z-10">🏆</span>

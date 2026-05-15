@@ -105,7 +105,7 @@ export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProp
                 >
                   {welcomeConfig.subtitle || (
                     <>
-                      Développe ton potentiel avec la <span className="text-voyage-primary font-black">famille Boulyali</span> à travers un parcours ludique au cœur du Maroc.
+                      Développe ton potentiel avec la <span className="text-[#7B3F1A] font-black">famille Boulyali</span> à travers un parcours ludique au cœur du Maroc.
                     </>
                   )}
                 </p>
