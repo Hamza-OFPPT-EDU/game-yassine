@@ -1,6 +1,6 @@
 import { useMemo, useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Map, Star, Loader2, Sparkles } from 'lucide-react';
+import { Loader2, Sparkles } from 'lucide-react';
 import { useAssetPreloader, type Asset } from '../hooks/useAssetPreloader';
 import { getAllAssets } from '../lib/assets';
 
@@ -14,10 +14,10 @@ interface SplashScreenProps {
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
-export default function SplashScreen({ onComplete, onProgress, progress: externalProgress, extraAssets = [], canContinue = true }: SplashScreenProps) {
+export default function SplashScreen({ onProgress, progress: externalProgress, extraAssets = [] }: SplashScreenProps) {
   const [videoStage, setVideoStage] = useState<'video' | 'ui'>('video');
   const assetsToPreload = useMemo(() => getAllAssets(extraAssets), [extraAssets]);
-  const { progress: internalProgress, isComplete } = useAssetPreloader(assetsToPreload);
+  const { progress: internalProgress } = useAssetPreloader(assetsToPreload);
   
   const progress = externalProgress !== undefined ? externalProgress : internalProgress;
 
@@ -28,7 +28,7 @@ export default function SplashScreen({ onComplete, onProgress, progress: externa
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Show video for 4 seconds
+    // Show video for 4 seconds max
     const videoTimer = setTimeout(() => {
       setVideoStage('ui');
     }, 4000);
@@ -64,6 +64,10 @@ export default function SplashScreen({ onComplete, onProgress, progress: externa
               playsInline
               className="w-full h-full object-cover"
               onEnded={() => setVideoStage('ui')}
+              onError={() => {
+                console.warn("Splash video failed to load, skipping to UI");
+                setVideoStage('ui');
+              }}
             >
               <source src={SPLASH_VIDEO_URL} type="video/mp4" />
             </video>
@@ -168,7 +172,7 @@ export default function SplashScreen({ onComplete, onProgress, progress: externa
               </motion.div>
             </motion.div>
 
-            {/* Title & Slogan Animation - Reduced by 30% */}
+            {/* Title & Slogan Animation */}
             <div className="space-y-4 mb-8 relative z-10 w-full">
               <motion.div
                 initial={{ y: 20, opacity: 0 }}

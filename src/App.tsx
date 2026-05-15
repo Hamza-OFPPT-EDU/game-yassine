@@ -14,24 +14,25 @@ import { Screen, type City, type Mission, type MissionCompletionSummary, AVATAR_
 import { useAudio } from './contexts/AudioContext';
 import BottomNavBar from './components/BottomNavBar';
 import { Loader2 } from 'lucide-react';
-import SplashScreen from './views/SplashScreen';
-import WelcomeScreen from './views/WelcomeScreen';
-import MapJourneyScreen from './views/MapJourneyScreen';
-import StoryScreen from './views/StoryScreen';
-import ChallengeScreen from './views/ChallengeScreen';
-import ProfileScreen from './views/ProfileScreen';
-import LevelCompleteModal from './components/LevelCompleteModal';
-import SettingsScreen from './views/SettingsScreen';
-import CinematicIntroScreen from './views/CinematicIntroScreen';
-import BadgesScreen from './views/BadgesScreen';
-import GrammarQuestScreen from './views/GrammarQuestScreen';
-import LeagueScreen from './views/LeagueScreen';
-import LeagueDetailScreen from './views/LeagueDetailScreen';
-import LeagueCreateScreen from './views/LeagueCreateScreen';
-import VocabularyMatchScreen from './views/VocabularyMatchScreen';
-import RegisterScreen from './views/RegisterScreen';
-import LoginScreen from './views/LoginScreen';
-import DuelCompetitionScreen from './views/DuelCompetitionScreen';
+import { lazy, Suspense } from 'react';
+const SplashScreen = lazy(() => import('./views/SplashScreen'));
+const WelcomeScreen = lazy(() => import('./views/WelcomeScreen'));
+const MapJourneyScreen = lazy(() => import('./views/MapJourneyScreen'));
+const StoryScreen = lazy(() => import('./views/StoryScreen'));
+const ChallengeScreen = lazy(() => import('./views/ChallengeScreen'));
+const ProfileScreen = lazy(() => import('./views/ProfileScreen'));
+const SettingsScreen = lazy(() => import('./views/SettingsScreen'));
+const CinematicIntroScreen = lazy(() => import('./views/CinematicIntroScreen'));
+const BadgesScreen = lazy(() => import('./views/BadgesScreen'));
+const GrammarQuestScreen = lazy(() => import('./views/GrammarQuestScreen'));
+const LeagueScreen = lazy(() => import('./views/LeagueScreen'));
+const LeagueDetailScreen = lazy(() => import('./views/LeagueDetailScreen'));
+const LeagueCreateScreen = lazy(() => import('./views/LeagueCreateScreen'));
+const VocabularyMatchScreen = lazy(() => import('./views/VocabularyMatchScreen'));
+const RegisterScreen = lazy(() => import('./views/RegisterScreen'));
+const LoginScreen = lazy(() => import('./views/LoginScreen'));
+const DuelCompetitionScreen = lazy(() => import('./views/DuelCompetitionScreen'));
+const LevelCompleteModal = lazy(() => import('./components/LevelCompleteModal'));
 import FullscreenPrompt from './components/FullscreenPrompt';
 import { useAuth } from './hooks/useSupabase';
 import { fetchDynamicAssets, fetchCityMissionAssets, getCoreAssets, getAllAssets } from './lib/assets';
@@ -113,22 +114,20 @@ export default function App() {
 
   // Screen Switching Logic
   useEffect(() => {
-    if (!splashComplete) return;
-
-    // Transition from Splash to Welcome Screen
-    if (currentScreen === Screen.Splash) {
-      setCurrentScreen(Screen.Welcome);
+    // Failsafe: Continue after 5s or when assets are ready
+    if (splashComplete || (isComplete && splashStarted)) {
+      if (currentScreen === Screen.Splash) {
+        setCurrentScreen(Screen.Welcome);
+      }
     }
     
-    // Auto-redirect to Map only if user is already on Welcome/Login/Register and a session is detected
-    // We add a small delay to let the user see the Welcome screen as requested
     if (session && [Screen.Welcome, Screen.Login, Screen.Register].includes(currentScreen)) {
       const timer = setTimeout(() => {
         setCurrentScreen(Screen.Map);
-      }, 1500);
+      }, 800); // Faster transition to map
       return () => clearTimeout(timer);
     }
-  }, [splashComplete, currentScreen, session, authLoading]);
+  }, [splashComplete, isComplete, splashStarted, currentScreen, session, authLoading]);
 
   /**
    * Robust synchronization of auth user metadata with app_users and player_profiles tables.
@@ -211,7 +210,10 @@ export default function App() {
         setIsCoreLoaded(true); 
         
         // Give time for SplashScreen to finish transition before starting background heavy loads
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // We wait for splashComplete or assets to be ready
+        while (!splashComplete && !isComplete) {
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
 
         // 2. Load Rabat Assets in background
         const rabatAssets = await fetchDynamicAssets('Rabat');
@@ -656,7 +658,16 @@ export default function App() {
               transition={{ duration: 0.6, ease: "easeInOut" }}
               className="absolute inset-0"
             >
-              {renderScreen()}
+              <Suspense fallback={
+                <div className="h-full w-full flex items-center justify-center bg-voyage-sand">
+                  <div className="flex flex-col items-center gap-4">
+                    <Loader2 className="animate-spin text-voyage-primary" size={32} />
+                    <p className="text-[10px] font-black text-voyage-primary uppercase tracking-widest animate-pulse">Initialisation...</p>
+                  </div>
+                </div>
+              }>
+                {renderScreen()}
+              </Suspense>
             </motion.div>
           </AnimatePresence>
         </div>

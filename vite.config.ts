@@ -43,6 +43,20 @@ export default defineConfig(({mode}) => {
         '@': path.resolve(__dirname, '.'),
       },
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor-react': ['react', 'react-dom'],
+            'vendor-motion': ['motion'],
+            'vendor-charts': ['recharts'],
+            'vendor-utils': ['lucide-react', 'clsx', 'tailwind-merge'],
+            'vendor-supabase': ['@supabase/supabase-js'],
+          }
+        }
+      },
+      chunkSizeWarningLimit: 1000,
+    },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modify—file watching is disabled to prevent flickering during agent edits.
