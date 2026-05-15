@@ -254,22 +254,36 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
     }, 500);
   };
 
-  const cities = ['Tous', 'Rabat', 'Chefchaouen', 'Fès', 'Marrakech', 'Dakhla', 'Culture', 'Succès'];
+  const cities = ['Tous', 'Rabat', 'Chefchaouen', 'Fès', 'Marrakech', 'Laâyoune', 'Dakhla', 'Culture', 'Succès'];
 
   const allGameBadges = useMemo(() => {
     return badges.map(b => {
       const staticInfo = (BADGE_MAP as any)[b.id];
-      let rawUrl = b.image_url || (staticInfo ? staticInfo.url : null) || b.badge_name;
+      const name = staticInfo?.name || b.badge_name;
+      const nameAr = b.badge_name_ar || '';
+      let rawUrl = b.image_url || staticInfo?.url || b.badge_name;
+      
       if (rawUrl && !rawUrl.toLowerCase().endsWith('.png') && !rawUrl.startsWith('http')) {
         rawUrl += '.png';
       }
+      
+      // Determine city/category
+      let city = staticInfo?.city;
+      if (!city) {
+        if (b.category === 'cultural' || b.category === 'culture') city = 'Culture';
+        else if (b.category === 'achievement' || b.category === 'succes') city = 'Succès';
+        else if (b.category === 'multiplayer') city = 'Succès';
+        else city = 'Succès';
+      }
+
       return {
         id: b.id,
-        name: b.badge_name,
+        name: name,
+        nameAr: nameAr,
         url: getBadgeUrl(rawUrl),
-        city: staticInfo?.city || (b.category === 'cultural' ? 'Culture' : 'Succès'),
+        city: city,
         isEarned: earnedBadges.includes(b.id),
-        description_fr: b.description_fr,
+        description_fr: b.description_fr || (staticInfo ? `Bijou traditionnel de la ville de ${staticInfo.city}.` : ''),
         rarity: b.rarity
       };
     });
@@ -572,21 +586,36 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
 
            {/* Toggle Menu - Cities */}
            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide px-1">
-             {cities.map((city) => (
-               <button
-                 key={city}
-                 onClick={() => { playSound('click'); setActiveCity(city); }}
-                 className={cn(
-                   "flex items-center gap-2 px-4 py-2.5 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all shrink-0 border-2",
-                   activeCity === city 
-                     ? "bg-[#7B3F1A] text-white border-[#7B3F1A] shadow-lg shadow-[#7B3F1A]/20" 
-                     : "bg-white text-[#7B3F1A] border-[#E5D5B8] hover:border-[#D4A43E]"
-                 )}
-               >
-                 <MapPin size={14} />
-                 {city}
-               </button>
-             ))}
+             {cities.map((city) => {
+               const cityBadges = allGameBadges.filter(b => 
+                 city === 'Tous' ? true : b.city?.toLowerCase() === city.toLowerCase()
+               );
+               const earned = cityBadges.filter(b => b.isEarned).length;
+               
+               return (
+                 <button
+                   key={city}
+                   onClick={() => { playSound('click'); setActiveCity(city); }}
+                   className={cn(
+                     "flex items-center gap-3 px-4 py-2.5 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all shrink-0 border-2",
+                     activeCity === city 
+                       ? "bg-[#7B3F1A] text-white border-[#7B3F1A] shadow-lg shadow-[#7B3F1A]/20" 
+                       : "bg-white text-[#7B3F1A] border-[#E5D5B8] hover:border-[#D4A43E]"
+                   )}
+                 >
+                   <MapPin size={14} className={activeCity === city ? "text-white" : "text-[#D4A43E]"} />
+                   <div className="flex flex-col items-start leading-tight">
+                     <span>{city}</span>
+                     <span className={cn(
+                       "text-[8px] font-bold",
+                       activeCity === city ? "text-white/60" : "text-[#D4A43E]"
+                     )}>
+                       {earned}/{cityBadges.length}
+                     </span>
+                   </div>
+                 </button>
+               );
+             })}
            </div>
 
            <div className="bg-white border border-[#E5D5B8] rounded-[40px] p-8 shadow-sm">
@@ -656,9 +685,10 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                               </div>
                             )}
                           </div>
-                          <div className="text-center space-y-0.5">
+                          <div className="text-center space-y-0.5 px-1">
                             <p className={cn("text-[10px] font-black uppercase tracking-tight leading-tight", isEarned ? "text-[#4E2510]" : "text-gray-400")}>
                               {badge.name}
+                              {badge.nameAr && <span className="block text-[8px] opacity-60 font-bold mt-0.5">{badge.nameAr}</span>}
                             </p>
                             <p className="text-[8px] font-bold text-[#D4A43E] uppercase tracking-tighter">
                               {badge.city}
