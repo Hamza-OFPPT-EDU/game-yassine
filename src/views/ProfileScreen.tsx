@@ -572,17 +572,19 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
 
         {/* Badges Section - Dynamic with Toggle */}
         <section className="space-y-6">
-           <div className="flex justify-between items-center px-2">
-             <div className="flex flex-col">
-               <h2 className="text-2xl font-black text-[#4E2510]">Badges des Missions</h2>
-               <p className="text-[10px] font-black text-[#D4A43E] uppercase tracking-widest text-left mt-1">
-                  Collectionne les trésors du Maroc
-               </p>
-             </div>
-             <span className="text-[10px] font-black text-[#D4A43E] bg-[#D4A43E]/10 px-3 py-1 rounded-full border border-[#D4A43E]/20">
-               {allGameBadges.filter(b => b.isEarned).length} / {allGameBadges.length} OBTENUS
-             </span>
-           </div>
+           <div className="flex items-center justify-between px-2">
+              <div>
+                <h2 className="text-[10px] font-black text-[#7B3F1A]/40 uppercase tracking-[0.2em]">Mes Badges & Succès</h2>
+                <p className="text-[8px] font-bold text-[#D4A43E] uppercase tracking-widest mt-0.5">
+                  Collection des bijoux de compétences
+                </p>
+              </div>
+              <div className="flex flex-col items-end gap-1">
+                <span className="text-[10px] font-black text-[#D4A43E] bg-[#D4A43E]/10 px-3 py-1 rounded-full border border-[#D4A43E]/20">
+                  {allGameBadges.filter(b => b.isEarned).length} / {allGameBadges.length} DÉVEROUILLÉS
+                </span>
+              </div>
+            </div>
 
            {/* Toggle Menu - Cities */}
            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide px-1">

@@ -80,8 +80,8 @@ export default function LeagueScreen({ userStats, onSelectLeague, onCreateLeague
           >
             <div className="bg-white/95 backdrop-blur-sm rounded-[1.9rem] p-6 flex items-center justify-between group-hover:bg-transparent transition-all">
               <div className="flex items-center gap-5 text-left">
-                <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center border border-blue-100 group-hover:bg-white transition-all">
-                   <Zap size={28} className="text-blue-600 group-hover:scale-110 transition-transform" />
+                <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center border border-blue-100 group-hover:bg-white transition-all overflow-hidden p-1">
+                   <img src="/assets/tug_of_war.png" alt="Duel" className="w-full h-full object-contain group-hover:scale-110 transition-transform" />
                 </div>
                 <div>
                    <h3 className="font-black text-voyage-primary group-hover:text-white transition-colors text-base uppercase tracking-tight">Duel de Compétition</h3>
