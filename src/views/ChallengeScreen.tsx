@@ -16,7 +16,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw, SkipForward, Clapperboard, Check, Wind, Lightbulb, Volume2, VolumeX, Music, Bell, Play, Save } from 'lucide-react';
 import { type City, type Challenge, type MissionCompletionSummary, type MissionQuestionResult, type Mission, DEFAULT_AVATAR_URL } from '../types';
-import { RABAT_EXPLANATIONS } from '../constants/explanations';
+import { RABAT_EXPLANATIONS, CHEFCHAOUEN_EXPLANATIONS } from '../constants/explanations';
 import { cn } from '../lib/utils';
 import { useSupabaseQuestions } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
@@ -459,17 +459,35 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const getExplanation = () => {
     if (!challenge) return null;
 
-    // Try to find in JSON first (fallback for Rabat)
+    // Try to find in JSON first (fallback for Rabat & Chefchaouen)
     if (city.id.toLowerCase() === 'rabat') {
       const cityData = RABAT_EXPLANATIONS["Rabat"];
       if (cityData) {
         // Find mission code (R1, R2, etc.) based on title
         let missionCode = "";
-        if (mission.title_fr?.toUpperCase().includes("HÔPITAL") || mission.title_fr?.toUpperCase().includes("IBN SINA")) missionCode = "R1";
-        else if (mission.title_fr?.toUpperCase().includes("MINISTÈRE")) missionCode = "R2";
-        else if (mission.title_fr?.toUpperCase().includes("UNIVERSITÉ")) missionCode = "R3";
-        else if (mission.title_fr?.toUpperCase().includes("ONG ESPOIR") || mission.title_fr?.toUpperCase().includes("ENTREPRENEURIAT")) missionCode = "R4";
-        else if (mission.title_fr?.toUpperCase().includes("WILAYA") || mission.title_fr?.toUpperCase().includes("DÉFI FINAL")) missionCode = "R5";
+        const title = mission.title_fr?.toUpperCase() || "";
+        if (title.includes("HÔPITAL") || title.includes("IBN SINA")) missionCode = "R1";
+        else if (title.includes("MINISTÈRE")) missionCode = "R2";
+        else if (title.includes("UNIVERSITÉ")) missionCode = "R3";
+        else if (title.includes("ONG ESPOIR") || title.includes("ENTREPRENEURIAT")) missionCode = "R4";
+        else if (title.includes("WILAYA") || title.includes("DÉFI FINAL")) missionCode = "R5";
+
+        if (missionCode && cityData[missionCode]) {
+          const exerciseKey = String(currentIdx + 1);
+          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
+          if (explanation) return explanation;
+        }
+      }
+    } else if (city.id.toLowerCase() === 'chefchaouen') {
+      const cityData = CHEFCHAOUEN_EXPLANATIONS["Chefchaouen"];
+      if (cityData) {
+        let missionCode = "";
+        const title = mission.title_fr?.toUpperCase() || "";
+        if (title.includes("TALASSEMTANE") || title.includes("RANDONNÉE")) missionCode = "C1";
+        else if (title.includes("COOPÉRATIVE") || title.includes("TISSEUSE")) missionCode = "C2";
+        else if (title.includes("SOUK") || title.includes("RESTAURANT")) missionCode = "C3";
+        else if (title.includes("HERBORISTERIE") || title.includes("RÉSILIENCE")) missionCode = "C4";
+        else if (title.includes("FESTIVAL") || title.includes("DÉFI FINAL")) missionCode = "C5";
 
         if (missionCode && cityData[missionCode]) {
           const exerciseKey = String(currentIdx + 1);
