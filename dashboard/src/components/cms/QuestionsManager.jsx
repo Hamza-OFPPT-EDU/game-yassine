@@ -380,12 +380,13 @@ export default function QuestionsManager({ mission, challenge, onBack }) {
                 {Array.isArray(q.options) && q.options.length > 0 && (
                   <div style={{ display:'flex', gap:6, marginTop:6, flexWrap:'wrap' }}>
                     {q.options.map((o, oi) => {
+                      const optKey = o.id || `opt-${i}-${oi}`;
                       const isCorrect = q.question_type === 'multiple_choice' 
                         ? (o.id === q.correct_answer)
                         : (q.correct_answer || '').includes(o.text || o.label_fr || '');
                       
                       return (
-                        <span key={oi} className={`q-option ${isCorrect ? 'correct' : ''}`}>
+                        <span key={optKey} className={`q-option ${isCorrect ? 'correct' : ''}`}>
                           {o.label_fr || o.text || o.left_fr || '...'}
                           {isCorrect && ' ✓'}
                         </span>

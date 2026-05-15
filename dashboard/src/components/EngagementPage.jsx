@@ -47,8 +47,8 @@ export default function EngagementPage() {
                   dataKey="value"
                   label={({ name, value }) => `${name}: ${value}m`}
                 >
-                  {data.timeByActivity.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  {data.timeByActivity.map((entry) => (
+                    <Cell key={entry.name} fill={COLORS[data.timeByActivity.indexOf(entry) % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip />

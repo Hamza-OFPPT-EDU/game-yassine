@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2, Award, Zap, Globe, Lock, MapPin, LogOut } from 'lucide-react';
-import { useAuth, useSupabaseProfile, useSupabaseBadges, useSupabaseUserHistory, useSupabaseSettings } from '../hooks/useSupabase';
+import { useAuth, useSupabaseProfile, useSupabaseBadges, useSupabaseUserHistory, useSupabaseSettings, useSupabaseCities } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
@@ -26,7 +26,7 @@ function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm"
+      className="fixed inset-0 z-100 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm"
       onClick={onClose}
     >
       <motion.div 
@@ -38,7 +38,7 @@ function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
       >
         <div className={cn(
           "h-48 flex items-center justify-center relative",
-          isEarned ? "bg-gradient-to-br from-[#FFF8F0] to-[#FEF3C7]" : "bg-gray-100 grayscale"
+          isEarned ? "bg-linear-to-br from-voyage-sand to-voyage-parchment" : "bg-gray-100 grayscale"
         )}>
           {isEarned && (
             <motion.div 
@@ -57,21 +57,21 @@ function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
         
         <div className="p-8 text-center space-y-4">
           <div className="space-y-1">
-            <h3 className="text-2xl font-black text-[#4E2510]">{badge.badge_name}</h3>
-            <p className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.2em]">
+            <h3 className="text-2xl font-black text-voyage-primary-dark">{badge.badge_name}</h3>
+            <p className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.2em]">
               {badge.rarity}
               {!isEarned && badge.xp_requirement > 0 && ` • Déverrouillage à ${badge.xp_requirement} XP`}
             </p>
           </div>
           
-          <p className="text-sm text-[#7B3F1A]/70 leading-relaxed font-medium">
+          <p className="text-sm text-voyage-primary/70 leading-relaxed font-medium">
             {badge.description_fr}
           </p>
           
           <div className="pt-4">
              <button 
                 onClick={onClose}
-                className="w-full py-4 bg-[#7B3F1A] text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#4E2510] transition-colors"
+                className="w-full py-4 bg-voyage-primary text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-voyage-primary-dark transition-colors"
              >
                Fermer
              </button>
@@ -98,7 +98,7 @@ function DevModal({ devInfo, onClose }: DevModalProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md"
+      className="fixed inset-0 z-100 flex items-center justify-center p-6 bg-black/80 backdrop-blur-md"
       onClick={onClose}
     >
       <motion.div 
@@ -112,10 +112,10 @@ function DevModal({ devInfo, onClose }: DevModalProps) {
           onClick={onClose}
           className="absolute top-6 right-6 z-20 p-2 bg-black/5 hover:bg-black/10 rounded-full transition-colors"
         >
-          <Globe size={20} className="text-[#4E2510]/40" />
+          <Globe size={20} className="text-voyage-primary-dark/40" />
         </button>
 
-        <div className="h-40 bg-[#4E2510] relative">
+        <div className="h-40 bg-voyage-primary-dark relative">
           <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
           <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
             <div className="w-32 h-32 rounded-[32px] border-8 border-white overflow-hidden shadow-xl bg-white">
@@ -130,11 +130,11 @@ function DevModal({ devInfo, onClose }: DevModalProps) {
 
         <div className="p-10 pt-20 text-center space-y-6">
           <div className="space-y-1">
-            <h3 className="text-3xl font-black text-[#4E2510] tracking-tight">{devInfo.name || 'Développeur'}</h3>
-            <p className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.3em]">Concepteur & Développeur</p>
+            <h3 className="text-3xl font-black text-voyage-primary-dark tracking-tight">{devInfo.name || 'Développeur'}</h3>
+            <p className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.3em]">Concepteur & Développeur</p>
           </div>
 
-          <p className="text-sm text-[#7B3F1A]/70 leading-relaxed font-medium px-4">
+          <p className="text-sm text-voyage-primary/70 leading-relaxed font-medium px-4">
             Passionné par la création d'expériences numériques innovantes et éducatives. Retrouvez-moi sur LinkedIn pour échanger !
           </p>
 
@@ -145,22 +145,22 @@ function DevModal({ devInfo, onClose }: DevModalProps) {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="p-4 bg-white rounded-[32px] border-4 border-[#D4A43E]/20 shadow-lg relative group overflow-hidden"
+              className="p-4 bg-white rounded-[32px] border-4 border-voyage-accent/20 shadow-lg relative group overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#D4A43E]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute inset-0 bg-linear-to-br from-voyage-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <img 
                 src={devInfo.qr_code_url || 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encodeURIComponent(devInfo.linkedin_url || '')} 
                 className="w-32 h-32 object-contain relative z-10"
                 alt="LinkedIn QR"
               />
             </motion.a>
-            <span className="text-[9px] font-black text-[#D4A43E] uppercase tracking-widest animate-pulse">Scannez pour visiter</span>
+            <span className="text-[9px] font-black text-voyage-accent uppercase tracking-widest animate-pulse">Scannez pour visiter</span>
           </div>
 
           <div className="pt-2">
              <button 
                 onClick={onClose}
-                className="w-full py-5 bg-[#4E2510] text-white rounded-[24px] font-black text-xs uppercase tracking-widest shadow-lg shadow-[#4E2510]/20 active:shadow-none transition-all active:scale-95"
+                className="w-full py-5 bg-voyage-primary-dark text-white rounded-[24px] font-black text-xs uppercase tracking-widest shadow-lg shadow-voyage-primary-dark/20 active:shadow-none transition-all active:scale-95"
              >
                Retour au jeu
              </button>
@@ -177,14 +177,16 @@ interface ProfileScreenProps {
   onShowBadges: () => void;
   onLogout: () => void;
   completedMissions: string[];
+  completedCities: string[];
 }
 
-export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogout, completedMissions }: ProfileScreenProps) {
+export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogout, completedMissions, completedCities }: ProfileScreenProps) {
   const { session, loading: authLoading, signOut } = useAuth();
   const { profile, loading: profileLoading } = useSupabaseProfile(session?.user?.id);
   const { badges, earnedBadges, loading: badgesLoading } = useSupabaseBadges(session?.user?.id);
   const { history, loading: historyLoading } = useSupabaseUserHistory(session?.user?.id);
   const { settings, loading: settingsLoading, getSetting } = useSupabaseSettings();
+  const { cities, loading: citiesLoading } = useSupabaseCities(completedCities, completedMissions);
   const { settings: audio, updateSettings: updateAudio, saveToCloud, playSound } = useAudio();
   const [selectedBadge, setSelectedBadge] = useState<any>(null);
   const [activeCity, setActiveCity] = useState('Tous');
@@ -257,7 +259,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
     }, 500);
   };
 
-  const cities = ['Tous', 'Rabat', 'Chefchaouen', 'Fès', 'Marrakech', 'Laâyoune', 'Dakhla', 'Culture', 'Succès'];
+  const badgeFilterTabs = ['Tous', 'Rabat', 'Chefchaouen', 'Fès', 'Marrakech', 'Laâyoune', 'Dakhla', 'Culture', 'Succès'];
 
   const allGameBadges = useMemo(() => {
     return badges.map(b => {
@@ -327,26 +329,54 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
   return (
     <div className="h-full w-full bg-[#FAFAFA] flex flex-col relative overflow-hidden">
       {/* Decorative Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#7B3F1A]/10 to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-64 bg-linear-to-b from-voyage-primary/10 to-transparent pointer-events-none" />
       
       <TopAppBar stats={stats} title="Ton Profil" onBack={onBack} />
       
-      <main className="flex-grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 max-w-2xl mx-auto w-full relative z-10 scrollbar-hide">
+      <main className="grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 max-w-2xl mx-auto w-full relative z-10 scrollbar-hide">
 
         
         {/* User Profile Card */}
         <section className="relative flex flex-col items-center text-center pt-8 pb-4">
            <div className="relative group">
-              <div className="absolute inset-0 bg-[#D4A43E]/20 blur-2xl rounded-full scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-voyage-accent/20 blur-2xl rounded-full scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <motion.div 
                 whileHover={{ scale: 1.05 }}
                 className="relative w-36 h-36 rounded-[40px] bg-white p-2 shadow-[0_20px_50px_rgba(123,63,26,0.15)] border-2 border-white overflow-hidden"
               >
+                {/* Level Progress Ring */}
+                <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 100 100">
+                  <circle
+                    cx="50" cy="50" r="46"
+                    fill="none"
+                    stroke="#F3F4F6"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+                  <motion.circle
+                    cx="50" cy="50" r="46"
+                    fill="none"
+                    stroke="url(#progress-gradient)"
+                    strokeWidth="4"
+                    strokeDasharray="289.02"
+                    initial={{ strokeDashoffset: 289.02 }}
+                    animate={{ strokeDashoffset: 289.02 - (289.02 * ((stats.xp % 1000) / 1000)) }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    strokeLinecap="round"
+                  />
+                  <defs>
+                    <linearGradient id="progress-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#D4A43E" />
+                      <stop offset="100%" stopColor="#7B3F1A" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+
                 <img 
                    src={optimizeSupabaseUrl(profile?.avatar_url || DEFAULT_AVATAR_URL, 300, 80)} 
                    alt="Profile" 
-                   className="w-full h-full object-cover rounded-[32px]"
+                   className="w-full h-full object-cover rounded-[32px] relative z-10"
                    referrerPolicy="no-referrer"
                  />
                  <motion.button 
@@ -356,38 +386,38 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                      playSound('click');
                      onSettings();
                    }}
-                   className="absolute -bottom-2 -right-2 w-12 h-12 bg-white border-2 border-[#E5D5B8] rounded-2xl flex items-center justify-center shadow-xl cursor-pointer z-20 hover:border-[#D4A43E] transition-colors"
+                   className="absolute -bottom-2 -right-2 w-12 h-12 bg-white border-2 border-voyage-secondary-light rounded-2xl flex items-center justify-center shadow-xl cursor-pointer z-30 hover:border-voyage-accent transition-colors"
                  >
-                   <Settings size={24} className="text-[#7B3F1A]" />
+                   <Settings size={24} className="text-voyage-primary" />
                  </motion.button>
               </motion.div>
            </div>
            
            <div className="mt-8 space-y-3 text-center">
-              <h1 className="text-4xl font-black text-[#4E2510] tracking-tight">
+              <h1 className="text-4xl font-black text-voyage-primary-dark tracking-tight">
                 {profile?.full_name || 'Explorateur'}
               </h1>
               
               <div className="flex flex-col items-center gap-2">
-                <p className="text-[#7B3F1A]/60 font-bold text-sm tracking-wide">
+                <p className="text-voyage-primary/60 font-bold text-sm tracking-wide">
                   {profile?.username ? `@${profile.username}` : (session?.user?.email || 'Explorateur des Savoirs')}
                 </p>
                 
                 <div className="flex items-center gap-3">
-                  <div className="inline-flex items-center gap-2 bg-[#D4A43E]/10 px-4 py-1.5 rounded-full border border-[#D4A43E]/20">
-                    <Shield size={14} className="text-[#D4A43E]" />
-                    <span className="font-black text-[#7B3F1A] uppercase tracking-[0.2em] text-[10px]">Niveau {profile?.level || 1}</span>
+                  <div className="inline-flex items-center gap-2 bg-voyage-accent/10 px-4 py-1.5 rounded-full border border-voyage-accent/20">
+                    <Shield size={14} className="text-voyage-accent" />
+                    <span className="font-black text-voyage-primary uppercase tracking-[0.2em] text-[10px]">Niveau {profile?.level || 1}</span>
                   </div>
                   
-                  <div className="inline-flex items-center gap-2 bg-[#7B3F1A]/5 px-4 py-1.5 rounded-full border border-[#7B3F1A]/10">
-                    <span className="font-black text-[#7B3F1A] uppercase tracking-widest text-[10px]">
+                  <div className="inline-flex items-center gap-2 bg-voyage-primary/5 px-4 py-1.5 rounded-full border border-voyage-primary/10">
+                    <span className="font-black text-voyage-primary uppercase tracking-widest text-[10px]">
                       {profile?.group_name || 'SPÉCIALITÉ NON DÉFINIE'}
                     </span>
                   </div>
                 </div>
 
                 {profile?.birth_date && (
-                  <p className="text-[10px] font-black text-[#7B3F1A]/40 uppercase tracking-[0.3em] mt-1">
+                  <p className="text-[10px] font-black text-voyage-primary/40 uppercase tracking-[0.3em] mt-1">
                     Né le {new Date(profile.birth_date).toLocaleDateString('fr-FR')}
                   </p>
                 )}
@@ -399,7 +429,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
         <section className="grid grid-cols-3 gap-4">
            {[
              { icon: Flame, color: 'text-orange-500', bg: 'bg-orange-50', label: 'JOURS', val: '12' },
-             { icon: TrendingUp, color: 'text-[#D4A43E]', bg: 'bg-[#D4A43E]/5', label: 'XP TOTAL', val: (stats.xp/1000).toFixed(1) + 'k' },
+             { icon: TrendingUp, color: 'text-voyage-accent', bg: 'bg-voyage-accent/5', label: 'XP TOTAL', val: (stats.xp/1000).toFixed(1) + 'k' },
              { icon: Trophy, color: 'text-amber-500', bg: 'bg-amber-50', label: 'BADGES', val: allGameBadges.filter(b => b.isEarned).length },
            ].map((stat, i) => (
              <motion.div 
@@ -407,28 +437,212 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ delay: 0.1 * i }}
-               className={cn("bg-white border border-[#E5D5B8] p-5 rounded-3xl flex flex-col items-center gap-2 shadow-sm relative overflow-hidden group")}
+               className={cn("bg-white border border-voyage-secondary-light p-5 rounded-3xl flex flex-col items-center gap-2 shadow-sm relative overflow-hidden group")}
              >
                 <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center mb-1", stat.bg)}>
                   <stat.icon size={22} className={stat.color} />
                 </div>
-                <span className="font-black text-xl text-[#4E2510]">{stat.val}</span>
-                <span className="text-[9px] font-black text-[#7B3F1A]/50 uppercase tracking-widest">{stat.label}</span>
+                <span className="font-black text-xl text-voyage-primary-dark">{stat.val}</span>
+                <span className="text-[9px] font-black text-voyage-primary/50 uppercase tracking-widest">{stat.label}</span>
              </motion.div>
            ))}
         </section>
 
-
-        {/* Engagement & Analytics Section */}
+        {/* Journey Progress Section */}
         <section className="space-y-6">
            <div className="flex justify-between items-end px-2">
              <div className="flex flex-col">
-               <h2 className="text-2xl font-black text-[#4E2510]">Engagement</h2>
-               <p className="text-[10px] font-black text-[#D4A43E] uppercase tracking-widest text-left mt-1">
+               <h2 className="text-2xl font-black text-voyage-primary-dark">Progression du Voyage</h2>
+               <p className="text-[10px] font-black text-voyage-accent uppercase tracking-widest text-left mt-1">
+                  Ton avancée dans les cités du Royaume
+               </p>
+             </div>
+             <Globe size={20} className="text-voyage-accent mb-1" />
+           </div>
+
+           <div className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm space-y-6">
+              {/* Total Missions Progress */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-wider">
+                  <span className="text-voyage-primary/60">Missions Totales</span>
+                  <span className="text-voyage-primary">{completedMissions.length} / {cities.reduce((acc, c) => acc + c.totalSteps, 0)}</span>
+                </div>
+                <div className="h-3 w-full bg-voyage-sand rounded-full overflow-hidden">
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: `${Math.min(100, (completedMissions.length / (cities.reduce((acc, c) => acc + c.totalSteps, 0) || 1)) * 100)}%` }}
+                    className="h-full bg-voyage-accent rounded-full shadow-[0_0_10px_rgba(212,164,62,0.3)]"
+                  />
+                </div>
+              </div>
+
+              {/* Individual Cities Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                {cities.map((city, idx) => {
+                  const completedInCity = city.status === 'completed' ? city.totalSteps : (city.stepNum > 0 ? city.stepNum - 1 : 0);
+                  const progressPercent = (completedInCity / (city.totalSteps || 1)) * 100;
+                  const cityColor = city.color || '#D4A43E';
+                  
+                  return (
+                    <motion.div 
+                      key={city.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.05 }}
+                      className={cn(
+                        "p-4 rounded-3xl border transition-all relative overflow-hidden group",
+                        city.status === 'locked' ? "bg-gray-50 border-gray-100 opacity-60" : "bg-white border-voyage-secondary-light hover:border-voyage-accent hover:shadow-md"
+                      )}
+                    >
+                      <div className="flex items-center gap-3 mb-3">
+                        <div 
+                          className={cn(
+                            "w-8 h-8 rounded-xl flex items-center justify-center text-white shadow-sm transition-colors",
+                          )}
+                          style={{ backgroundColor: city.status === 'locked' ? '#E5E7EB' : cityColor }}
+                        >
+                          {city.status === 'completed' ? <CheckCircle2 size={16} /> : <MapPin size={16} />}
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-black text-voyage-primary-dark uppercase truncate max-w-[80px]">{city.name}</span>
+                          <span className="text-[8px] font-bold text-voyage-primary/40 uppercase">{completedInCity}/{city.totalSteps} Missions</span>
+                        </div>
+                      </div>
+
+                      <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          animate={{ width: `${progressPercent}%` }}
+                          className="h-full rounded-full transition-all duration-1000"
+                          style={{ backgroundColor: city.status === 'locked' ? '#D1D5DB' : cityColor }}
+                        />
+                      </div>
+
+                      {city.status === 'locked' && (
+                        <div className="absolute top-2 right-2">
+                           <Lock size={12} className="text-gray-300" />
+                        </div>
+                      )}
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Recent Missions Feed */}
+              {history && history.length > 0 && (
+                <div className="space-y-4 pt-4 border-t border-gray-100">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-[10px] font-black text-voyage-primary/40 uppercase tracking-widest">Dernières Activités</h4>
+                    <Trophy size={14} className="text-voyage-accent/40" />
+                  </div>
+                  <div className="space-y-3">
+                    {history.slice(-3).reverse().map((item, i) => (
+                      <motion.div 
+                        key={item.id}
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 + (i * 0.1) }}
+                        className="flex items-center gap-4 bg-gray-50/50 p-3 rounded-2xl border border-gray-100 hover:bg-white hover:shadow-sm transition-all"
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center shadow-sm">
+                          <CheckCircle2 size={18} className="text-green-500" />
+                        </div>
+                        <div className="grow min-w-0">
+                          <p className="text-[11px] font-black text-voyage-primary-dark truncate">{item.missions?.title_fr || 'Mission'}</p>
+                          <p className="text-[9px] font-bold text-voyage-primary/40 uppercase">{new Date(item.created_at).toLocaleDateString('fr-FR')}</p>
+                        </div>
+                        <div className="text-right shrink-0">
+                          <span className="text-[11px] font-black text-voyage-primary">+{item.xp} XP</span>
+                          <div className="flex gap-0.5 justify-end mt-0.5">
+                            {[...Array(3)].map((_, j) => (
+                              <Star key={j} size={8} className={cn(j < (item.stars || 0) ? "text-amber-400 fill-amber-400" : "text-gray-200")} />
+                            ))}
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              )}
+           </div>
+        </section>
+
+        {/* World Map Mini-View (Carte du Royaume) */}
+        <section className="space-y-6">
+           <div className="flex justify-between items-end px-2">
+             <div className="flex flex-col">
+               <h2 className="text-2xl font-black text-voyage-primary-dark">Carte du Royaume</h2>
+               <p className="text-[10px] font-black text-voyage-accent uppercase tracking-widest text-left mt-1">
+                  Ta conquête du territoire marocain
+               </p>
+             </div>
+             <MapPin size={20} className="text-voyage-accent mb-1" />
+           </div>
+
+           <div className="bg-white border border-voyage-secondary-light rounded-[40px] p-2 shadow-sm relative overflow-hidden aspect-4/3 flex items-center justify-center">
+              {/* Abstract Map Background */}
+              <div className="absolute inset-0 bg-voyage-sand/30 opacity-40">
+                 <svg width="100%" height="100%" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="scale-110">
+                    <path d="M100 50C150 20 250 80 300 120C350 160 300 250 250 280C200 310 100 280 50 220C0 160 50 80 100 50Z" fill="#E5D5B8" fillOpacity="0.3" />
+                    <path d="M50 100C80 80 120 120 150 100C180 80 220 140 250 120" stroke="#7B3F1A" strokeOpacity="0.1" strokeWidth="2" strokeDasharray="4 4" />
+                 </svg>
+              </div>
+
+              {/* Dynamic City Markers */}
+              <div className="relative w-full h-full">
+                {cities.map((city, idx) => {
+                  // Approximate coordinates for the mini-map based on map_x/map_y
+                  // Since we don't have the exact map size here, we use percentage-based positioning
+                  const x = city.map_x ? `${(city.map_x / 1000) * 100}%` : `${20 + (idx * 15)}%`;
+                  const y = city.map_y ? `${(city.map_y / 1000) * 100}%` : `${30 + (idx * 10)}%`;
+                  
+                  return (
+                    <motion.div
+                      key={city.id}
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.2 + (idx * 0.1), type: 'spring' }}
+                      style={{ left: x, top: y }}
+                      className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1 z-20"
+                    >
+                      <div className={cn(
+                        "w-8 h-8 rounded-full flex items-center justify-center shadow-lg transition-all duration-500",
+                        city.status === 'completed' ? "bg-green-500 scale-110" : 
+                        city.status === 'active' ? "bg-voyage-accent animate-bounce" : "bg-gray-300 grayscale"
+                      )}>
+                        {city.status === 'completed' ? (
+                          <CheckCircle2 size={16} className="text-white" />
+                        ) : city.status === 'active' ? (
+                          <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                        ) : (
+                          <Lock size={12} className="text-white/50" />
+                        )}
+                      </div>
+                      <span className={cn(
+                        "text-[7px] font-black uppercase tracking-tighter px-1.5 py-0.5 rounded-full bg-white/80 backdrop-blur-sm border shadow-sm",
+                        city.status === 'locked' ? "text-gray-400 border-gray-100" : "text-voyage-primary-dark border-voyage-secondary-light"
+                      )}>
+                        {city.name}
+                      </span>
+                    </motion.div>
+                  );
+                })}
+              </div>
+           </div>
+        </section>
+        {/* Engagement & Analytics Section */}
+
+        <section className="space-y-6">
+           <div className="flex justify-between items-end px-2">
+             <div className="flex flex-col">
+               <h2 className="text-2xl font-black text-voyage-primary-dark">Engagement</h2>
+               <p className="text-[10px] font-black text-voyage-accent uppercase tracking-widest text-left mt-1">
                   Analyse de tes performances
                </p>
              </div>
-             <TrendingUp size={20} className="text-[#D4A43E] mb-1" />
+             <TrendingUp size={20} className="text-voyage-accent mb-1" />
            </div>
 
            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -437,11 +651,11 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-white border border-[#E5D5B8] rounded-[40px] p-6 shadow-sm space-y-4"
+                className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm space-y-4"
               >
                 <div className="flex justify-between items-center">
-                  <h4 className="text-xs font-black text-[#7B3F1A] uppercase tracking-widest">Progression XP</h4>
-                  <Zap size={14} className="text-[#D4A43E]" />
+                  <h4 className="text-xs font-black text-voyage-primary uppercase tracking-widest">Progression XP</h4>
+                  <Zap size={14} className="text-voyage-accent" />
                 </div>
                 <div className="h-48 w-full">
                   <ResponsiveContainer width="100%" height="100%">
@@ -470,11 +684,11 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="bg-white border border-[#E5D5B8] rounded-[40px] p-6 shadow-sm space-y-4"
+                className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm space-y-4"
               >
                 <div className="flex justify-between items-center">
-                  <h4 className="text-xs font-black text-[#7B3F1A] uppercase tracking-widest">Soft Skills</h4>
-                  <Brain size={14} className="text-[#7B3F1A]" />
+                  <h4 className="text-xs font-black text-voyage-primary uppercase tracking-widest">Soft Skills</h4>
+                  <Brain size={14} className="text-voyage-primary" />
                 </div>
                 <div className="h-48 w-full flex items-center justify-center">
                   <ResponsiveContainer width="100%" height="100%">
@@ -493,10 +707,10 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="bg-white border border-[#E5D5B8] rounded-[40px] p-6 shadow-sm space-y-4"
+                className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm space-y-4"
               >
                 <div className="flex justify-between items-center">
-                  <h4 className="text-xs font-black text-[#7B3F1A] uppercase tracking-widest">Taux de Succès</h4>
+                  <h4 className="text-xs font-black text-voyage-primary uppercase tracking-widest">Taux de Succès</h4>
                   <Star size={14} className="text-amber-500" />
                 </div>
                 <div className="h-48 w-full">
@@ -520,10 +734,10 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="bg-white border border-[#E5D5B8] rounded-[40px] p-6 shadow-sm space-y-4"
+                className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm space-y-4"
               >
                 <div className="flex justify-between items-center">
-                  <h4 className="text-xs font-black text-[#7B3F1A] uppercase tracking-widest">Activité Hebdo</h4>
+                  <h4 className="text-xs font-black text-voyage-primary uppercase tracking-widest">Activité Hebdo</h4>
                   <Flame size={14} className="text-orange-500" />
                 </div>
                 <div className="h-48 w-full">
@@ -546,16 +760,16 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
 
         {/* Progress Card */}
         <section className="relative overflow-hidden group">
-           <div className="absolute inset-0 bg-gradient-to-br from-[#7B3F1A] to-[#4E2510] rounded-[40px] shadow-2xl" />
+           <div className="absolute inset-0 bg-linear-to-br from-voyage-primary to-voyage-primary-dark rounded-[40px] shadow-2xl" />
            <div className="relative z-10 p-8 space-y-6">
               <div className="flex justify-between items-end">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.3em]">PROCHAINE ÉTAPE</span>
+                  <span className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.3em]">PROCHAINE ÉTAPE</span>
                   <h3 className="text-2xl font-black text-white">Niveau {stats.level + 1}</h3>
                 </div>
                 <div className="text-right">
                   <span className="block font-black text-white text-xl">{Math.max(0, (stats.level + 1) * 1000 - stats.xp)} XP</span>
-                  <span className="text-[10px] font-bold text-[#D4A43E]/70 uppercase tracking-widest text-right">Restant</span>
+                  <span className="text-[10px] font-bold text-voyage-accent/70 uppercase tracking-widest text-right">Restant</span>
                 </div>
               </div>
               
@@ -565,12 +779,12 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.min(100, (stats.xp % 1000) / 10)}%` }}
                     transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="h-full bg-gradient-to-r from-[#D4A43E] to-[#F59E0B] rounded-full relative overflow-hidden shadow-[0_0_20px_rgba(212,164,62,0.4)]"
+                    className="h-full bg-linear-to-r from-voyage-accent to-[#F59E0B] rounded-full relative overflow-hidden shadow-[0_0_20px_rgba(212,164,62,0.4)]"
                   >
                     <motion.div 
                       animate={{ x: ['-100%', '200%'] }}
                       transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12"
+                      className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent -skew-x-12"
                     />
                   </motion.div>
                 </div>
@@ -583,13 +797,13 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
         <section className="space-y-6">
            <div className="flex items-center justify-between px-2">
               <div>
-                <h2 className="text-[10px] font-black text-[#7B3F1A]/40 uppercase tracking-[0.2em]">Médiathèque des Bijoux</h2>
-                <p className="text-[8px] font-bold text-[#D4A43E] uppercase tracking-widest mt-0.5">
+                <h2 className="text-[10px] font-black text-voyage-primary/40 uppercase tracking-[0.2em]">Médiathèque des Bijoux</h2>
+                <p className="text-[8px] font-bold text-voyage-accent uppercase tracking-widest mt-0.5">
                   Collection des trésors déverrouillés par tes exploits
                 </p>
               </div>
               <div className="flex flex-col items-end gap-1">
-                <span className="text-[10px] font-black text-[#D4A43E] bg-[#D4A43E]/10 px-3 py-1 rounded-full border border-[#D4A43E]/20">
+                <span className="text-[10px] font-black text-voyage-accent bg-voyage-accent/10 px-3 py-1 rounded-full border border-voyage-accent/20">
                   {allGameBadges.filter(b => b.isEarned).length} / {allGameBadges.length} ACQUIS
                 </span>
               </div>
@@ -597,7 +811,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
 
            {/* Toggle Menu - Cities */}
            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide px-1">
-             {cities.map((city) => {
+             {badgeFilterTabs.map((city) => {
                const cityBadges = allGameBadges.filter(b => 
                  city === 'Tous' ? true : b.city?.toLowerCase() === city.toLowerCase()
                );
@@ -610,16 +824,16 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                    className={cn(
                      "flex items-center gap-3 px-4 py-2.5 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all shrink-0 border-2",
                      activeCity === city 
-                       ? "bg-[#7B3F1A] text-white border-[#7B3F1A] shadow-lg shadow-[#7B3F1A]/20" 
-                       : "bg-white text-[#7B3F1A] border-[#E5D5B8] hover:border-[#D4A43E]"
+                       ? "bg-voyage-primary text-white border-voyage-primary shadow-lg shadow-voyage-primary/20" 
+                       : "bg-white text-voyage-primary border-voyage-secondary-light hover:border-voyage-accent"
                    )}
                  >
-                   <MapPin size={14} className={activeCity === city ? "text-white" : "text-[#D4A43E]"} />
+                   <MapPin size={14} className={activeCity === city ? "text-white" : "text-voyage-accent"} />
                    <div className="flex flex-col items-start leading-tight">
                      <span>{city}</span>
                      <span className={cn(
                        "text-[8px] font-bold",
-                       activeCity === city ? "text-white/60" : "text-[#D4A43E]"
+                       activeCity === city ? "text-white/60" : "text-voyage-accent"
                      )}>
                        {earned}/{cityBadges.length}
                      </span>
@@ -629,14 +843,14 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
              })}
            </div>
 
-           <div className="bg-white border border-[#E5D5B8] rounded-[40px] p-8 shadow-sm">
+           <div className="bg-white border border-voyage-secondary-light rounded-[40px] p-8 shadow-sm">
               <AnimatePresence mode="wait">
                 {filteredBadges.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
                     <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-gray-300">
                       <Lock size={32} />
                     </div>
-                    <p className="text-sm font-bold text-[#7B3F1A]/40 uppercase tracking-tight">Aucun badge dans cette ville</p>
+                    <p className="text-sm font-bold text-voyage-primary/40 uppercase tracking-tight">Aucun badge dans cette ville</p>
                   </div>
                 ) : (
                   <motion.div 
@@ -659,8 +873,8 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                           <div className={cn(
                             "w-20 h-20 rounded-[28px] flex items-center justify-center border-2 shadow-sm transition-all duration-500 relative overflow-hidden",
                             isEarned 
-                              ? "bg-gradient-to-br from-[#FFF8F0] to-[#FEF3C7] border-[#D4A43E] shadow-[#D4A43E]/20" 
-                              : "bg-gray-50 border-[#E5D5B8]/30 grayscale opacity-40"
+                              ? "bg-linear-to-br from-voyage-sand to-voyage-parchment border-voyage-accent shadow-voyage-accent/20" 
+                              : "bg-gray-50 border-voyage-secondary-light/30 grayscale opacity-40"
                           )}>
                             {isEarned && (
                               <motion.div 
@@ -692,23 +906,23 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
 
                             {!isEarned && (
                               <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/5 z-20 gap-1">
-                                <Lock size={16} className="text-[#7B3F1A]/50" />
+                                <Lock size={16} className="text-voyage-primary/50" />
                                 {badge.xp_requirement > 0 && (
-                                  <span className="text-[6px] font-black text-[#7B3F1A]/40 uppercase tracking-tighter">{badge.xp_requirement} XP</span>
+                                  <span className="text-[6px] font-black text-voyage-primary/40 uppercase tracking-tighter">{badge.xp_requirement} XP</span>
                                 )}
                               </div>
                             )}
                           </div>
                           <div className="text-center space-y-0.5 px-1">
-                            <p className={cn("text-[10px] font-black uppercase tracking-tight leading-tight", isEarned ? "text-[#4E2510]" : "text-gray-400")}>
+                            <p className={cn("text-[10px] font-black uppercase tracking-tight leading-tight", isEarned ? "text-voyage-primary-dark" : "text-gray-400")}>
                               {badge.name}
                             </p>
                             {badge.nameAr && (
-                              <p className="text-[9px] font-bold text-[#7B3F1A]/40 arabic-font leading-none mb-1">
+                              <p className="text-[9px] font-bold text-voyage-primary/40 arabic-font leading-none mb-1">
                                 {badge.nameAr}
                               </p>
                             )}
-                            <p className="text-[8px] font-black text-[#D4A43E] uppercase tracking-tighter">
+                            <p className="text-[8px] font-black text-voyage-accent uppercase tracking-tighter">
                               {badge.city}
                             </p>
                           </div>
@@ -740,7 +954,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
         {/* Skills Section */}
         <section className="space-y-5">
           <div className="flex justify-between items-center px-2">
-            <h2 className="text-2xl font-black text-[#4E2510]">Compétences <span className="text-[10px] font-black text-[#D4A43E] bg-[#D4A43E]/10 px-2 py-0.5 rounded ml-2">SOFT SKILLS</span></h2>
+            <h2 className="text-2xl font-black text-voyage-primary-dark">Compétences <span className="text-[10px] font-black text-voyage-accent bg-voyage-accent/10 px-2 py-0.5 rounded ml-2">SOFT SKILLS</span></h2>
           </div>
           <div className="grid grid-cols-2 gap-5">
             {skills.map((skill, idx) => (
@@ -749,14 +963,14 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 + (idx * 0.05) }}
-                className={cn("p-6 rounded-[32px] border border-[#E5D5B8] flex flex-col items-center text-center gap-4 transition-all hover:shadow-xl hover:-translate-y-1 bg-white")}
+                className={cn("p-6 rounded-[32px] border border-voyage-secondary-light flex flex-col items-center text-center gap-4 transition-all hover:shadow-xl hover:-translate-y-1 bg-white")}
               >
                  <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center shadow-inner relative border-2 border-transparent", skill.bg)}>
                     <skill.icon className={skill.color} size={32} />
                  </div>
                  <div>
-                    <p className="font-black text-[#4E2510] text-sm leading-tight mb-1">{skill.name}</p>
-                    <p className="text-[10px] font-bold text-[#7B3F1A]/40 arabic-font leading-none">{skill.label}</p>
+                    <p className="font-black text-voyage-primary-dark text-sm leading-tight mb-1">{skill.name}</p>
+                    <p className="text-[10px] font-bold text-voyage-primary/40 arabic-font leading-none">{skill.label}</p>
                  </div>
                  <div className="w-full h-1.5 bg-[#F0F0F0] rounded-full overflow-hidden">
                     <motion.div 
@@ -765,7 +979,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                       className={cn("h-full rounded-full", skill.color.replace('text-', 'bg-'))}
                     />
                  </div>
-                 <span className="text-[10px] font-black text-[#7B3F1A]/60 uppercase tracking-widest">Niveau {skill.level}</span>
+                 <span className="text-[10px] font-black text-voyage-primary/60 uppercase tracking-widest">Niveau {skill.level}</span>
               </motion.div>
             ))}
           </div>
@@ -773,8 +987,8 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
 
         {/* Audio Settings */}
         <section className="space-y-5">
-           <h2 className="text-2xl font-black text-[#4E2510] px-2">Réglages Audio</h2>
-           <div className="bg-white border border-[#E5D5B8] rounded-[40px] p-6 shadow-sm grid grid-cols-2 gap-4">
+           <h2 className="text-2xl font-black text-voyage-primary-dark px-2">Réglages Audio</h2>
+           <div className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm grid grid-cols-2 gap-4">
               <button 
                 onClick={() => handleToggleAudio({ soundEffectsEnabled: !audio.soundEffectsEnabled })}
                 className={cn(
@@ -786,8 +1000,8 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                   <Bell size={24} />
                 </div>
                 <div className="text-center">
-                  <p className="font-black text-[#4E2510] text-sm uppercase tracking-tight">Effets</p>
-                  <p className="text-[9px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest">Sonores</p>
+                  <p className="font-black text-voyage-primary-dark text-sm uppercase tracking-tight">Effets</p>
+                  <p className="text-[9px] font-bold text-voyage-primary/40 uppercase tracking-widest">Sonores</p>
                 </div>
               </button>
 
@@ -802,8 +1016,8 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                   <Music size={24} />
                 </div>
                 <div className="text-center">
-                  <p className="font-black text-[#4E2510] text-sm uppercase tracking-tight">Musique</p>
-                  <p className="text-[9px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest">De fond</p>
+                  <p className="font-black text-voyage-primary-dark text-sm uppercase tracking-tight">Musique</p>
+                  <p className="text-[9px] font-bold text-voyage-primary/40 uppercase tracking-widest">De fond</p>
                 </div>
               </button>
            </div>
@@ -818,18 +1032,18 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
               playSound('click');
               setShowDevModal(true);
             }}
-            className="w-full py-6 rounded-[32px] font-black text-[#D4A43E] border-2 border-[#D4A43E]/30 bg-[#D4A43E]/5 hover:bg-[#D4A43E]/10 transition-all flex items-center justify-between px-8 shadow-sm group"
+            className="w-full py-6 rounded-[32px] font-black text-voyage-accent border-2 border-voyage-accent/30 bg-voyage-accent/5 hover:bg-voyage-accent/10 transition-all flex items-center justify-between px-8 shadow-sm group"
           >
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-[#D4A43E] rounded-2xl text-white shadow-lg shadow-[#D4A43E]/20 group-hover:rotate-12 transition-transform">
+              <div className="p-3 bg-voyage-accent rounded-2xl text-white shadow-lg shadow-voyage-accent/20 group-hover:rotate-12 transition-transform">
                 <Users size={20} />
               </div>
               <div className="text-left">
-                <span className="block text-sm font-black uppercase tracking-tight text-[#4E2510]">Connaître le développeur</span>
-                <span className="block text-[10px] font-bold text-[#D4A43E] uppercase tracking-widest mt-0.5">Design & Développement</span>
+                <span className="block text-sm font-black uppercase tracking-tight text-voyage-primary-dark">Connaître le développeur</span>
+                <span className="block text-[10px] font-bold text-voyage-accent uppercase tracking-widest mt-0.5">Design & Développement</span>
               </div>
             </div>
-            <ChevronRight size={20} className="text-[#D4A43E]/60 group-hover:translate-x-1 transition-transform" />
+            <ChevronRight size={20} className="text-voyage-accent/60 group-hover:translate-x-1 transition-transform" />
           </motion.button>
         </div>
         
@@ -843,11 +1057,11 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
               await signOut();
               onLogout();
             }}
-            className="w-full py-5 rounded-3xl font-black text-[#7B3F1A]/60 border-2 border-[#E5D5B8] hover:bg-[#7B3F1A]/5 transition-all flex items-center justify-center gap-3 shadow-sm active:shadow-none"
+            className="w-full py-5 rounded-3xl font-black text-voyage-primary/60 border-2 border-voyage-secondary-light hover:bg-voyage-primary/5 transition-all flex items-center justify-center gap-3 shadow-sm active:shadow-none"
           >
-            <LogOut size={22} className="text-[#7B3F1A]/40" />
+            <LogOut size={22} className="text-voyage-primary/40" />
             <div className="flex flex-col items-center leading-none">
-              <span className="tracking-tight text-lg uppercase text-[#7B3F1A]">Se déconnecter</span>
+              <span className="tracking-tight text-lg uppercase text-voyage-primary">Se déconnecter</span>
               <span className="text-[10px] opacity-40 font-bold mt-1 tracking-widest uppercase">تسجيل الخروج</span>
             </div>
           </motion.button>

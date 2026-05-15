@@ -591,6 +591,7 @@ export default function App() {
               setCurrentScreen(Screen.Welcome);
             }}
             completedMissions={completedMissions}
+            completedCities={completedCities}
           />
         );
       case Screen.Badges:

@@ -90,7 +90,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
   return (
     <div className="h-full w-full flex flex-col relative bg-[#FFF8F0] text-[#1A1A2E] overflow-y-auto pb-10 font-sans">
       {/* Dynamic Background with Moroccan Influence */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none fixed">
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-[#7B3F1A]/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#F4A261]/10 rounded-full blur-[100px]" />
         
@@ -135,7 +135,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
         </div>
       </header>
 
-      <main className="relative z-10 flex-grow flex flex-col px-6 max-w-md mx-auto w-full">
+      <main className="relative z-10 grow flex flex-col px-6 max-w-md mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -146,7 +146,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
               <div className="space-y-1.5">
                 <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ml-2">Prénom</label>
                 <input
-                  type="text"
+                  name="register_firstname"
+                  autoComplete="off"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   placeholder="Amir"
@@ -157,7 +158,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
               <div className="space-y-1.5">
                 <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ml-2">Nom</label>
                 <input
-                  type="text"
+                  name="register_lastname"
+                  autoComplete="off"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   placeholder="Boulyali"
@@ -174,7 +176,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   <User size={18} strokeWidth={2.5} />
                 </div>
                 <input
-                  type="text"
+                  name="register_username"
+                  autoComplete="off"
                   value={username}
                   readOnly
                   placeholder="prenom.nom"
@@ -208,7 +211,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   Établissement <span className="text-[#7B3F1A]/40 lowercase font-bold text-[8px]">(Optionnel)</span>
                 </label>
                 <input
-                  type="text"
+                  name="register_establishment"
+                  autoComplete="new-password"
                   value={establishment}
                   onChange={(e) => setEstablishment(e.target.value)}
                   placeholder="ex: OFPPT"
@@ -224,7 +228,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   Spécialité <span className="text-[#7B3F1A]/40 lowercase font-bold text-[8px]">(Optionnel)</span>
                 </label>
                 <input
-                  type="text"
+                  name="register_specialty"
+                  autoComplete="new-password"
                   value={specialty}
                   onChange={(e) => setSpecialty(e.target.value)}
                   placeholder="ex: Dév Digital"
@@ -237,7 +242,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   Niveau <span className="text-[#7B3F1A]/40 lowercase font-bold text-[8px]">(Optionnel)</span>
                 </label>
                 <input
-                  type="text"
+                  name="register_level"
+                  autoComplete="new-password"
                   value={academicLevel}
                   onChange={(e) => setAcademicLevel(e.target.value)}
                   placeholder="ex: 1ère année"
@@ -254,7 +260,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   <Sparkles size={18} strokeWidth={2.5} />
                 </div>
                 <input
-                  type="date"
+                  name="register_birthdate"
+                  autoComplete="new-password"
                   value={birthDate}
                   onChange={(e) => setBirthDate(e.target.value)}
                   className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3.5 pl-11 pr-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm"
@@ -270,7 +277,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   <Lock size={18} strokeWidth={2.5} />
                 </div>
                 <input
-                  type="password"
+                  name="register_password"
+                  autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
@@ -296,7 +304,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading || !password}
-              className="w-full bg-gradient-to-br from-[#7B3F1A] to-[#4E2510] text-white py-4.5 rounded-3xl font-black text-lg uppercase tracking-tight flex items-center justify-center gap-3 shadow-xl shadow-[#7B3F1A]/20 hover:shadow-[#7B3F1A]/40 disabled:opacity-50 transition-all mt-4 border-b-4 border-black/20"
+              className="w-full bg-linear-to-br from-[#7B3F1A] to-[#4E2510] text-white py-4.5 rounded-3xl font-black text-lg uppercase tracking-tight flex items-center justify-center gap-3 shadow-xl shadow-[#7B3F1A]/20 hover:shadow-[#7B3F1A]/40 disabled:opacity-50 transition-all mt-4 border-b-4 border-black/20"
             >
               {loading ? (
                 <Loader2 className="animate-spin" size={24} />

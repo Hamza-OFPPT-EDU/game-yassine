@@ -16,7 +16,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { TrendingUp, CheckCircle2, Loader2, X, Map as MapIcon, Info, PartyPopper, Compass, Trophy, User, Settings, LayoutGrid, Sparkles, MessageSquare, RotateCcw, SkipForward, Clapperboard, Check, Wind, Lightbulb, Volume2, VolumeX, Music, Bell, Play, Save } from 'lucide-react';
 import { type City, type Challenge, type MissionCompletionSummary, type MissionQuestionResult, type Mission, DEFAULT_AVATAR_URL } from '../types';
-import { RABAT_EXPLANATIONS, CHEFCHAOUEN_EXPLANATIONS } from '../constants/explanations';
+import { RABAT_EXPLANATIONS, CHEFCHAOUEN_EXPLANATIONS, FES_EXPLANATIONS, MARRAKECH_EXPLANATIONS, LAAYOUNE_EXPLANATIONS, DAKHLA_EXPLANATIONS } from '../constants/explanations';
 import { cn } from '../lib/utils';
 import { useSupabaseQuestions } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
@@ -119,7 +119,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const { settings: audio, updateSettings: updateAudio, playSound: playEffect, playVoice, saveToCloud: saveAudioToCloud, openSettings } = useAudio();
   
   // Timer & Skip state
-  const DEFAULT_QUESTION_TIME = 30; // seconds
+  const DEFAULT_QUESTION_TIME = 90; // seconds
   const timer = useTimer({
     initialSeconds: DEFAULT_QUESTION_TIME,
     enabled: !showFeedback,
@@ -488,6 +488,74 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
         else if (title.includes("SOUK") || title.includes("RESTAURANT")) missionCode = "C3";
         else if (title.includes("HERBORISTERIE") || title.includes("RÉSILIENCE")) missionCode = "C4";
         else if (title.includes("FESTIVAL") || title.includes("DÉFI FINAL")) missionCode = "C5";
+
+        if (missionCode && cityData[missionCode]) {
+          const exerciseKey = String(currentIdx + 1);
+          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
+          if (explanation) return explanation;
+        }
+      }
+    } else if (city.id.toLowerCase() === 'fès' || city.id.toLowerCase() === 'fes') {
+      const cityData = FES_EXPLANATIONS["Fès"];
+      if (cityData) {
+        let missionCode = "";
+        const title = mission.title_fr?.toUpperCase() || "";
+        if (title.includes("CALLIGRAPHIE") || title.includes("ATELIER")) missionCode = "F1";
+        else if (title.includes("TANNERIES") || title.includes("CHOUARA")) missionCode = "F2";
+        else if (title.includes("UNIVERSITÉ")) missionCode = "F3";
+        else if (title.includes("BOU INANIA") || title.includes("RESTAURATION")) missionCode = "F4";
+        else if (title.includes("FESTIVAL") || title.includes("DÉFI FINAL")) missionCode = "F5";
+
+        if (missionCode && cityData[missionCode]) {
+          const exerciseKey = String(currentIdx + 1);
+          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
+          if (explanation) return explanation;
+        }
+      }
+    } else if (city.id.toLowerCase() === 'marrakech') {
+      const cityData = MARRAKECH_EXPLANATIONS["Marrakech"];
+      if (cityData) {
+        let missionCode = "";
+        const title = mission.title_fr?.toUpperCase() || "";
+        if (title.includes("STARTUP") || title.includes("TECH")) missionCode = "M1";
+        else if (title.includes("RIAD") || title.includes("LUXE")) missionCode = "M2";
+        else if (title.includes("SOUK") || title.includes("SEMMARINE")) missionCode = "M3";
+        else if (title.includes("ÉVÉNEMENTIEL") || title.includes("PRESSION")) missionCode = "M4";
+        else if (title.includes("SOMMET") || title.includes("DÉFI FINAL")) missionCode = "M5";
+
+        if (missionCode && cityData[missionCode]) {
+          const exerciseKey = String(currentIdx + 1);
+          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
+          if (explanation) return explanation;
+        }
+      }
+    } else if (city.id.toLowerCase() === 'laâyoune' || city.id.toLowerCase() === 'laayoune') {
+      const cityData = LAAYOUNE_EXPLANATIONS["Laâyoune"];
+      if (cityData) {
+        let missionCode = "";
+        const title = mission.title_fr?.toUpperCase() || "";
+        if (title.includes("BASE") || title.includes("DÉSERT")) missionCode = "L1";
+        else if (title.includes("COOPÉRATIVE") || title.includes("FEMMES")) missionCode = "L2";
+        else if (title.includes("MÉDECIN")) missionCode = "L3";
+        else if (title.includes("FERME") || title.includes("SOLAIRE")) missionCode = "L4";
+        else if (title.includes("PLAN") || title.includes("DÉVELOPPEMENT") || title.includes("DÉFI FINAL")) missionCode = "L5";
+
+        if (missionCode && cityData[missionCode]) {
+          const exerciseKey = String(currentIdx + 1);
+          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
+          if (explanation) return explanation;
+        }
+      }
+    } else if (city.id.toLowerCase() === 'dakhla') {
+      const cityData = DAKHLA_EXPLANATIONS["Dakhla"];
+      if (cityData) {
+        let missionCode = "";
+        const title = mission.title_fr?.toUpperCase() || "";
+        if (title.includes("PORT") || title.includes("PÊCHE")) missionCode = "D1";
+        else if (title.includes("STATION") || title.includes("BIOLOGIE")) missionCode = "D2";
+        else if (title.includes("FERME D'ALGUES") || title.includes("CIRCULAIRE")) missionCode = "D3";
+        else if (title.includes("PARC ÉOLIEN") || title.includes("ÉNERGIE")) missionCode = "D4";
+        else if (title.includes("PALAIS") || title.includes("CONGRÈS") || title.includes("MAÎTRISE ABSOLUE")) missionCode = "D5";
 
         if (missionCode && cityData[missionCode]) {
           const exerciseKey = String(currentIdx + 1);
@@ -1468,8 +1536,8 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                 </div>
 
                 <div className="bg-voyage-sand/30 p-6 rounded-3xl border-2 border-dashed border-voyage-accent/20">
-                  <p className="text-lg font-bold text-duo-eel leading-relaxed text-center italic">
-                    "{getExplanation()}"
+                  <p className="text-lg text-duo-eel leading-relaxed text-justify italic">
+                    {getExplanation()}
                   </p>
                 </div>
 

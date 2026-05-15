@@ -122,7 +122,7 @@ export default function BadgesPage() {
                         paddingAngle={5}
                         label={({name, value}) => `${name}: ${value}`}
                       >
-                        {byCategory.map((entry, i) => <Cell key={i} fill={entry.color} />)}
+                        {byCategory.map((entry) => <Cell key={entry.name} fill={entry.color} />)}
                       </Pie>
                       <Tooltip content={<CustomTooltip />} />
                       <Legend verticalAlign="bottom" height={36}/>
@@ -150,7 +150,7 @@ export default function BadgesPage() {
                       <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} />
                       <Tooltip content={<CustomTooltip />} />
                       <Bar dataKey="value" name="Nombre" radius={[6,6,0,0]}>
-                        {byRarity.map((entry, i) => <Cell key={i} fill={entry.color} />)}
+                        {byRarity.map((entry) => <Cell key={entry.name} fill={entry.color} />)}
                       </Bar>
                     </BarChart>
                   </ResponsiveContainer>

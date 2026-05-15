@@ -64,34 +64,53 @@ function buildFallbackCities(completedCities: string[], freeExploration: boolean
 export function useSupabaseCities(completedCities: string[], completedMissions: string[]) {
   const [cities, setCities] = useState<City[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const { freeExploration } = useSettings();
 
   useEffect(() => {
     async function fetchData() {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
+
       setLoading(true);
       try {
         // Fetch global settings
-        const { data: globalSettings } = await supabase
+        const globalSettingsQuery = supabase
           .from('app_settings')
           .select('value')
           .eq('key', 'global_free_exploration')
-          .single();
+          .single() as any;
+        const { data: globalSettings } = await globalSettingsQuery.abortSignal(controller.signal);
         
         const isGlobalFreeExploration = globalSettings?.value === true || globalSettings?.value === 'true';
         const effectiveFreeExploration = freeExploration || isGlobalFreeExploration;
 
         // Fetch cities
-        const { data: cityData, error: cityError } = await supabase
+        const cityQuery = supabase
           .from('challenges')
           .select('*')
-          .order('sort_order', { ascending: true });
+          .order('sort_order', { ascending: true }) as any;
+        const { data: cityData, error: cityError } = await cityQuery.abortSignal(controller.signal);
 
         // Fetch missions to count steps
-        const { data: missionData, error: missionError } = await supabase
+        const missionQuery = supabase
           .from('missions')
-          .select('id, city_id');
+          .select('id, city_id') as any;
+        const { data: missionData, error: missionError } = await missionQuery.abortSignal(controller.signal);
 
-        if (cityError || missionError) throw cityError || missionError;
+        clearTimeout(timeoutId);
+
+        if (cityError || missionError) {
+           // Handle specific missing table/column errors (406/404/42P01)
+           const isMissingError = cityError?.code === '42P01' || cityError?.code === 'PGRST116';
+           if (isMissingError) {
+             console.warn('Database schema incomplete or missing tables/columns. Falling back.');
+             setCities([]);
+             setLoading(false);
+             return;
+           }
+           throw cityError || missionError;
+        }
 
         if (!cityData || cityData.length === 0) {
           console.warn('No cities found in database');
@@ -155,18 +174,25 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
           };
         });
         setCities(mappedCities);
-      } catch (err) {
-        console.error('Failed to link with database:', err);
+      } catch (err: any) {
+        if (err.name === 'AbortError') {
+          console.error('Fetch aborted due to timeout');
+          setError('Le serveur met trop de temps à répondre. Utilisation des données locales.');
+        } else {
+          console.error('Failed to link with database:', err);
+          setError('Erreur de connexion. Utilisation des données locales.');
+        }
         // We still keep the fallback only as a last resort to prevent app crash
         setCities(buildFallbackCities(completedCities, freeExploration));
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
 
     fetchData();
   }, [completedCities, completedMissions, freeExploration]);
 
-  return { cities, loading };
+  return { cities, loading, error };
 }
 
 export function useSupabaseMissions(cityId: string, completedMissions: string[] = []) {
@@ -497,25 +523,32 @@ export function useSupabaseProfile(userId?: string) {
     }
 
     async function fetchProfile() {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s timeout
+
       setLoading(true);
       try {
         // 1. Try to get the profile from app_users (primary)
-        const { data: appUser, error: appUserError } = await supabase
+        const appUserQuery = supabase
           .from('app_users')
           .select('*, organizations(name)')
           .eq('id', userId)
-          .single();
+          .single() as any;
+        const { data: appUser, error: appUserError } = await appUserQuery.abortSignal(controller.signal);
 
         // 2. Also get from player_profiles for fallback stats
-        const { data: playerProfile } = await supabase
+        const playerProfileQuery = supabase
           .from('player_profiles')
           .select('xp, level, display_name')
           .eq('id', userId)
-          .single();
+          .single() as any;
+        const { data: playerProfile } = await playerProfileQuery.abortSignal(controller.signal);
 
-        // 3. Also get auth metadata for ultimate fallback of identity (critical for signup sync delays)
+        // 3. Also get auth metadata
         const { data: authData } = await supabase.auth.getUser();
         const meta = authData?.user?.user_metadata || {};
+
+        clearTimeout(timeoutId);
 
         if (!appUserError && appUser) {
           const genderDefault = appUser.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
@@ -547,8 +580,13 @@ export function useSupabaseProfile(userId?: string) {
             avatar_url: meta.avatar_url || genderDefault
           });
         }
-      } catch (err) {
-        console.error("Error fetching profile details:", err);
+      } catch (err: any) {
+        if (err.name === 'AbortError') {
+           console.error("Profile fetch timeout, using cached or metadata fallbacks");
+        } else {
+           console.error("Error fetching profile details:", err);
+        }
+        
         setProfile({
           id: userId,
           full_name: 'Explorateur',
@@ -556,8 +594,9 @@ export function useSupabaseProfile(userId?: string) {
           xp: 0,
           level: 1
         });
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
 
     fetchProfile();

@@ -40,16 +40,17 @@
 
 @layer base {
   html {
-    font-size: 94%; /* Réduction globale de 6% */
+    font-size: 83.25%; /* Réduction cumulative des éléments de ~16.75% (0.95 * 0.95 * 0.98 * 0.98 * 0.98 * 0.98) */
   }
   body {
     background-color: #FBF3E3;
     color: #4E2510;
     font-family: var(--font-sans);
+    font-size: 0.885rem; /* Réduction cumulative du texte de ~21.8% (0.94 * 0.94 * 0.97 * 0.97 * 0.97 * 0.97) */
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Réduction globale des icônes de 5% */
+  /* Réduction globale des icônes */
   svg {
     width: 0.95em;
     height: 0.95em;

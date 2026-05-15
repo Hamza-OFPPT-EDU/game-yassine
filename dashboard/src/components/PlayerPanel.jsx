@@ -288,14 +288,12 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
                               </span>
                             </div>
                             
-                            {/* Detailed Missions View */}
                             <div className="mission-schema-list">
                               {[...Array(city.missions_total)].map((_, i) => {
                                 const isMissionDone = i < city.missions_completed;
                                 const isCurrent = i === city.missions_completed && city.status === 'current';
-                                
                                 return (
-                                  <div key={i} className={`mission-schema-item ${isMissionDone ? 'done' : isCurrent ? 'active' : 'locked'}`}>
+                                  <div key={`mission-${city.id}-${i}`} className={`mission-schema-item ${isMissionDone ? 'done' : isCurrent ? 'active' : 'locked'}`}>
                                     {isMissionDone ? <CheckCircle2 size={12} /> : <Circle size={12} />}
                                     <span>Mission {i + 1}</span>
                                     {isMissionDone && <span className="m-badge">100%</span>}
@@ -405,17 +403,20 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
                                   </div>
                                   
                                   <div className="history-log">
-                                    {(item.details || []).map((q, idx) => (
-                                      <div key={idx} className={`log-row ${q.isCorrect ? 'correct' : 'incorrect'}`}>
-                                        <div className="log-q">Q{idx + 1}: {q.question}</div>
-                                        <div className="log-a">
-                                          <span>Réponse: <strong>{q.givenAnswer || '—'}</strong></span>
-                                          {!q.isCorrect && (
-                                            <span className="log-correct">Attendu: <strong>{q.correctAnswer}</strong></span>
-                                          )}
+                                    {(item.details || []).map((q, idx) => {
+                                      const qKey = q.question_id || `q-${item.id}-${idx}`;
+                                      return (
+                                        <div key={qKey} className={`log-row ${q.isCorrect ? 'correct' : 'incorrect'}`}>
+                                          <div className="log-q">Q{idx + 1}: {q.question}</div>
+                                          <div className="log-a">
+                                            <span>Réponse: <strong>{q.givenAnswer || '—'}</strong></span>
+                                            {!q.isCorrect && (
+                                              <span className="log-correct">Attendu: <strong>{q.correctAnswer}</strong></span>
+                                            )}
+                                          </div>
                                         </div>
-                                      </div>
-                                    ))}
+                                      );
+                                    })}
                                   </div>
                                 </div>
                               )}
