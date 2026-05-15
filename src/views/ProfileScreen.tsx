@@ -189,10 +189,10 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
   const [isSavingAudio, setIsSavingAudio] = useState(false);
 
   const devInfo = getSetting('developer_info') || {
-    name: 'Hamza',
-    photo_url: '',
-    linkedin_url: 'https://www.linkedin.com/in/hamza-ofppt',
-    qr_code_url: ''
+    name: 'Yacine BOULYALI',
+    photo_url: '/assets/yacine_profile.jpg',
+    linkedin_url: 'https://www.linkedin.com/in/yacineboulyali/',
+    qr_code_url: '/assets/yacine_qr.png'
   };
 
   const chartData = useMemo(() => {
