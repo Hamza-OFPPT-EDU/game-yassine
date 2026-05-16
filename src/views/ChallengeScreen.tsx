@@ -119,7 +119,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const { settings: audio, updateSettings: updateAudio, playSound: playEffect, playVoice, saveToCloud: saveAudioToCloud, openSettings } = useAudio();
   
   // Timer & Skip state
-  const DEFAULT_QUESTION_TIME = 90; // seconds
+  const DEFAULT_QUESTION_TIME = 120; // seconds (2 minutes)
   const timer = useTimer({
     initialSeconds: DEFAULT_QUESTION_TIME,
     enabled: !showFeedback,
@@ -167,7 +167,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
 
     timeoutHandledRef.current = false;
     handleReset();
-    timer.reset(DEFAULT_QUESTION_TIME);
+    timer.reset(challenge?.time_limit_sec || DEFAULT_QUESTION_TIME);
     setShortAnswer('');
     setStartTime(Date.now());
     setAttempts(0);

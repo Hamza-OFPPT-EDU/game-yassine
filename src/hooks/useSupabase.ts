@@ -424,7 +424,8 @@ export function useSupabaseQuestions(missionId: string) {
             presentation_fr: q.presentation_fr,
             explanation_fr: q.explanation_fr,
             context_dialogue: q.context_dialogue,
-            illustration_url: q.illustration_url
+            illustration_url: q.illustration_url,
+            time_limit_sec: q.time_limit_sec
           };
         });
         setQuestions(mappedQuestions);
