@@ -118,10 +118,12 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const [isSavingAudio, setIsSavingAudio] = useState(false);
   const { settings: audio, updateSettings: updateAudio, playSound: playEffect, playVoice, saveToCloud: saveAudioToCloud, openSettings } = useAudio();
   
+  const challenge = questions[currentIdx];
+  
   // Timer & Skip state
   const DEFAULT_QUESTION_TIME = 120; // seconds (2 minutes)
   const timer = useTimer({
-    initialSeconds: DEFAULT_QUESTION_TIME,
+    initialSeconds: challenge?.time_limit_sec || DEFAULT_QUESTION_TIME,
     enabled: !showFeedback,
     onTimeExpired: () => handleTimeExpired(),
   });
@@ -138,8 +140,6 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const currentQuestionResultRef = useRef<MissionQuestionResult | null>(null);
   const timeoutHandledRef = useRef(false);
   const autoNextTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const challenge = questions[currentIdx];
   
   // Options are now normalized in useSupabaseQuestions hook
   // Ensure options is always an array for safe .map() calls
@@ -174,7 +174,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
     setCurrentStepIdx(0);
     setTimerStartTime(Date.now());
     setIsTimerPaused(false);
-  }, [currentIdx]);
+  }, [currentIdx, challenge?.time_limit_sec]);
 
   useEffect(() => {
     return () => {

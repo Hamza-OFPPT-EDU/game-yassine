@@ -37,7 +37,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
   const { playSound } = useAudio();
   const [team1Score, setTeam1Score] = useState(2);
   const [team2Score, setTeam2Score] = useState(3);
-  const [timer, setTimer] = useState(15);
+  const [timer, setTimer] = useState(120);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -298,7 +298,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
           <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-2 rounded-2xl border border-slate-100 shadow-xl z-20 flex items-center gap-2">
             <Timer size={18} className={cn("text-voyage-primary", timer < 5 && "text-red-500 animate-pulse")} />
             <span className={cn("font-black text-xl tabular-nums", timer < 5 ? "text-red-500" : "text-voyage-primary")}>
-              00:{timer.toString().padStart(2, '0')}
+              {Math.floor(timer / 60).toString().padStart(2, '0')}:{(timer % 60).toString().padStart(2, '0')}
             </span>
           </div>
 
@@ -374,7 +374,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
                     setCurrentQuestion(ex);
                     setSelectedAnswers([]);
                     setIsComplete(false);
-                    setTimer(15);
+                    setTimer(120);
                     playSound('click');
                     // Scroll to top to focus on the new question
                     document.querySelector('main')?.scrollTo({ top: 0, behavior: 'smooth' });
