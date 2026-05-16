@@ -103,6 +103,7 @@ export type Mission = {
   cinematic_text?: string;
   cinematic_gif_url?: string;
   cinematic_audio_url?: string;
+  illustration_url?: string;
   status?: 'locked' | 'active' | 'completed';
 };
 

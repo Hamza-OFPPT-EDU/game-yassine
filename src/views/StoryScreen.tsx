@@ -54,8 +54,8 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
         className="absolute inset-0 z-0"
       >
         <img
-          src={optimizeSupabaseUrl(city.image, 1000, 70)}
-          alt={city.name}
+          src={optimizeSupabaseUrl(mission?.illustration_url || city.image, 1000, 70)}
+          alt={mission?.title_fr || city.name}
           className="w-full h-full object-cover opacity-30"
           referrerPolicy="no-referrer"
         />

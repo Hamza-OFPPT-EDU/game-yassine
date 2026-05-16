@@ -143,6 +143,12 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
             status = 'active';
           }
 
+          // Rabat Illustration Override
+          let displayImage = city.illustration_url;
+          if (city.city_name_fr === 'Rabat') {
+            displayImage = "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/challenge-illustrations/rabat/1775865430897-hz5t79e38xk-compressed.jpg";
+          }
+
           return {
             id: city.id,
             name: city.city_name_fr,
@@ -151,7 +157,7 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
             arabicDescription: city.description_ar || '',
             focus: city.focus_fr,
             points: 500,
-            image: city.illustration_url,
+            image: displayImage,
             iconUrl: city.icon_name,
             status,
             stepNum: completedInCity + 1 > totalSteps ? totalSteps : completedInCity + 1,
@@ -267,7 +273,8 @@ export function useSupabaseMissions(cityId: string, completedMissions: string[] 
             script_opening: scriptOpening,
             cinematic_text: m.cinematic_text,
             cinematic_gif_url: m.cinematic_gif_url,
-            cinematic_audio_url: m.cinematic_audio_url
+            cinematic_audio_url: m.cinematic_audio_url,
+            illustration_url: m.illustration_url
           };
         });
         setMissions(mappedMissions);
