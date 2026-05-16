@@ -70,7 +70,7 @@ function NewUserModal({ isOpen, onClose, onSubmit }) {
   };
 
   return (
-    <div className="modal-overlay z-[1000] fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div className="modal-overlay z-1000 fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="modal-content bg-bg-surface border-border-light rounded-2xl w-full max-w-md overflow-hidden relative shadow-2xl animate-slideUp">
         <button className="absolute top-4 right-4 text-text-muted hover:text-text-primary" onClick={onClose}>
           <X size={20} />
@@ -223,7 +223,7 @@ function BulkImportModal({ isOpen, onClose, onSubmit }) {
   };
 
   return (
-    <div className="modal-overlay z-[1000] fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div className="modal-overlay z-1000 fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="modal-content bg-bg-surface border-border-light rounded-2xl w-full max-w-2xl overflow-hidden relative shadow-2xl animate-slideUp">
         <button className="absolute top-4 right-4 text-text-muted hover:text-text-primary" onClick={onClose}>
           <X size={20} />

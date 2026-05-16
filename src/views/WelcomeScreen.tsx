@@ -47,7 +47,7 @@ export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProp
         >
           <source src={SPLASH_VIDEO_URL} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f1e]/60 via-transparent to-[#0a0f1e]/90" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/40 to-[#1e0e06]" />
       </div>
 
       <AnimatePresence>
@@ -85,7 +85,8 @@ export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProp
             </section>
 
             {/* Content (Glassmorphic block) */}
-            <main className="flex-grow flex flex-col items-center justify-center px-8 text-center mt-2">
+            <div className="grow" />
+            <main className="flex flex-col items-center justify-center px-8 text-center mt-2">
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}

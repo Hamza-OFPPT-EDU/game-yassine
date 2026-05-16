@@ -24,19 +24,18 @@ const ProfileScreen = lazy(() => import('./views/ProfileScreen'));
 const SettingsScreen = lazy(() => import('./views/SettingsScreen'));
 const CinematicIntroScreen = lazy(() => import('./views/CinematicIntroScreen'));
 const BadgesScreen = lazy(() => import('./views/BadgesScreen'));
-const GrammarQuestScreen = lazy(() => import('./views/GrammarQuestScreen'));
 const LeagueScreen = lazy(() => import('./views/LeagueScreen'));
 const LeagueDetailScreen = lazy(() => import('./views/LeagueDetailScreen'));
 const LeagueCreateScreen = lazy(() => import('./views/LeagueCreateScreen'));
-const VocabularyMatchScreen = lazy(() => import('./views/VocabularyMatchScreen'));
 const RegisterScreen = lazy(() => import('./views/RegisterScreen'));
 const LoginScreen = lazy(() => import('./views/LoginScreen'));
 const DuelCompetitionScreen = lazy(() => import('./views/DuelCompetitionScreen'));
 const LevelCompleteModal = lazy(() => import('./components/LevelCompleteModal'));
 import FullscreenPrompt from './components/FullscreenPrompt';
 import { useAuth } from './hooks/useSupabase';
-import { fetchDynamicAssets, fetchCityMissionAssets, getCoreAssets, getAllAssets } from './lib/assets';
+import { fetchDynamicAssets, fetchCityMissionAssets, getCoreAssets, getAllAssets, getAssetsByPriority } from './lib/assets';
 import { useAssetPreloader, type Asset } from './hooks/useAssetPreloader';
+import { usePriorityAssetPreloader } from './hooks/usePriorityAssetPreloader';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>(Screen.Splash);
@@ -73,9 +72,9 @@ export default function App() {
   const [loadingCityAssets, setLoadingCityAssets] = useState<string | null>(null);
   const [isCoreLoaded, setIsCoreLoaded] = useState(false);
 
-  // Global preloader
-  const allAssets = useMemo(() => getAllAssets(dynamicAssets), [dynamicAssets]);
-  const { progress, isComplete } = useAssetPreloader(allAssets);
+  // Global prioritized preloader
+  const priorityGroups = useMemo(() => getAssetsByPriority(dynamicAssets), [dynamicAssets]);
+  const { progress, isComplete, currentGroupIdx } = usePriorityAssetPreloader(priorityGroups);
 
   const [splashStarted, setSplashStarted] = useState(false);
   const [splashComplete, setSplashComplete] = useState(false);
@@ -89,7 +88,7 @@ export default function App() {
       setSplashStarted(true);
       const timer = setTimeout(() => {
         setSplashComplete(true);
-      }, 5000);
+      }, 3000); // Show splash for 3 seconds after prompt
       return () => {
         // We don't clear the timer here because we want it to finish even if the component re-renders
         // or Strict Mode re-mounts it.
@@ -202,45 +201,17 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    async function loadResourcesSequentially() {
+    async function loadResourcesPrioritized() {
       try {
-        // 1. Load Core Assets (Logo, Sounds, Video) - Priority
-        const coreAssets = getCoreAssets();
-        setDynamicAssets(coreAssets);
-        setIsCoreLoaded(true); 
-        
-        // Give time for SplashScreen to finish transition before starting background heavy loads
-        // We wait for splashComplete or assets to be ready
-        while (!splashComplete && !isComplete) {
-          await new Promise(resolve => setTimeout(resolve, 500));
-        }
-
-        // 2. Load Rabat Assets in background
-        const rabatAssets = await fetchDynamicAssets('Rabat');
-        setDynamicAssets(prev => {
-          const existingUrls = new Set(prev.map(a => a.url));
-          const uniqueRabat = rabatAssets.filter(a => !existingUrls.has(a.url));
-          return [...prev, ...uniqueRabat];
-        });
-        setLoadedCities(prev => [...prev, 'Rabat']);
-
-        // 3. Load other cities successively in background
-        const otherCities = ['Chefchaouen', 'Fès', 'Marrakech', 'Laâyoune', 'Dakhla'];
-        for (const city of otherCities) {
-          await new Promise(resolve => setTimeout(resolve, 3000));
-          const cityAssets = await fetchDynamicAssets(city);
-          setDynamicAssets(prev => {
-            const existingUrls = new Set(prev.map(a => a.url));
-            const uniqueCity = cityAssets.filter(a => !existingUrls.has(a.url));
-            return [...prev, ...uniqueCity];
-          });
-          setLoadedCities(prev => [...prev, city]);
-        }
+        // Fetch dynamic assets from all cities to group them by priority
+        const allDynamic = await fetchDynamicAssets();
+        setDynamicAssets(allDynamic);
+        setIsCoreLoaded(true);
       } catch (err) {
-        console.error('Error in sequential asset loading:', err);
+        console.error('Error in prioritized asset loading:', err);
       }
     }
-    loadResourcesSequentially();
+    loadResourcesPrioritized();
   }, []);
 
   const preloadCityResources = async (cityId: string) => {
@@ -441,25 +412,28 @@ export default function App() {
     setLoadingMissions(false);
   };
 
-  const showNavBar = [Screen.Map, Screen.Profile, Screen.Settings, Screen.GrammarQuest, Screen.League, Screen.LeagueDetail, Screen.LeagueCreate].includes(currentScreen);
+  const showNavBar = [Screen.Map, Screen.Profile, Screen.Settings, Screen.League, Screen.LeagueDetail, Screen.LeagueCreate].includes(currentScreen);
 
 
 
 
   const renderScreen = () => {
     const screenContent = () => {
+      const isInitialScreen = [Screen.Splash, Screen.Welcome, Screen.Login, Screen.Register].includes(currentScreen);
+      if (authLoading && !isInitialScreen) {
+        return (
+          <div className="h-full w-full flex items-center justify-center bg-voyage-sand">
+            <div className="flex flex-col items-center gap-4">
+              <Loader2 className="animate-spin text-voyage-primary" size={40} />
+              <p className="text-[10px] font-black text-voyage-primary uppercase tracking-widest animate-pulse">Vérification de session...</p>
+            </div>
+          </div>
+        );
+      }
 
-    if (!fullscreenShownOnce) {
-      return <div className="h-full w-full bg-voyage-sand" />;
-    }
-
-    if (authLoading && ![Screen.Splash, Screen.Welcome, Screen.Login, Screen.Register].includes(currentScreen)) {
-      return <div className="h-full w-full flex items-center justify-center bg-voyage-sand"><Loader2 className="animate-spin text-voyage-primary" size={40} /></div>; 
-    }
-
-    switch (currentScreen) {
+      switch (currentScreen) {
       case Screen.Splash:
-        return <SplashScreen />;
+        return <SplashScreen progress={progress} extraAssets={dynamicAssets} />;
       case Screen.Welcome:
         return <WelcomeScreen 
           onLogin={() => setCurrentScreen(Screen.Login)}
@@ -526,8 +500,6 @@ export default function App() {
             redoQuestionIds={redoQuestionIds}
           />
         );
-      case Screen.GrammarQuest:
-        return <GrammarQuestScreen onBack={() => setCurrentScreen(Screen.Map)} />;
       case Screen.League:
         return (
           <LeagueScreen 
@@ -579,8 +551,6 @@ export default function App() {
             onContinueAdventure={() => setCurrentScreen(Screen.Map)}
           />
         );
-      case Screen.VocabularyMatch:
-        return <VocabularyMatchScreen onBack={() => setCurrentScreen(Screen.Map)} />;
       case Screen.Profile:
         return (
           <ProfileScreen 
@@ -638,8 +608,6 @@ export default function App() {
       case Screen.Map: return 'journey';
       case Screen.Profile: return 'profile';
       case Screen.Settings: return 'settings';
-      case Screen.GrammarQuest:
-      case Screen.VocabularyMatch: return 'explore';
       case Screen.League:
       case Screen.LeagueDetail:
       case Screen.LeagueCreate: return 'league';
@@ -652,7 +620,7 @@ export default function App() {
         <div className="grow overflow-hidden relative">
           <AnimatePresence>
             <motion.div
-              key={showFullscreenPrompt ? 'prompt' : currentScreen}
+              key={currentScreen}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -682,7 +650,6 @@ export default function App() {
                   case 'journey': setCurrentScreen(Screen.Map); break;
                   case 'profile': setCurrentScreen(Screen.Profile); break;
                   case 'settings': setCurrentScreen(Screen.Settings); break;
-                  case 'explore': setCurrentScreen(Screen.GrammarQuest); break;
                   case 'league': setCurrentScreen(Screen.League); break;
                 }
               }} 

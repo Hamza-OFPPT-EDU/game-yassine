@@ -11,14 +11,13 @@ interface BottomNavBarProps {
 export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarProps) {
   const { playSound } = useAudio();
   const tabs = [
-    { id: 'explore', icon: Compass, label: 'Explorer' },
     { id: 'league', icon: Trophy, label: 'Ligues' },
     { id: 'journey', icon: MapIcon, label: 'Parcours' },
     { id: 'profile', icon: User, label: 'Profil' },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-[3.66rem] pt-[0.68rem] bg-white border-t border-voyage-secondary/30 shadow-2xl">
+    <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-[0.6rem] pt-[0.3rem] bg-white border-t border-voyage-secondary/30 shadow-2xl">
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         const Icon = tab.icon;
@@ -46,7 +45,7 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
               isActive ? "bg-voyage-primary/5 scale-110" : "group-hover:bg-voyage-sand"
             )}>
               <Icon 
-                size={28} 
+                size={33} 
                 className={cn(
                   "transition-all duration-300",
                   isActive ? "stroke-[3px]" : "stroke-[2px] opacity-70"

@@ -116,7 +116,7 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
       </header>
 
       {/* Main Content - Scrollable area */}
-      <main className="flex-grow relative z-10 overflow-y-auto px-8 custom-scrollbar">
+      <main className="grow relative z-10 overflow-y-auto px-8 custom-scrollbar">
         <div className="min-h-full flex flex-col items-center justify-center py-12">
           {/* GIF Character */}
           <motion.div
@@ -185,7 +185,7 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
 
             {/* Scrollable Text Area */}
             <div className="relative w-full">
-              <div className="absolute -inset-6 bg-white/[0.03] backdrop-blur-md rounded-[40px] border border-white/5 shadow-2xl" />
+              <div className="absolute -inset-6 bg-white/3 backdrop-blur-md rounded-[40px] border border-white/5 shadow-2xl" />
 
               <div className="relative px-2 py-4">
                 <div className="px-4 text-center">

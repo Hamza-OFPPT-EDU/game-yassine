@@ -159,7 +159,7 @@ export default function StoryScreen({ city, onClose, onStartChallenge, mission, 
                   <User className="text-voyage-primary" size={24} />
                 </div>
                 <div className="bg-white border-2 border-voyage-accent/20 p-4 rounded-3xl relative shadow-sm flex-1">
-                  <div className="absolute -left-2 top-4 w-4 h-4 bg-white border-l-2 border-t-2 border-voyage-accent/20 rotate-[-45deg]" />
+                  <div className="absolute -left-2 top-4 w-4 h-4 bg-white border-l-2 border-t-2 border-voyage-accent/20 -rotate-45" />
                   <p className="text-sm font-bold text-voyage-primary italic">
                     <span className="text-[10px] uppercase tracking-widest text-voyage-primary/60 block not-italic mb-1">
                       {mission?.mentor_name || "Coach Yassine"} 

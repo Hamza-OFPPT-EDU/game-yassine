@@ -379,18 +379,20 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                    className="w-full h-full object-cover rounded-[32px] relative z-10"
                    referrerPolicy="no-referrer"
                  />
-                 <motion.button 
-                   whileHover={{ scale: 1.1, rotate: 15 }}
-                   whileTap={{ scale: 0.9 }}
-                   onClick={() => {
-                     playSound('click');
-                     onSettings();
-                   }}
-                   className="absolute -bottom-2 -right-2 w-12 h-12 bg-white border-2 border-voyage-secondary-light rounded-2xl flex items-center justify-center shadow-xl cursor-pointer z-30 hover:border-voyage-accent transition-colors"
-                 >
-                   <Settings size={24} className="text-voyage-primary" />
-                 </motion.button>
               </motion.div>
+
+              {/* Settings Button - Superimposed on frame */}
+              <motion.button 
+                whileHover={{ scale: 1.1, rotate: -15 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => {
+                  playSound('click');
+                  onSettings();
+                }}
+                className="absolute -bottom-3 -right-3 w-12 h-12 bg-white border-4 border-voyage-primary rounded-2xl flex items-center justify-center shadow-2xl cursor-pointer z-30 transition-all"
+              >
+                <Settings size={22} className="text-voyage-primary fill-voyage-primary/10" />
+              </motion.button>
            </div>
            
            <div className="mt-8 space-y-3 text-center">
@@ -448,128 +450,8 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
            ))}
         </section>
 
-        {/* Journey Progress Section */}
-        <section className="space-y-6">
-           <div className="flex justify-between items-end px-2">
-             <div className="flex flex-col">
-               <h2 className="text-2xl font-black text-voyage-primary-dark">Progression du Voyage</h2>
-               <p className="text-[10px] font-black text-voyage-accent uppercase tracking-widest text-left mt-1">
-                  Ton avancée dans les cités du Royaume
-               </p>
-             </div>
-             <Globe size={20} className="text-voyage-accent mb-1" />
-           </div>
+        {/* Engagement & Analytics Section */}
 
-           <div className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm space-y-6">
-              {/* Total Missions Progress */}
-              <div className="space-y-3">
-                <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-wider">
-                  <span className="text-voyage-primary/60">Missions Totales</span>
-                  <span className="text-voyage-primary">{completedMissions.length} / {cities.reduce((acc, c) => acc + c.totalSteps, 0)}</span>
-                </div>
-                <div className="h-3 w-full bg-voyage-sand rounded-full overflow-hidden">
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${Math.min(100, (completedMissions.length / (cities.reduce((acc, c) => acc + c.totalSteps, 0) || 1)) * 100)}%` }}
-                    className="h-full bg-voyage-accent rounded-full shadow-[0_0_10px_rgba(212,164,62,0.3)]"
-                  />
-                </div>
-              </div>
-
-              {/* Individual Cities Grid */}
-              <div className="grid grid-cols-2 gap-4">
-                {cities.map((city, idx) => {
-                  const completedInCity = city.status === 'completed' ? city.totalSteps : (city.stepNum > 0 ? city.stepNum - 1 : 0);
-                  const progressPercent = (completedInCity / (city.totalSteps || 1)) * 100;
-                  const cityColor = city.color || '#D4A43E';
-                  
-                  return (
-                    <motion.div 
-                      key={city.id}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.05 }}
-                      className={cn(
-                        "p-4 rounded-3xl border transition-all relative overflow-hidden group",
-                        city.status === 'locked' ? "bg-gray-50 border-gray-100 opacity-60" : "bg-white border-voyage-secondary-light hover:border-voyage-accent hover:shadow-md"
-                      )}
-                    >
-                      <div className="flex items-center gap-3 mb-3">
-                        <div 
-                          className={cn(
-                            "w-8 h-8 rounded-xl flex items-center justify-center text-white shadow-sm transition-colors",
-                          )}
-                          style={{ backgroundColor: city.status === 'locked' ? '#E5E7EB' : cityColor }}
-                        >
-                          {city.status === 'completed' ? <CheckCircle2 size={16} /> : <MapPin size={16} />}
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-[10px] font-black text-voyage-primary-dark uppercase truncate max-w-[80px]">{city.name}</span>
-                          <span className="text-[8px] font-bold text-voyage-primary/40 uppercase">{completedInCity}/{city.totalSteps} Missions</span>
-                        </div>
-                      </div>
-
-                      <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-                        <motion.div 
-                          initial={{ width: 0 }}
-                          animate={{ width: `${progressPercent}%` }}
-                          className="h-full rounded-full transition-all duration-1000"
-                          style={{ backgroundColor: city.status === 'locked' ? '#D1D5DB' : cityColor }}
-                        />
-                      </div>
-
-                      {city.status === 'locked' && (
-                        <div className="absolute top-2 right-2">
-                           <Lock size={12} className="text-gray-300" />
-                        </div>
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </div>
-
-              {/* Recent Missions Feed */}
-              {history && history.length > 0 && (
-                <div className="space-y-4 pt-4 border-t border-gray-100">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-[10px] font-black text-voyage-primary/40 uppercase tracking-widest">Dernières Activités</h4>
-                    <Trophy size={14} className="text-voyage-accent/40" />
-                  </div>
-                  <div className="space-y-3">
-                    {history.slice(-3).reverse().map((item, i) => (
-                      <motion.div 
-                        key={item.id}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 + (i * 0.1) }}
-                        className="flex items-center gap-4 bg-gray-50/50 p-3 rounded-2xl border border-gray-100 hover:bg-white hover:shadow-sm transition-all"
-                      >
-                        <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center shadow-sm">
-                          <CheckCircle2 size={18} className="text-green-500" />
-                        </div>
-                        <div className="grow min-w-0">
-                          <p className="text-[11px] font-black text-voyage-primary-dark truncate">{item.missions?.title_fr || 'Mission'}</p>
-                          <p className="text-[9px] font-bold text-voyage-primary/40 uppercase">{new Date(item.created_at).toLocaleDateString('fr-FR')}</p>
-                        </div>
-                        <div className="text-right shrink-0">
-                          <span className="text-[11px] font-black text-voyage-primary">+{item.xp} XP</span>
-                          <div className="flex gap-0.5 justify-end mt-0.5">
-                            {[...Array(3)].map((_, j) => (
-                              <Star key={j} size={8} className={cn(j < (item.stars || 0) ? "text-amber-400 fill-amber-400" : "text-gray-200")} />
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              )}
-           </div>
-        </section>
-
-        {/* World Map Mini-View (Carte du Royaume) */}
         <section className="space-y-6">
            <div className="flex justify-between items-end px-2">
              <div className="flex flex-col">
@@ -582,7 +464,6 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
            </div>
 
            <div className="bg-white border border-voyage-secondary-light rounded-[40px] p-2 shadow-sm relative overflow-hidden aspect-4/3 flex items-center justify-center">
-              {/* Abstract Map Background */}
               <div className="absolute inset-0 bg-voyage-sand/30 opacity-40">
                  <svg width="100%" height="100%" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="scale-110">
                     <path d="M100 50C150 20 250 80 300 120C350 160 300 250 250 280C200 310 100 280 50 220C0 160 50 80 100 50Z" fill="#E5D5B8" fillOpacity="0.3" />
@@ -590,11 +471,8 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                  </svg>
               </div>
 
-              {/* Dynamic City Markers */}
               <div className="relative w-full h-full">
                 {cities.map((city, idx) => {
-                  // Approximate coordinates for the mini-map based on map_x/map_y
-                  // Since we don't have the exact map size here, we use percentage-based positioning
                   const x = city.map_x ? `${(city.map_x / 1000) * 100}%` : `${20 + (idx * 15)}%`;
                   const y = city.map_y ? `${(city.map_y / 1000) * 100}%` : `${30 + (idx * 10)}%`;
                   
@@ -630,131 +508,6 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                   );
                 })}
               </div>
-           </div>
-        </section>
-        {/* Engagement & Analytics Section */}
-
-        <section className="space-y-6">
-           <div className="flex justify-between items-end px-2">
-             <div className="flex flex-col">
-               <h2 className="text-2xl font-black text-voyage-primary-dark">Engagement</h2>
-               <p className="text-[10px] font-black text-voyage-accent uppercase tracking-widest text-left mt-1">
-                  Analyse de tes performances
-               </p>
-             </div>
-             <TrendingUp size={20} className="text-voyage-accent mb-1" />
-           </div>
-
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* XP Progression Chart */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm space-y-4"
-              >
-                <div className="flex justify-between items-center">
-                  <h4 className="text-xs font-black text-voyage-primary uppercase tracking-widest">Progression XP</h4>
-                  <Zap size={14} className="text-voyage-accent" />
-                </div>
-                <div className="h-48 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData.xp}>
-                      <defs>
-                        <linearGradient id="colorXp" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#D4A43E" stopOpacity={0.3}/>
-                          <stop offset="95%" stopColor="#D4A43E" stopOpacity={0}/>
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F0F0F0" />
-                      <XAxis dataKey="date" hide />
-                      <YAxis hide />
-                      <Tooltip 
-                        contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', fontSize: '10px', fontWeight: 'bold' }}
-                      />
-                      <Area type="monotone" dataKey="xp" stroke="#D4A43E" strokeWidth={3} fillOpacity={1} fill="url(#colorXp)" />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-              </motion.div>
-
-              {/* Skills Radar Chart */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm space-y-4"
-              >
-                <div className="flex justify-between items-center">
-                  <h4 className="text-xs font-black text-voyage-primary uppercase tracking-widest">Soft Skills</h4>
-                  <Brain size={14} className="text-voyage-primary" />
-                </div>
-                <div className="h-48 w-full flex items-center justify-center">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData.skills}>
-                      <PolarGrid stroke="#F0F0F0" />
-                      <PolarAngleAxis dataKey="name" tick={{ fontSize: 8, fontWeight: 'bold', fill: '#7B3F1A' }} />
-                      <Radar name="XP" dataKey="value" stroke="#7B3F1A" fill="#7B3F1A" fillOpacity={0.4} />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-              </motion.div>
-
-              {/* Success Rate Chart */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm space-y-4"
-              >
-                <div className="flex justify-between items-center">
-                  <h4 className="text-xs font-black text-voyage-primary uppercase tracking-widest">Taux de Succès</h4>
-                  <Star size={14} className="text-amber-500" />
-                </div>
-                <div className="h-48 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={chartData.success}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F0F0F0" />
-                      <XAxis dataKey="name" hide />
-                      <YAxis domain={[0, 100]} hide />
-                      <Tooltip 
-                        contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', fontSize: '10px', fontWeight: 'bold' }}
-                      />
-                      <Line type="stepAfter" dataKey="score" stroke="#7B3F1A" strokeWidth={3} dot={{ fill: '#7B3F1A', r: 4 }} activeDot={{ r: 6 }} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </motion.div>
-
-              {/* Activity Chart */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm space-y-4"
-              >
-                <div className="flex justify-between items-center">
-                  <h4 className="text-xs font-black text-voyage-primary uppercase tracking-widest">Activité Hebdo</h4>
-                  <Flame size={14} className="text-orange-500" />
-                </div>
-                <div className="h-48 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={chartData.activity}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F0F0F0" />
-                      <XAxis dataKey="day" tick={{ fontSize: 10, fontWeight: 'bold', fill: '#7B3F1A' }} axisLine={false} tickLine={false} />
-                      <YAxis hide />
-                      <Tooltip 
-                        cursor={{ fill: '#F59E0B', opacity: 0.1 }}
-                        contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', fontSize: '10px', fontWeight: 'bold' }}
-                      />
-                      <Bar dataKey="count" fill="#D4A43E" radius={[10, 10, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </motion.div>
            </div>
         </section>
 

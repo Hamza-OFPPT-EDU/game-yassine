@@ -86,7 +86,7 @@ export default function MapJourneyScreen({
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
-          className="w-16 h-16 rounded-full border-[6px] border-[#7B3F1A]/20 border-t-[#D4A43E]"
+          className="w-16 h-16 rounded-full border-[6px] border-[#7B3F1A]/20 border-t-voyage-accent"
         />
         <p className="font-headline font-black text-[#7B3F1A] uppercase tracking-widest text-[11px] opacity-70">
           Préparation du voyage...
@@ -110,7 +110,7 @@ export default function MapJourneyScreen({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100]"
+            className="fixed inset-0 z-100"
             style={{ background: 'linear-gradient(160deg, #4E2510 0%, #7B3F1A 50%, #A0572B 100%)' }}
           >
             <button
@@ -124,7 +124,7 @@ export default function MapJourneyScreen({
             {[...Array(12)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute text-[#D4A43E] star-twinkle"
+                className="absolute text-voyage-accent star-twinkle"
                 style={{
                   top: `${8 + Math.random() * 84}%`,
                   left: `${5 + Math.random() * 90}%`,
@@ -152,13 +152,13 @@ export default function MapJourneyScreen({
                   </motion.div>
 
                   <div className="space-y-2.5">
-                    <p className="text-[#D4A43E] font-black uppercase tracking-[0.3em] text-[12px]">
+                    <p className="text-voyage-accent font-black uppercase tracking-[0.3em] text-[12px]">
                       Le Voyage des Compétences
                     </p>
                     <h1 className="text-[41px] font-headline font-black text-white tracking-tight">
                       {cinematicCity.name}
                     </h1>
-                    <p className="arabic-font text-[#C9A96E] text-[17px]">{cinematicCity.arabicName}</p>
+                    <p className="arabic-font text-voyage-secondary text-[17px]">{cinematicCity.arabicName}</p>
                   </div>
 
                   <div className="space-y-6">
@@ -258,7 +258,7 @@ export default function MapJourneyScreen({
       </AnimatePresence>
 
       {/* ── Corps principal ──────────────────────────────────────────────── */}
-      <main className="flex-grow overflow-y-auto relative pt-16 pb-48 scrollbar-hide" ref={scrollContainerRef}>
+      <main className="grow overflow-y-auto relative pt-16 pb-48 scrollbar-hide" ref={scrollContainerRef}>
 
         {/* ── SVG Path + Nœuds ────────────────────────────────────────────── */}
         <div className="relative max-w-sm mx-auto px-4">
@@ -344,13 +344,13 @@ export default function MapJourneyScreen({
                   block: 'center',
                 });
               }}
-              className="fixed bottom-52 left-1/2 -translate-x-1/2 z-50 p-3 rounded-full shadow-lg border-2 bg-white/95 backdrop-blur-sm border-[#D4A43E]/60 hover:bg-white transition-all group"
+              className="fixed bottom-52 left-1/2 -translate-x-1/2 z-50 p-3 rounded-full shadow-lg border-2 bg-white/95 backdrop-blur-sm border-voyage-accent/60 hover:bg-white transition-all group"
             >
               <motion.div
                 animate={{ y: [0, 4, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
-                <ArrowDown size={24} className="text-[#D4A43E] group-hover:text-[#A87D28] transition-colors" />
+                <ArrowDown size={24} className="text-voyage-accent group-hover:text-voyage-accent-dark transition-colors" />
               </motion.div>
             </motion.button>
           )}
@@ -389,7 +389,7 @@ export default function MapJourneyScreen({
                       alt={displayCity.name}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent" />
 
                     {/* Floating Icon over Banner - Now using the CityOrb for consistency */}
                     <div className="absolute bottom-[-9px] left-8 z-10 scale-[0.85] origin-bottom-left">
@@ -417,11 +417,11 @@ export default function MapJourneyScreen({
                     <div className="flex justify-between items-start mb-6">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-[8.5px] font-black text-[#D4A43E] uppercase tracking-[0.2em]">{displayCity.headline || displayCity.focus}</span>
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#D4A43E] animate-pulse" />
+                          <span className="text-[8.5px] font-black text-voyage-accent uppercase tracking-[0.2em]">{displayCity.headline || displayCity.focus}</span>
+                          <div className="w-1.5 h-1.5 rounded-full bg-voyage-accent animate-pulse" />
                           {displayCity.acteTitle && (
                             <>
-                              <div className="w-px h-2 bg-[#D4A43E]/30" />
+                              <div className="w-px h-2 bg-voyage-accent/30" />
                               <span className="text-[9.5px] font-bold text-[#7B3F1A]/60 italic">{displayCity.acteTitle}</span>
                             </>
                           )}
@@ -437,7 +437,7 @@ export default function MapJourneyScreen({
                       <div className="flex flex-col items-end">
                         <div className="bg-white/50 border border-[#E5D5B8] px-3 py-1.5 rounded-2xl shadow-sm text-right">
                           <span className="block text-[7.5px] font-black text-[#7B3F1A]/50 uppercase tracking-widest">Progression</span>
-                          <span className="font-black text-[17px] text-[#D4A43E]">
+                          <span className="font-black text-[17px] text-voyage-accent">
                             {Math.round((displayCity.stepNum / displayCity.totalSteps) * 100)}%
                           </span>
                         </div>
@@ -460,7 +460,7 @@ export default function MapJourneyScreen({
                         <div className="flex items-center gap-3">
                           <div className={cn(
                             "p-2 rounded-xl transition-colors",
-                            isMissionsExpanded ? "bg-[#D4A43E] text-white" : "bg-white text-[#D4A43E]"
+                            isMissionsExpanded ? "bg-voyage-accent text-white" : "bg-white text-voyage-accent"
                           )}>
                             <Sparkles size={16} />
                           </div>
@@ -512,7 +512,7 @@ export default function MapJourneyScreen({
                       <motion.div
                         animate={{ x: ['-100%', '200%'] }}
                         transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                        className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent skew-x-12"
                       />
                       <span className="font-black uppercase tracking-widest relative z-10">
                         {displayCity.status === 'completed' ? 'Relever de nouveau' : 'Lancer l\'aventure'}
@@ -692,7 +692,7 @@ const CityNode: React.FC<{
         </h3>
         <p className={cn(
           "arabic-font text-[11px] font-bold",
-          isLocked ? "text-slate-400" : "text-voyage-accent/100"
+          isLocked ? "text-slate-400" : "text-voyage-accent"
         )}>
           {city.arabicName}
         </p>
@@ -703,7 +703,7 @@ const CityNode: React.FC<{
         <motion.div
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute -top-6 bg-[#D4A43E] text-white text-[7.5px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 whitespace-nowrap z-30"
+          className="absolute -top-6 bg-voyage-accent text-white text-[7.5px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 whitespace-nowrap z-30"
         >
           MISSION EN COURS
         </motion.div>
@@ -726,7 +726,7 @@ const MissionsList: React.FC<{
 
     if (loading) return (
       <div className="flex flex-col items-center justify-center py-10 gap-3">
-        <Loader2 className="animate-spin text-[#D4A43E]" size={24} />
+        <Loader2 className="animate-spin text-voyage-accent" size={24} />
         <span className="text-[9.5px] font-black text-[#7B3F1A]/40 uppercase tracking-widest">Chargement des défis...</span>
       </div>
     );
@@ -771,12 +771,12 @@ const MissionsList: React.FC<{
                       {mission.title_fr}
                     </p>
                     {mission.is_bonus && (
-                      <Sparkles size={12} className="text-[#D4A43E]" />
+                      <Sparkles size={12} className="text-voyage-accent" />
                     )}
                   </div>
                   <div className="flex items-center gap-3 mt-0.5">
-                    <span className="text-[8.5px] font-black text-[#D4A43E] uppercase tracking-wider flex items-center gap-1">
-                      <Star size={10} fill="#D4A43E" /> +{mission.xp_reward} XP
+                    <span className="text-[8.5px] font-black text-voyage-accent uppercase tracking-wider flex items-center gap-1">
+                      <Star size={10} fill-voyage-accent /> +{mission.xp_reward} XP
                     </span>
                     <span className="text-[8.5px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest">
                       {mission.estimated_time || '5 min'}
@@ -788,9 +788,9 @@ const MissionsList: React.FC<{
               {/* Status indicator */}
               <div className="flex items-center gap-2 relative z-10">
                 {isDone ? (
-                  <div className="flex gap-0.5 bg-[#D4A43E]/10 p-1 rounded-lg">
+                  <div className="flex gap-0.5 bg-voyage-accent/10 p-1 rounded-lg">
                     {[...Array(3)].map((_, i) => (
-                      <Star key={i} size={10} className="text-[#D4A43E] fill-[#D4A43E] star-twinkle" style={{ animationDelay: `${i * 0.2}s` }} />
+                      <Star key={i} size={10} className="text-voyage-accent fill-voyage-accent star-twinkle" style={{ animationDelay: `${i * 0.2}s` }} />
                     ))}
                   </div>
                 ) : (

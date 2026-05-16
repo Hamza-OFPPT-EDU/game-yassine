@@ -174,8 +174,53 @@ export const getCoreAssets = () => {
   return assets;
 };
 
+export const getAssetsByPriority = (dynamicAssets: Asset[] = []) => {
+  const priorities: Asset[][] = [[], [], [], []];
+
+  // Priority 1: Intro Video and Background Music
+  priorities[0].push({ url: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4', type: 'video' });
+  priorities[0].push({ url: '/audio/intro_music.mp3', type: 'audio' });
+  priorities[0].push({ url: 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/logo.png', type: 'image' });
+
+  // Priority 2: Audio Effects
+  const effectAudios = [
+    '/audio/correct.mp3', '/audio/wrong.mp3', '/audio/click.mp3', 
+    '/audio/match.mp3', '/audio/success.mp3', '/audio/whoosh.mp3'
+  ];
+  effectAudios.forEach(url => priorities[1].push({ url, type: 'audio' }));
+
+  // Priority 3: City Images (Dynamic assets from city table)
+  // These are illustration_url, cinematic_character, icon_name
+  dynamicAssets.forEach(asset => {
+    // Crude filter based on common URL patterns or types if available
+    // But since dynamicAssets already filtered city vs mission in fetchDynamicAssets, 
+    // we should really separate them there. 
+    // For now, let's assume images that are not GIFs are city images.
+    if (asset.type === 'image' && !asset.url.toLowerCase().endsWith('.gif')) {
+      priorities[2].push(asset);
+    }
+  });
+
+  // Priority 4: GIFs and Narration Audios
+  dynamicAssets.forEach(asset => {
+    if (asset.url.toLowerCase().endsWith('.gif') || asset.type === 'audio') {
+      priorities[3].push(asset);
+    }
+  });
+
+  return priorities;
+};
+
 export const getAllAssets = (dynamicAssets: Asset[] = []) => {
   const assets: Asset[] = [...dynamicAssets];
   const core = getCoreAssets();
-  return [...assets, ...core];
+  
+  // Combine all but remove duplicates
+  const all = [...assets, ...core];
+  const uniqueUrls = new Set<string>();
+  return all.filter(a => {
+    if (uniqueUrls.has(a.url)) return false;
+    uniqueUrls.add(a.url);
+    return true;
+  });
 };

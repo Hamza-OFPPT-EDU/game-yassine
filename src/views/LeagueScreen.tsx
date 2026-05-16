@@ -67,7 +67,7 @@ export default function LeagueScreen({ userStats, onSelectLeague, onCreateLeague
         cancelLabel="Non, rester"
       />
 
-      <main className="flex-grow overflow-y-auto px-4 pt-24 pb-32 space-y-6 max-w-2xl mx-auto w-full relative z-10 scrollbar-hide">
+      <main className="grow overflow-y-auto px-4 pt-24 pb-32 space-y-6 max-w-2xl mx-auto w-full relative z-10 scrollbar-hide">
         
         {/* Search & Create Header */}
         <div className="flex flex-col gap-4">
@@ -76,7 +76,7 @@ export default function LeagueScreen({ userStats, onSelectLeague, onCreateLeague
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onEnterDuel}
-            className="w-full bg-gradient-to-br from-blue-600 to-red-600 p-[2px] rounded-[2rem] shadow-xl shadow-blue-600/20 overflow-hidden group"
+            className="w-full bg-linear-to-br from-blue-600 to-red-600 p-[2px] rounded-4xl shadow-xl shadow-blue-600/20 overflow-hidden group"
           >
             <div className="bg-white/95 backdrop-blur-sm rounded-[1.9rem] p-6 flex items-center justify-between group-hover:bg-transparent transition-all">
               <div className="flex items-center gap-5 text-left">
@@ -93,7 +93,7 @@ export default function LeagueScreen({ userStats, onSelectLeague, onCreateLeague
           </motion.button>
 
           <div className="flex items-center gap-3">
-             <div className="relative flex-grow">
+             <div className="relative grow p-6">
                 <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input 
                   type="text"
@@ -146,7 +146,7 @@ export default function LeagueScreen({ userStats, onSelectLeague, onCreateLeague
                   whileTap={{ scale: 0.98 }}
                   onClick={(e) => isJoined ? handleAction(e, 'select', league.id) : handleAction(e, 'join', league.id)}
                   className={cn(
-                    "bg-white border-2 rounded-[2rem] p-5 transition-all relative overflow-hidden group shadow-sm hover:shadow-xl hover:border-voyage-accent/20",
+                    "bg-white border-2 rounded-4xl p-5 transition-all relative overflow-hidden group shadow-sm hover:shadow-xl hover:border-voyage-accent/20",
                     isJoined ? "border-slate-100" : "border-slate-100/50 opacity-95"
                   )}
                 >
@@ -166,7 +166,7 @@ export default function LeagueScreen({ userStats, onSelectLeague, onCreateLeague
                       )}
                     </div>
 
-                    <div className="flex-grow min-w-0">
+                    <div className="grow min-w-0">
                       <div className="flex items-center gap-2">
                         <h3 className="font-black text-voyage-primary text-base uppercase truncate tracking-tight">{league.name}</h3>
                         {isCreator && (

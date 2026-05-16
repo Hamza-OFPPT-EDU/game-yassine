@@ -176,12 +176,21 @@ export const resolveCityIcon = (city: City, size = 72, className = "") => {
   if (name === 'camera') return <Camera {...props} />;
   if (name === 'music') return <Music {...props} />;
 
-  // 4. Default City Mapping (Legacy)
+  // 4. Default City Mapping (Premium PNG Assets)
   const cityId = city.id?.toLowerCase();
-  if (cityId === 'rabat') return <Landmark {...props} />;
-  if (cityId === 'marrakech') return <Flower2 {...props} />;
-  if (cityId === 'fes') return <Castle {...props} />;
-  if (cityId === 'chefchaouen') return <Mountain {...props} />;
+  const getPremiumIcon = (cityName: string) => (
+    <img 
+      src={`https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Cities%20icons/${cityName}.png`}
+      style={{ width: '100%', height: '100%', maxWidth: size, maxHeight: size, objectFit: 'contain', display: 'block' }}
+      className={className}
+      alt={cityName}
+    />
+  );
+
+  if (cityId === 'rabat') return getPremiumIcon('Rabat');
+  if (cityId === 'marrakech') return getPremiumIcon('Marrakech');
+  if (cityId === 'fes') return getPremiumIcon('Fes');
+  if (cityId === 'chefchaouen') return getPremiumIcon('Chefchaouen');
   if (cityId === 'laayoune') return <LandmarkIcon {...props} />;
   if (cityId === 'dakhla') return <Ship {...props} />;
   if (cityId === 'agadir') return <Sun {...props} />;

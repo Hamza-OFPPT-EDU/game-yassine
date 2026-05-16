@@ -14,12 +14,10 @@ interface SplashScreenProps {
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
-export default function SplashScreen({ onProgress, progress: externalProgress, extraAssets = [] }: SplashScreenProps) {
+export default function SplashScreen({ onProgress, progress: externalProgress }: SplashScreenProps) {
   const [videoStage, setVideoStage] = useState<'video' | 'ui'>('video');
-  const assetsToPreload = useMemo(() => getAllAssets(extraAssets), [extraAssets]);
-  const { progress: internalProgress } = useAssetPreloader(assetsToPreload);
   
-  const progress = externalProgress !== undefined ? externalProgress : internalProgress;
+  const progress = externalProgress !== undefined ? externalProgress : 0;
 
   useEffect(() => {
     onProgress?.(progress);
@@ -28,10 +26,10 @@ export default function SplashScreen({ onProgress, progress: externalProgress, e
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Show video for 4 seconds max
+    // Show video for 3 seconds max (matching the 3s requirement)
     const videoTimer = setTimeout(() => {
       setVideoStage('ui');
-    }, 4000);
+    }, 3000);
 
     return () => clearTimeout(videoTimer);
   }, []);
@@ -158,7 +156,7 @@ export default function SplashScreen({ onProgress, progress: externalProgress, e
                 <motion.div
                   animate={{ x: ['-100%', '200%'] }}
                   transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
+                  className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent skew-x-12"
                 />
               </div>
 
@@ -166,7 +164,7 @@ export default function SplashScreen({ onProgress, progress: externalProgress, e
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.8, type: "spring" }}
-                className="absolute -top-1 -right-1 w-10 h-10 rounded-xl bg-[#D4A43E] flex items-center justify-center shadow-lg border-b-4 border-[#B58B60]"
+                className="absolute -top-1 -right-1 w-10 h-10 rounded-xl bg-voyage-accent flex items-center justify-center shadow-lg border-b-4 border-[#B58B60]"
               >
                 <Sparkles className="text-white" size={20} fill="currentColor" />
               </motion.div>
@@ -181,7 +179,7 @@ export default function SplashScreen({ onProgress, progress: externalProgress, e
                 className="space-y-1.5 text-center"
               >
                 <h1 className="font-headline font-black text-[18px] text-[#4E2510] tracking-tight">
-                  Le Voyage des <span className="text-[#D4A43E]">Soft Skills</span>
+                  Le Voyage des <span className="text-voyage-accent">Soft Skills</span>
                 </h1>
                 <motion.p
                   initial={{ opacity: 0 }}
@@ -198,7 +196,7 @@ export default function SplashScreen({ onProgress, progress: externalProgress, e
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="h-1 w-16 bg-gradient-to-r from-transparent via-[#D4A43E] to-transparent mx-auto"
+                className="h-1 w-16 bg-linear-to-r from-transparent via-voyage-accent to-transparent mx-auto"
               />
             </div>
 
@@ -214,12 +212,12 @@ export default function SplashScreen({ onProgress, progress: externalProgress, e
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
                   transition={{ type: "spring", bounce: 0, duration: 0.5 }}
-                  className="absolute inset-0 bg-gradient-to-r from-[#B58B60] via-[#D4A43E] to-[#B58B60] bg-[length:200%_100%]"
+                  className="absolute inset-0 bg-linear-to-r from-[#B58B60] via-voyage-accent to-[#B58B60] bg-size-[200%_100%]"
                 />
                 <motion.div
                   animate={{ x: ['-100%', '200%'] }}
                   transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent"
                 />
               </div>
               <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-[#7B3F1A]/60">

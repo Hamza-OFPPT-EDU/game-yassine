@@ -804,7 +804,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
               alt="Background" 
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
+            <div className="absolute inset-0 bg-linear-to-b from-transparent via-voyage-primary-dark/40 to-voyage-primary-dark/95 pointer-events-none" />
           </div>
         )}
 
@@ -999,7 +999,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                         <div className="flex items-center justify-between w-full">
                           <span className="font-bold">{opt.text}</span>
                           {showSuccess && (
-                            <div className="flex-shrink-0 bg-emerald-500 text-white px-2 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-tight flex items-center gap-1 shadow-sm">
+                            <div className="shrink-0 bg-emerald-500 text-white px-2 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-tight flex items-center gap-1 shadow-sm">
                               <CheckCircle2 size={10} />
                               Solution
                             </div>
@@ -1507,14 +1507,14 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md"
+            className="fixed inset-0 z-110 flex items-center justify-center p-6 bg-voyage-primary-dark/60 backdrop-blur-md"
             onClick={() => setShowExplanationModal(false)}
           >
             <motion.div
               initial={{ scale: 0.9, y: 30 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 30 }}
-              className="bg-white rounded-[2.5rem] p-8 max-w-lg w-full shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative border-2 border-voyage-accent/20"
+              className="bg-white rounded-4xl p-6 w-full max-w-lg shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative border-2 border-voyage-accent/20"
               onClick={e => e.stopPropagation()}
             >
               <button 
@@ -1563,7 +1563,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm"
+            className="fixed inset-0 z-120 flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm"
             onClick={() => setShowCinematic(false)}
           >
             <motion.div

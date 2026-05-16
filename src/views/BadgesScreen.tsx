@@ -36,7 +36,7 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
 
   if (loading) {
     return (
-      <div className="h-full w-full flex flex-col items-center justify-center bg-voyage-sand gap-4">
+      <div className="grow flex flex-col justify-center items-center gap-12 bg-voyage-sand">
         <Loader2 className="animate-spin text-voyage-primary" size={48} />
         <p className="text-voyage-primary/60 font-black uppercase tracking-widest text-xs">Chargement de tes succès...</p>
       </div>
@@ -71,7 +71,7 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
         </div>
       </div>
 
-      <main className="flex-grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 scrollbar-hide">
+      <main className="grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 scrollbar-hide">
         {categories.map((cat, catIdx) => {
           const catBadges = badges.filter(b => (b.category || '').toLowerCase() === cat.id);
           if (catBadges.length === 0) return null;
@@ -83,7 +83,7 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                   <h2 className="text-lg font-black text-voyage-primary">{cat.label}</h2>
                   <p className="text-[10px] font-bold text-voyage-primary/40 uppercase tracking-widest">{cat.labelAr}</p>
                 </div>
-                <div className="h-px flex-grow mx-4 bg-voyage-primary/10 mb-2" />
+                <div className="h-px grow mx-4 bg-voyage-primary/10 mb-2" />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -109,7 +109,7 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: (catIdx * 0.2) + (idx * 0.05) }}
                         className={cn(
-                          "relative p-5 rounded-3xl border-2 border-b-4 flex flex-col items-center text-center gap-3 transition-all",
+                          "relative p-5 rounded-4xl border-2 border-b-4 flex flex-col items-center text-center gap-3 transition-all",
                           isEarned 
                             ? "bg-white border-voyage-primary/20 shadow-sm" 
                             : "bg-voyage-primary/5 border-transparent opacity-60 grayscale"
@@ -131,7 +131,7 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                           )}
                           
                           {!isEarned && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-2xl">
+                            <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/40 to-black/80 flex items-center justify-center rounded-2xl">
                               <Lock size={24} className="text-white/60" />
                             </div>
                           )}

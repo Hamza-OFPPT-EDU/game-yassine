@@ -583,7 +583,7 @@ export default function MediaLibrary() {
 
       {/* Create Badge Modal */}
       {badgeModal && (
-         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+         <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setBadgeModal(null)} />
            <div className="bg-[#1e293b] border border-white/10 rounded-2xl w-full max-w-md p-6 relative shadow-2xl fade-in">
              <div className="flex items-center gap-3 mb-6">

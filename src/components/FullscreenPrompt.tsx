@@ -13,13 +13,10 @@ interface FullscreenPromptProps {
   extraAssets?: Asset[];
 }
 
-export default function FullscreenPrompt({ show, onAccept, onDecline, progress: externalProgress, extraAssets = [] }: FullscreenPromptProps) {
+export default function FullscreenPrompt({ show, onAccept, onDecline, progress: externalProgress }: FullscreenPromptProps) {
   const acceptRef = useRef<HTMLButtonElement>(null);
-
-  const assets = useMemo(() => getAllAssets(extraAssets), [extraAssets]);
-  const { progress: internalProgress } = useAssetPreloader(assets);
   
-  const progress = externalProgress !== undefined ? externalProgress : internalProgress;
+  const progress = externalProgress !== undefined ? externalProgress : 0;
 
   useEffect(() => {
     if (show) {
@@ -51,8 +48,8 @@ export default function FullscreenPrompt({ show, onAccept, onDecline, progress: 
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[200] flex items-center justify-center p-6"
-          style={{ background: 'rgba(30, 14, 6, 0.75)', backdropFilter: 'blur(12px)' }}
+          className="fixed inset-0 z-200 flex items-center justify-center p-6"
+          style={{ background: 'rgba(30, 14, 6, 0.65)', backdropFilter: 'blur(6px)' }}
           onClick={onDecline}
         >
           <motion.div
@@ -61,7 +58,7 @@ export default function FullscreenPrompt({ show, onAccept, onDecline, progress: 
             exit={{ scale: 0.88, y: 20, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 320, damping: 26 }}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-sm rounded-[2rem] overflow-hidden shadow-2xl border border-[#D4A43E]/30"
+            className="relative w-full max-w-sm rounded-4xl overflow-hidden shadow-2xl border border-voyage-accent/30"
             style={{
               background: 'linear-gradient(160deg, #2A1206 0%, #3D1A08 50%, #4E2510 100%)',
             }}
@@ -78,7 +75,7 @@ export default function FullscreenPrompt({ show, onAccept, onDecline, progress: 
             {/* Dismiss button */}
             <button
               onClick={onDecline}
-              className="absolute top-4 right-4 p-2 rounded-xl text-[#C9A96E]/60 hover:text-[#C9A96E] hover:bg-white/10 transition-all z-10"
+              className="absolute top-4 right-4 p-2 rounded-xl text-voyage-secondary/60 hover:text-voyage-secondary hover:bg-white/10 transition-all z-10"
               aria-label="Fermer"
             >
               <X size={18} />
@@ -89,19 +86,19 @@ export default function FullscreenPrompt({ show, onAccept, onDecline, progress: 
               <motion.div
                 animate={{ scale: [1, 1.06, 1] }}
                 transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-                className="w-20 h-20 rounded-2xl flex items-center justify-center border-2 border-[#D4A43E]/40 shadow-xl"
+                className="w-20 h-20 rounded-2xl flex items-center justify-center border-2 border-voyage-accent/40 shadow-xl"
                 style={{ background: 'linear-gradient(135deg, #A0572B, #7B3F1A)' }}
               >
-                <Maximize2 size={36} className="text-[#D4A43E]" />
+                <Maximize2 size={36} className="text-voyage-accent" />
               </motion.div>
 
               {/* Sparkle badges */}
               <div className="flex items-center gap-2">
-                <Sparkles size={12} className="text-[#D4A43E]" />
-                <span className="text-[10px] font-black text-[#D4A43E] uppercase tracking-[0.25em]">
+                <Sparkles size={12} className="text-voyage-accent" />
+                <span className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.25em]">
                   Mode Immersif
                 </span>
-                <Sparkles size={12} className="text-[#D4A43E]" />
+                <Sparkles size={12} className="text-voyage-accent" />
               </div>
 
               {/* Title */}
@@ -109,7 +106,7 @@ export default function FullscreenPrompt({ show, onAccept, onDecline, progress: 
                 <h2 className="text-2xl font-headline font-black text-white tracking-tight leading-tight">
                   Passer en plein écran ?
                 </h2>
-                <p className="text-[#C9A96E]/80 text-sm font-bold leading-relaxed">
+                <p className="text-voyage-secondary/80 text-sm font-bold leading-relaxed">
                   Pour une meilleure expérience de jeu, nous recommandons d'activer le mode plein écran.
                 </p>
               </div>
@@ -117,14 +114,14 @@ export default function FullscreenPrompt({ show, onAccept, onDecline, progress: 
               {/* Decorative divider & Progress */}
               <div className="w-full space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#D4A43E]/30" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#D4A43E]/50" />
-                  <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#D4A43E]/30" />
+                  <div className="flex-1 h-px bg-linear-to-r from-transparent to-voyage-accent/30" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-voyage-accent/50" />
+                  <div className="flex-1 h-px bg-linear-to-l from-transparent to-voyage-accent/30" />
                 </div>
                 
                 {/* Background preloading indicator */}
                 <div className="flex flex-col items-center gap-1.5">
-                  <div className="flex items-center gap-2 text-[10px] font-bold text-[#C9A96E]/50 uppercase tracking-widest">
+                  <div className="flex items-center gap-2 text-[10px] font-bold text-voyage-secondary/50 uppercase tracking-widest">
                     <Loader2 size={10} className="animate-spin" />
                     Chargement des ressources... {progress}%
                   </div>
@@ -132,7 +129,7 @@ export default function FullscreenPrompt({ show, onAccept, onDecline, progress: 
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${progress}%` }}
-                      className="h-full bg-gradient-to-r from-[#A87D28] to-[#D4A43E]"
+                      className="h-full bg-linear-to-r from-voyage-accent-dark to-voyage-accent"
                     />
                   </div>
                 </div>
@@ -145,7 +142,7 @@ export default function FullscreenPrompt({ show, onAccept, onDecline, progress: 
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={handleAccept}
-                  className="w-full py-4 rounded-2xl font-black text-base uppercase tracking-tight text-[#4E2510] flex items-center justify-center gap-2.5 shadow-lg border-b-4 border-[#A87D28] active:translate-y-0.5 active:border-b-0 transition-all"
+                  className="w-full py-4 rounded-2xl font-black text-base uppercase tracking-tight text-[#4E2510] flex items-center justify-center gap-2.5 shadow-lg border-b-4 border-voyage-accent-dark active:translate-y-0.5 active:border-b-0 transition-all"
                   style={{ background: 'linear-gradient(135deg, #F0CC7A, #D4A43E)' }}
                 >
                   <Maximize2 size={18} />
@@ -154,7 +151,7 @@ export default function FullscreenPrompt({ show, onAccept, onDecline, progress: 
 
                 <button
                   onClick={onDecline}
-                  className="w-full py-3 rounded-2xl font-black text-sm uppercase tracking-widest text-[#C9A96E]/60 hover:text-[#C9A96E] transition-colors"
+                  className="w-full py-3 rounded-2xl font-black text-sm uppercase tracking-widest text-voyage-secondary/60 hover:text-voyage-secondary transition-colors"
                 >
                   Non merci, continuer
                 </button>
