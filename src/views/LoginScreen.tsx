@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { User, Lock, ArrowRight, Loader2, AlertCircle, Sparkles, Map, Volume2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAudio } from '../contexts/AudioContext';
+import { useSettings } from '../contexts/SettingsContext';
 
 interface LoginScreenProps {
   onBack: () => void;
@@ -12,10 +13,13 @@ interface LoginScreenProps {
 
 export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScreenProps) {
   const { playSound, openSettings } = useAudio();
+  const { language } = useSettings();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const isAr = language === 'ar';
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,21 +38,24 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
       });
 
       if (authError) {
-        setError(authError.message === "Invalid login credentials" ? "Pseudo ou mot de passe incorrect." : authError.message);
+        const errorMsg = authError.message === "Invalid login credentials"
+          ? (isAr ? "اسم المستخدم أو كلمة المرور غير صحيحة." : "Pseudo ou mot de passe incorrect.")
+          : authError.message;
+        setError(errorMsg);
         playSound('wrong');
       } else if (data.user) {
         playSound('success');
         onSuccess();
       }
     } catch (err) {
-      setError("Une erreur est survenue lors de la connexion.");
+      setError(isAr ? "حدث خطأ أثناء الاتصال." : "Une erreur est survenue lors de la connexion.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="h-full w-full flex flex-col relative bg-[#FFF8F0] text-[#1A1A2E] overflow-hidden font-sans">
+    <div className="h-full w-full flex flex-col relative bg-[#FFF8F0] text-[#1A1A2E] overflow-hidden font-sans" dir={isAr ? 'rtl' : 'ltr'}>
       {/* Dynamic Background with Moroccan Influence */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] right-[-5%] w-[60%] h-[60%] bg-[#7B3F1A]/10 rounded-full blur-[120px]" />
@@ -72,11 +79,15 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
             onClick={onBack}
             className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-[#7B3F1A]/10 text-[#7B3F1A]"
           >
-            <ArrowRight className="rotate-180" size={22} strokeWidth={2.5} />
+            <ArrowRight className={isAr ? "" : "rotate-180"} size={22} strokeWidth={2.5} />
           </motion.button>
           <div>
-            <h1 className="text-2xl font-black uppercase tracking-tighter text-[#1A1A2E]">Connexion</h1>
-            <p className="text-[10px] font-bold text-[#7B3F1A]/60 uppercase tracking-widest">Le Voyage Continue</p>
+            <h1 className={`text-2xl font-black uppercase tracking-tighter text-[#1A1A2E] ${isAr ? 'arabic-font' : ''}`}>
+              {isAr ? "تسجيل الدخول" : "Connexion"}
+            </h1>
+            <p className={`text-[10px] font-bold text-[#7B3F1A]/60 uppercase tracking-widest ${isAr ? 'arabic-font' : ''}`}>
+              {isAr ? "الرحلة تستمر" : "Le Voyage Continue"}
+            </p>
           </div>
         </div>
 
@@ -104,38 +115,46 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
           className="bg-white/80 backdrop-blur-2xl border-2 border-white rounded-[40px] p-8 shadow-[0_20px_60px_rgba(45,106,79,0.15)] relative overflow-hidden"
         >
           {/* Top Decorative Sparkle */}
-          <div className="absolute -top-4 -right-4 w-16 h-16 bg-[#F4A261] rounded-3xl flex items-center justify-center shadow-lg rotate-12">
+          <div className={`absolute -top-4 w-16 h-16 bg-[#F4A261] rounded-3xl flex items-center justify-center shadow-lg rotate-12 ${isAr ? '-left-4' : '-right-4'}`}>
             <Sparkles className="text-white" size={28} fill="currentColor" />
           </div>
 
           <div className="space-y-8">
             <div className="text-center space-y-2">
-              <h2 className="text-xl font-black text-[#1A1A2E] uppercase">Bon retour !</h2>
-              <p className="text-sm font-medium text-[#6B7280]">Entre tes identifiants pour reprendre ton aventure.</p>
+              <h2 className={`text-xl font-black text-[#1A1A2E] uppercase ${isAr ? 'arabic-font' : ''}`}>
+                {isAr ? "مرحباً بعودتك !" : "Bon retour !"}
+              </h2>
+              <p className={`text-sm font-medium text-[#6B7280] ${isAr ? 'arabic-font text-[13px] leading-relaxed' : ''}`}>
+                {isAr ? "أدخل بيانات اعتمادك لاستئناف مغامرتك." : "Entre tes identifiants pour reprendre ton aventure."}
+              </p>
             </div>
 
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-[0.2em] ml-2">Ton Pseudo de voyageur</label>
+                <label className={`text-[10px] font-black text-[#7B3F1A] uppercase tracking-[0.2em] ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
+                  {isAr ? "اسم المستخدم الخاص بك" : "Ton Pseudo de voyageur"}
+                </label>
                 <div className="relative group">
-                  <div className="absolute left-5 top-1/2 -translate-y-1/2 text-[#7B3F1A]/40 group-focus-within:text-[#7B3F1A] transition-colors">
+                  <div className={`absolute top-1/2 -translate-y-1/2 text-[#7B3F1A]/40 group-focus-within:text-[#7B3F1A] transition-colors ${isAr ? 'right-5' : 'left-5'}`}>
                     <User size={20} strokeWidth={2.5} />
                   </div>
                   <input
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value.toLowerCase())}
-                    placeholder="prenom.nom"
-                    className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 pl-14 pr-6 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-[#1A1A2E]"
+                    placeholder={isAr ? "الاسم.اللقب" : "prenom.nom"}
+                    className={`w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-[#1A1A2E] ${isAr ? 'pr-14 pl-6 text-right arabic-font' : 'pl-14 pr-6'}`}
                     disabled={loading}
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-[#7B3F1A] uppercase tracking-[0.2em] ml-2">Mot de passe secret</label>
+                <label className={`text-[10px] font-black text-[#7B3F1A] uppercase tracking-[0.2em] ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
+                  {isAr ? "كلمة المرور السرية" : "Mot de passe secret"}
+                </label>
                 <div className="relative group">
-                  <div className="absolute left-5 top-1/2 -translate-y-1/2 text-[#7B3F1A]/40 group-focus-within:text-[#7B3F1A] transition-colors">
+                  <div className={`absolute top-1/2 -translate-y-1/2 text-[#7B3F1A]/40 group-focus-within:text-[#7B3F1A] transition-colors ${isAr ? 'right-5' : 'left-5'}`}>
                     <Lock size={20} strokeWidth={2.5} />
                   </div>
                   <input
@@ -143,7 +162,7 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 pl-14 pr-6 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-[#1A1A2E]"
+                    className={`w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-[#1A1A2E] ${isAr ? 'pr-14 pl-6 text-right' : 'pl-14 pr-6'}`}
                     disabled={loading}
                   />
                 </div>
@@ -153,7 +172,7 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
                 <motion.div 
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="flex items-center gap-3 text-[#E76F51] bg-[#E76F51]/10 p-4 rounded-2xl border border-[#E76F51]/20 text-xs font-bold"
+                  className={`flex items-center gap-3 text-[#E76F51] bg-[#E76F51]/10 p-4 rounded-2xl border border-[#E76F51]/20 text-xs font-bold ${isAr ? 'arabic-font' : ''}`}
                 >
                   <AlertCircle size={18} />
                   {error}
@@ -170,10 +189,10 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
                 {loading ? (
                   <Loader2 className="animate-spin" size={24} />
                 ) : (
-                  <>
-                    Explorer le Royaume
-                    <ArrowRight size={22} strokeWidth={3} />
-                  </>
+                  <div className={`flex items-center gap-2 ${isAr ? 'flex-row-reverse arabic-font' : ''}`}>
+                    <span>{isAr ? "استكشف المملكة" : "Explorer le Royaume"}</span>
+                    <ArrowRight className={isAr ? "rotate-180" : ""} size={22} strokeWidth={3} />
+                  </div>
                 )}
               </motion.button>
             </form>
@@ -183,10 +202,12 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
                 onClick={onRegister}
                 className="group inline-flex flex-col items-center gap-1"
               >
-                <span className="text-[11px] font-bold text-[#6B7280]">Pas encore de compte ?</span>
-                <span className="text-sm font-black text-[#F4A261] group-hover:text-[#E76F51] transition-colors flex items-center gap-1">
-                  Rejoins l'aventure maintenant
-                  <ArrowRight size={14} strokeWidth={3} />
+                <span className={`text-[11px] font-bold text-[#6B7280] ${isAr ? 'arabic-font' : ''}`}>
+                  {isAr ? "ليس لديك حساب بعد ؟" : "Pas encore de compte ?"}
+                </span>
+                <span className={`text-sm font-black text-[#F4A261] group-hover:text-[#E76F51] transition-colors flex items-center gap-1 ${isAr ? 'arabic-font flex-row-reverse' : ''}`}>
+                  <span>{isAr ? "انضم إلى المغامرة الآن" : "Rejoins l'aventure maintenant"}</span>
+                  <ArrowRight className={isAr ? "rotate-180" : ""} size={14} strokeWidth={3} />
                 </span>
               </button>
             </div>
@@ -199,8 +220,10 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
           transition={{ delay: 0.5 }}
           className="mt-10 text-center space-y-4"
         >
-          <p className="text-[#7B3F1A]/40 text-[10px] font-bold uppercase tracking-[0.2em] italic px-10 leading-relaxed">
-            "Tes badges et ta progression t'attendent pour la suite du voyage."
+          <p className={`text-[#7B3F1A]/40 text-[10px] font-bold uppercase tracking-[0.2em] italic px-10 leading-relaxed ${isAr ? 'arabic-font text-[11px]' : ''}`}>
+            {isAr 
+              ? "\"شاراتك وتقدمك في انتظارك لمواصلة الرحلة.\""
+              : "\"Tes badges et ta progression t'attendent pour la suite du voyage.\""}
           </p>
           
           <div className="flex justify-center gap-1.5">
