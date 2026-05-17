@@ -37,7 +37,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
   const { playSound } = useAudio();
   const [team1Score, setTeam1Score] = useState(2);
   const [team2Score, setTeam2Score] = useState(3);
-  const [timer, setTimer] = useState(120);
+  const [timer, setTimer] = useState(110);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -247,7 +247,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
           <div className="flex flex-col items-center">
             <span className="text-[10px] font-black text-blue-500 uppercase">{team1Score}</span>
           </div>
-          <div className="w-[1px] h-4 bg-slate-200 mx-1" />
+          <div className="w-px h-4 bg-slate-200 mx-1" />
           <div className="flex flex-col items-center">
             <span className="text-[10px] font-black text-red-500 uppercase">{team2Score}</span>
           </div>
@@ -255,7 +255,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
       </header>
 
       {/* Main Content Area (Scrollable) */}
-      <main className="flex-grow overflow-y-auto px-6 pb-32 space-y-4">
+      <main className="grow overflow-y-auto px-6 pb-32 space-y-4">
         
         {/* Team Headers */}
         <div className="grid grid-cols-2 gap-2 mt-2">
@@ -284,7 +284,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
         </div>
 
         {/* Tug of War Visual Area */}
-        <div className="bg-white rounded-[32px] border-2 border-slate-100 overflow-hidden relative shadow-sm aspect-[4/3] flex items-center justify-center">
+        <div className="bg-white rounded-[32px] border-2 border-slate-100 overflow-hidden relative shadow-sm aspect-4/3 flex items-center justify-center">
           {/* Background Split */}
           <div className="absolute inset-0 flex">
             <div className="flex-1 bg-blue-50/30" />
@@ -292,7 +292,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
           </div>
           
           {/* Center Line */}
-          <div className="absolute top-0 bottom-0 left-1/2 w-[1px] border-l-2 border-dashed border-slate-200 -translate-x-1/2" />
+          <div className="absolute top-0 bottom-0 left-1/2 w-px border-l-2 border-dashed border-slate-200 -translate-x-1/2" />
           
           {/* Timer Overlay */}
           <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-2 rounded-2xl border border-slate-100 shadow-xl z-20 flex items-center gap-2">
@@ -374,7 +374,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
                     setCurrentQuestion(ex);
                     setSelectedAnswers([]);
                     setIsComplete(false);
-                    setTimer(120);
+                    setTimer(110);
                     playSound('click');
                     // Scroll to top to focus on the new question
                     document.querySelector('main')?.scrollTo({ top: 0, behavior: 'smooth' });
@@ -411,7 +411,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
       </main>
 
       {/* Footer Navigation & Actions */}
-      <div className="fixed bottom-0 left-0 right-0 p-6 pb-12 bg-gradient-to-t from-white via-white to-white/80 backdrop-blur-md border-t border-slate-100 z-30">
+      <div className="fixed bottom-0 left-0 right-0 p-6 pb-12 bg-linear-to-t from-white via-white to-white/80 backdrop-blur-md border-t border-slate-100 z-30">
         <div className="max-w-md mx-auto space-y-4">
           
           <div className="flex items-center justify-between px-4">
@@ -456,7 +456,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md p-8"
+            className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-md p-8"
           >
             <motion.div 
               initial={{ scale: 0.9, y: 20 }}

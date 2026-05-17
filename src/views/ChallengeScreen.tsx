@@ -121,9 +121,9 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const challenge = questions[currentIdx];
   
   // Timer & Skip state
-  const DEFAULT_QUESTION_TIME = 120; // seconds (2 minutes)
+  const DEFAULT_QUESTION_TIME = 110; // seconds (1 minute 50 seconds)
   const timer = useTimer({
-    initialSeconds: challenge?.time_limit_sec || DEFAULT_QUESTION_TIME,
+    initialSeconds: DEFAULT_QUESTION_TIME,
     enabled: !showFeedback,
     onTimeExpired: () => handleTimeExpired(),
   });
@@ -167,14 +167,14 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
 
     timeoutHandledRef.current = false;
     handleReset();
-    timer.reset(challenge?.time_limit_sec || DEFAULT_QUESTION_TIME);
+    timer.reset(DEFAULT_QUESTION_TIME);
     setShortAnswer('');
     setStartTime(Date.now());
     setAttempts(0);
     setCurrentStepIdx(0);
     setTimerStartTime(Date.now());
     setIsTimerPaused(false);
-  }, [currentIdx, challenge?.time_limit_sec]);
+  }, [currentIdx]);
 
   useEffect(() => {
     return () => {
@@ -870,7 +870,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
           )}
 
           <div className="space-y-4 text-center mb-10">
-            <h2 className="text-3xl font-black text-duo-eel leading-tight tracking-tight px-4">
+            <h2 className="text-3xl font-semibold text-duo-eel leading-tight tracking-tight px-4">
               {challenge.type === 'scenario-cascade' && challenge.steps && challenge.steps[currentStepIdx] 
                 ? challenge.steps[currentStepIdx].question 
                 : challenge.question}
@@ -1360,7 +1360,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                        <MessageSquare className="text-voyage-accent" size={32} />
                     </div>
                  </div>
-                 <p className="text-2xl font-black text-white text-center leading-relaxed italic">
+                 <p className="text-2xl font-semibold text-white text-center leading-relaxed italic">
                    "{challenge.question}"
                  </p>
                  <div className="grid grid-cols-2 gap-4">

@@ -38,7 +38,7 @@ export function useActivityTracker(userId: string | undefined, currentScreen: Sc
     if (currentScreen === Screen.Story || currentScreen === Screen.CinematicIntro) {
       contextType = 'city_session';
       contextId = selectedCityId;
-    } else if (currentScreen === Screen.Challenge || currentScreen === Screen.GrammarQuest || currentScreen === Screen.VocabularyMatch) {
+    } else if (currentScreen === Screen.Challenge) {
       contextType = 'exercise_session';
       contextId = selectedCityId; // Ideally mission_id but city_id is okay for now
     } else if (currentScreen === Screen.Map) {

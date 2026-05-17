@@ -33,9 +33,10 @@ const DuelCompetitionScreen = lazy(() => import('./views/DuelCompetitionScreen')
 const LevelCompleteModal = lazy(() => import('./components/LevelCompleteModal'));
 import FullscreenPrompt from './components/FullscreenPrompt';
 import { useAuth } from './hooks/useSupabase';
-import { fetchDynamicAssets, fetchCityMissionAssets, getCoreAssets, getAllAssets, getAssetsByPriority } from './lib/assets';
-import { useAssetPreloader, type Asset } from './hooks/useAssetPreloader';
-import { usePriorityAssetPreloader } from './hooks/usePriorityAssetPreloader';
+import { fetchDynamicAssets, getAssetsByPriority } from './lib/assets';
+import { useResourceCache, getCachedAssetList, setCachedAssetList } from './hooks/useResourceCache';
+import { type Asset } from './hooks/useAssetPreloader';
+import LoadingModal from './components/LoadingModal';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>(Screen.Splash);
@@ -69,12 +70,15 @@ export default function App() {
 
   const [dynamicAssets, setDynamicAssets] = useState<Asset[]>([]);
   const [loadedCities, setLoadedCities] = useState<string[]>([]);
-  const [loadingCityAssets, setLoadingCityAssets] = useState<string | null>(null);
   const [isCoreLoaded, setIsCoreLoaded] = useState(false);
+  const [showLoadingModal, setShowLoadingModal] = useState(false);
 
-  // Global prioritized preloader
+  // Priority groups for the resource cache
   const priorityGroups = useMemo(() => getAssetsByPriority(dynamicAssets), [dynamicAssets]);
-  const { progress, isComplete, currentGroupIdx } = usePriorityAssetPreloader(priorityGroups);
+
+  // NEW: unified cache-aware preloader
+  const cacheState = useResourceCache(priorityGroups);
+  const { progress, isComplete: assetsComplete } = cacheState;
 
   const [splashStarted, setSplashStarted] = useState(false);
   const [splashComplete, setSplashComplete] = useState(false);
@@ -86,13 +90,11 @@ export default function App() {
     if (fullscreenShownOnce && !splashTimerRef.current) {
       splashTimerRef.current = true;
       setSplashStarted(true);
+      // Fixed 4-second splash duration
       const timer = setTimeout(() => {
         setSplashComplete(true);
-      }, 3000); // Show splash for 3 seconds after prompt
-      return () => {
-        // We don't clear the timer here because we want it to finish even if the component re-renders
-        // or Strict Mode re-mounts it.
-      };
+      }, 4000);
+      return () => { clearTimeout(timer); };
     }
   }, [fullscreenShownOnce]);
 
@@ -113,20 +115,23 @@ export default function App() {
 
   // Screen Switching Logic
   useEffect(() => {
-    // Failsafe: Continue after 5s or when assets are ready
-    if (splashComplete || (isComplete && splashStarted)) {
+    if (splashComplete) {
       if (currentScreen === Screen.Splash) {
         setCurrentScreen(Screen.Welcome);
+        // Show loading modal after splash — assets continue loading in background
+        if (!assetsComplete) {
+          setShowLoadingModal(true);
+        }
       }
     }
     
     if (session && [Screen.Welcome, Screen.Login, Screen.Register].includes(currentScreen)) {
       const timer = setTimeout(() => {
         setCurrentScreen(Screen.Map);
-      }, 800); // Faster transition to map
+      }, 800);
       return () => clearTimeout(timer);
     }
-  }, [splashComplete, isComplete, splashStarted, currentScreen, session, authLoading]);
+  }, [splashComplete, currentScreen, session, authLoading, assetsComplete]);
 
   /**
    * Robust synchronization of auth user metadata with app_users and player_profiles tables.
@@ -203,10 +208,19 @@ export default function App() {
   useEffect(() => {
     async function loadResourcesPrioritized() {
       try {
-        // Fetch dynamic assets from all cities to group them by priority
+        // Try localStorage cache first to avoid DB round-trip
+        const cached = getCachedAssetList();
+        if (cached) {
+          setDynamicAssets(cached.flat());
+          setIsCoreLoaded(true);
+          return;
+        }
+        // Fetch from DB
         const allDynamic = await fetchDynamicAssets();
         setDynamicAssets(allDynamic);
         setIsCoreLoaded(true);
+        // Cache the result
+        setCachedAssetList(getAssetsByPriority(allDynamic));
       } catch (err) {
         console.error('Error in prioritized asset loading:', err);
       }
@@ -215,8 +229,8 @@ export default function App() {
   }, []);
 
   const preloadCityResources = async (cityId: string) => {
-    if (loadedCities.includes(cityId) || loadingCityAssets === cityId) return;
-    // (Existing logic can stay as a fallback if needed, but the sequential loop will handle most)
+    if (loadedCities.includes(cityId)) return;
+    // Assets handled by the priority cache system
   };
 
   // Sync stats with profile once loaded
@@ -433,7 +447,7 @@ export default function App() {
 
       switch (currentScreen) {
       case Screen.Splash:
-        return <SplashScreen progress={progress} extraAssets={dynamicAssets} />;
+        return <SplashScreen progress={progress} extraAssets={dynamicAssets} logs={cacheState.logs} />;
       case Screen.Welcome:
         return <WelcomeScreen 
           onLogin={() => setCurrentScreen(Screen.Login)}
@@ -678,6 +692,12 @@ export default function App() {
           )}
         </AnimatePresence>
 
+        {/* Loading Modal — shown after splash while secondary assets load */}
+        <LoadingModal
+          visible={showLoadingModal}
+          onDismiss={() => setShowLoadingModal(false)}
+          {...cacheState}
+        />
 
       </div>
   );

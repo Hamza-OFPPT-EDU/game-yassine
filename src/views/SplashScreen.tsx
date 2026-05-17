@@ -1,8 +1,9 @@
 import { useMemo, useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Loader2, Sparkles } from 'lucide-react';
+import { Loader2, Sparkles, CheckCircle2, XCircle, SkipForward, Info } from 'lucide-react';
 import { useAssetPreloader, type Asset } from '../hooks/useAssetPreloader';
 import { getAllAssets } from '../lib/assets';
+import { type CacheLog } from '../hooks/useResourceCache';
 
 interface SplashScreenProps {
   onComplete?: () => void;
@@ -10,12 +11,14 @@ interface SplashScreenProps {
   progress?: number;
   extraAssets?: Asset[];
   canContinue?: boolean;
+  logs?: CacheLog[];
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
-export default function SplashScreen({ onProgress, progress: externalProgress }: SplashScreenProps) {
+export default function SplashScreen({ onProgress, progress: externalProgress, logs = [] }: SplashScreenProps) {
   const [videoStage, setVideoStage] = useState<'video' | 'ui'>('video');
+  const logEndRef = useRef<HTMLDivElement>(null);
   
   const progress = externalProgress !== undefined ? externalProgress : 0;
 
@@ -26,13 +29,18 @@ export default function SplashScreen({ onProgress, progress: externalProgress }:
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Show video for 3 seconds max (matching the 3s requirement)
+    // Show video for 4 seconds max (matching the 4s requirement)
     const videoTimer = setTimeout(() => {
       setVideoStage('ui');
-    }, 3000);
+    }, 4000);
 
     return () => clearTimeout(videoTimer);
   }, []);
+
+  // Auto-scroll logs
+  useEffect(() => {
+    logEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [logs.length]);
 
 
   return (
@@ -229,7 +237,38 @@ export default function SplashScreen({ onProgress, progress: externalProgress }:
               </div>
             </motion.div>
 
-            <div className="h-12" />
+            {/* Log Area — shown during UI phase */}
+            {logs.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2 }}
+                className="w-full max-w-[260px] mt-4"
+              >
+                <div className="bg-[#1A0F07]/6 rounded-2xl p-3 max-h-[80px] overflow-hidden relative">
+                  <div className="space-y-0.5 overflow-y-auto max-h-[72px] scrollbar-hide">
+                    {logs.slice(-6).map(log => (
+                      <div key={log.id} className="flex items-center gap-1.5">
+                        <span className={[
+                          'text-[8px] font-bold leading-tight break-all',
+                          log.status === 'success' ? 'text-emerald-600' :
+                          log.status === 'error'   ? 'text-red-400' :
+                          log.status === 'skip'    ? 'text-[#7B3F1A]/30' :
+                                                     'text-[#7B3F1A]/50'
+                        ].join(' ')}>
+                          {log.message}
+                        </span>
+                      </div>
+                    ))}
+                    <div ref={logEndRef} />
+                  </div>
+                  {/* Fade overlay to hide overflow */}
+                  <div className="absolute bottom-0 inset-x-0 h-4 bg-linear-to-t from-voyage-sand/80 to-transparent rounded-b-2xl pointer-events-none" />
+                </div>
+              </motion.div>
+            )}
+
+            <div className="h-8" />
           </motion.div>
         )}
       </AnimatePresence>
