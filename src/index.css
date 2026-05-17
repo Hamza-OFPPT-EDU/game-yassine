@@ -11,40 +11,59 @@
   --color-duo-red:         #FF4B4B;
   --color-duo-red-dark:    #ea2b2b;
   --color-duo-yellow:      #FFC800;
-  --color-duo-eel:         #4B4B4B;
+  --color-duo-eel:         var(--duo-eel);
   --color-duo-wolf:        #777777;
   --color-duo-swan:        #E5E5E5;
 
   /* ── Palette Marron — identité "Voyage des Compétences" ─ */
-  --color-voyage-primary:       #7B3F1A;   /* marron soutenu */
-  --color-voyage-primary-dark:  #4E2510;   /* marron très foncé */
-  --color-voyage-primary-light: #A0572B;   /* marron clair */
+  --color-voyage-primary:       var(--voyage-primary);
+  --color-voyage-primary-dark:  var(--voyage-primary-dark);
+  --color-voyage-primary-light: var(--voyage-primary-light);
 
-  --color-voyage-secondary:      #C9A96E;  /* sable doré */
-  --color-voyage-secondary-dark: #A07840;  /* ocre profond */
-  --color-voyage-secondary-light:#E8D5B0;  /* sable pâle */
+  --color-voyage-secondary:      var(--voyage-secondary);
+  --color-voyage-secondary-dark: var(--voyage-secondary-dark);
+  --color-voyage-secondary-light:var(--voyage-secondary-light);
 
-  --color-voyage-accent:        #D4A43E;   /* or marocain */
-  --color-voyage-accent-dark:   #A87D28;   /* or foncé */
-  --color-voyage-accent-light:  #F0CC7A;   /* or clair */
+  --color-voyage-accent:        var(--voyage-accent);
+  --color-voyage-accent-dark:   var(--voyage-accent-dark);
+  --color-voyage-accent-light:  var(--voyage-accent-light);
 
-  --color-voyage-sand:          #FBF3E3;   /* parchemin */
-  --color-voyage-parchment:     #F5E8C8;   /* beige chaud */
-  --color-voyage-terracotta:    #C1440E;   /* terracotta */
-  --color-voyage-zellige:       #2C6E7F;   /* bleu zellij */
+  --color-voyage-sand:          var(--voyage-sand);
+  --color-voyage-parchment:     var(--voyage-parchment);
+  --color-voyage-terracotta:    #C1440E;
+  --color-voyage-zellige:       #2C6E7F;
 
-  --color-grad-start:           #7B3F1A;
-  --color-grad-end:             #4E2510;
+  --color-grad-start:           var(--voyage-primary);
+  --color-grad-end:             var(--voyage-primary-dark);
 }
 
+:root {
+  --voyage-primary:       #7B3F1A;
+  --voyage-primary-dark:  #4E2510;
+  --voyage-primary-light: #A0572B;
+
+  --voyage-secondary:      #C9A96E;
+  --voyage-secondary-dark: #A07840;
+  --voyage-secondary-light:#E8D5B0;
+
+  --voyage-accent:        #D4A43E;
+  --voyage-accent-dark:   #A87D28;
+  --voyage-accent-light:  #F0CC7A;
+
+  --voyage-sand:          #FBF3E3;
+  --voyage-parchment:     #F5E8C8;
+
+  --voyage-body-text:     #4E2510;
+  --duo-eel:              #4B4B4B;
+}
 
 @layer base {
   html {
     font-size: 83.25%; /* Réduction cumulative des éléments de ~16.75% (0.95 * 0.95 * 0.98 * 0.98 * 0.98 * 0.98) */
   }
   body {
-    background-color: #FBF3E3;
-    color: #4E2510;
+    background-color: var(--color-voyage-sand);
+    color: var(--voyage-body-text);
     font-family: var(--font-sans);
     font-size: 0.885rem; /* Réduction cumulative du texte de ~21.8% (0.94 * 0.94 * 0.97 * 0.97 * 0.97 * 0.97) */
     -webkit-font-smoothing: antialiased;
@@ -214,3 +233,136 @@
   background-position: 0 0, 10px 10px;
   opacity: 0.03;
 }
+
+/* ==========================================================================
+   ── Dark Mode System (Analysé et créé à partir des couleurs spécifiées) ──
+   ========================================================================== */
+.dark {
+  /*
+    Analyse de la palette fournie :
+    - #430D27 (Deep dark plum) -> Fond global (voyage-sand)
+    - #582233 (Wine red / crimson plum) -> Conteneurs, cartes et modales (voyage-parchment)
+    - #713045 (Muted red-violet) -> Éléments primaires, sélections et boutons structuraux (voyage-primary)
+    - #FFC85C (Vibrant warm gold / mustard) -> Accents brillants, icônes clés et highlights (voyage-accent)
+  */
+  --voyage-sand:          #430D27;
+  --voyage-parchment:     #582233;
+
+  --voyage-primary:       #713045;
+  --voyage-primary-dark:  #430D27;
+  --voyage-primary-light: #8B3E57;
+
+  --voyage-secondary:      #8B3E57;
+  --voyage-secondary-dark: #582233;
+  --voyage-secondary-light:#713045;
+
+  --voyage-accent:        #FFC85C;
+  --voyage-accent-dark:   #DFA438;
+  --voyage-accent-light:  #FFE29E;
+
+  --voyage-body-text:     #FBF3E3;
+  --duo-eel:              #FBF3E3;
+}
+
+/* Overrides de classes utilitaires globales pour le mode sombre */
+.dark body {
+  background-color: #430D27 !important;
+  color: #FBF3E3 !important;
+}
+
+/* Cartes, conteneurs, popups, headers et footers */
+.dark .card-duo,
+.dark .card-voyage,
+.dark .glass-card,
+.dark div[class*="bg-white"],
+.dark section[class*="bg-white"],
+.dark footer[class*="bg-white"],
+.dark header[class*="bg-white"],
+.dark .bg-white {
+  background-color: #582233 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #FBF3E3 !important;
+}
+
+/* Réajustement des textes sombres */
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6,
+.dark .text-duo-eel,
+.dark .text-slate-800,
+.dark .text-slate-900,
+.dark .text-gray-800,
+.dark .text-gray-900 {
+  color: #FBF3E3 !important;
+}
+
+.dark .text-voyage-primary-dark,
+.dark .text-voyage-primary,
+.dark .text-voyage-secondary-dark,
+.dark .text-voyage-accent {
+  color: #FFC85C !important;
+}
+
+.dark .text-slate-600,
+.dark .text-slate-700,
+.dark .text-gray-600,
+.dark .text-gray-700 {
+  color: #E8D5B0 !important;
+}
+
+/* Inputs, Textareas et Selects */
+.dark input, .dark textarea, .dark select {
+  background-color: #430D27 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #FBF3E3 !important;
+}
+
+/* Fonds teintés d'accentuation */
+.dark .bg-voyage-sand\/30 {
+  background-color: rgba(113, 48, 69, 0.4) !important;
+}
+
+.dark .bg-voyage-accent\/10 {
+  background-color: rgba(255, 200, 92, 0.15) !important;
+}
+
+/* Bordures douces */
+.dark .border-voyage-secondary\/20,
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-gray-100,
+.dark .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Zellige pattern en mode sombre */
+.dark .zellige-pattern {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 18px,
+      rgba(113, 48, 69, 0.2) 18px,
+      rgba(113, 48, 69, 0.2) 20px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 18px,
+      rgba(255, 200, 92, 0.1) 18px,
+      rgba(255, 200, 92, 0.1) 20px
+    ) !important;
+}
+
+/* Parchemin de carte adapté */
+.dark .map-bg {
+  background-color: #582233 !important;
+  background-image:
+    repeating-linear-gradient(
+      0deg, transparent, transparent 39px,
+      rgba(255, 200, 92, 0.04) 39px, rgba(255, 200, 92, 0.04) 40px
+    ),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 39px,
+      rgba(255, 200, 92, 0.04) 39px, rgba(255, 200, 92, 0.04) 40px
+    ) !important;
+}
+
