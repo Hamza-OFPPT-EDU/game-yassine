@@ -5,6 +5,7 @@ import { type City, type Mission } from '../types';
 import { useAudio } from '../hooks/useAudio';
 import { getCityTheme, optimizeSupabaseUrl, resolveAssetUrl } from '../lib/city-theme';
 import GameButton from '../components/GameButton';
+import { useSettings } from '../contexts/SettingsContext';
 
 interface CinematicIntroScreenProps {
   city: City;
@@ -16,6 +17,7 @@ interface CinematicIntroScreenProps {
 const PANEAU_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png';
 
 export default function CinematicIntroScreen({ city, mission, onNext, onClose }: CinematicIntroScreenProps) {
+  const { language } = useSettings();
   const { playSound } = useAudio();
   const theme = getCityTheme(city);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -55,6 +57,8 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
     setIsAudioPlaying(!isAudioPlaying);
   };
 
+  const isAr = language === 'ar';
+
   return (
     <div className="h-screen w-full bg-slate-50 text-slate-900 overflow-hidden flex flex-col relative font-sans">
       {/* Background Ambience with subtle parallax-like scale */}
@@ -73,25 +77,25 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
       </motion.div>
 
       {/* Header - Stays at top */}
-      <header className="relative z-20 p-6 flex flex-col gap-4 items-center shrink-0">
-        <div className="w-full flex justify-between items-center">
+      <header className={`relative z-20 p-6 flex flex-col gap-4 items-center shrink-0 ${isAr ? 'flex-row-reverse' : ''}`}>
+        <div className={`w-full flex justify-between items-center ${isAr ? 'flex-row-reverse' : ''}`}>
           <motion.button
-            initial={{ x: -20, opacity: 0 }}
+            initial={{ x: isAr ? 20 : -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             onClick={() => { playSound('click'); onClose(); }}
-            className="p-3 bg-white hover:bg-slate-50 rounded-2xl transition-all border border-slate-200 shadow-md text-slate-600"
+            className="p-3 bg-white hover:bg-slate-50 rounded-2xl transition-all border border-slate-200 shadow-md text-slate-600 animate-pressable"
           >
-            <X size={22} />
+            <X size={22} className={isAr ? 'scale-x-[-1]' : ''} />
           </motion.button>
 
           <motion.div
-            initial={{ x: 20, opacity: 0 }}
+            initial={{ x: isAr ? -20 : 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
           >
             {mission.cinematic_audio_url ? (
               <button
                 onClick={toggleAudio}
-                className="p-3 bg-white hover:bg-slate-50 rounded-2xl transition-all border border-slate-200 shadow-md text-slate-600"
+                className="p-3 bg-white hover:bg-slate-50 rounded-2xl transition-all border border-slate-200 shadow-md text-slate-600 animate-pressable"
               >
                 {isAudioPlaying ? (
                   <Volume2 size={22} className="text-voyage-accent animate-pulse" />
@@ -110,7 +114,9 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
         >
           <div className="flex items-center gap-2 px-4 py-1.5 bg-white rounded-full border border-slate-200 shadow-sm">
             <MapPin size={12} style={{ color: theme.color }} />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{city.name}</span>
+            <span className={`text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 ${isAr ? 'arabic-font text-[11px]' : ''}`}>
+              {isAr ? (city.arabicName || city.name) : city.name}
+            </span>
           </div>
         </motion.div>
       </header>
@@ -154,22 +160,22 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
                 transition={{ delay: 0.6 }}
                 className="inline-block px-3 py-1 bg-voyage-accent/20 border border-voyage-accent/30 rounded-md mb-2"
               >
-                <span className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.3em]">
-                  Mission de l'Acte I
+                <span className={`text-[10px] font-black text-voyage-accent uppercase tracking-[0.3em] ${isAr ? 'arabic-font text-[11px] tracking-normal' : ''}`}>
+                  {isAr ? "مهمة الفصل الأول" : "Mission de l'Acte I"}
                 </span>
               </motion.div>
 
-              <h1 className="text-3xl sm:text-4xl font-headline font-black tracking-tight leading-tight italic bg-clip-text text-transparent bg-linear-to-b from-slate-900 to-slate-700 mb-2">
-                {mission.title_fr}
+              <h1 className={`text-3xl sm:text-4xl font-headline font-black tracking-tight leading-tight italic bg-clip-text text-transparent bg-linear-to-b from-slate-900 to-slate-700 mb-2 ${isAr ? 'arabic-font text-3xl not-italic' : ''}`}>
+                {isAr ? (mission.title_ar || mission.title_fr) : mission.title_fr}
               </h1>
 
               <motion.h2
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8 }}
-                className="arabic-font text-2xl font-black text-voyage-accent/80 mb-4"
+                className={`${isAr ? 'arabic-font text-2xl font-black' : 'text-xs font-black uppercase tracking-widest'} text-voyage-accent/80 mb-4`}
               >
-                مهمة جديدة في انتظارك
+                {isAr ? "مهمة جديدة في انتظارك" : "Une nouvelle mission vous attend"}
               </motion.h2>
 
               <div className="flex justify-center">
@@ -182,14 +188,13 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
               </div>
             </div>
 
-
             {/* Scrollable Text Area */}
-            <div className="relative w-full">
+            <div className="relative w-full" dir={isAr ? 'rtl' : 'ltr'}>
               <div className="absolute -inset-6 bg-white/3 backdrop-blur-md rounded-[40px] border border-white/5 shadow-2xl" />
 
               <div className="relative px-2 py-4">
                 <div className="px-4 text-center">
-                  <p className="text-base sm:text-lg font-medium leading-[1.8] text-slate-600 tracking-wide">
+                  <p className={`text-base sm:text-lg font-medium leading-[1.8] text-slate-600 tracking-wide ${isAr ? 'arabic-font text-right text-lg font-bold' : ''}`}>
                     {cinematicText}
                   </p>
                 </div>
@@ -216,17 +221,21 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1.2 }}
           onClick={() => { playSound('click'); onNext(); }}
-          className="pointer-events-auto px-12 group"
+          className={`pointer-events-auto px-12 group flex items-center gap-2 ${isAr ? 'flex-row-reverse' : ''}`}
         >
           <div className="absolute inset-0 bg-linear-to-r from-transparent via-slate-950/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-          <span className="relative z-10">Lancer la mission</span>
-          <Play size={24} className="relative z-10 group-hover:translate-x-1 transition-transform fill-current" />
+          <span className={`relative z-10 ${isAr ? 'arabic-font text-xl font-black' : ''}`}>
+            {isAr ? "ابدأ المهمة" : "Lancer la mission"}
+          </span>
+          <Play size={24} className={`relative z-10 group-hover:translate-x-1 transition-transform fill-current ${isAr ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
         </GameButton>
 
-        <div className="flex items-center gap-3 text-slate-300 text-[10px] font-black uppercase tracking-[0.3em]">
+        <div className={`flex items-center gap-3 text-slate-300 text-[10px] font-black uppercase tracking-[0.3em] ${isAr ? 'flex-row-reverse' : ''}`}>
           <div className="h-px w-8 bg-slate-200" />
           <Sparkles size={12} className="text-voyage-accent" />
-          <span>Le Voyage Continue</span>
+          <span className={isAr ? 'arabic-font text-[11px] tracking-normal' : ''}>
+            {isAr ? "الرحلة مستمرة" : "Le Voyage Continue"}
+          </span>
           <div className="h-px w-8 bg-slate-200" />
         </div>
       </footer>
@@ -241,4 +250,3 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
     </div>
   );
 }
-

@@ -274,10 +274,12 @@ export function useSupabaseMissions(cityId: string, completedMissions: string[] 
             description_ar: m.description_ar,
             mentor_name: language === 'ar' ? (m.mentor_name_ar || mentorName) : mentorName,
             mentor_role: language === 'ar' ? (m.mentor_role_ar || mentorRole) : mentorRole,
-            script_opening: language === 'ar' ? (m.script_opening_ar || m.script_opening || scriptOpening) : scriptOpening,
-            cinematic_text: language === 'ar' ? (m.cinematic_text_ar || m.cinematic_text) : m.cinematic_text,
-            cinematic_gif_url: m.cinematic_gif_url,
-            cinematic_audio_url: m.cinematic_audio_url,
+            script_opening: language === 'ar' ? (m.script_opening_ar || m.narration?.scripts?.opening_ar || m.script_opening || scriptOpening) : scriptOpening,
+            cinematic_text: language === 'ar' ? (m.cinematic_text_ar || m.narration?.cinematic?.text_ar || m.cinematic_text) : m.cinematic_text,
+            cinematic_gif_url: m.cinematic_gif_url || m.narration?.cinematic?.gif_url,
+            cinematic_audio_url: language === 'ar' 
+              ? (m.cinematic_audio_url_ar || m.narration?.cinematic?.audio_url_ar || m.cinematic_audio_url || m.narration?.cinematic?.audio_url_fr) 
+              : (m.cinematic_audio_url || m.narration?.cinematic?.audio_url_fr),
             illustration_url: m.illustration_url
           };
         });

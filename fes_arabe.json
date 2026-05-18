@@ -1,812 +1,812 @@
 {
-    "id": "550e8400-e29b-41d4-a716-446655440003",
-    "city_id": "fes",
-    "name_fr": "Fès",
-    "name_ar": "فاس",
-    "color": "#1e40af",
-    "icon": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Cities%20icons/fes.png",
-    "headline_fr": "Capitale Spirituelle et Intellectuelle",
-    "headline_ar": "العاصمة الروحية والفكرية",
-    "description_fr": "Ishaq analyse équipes, stress, décisions et systèmes avec des maîtres artisans, scientifiques et restaurateurs de la médina.",
-    "description_ar": "يقوم إسحاق بتحليل الفرق والتوتر والقرارات والأنظمة مع الحرفيين والعلماء وأصحاب المطاعم في المدينة القديمة.",
-    "focus_fr": "Analyse & Pensée Critique",
-    "focus_ar": "التحليل والتفكير النقدي",
-    "illustration_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/challenge-illustrations/fes/1775897948311-n36zgyweqeq-compressed.jpg",
-    "pedagogical_theories_fr": [
-        "Analyser les dysfonctions d’équipe (Lencioni)",
-        "Maîtriser l’analyse causale des conflits",
-        "Appliquer le modèle du fromage suisse (Reason)",
-        "Diagnostiquer le stress chronique avec Selye",
-        "Éviter le Groupthink (Janis)",
-        "Utiliser l’analyse du chemin critique (CPM)",
-        "Résoudre des dilemmes éthiques complexes",
-        "Pratiquer la pensée systémique (Senge)",
-        "Cartographier les parties prenantes (Freeman)"
-    ],
-    "pedagogical_theories_ar": [
-        "تحليل اختلالات الفريق (لينسيوني)",
-        "إتقان التحليل السببي للنزاعات",
-        "تطبيق نموذج الجبن السويسري (ريزون)",
-        "تشخيص التوتر المزمن مع سيلي",
-        "تجنب التفكير الجماعي (جانيس)",
-        "استخدام تحليل المسار الحرج (CPM)",
-        "حل المعضلات الأخلاقية المعقدة",
-        "ممارسة التفكير النظمي (سينج)",
-        "رسم خرائط الأطراف المعنية (فريمان)"
-    ],
-    "learning_outcomes_fr": [
-        "Fès, plus vieille cité universitaire du monde, vous invite à analyser en profondeur : pourquoi les équipes échouent, comment le stress s’installe, pourquoi les décisions déraillent, et comment tradition et innovation coexistent."
-    ],
-    "learning_outcomes_ar": [
-        "فاس، أقدم مدينة جامعية في العالم، تدعوك للتحليل المتعمق: لماذا تفشل الفرق، كيف يترسخ التوتر، لماذا تنحرف القرارات، وكيف يتعايش التقليد والابتكار."
-    ],
-    "missions": [
+  "id": "550e8400-e29b-41d4-a716-446655440003",
+  "city_id": "fes",
+  "name_fr": "Fès",
+  "name_ar": "فاس",
+  "color": "#1e40af",
+  "icon": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Cities%20icons/fes.png",
+  "headline_fr": "Capitale Spirituelle et Intellectuelle",
+  "headline_ar": "العاصمة الروحية والفكرية",
+  "description_fr": "Ishaq analyse équipes, stress, décisions et systèmes avec des maîtres artisans, scientifiques et restaurateurs de la médina.",
+  "description_ar": "يقوم إسحاق بتحليل الفرق والتوتر والقرارات والأنظمة مع الحرفيين والعلماء وأصحاب المطاعم في المدينة القديمة.",
+  "focus_fr": "Analyse & Pensée Critique",
+  "focus_ar": "التحليل والتفكير النقدي",
+  "illustration_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/challenge-illustrations/fes/1775897948311-n36zgyweqeq-compressed.jpg",
+  "pedagogical_theories_fr": [
+    "Analyser les dysfonctions d’équipe (Lencioni)",
+    "Maîtriser l’analyse causale des conflits",
+    "Appliquer le modèle du fromage suisse (Reason)",
+    "Diagnostiquer le stress chronique avec Selye",
+    "Éviter le Groupthink (Janis)",
+    "Utiliser l’analyse du chemin critique (CPM)",
+    "Résoudre des dilemmes éthiques complexes",
+    "Pratiquer la pensée systémique (Senge)",
+    "Cartographier les parties prenantes (Freeman)"
+  ],
+  "pedagogical_theories_ar": [
+    "تحليل اختلالات الفريق (لينسيوني)",
+    "إتقان التحليل السببي للنزاعات",
+    "تطبيق نموذج الجبن السويسري (ريزون)",
+    "تشخيص التوتر المزمن مع سيلي",
+    "تجنب التفكير الجماعي (جانيس)",
+    "استخدام تحليل المسار الحرج (CPM)",
+    "حل المعضلات الأخلاقية المعقدة",
+    "ممارسة التفكير النظمي (سينج)",
+    "رسم خرائط الأطراف المعنية (فريمان)"
+  ],
+  "learning_outcomes_fr": [
+    "Fès, plus vieille cité universitaire du monde, vous invite à analyser en profondeur : pourquoi les équipes échouent, comment le stress s’installe, pourquoi les décisions déraillent, et comment tradition et innovation coexistent."
+  ],
+  "learning_outcomes_ar": [
+    "فاس، أقدم مدينة جامعية في العالم، تدعوك للتحليل المتعمق: لماذا تفشل الفرق، كيف يترسخ التوتر، لماذا تنحرف القرارات، وكيف يتعايش التقليد والابتكار."
+  ],
+  "missions": [
+    {
+      "id": "550e8400-e29b-41d4-a716-44665544f111",
+      "title_fr": "L’Atelier de calligraphie",
+      "title_ar": "ورشة الخط",
+      "description_fr": "Lieu: Atelier de calligraphie. Soft skill: Travail en équipe (analyse). Ishaq analyse les équipes avec des maîtres artisans.",
+      "description_ar": "المكان: ورشة خط. المهارة الناعمة: العمل الجماعي (تحليل). يقوم إسحاق بتحليل الفرق مع حرفيين مهرة.",
+      "type": "challenge",
+      "xp_reward": 1000,
+      "bloom_level": "",
+      "soft_skill_dominant": "Travail en équipe (ANALYSE)",
+      "duration_minutes": null,
+      "success_threshold": 70,
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "الأستاذ إدريس",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "خطاط",
+        "location_fr": "",
+        "location_ar": "ورشة خط، مدينة فاس القديمة"
+      },
+      "scripts": {
+        "opening_fr": "Atelier de calligraphie, médina de Fès, Mardi 9h\n\nL'atelier est un riad centenaire. 8 apprentis de 3 niveaux travaillent en silence. Les murs sont couverts d'œuvres. Maître Idris :\n\n\"Ishaq, tu connais les rôles de Belbin. Tu les as APPLIQUÉS chez Khadija. Maintenant, tu vas ANALYSER pourquoi certaines équipes DURENT 1 000 ans et d'autres meurent en 6 mois...\"",
+        "opening_ar": "ورشة الخط، مدينة فاس القديمة، الثلاثاء 9 صباحاً\n\nالورشة عبارة عن رياض عمره قرن. 8 تلاميذ من 3 مستويات يعملون في صمت. الجدران مغطاة بالأعمال. الأستاذ إدريس:\n\n\"إسحاق، أنت تعرف أدوار بلبين. طبقته عند خديجة. الآن، ستحلل لماذا تستمر بعض الفرق 1000 عام وتموت أخرى في 6 أشهر...\"",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "Médina de Fès – Mardi 9h. Maître Idris ouvre les portes de son atelier de calligraphie. « La calligraphie demande une décision irrévocable à chaque trait. Une fois l'encre posée, on ne revient pas en arrière. Apprends la certitude du geste, Ishaq. »",
+        "text_ar": "مدينة فاس القديمة – الثلاثاء 9 صباحاً. يفتح الأستاذ إدريس أبواب ورشة الخط الخاصة به. « الخط يتطلب قراراً لا رجعة فيه في كل ضربة. بمجرد وضع الحبر، لا يمكنك العودة. تعلم يقين الإيماءة، إسحاق. »",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome-narration-Fes.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Fes/FES%20MISSION%204.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "theories_ar": "",
+      "exercises": [
         {
-            "id": "550e8400-e29b-41d4-a716-44665544f111",
-            "title_fr": "L’Atelier de calligraphie",
-            "title_ar": "ورشة الخط",
-            "description_fr": "Lieu: Atelier de calligraphie. Soft skill: Travail en équipe (analyse). Ishaq analyse les équipes avec des maîtres artisans.",
-            "description_ar": "المكان: ورشة خط. المهارة الناعمة: العمل الجماعي (تحليل). يقوم إسحاق بتحليل الفرق مع حرفيين مهرة.",
-            "type": "challenge",
-            "xp_reward": 1000,
-            "bloom_level": "",
-            "soft_skill_dominant": "Travail en équipe (ANALYSE)",
-            "duration_minutes": null,
-            "success_threshold": 70,
-            "mentor": {
-                "name_fr": "",
-                "name_ar": "الأستاذ إدريس",
-                "age": null,
-                "role_fr": "",
-                "role_ar": "خطاط",
-                "location_fr": "",
-                "location_ar": "ورشة خط، مدينة فاس القديمة"
+          "id": "6f23db12-9570-4958-b5e1-73c339f13334",
+          "type": "qcm",
+          "question_fr": "Quel est le principal avantage du modèle maître-apprenti par rapport à un cours théorique ?",
+          "question_ar": "ما هي الميزة الرئيسية لنموذج المعلم-المتدرب مقارنة بالدروس النظرية؟",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Le maître est plus intelligent",
+              "label_ar": "المعلم أكثر ذكاءً"
             },
-            "scripts": {
-                "opening_fr": "Atelier de calligraphie, médina de Fès, Mardi 9h\n\nL'atelier est un riad centenaire. 8 apprentis de 3 niveaux travaillent en silence. Les murs sont couverts d'œuvres. Maître Idris :\n\n\"Ishaq, tu connais les rôles de Belbin. Tu les as APPLIQUÉS chez Khadija. Maintenant, tu vas ANALYSER pourquoi certaines équipes DURENT 1 000 ans et d'autres meurent en 6 mois...\"",
-                "opening_ar": "ورشة الخط، مدينة فاس القديمة، الثلاثاء 9 صباحاً\n\nالورشة عبارة عن رياض عمره قرن. 8 تلاميذ من 3 مستويات يعملون في صمت. الجدران مغطاة بالأعمال. الأستاذ إدريس:\n\n\"إسحاق، أنت تعرف أدوار بلبين. طبقته عند خديجة. الآن، ستحلل لماذا تستمر بعض الفرق 1000 عام وتموت أخرى في 6 أشهر...\"",
-                "closing_fr": "",
-                "closing_ar": ""
+            {
+              "id": "B",
+              "label_fr": "L’apprenti ne paie pas",
+              "label_ar": "المتدرب لا يدفع"
             },
-            "cinematic": {
-                "text_fr": "Médina de Fès – Mardi 9h. Maître Idris ouvre les portes de son atelier de calligraphie. « La calligraphie demande une décision irrévocable à chaque trait. Une fois l'encre posée, on ne revient pas en arrière. Apprends la certitude du geste, Ishaq. »",
-                "text_ar": "مدينة فاس القديمة – الثلاثاء 9 صباحاً. يفتح الأستاذ إدريس أبواب ورشة الخط الخاصة به. « الخط يتطلب قراراً لا رجعة فيه في كل ضربة. بمجرد وضع الحبر، لا يمكنك العودة. تعلم يقين الإيماءة، إسحاق. »",
-                "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome-narration-Fes.gif",
-                "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Fes/FES%20MISSION%204.mp3",
-                "audio_url_ar": ""
+            {
+              "id": "C",
+              "label_fr": "L’apprentissage se fait dans la pratique réelle, avec feedback immédiat et progressif.",
+              "label_ar": "التعلم يتم في الممارسة الحقيقية، مع تغذية راجعة فورية وتدريجية."
             },
-            "theories_fr": "",
-            "theories_ar": "",
-            "exercises": [
-                {
-                    "id": "6f23db12-9570-4958-b5e1-73c339f13334",
-                    "type": "qcm",
-                    "question_fr": "Quel est le principal avantage du modèle maître-apprenti par rapport à un cours théorique ?",
-                    "question_ar": "ما هي الميزة الرئيسية لنموذج المعلم-المتدرب مقارنة بالدروس النظرية؟",
-                    "options": [
-                        {
-                            "id": "A",
-                            "label_fr": "Le maître est plus intelligent",
-                            "label_ar": "المعلم أكثر ذكاءً"
-                        },
-                        {
-                            "id": "B",
-                            "label_fr": "L’apprenti ne paie pas",
-                            "label_ar": "المتدرب لا يدفع"
-                        },
-                        {
-                            "id": "C",
-                            "label_fr": "L’apprentissage se fait dans la pratique réelle, avec feedback immédiat et progressif.",
-                            "label_ar": "التعلم يتم في الممارسة الحقيقية، مع تغذية راجعة فورية وتدريجية."
-                        },
-                        {
-                            "id": "D",
-                            "label_fr": "C’est plus rapide",
-                            "label_ar": "إنه أسرع"
-                        }
-                    ],
-                    "correct_answer": "C",
-                    "feedback_positive": {
-                        "fr": "Analyse correcte ! Pratique réelle, feedback immédiat, progressivité = ZPD de Vygotsky.",
-                        "ar": "تحليل صحيح! ممارسة حقيقية، تغذية راجعة فورية، تدرج = منطقة التطور القريب لفيغوتسكي."
-                    },
-                    "feedback_negative": {
-                        "fr": "Non. Le maître n’est pas plus intelligent, juste plus expérimenté. L’avantage est la pratique contextualisée.",
-                        "ar": "لا. المعلم ليس أكثر ذكاءً، بل أكثر خبرة. الميزة هي الممارسة السياقية."
-                    },
-                    "hint": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "explanation": {
-                        "fr": "Analyser les avantages du modèle maître-apprenti (apprentissage situé, feedback immédiat, progressivité ZPD). Indication : L’avantage principal réside dans la pratique réelle avec un retour rapide et une progression par étapes, non dans la rapidité ou le coût.",
-                        "ar": "تحليل مزايا نموذج المعلم-المتدرب (التعلم الموقعي، التغذية الراجعة الفورية، تدرج منطقة التطور القريب). دلالة: الميزة الرئيسية تكمن في الممارسة الحقيقية مع عودة سريعة وتقدم تدريجي، وليس في السرعة أو التكلفة."
-                    },
-                    "context_dialogue": null,
-                    "presentation": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "scores": {
-                        "decision": 0,
-                        "equipe": 0,
-                        "stress": 0,
-                        "xp": 100
-                    },
-                    "time_limit_sec": 45,
-                    "soft_skills_impact": {},
-                    "audio_url_fr": "",
-                    "audio_url_ar": "",
-                    "created_at": "2026-05-04T13:24:41.646908+00:00",
-                    "updated_at": "2026-05-04T13:24:41.646908+00:00"
-                },
-                {
-                    "id": "0a0d81df-ae47-423d-ab26-f2b513bf73c2",
-                    "type": "matching",
-                    "question_fr": "Relie chaque situation à la dysfonction Lencioni.",
-                    "question_ar": "اربط كل حالة باختلال لينسيوني.",
-                    "options": {
-                        "pairs": [
-                            {
-                                "left_fr": "Hamid cache ses erreurs par peur",
-                                "left_ar": "حامد يخفي أخطائه خوفاً",
-                                "right_fr": "Absence de confiance",
-                                "right_ar": "غياب الثقة"
-                            },
-                            {
-                                "left_fr": "Les compagnons évitent de critiquer",
-                                "left_ar": "الرفاق يتجنبون النقد",
-                                "right_fr": "Peur du conflit sain",
-                                "right_ar": "الخوف من النزاع الصحي"
-                            },
-                            {
-                                "left_fr": "Samir ne se sent pas concerné par les délais",
-                                "left_ar": "سمير لا يشعر بالمسؤولية تجاه المواعيد",
-                                "right_fr": "Évitement de la responsabilité",
-                                "right_ar": "تجنب المسؤولية"
-                            },
-                            {
-                                "left_fr": "Chacun travaille pour soi",
-                                "left_ar": "كل واحد يعمل لنفسه",
-                                "right_fr": "Inattention aux résultats",
-                                "right_ar": "عدم الاهتمام بالنتائج"
-                            },
-                            {
-                                "left_fr": "Kamal refuse de s’engager sur un résultat",
-                                "left_ar": "كمال يرفض الالتزام بنتيجة",
-                                "right_fr": "Manque d’engagement",
-                                "right_ar": "غياب الالتزام"
-                            }
-                        ]
-                    },
-                    "correct_answer": "",
-                    "feedback_positive": {
-                        "fr": "Analyse parfaite ! Pyramide Lencioni : confiance → conflit → engagement → responsabilité → résultats.",
-                        "ar": "تحليل ممتاز! هرم لينسيوني: ثقة → نزاع → التزام → مسؤولية → نتائج."
-                    },
-                    "feedback_negative": {
-                        "fr": "Vérifiez : 1=confiance, 2=conflit, 3=responsabilité, 4=résultats, 5=engagement.",
-                        "ar": "تحقق: 1=ثقة، 2=نزاع، 3=مسؤولية، 4=نتائج، 5=التزام."
-                    },
-                    "hint": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "explanation": {
-                        "fr": "Identifier les 5 dysfonctions d’équipe de Lencioni. Indication : Cacher ses erreurs → absence de confiance ; éviter la critique → peur du conflit ; pas concerné par les délais → évitement de responsabilité ; chacun pour soi → inattention aux résultats ; refus d’engagement → manque d’engagement.",
-                        "ar": "تحديد اختلالات الفريق الخمسة حسب لينسيوني. دلالة: إخفاء الأخطاء ← غياب الثقة؛ تجنب النقد ← الخوف من النزاع؛ عدم الاهتمام بالمواعيد ← تجنب المسؤولية؛ كل لنفسه ← عدم الاهتمام بالنتائج؛ رفض الالتزام ← غياب الالتزام."
-                    },
-                    "context_dialogue": null,
-                    "presentation": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "scores": {
-                        "decision": 0,
-                        "equipe": 0,
-                        "stress": 0,
-                        "xp": 100
-                    },
-                    "time_limit_sec": 45,
-                    "soft_skills_impact": {},
-                    "audio_url_fr": "",
-                    "audio_url_ar": "",
-                    "created_at": "2026-05-04T13:24:41.646908+00:00",
-                    "updated_at": "2026-05-04T13:24:41.646908+00:00"
-                },
-                {
-                    "id": "9d004166-977c-494a-b2bc-3dd64173d373",
-                    "type": "scenario_dialogue",
-                    "question_fr": "Hamid a travaillé 3 mois, le maître dit « insuffisant, recommence ». Hamid démissionne. Quelle est la cause profonde ?",
-                    "question_ar": "حامد عمل 3 أشهر، يقول المعلم « غير كافٍ، أعد ». حامد يستقيل. ما السبب الجذري؟",
-                    "options": [
-                        {
-                            "id": "A",
-                            "label_fr": "Hamid est paresseux",
-                            "label_ar": "حامد كسول"
-                        },
-                        {
-                            "id": "B",
-                            "label_fr": "Manque de feedback progressif : 3 mois sans retour, puis critique totale = choc émotionnel.",
-                            "label_ar": "غياب التغذية الراجعة التدريجية: 3 أشهر بدون عودة، ثم نقد كامل = صدمة عاطفية."
-                        },
-                        {
-                            "id": "C",
-                            "label_fr": "Le maître est trop sévère",
-                            "label_ar": "المعلم شديد القسوة"
-                        },
-                        {
-                            "id": "D",
-                            "label_fr": "C’est normal dans l’artisanat",
-                            "label_ar": "هذا طبيعي في الحرف"
-                        }
-                    ],
-                    "correct_answer": "B",
-                    "feedback_positive": {
-                        "fr": "Analyse systémique ! Absence feedback intermédiaire, négatif uniquement, disproportion effort/reconnaissance.",
-                        "ar": "تحليل نظامي! غياب تغذية راجعة وسطية، سلبي فقط، عدم تناسب الجهد/التقدير."
-                    },
-                    "feedback_negative": {
-                        "fr": "Ne réduisez pas au caractère. La cause est dans la méthode : feedback trop rare et brutal.",
-                        "ar": "لا تختزله في الشخصية. السبب في الطريقة: تغذية راجعة نادرة وقاسية."
-                    },
-                    "hint": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "explanation": {
-                        "fr": "Analyser la cause profonde d’un conflit (feedback insuffisant, disproportion effort/reconnaissance). Indication : 3 mois sans retour puis critique totale = choc émotionnel. La cause n’est ni le caractère ni la sévérité, mais l’absence de feedback progressif.",
-                        "ar": "تحليل السبب الجذري لنزاع (تغذية راجعة غير كافية، عدم تناسب الجهد/التقدير). دلالة: 3 أشهر بدون عودة ثم نقد كامل = صدمة عاطفية. السبب ليس الشخصية أو القسوة، بل غياب التغذية الراجعة التدريجية."
-                    },
-                    "context_dialogue": null,
-                    "presentation": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "scores": {
-                        "decision": 0,
-                        "equipe": 0,
-                        "stress": 0,
-                        "xp": 100
-                    },
-                    "time_limit_sec": 45,
-                    "soft_skills_impact": {},
-                    "audio_url_fr": "",
-                    "audio_url_ar": "",
-                    "created_at": "2026-05-04T13:24:41.646908+00:00",
-                    "updated_at": "2026-05-04T13:24:41.646908+00:00"
-                },
-                {
-                    "id": "7b6d59d7-8bf3-4c3a-921e-ac13653c46a4",
-                    "type": "scenario_cascade",
-                    "question_fr": "Analyse des conflits d'équipe",
-                    "question_ar": "تحليل نزاعات الفريق",
-                    "options": {
-                        "steps": [
-                            {
-                                "question_fr": "2 compagnons refusent de travailler ensemble. Phase Tuckman ?",
-                                "question_ar": "رفيقان يرفضان العمل معاً. مرحلة تكمان؟",
-                                "correct": "B",
-                                "responses": [
-                                    {
-                                        "id": "A",
-                                        "text_fr": "Forming",
-                                        "text_ar": "التشكيل"
-                                    },
-                                    {
-                                        "id": "B",
-                                        "text_fr": "Storming (tempête)",
-                                        "text_ar": "العاصفة"
-                                    }
-                                ]
-                            },
-                            {
-                                "question_fr": "Pourquoi Kamal (qualité) et Samir (rapidité) sont en conflit ?",
-                                "question_ar": "لماذا كمال (الجودة) وسمير (السرعة) في نزاع؟",
-                                "correct": "B",
-                                "responses": [
-                                    {
-                                        "id": "A",
-                                        "text_fr": "Ils ne s'aiment pas",
-                                        "text_ar": "لا يحبان بعضهما"
-                                    },
-                                    {
-                                        "id": "B",
-                                        "text_fr": "Conflit de rôles Belbin (Analyste vs Réalisateur)",
-                                        "text_ar": "نزاع أدوار بلبين (محلل مقابل منفذ)"
-                                    }
-                                ]
-                            },
-                            {
-                                "question_fr": "Solution structurelle ?",
-                                "question_ar": "حل هيكلي؟",
-                                "correct": "B",
-                                "responses": [
-                                    {
-                                        "id": "A",
-                                        "text_fr": "Les séparer",
-                                        "text_ar": "فصلهما"
-                                    },
-                                    {
-                                        "id": "B",
-                                        "text_fr": "Kamal contrôle, Samir produit. Complémentarité.",
-                                        "text_ar": "كمال يراقب، سمير ينتج. تكامل."
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    "correct_answer": "",
-                    "feedback_positive": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "feedback_negative": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "hint": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "explanation": {
-                        "fr": "Diagnostiquer une phase d’équipe (Tuckman), un conflit de rôles Belbin, et proposer une restructuration systémique. Indication : Q1 → Storming ; Q2 → Analyste vs Réalisateur ; Q3 → complémentarité (contrôle qualité vs production).",
-                        "ar": "تشخيص مرحلة فريق (تكمان)، نزاع أدوار بلبين، واقتراح إعادة هيكلة نظامية. دلالة: س1 ← العاصفة؛ س2 ← محلل مقابل منفذ؛ س3 ← تكامل (مراقبة الجودة مقابل الإنتاج)."
-                    },
-                    "context_dialogue": null,
-                    "presentation": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "scores": {
-                        "decision": 0,
-                        "equipe": 0,
-                        "stress": 0,
-                        "xp": 100
-                    },
-                    "time_limit_sec": 45,
-                    "soft_skills_impact": {},
-                    "audio_url_fr": "",
-                    "audio_url_ar": "",
-                    "created_at": "2026-05-04T13:24:41.646908+00:00",
-                    "updated_at": "2026-05-04T13:24:41.646908+00:00"
-                },
-                {
-                    "id": "36fc53e2-f38f-4eb1-a704-5f6d229204b9",
-                    "type": "vrai_faux",
-                    "question_fr": "« Le meilleur artisan fait automatiquement le meilleur leader. »",
-                    "question_ar": "« أفضل حرفي يصبح تلقائياً أفضل قائد. »",
-                    "options": null,
-                    "correct_answer": "faux",
-                    "feedback_positive": {
-                        "fr": "Compétence technique ≠ compétence managériale. Principe de Peter.",
-                        "ar": "كفاءة تقنية ≠ كفاءة إدارية. مبدأ بيتر."
-                    },
-                    "feedback_negative": {
-                        "fr": "Faux. Deux compétences distinctes.",
-                        "ar": "خطأ. كفاءتان مختلفتان."
-                    },
-                    "hint": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "explanation": {
-                        "fr": "Démystifier le leadership, le conflit et le mentorat. Indication : Meilleur artisan ≠ meilleur leader (FAUX) ; conflit d’idées améliore la qualité (VRAI) ; modèle maître-apprenti toujours actuel (FAUX).",
-                        "ar": "تفنيد القيادة والنزاع والإرشاد. دلالة: أفضل حرفي ≠ أفضل قائد (خطأ)؛ نزاع الأفكار يحسن الجودة (صحيح)؛ نموذج المعلم-المتدرب لا يزال حالياً (خطأ)."
-                    },
-                    "context_dialogue": null,
-                    "presentation": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "scores": {
-                        "decision": 0,
-                        "equipe": 0,
-                        "stress": 0,
-                        "xp": 100
-                    },
-                    "time_limit_sec": 45,
-                    "soft_skills_impact": {},
-                    "audio_url_fr": "",
-                    "audio_url_ar": "",
-                    "created_at": "2026-05-04T13:24:41.646908+00:00",
-                    "updated_at": "2026-05-04T13:24:41.646908+00:00"
-                },
-                {
-                    "id": "98b8c87a-2a05-4bb1-8fad-91232b4b977e",
-                    "type": "error_detection",
-                    "question_fr": "Trouvez les 6 erreurs dans le rapport de l’atelier.",
-                    "question_ar": "ابحث عن الأخطاء الستة في تقرير الورشة.",
-                    "options": {
-                        "errors": [
-                            {
-                                "id": "1",
-                                "text_fr": "Pas de hiérarchie",
-                                "is_error": true
-                            },
-                            {
-                                "id": "2",
-                                "text_fr": "Aucune spécialisation",
-                                "is_error": true
-                            },
-                            {
-                                "id": "3",
-                                "text_fr": "Feedback annuel",
-                                "is_error": true
-                            },
-                            {
-                                "id": "4",
-                                "text_fr": "Recrutement sans essai",
-                                "is_error": true
-                            },
-                            {
-                                "id": "5",
-                                "text_fr": "2 jours théorie puis production",
-                                "is_error": true
-                            },
-                            {
-                                "id": "6",
-                                "text_fr": "Turnover 80%",
-                                "is_error": true
-                            }
-                        ]
-                    },
-                    "correct_answer": "",
-                    "feedback_positive": {
-                        "fr": "Analyse systémique ! Chaque erreur a une conséquence.",
-                        "ar": "تحليل نظامي! كل خطأ له نتيجة."
-                    },
-                    "feedback_negative": {
-                        "fr": "Relisez : structure, spécialisation, feedback, recrutement.",
-                        "ar": "أعد القراءة: هيكل، تخصص، تغذية راجعة، توظيف."
-                    },
-                    "hint": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "explanation": {
-                        "fr": "Analyser les erreurs systémiques d’un atelier (absence de hiérarchie, spécialisation, feedback, recrutement, progression). Indication : Pas de hiérarchie, pas de spécialisation, feedback annuel, recrutement sur diplômes, 2 jours de théorie puis production, turnover 80 %.",
-                        "ar": "تحليل الأخطاء النظامية في ورشة (غياب هيكل، تخصص، تغذية راجعة، توظيف، تقدم). دلالة: لا هيكل، لا تخصص، تغذية راجعة سنوية، توظيف بالشهادات، يومان نظرية ثم إنتاج، دوران 80%."
-                    },
-                    "context_dialogue": null,
-                    "presentation": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "scores": {
-                        "decision": 0,
-                        "equipe": 0,
-                        "stress": 0,
-                        "xp": 100
-                    },
-                    "time_limit_sec": 45,
-                    "soft_skills_impact": {},
-                    "audio_url_fr": "",
-                    "audio_url_ar": "",
-                    "created_at": "2026-05-04T13:24:41.646908+00:00",
-                    "updated_at": "2026-05-04T13:24:41.646908+00:00"
-                },
-                {
-                    "id": "07b47f86-a770-48e8-a3e0-21fdee597b0f",
-                    "type": "ranking",
-                    "question_fr": "Classez les 7 éléments par priorité de transmission.",
-                    "question_ar": "رتب العناصر السبعة حسب أولوية النقل.",
-                    "options": {
-                        "order": [
-                            {
-                                "id": "1",
-                                "label_fr": "Éthique"
-                            },
-                            {
-                                "id": "2",
-                                "label_fr": "Philosophie"
-                            },
-                            {
-                                "id": "3",
-                                "label_fr": "Enseigner"
-                            },
-                            {
-                                "id": "4",
-                                "label_fr": "Geste"
-                            },
-                            {
-                                "id": "5",
-                                "label_fr": "Gestion"
-                            },
-                            {
-                                "id": "6",
-                                "label_fr": "Client"
-                            },
-                            {
-                                "id": "7",
-                                "label_fr": "Innovation"
-                            }
-                        ]
-                    },
-                    "correct_answer": "",
-                    "feedback_positive": {
-                        "fr": "Analyse hiérarchique ! Valeurs d’abord.",
-                        "ar": "تحليل هرمي! القيم أولاً."
-                    },
-                    "feedback_negative": {
-                        "fr": "L’éthique et la philosophie passent avant.",
-                        "ar": "الأخلاق والفلسفة تأتي أولاً."
-                    },
-                    "hint": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "explanation": {
-                        "fr": "Prioriser la transmission des savoirs (éthique, philosophie, enseignement, geste, gestion, client, innovation). Indication : Éthique d’abord, puis philosophie, puis capacité à enseigner, ensuite le geste technique, la gestion, la relation client, enfin l’innovation.",
-                        "ar": "تحديد أولويات نقل المعارف (أخلاق، فلسفة، تعليم، إيماءة، إدارة، عميل، ابتكار). دلالة: أخلاق أولاً، ثم فلسفة، ثم قدرة على التعليم، ثم الإيماءة التقنية، الإدارة، علاقة العميل، أخيراً الابتكار."
-                    },
-                    "context_dialogue": null,
-                    "presentation": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "scores": {
-                        "decision": 0,
-                        "equipe": 0,
-                        "stress": 0,
-                        "xp": 100
-                    },
-                    "time_limit_sec": 45,
-                    "soft_skills_impact": {},
-                    "audio_url_fr": "",
-                    "audio_url_ar": "",
-                    "created_at": "2026-05-04T13:24:41.646908+00:00",
-                    "updated_at": "2026-05-04T13:24:41.646908+00:00"
-                },
-                {
-                    "id": "3ba096f5-22ae-4e04-a683-1262f278f5c4",
-                    "type": "fill_blanks",
-                    "question_fr": "Modèle de Lave & Wenger",
-                    "question_ar": "نموذج لاف ووينغر",
-                    "options": [
-                        {
-                            "id": "1",
-                            "label_fr": "communauté",
-                            "label_ar": ""
-                        },
-                        {
-                            "id": "2",
-                            "label_fr": "participation",
-                            "label_ar": ""
-                        },
-                        {
-                            "id": "3",
-                            "label_fr": "périphérique",
-                            "label_ar": ""
-                        },
-                        {
-                            "id": "4",
-                            "label_fr": "légitime",
-                            "label_ar": ""
-                        }
-                    ],
-                    "correct_answer": "communauté, participation, périphérique, légitime",
-                    "feedback_positive": {
-                        "fr": "Participation périphérique légitime maîtrisée.",
-                        "ar": "إتقان المشاركة المحيطية الشرعية."
-                    },
-                    "feedback_negative": {
-                        "fr": "Relisez les piliers de Lave & Wenger.",
-                        "ar": "أعد قراءة ركائز لاف ووينغر."
-                    },
-                    "hint": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "explanation": {
-                        "fr": "Maîtriser les concepts de Lave & Wenger (communauté de pratique, participation périphérique légitime). Indication : Communauté de pratique, participation périphérique légitime, observation, participation, identité.",
-                        "ar": "إتقان مفاهيم لاف ووينغر (مجتمع الممارسة، المشاركة المحيطية الشرعية). دلالة: مجتمع ممارسة، مشاركة محيطية شرعية، ملاحظة، مشاركة، هوية."
-                    },
-                    "context_dialogue": null,
-                    "presentation": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "scores": {
-                        "decision": 0,
-                        "equipe": 0,
-                        "stress": 0,
-                        "xp": 100
-                    },
-                    "time_limit_sec": 45,
-                    "soft_skills_impact": {},
-                    "audio_url_fr": "",
-                    "audio_url_ar": "",
-                    "created_at": "2026-05-04T13:24:41.646908+00:00",
-                    "updated_at": "2026-05-04T13:24:41.646908+00:00"
-                },
-                {
-                    "id": "14a7dc95-4a3e-4b04-8931-ec39f7dab082",
-                    "type": "short_answer",
-                    "question_fr": "Analysez le leadership de Maître Idris (forces, faiblesses, recommandation).",
-                    "question_ar": "حلل قيادة الأستاذ إدريس (نقاط قوة، ضعف، توصية).",
-                    "options": null,
-                    "correct_answer": "",
-                    "feedback_positive": {
-                        "fr": "Analyse critique exceptionnelle !",
-                        "ar": "تحليل نقدي استثنائي!"
-                    },
-                    "feedback_negative": {
-                        "fr": "Ajoutez des références théoriques.",
-                        "ar": "أضف مراجع نظرية."
-                    },
-                    "hint": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "explanation": {
-                        "fr": "Analyser le leadership d’une autorité avec des références théoriques (Belbin, Lencioni, SDT). Indication : Forces (expertise, sens), faiblesses (feedback rare et négatif), recommandation (point hebdomadaire 1 positif + 1 amélioration + 1 objectif).",
-                        "ar": "تحليل قيادة سلطة بمراجع نظرية (بلبين، لينسيوني، تقرير المصير). دلالة: قوة (خبرة، معنى)، ضعف (تغذية راجعة نادرة وسلبية)، توصية (نقطة أسبوعية: 1 إيجابي + 1 تحسين + 1 هدف)."
-                    },
-                    "context_dialogue": null,
-                    "presentation": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "scores": {
-                        "decision": 0,
-                        "equipe": 0,
-                        "stress": 0,
-                        "xp": 100
-                    },
-                    "time_limit_sec": 45,
-                    "soft_skills_impact": {},
-                    "audio_url_fr": "",
-                    "audio_url_ar": "",
-                    "created_at": "2026-05-04T13:24:41.646908+00:00",
-                    "updated_at": "2026-05-04T13:24:41.646908+00:00"
-                },
-                {
-                    "id": "227813f0-8b67-49d4-8c75-fb0336047d1e",
-                    "type": "puzzle_riddle",
-                    "question_fr": "« Lencioni me place à la base… Qui suis-je ? »",
-                    "question_ar": "« لينسيوني يضعني في القاعدة… من أنا؟ »",
-                    "options": [
-                        {
-                            "id": "A",
-                            "label_fr": "Le respect",
-                            "label_ar": "الاحترام"
-                        },
-                        {
-                            "id": "B",
-                            "label_fr": "La confiance",
-                            "label_ar": "الثقة"
-                        }
-                    ],
-                    "correct_answer": "B",
-                    "feedback_positive": {
-                        "fr": "Exact ! Base de la pyramide Lencioni.",
-                        "ar": "صحيح! قاعدة هرم لينسيوني."
-                    },
-                    "feedback_negative": {
-                        "fr": "C’est la confiance.",
-                        "ar": "إنها الثقة."
-                    },
-                    "hint": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "explanation": {
-                        "fr": "Identifier la confiance comme base de toute équipe (Lencioni). Indication : Outil invisible sans lequel les rois tombent et les équipes se déchirent ; Lencioni la place à la base de la pyramide.",
-                        "ar": "تحديد الثقة كقاعدة لأي فريق (لينسيوني). دلالة: أداة غير مرئية بدونها يسقط الملوك وتتمزق الفرق؛ لينسيوني يضعها في قاعدة الهرم."
-                    },
-                    "context_dialogue": null,
-                    "presentation": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "scores": {
-                        "decision": 0,
-                        "equipe": 0,
-                        "stress": 0,
-                        "xp": 150
-                    },
-                    "time_limit_sec": 45,
-                    "soft_skills_impact": {},
-                    "audio_url_fr": "",
-                    "audio_url_ar": "",
-                    "created_at": "2026-05-04T13:24:41.646908+00:00",
-                    "updated_at": "2026-05-04T13:24:41.646908+00:00"
-                }
-            ],
-            "created_at": "2026-05-04T12:32:48.682548+00:00",
-            "updated_at": "2026-05-04T12:32:48.682548+00:00"
+            {
+              "id": "D",
+              "label_fr": "C’est plus rapide",
+              "label_ar": "إنه أسرع"
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive": {
+            "fr": "Analyse correcte ! Pratique réelle, feedback immédiat, progressivité = ZPD de Vygotsky.",
+            "ar": "تحليل صحيح! ممارسة حقيقية، تغذية راجعة فورية، تدرج = منطقة التطور القريب لفيغوتسكي."
+          },
+          "feedback_negative": {
+            "fr": "Non. Le maître n’est pas plus intelligent, juste plus expérimenté. L’avantage est la pratique contextualisée.",
+            "ar": "لا. المعلم ليس أكثر ذكاءً، بل أكثر خبرة. الميزة هي الممارسة السياقية."
+          },
+          "hint": {
+            "fr": "",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Analyser les avantages du modèle maître-apprenti (apprentissage situé, feedback immédiat, progressivité ZPD). Indication : L’avantage principal réside dans la pratique réelle avec un retour rapide et une progression par étapes, non dans la rapidité ou le coût.",
+            "ar": "تحليل مزايا نموذج المعلم-المتدرب (التعلم الموقعي، التغذية الراجعة الفورية، تدرج منطقة التطور القريب). دلالة: الميزة الرئيسية تكمن في الممارسة الحقيقية مع عودة سريعة وتقدم تدريجي، وليس في السرعة أو التكلفة."
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:41.646908+00:00",
+          "updated_at": "2026-05-04T13:24:41.646908+00:00"
         },
         {
-            "id": "550e8400-e29b-41d4-a716-44665544f222",
-            "title_fr": "Les Tanneries Chouara",
-            "title_ar": "مدابغ شوارة",
-            "description_fr": "Lieu: Tanneries Chouara. Soft skill: Gestion du stress (analyse). Diagnostiquer le stress chronique avec Selye.",
-            "description_ar": "المكان: مدابغ شوارة. المهارة الناعمة: إدارة التوتر (تحليل). تشخيص التوتر المزمن مع سيلي.",
-            "type": "challenge",
-            "xp_reward": 1000,
-            "bloom_level": "",
-            "soft_skill_dominant": "Synthèse analytique",
-            "duration_minutes": null,
-            "success_threshold": 70,
-            "mentor": {
-                "name_fr": "",
-                "name_ar": "سعيد",
-                "age": null,
-                "role_fr": "",
-                "role_ar": "دباغ",
-                "location_fr": "",
-                "location_ar": "مدابغ شوارة، فاس"
-            },
-            "scripts": {
-                "opening_fr": "Palais Batha, Fès, Vendredi 7h\n\nLalla Ghita, femme d'autorité en caftan brodé, regarde Ishaq de haut en bas.\n\n\"Maître Idris, Saïd, Latifa et Youssef m'ont tous écrit la même chose : 'Ce jeune homme ANALYSE.' Très bien. ANALYSE ceci : 200 artisans de 15 corporations. 5 000 visiteurs. Budget serré. Tensions politiques...\"",
-                "opening_ar": "قصر البطحاء، فاس، الجمعة 7 صباحاً\n\nللا غيثة، امرأة ذات سلطان في قفطان مطرز، تنظر إلى إسحاق من رأسه إلى قدميه.\n\n\"الأستاذ إدريس، سعيد، لطيفة ويوسف كتبوا لي كلهم نفس الشيء: 'هذا الشاب يُحلِّل.' حسناً. حَلِّل هذا: 200 حرفي من 15 حرفة. 5000 زائر. ميزانية محدودة. توترات سياسية...\"",
-                "closing_fr": "",
-                "closing_ar": ""
-            },
-            "cinematic": {
-                "text_fr": "Tanneries Chouara – Mercredi 14h. Saïd, tanneur depuis 40 ans, montre les cuves colorées. « Ici, le stress est physique, Ishaq. L'odeur, la chaleur, l'effort. Si l'équipe ne communique pas parfaitement, on perd des peaux précieuses. La coordination est notre survie. »",
-                "text_ar": "مدابغ شوارة – الأربعاء 14:00. سعيد، دباغ منذ 40 عاماً، يُري الأحواض الملونة. « هنا، التوتر جسدي، إسحاق. الرائحة، الحرارة، الجهد. إذا لم يتواصل الفريق بشكل مثالي، نخسر جلوداً ثمينة. التنسيق هو بقاؤنا. »",
-                "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome-narration-Fes.gif",
-                "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Fes/FES%20MISSION%202.mp3",
-                "audio_url_ar": ""
-            },
-            "theories_fr": "",
-            "theories_ar": "",
-            "exercises": [
-                {
-                    "id": "79d7a8b0-ca5b-4e56-b02a-e0b3debe197e",
-                    "type": "qcm",
-                    "question_fr": "Différence principale entre stress médical (Karim) et tanneries (Saïd) ?",
-                    "question_ar": "الفرق الرئيسي بين التوتر الطبي (كريم) والمدابغ (سعيد)؟",
-                    "options": [
-                        {
-                            "id": "A",
-                            "label_fr": "Stress médical est plus grave",
-                            "label_ar": "التوتر الطبي أخطر"
-                        },
-                        {
-                            "id": "B",
-                            "label_fr": "Karim subit un stress aigu (pics), Saïd un stress chronique (constant).",
-                            "label_ar": "كريم يعاني من توتر حاد (نوبات)، سعيد من توتر مزمن (مستمر)."
-                        }
-                    ],
-                    "correct_answer": "B",
-                    "feedback_positive": {
-                        "fr": "Analyse comparative juste ! Aigu vs Chronique.",
-                        "ar": "تحليل مقارن صحيح! حاد مقابل مزمن."
-                    },
-                    "feedback_negative": {
-                        "fr": "L’un est intense et court, l’autre constant.",
-                        "ar": "أحدهما شديد وقصير، والآخر مستمر."
-                    },
-                    "hint": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "explanation": {
-                        "fr": "Analyser la différence entre stress aigu (pics courts) et stress chronique (constant). Indication : Dr. Karim subit des pics intenses et courts (aigu), Saïd une usure modérée mais constante (chronique).",
-                        "ar": "تحليل الفرق بين التوتر الحاد (نوبات قصيرة) والتوتر المزمن (مستمر). دلالة: الدكتور كريم يعاني من نوبات شديدة وقصيرة (حاد)، سعيد من تآكل معتدل لكن مستمر (مزمن)."
-                    },
-                    "context_dialogue": null,
-                    "presentation": {
-                        "fr": "",
-                        "ar": ""
-                    },
-                    "scores": {
-                        "decision": 0,
-                        "equipe": 0,
-                        "stress": 0,
-                        "xp": 100
-                    },
-                    "time_limit_sec": 45,
-                    "soft_skills_impact": {},
-                    "audio_url_fr": "",
-                    "audio_url_ar": "",
-                    "created_at": "2026-05-04T13:24:41.997134+00:00",
-                    "updated_at": "2026-05-04T13:24:41.997134+00:00"
-                }
+          "id": "0a0d81df-ae47-423d-ab26-f2b513bf73c2",
+          "type": "matching",
+          "question_fr": "Relie chaque situation à la dysfonction Lencioni.",
+          "question_ar": "اربط كل حالة باختلال لينسيوني.",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Hamid cache ses erreurs par peur",
+                "left_ar": "حامد يخفي أخطائه خوفاً",
+                "right_fr": "Absence de confiance",
+                "right_ar": "غياب الثقة"
+              },
+              {
+                "left_fr": "Les compagnons évitent de critiquer",
+                "left_ar": "الرفاق يتجنبون النقد",
+                "right_fr": "Peur du conflit sain",
+                "right_ar": "الخوف من النزاع الصحي"
+              },
+              {
+                "left_fr": "Samir ne se sent pas concerné par les délais",
+                "left_ar": "سمير لا يشعر بالمسؤولية تجاه المواعيد",
+                "right_fr": "Évitement de la responsabilité",
+                "right_ar": "تجنب المسؤولية"
+              },
+              {
+                "left_fr": "Chacun travaille pour soi",
+                "left_ar": "كل واحد يعمل لنفسه",
+                "right_fr": "Inattention aux résultats",
+                "right_ar": "عدم الاهتمام بالنتائج"
+              },
+              {
+                "left_fr": "Kamal refuse de s’engager sur un résultat",
+                "left_ar": "كمال يرفض الالتزام بنتيجة",
+                "right_fr": "Manque d’engagement",
+                "right_ar": "غياب الالتزام"
+              }
             ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Analyse parfaite ! Pyramide Lencioni : confiance → conflit → engagement → responsabilité → résultats.",
+            "ar": "تحليل ممتاز! هرم لينسيوني: ثقة → نزاع → التزام → مسؤولية → نتائج."
+          },
+          "feedback_negative": {
+            "fr": "Vérifiez : 1=confiance, 2=conflit, 3=responsabilité, 4=résultats, 5=engagement.",
+            "ar": "تحقق: 1=ثقة، 2=نزاع، 3=مسؤولية، 4=نتائج، 5=التزام."
+          },
+          "hint": {
+            "fr": "",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Identifier les 5 dysfonctions d’équipe de Lencioni. Indication : Cacher ses erreurs → absence de confiance ; éviter la critique → peur du conflit ; pas concerné par les délais → évitement de responsabilité ; chacun pour soi → inattention aux résultats ; refus d’engagement → manque d’engagement.",
+            "ar": "تحديد اختلالات الفريق الخمسة حسب لينسيوني. دلالة: إخفاء الأخطاء ← غياب الثقة؛ تجنب النقد ← الخوف من النزاع؛ عدم الاهتمام بالمواعيد ← تجنب المسؤولية؛ كل لنفسه ← عدم الاهتمام بالنتائج؛ رفض الالتزام ← غياب الالتزام."
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:41.646908+00:00",
+          "updated_at": "2026-05-04T13:24:41.646908+00:00"
+        },
+        {
+          "id": "9d004166-977c-494a-b2bc-3dd64173d373",
+          "type": "scenario_dialogue",
+          "question_fr": "Hamid a travaillé 3 mois, le maître dit « insuffisant, recommence ». Hamid démissionne. Quelle est la cause profonde ?",
+          "question_ar": "حامد عمل 3 أشهر، يقول المعلم « غير كافٍ، أعد ». حامد يستقيل. ما السبب الجذري؟",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Hamid est paresseux",
+              "label_ar": "حامد كسول"
+            },
+            {
+              "id": "B",
+              "label_fr": "Manque de feedback progressif : 3 mois sans retour, puis critique totale = choc émotionnel.",
+              "label_ar": "غياب التغذية الراجعة التدريجية: 3 أشهر بدون عودة، ثم نقد كامل = صدمة عاطفية."
+            },
+            {
+              "id": "C",
+              "label_fr": "Le maître est trop sévère",
+              "label_ar": "المعلم شديد القسوة"
+            },
+            {
+              "id": "D",
+              "label_fr": "C’est normal dans l’artisanat",
+              "label_ar": "هذا طبيعي في الحرف"
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Analyse systémique ! Absence feedback intermédiaire, négatif uniquement, disproportion effort/reconnaissance.",
+            "ar": "تحليل نظامي! غياب تغذية راجعة وسطية، سلبي فقط، عدم تناسب الجهد/التقدير."
+          },
+          "feedback_negative": {
+            "fr": "Ne réduisez pas au caractère. La cause est dans la méthode : feedback trop rare et brutal.",
+            "ar": "لا تختزله في الشخصية. السبب في الطريقة: تغذية راجعة نادرة وقاسية."
+          },
+          "hint": {
+            "fr": "",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Analyser la cause profonde d’un conflit (feedback insuffisant, disproportion effort/reconnaissance). Indication : 3 mois sans retour puis critique totale = choc émotionnel. La cause n’est ni le caractère ni la sévérité, mais l’absence de feedback progressif.",
+            "ar": "تحليل السبب الجذري لنزاع (تغذية راجعة غير كافية، عدم تناسب الجهد/التقدير). دلالة: 3 أشهر بدون عودة ثم نقد كامل = صدمة عاطفية. السبب ليس الشخصية أو القسوة، بل غياب التغذية الراجعة التدريجية."
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:41.646908+00:00",
+          "updated_at": "2026-05-04T13:24:41.646908+00:00"
+        },
+        {
+          "id": "7b6d59d7-8bf3-4c3a-921e-ac13653c46a4",
+          "type": "scenario_cascade",
+          "question_fr": "Analyse des conflits d'équipe",
+          "question_ar": "تحليل نزاعات الفريق",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "2 compagnons refusent de travailler ensemble. Phase Tuckman ?",
+                "question_ar": "رفيقان يرفضان العمل معاً. مرحلة تكمان؟",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Forming",
+                    "text_ar": "التشكيل"
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "Storming (tempête)",
+                    "text_ar": "العاصفة"
+                  }
+                ]
+              },
+              {
+                "question_fr": "Pourquoi Kamal (qualité) et Samir (rapidité) sont en conflit ?",
+                "question_ar": "لماذا كمال (الجودة) وسمير (السرعة) في نزاع؟",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Ils ne s'aiment pas",
+                    "text_ar": "لا يحبان بعضهما"
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "Conflit de rôles Belbin (Analyste vs Réalisateur)",
+                    "text_ar": "نزاع أدوار بلبين (محلل مقابل منفذ)"
+                  }
+                ]
+              },
+              {
+                "question_fr": "Solution structurelle ?",
+                "question_ar": "حل هيكلي؟",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Les séparer",
+                    "text_ar": "فصلهما"
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "Kamal contrôle, Samir produit. Complémentarité.",
+                    "text_ar": "كمال يراقب، سمير ينتج. تكامل."
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Diagnostiquer une phase d’équipe (Tuckman), un conflit de rôles Belbin, et proposer une restructuration systémique. Indication : Q1 → Storming ; Q2 → Analyste vs Réalisateur ; Q3 → complémentarité (contrôle qualité vs production).",
+            "ar": "تشخيص مرحلة فريق (تكمان)، نزاع أدوار بلبين، واقتراح إعادة هيكلة نظامية. دلالة: س1 ← العاصفة؛ س2 ← محلل مقابل منفذ؛ س3 ← تكامل (مراقبة الجودة مقابل الإنتاج)."
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:41.646908+00:00",
+          "updated_at": "2026-05-04T13:24:41.646908+00:00"
+        },
+        {
+          "id": "36fc53e2-f38f-4eb1-a704-5f6d229204b9",
+          "type": "vrai_faux",
+          "question_fr": "« Le meilleur artisan fait automatiquement le meilleur leader. »",
+          "question_ar": "« أفضل حرفي يصبح تلقائياً أفضل قائد. »",
+          "options": null,
+          "correct_answer": "faux",
+          "feedback_positive": {
+            "fr": "Compétence technique ≠ compétence managériale. Principe de Peter.",
+            "ar": "كفاءة تقنية ≠ كفاءة إدارية. مبدأ بيتر."
+          },
+          "feedback_negative": {
+            "fr": "Faux. Deux compétences distinctes.",
+            "ar": "خطأ. كفاءتان مختلفتان."
+          },
+          "hint": {
+            "fr": "",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Démystifier le leadership, le conflit et le mentorat. Indication : Meilleur artisan ≠ meilleur leader (FAUX) ; conflit d’idées améliore la qualité (VRAI) ; modèle maître-apprenti toujours actuel (FAUX).",
+            "ar": "تفنيد القيادة والنزاع والإرشاد. دلالة: أفضل حرفي ≠ أفضل قائد (خطأ)؛ نزاع الأفكار يحسن الجودة (صحيح)؛ نموذج المعلم-المتدرب لا يزال حالياً (خطأ)."
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:41.646908+00:00",
+          "updated_at": "2026-05-04T13:24:41.646908+00:00"
+        },
+        {
+          "id": "98b8c87a-2a05-4bb1-8fad-91232b4b977e",
+          "type": "error_detection",
+          "question_fr": "Trouvez les 6 erreurs dans le rapport de l’atelier.",
+          "question_ar": "ابحث عن الأخطاء الستة في تقرير الورشة.",
+          "options": {
+            "errors": [
+              {
+                "id": "1",
+                "text_fr": "Pas de hiérarchie",
+                "is_error": true
+              },
+              {
+                "id": "2",
+                "text_fr": "Aucune spécialisation",
+                "is_error": true
+              },
+              {
+                "id": "3",
+                "text_fr": "Feedback annuel",
+                "is_error": true
+              },
+              {
+                "id": "4",
+                "text_fr": "Recrutement sans essai",
+                "is_error": true
+              },
+              {
+                "id": "5",
+                "text_fr": "2 jours théorie puis production",
+                "is_error": true
+              },
+              {
+                "id": "6",
+                "text_fr": "Turnover 80%",
+                "is_error": true
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Analyse systémique ! Chaque erreur a une conséquence.",
+            "ar": "تحليل نظامي! كل خطأ له نتيجة."
+          },
+          "feedback_negative": {
+            "fr": "Relisez : structure, spécialisation, feedback, recrutement.",
+            "ar": "أعد القراءة: هيكل، تخصص، تغذية راجعة، توظيف."
+          },
+          "hint": {
+            "fr": "",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Analyser les erreurs systémiques d’un atelier (absence de hiérarchie, spécialisation, feedback, recrutement, progression). Indication : Pas de hiérarchie, pas de spécialisation, feedback annuel, recrutement sur diplômes, 2 jours de théorie puis production, turnover 80 %.",
+            "ar": "تحليل الأخطاء النظامية في ورشة (غياب هيكل، تخصص، تغذية راجعة، توظيف، تقدم). دلالة: لا هيكل، لا تخصص، تغذية راجعة سنوية، توظيف بالشهادات، يومان نظرية ثم إنتاج، دوران 80%."
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:41.646908+00:00",
+          "updated_at": "2026-05-04T13:24:41.646908+00:00"
+        },
+        {
+          "id": "07b47f86-a770-48e8-a3e0-21fdee597b0f",
+          "type": "ranking",
+          "question_fr": "Classez les 7 éléments par priorité de transmission.",
+          "question_ar": "رتب العناصر السبعة حسب أولوية النقل.",
+          "options": {
+            "order": [
+              {
+                "id": "1",
+                "label_fr": "Éthique"
+              },
+              {
+                "id": "2",
+                "label_fr": "Philosophie"
+              },
+              {
+                "id": "3",
+                "label_fr": "Enseigner"
+              },
+              {
+                "id": "4",
+                "label_fr": "Geste"
+              },
+              {
+                "id": "5",
+                "label_fr": "Gestion"
+              },
+              {
+                "id": "6",
+                "label_fr": "Client"
+              },
+              {
+                "id": "7",
+                "label_fr": "Innovation"
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Analyse hiérarchique ! Valeurs d’abord.",
+            "ar": "تحليل هرمي! القيم أولاً."
+          },
+          "feedback_negative": {
+            "fr": "L’éthique et la philosophie passent avant.",
+            "ar": "الأخلاق والفلسفة تأتي أولاً."
+          },
+          "hint": {
+            "fr": "",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Prioriser la transmission des savoirs (éthique, philosophie, enseignement, geste, gestion, client, innovation). Indication : Éthique d’abord, puis philosophie, puis capacité à enseigner, ensuite le geste technique, la gestion, la relation client, enfin l’innovation.",
+            "ar": "تحديد أولويات نقل المعارف (أخلاق، فلسفة، تعليم، إيماءة، إدارة، عميل، ابتكار). دلالة: أخلاق أولاً، ثم فلسفة، ثم قدرة على التعليم، ثم الإيماءة التقنية، الإدارة، علاقة العميل، أخيراً الابتكار."
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:41.646908+00:00",
+          "updated_at": "2026-05-04T13:24:41.646908+00:00"
+        },
+        {
+          "id": "3ba096f5-22ae-4e04-a683-1262f278f5c4",
+          "type": "fill_blanks",
+          "question_fr": "Modèle de Lave & Wenger",
+          "question_ar": "نموذج لاف ووينغر",
+          "options": [
+            {
+              "id": "1",
+              "label_fr": "communauté",
+              "label_ar": ""
+            },
+            {
+              "id": "2",
+              "label_fr": "participation",
+              "label_ar": ""
+            },
+            {
+              "id": "3",
+              "label_fr": "périphérique",
+              "label_ar": ""
+            },
+            {
+              "id": "4",
+              "label_fr": "légitime",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "communauté, participation, périphérique, légitime",
+          "feedback_positive": {
+            "fr": "Participation périphérique légitime maîtrisée.",
+            "ar": "إتقان المشاركة المحيطية الشرعية."
+          },
+          "feedback_negative": {
+            "fr": "Relisez les piliers de Lave & Wenger.",
+            "ar": "أعد قراءة ركائز لاف ووينغر."
+          },
+          "hint": {
+            "fr": "",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Maîtriser les concepts de Lave & Wenger (communauté de pratique, participation périphérique légitime). Indication : Communauté de pratique, participation périphérique légitime, observation, participation, identité.",
+            "ar": "إتقان مفاهيم لاف ووينغر (مجتمع الممارسة، المشاركة المحيطية الشرعية). دلالة: مجتمع ممارسة، مشاركة محيطية شرعية، ملاحظة، مشاركة، هوية."
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:41.646908+00:00",
+          "updated_at": "2026-05-04T13:24:41.646908+00:00"
+        },
+        {
+          "id": "14a7dc95-4a3e-4b04-8931-ec39f7dab082",
+          "type": "short_answer",
+          "question_fr": "Analysez le leadership de Maître Idris (forces, faiblesses, recommandation).",
+          "question_ar": "حلل قيادة الأستاذ إدريس (نقاط قوة، ضعف، توصية).",
+          "options": null,
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Analyse critique exceptionnelle !",
+            "ar": "تحليل نقدي استثنائي!"
+          },
+          "feedback_negative": {
+            "fr": "Ajoutez des références théoriques.",
+            "ar": "أضف مراجع نظرية."
+          },
+          "hint": {
+            "fr": "",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Analyser le leadership d’une autorité avec des références théoriques (Belbin, Lencioni, SDT). Indication : Forces (expertise, sens), faiblesses (feedback rare et négatif), recommandation (point hebdomadaire 1 positif + 1 amélioration + 1 objectif).",
+            "ar": "تحليل قيادة سلطة بمراجع نظرية (بلبين، لينسيوني، تقرير المصير). دلالة: قوة (خبرة، معنى)، ضعف (تغذية راجعة نادرة وسلبية)، توصية (نقطة أسبوعية: 1 إيجابي + 1 تحسين + 1 هدف)."
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:41.646908+00:00",
+          "updated_at": "2026-05-04T13:24:41.646908+00:00"
+        },
+        {
+          "id": "227813f0-8b67-49d4-8c75-fb0336047d1e",
+          "type": "puzzle_riddle",
+          "question_fr": "« Lencioni me place à la base… Qui suis-je ? »",
+          "question_ar": "« لينسيوني يضعني في القاعدة… من أنا؟ »",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Le respect",
+              "label_ar": "الاحترام"
+            },
+            {
+              "id": "B",
+              "label_fr": "La confiance",
+              "label_ar": "الثقة"
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Exact ! Base de la pyramide Lencioni.",
+            "ar": "صحيح! قاعدة هرم لينسيوني."
+          },
+          "feedback_negative": {
+            "fr": "C’est la confiance.",
+            "ar": "إنها الثقة."
+          },
+          "hint": {
+            "fr": "",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Identifier la confiance comme base de toute équipe (Lencioni). Indication : Outil invisible sans lequel les rois tombent et les équipes se déchirent ; Lencioni la place à la base de la pyramide.",
+            "ar": "تحديد الثقة كقاعدة لأي فريق (لينسيوني). دلالة: أداة غير مرئية بدونها يسقط الملوك وتتمزق الفرق؛ لينسيوني يضعها في قاعدة الهرم."
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 150
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:41.646908+00:00",
+          "updated_at": "2026-05-04T13:24:41.646908+00:00"
         }
-    ]
+      ],
+      "created_at": "2026-05-04T12:32:48.682548+00:00",
+      "updated_at": "2026-05-04T12:32:48.682548+00:00"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-44665544f222",
+      "title_fr": "Les Tanneries Chouara",
+      "title_ar": "مدابغ شوارة",
+      "description_fr": "Lieu: Tanneries Chouara. Soft skill: Gestion du stress (analyse). Diagnostiquer le stress chronique avec Selye.",
+      "description_ar": "المكان: مدابغ شوارة. المهارة الناعمة: إدارة التوتر (تحليل). تشخيص التوتر المزمن مع سيلي.",
+      "type": "challenge",
+      "xp_reward": 1000,
+      "bloom_level": "",
+      "soft_skill_dominant": "Synthèse analytique",
+      "duration_minutes": null,
+      "success_threshold": 70,
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "سعيد",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "دباغ",
+        "location_fr": "",
+        "location_ar": "مدابغ شوارة، فاس"
+      },
+      "scripts": {
+        "opening_fr": "Palais Batha, Fès, Vendredi 7h\n\nLalla Ghita, femme d'autorité en caftan brodé, regarde Ishaq de haut en bas.\n\n\"Maître Idris, Saïd, Latifa et Youssef m'ont tous écrit la même chose : 'Ce jeune homme ANALYSE.' Très bien. ANALYSE ceci : 200 artisans de 15 corporations. 5 000 visiteurs. Budget serré. Tensions politiques...\"",
+        "opening_ar": "قصر البطحاء، فاس، الجمعة 7 صباحاً\n\nللا غيثة، امرأة ذات سلطان في قفطان مطرز، تنظر إلى إسحاق من رأسه إلى قدميه.\n\n\"الأستاذ إدريس، سعيد، لطيفة ويوسف كتبوا لي كلهم نفس الشيء: 'هذا الشاب يُحلِّل.' حسناً. حَلِّل هذا: 200 حرفي من 15 حرفة. 5000 زائر. ميزانية محدودة. توترات سياسية...\"",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "Tanneries Chouara – Mercredi 14h. Saïd, tanneur depuis 40 ans, montre les cuves colorées. « Ici, le stress est physique, Ishaq. L'odeur, la chaleur, l'effort. Si l'équipe ne communique pas parfaitement, on perd des peaux précieuses. La coordination est notre survie. »",
+        "text_ar": "مدابغ شوارة – الأربعاء 14:00. سعيد، دباغ منذ 40 عاماً، يُري الأحواض الملونة. « هنا، التوتر جسدي، إسحاق. الرائحة، الحرارة، الجهد. إذا لم يتواصل الفريق بشكل مثالي، نخسر جلوداً ثمينة. التنسيق هو بقاؤنا. »",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome-narration-Fes.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Fes/FES%20MISSION%202.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "theories_ar": "",
+      "exercises": [
+        {
+          "id": "79d7a8b0-ca5b-4e56-b02a-e0b3debe197e",
+          "type": "qcm",
+          "question_fr": "Différence principale entre stress médical (Karim) et tanneries (Saïd) ?",
+          "question_ar": "الفرق الرئيسي بين التوتر الطبي (كريم) والمدابغ (سعيد)؟",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Stress médical est plus grave",
+              "label_ar": "التوتر الطبي أخطر"
+            },
+            {
+              "id": "B",
+              "label_fr": "Karim subit un stress aigu (pics), Saïd un stress chronique (constant).",
+              "label_ar": "كريم يعاني من توتر حاد (نوبات)، سعيد من توتر مزمن (مستمر)."
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Analyse comparative juste ! Aigu vs Chronique.",
+            "ar": "تحليل مقارن صحيح! حاد مقابل مزمن."
+          },
+          "feedback_negative": {
+            "fr": "L’un est intense et court, l’autre constant.",
+            "ar": "أحدهما شديد وقصير، والآخر مستمر."
+          },
+          "hint": {
+            "fr": "",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Analyser la différence entre stress aigu (pics courts) et stress chronique (constant). Indication : Dr. Karim subit des pics intenses et courts (aigu), Saïd une usure modérée mais constante (chronique).",
+            "ar": "تحليل الفرق بين التوتر الحاد (نوبات قصيرة) والتوتر المزمن (مستمر). دلالة: الدكتور كريم يعاني من نوبات شديدة وقصيرة (حاد)، سعيد من تآكل معتدل لكن مستمر (مزمن)."
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:41.997134+00:00",
+          "updated_at": "2026-05-04T13:24:41.997134+00:00"
+        }
+      ]
+    }
+  ]
 }

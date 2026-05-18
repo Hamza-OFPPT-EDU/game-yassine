@@ -2,25 +2,25 @@
   "Rabat": {
     "city_id": "550e8400-e29b-41d4-a716-446655440001",
     "name_fr": "Rabat",
-    "name_ar": "",
+    "name_ar": "الرباط",
     "missions": [
       {
         "id": "550e8400-e29b-41d4-a716-446655441111",
         "title_fr": "Urgences à l’Hôpital Ibn Sina",
-        "title_ar": "",
+        "title_ar": "طوارئ في مستشفى ابن سينا",
         "description_fr": "Mentor: Dr. Amina Fassi. Soft Skill: Gestion du stress. Apprendre à identifier les types de stress, les symptômes physiques et pratiquer la technique 4-7-8.",
-        "description_ar": "",
+        "description_ar": "المرشدة: د. أمينة الفاسي. المهارة الناعمة: إدارة الضغط. تعلّم التعرف على أنواع الضغط والأعراض الجسدية وممارسة تقنية 4-7-8.",
         "narrations": {
           "cinematic": {
             "text_fr": "Hôpital Ibn Sina, Rabat – Samedi 22h30. Ishaq accompagne Dr. Amina Fassi, urgentiste, pour découvrir comment elle gère le stress extrême de son métier. « Ishaq, viens avec moi. Tu vas apprendre que le stress n'est pas un ennemi. C'est un outil qu'on apprend à maîtriser. Observe bien... »",
-            "text_ar": "",
+            "text_ar": "مستشفى ابن سينا، الرباط – السبت 22:30. يرافق إسحاق الدكتورة أمينة فاسي، طبيبة الطوارئ، لاكتشاف كيف تدير التوتر الشديد في مهنتها. « إسحاق، تعال معي. ستتعلم أن التوتر ليس عدواً. إنها أداة نتعلم السيطرة عليها. راقب جيداً... »",
             "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Rabat.gif",
             "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Rabat/Rabat%20M1.mp3",
             "audio_url_ar": ""
           },
           "scripts": {
             "opening_fr": "Hôpital Ibn Sina, Rabat - Samedi 22h30\n\nIshaq accompagne Dr. Amina Fassi, urgentiste, pour découvrir comment elle gère le stress extrême de son métier.\n\n\"Ishaq, viens avec moi. Tu vas apprendre que le stress n'est pas un ennemi. C'est un outil qu'on apprend à maîtriser. Observe bien...\"",
-            "opening_ar": "",
+            "opening_ar": "مستشفى ابن سينا، الرباط - السبت 22:30 مساءً\n\nيرافق إسحاق الدكتورة أمينة الفاسي، طبيبة الطوارئ، ليكتشف كيف تتعامل مع الضغط الشديد في مهنتها.\n\n\"إسحاق، تعال معي. ستتعلم أن الضغط ليس عدواً، بل هو أداة نتعلم كيف نتقنها. راقب جيداً...\"",
             "closing_fr": "",
             "closing_ar": ""
           }
@@ -29,20 +29,20 @@
       {
         "id": "550e8400-e29b-41d4-a716-446655442222",
         "title_fr": "Ministère & Prise de décision",
-        "title_ar": "",
+        "title_ar": "الوزارة واتخاذ القرار",
         "description_fr": "Mentor: Le Directeur. Soft Skill: Prise de décision. Maîtriser le processus de Simon (6 étapes), la matrice d’Eisenhower et identifier les biais cognitifs.",
-        "description_ar": "",
+        "description_ar": "المرشدة: فاطمة الزرهوني. المهارة الناعمة: اتخاذ القرار. إتقان عملية سيمون (6 خطوات) ومصفوفة أيزنهاور وتحديد التحيزات المعرفية.",
         "narrations": {
           "cinematic": {
             "text_fr": "Ministère de l'Intérieur – Rabat, Lundi 9h. Ishaq rencontre Fatima Zerhouni, DRH du Ministère. Elle supervise 200 fonctionnaires et doit prendre des décisions vitales en quelques secondes. « Ishaq, choisir, c'est renoncer. Mais ne pas choisir, c'est échouer. Je vais t'apprendre à décider avec clarté, même dans le brouillard de l'urgence. »",
-            "text_ar": "",
+            "text_ar": "وزارة الداخلية – الرباط، الاثنين 9 صباحاً. يلتقي إسحاق بفاطمة الزرهوني، مديرة الموارد البشرية بالوزارة. تشرف على 200 موظف وتتخذ قرارات حيوية في ثوانٍ. « إسحاق، الاختيار هو التخلي. ولكن عدم الاختيار هو الفشل. سأعلمك اتخاذ القرار بوضوح، حتى في ضباب الطوارئ. »",
             "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Rabat.gif",
             "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Rabat/rabat%20M2.mp3",
             "audio_url_ar": ""
           },
           "scripts": {
             "opening_fr": "",
-            "opening_ar": "",
+            "opening_ar": "وزارة الداخلية – الرباط، الاثنين 9 صباحاً. يلتقي إسحاق بفاطمة الزرهوني، مديرة الموارد البشرية بالوزارة. تشرف على 200 موظف وتتخذ قرارات حيوية في ثوانٍ. « إسحاق، الاختيار هو التخلي. ولكن عدم الاختيار هو الفشل. سأعلمك اتخاذ القرار بوضوح، حتى في ضباب الطوارئ. »",
             "closing_fr": "",
             "closing_ar": ""
           }
@@ -51,20 +51,20 @@
       {
         "id": "550e8400-e29b-41d4-a716-446655443333",
         "title_fr": "Projet collaboratif à l’Université",
-        "title_ar": "",
+        "title_ar": "مشروع تعاوني في الجامعة",
         "description_fr": "Mentor: Dr. Sarah. Soft Skill: Travail en équipe. Découvrir les rôles Belbin, pratiquer la CNV et comprendre le cycle de vie d'une équipe (Tuckman).",
-        "description_ar": "",
+        "description_ar": "المرشد: أ. يوسف بنجلون. المهارة الناعمة: العمل الجماعي. اكتشاف أدوار بلبين وممارسة التواصل اللاعنفي وفهم دورة حياة الفريق (تاكمان).",
         "narrations": {
           "cinematic": {
             "text_fr": "Université Mohammed V - Rabat, Mercredi 14h. Ishaq rencontre Pr. Youssef Benjelloun, coordinateur d'un projet recherche interdisciplinaire. « Ishaq, le travail d'équipe n'est pas naturel. C'est un ART qu'on apprend. Je vais te montrer les règles essentielles pour transformer un groupe en une force cohérente. »",
-            "text_ar": "",
+            "text_ar": "جامعة محمد الخامس - الرباط، الأربعاء 14:00. يلتقي إسحاق بالأستاذ يوسف بنجلون، منسق مشروع بحثي متعدد التخصصات. « إسحاق، العمل الجماعي ليس فطرياً. إنه فن نتعلمه. سأريك القواعد الأساسية لتحويل مجموعة إلى قوة متماسكة. »",
             "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Rabat.gif",
             "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Rabat/rabat%20m3.mp3",
             "audio_url_ar": ""
           },
           "scripts": {
             "opening_fr": "Université Mohammed V - Rabat, Mercredi 14h\n\nIshaq rencontre Pr. Youssef Benjelloun, coordinateur d'un projet recherche interdisciplinaire (5 chercheurs de 3 disciplines).\n\n\"Ishaq, le travail d'équipe n'est pas naturel. C'est un ART qu'on apprend. Je vais te montrer les règles essentielles...\"",
-            "opening_ar": "",
+            "opening_ar": "جامعة محمد الخامس - الرباط، الأربعاء 14:00\n\nيلتقي إسحاق بالبروفيسور يوسف بنجلون، منسق مشروع بحثي متعدد التخصصات (5 باحثين من 3 تخصصات).\n\n\"إسحاق، العمل الجماعي ليس أمراً فطرياً. إنه فن نتعلمه. سأوضح لك القواعد الأساسية...\"",
             "closing_fr": "",
             "closing_ar": ""
           }
@@ -73,20 +73,20 @@
       {
         "id": "550e8400-e29b-41d4-a716-446655444444",
         "title_fr": "ONG Espoir Maroc",
-        "title_ar": "",
+        "title_ar": "منظمة أمل المغرب غير الحكومية",
         "description_fr": "Mentor: Salma. Soft Skill: Résilience. Identifier le burnout, pratiquer le coping adaptatif et maîtriser les piliers de la résilience (Cyrulnik).",
-        "description_ar": "",
+        "description_ar": "المرشدة: سلمى. المهارة الناعمة: المرونة. التعرف على الاحتراق الوظيفي وممارسة التكيف الإيجابي وإتقان ركائز المرونة (سيرولنيك).",
         "narrations": {
           "cinematic": {
             "text_fr": "Rabat – Jeudi 11h. Ishaq rejoint Khalid, chef de chantier sur un projet d'infrastructure majeur. « La coordination, c'est comme une chorégraphie, Ishaq. Si un seul danseur perd le rythme, tout le spectacle s'arrête. Apprends à synchroniser les talents pour bâtir l'avenir. »",
-            "text_ar": "",
+            "text_ar": "الرباط – الخميس 11:00. ينضم إسحاق إلى خالد، رئيس ورشة في مشروع بنية تحتية كبرى. « التنسيق يشبه الرقص، إسحاق. إذا فقد راقص واحد الإيقاع، يتوقف العرض بأكمله. تعلم مزامنة المواهب لبناء المستقبل. »",
             "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Rabat.gif",
             "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Rabat/Rabat%20m4.mp3",
             "audio_url_ar": ""
           },
           "scripts": {
             "opening_fr": "",
-            "opening_ar": "",
+            "opening_ar": "الرباط – الخميس 11:00. ينضم إسحاق إلى خالد، رئيس ورشة في مشروع بنية تحتية كبرى. « التنسيق يشبه الرقص، إسحاق. إذا فقد راقص واحد الإيقاع، يتوقف العرض بأكمله. تعلم مزامنة المواهب لبناء المستقبل. »",
             "closing_fr": "",
             "closing_ar": ""
           }
@@ -95,20 +95,20 @@
       {
         "id": "550e8400-e29b-41d4-a716-446655445555",
         "title_fr": "Le Grand Défi Final – Wilaya",
-        "title_ar": "",
+        "title_ar": "التحدي الكبير الأخير – الولاية",
         "description_fr": "Mentor: Le Wali. Synthèse des 3 soft skills (Stress, Décision, Équipe). Gérer une crise sanitaire majeure et arbitrer des dilemmes éthiques de haut niveau.",
-        "description_ar": "",
+        "description_ar": "المرشد: الوالي. تجميع المهارات الثلاث (الضغط، القرار، الفريق). إدارة أزمة صحية كبرى والتحكيم في معضلات أخلاقية عالية المستوى.",
         "narrations": {
           "cinematic": {
             "text_fr": "Wilaya de Rabat, Vendredi 10h. Ishaq est l'invité du Wali pour observer la gestion d'une crise réelle. « Ici, Ishaq, la théorie s'arrête et l'action commence. Tu vas voir comment le stress, la décision et l'équipe fusionnent pour sauver des situations désespérées. Bienvenue dans le monde réel. »",
-            "text_ar": "",
+            "text_ar": "ولاية الرباط، الجمعة 10:00. إسحاق ضيف الوالي لمراقبة إدارة أزمة حقيقية. « هنا، إسحاق، تتوقف النظرية ويبدأ العمل. سترى كيف يندمج التوتر، القرار والفريق لإنقاذ مواقف يائسة. مرحباً بك في العالم الحقيقي. »",
             "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Rabat.gif",
             "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Rabat/Rabat%20m5.mp3",
             "audio_url_ar": ""
           },
           "scripts": {
             "opening_fr": "Wilaya de Rabat, Vendredi 10h - Crise Sanitaire\n\nIshaq est invité par le Wali (Gouverneur) Mohamed Azhari. Une intoxication alimentaire massive s'est déclarée dans un quartier populaire. 200 personnes à l'hôpital. Les médias arrivent. La population panique.\n\n\"Ishaq, pendant 24h, tu seras mon stagiaire d'observation. Tu vas voir comment on gère une CRISE RÉELLE où DÉCISION, ÉQUIPE et STRESS sont testés ensemble. Prêt ?\"",
-            "opening_ar": "",
+            "opening_ar": "ولاية الرباط، الجمعة 10:00 صباحاً - الأزمة الصحية\n\nتمت دعوة إسحاق من قبل الوالي (المحافظ) محمد الأزهري. حدث تسمم غذائي جماعي في حي شعبي. 200 شخص في المستشفى. وسائل الإعلام تصل. السكان في حالة ذعر.\n\n\"إسحاق، لمدة 24 ساعة، ستكون متدرب الملاحظة الخاص بي. سترى كيف ندير أزمة حقيقية حيث يتم اختبار القرار والفريق والضغط معاً. هل أنت مستعد؟\"",
             "closing_fr": "",
             "closing_ar": ""
           }
@@ -137,7 +137,7 @@
           },
           "scripts": {
             "opening_fr": "",
-            "opening_ar": "",
+            "opening_ar": "شفشاون – الثلاثاء 10:00. يلتقي إسحاق بأحمد، حائك مشهور. « انظر إلى هذه الخيوط، إسحاق. وحدها هشة. إذا نسجت معاً بصبر، تخلق عملاً لا يقهر. هكذا يُبنى فريق قوي: خيطاً خيطاً، رابطاً رابطاً. »",
             "closing_fr": "",
             "closing_ar": ""
           }
@@ -159,7 +159,7 @@
           },
           "scripts": {
             "opening_fr": "",
-            "opening_ar": "",
+            "opening_ar": "ساحة أوتا الحمام – الأربعاء 15:00. فاطمة، نادلة متحمسة، تستقبل إسحاق. « في المطبخ، يرتفع التوتر أسرع من بخار القدور. إذا لم تتحكم فيه، يفسد الطبق. تنفس، إسحاق. تحكم بنارك الداخلية لتقدم التميز. »",
             "closing_fr": "",
             "closing_ar": ""
           }
@@ -169,8 +169,8 @@
         "id": "98b50e2d-dc99-43ef-b387-052637738c03",
         "title_fr": "Le Souk et le Restaurant",
         "title_ar": "السوق والمطعم",
-        "description_fr": "Mentor: Omar. Soft Skill: Prise de décision (APPLICATION). Négocier avec la méthode BATNA et détecter les biais cognitifs.",
-        "description_ar": "المرشد: عمر. المهارة الناعمة: اتخاذ القرار (تطبيق). التفاوض بطريقة BATNA وكشف التحيزات المعرفية.",
+        "description_fr": "Lieu: Souk & Restaurant de la place Outa el-Hammam. Soft skill: Négociation constructive (coopérative vs distributive).",
+        "description_ar": "المكان: السوق والمطعم في ساحة وطاء الحمام. المهارة الناعمة: التفاوض البناء (التعاوني مقابل التوزيعي).",
         "narrations": {
           "cinematic": {
             "text_fr": "Ruelle Bleue – Jeudi 9h. Ishaq aide Latifa à organiser un atelier de peinture pour enfants. « Gérer un groupe, c'est comme peindre une fresque : il faut savoir quand diriger et quand laisser la liberté. Observe comment nous harmonisons les couleurs et les personnalités. »",
@@ -181,7 +181,7 @@
           },
           "scripts": {
             "opening_fr": "",
-            "opening_ar": "",
+            "opening_ar": "الزنقة الزرقاء – الخميس 9:00. إسحاق يساعد لطيفة في تنظيم ورشة رسم للأطفال. « إدارة مجموعة تشبه رسم لوحة جدارية: يجب أن تعرف متى توجه ومتى تترك الحرية. لاحظ كيف ننسق الألوان والشخصيات. »",
             "closing_fr": "",
             "closing_ar": ""
           }
@@ -191,8 +191,8 @@
         "id": "98b50e2d-dc99-43ef-b387-052637738c04",
         "title_fr": "L’Herboristerie de la Résilience",
         "title_ar": "عشبة المرونة",
-        "description_fr": "Mentor: Zineb. Soft Skill: Résilience (APPLICATION). Appliquer les 8 piliers de Cyrulnik.",
-        "description_ar": "المرشدة: زينب. المهارة الناعمة: المرونة (تطبيق). تطبيق ركائز سيرولنيك الثمانية.",
+        "description_fr": "Lieu: L'Herboristerie. Soft skill: Résilience émotionnelle (ABCDE d'Ellis). Évaluer sa propre résilience face aux obstacles.",
+        "description_ar": "المكان: معشبة المرونة. المهارة الناعمة: المرونة العاطفية (مخطط ABCDE لإليس). تقييم مرونتك الخاصة في مواجهة العقبات.",
         "narrations": {
           "cinematic": {
             "text_fr": "",
@@ -213,8 +213,8 @@
         "id": "98b50e2d-dc99-43ef-b387-052637738c05",
         "title_fr": "Le Festival – Défi Final Chefchaouen",
         "title_ar": "المهرجان – التحدي الأخير في شفشاون",
-        "description_fr": "Mentor: Nabil. Soft Skill: Synthèse (stress + équipe + décision). Gérer une crise en milieu isolé.",
-        "description_ar": "المرشد: نبيل. المهارة الناعمة: تركيب (توتر + فريق + قرار). إدارة أزمة في وسط معزول.",
+        "description_fr": "Lieu: Ruelle Bleue (Festival). Soft skill: Négociation & Résilience (synthèse). Négocier une charte écologique.",
+        "description_ar": "المكان: الزقاق الأزرق (المهرجان). المهارة الناعمة: التفاوض والمرونة (تركيب). التفاوض على ميثاق بيئي.",
         "narrations": {
           "cinematic": {
             "text_fr": "",
@@ -281,6 +281,72 @@
             "closing_ar": ""
           }
         }
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-44665544f333",
+        "title_fr": "L’Université – Prise de décision analytique",
+        "title_ar": "الجامعة – اتخاذ القرار التحليلي",
+        "description_fr": "Lieu: Université Sidi Mohamed Ben Abdellah. Soft skill: Prise de décision (analyse). Éviter le Groupthink (Janis).",
+        "description_ar": "المكان: جامعة سيدي محمد بن عبد الله. المهارة الناعمة: اتخاذ القرار (التحليل). تجنب التفكير الجماعي (Janis).",
+        "narrations": {
+          "cinematic": {
+            "text_fr": "Université Sidi Mohamed Ben Abdellah, Fès, Lundi 10h. Bureau de Pr. Latifa. Murs couverts de publications, données statistiques, photos de terrain. « Ishaq, Saïd m'a dit que tu analyses bien. Bien. Mais tu analyses avec tes YEUX et ton CŒUR. Moi, je t'apprends à analyser avec des DONNÉES... »",
+            "text_ar": "جامعة سيدي محمد بن عبد الله، فاس، الاثنين 10 صباحاً. مكتب الأستاذة لطيفة. الجدران مغطاة بالمنشورات والبيانات الإحصائية والصور الميدانية. « إسحاق، قال لي سعيد أنك تحلل جيداً. حسناً. لكنك تحلل بعينيك وقلبك. أنا سأعلمك كيف تحلل بالبيانات... »",
+            "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome-narration-Fes.gif",
+            "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Fes/FES%20MISSION%203.mp3",
+            "audio_url_ar": ""
+          },
+          "scripts": {
+            "opening_fr": "Université Sidi Mohamed Ben Abdellah, Fès, Lundi 10h. Bureau de Pr. Latifa. Murs couverts de publications, données statistiques, photos de terrain. « Ishaq, Saïd m'a dit que tu analyses bien. Bien. Mais tu analyses avec tes YEUX et ton CŒUR. Moi, je t'apprends à analyser avec des DONNÉES... »",
+            "opening_ar": "جامعة سيدي محمد بن عبد الله، فاس، الاثنين 10 صباحاً. مكتب الأستاذة لطيفة. الجدران مغطاة بالمنشورات والبيانات الإحصائية والصور الميدانية. « إسحاق، قال لي سعيد أنك تحلل جيداً. حسناً. لكنك تحلل بعينيك وقلبك. أنا سأعلمك كيف تحلل بالبيانات... »",
+            "closing_fr": "",
+            "closing_ar": ""
+          }
+        }
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-44665544f444",
+        "title_fr": "Restaurations de la Medersa Bou Inania",
+        "title_ar": "ترميم المدرسة البوعنانية",
+        "description_fr": "Lieu: Medersa Bou Inania. Soft skill: Analyse systémique (Senge). Gérer la complexité et le chemin critique (CPM).",
+        "description_ar": "المكان: المدرسة البوعنانية. المهارة الناعمة: التحليل النظمي (Senge). إدارة التعقيد والمسار الحرج (CPM).",
+        "narrations": {
+          "cinematic": {
+            "text_fr": "Medersa Bou Inania, Fès, Mercredi 8h. Ishaq entre dans un chef-d’œuvre de l’architecture mérinide (XIVe siècle). Mosaïques, stuc sculpté, bois de cèdre, fontaine en marbre. Mais des échafaudages partout. 15 personnes travaillent. Youssef : « Ishaq, bienvenue dans le projet le plus COMPLEXE de Fès. Restaurer un monument de 700 ans avec des techniques ANCESTRALES et des contraintes MODERNES (normes UNESCO, budget, délais). C'est le laboratoire PARFAIT pour l'ANALYSE SYSTÉMIQUE. Ici, CHAQUE décision impacte 10 autres. »",
+            "text_ar": "المدرسة البوعنانية، فاس، الأربعاء 8 صباحاً. يدخل إسحاق إلى تحفة معمارية مرينية (القرن الرابع عشر). فسيفساء، جص منحوت، خشب أرز، نافورة رخامية. لكن السقالات في كل مكان. 15 شخصاً يعملون. يوسف: « إسحاق، مرحباً بك في المشروع الأكثر تعقيداً في فاس. ترميم معلمة عمرها 700 عام بتقنيات قديمة وتحديات حديثة (معايير اليونسكو، الميزانية، الآجال). إنه المختبر المثالي للتحليل النظمي. هنا، كل قرار يؤثر على 10 قرارات أخرى. »",
+            "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome-narration-Fes.gif",
+            "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Fes/FES%20MISSION%204.mp3",
+            "audio_url_ar": ""
+          },
+          "scripts": {
+            "opening_fr": "Medersa Bou Inania, Fès, Mercredi 8h. Ishaq entre dans un chef-d’œuvre de l’architecture mérinide (XIVe siècle). Mosaïques, stuc sculpté, bois de cèdre, fontaine en marbre. Mais des échafaudages partout. 15 personnes travaillent. Youssef : « Ishaq, bienvenue dans le projet le plus COMPLEXE de Fès. Restaurer un monument de 700 ans avec des techniques ANCESTRALES et des contraintes MODERNES (normes UNESCO, budget, délais). C'est le laboratoire PARFAIT pour l'ANALYSE SYSTÉMIQUE. Ici, CHAQUE décision impacte 10 autres. »",
+            "opening_ar": "المدرسة البوعنانية، فاس، الأربعاء 8 صباحاً. يدخل إسحاق إلى تحفة معمارية مرينية (القرن الرابع عشر). فسيفساء، جص منحوت، خشب أرز، نافورة رخامية. لكن السقالات في كل مكان. 15 شخصاً يعملون. يوسف: « إسحاق، مرحباً بك في المشروع الأكثر تعقيداً في فاس. ترميم معلمة عمرها 700 عام بتقنيات قديمة وتحديات حديثة (معايير اليونسكو، الميزانية، الآجال). إنه المختبر المثالي للتحليل النظمي. هنا، كل قرار يؤثر على 10 قرارات أخرى. »",
+            "closing_fr": "",
+            "closing_ar": ""
+          }
+        }
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-44665544f555",
+        "title_fr": "Festival de Fès – Défi final",
+        "title_ar": "مهرجان فاس – التحدي الأخير",
+        "description_fr": "Lieu: Festival de Fès. Soft skill: Synthèse analytique. Cartographier les parties prenantes (Freeman).",
+        "description_ar": "المكان: مهرجان فاس. المهارة الناعمة: التركيب التحليلي. رسم خرائط الأطراف المعنية (Freeman).",
+        "narrations": {
+          "cinematic": {
+            "text_fr": "Palais Batha, Fès, Vendredi 7h. Lalla Ghita, femme d’autorité en caftan brodé, regarde Ishaq de haut en bas. « Maître Idris, Saïd, Latifa et Youssef m'ont tous écrit la même chose : 'Ce jeune homme ANALYSE.' Très bien. ANALYSE ceci : 200 artisans de 15 corporations. 5 000 visiteurs. Budget serré. Tensions politiques entre corporations. Presse internationale. Tu as 48h pour être mes YEUX ANALYTIQUES. Je décide, mais TU ANALYSES. »",
+            "text_ar": "قصر البطحاء، فاس، الجمعة 7 صباحاً. للا غيثة، امرأة ذات سلطة ترتدي قفطاناً مطرزاً، تنظر إلى إسحاق من الأعلى إلى الأسفل. « الأستاذ إدريس، سعيد، لطيفة ويوسف كتبوا لي جميعاً نفس الشيء: 'هذا الشاب يحلل.' حسناً جداً. حلل هذا: 200 حرفي من 15 طائفة حرفية. 5000 زائر. ميزانية محدودة. توترات بين الطوائف الحرفية. صحافة دولية. لديك 48 ساعة لتكون عيني التحليلية. أنا أقرر، لكن أنت تحلل. »",
+            "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome-narration-Fes.gif",
+            "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Fes/MISSION%205.mp3",
+            "audio_url_ar": ""
+          },
+          "scripts": {
+            "opening_fr": "Palais Batha, Fès, Vendredi 7h. Lalla Ghita, femme d’autorité en caftan brodé, regarde Ishaq de haut en bas. « Maître Idris, Saïd, Latifa et Youssef m'ont tous écrit la même chose : 'Ce jeune homme ANALYSE.' Très bien. ANALYSE ceci : 200 artisans de 15 corporations. 5 000 visiteurs. Budget serré. Tensions politiques entre corporations. Presse internationale. Tu as 48h pour être mes YEUX ANALYTIQUES. Je décide, mais TU ANALYSES. »",
+            "opening_ar": "قصر البطحاء، فاس، الجمعة 7 صباحاً. للا غيثة، امرأة ذات سلطة ترتدي قفطاناً مطرزاً، تنظر إلى إسحاق من الأعلى إلى الأسفل. « الأستاذ إدريس، سعيد، لطيفة ويوسف كتبوا لي جميعاً نفس الشيء: 'هذا الشاب يحلل.' حسناً جداً. حلل هذا: 200 حرفي من 15 طائفة حرفية. 5000 زائر. ميزانية محدودة. توترات بين الطوائف الحرفية. صحافة دولية. لديك 48 ساعة لتكون عيني التحليلية. أنا أقرر، لكن أنت تحلل. »",
+            "closing_fr": "",
+            "closing_ar": ""
+          }
+        }
       }
     ]
   },
@@ -292,7 +358,7 @@
       {
         "id": "98b50e2d-dc99-43ef-b387-052637738a01",
         "title_fr": "Mission 1: La Startup Tech",
-        "title_ar": "المهمة 1: الشركة التقنية الناشئة",
+        "title_ar": "الشركة التقنية الناشئة",
         "description_fr": "Lieu: Startup tech. \nSoft skill: Prise de décision (évaluation).\nÉvaluer des méthodes de décision (Lean Startup).",
         "description_ar": "المكان: شركة تقنية ناشئة.\nالمهارة الناعمة: اتخاذ القرار (تقييم).\nتقييم طرق اتخاذ القرار (الشركة الناشئة الرشيقة).",
         "narrations": {
@@ -314,7 +380,7 @@
       {
         "id": "98b50e2d-dc99-43ef-b387-052637738a02",
         "title_fr": "Mission 2: Riad de Luxe – Interculturel",
-        "title_ar": "المهمة 2: رياض فاخر – بين الثقافات",
+        "title_ar": "رياض فاخر – بين الثقافات",
         "description_fr": "Lieu: Riad de luxe. Soft skill: Travail en équipe (évaluation interculturelle). Maîtriser l’intelligence interculturelle (Hofstede).",
         "description_ar": "المكان: رياض فاخر. المهارة الناعمة: العمل الجماعي (تقييم بين الثقافات). إتقان الذكاء بين الثقافات (هوفستيد).",
         "narrations": {
@@ -332,6 +398,72 @@
             "closing_ar": ""
           }
         }
+      },
+      {
+        "id": "98b50e2d-dc99-43ef-b387-052637738a03",
+        "title_fr": "Mission 3: Souk Semmarine – Commerce",
+        "title_ar": "سوق سمارين – التجارة",
+        "description_fr": "Lieu: Souk Semmarine. Soft skill: Négociation (évaluation). Négocier avec la méthode BATNA.",
+        "description_ar": "المكان: سوق سمارين. المهارة الناعمة: التفاوض (تقييم). التفاوض بطريقة BATNA.",
+        "narrations": {
+          "cinematic": {
+            "text_fr": "Souk Semmarine, Marrakech, Samedi 8h. Hassan, djellaba grise, moustache blanche, ouvre sa boutique d’artisanat (cuir, tapis, lampes). « Ishaq, à Chefchaouen tu as négocié des olives avec Omar. Ici, les ENJEUX sont 100x plus grands. Tu vas ÉVALUER des stratégies de négociation. Pas les APPLIQUER... Les JUGER. »",
+            "text_ar": "سوق سمارين، مراكش، السبت 8 صباحاً. حسن، جلباب رمادي، شارب أبيض، يفتح متجره الحرفي (جلود، سجاد، مصابيح). « إسحاق، في شفشاون تفاوضت على الزيتون مع عمر. هنا، الرهانات أكبر 100 مرة. ستقيم استراتيجيات التفاوض. لا تطبقها... بل تحكم عليها. »",
+            "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Marrakech.gif",
+            "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Marrakech/MArrakech%20mission%202.mp3",
+            "audio_url_ar": ""
+          },
+          "scripts": {
+            "opening_fr": "Souk Semmarine, Marrakech, Samedi 8h. Hassan, djellaba grise, moustache blanche, ouvre sa boutique d’artisanat (cuir, tapis, lampes). « Ishaq, à Chefchaouen tu as négocié des olives avec Omar. Ici, les ENJEUX sont 100x plus grands. Tu vas ÉVALUER des stratégies de négociation. Pas les APPLIQUER... Les JUGER. »",
+            "opening_ar": "سوق سمارين، مراكش، السبت 8 صباحاً. حسن، جلباب رمادي، شارب أبيض، يفتح متجره الحرفي (جلود، سجاد، مصابيح). « إسحاق، في شفشاون تفاوضت على الزيتون مع عمر. هنا، الرهانات أكبر 100 مرة. ستقيم استراتيجيات التفاوض. لا تطبقها... بل تحكم عليها. »",
+            "closing_fr": "",
+            "closing_ar": ""
+          }
+        }
+      },
+      {
+        "id": "98b50e2d-dc99-43ef-b387-052637738a04",
+        "title_fr": "Mission 4: Palais Selman – Événementiel",
+        "title_ar": "قصر سلمان – الفعاليات تحت الضغط",
+        "description_fr": "Lieu: Palais Selman (événementiel). Soft skill: Gestion du stress (évaluation sous pression). Évaluer des risques avec matrice Impact × Contrôlabilité.",
+        "description_ar": "المكان: قصر سلمان. المهارة الناعمة: إدارة التوتر (تقييم تحت الضغط). تقييم المخاطر بمصفوفة التأثير × قابلية التحكم.",
+        "narrations": {
+          "cinematic": {
+            "text_fr": "Palais Selman, Marrakech, Mercredi 6h. Le mariage du siècle commence dans 10h. Zineb, téléphone collé à l’oreille, n’a pas dormi. « Ishaq, 5 crises simultanées. Je n'ai plus le temps d'ANALYSER. J'ai besoin de quelqu'un qui ÉVALUE vite et bien. Pas de théorie. Pas de processus en 6 étapes. ÉVALUE. JUGE. RECOMMANDE. Maintenant. »",
+            "text_ar": "قصر سلمان، مراكش، الأربعاء 6 صباحاً. حفل زفاف القرن يبدأ بعد 10 ساعات. زينب، الهاتف ملتصق بأذنها، لم تنم. « إسحاق، 5 أزمات متزامنة. لم يعد لدي وقت للتحليل. أحتاج شخصاً يقيم بسرعة وبشكل جيد. لا نظرية. لا عملية في 6 خطوات. قيم. احكم. أوصي. الآن. »",
+            "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Marrakech.gif",
+            "audio_url_fr": "",
+            "audio_url_ar": ""
+          },
+          "scripts": {
+            "opening_fr": "Palais Selman, Marrakech, Mercredi 6h. Le mariage du siècle commence dans 10h. Zineb, téléphone collé à l’oreille, n’a pas dormi. « Ishaq, 5 crises simultanées. Je n'ai plus le temps d'ANALYSER. J'ai besoin de quelqu'un qui ÉVALUE vite et bien. Pas de théorie. Pas de processus en 6 étapes. ÉVALUE. JUGE. RECOMMANDE. Maintenant. »",
+            "opening_ar": "قصر سلمان، مراكش، الأربعاء 6 صباحاً. حفل زفاف القرن يبدأ بعد 10 ساعات. زينب، الهاتف ملتصق بأذنها، لم تنم. « إسحاق، 5 أزمات متزامنة. لم يعد لدي وقت للتحليل. أحتاج شخصاً يقيم بسرعة وبشكل جيد. لا نظرية. لا عملية في 6 خطوات. قيم. احكم. أوصي. الآن. »",
+            "closing_fr": "",
+            "closing_ar": ""
+          }
+        }
+      },
+      {
+        "id": "98b50e2d-dc99-43ef-b387-052637738a05",
+        "title_fr": "Mission 5: Palais des Congrès – Synthèse",
+        "title_ar": "قصر المؤتمرات – التركيب",
+        "description_fr": "Lieu: Palais des Congrès. Soft skill: Synthèse évaluative. Utiliser une matrice de décision pondérée.",
+        "description_ar": "المكان: قصر المؤتمرات. المهارة الناعمة: تركيب التقييم. استخدام مصفوفة القرار المرجحة.",
+        "narrations": {
+          "cinematic": {
+            "text_fr": "Palais des Congrès, Marrakech, Vendredi 8h. 200 délégués de 30 pays. Sécurité renforcée. Presse internationale. Le Wali, costume impeccable : « Ishaq, 5 pays proposent des stratégies de tourisme durable. J'ai besoin de ton ÉVALUATION pour RECOMMANDER au Roi les 2 meilleures. »",
+            "text_ar": "قصر المؤتمرات، مراكش، الجمعة 8 صباحاً. 200 مندوب من 30 دولة. أمن مشدد. صحافة دولية. الوالي، بذلة لا تشوبها شائبة: « إسحاق، 5 بلدان تقدم استراتيجيات للسياحة المستدامة. أحتاج إلى تقييمك لأوصي الملك بأفضلها. »",
+            "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Marrakech.gif",
+            "audio_url_fr": "",
+            "audio_url_ar": ""
+          },
+          "scripts": {
+            "opening_fr": "Palais des Congrès, Marrakech, Vendredi 8h. 200 délégués de 30 pays. Sécurité renforcée. Presse internationale. Le Wali, costume impeccable : « Ishaq, 5 pays proposent des stratégies de tourisme durable. J'ai besoin de ton ÉVALUATION pour RECOMMANDER au Roi les 2 meilleures. »",
+            "opening_ar": "قصر المؤتمرات، مراكش، الجمعة 8 صباحاً. 200 مندوب من 30 دولة. أمن مشدد. صحافة دولية. الوالي، بذلة لا تشوبها شائبة: « إسحاق، 5 بلدان تقدم استراتيجيات للسياحة المستدامة. أحتاج إلى تقييمك لأوصي الملك بأفضلها. »",
+            "closing_fr": "",
+            "closing_ar": ""
+          }
+        }
       }
     ]
   },
@@ -343,9 +475,9 @@
       {
         "id": "98b50e2d-dc99-43ef-b387-052637738d01",
         "title_fr": "Mission 1: Le Port de Pêche",
-        "title_ar": "المهمة 1: ميناء الصيد",
+        "title_ar": "ميناء الصيد",
         "description_fr": "",
-        "description_ar": "",
+        "description_ar": "المرشد: إسحاق (نفسه). المهارة الناعمة: الرؤية المتكاملة. تحليل تعقيد الميناء (الصيد، الشحن، السياحة، الأمن) والتحكيم في معضلة تشغيلية كبرى.",
         "narrations": {
           "cinematic": {
             "text_fr": "Port de pêche de Dakhla, Jeudi 5h30. Le soleil se lève sur la lagune. 25 barques de pêche. Le Capitaine Aziz, sans carte, sans GPS, montre le large du doigt. « Ishaq, un pêcheur ne 'gère pas son stress'. Il est CALME. Parce qu'il CONNAÎT la mer mieux que sa propre maison. Parce qu'il a DÉJÀ affronté la tempête 1000 fois. Aujourd'hui, tu vas MAÎTRISER. Pas appliquer. Pas analyser. Pas évaluer. Pas créer. MAÎTRISER. C'est à dire : TOUT ce que tu as appris devient INSTINCT. »",
@@ -365,9 +497,9 @@
       {
         "id": "98b50e2d-dc99-43ef-b387-052637738d02",
         "title_fr": "Mission 2: Biologie Marine – Systémique",
-        "title_ar": "المهمة 2: بيولوجيا بحرية – نظمية",
+        "title_ar": "بيولوجيا بحرية – نظمية",
         "description_fr": "",
-        "description_ar": "",
+        "description_ar": "المرشدة: د. مليكة (عالمة أحياء). المهارة الناعمة: التفكير النظمي. نمذجة بحيرة الداخلة كنظام معقد مترابط.",
         "narrations": {
           "cinematic": {
             "text_fr": "",
@@ -387,9 +519,9 @@
       {
         "id": "eab76c75-3644-4e72-95b2-264520cdeef0",
         "title_fr": "Mission D3 : La Ferme d’Algues – Économie Circulaire",
-        "title_ar": "المهمة 3: مزرعة الطحالب – الاقتصاد الدائري",
+        "title_ar": "مزرعة الطحالب – الاقتصاد الدائري",
         "description_fr": "",
-        "description_ar": "",
+        "description_ar": "المرشد: ياسين (مهندس). المهارة الناعمة: الاقتصاد الدائري. تصميم نظام بيئي صناعي خالي من النفايات في مزرعة الطحالب.",
         "narrations": {
           "cinematic": {
             "text_fr": "Le vent de Dakhla porte l'odeur de l'iode et de l'innovation. Younès vous attend devant des bassins d'algues d'un vert émeraude. 'Le futur est circulaire, ou il ne sera pas', dit-il.",
@@ -409,9 +541,9 @@
       {
         "id": "f83e1989-e001-470a-bda4-722124c346f1",
         "title_fr": "Mission D4 : Le Parc Éolien – Énergie Invisible",
-        "title_ar": "المهمة 4: الحقل الرياحي – الطاقة غير المرئية",
+        "title_ar": "الحقل الرياحي – الطاقة غير المرئية",
         "description_fr": "",
-        "description_ar": "",
+        "description_ar": "المرشدة: ليلى (مديرة المشروع). المهارة الناعمة: طاقة الرياح. إدارة الموارد غير المرئية والتقلب لتزويد المدينة بالطاقة.",
         "narrations": {
           "cinematic": {
             "text_fr": "Fatima-Zahra vous accueille au pied d'un géant d'acier. Le sifflement des pales rythme la conversation. 'Ici, chaque souffle de vent est une promesse d'avenir', dit-elle en ajustant son casque.",
@@ -431,9 +563,9 @@
       {
         "id": "0f576c5b-6cba-4efc-a85d-ddc0aa307dc3",
         "title_fr": "Mission D5 : Le Palais des Congrès – Maîtrise Absolue",
-        "title_ar": "المهمة 5: قصر المؤتمرات – الإتقان المطلق",
+        "title_ar": "قصر المؤتمرات – الإتقان المطلق",
         "description_fr": "",
-        "description_ar": "",
+        "description_ar": "المرشد: الوالي. المهارة الناعمة: الرؤية الشاملة. حل الأزمات المعقدة المترابطة في الداخلة (التحدي الأخير للمغامرة).",
         "narrations": {
           "cinematic": {
             "text_fr": "Le Palais des Congrès de Dakhla brille sous le soleil de midi. Aziz vous attend à l'entrée. 'Aujourd'hui, vous ne répondez plus à des questions, vous devenez la réponse', dit-il solennellement.",
@@ -496,6 +628,72 @@
           "scripts": {
             "opening_fr": "Coopérative \"Étoiles du Sahara\", quartier populaire, Mardi 9h. Un local modeste. 25 femmes fabriquent des produits à base de cactus (huile, crème, savon). La coopérative a 18 mois et génère déjà 15 000 DH/mois. Aicha : « Ishaq, il y a 18 mois, il n'y avait RIEN ici. Pas de local, pas d'argent, pas de formation. J'ai CRÉÉ tout. La structure, les processus, les formations, le marketing, la gouvernance. Tu connais Belbin, Tuckman, Lencioni ? Oublie tout. Ici, j'ai dû INVENTER MON PROPRE modèle. »",
             "opening_ar": "تعاونية 'نجوم الصحراء'، حي شعبي، الثلاثاء 9 صباحاً. مكان متواضع. 25 امرأة يصنعن منتجات من الصبار (زيت، كريم، صابون). التعاونية عمرها 18 شهراً وتدر بالفعل 15.000 درهم شهرياً. عائشة: « إسحاق، قبل 18 شهراً، لم يكن هناك شيء هنا. لا مكان، لا مال، لا تكوين. لقد ابتكرت كل شيء. الهيكل، العمليات، التكوينات، التسويق، الحوكمة. هل تعرف بلبين، تكمان، لينسيوني؟ انس كل شيء. هنا، كان عليّ أن أخترع نموذجي الخاص. »",
+            "closing_fr": "",
+            "closing_ar": ""
+          }
+        }
+      },
+      {
+        "id": "98b50e2d-dc99-43ef-b387-052637738b03",
+        "title_fr": "Mission L3 : Le Médecin du Désert",
+        "title_ar": "طبيب الصحراء",
+        "description_fr": "Lieu: Dispensaire mobile (4x4). Soft skill: Création de décision médicale.",
+        "description_ar": "المكان: عيادة متنقلة (4x4). المهارة الناعمة: ابتكار قرار طبي.",
+        "narrations": {
+          "cinematic": {
+            "text_fr": "Dispensaire mobile (4x4 aménagé), 150 km de Laâyoune, Jeudi 7h. Dr. Mourad, barbe de 3 jours, mains calleuses, ouvre l’arrière de son 4x4 transformé en mini-clinique. « Ishaq, ici pas d'échographie. Pas de labo. Pas de spécialiste. Pas d'internet 90% du temps. Moi seul. Mon stéthoscope. Mon cerveau. Chaque jour je dois CRÉER des DÉCISIONS MÉDICALES avec 10% des outils qu'un médecin de Rabat utilise. Tu vas comprendre ce que CRÉER sous contrainte signifie VRAIMENT. »",
+            "text_ar": "عيادة متنقلة (4x4 مهيأة)، 150 كم من العيون، الخميس 7 صباحاً. الدكتور مراد، لحية 3 أيام، أيدٍ خشنة، يفتح الجزء الخلفي من سيارته 4x4 المحولة إلى عيادة صغيرة. « إسحاق، هنا لا موجات فوق صوتية. لا مختبر. لا اختصاصي. لا إنترنت 90% من الوقت. أنا وحدي. سماعتي الطبية. عقلي. كل يوم يجب أن أبتكر قرارات طبية بـ10% من الأدوات التي يستخدمها طبيب في الرباط. ستفهم ماذا يعني الابتكار تحت الضغط حقاً. »",
+            "gif_url": "",
+            "audio_url_fr": "",
+            "audio_url_ar": ""
+          },
+          "scripts": {
+            "opening_fr": "Dispensaire mobile (4x4 aménagé), 150 km de Laâyoune, Jeudi 7h. Dr. Mourad, barbe de 3 jours, mains calleuses, ouvre l’arrière de son 4x4 transformé en mini-clinique. « Ishaq, ici pas d'échographie. Pas de labo. Pas de spécialiste. Pas d'internet 90% du temps. Moi seul. Mon stéthoscope. Mon cerveau. Chaque jour je dois CRÉER des DÉCISIONS MÉDICALES avec 10% des outils qu'un médecin de Rabat utilise. Tu vas comprendre ce que CRÉER sous contrainte signifie VRAIMENT. »",
+            "opening_ar": "عيادة متنقلة (4x4 مهيأة)، 150 كم من العيون، الخميس 7 صباحاً. الدكتور مراد، لحية 3 أيام، أيدٍ خشنة، يفتح الجزء الخلفي من سيارته 4x4 المحولة إلى عيادة صغيرة. « إسحاق، هنا لا موجات فوق صوتية. لا مختبر. لا اختصاصي. لا إنترنت 90% من الوقت. أنا وحدي. سماعتي الطبية. عقلي. كل يوم يجب أن أبتكر قرارات طبية بـ10% من الأدوات التي يستخدمها طبيب في الرباط. ستفهم ماذا يعني الابتكار تحت الضغط حقاً. »",
+            "closing_fr": "",
+            "closing_ar": ""
+          }
+        }
+      },
+      {
+        "id": "98b50e2d-dc99-43ef-b387-052637738b04",
+        "title_fr": "Mission L4 : La Ferme Solaire",
+        "title_ar": "المزرعة الشمسية",
+        "description_fr": "Lieu: Ferme solaire. Soft skill: Innovation frugale.",
+        "description_ar": "المكان: مزرعة شمسية. المهارة الناعمة: الابتكار المقتصد.",
+        "narrations": {
+          "cinematic": {
+            "text_fr": "Ferme solaire \"Noor Sahara\", 30 km de Laâyoune, Samedi 8h. 500 panneaux solaires alignés dans le désert. La station alimente 3 villages (2 000 personnes). Brahim : « Ishaq, l'innovation FRUGALE c'est : MAXIMUM d'impact avec MINIMUM de ressources. Au désert, chaque watt, chaque litre, chaque dirham compte. Tu ne peux pas GASPILLER. Tu vas CRÉER des innovations qui fonctionnent avec PRESQUE RIEN. »",
+            "text_ar": "مزرعة شمسية 'نور الصحراء'، 30 كم من العيون، السبت 8 صباحاً. 500 لوح شمسي مصطفة في الصحراء. المحطة تغذي 3 قرى (2000 شخص). إبراهيم: « إسحاق، الابتكار المقتصد هو: أقصى تأثير بأقل الموارد. في الصحراء، كل واط، كل لتر، كل درهم مهم. لا يمكنك التبذير. ستبتكر ابتكارات تعمل بتقريباً لا شيء. »",
+            "gif_url": "",
+            "audio_url_fr": "",
+            "audio_url_ar": ""
+          },
+          "scripts": {
+            "opening_fr": "Ferme solaire \"Noor Sahara\", 30 km de Laâyoune, Samedi 8h. 500 panneaux solaires alignés dans le désert. La station alimente 3 villages (2 000 personnes). Brahim : « Ishaq, l'innovation FRUGALE c'est : MAXIMUM d'impact avec MINIMUM de ressources. Au désert, chaque watt, chaque litre, chaque dirham compte. Tu ne peux pas GASPILLER. Tu vas CRÉER des innovations qui fonctionnent avec PRESQUE RIEN. »",
+            "opening_ar": "مزرعة شمسية 'نور الصحراء'، 30 كم من العيون، السبت 8 صباحاً. 500 لوح شمسي مصطفة في الصحراء. المحطة تغذي 3 قرى (2000 شخص). إبراهيم: « إسحاق، الابتكار المقتصد هو: أقصى تأثير بأقل الموارد. في الصحراء، كل واط، كل لتر، كل درهم مهم. لا يمكنك التبذير. ستبتكر ابتكارات تعمل بتقريباً لا شيء. »",
+            "closing_fr": "",
+            "closing_ar": ""
+          }
+        }
+      },
+      {
+        "id": "98b50e2d-dc99-43ef-b387-052637738b05",
+        "title_fr": "Mission L5 : Le Plan de Développement",
+        "title_ar": "خطة التنمية",
+        "description_fr": "Lieu: Wilaya. Soft skill: Synthèse créative. Élaborer une vision stratégique provinciale.",
+        "description_ar": "المكان: ولاية العيون. المهارة الناعمة: تركيب ابتكاري. إعداد رؤية استراتيجية للمحافظة.",
+        "narrations": {
+          "cinematic": {
+            "text_fr": "Wilaya de Laâyoune, Lundi 9h. Le Gouverneur, homme imposant en costume gris : « Ishaq, le Commandant Rachid, Aicha, Dr. Mourad et Brahim m'ont TOUS écrit. Ils disent que tu CRÉES. Bien. CRÉE-MOI un plan de développement. Population : 250 000 personnes. Budget limité. Défis : isolement, chaleur, eau rare, emploi insuffisant. Atouts : soleil, espace, jeunesse, position stratégique. Je veux un plan en 5 AXES. Original. Ambitieux. Réaliste. En 48h. »",
+            "text_ar": "ولاية العيون، الاثنين 9 صباحاً. الحاكم، رجل مهيب ببدلة رمادية: « إسحاق، القائد رشيد، عائشة، الدكتور مراد وإبراهيم كلهم كتبوا لي. يقولون إنك تبتكر. حسناً. ابتكر لي خطة تنموية. عدد السكان: 250.000 نسمة. ميزانية محدودة. تحديات: عزلة، حرارة، ماء نادر، تشغيل غير كافٍ. مزايا: شمس، فضاء، شباب، موقع استراتيجي. أريد خطة في 5 محاور. أصلية. طموحة. واقعية. في 48 ساعة. »",
+            "gif_url": "",
+            "audio_url_fr": "",
+            "audio_url_ar": ""
+          },
+          "scripts": {
+            "opening_fr": "Wilaya de Laâyoune, Lundi 9h. Le Gouverneur, homme imposant en costume gris : « Ishaq, le Commandant Rachid, Aicha, Dr. Mourad et Brahim m'ont TOUS écrit. Ils disent que tu CRÉES. Bien. CRÉE-MOI un plan de développement. Population : 250 000 personnes. Budget limité. Défis : isolement, chaleur, eau rare, emploi insuffisant. Atouts : soleil, espace, jeunesse, position stratégique. Je veux un plan en 5 AXES. Original. Ambitieux. Réaliste. En 48h. »",
+            "opening_ar": "ولاية العيون، الاثنين 9 صباحاً. الحاكم, رجل مهيب ببدلة رمادية: « إسحاق، القائد رشيد، عائشة، الدكتور مراد وإبراهيم كلهم كتبوا لي. يقولون إنك تبتكر. حسناً. ابتكر لي خطة تنموية. عدد السكان: 250.000 نسمة. ميزانية محدودة. تحديات: عزلة، حرارة، ماء نادر، تشغيل غير كافٍ. مزايا: شمس، فضاء، شباب، موقع استراتيجي. أريد خطة في 5 محاور. أصلية. طموحة. واقعية. في 48 ساعة. »",
             "closing_fr": "",
             "closing_ar": ""
           }
