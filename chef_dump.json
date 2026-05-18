@@ -1,0 +1,3765 @@
+{
+  "id": "98b50e2d-dc99-43ef-b387-052637738f62",
+  "city_id": "chefchaouen",
+  "name_fr": "Chefchaouen",
+  "name_ar": "شفشاون",
+  "color": "#3b82f6",
+  "icon": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Cities%20icons/chefchaoun.png",
+  "headline_fr": "La Perle Bleue",
+  "headline_ar": "",
+  "description_fr": "Ishaq applique ses connaissances en montagne, atelier, souk, herboristerie et festival pour maîtriser l’adaptation.",
+  "description_ar": "",
+  "focus_fr": "Application des Soft Skills",
+  "focus_ar": "",
+  "illustration_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/challenge-illustrations/chefchaoun/chefchaoun%20-%20uliistration.jpg",
+  "pedagogical_theories_fr": [
+    "Appliquer la technique STOP en situation réelle",
+    "Utiliser la visualisation positive",
+    "Transférer les rôles Belbin dans un contexte artisanal",
+    "Pratiquer la communication « Oui ET… »",
+    "Négocier avec la méthode BATNA (Fisher & Ury)",
+    "Détecter les biais cognitifs dans la vie quotidienne",
+    "Appliquer les 8 piliers de Cyrulnik",
+    "Gérer une crise en milieu isolé",
+    "Adapter les techniques de respiration à l’effort physique",
+    "Travailler en équipe intergénérationnelle"
+  ],
+  "pedagogical_theories_ar": [],
+  "learning_outcomes_fr": [
+    "Chefchaouen, ville bleue nichée dans le Rif, vous invite à appliquer concrètement les concepts découverts à Rabat. Ici, pas de théorie : on pratique en montagne, à l’atelier de tissage, au souk, à l’herboristerie et au festival."
+  ],
+  "learning_outcomes_ar": [],
+  "missions": [
+    {
+      "id": "98b50e2d-dc99-43ef-b387-052637738c01",
+      "title_fr": "Randonnée au Parc Talassemtane",
+      "title_ar": "",
+      "description_fr": "Mentor: Aziz Moussaoui (Guide). Soft Skill: Gestion du stress (APPLICATION). Appliquez la technique STOP et la visualisation positive en situation réelle de montagne.",
+      "description_ar": "",
+      "type": "challenge",
+      "xp_reward": 1000,
+      "bloom_level": "",
+      "soft_skill_dominant": "",
+      "duration_minutes": null,
+      "success_threshold": 70,
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "",
+        "location_fr": "",
+        "location_ar": ""
+      },
+      "scripts": {
+        "opening_fr": "",
+        "opening_ar": "",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "Chefchaouen – Mardi 10h. Ishaq rencontre Ahmed, un artisan tisserand renommé. « Regarde ces fils, Ishaq. Seuls, ils sont fragiles. Tissés ensemble avec patience, ils créent une œuvre indestructible. C'est ainsi que se construit une équipe solide : fil par fil, lien par lien. »",
+        "text_ar": "",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Chefchaoun.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Chefchaoun/chefchaoun%20mission%201.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "theories_ar": "",
+      "exercises": [
+        {
+          "id": "d47b8984-fa7a-4d7a-80b7-36bc5ff642be",
+          "type": "qcm",
+          "question_fr": "Un touriste a le vertige et crie « Je ne peux plus bouger ! ». Selon la technique STOP, quelle est votre première action ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Lui crier « Avance, c’est pas dangereux »",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Courir vers lui",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Dire calmement « STOP. On s’arrête. Respirez avec moi. »",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Appeler les secours",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive": {
+            "fr": "Parfait ! STOP : Stop, Take breath, Observe, Proceed. Vous appliquez la co-régulation.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Crier ou courir aggrave la panique. Restez calme and respirez avec lui.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Crier ou courir aggrave la panique. Restez calme and respirez avec lui.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Appliquer la technique STOP pour interrompre une panique en montagne. Indication : La première chose à faire est d’arrêter le mouvement, de respirer avec la personne, puis d’observer avant d’agir.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        },
+        {
+          "id": "4596ec24-e602-4a12-b7cf-8c889e889f6b",
+          "type": "matching",
+          "question_fr": "Reliez chaque stresseur de montagne à la meilleure stratégie.",
+          "question_ar": "",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Panique d’altitude",
+                "left_ar": "",
+                "right_fr": "4-7-8 + co-régulation",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Orage",
+                "left_ar": "",
+                "right_fr": "abri immédiat",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Épuisement",
+                "left_ar": "",
+                "right_fr": "encouragement + micro-objectifs",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Dispute sur direction",
+                "left_ar": "",
+                "right_fr": "médiation CNV",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Blessure légère",
+                "left_ar": "",
+                "right_fr": "premiers secours + évaluation",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Perte du sentier",
+                "left_ar": "",
+                "right_fr": "STOP + carte + GPS",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Transfert parfait ! Vous appliquez Rabat en montagne. Niveau Bloom 3 réussi.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Révisez : panique = respiration, orage = abri, épuisement = encouragement, dispute = médiation.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Révisez : panique = respiration, orage = abri, épuisement = encouragement, dispute = médiation.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Associer chaque stresseur à une stratégie de coping adaptée. Indication : Panique → respiration, orage → abri, épuisement → encouragement, dispute → médiation, blessure → secours, perte → orientation.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        },
+        {
+          "id": "b3b7f690-0c0e-4ece-8a95-47f7ac346f9d",
+          "type": "scenario_dialogue",
+          "question_fr": "Un touriste diabétique, perdu dans le brouillard, panique. Que faites-vous en premier ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "« Restez calme, tout va bien » puis courir chercher Aziz",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Vous asseoir à côté, appliquer STOP, évaluer : « Quand avez-vous pris votre dernière insuline ? »",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Crier pour appeler Aziz",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Paniquer aussi",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Excellente application ! STOP + co-régulation + collecte d’info (Simon). Urgence diabète gérée.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Nier la réalité ou laisser seul aggrave la panique. Validez l’émotion, puis agissez.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Nier la réalité ou laisser seul aggrave la panique. Validez l’émotion, puis agissez.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Gérer une urgence médicale en montagne par co‑régulation et collecte d’informations. Indication : Installez-vous à côté de la personne, respirez ensemble, puis demandez quand a eu lieu la dernière injection d’insuline.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        },
+        {
+          "id": "05a452b0-dff8-4282-9e7f-ed5a60f3888e",
+          "type": "fill_blanks",
+          "question_fr": "Complétez les étapes de la visualisation positive.",
+          "question_ar": "",
+          "options": {
+            "bank": [
+              {
+                "text_fr": "yeux",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "lieu",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "sécurité",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "détails",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "5 sens",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "calme",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "mental",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "corps",
+                "text_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "yeux, lieu, sécurité, détails, 5 sens, calme, mental, corps",
+          "feedback_positive": {
+            "fr": "Parfait ! La visualisation active les mêmes zones cérébrales que l’expérience réelle.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Retenez : fermez les yeux, lieu sûr, détails sensoriels, le mental calme le corps.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Retenez : fermez les yeux, lieu sûr, détails sensoriels, le mental calme le corps.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Maîtriser la visualisation positive pour calmer l’esprit. Indication : Fermez les yeux, imaginez un lieu sûr, ajoutez des détails avec les 5 sens, restez dans ce calme, puis rouvrez les yeux.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        },
+        {
+          "id": "40fa1bba-e05e-49b2-8974-8a48e7b4fee8",
+          "type": "vrai_faux",
+          "question_fr": "« La nature réduit automatiquement le stress. »",
+          "question_ar": "",
+          "options": [],
+          "correct_answer": "vrai",
+          "feedback_positive": {
+            "fr": "Vrai, 20 min en forêt font baisser le cortisol de 15% (Shinrin-yoku).",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Les études le confirment. Mais la nature ne remplace pas les techniques respiratoires.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Les études le confirment. Mais la nature ne remplace pas les techniques respiratoires.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Distinguer les idées reçues sur le stress en nature. Indication : La nature aide (VRAI), un guide ressent du stress (FAUX), en urgence il faut d’abord réfléchir (FAUX).",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        },
+        {
+          "id": "7e47957c-3419-40f9-b624-4fb62b60d66c",
+          "type": "vrai_faux",
+          "question_fr": "« Un bon guide ne ressent jamais de stress. »",
+          "question_ar": "",
+          "options": [],
+          "correct_answer": "faux",
+          "feedback_positive": {
+            "fr": "Faux. Les experts canalisent le stress, ils ne le suppriment pas.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Nier son stress en montagne est dangereux. Il faut le gérer, pas l’ignorer.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Nier son stress en montagne est dangereux. Il faut le gérer, pas l’ignorer.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Prendre des décisions rapides sous pression en environnement hostile. Indication : Malaise → ombre et eau ; orage → descendre ; enfant → s’agenouiller et voix douce ; fatigue → passer le relais.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        },
+        {
+          "id": "28be0494-8b55-453e-b591-8ea76d88b69a",
+          "type": "vrai_faux",
+          "question_fr": "« En urgence, il faut d’abord agir, puis réfléchir. »",
+          "question_ar": "",
+          "options": [],
+          "correct_answer": "faux",
+          "feedback_positive": {
+            "fr": "Faux. STOP d’abord : s’arrêter, respirer, observer, puis agir.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Agir sans réfléchir en montagne mène à la chute. Évaluez avant d’agir.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Agir sans réfléchir en montagne mène à la chute. Évaluez avant d’agir.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Gérer une blessure en montagne avec STOP, organisation d’équipe et recadrage. Indication : Immobilisez d’abord, organisez la descente avec deux soutiens, puis rassurez sur le rythme et l’entraide.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        },
+        {
+          "id": "900e7739-1965-49c2-b2e8-5854b2fe9ffe",
+          "type": "time_attack",
+          "question_fr": "URGENCE : Randonneur fait un malaise (chaleur). Première action ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Le forcer à marcher",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Ombre, pieds surélevés, eau",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Asperger d'eau froide",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Réflexe juste ! Position latérale de sécurité et réhydratation.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Le forcer à marcher ou l’asperger d’eau froide est dangereux.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Le forcer à marcher ou l’asperger d’eau froide est dangereux.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Anticiper les risques en repérant les erreurs de préparation. Indication : Baskets, 50 cl d’eau, départ à 13h, personne ne sait où il va, téléphone à 40 %.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        },
+        {
+          "id": "204f41f1-c2d8-4ed6-a85c-09095cd720f6",
+          "type": "scenario_cascade",
+          "question_fr": "Randonneur blessé à la cheville.",
+          "question_ar": "",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Blessé à la cheville, ne peut plus marcher. Première action ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Le porter",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "STOP, évaluer la blessure, immobiliser",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Cheville enflée mais pas cassée. Organisation de la descente ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Porter vous-même",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "2 personnes soutiennent la victime, vous ouvrez, Aziz ferme",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Ahmed panique : « Et si c’est cassé ? » Que répondre ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Ignorer",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Pas cassée. On avance à ton rythme. On va y arriver ensemble. »",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "STOP + évaluation Simon. Base des premiers secours. Distribution Belbin appliquée. Recadrage + autonomie + affiliation.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Le porter ou courir chercher de l’aide aggrave la situation. Laisser marcher seul ou porter vous-même est risqué.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Le porter ou courir chercher de l’aide aggrave la situation. Laisser marcher seul ou porter vous-même est risqué.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Ordonner les actions d’évacuation. Indication : Sécurisez d’abord, puis évaluez, protégez, appelez, donnez les coordonnées, enfin rassurez.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        },
+        {
+          "id": "c76f3c0d-622b-4cfc-a937-e104ea42ecda",
+          "type": "error_detection",
+          "question_fr": "Trouvez les 5 erreurs dans la checklist du touriste.",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "Baskets de ville",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "50cl eau",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Départ 13h",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Personne ne sait où il va",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Téléphone à 40%",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "5 erreurs mortelles. Même logique que la détection de burnout.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Relisez : chaussures, eau, horaire, information, batterie. La prévention sauve.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Relisez : chaussures, eau, horaire, information, batterie. La prévention sauve.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Identifier l’état de calme intérieur, essentiel en situation critique. Indication : Ce qui est invisible mais maintient debout, perdu en montagne ou en réunion, naturel chez l’enfant.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        },
+        {
+          "id": "8816258b-41f1-42b0-88c7-92ba008a9db4",
+          "type": "ranking",
+          "question_fr": "Classez les 6 actions dans l’ordre correct d'évacuation.",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Ordre parfait. Même processus Simon adapté à l’évacuation.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Rappel : sécurité d’abord, évaluer, protéger, appeler, coordonner, puis rassurer.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Rappel : sécurité d’abord, évaluer, protéger, appeler, coordonner, puis rassurer.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Ordre parfait. Même processus Simon adapté à l’évacuation.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        },
+        {
+          "id": "d85fc356-cf93-4bfe-8692-99083c7e5a04",
+          "type": "puzzle_riddle",
+          "question_fr": "« Je suis invisible mais je te maintiens debout. En montagne, si tu me perds, tes jambes te trahissent… Qui suis-je ? »",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "La force",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Le courage",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Le calme intérieur",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "L’expérience",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive": {
+            "fr": "Bravo ! Le calme intérieur n’est pas l’absence de stress, mais la présence de contrôle.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Relisez : « Les enfants l’ont sans efforts » – c’est le calme intérieur.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Relisez : « Les enfants l’ont sans efforts » – c’est le calme intérieur.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Bravo ! Le calme intérieur n’est pas l’absence de stress, mais la présence de contrôle.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 250
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.158751+00:00",
+          "updated_at": "2026-05-04T13:24:36.158751+00:00"
+        }
+      ],
+      "created_at": "2026-05-04T11:39:26.664888+00:00",
+      "updated_at": "2026-05-04T11:39:26.664888+00:00"
+    },
+    {
+      "id": "98b50e2d-dc99-43ef-b387-052637738c02",
+      "title_fr": "Coopérative tisseuse du Rif",
+      "title_ar": "",
+      "description_fr": "Mentor: Khadija Moussaoui. Soft Skill: Travail en équipe (APPLICATION). Transférer les rôles Belbin dans un contexte artisanal.",
+      "description_ar": "",
+      "type": "challenge",
+      "xp_reward": 1000,
+      "bloom_level": "",
+      "soft_skill_dominant": "",
+      "duration_minutes": null,
+      "success_threshold": 70,
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "",
+        "location_fr": "",
+        "location_ar": ""
+      },
+      "scripts": {
+        "opening_fr": "",
+        "opening_ar": "",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "Place Uta el-Hammam – Mercredi 15h. Fatima, restauratrice passionnée, accueille Ishaq. « En cuisine, le stress monte plus vite que la vapeur des marmites. Si tu ne le maîtrises pas, il gâche le plat. Respire, Ishaq. Maîtrise ton feu intérieur pour servir l'excellence. »",
+        "text_ar": "",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Chefchaoun.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Chefchaoun/chefchaoun%20mission%202.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "theories_ar": "",
+      "exercises": [
+        {
+          "id": "c274bec8-dfa6-444c-a295-d9425380a6f9",
+          "type": "qcm",
+          "question_fr": "Zahra (60 ans) ne tisse plus, corrige les gestes, encourage, calme les disputes. Quel rôle Belbin ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Créative",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Harmonisatrice",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Leader",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Réalisatrice",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Exact ! L’harmonisatrice gère les tensions et encourage l’équipe.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Non. Zahra ne crée pas, ne dirige pas seule, n’exécute pas. Elle harmonise.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Non. Zahra ne crée pas, ne dirige pas seule, n’exécute pas. Elle harmonise.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Reconnaître les rôles Belbin dans une équipe artisanale. Indication : Une personne qui ne tisse plus mais corrige, encourage et apaise les conflits joue le rôle d’harmonisatrice.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        },
+        {
+          "id": "cc944053-06b3-4050-a99b-853e0c586a9e",
+          "type": "team_roles",
+          "question_fr": "Attribuez les 5 tisseuses aux rôles optimaux.",
+          "question_ar": "",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Fatima (rapide, motif identique)",
+                "left_ar": "",
+                "right_fr": "Réalisatrice",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Nora (invente des motifs)",
+                "left_ar": "",
+                "right_fr": "Créative",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Zahra (voit les erreurs)",
+                "left_ar": "",
+                "right_fr": "Analyste",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Halima (gère les conflits)",
+                "left_ar": "",
+                "right_fr": "Harmonisatrice",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Meryem (commande, comptes)",
+                "left_ar": "",
+                "right_fr": "Leader",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Distribution parfaite ! Belbin transféré du labo à l’atelier.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Révisez : réalisatrice = production standard, créative = innovation, analyste = contrôle, harmonisatrice = médiation, leader = logistique.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Révisez : réalisatrice = production standard, créative = innovation, analyste = contrôle, harmonisatrice = médiation, leader = logistique.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Distribuer les rôles Belbin selon les forces de chacun. Indication : Fatima (rapide, motif fixe) → réalisatrice ; Nora (invente) → créative ; Zahra (voit les erreurs) → analyste ; Halima (gère les conflits) → harmonisatrice ; Meryem (commande, comptes) → leader.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        },
+        {
+          "id": "3f5fb41b-395b-4402-9db2-e63392556cbd",
+          "type": "scenario_dialogue",
+          "question_fr": "Nora (moderne) et Fatima (tradition) se disputent. Quelle intervention ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "« Fatima a raison »",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "« Gardez les symboles de Fatima dans une composition moderne. »",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "« Nora a raison »",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "« Ce n’est pas mon affaire »",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Médiation générationnelle parfaite. « Oui ET… » concilie tradition et innovation.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Prendre parti ou fuir détruit l’équipe. Cherchez la 3ème voie.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Prendre parti ou fuir détruit l’équipe. Cherchez la 3ème voie.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Médier un conflit générationnel par la technique « Oui ET… ». Indication : Proposez de garder les symboles traditionnels dans une composition moderne.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        },
+        {
+          "id": "0b5111eb-b1ec-4430-9bef-f48f6c97e2a7",
+          "type": "fill_blanks",
+          "question_fr": "Complétez le texte sur la technique « Oui ET… ».",
+          "question_ar": "",
+          "options": {
+            "bank": [
+              {
+                "text_fr": "« mais »",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "bloque",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "opposition",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "idée",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "construit",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "enrichit",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "collaboration",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "innovation",
+                "text_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "« mais », bloque, opposition, idée, construit, enrichit, collaboration, innovation",
+          "feedback_positive": {
+            "fr": "Parfait ! « Oui MAIS » bloque, « Oui ET » construit et innove.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Retenez : « mais » annule, « et » enrichit. La collaboration naît du « et ».",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Retenez : « mais » annule, « et » enrichit. La collaboration naît du « et ».",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Comprendre la différence entre « Oui MAIS » (bloque) et « Oui ET » (enrichit). Indication : Le mot « mais » annule, « et » construit.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        },
+        {
+          "id": "89fea450-79e7-44c9-b5d6-91ed3e6b3f84",
+          "type": "vrai_faux",
+          "question_fr": "« Une équipe de femmes est plus collaborative qu’une équipe d’hommes. »",
+          "question_ar": "",
+          "options": [],
+          "correct_answer": "faux",
+          "feedback_positive": {
+            "fr": "Faux. La collaboration dépend des compétences, pas du genre.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Les stéréotypes sont des obstacles. La diversité (mixte) est la plus efficace.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Les stéréotypes sont des obstacles. La diversité (mixte) est la plus efficace.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Démystifier les stéréotypes sur le travail collaboratif. Indication : Genre ≠ collaboration (FAUX) ; la pratique transmet mieux (VRAI) ; toutes les décisions ne se prennent pas par vote (FAUX).",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        },
+        {
+          "id": "d9b8b81a-a7e2-4537-b47a-d85d711d8188",
+          "type": "vrai_faux",
+          "question_fr": "« Le savoir-faire artisanal se transmet mieux par la pratique que par la théorie. »",
+          "question_ar": "",
+          "options": [],
+          "correct_answer": "vrai",
+          "feedback_positive": {
+            "fr": "Vrai. C’est l’apprentissage situé de Lave & Wenger.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Les ateliers apprennent par observation puis participation, pas par cours.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Les ateliers apprennent par observation puis participation, pas par cours.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Gérer un membre en difficulté par dialogue privé, soutien et confidentialité. Indication : Parlez-lui seul à seul, proposez de l’aide, puis dites simplement qu’elle traverse une période difficile.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        },
+        {
+          "id": "02bdd987-6fee-4196-9141-d77bf04ccd2d",
+          "type": "vrai_faux",
+          "question_fr": "« Dans une coopérative, toutes les décisions doivent être prises par vote. »",
+          "question_ar": "",
+          "options": [],
+          "correct_answer": "faux",
+          "feedback_positive": {
+            "fr": "Faux. Décisions techniques par l’expert, stratégiques par vote, urgentes par le leader.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Rappelez-vous R2 : stratégique, tactique, opérationnel. Le vote n’est pas universel.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Rappelez-vous R2 : stratégique, tactique, opérationnel. Le vote n’est pas universel.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Ordonner les étapes de la création collaborative. Indication : Comprendre la commande, choisir les motifs, distribuer les tâches, produire, contrôler, ajuster, livrer.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        },
+        {
+          "id": "eaa1abc0-e109-4650-98af-978c6bef5455",
+          "type": "scenario_cascade",
+          "question_fr": "Tisseuse en difficulté : Samia fait des erreurs.",
+          "question_ar": "",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Samia fait des erreurs. Première action ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "La critiquer publiquement",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "Lui parler en privé avec bienveillance",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Samia révèle : « Mon mari veut m’arrêter. »",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Ignorer",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Comment la coopérative peut te soutenir ? »",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Samia demande le secret. Que dire à l’équipe ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Raconter toute l'histoire",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Samia traverse une période difficile. Elle a besoin de soutien. »",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Dialogue privé d’abord. Bienveillance et soutien pratique. Respect de la confidentialité + solidarité.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "La critiquer publiquement ou la remplacer brusquement aggrave les choses. Ignorer ou juger sa situation est inapproprié.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "La critiquer publiquement ou la remplacer brusquement aggrave les choses. Ignorer ou juger sa situation est inapproprié.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Identifier les 5 dysfonctions de Lencioni. Indication : Décision unilatérale, attaque personnelle, désengagement, oubli de la qualité, réunion sans résolution.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        },
+        {
+          "id": "c462c067-a2ed-49a1-9758-e8afef9cf1fb",
+          "type": "ranking",
+          "question_fr": "Classez les 7 étapes du processus collaboratif de création.",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Même structure que le processus Simon. Universel.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Rappel : comprendre, choisir, distribuer, produire, contrôler, ajuster, livrer.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Rappel : comprendre, choisir, distribuer, produire, contrôler, ajuster, livrer.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Négocier un compromis win‑win face à un client difficile. Indication : Proposez de garder 50 % des floraux existants à prix réduit et 50 % de nouveaux géométriques, surcoût partagé.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        },
+        {
+          "id": "2b13c258-153a-42ba-8d97-6eb71fe9b9bb",
+          "type": "error_detection",
+          "question_fr": "Identifiez les 5 dysfonctions dans la réunion.",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "Décision unilatérale",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Attaque personnelle",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Désengagement (téléphone)",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Ignorer qualité",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Réunion sans résolution",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Parfait. Vous identifiez les 5 dysfonctions de Lencioni.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Relisez : décision chef seul, critique personnelle, absentéisme, court-termisme, départ sans conclusion.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Relisez : décision chef seul, critique personnelle, absentéisme, court-termisme, départ sans conclusion.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Comprendre la force collective. Indication : Un fil seul est fragile, ensemble ils font un tapis. Une personne seule est limitée, ensemble elles deviennent une force.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        },
+        {
+          "id": "96ddb4a6-f3b2-4ca1-8936-06bde23d2a54",
+          "type": "scenario_decision",
+          "question_fr": "L’hôtel veut changer les motifs après 5 jours de travail. Que faire ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Accepter et tout recommencer",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Refuser",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Compromis : 50% floraux existants à prix réduit + 50% nouveaux géométriques, surcoût partagé.",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive": {
+            "fr": "Négociation win-win. Ni soumission ni rupture. Créativité commerciale.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Accepter ou refuser brutalement est perdant. Le compromis intelligent sauve la relation.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Accepter ou refuser brutalement est perdant. Le compromis intelligent sauve la relation.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Négociation win-win. Ni soumission ni rupture. Créativité commerciale.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        },
+        {
+          "id": "d0056dc5-c52c-4e41-8de9-4f20732b95c8",
+          "type": "puzzle_riddle",
+          "question_fr": "« Chaque fil seul est fragile. Ensemble ils deviennent tapis. Chaque personne seule est limitée. Ensemble elles deviennent… ? »",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Une entreprise",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Une famille",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Une force",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Un problème",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive": {
+            "fr": "Magnifique ! L’équipe transforme la fragilité individuelle en force collective.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Relisez : « un fil fragile → tapis solide, une note → musique. » C’est une force.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Relisez : « un fil fragile → tapis solide, une note → musique. » C’est une force.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Magnifique ! L’équipe transforme la fragilité individuelle en force collective.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 250
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.479768+00:00",
+          "updated_at": "2026-05-04T13:24:36.479768+00:00"
+        }
+      ],
+      "created_at": "2026-05-04T11:39:27.161254+00:00",
+      "updated_at": "2026-05-04T11:39:27.161254+00:00"
+    },
+    {
+      "id": "98b50e2d-dc99-43ef-b387-052637738c03",
+      "title_fr": "Le Souk et le Restaurant",
+      "title_ar": "",
+      "description_fr": "Mentor: Omar. Soft Skill: Prise de décision (APPLICATION). Négocier avec la méthode BATNA et détecter les biais cognitifs.",
+      "description_ar": "",
+      "type": "challenge",
+      "xp_reward": 1000,
+      "bloom_level": "",
+      "soft_skill_dominant": "",
+      "duration_minutes": null,
+      "success_threshold": 70,
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "",
+        "location_fr": "",
+        "location_ar": ""
+      },
+      "scripts": {
+        "opening_fr": "",
+        "opening_ar": "",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "Ruelle Bleue – Jeudi 9h. Ishaq aide Latifa à organiser un atelier de peinture pour enfants. « Gérer un groupe, c'est comme peindre une fresque : il faut savoir quand diriger et quand laisser la liberté. Observe comment nous harmonisons les couleurs et les personnalités. »",
+        "text_ar": "",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Chefchaoun.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Chefchaoun/chefchaoun%20mission%204.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "theories_ar": "",
+      "exercises": [
+        {
+          "id": "d4cf1f0e-138e-4909-9cf1-d530d903820a",
+          "type": "qcm",
+          "question_fr": "Omar hésite entre : A) 5 kg de tomates (50 DH), B) Changer le menu été, C) Ouvrir 2ème restaurant à Tanger. Classez.",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "A=Strat., B=Tact., C=Opér.",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "A=Tact., B=Opér., C=Strat.",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "A=Opérationnelle, B=Tactique, C=Stratégique",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive": {
+            "fr": "Classification parfaite. Transfert du ministère au commerce local.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Règle : <10K DH = opérationnelle, 10K-1M = tactique, >1M = stratégique.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Règle : <10K DH = opérationnelle, 10K-1M = tactique, >1M = stratégique.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Classer les décisions selon leur horizon et leur budget. Indication : 50 DH → opérationnelle ; changer le menu → tactique ; ouvrir un second restaurant → stratégique.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.78073+00:00",
+          "updated_at": "2026-05-04T13:24:36.78073+00:00"
+        },
+        {
+          "id": "b0936082-a630-436f-9487-3214e1084db2",
+          "type": "scenario_dialogue",
+          "question_fr": "Abdellah demande 50 DH/kg pour les olives, Omar propose 30. À vous de conclure.",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "« 35, dernier prix »",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "« 40 DH si qualité garantie chaque semaine, 20 kg/semaine en exclusivité. »",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "« 45, d’accord »",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "« 20, pas plus »",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Négociation win-win ! Intérêts (volume, stabilité) plutôt que positions (prix).",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "L’ultimatum ou la capitulation sont perdants. Créez de la valeur (volume + exclusivité).",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "L’ultimatum ou la capitulation sont perdants. Créez de la valeur (volume + exclusivité).",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Négocier par les intérêts plutôt que par les positions. Indication : Proposez un prix moyen (40 DH) en échange d’un volume garanti chaque semaine.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.78073+00:00",
+          "updated_at": "2026-05-04T13:24:36.78073+00:00"
+        },
+        {
+          "id": "a0bfeab4-49fe-425e-ab16-eed7e6ff2527",
+          "type": "matching",
+          "question_fr": "Reliez chaque situation au biais correspondant au restaurant.",
+          "question_ar": "",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Note 4.8/5",
+                "left_ar": "",
+                "right_fr": "Confirmation",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "plat à 120 DH après un à 200 DH",
+                "left_ar": "",
+                "right_fr": "Ancrage",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "refuse poisson car ami malade",
+                "left_ar": "",
+                "right_fr": "Disponibilité",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "commande « le plus commandé »",
+                "left_ar": "",
+                "right_fr": "Conformité sociale",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Transfert des biais cognitifs. Vous les repérez partout.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Révisez : ancrage, confirmation, disponibilité, conformité.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Révisez : ancrage, confirmation, disponibilité, conformité.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Identifier les biais cognitifs dans des situations commerciales. Indication : Note Google → confirmation ; premier prix élevé → ancrage ; ami malade → disponibilité ; plat le plus commandé → conformité.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.78073+00:00",
+          "updated_at": "2026-05-04T13:24:36.78073+00:00"
+        },
+        {
+          "id": "9c722418-4300-4fb6-964a-8d61427fb204",
+          "type": "ranking",
+          "question_fr": "Classez les 8 tâches selon la matrice d’Eisenhower pour un chef.",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Priorisation de chef. Même logique Eisenhower, contexte différent.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Rappel : urgent+important d’abord, urgent+moins important ensuite, important+pas urgent ensuite, le reste.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Rappel : urgent+important d’abord, urgent+moins important ensuite, important+pas urgent ensuite, le reste.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Prioriser des tâches avec la matrice d’Eisenhower. Indication : Urgent + important d’abord (allergie, serveur absent), puis urgent (VIP, avis), puis important non urgent (légumes, menu), enfin le reste.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.78073+00:00",
+          "updated_at": "2026-05-04T13:24:36.78073+00:00"
+        },
+        {
+          "id": "d0b7eed5-4a5f-4203-be10-c672b6451906",
+          "type": "scenario_cascade",
+          "question_fr": "Intoxication alimentaire au restaurant.",
+          "question_ar": "",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Un client dit « mon fils a vomi après avoir mangé chez vous ». Première réaction ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Nier",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "Empathie, demander détails, vérifier en cuisine",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Vous trouvez des crevettes stockées à 12°C (norme 4°C). Action ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Cacher",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "Retirer TOUS les plats concernés, noter l’incident, appeler les autres clients.",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Le père veut porter plainte. Approche ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Dénier toute responsabilité",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Je prends toute la responsabilité, je paie les frais, venez vérifier nos mesures. »",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Gestion de crise exemplaire. Transparence totale. Modèle de gestion de crise.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Nier ou fermer immédiatement est une erreur. Jeter et cacher est une faute éthique. Se défendre ou payer sans transparence aggrave la méfiance.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Nier ou fermer immédiatement est une erreur. Jeter et cacher est une faute éthique. Se défendre ou payer sans transparence aggrave la méfiance.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Gérer une intoxication alimentaire with empathie, transparence et responsabilité. Indication : Demandez des détails, retirez tous les plats suspects, prévenez les autres clients, puis assumez pleinement.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.78073+00:00",
+          "updated_at": "2026-05-04T13:24:36.78073+00:00"
+        },
+        {
+          "id": "3a349fc7-2994-4de5-b92e-f0239bc260f8",
+          "type": "fill_blanks",
+          "question_fr": "Complétez les 7 principes de Fisher & Ury.",
+          "question_ar": "",
+          "options": {
+            "bank": [
+              {
+                "text_fr": "intérêts",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "positions",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "options",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "critères",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "BATNA",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "relation",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "écoute",
+                "text_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "intérêts, positions, options, critères, BATNA, relation, écoute",
+          "feedback_positive": {
+            "fr": "Parfait ! Intérêts > positions. BATNA = meilleure alternative.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Retenez : intérêts, options, critères objectifs, BATNA, relation, écoute.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Retenez : intérêts, options, critères objectifs, BATNA, relation, écoute.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Mémoriser les 7 principes de la négociation raisonnée (Fisher & Ury). Indication : Intérêts, positions, options, critères, BATNA, relation, écoute.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.78073+00:00",
+          "updated_at": "2026-05-04T13:24:36.78073+00:00"
+        },
+        {
+          "id": "3f84812b-938e-4459-9ffc-d32c37023008",
+          "type": "time_attack",
+          "question_fr": "RUSH : 3 tables, 1 serveur absent. Priorité ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Table avec enfant qui pleure",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Table VIP",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Table qui attend depuis longtemps",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "A",
+          "feedback_positive": {
+            "fr": "Empathie avant hiérarchie. Urgence émotionnelle d’abord.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Le VIP passe après l’urgence sociale. L’enfant en détresse est prioritaire.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Le VIP passe après l’urgence sociale. L’enfant en détresse est prioritaire.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Prendre des décisions rapides en service. Indication : Enfant qui pleure → priorité ; plat épuisé → alternative + offrir thé ; cuisinier coupé → sortir et remplacer.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.78073+00:00",
+          "updated_at": "2026-05-04T13:24:36.78073+00:00"
+        },
+        {
+          "id": "54bda93f-a421-4b66-adcb-9a0fe1761f49",
+          "type": "error_detection",
+          "question_fr": "Trouvez les 5 erreurs dans le business plan du restaurant.",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "100% économies (risque ruine)",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Étude « j’ai mangé à Tanger » (subjective)",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Emplacement choisi par un ami (non visité)",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Gérer seul 2 restaurants (burnout)",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Menu identique (clientèle différente)",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Diagnostic financier parfait. Mêmes erreurs que le projet ministère.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Relisez : financement, étude de marché, local, charge mentale, adaptation.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Relisez : financement, étude de marché, local, charge mentale, adaptation.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Repérer les erreurs d’un business plan de restaurant. Indication : 100 % économies (risque ruine), étude subjective, emplacement non visité, charge seule (burnout), menu identique sans adaptation.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.78073+00:00",
+          "updated_at": "2026-05-04T13:24:36.78073+00:00"
+        },
+        {
+          "id": "9df548e5-7945-41ba-aec2-749b631532ee",
+          "type": "short_answer",
+          "question_fr": "Créez un plan d’expansion (80-120 mots) : étude de marché, financement, équipe, calendrier.",
+          "question_ar": "",
+          "options": [],
+          "correct_answer": "plan d'expansion",
+          "feedback_positive": {
+            "fr": "Plan stratégique solide. Vous appliquez Simon au commerce.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Il manque une des 4 sections ou une justification claire.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Il manque une des 4 sections ou une justification claire.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Construire un plan d’expansion. Indication : Étude de marché (2 mois), financement mixte (50/50), équipe autonome, menu adapté (60/40), calendrier 8 mois.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.78073+00:00",
+          "updated_at": "2026-05-04T13:24:36.78073+00:00"
+        },
+        {
+          "id": "0ac65914-b42e-4093-a6f1-753e4ec73f65",
+          "type": "puzzle_riddle",
+          "question_fr": "« Au souk je nais chaque matin, en cuisine je vis chaque midi… Si tu me fuis tu perds, si tu me maîtrises tu gagnes. Qui suis-je ? »",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Le prix",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "La décision",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "La négociation",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "L’expérience",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Exact ! La décision est partout : souk, cuisine, négo. Omar la pratique 200 fois par jour.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Relisez : « Fatima me connaît bien (R2), Omar me pratique. » C’est la décision.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Relisez : « Fatima me connaît bien (R2), Omar me pratique. » C’est la décision.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Identifier la décision comme compétence transverse du commerce. Indication : Elle naît au souk, vit en cuisine, brille en négociation ; Omar la pratique 200 fois par jour.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 250
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:36.78073+00:00",
+          "updated_at": "2026-05-04T13:24:36.78073+00:00"
+        }
+      ],
+      "created_at": "2026-05-04T11:39:27.666448+00:00",
+      "updated_at": "2026-05-04T11:39:27.666448+00:00"
+    },
+    {
+      "id": "98b50e2d-dc99-43ef-b387-052637738c04",
+      "title_fr": "L’Herboristerie de la Résilience",
+      "title_ar": "",
+      "description_fr": "Mentor: Zineb. Soft Skill: Résilience (APPLICATION). Appliquer les 8 piliers de Cyrulnik.",
+      "description_ar": "",
+      "type": "challenge",
+      "xp_reward": 1000,
+      "bloom_level": "",
+      "soft_skill_dominant": "",
+      "duration_minutes": null,
+      "success_threshold": 70,
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "",
+        "location_fr": "",
+        "location_ar": ""
+      },
+      "scripts": {
+        "opening_fr": "",
+        "opening_ar": "",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "",
+        "text_ar": "",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Chefchaoun.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Chefchaoun/Chefchaoun%20mission%205.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "theories_ar": "",
+      "exercises": [
+        {
+          "id": "e1b22577-daa4-4823-9cf4-28b04afd898a",
+          "type": "qcm",
+          "question_fr": "Zineb pleure au travail, dort mal depuis 4 mois, dit « je ne sers à rien ». Diagnostic ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Stress aigu",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Burnout",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Anxiété passagère",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Fatigue normale",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Diagnostic correct. Burnout : épuisement émotionnel, cynisme, inefficacité.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Le stress aigu est court. L’anxiété n’a pas d’épuisement. Ici c’est burnout.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Le stress aigu est court. L’anxiété n’a pas d’épuisement. Ici c’est burnout.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Diagnostiquer un burnout (épuisement émotionnel, cynisme, inefficacité). Indication : Pleurs, insomnie depuis 4 mois, sentiment d’inutilité → burnout.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.063897+00:00",
+          "updated_at": "2026-05-04T13:24:37.063897+00:00"
+        },
+        {
+          "id": "18d7b5fc-33ff-4544-8c04-4bf7f6471754",
+          "type": "fill_blanks",
+          "question_fr": "Complétez l’histoire d’Amina avec les 8 piliers de Cyrulnik.",
+          "question_ar": "",
+          "options": {
+            "bank": [
+              {
+                "text_fr": "Sens",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "Relations",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "Humour",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "Corps",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "Apprentissage",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "Créativité",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "Espoir",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "Spiritualité",
+                "text_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "Sens, Relations, Humour, Corps, Apprentissage, Créativité, Espoir, Spiritualité",
+          "feedback_positive": {
+            "fr": "8/8. Vous reconnaissez chaque pilier dans une histoire vécue.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Révisez les piliers : sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Révisez les piliers : sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Appliquer les 8 piliers de Cyrulnik. Indication : Sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.063897+00:00",
+          "updated_at": "2026-05-04T13:24:37.063897+00:00"
+        },
+        {
+          "id": "71c8ba08-8e22-4e00-9107-b9ca62e4d344",
+          "type": "scenario_dialogue",
+          "question_fr": "Une femme pleure car son fils parti en Espagne ne l’appelle plus. Que faire ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Donner de la valériane",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "« Asseyez-vous. Racontez-moi. Quand l’avez-vous vu pour la dernière fois ? »",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "« Votre fils est adulte »",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "« Ne vous inquiétez pas »",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Écoute active parfaite. L’herboristerie soigne aussi par la parole.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Traiter seulement le symptôme (valériane) ou minimiser sa douleur est inefficace.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Traiter seulement le symptôme (valériane) ou minimiser sa douleur est inefficace.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Pratiquer l’écoute active face à une détresse émotionnelle. Indication : Invitez la personne à s’asseoir, raconter, puis demandez quand elle a vu son fils pour la dernière fois.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.063897+00:00",
+          "updated_at": "2026-05-04T13:24:37.063897+00:00"
+        },
+        {
+          "id": "4719a290-ed47-4a23-8c38-64d5d136c4a3",
+          "type": "matching",
+          "question_fr": "Reliez chaque plante au pilier de résilience.",
+          "question_ar": "",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Verveine (calme)",
+                "left_ar": "",
+                "right_fr": "Calme émotionnel",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Romarin (mémoire)",
+                "left_ar": "",
+                "right_fr": "Apprentissage",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Safran (humeur)",
+                "left_ar": "",
+                "right_fr": "Espoir",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Thym (énergie)",
+                "left_ar": "",
+                "right_fr": "Corps",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Phytothérapie au service de la résilience. Contexte culturel intégré.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Révisez : verveine = calme, romarin = mémoire, safran = humeur, thym = corps.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Révisez : verveine = calme, romarin = mémoire, safran = humeur, thym = corps.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Relier des plantes médicinales aux piliers de résilience. Indication : Verveine → calme émotionnel ; romarin → apprentissage ; safran → espoir ; thym → corps.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.063897+00:00",
+          "updated_at": "2026-05-04T13:24:37.063897+00:00"
+        },
+        {
+          "id": "bb5e8723-24b9-423d-9f43-c162ccb049e1",
+          "type": "scenario_cascade",
+          "question_fr": "Recadrage cognitif pour Zineb.",
+          "question_ar": "",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Zineb dit : « Personne ne vient. » Recadrage ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Nier",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« 15 clients la semaine dernière, ce n’est pas personne. »",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "« Les gens préfèrent les médicaments chimiques. » Recadrage ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Oui c'est vrai",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Ils veulent les deux. Chimique et naturel sont complémentaires. »",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "« L’herboristerie est morte. » Recadrage ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Hélas",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Le marché bio mondial vaut 200 milliards. Nos produits sont exactement ce que le monde cherche. »",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Recadrage par les chiffres. Complémentarité. Recadrage par les données mondiales.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Nier ou minimiser sans preuve ne fonctionne pas. Dire « tu as raison » est un extrême. « Arrête d’être négative » est inefficace.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Nier ou minimiser sans preuve ne fonctionne pas. Dire « tu as raison » est un extrême. « Arrête d’être négative » est inefficace.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Recadrer des pensées négatives par les faits, la nuance et les données. Indication : « Personne » → donnez un chiffre ; « préfèrent chimique » → complémentarité ; « herboristerie morte » → marché bio mondial.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.063897+00:00",
+          "updated_at": "2026-05-04T13:24:37.063897+00:00"
+        },
+        {
+          "id": "4e48bc09-3662-4305-8909-ad91604fc67f",
+          "type": "error_detection",
+          "question_fr": "Trouvez les 6 erreurs dans la routine toxique de Zineb.",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "13h30 sans pause",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Écran 3h avant coucher",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Zéro sport",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Isolement social",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Aucune vacance depuis 2 ans",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "3 cafés matin vide",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Mêmes erreurs que Dr. Rachid. Burnout : mêmes patterns partout.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Relisez : pauses, écran, sport, amis, vacances, petit-déjeuner.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Relisez : pauses, écran, sport, amis, vacances, petit-déjeuner.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Repérer les erreurs d’une routine toxique menant au burnout. Indication : 13h30 sans pause, écran 3h avant coucher, zéro sport, isolement, aucune vacance, 3 cafés à jeun.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.063897+00:00",
+          "updated_at": "2026-05-04T13:24:37.063897+00:00"
+        },
+        {
+          "id": "5b6226e2-99b5-4bec-aa20-5a9a75aab441",
+          "type": "ranking",
+          "question_fr": "Classez les 6 actions du plan de récupération par priorité.",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Priorisation juste : urgence médicale → récupération → prévention.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Commencer par le sport ou les amis sans bilan médical est dangereux.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Commencer par le sport ou les amis sans bilan médical est dangereux.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Prioriser les actions de récupération. Indication : D’abord médecin, puis vacances, réduire les heures, éteindre les écrans, sport, enfin amie.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.063897+00:00",
+          "updated_at": "2026-05-04T13:24:37.063897+00:00"
+        },
+        {
+          "id": "1551f2a0-e011-4dd5-872b-4bc429847d9b",
+          "type": "time_attack",
+          "question_fr": "URGENCE : Client : « Mal de tête depuis 3 jours. » Votre réponse ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "« Consultez un médecin d’abord, puis revenez. »",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Donner une tisane",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "A",
+          "feedback_positive": {
+            "fr": "Prudence professionnelle. Reconnaître ses limites.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Donner une tisane sans diagnostic préalable est dangereux.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Donner une tisane sans diagnostic préalable est dangereux.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Réagir avec prudence face à des situations de stress client. Indication : Mal de tête → consulter un médecin ; adolescente → verveine + 4-7-8 ; femme enceinte → précaution, consulter.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.063897+00:00",
+          "updated_at": "2026-05-04T13:24:37.063897+00:00"
+        },
+        {
+          "id": "5ba72525-f1ba-491e-ab5f-7ea4bdea8464",
+          "type": "short_answer",
+          "question_fr": "Écrivez une lettre (80-120 mots) à Zineb utilisant les 8 piliers.",
+          "question_ar": "",
+          "options": [],
+          "correct_answer": "lettre à Zineb",
+          "feedback_positive": {
+            "fr": "Lettre magnifique. Chaque phrase = un pilier concret.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Il manque un ou plusieurs piliers. Citez-les tous.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Il manque un ou plusieurs piliers. Citez-les tous.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Écrire une lettre d’encouragement utilisant les 8 piliers de résilience. Indication : Citez chaque pilier avec un petit geste concret (sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité).",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.063897+00:00",
+          "updated_at": "2026-05-04T13:24:37.063897+00:00"
+        },
+        {
+          "id": "0be4801c-6182-4c69-8d31-24b3a48f88a0",
+          "type": "puzzle_riddle",
+          "question_fr": "« Je pousse dans les fissures, là où rien ne devrait vivre. Plus la terre est sèche, plus mes racines plongent… Qui suis-je ? »",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "La plante",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "La résilience",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "L’espoir",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Magnifique ! La résilience grandit dans l’adversité, comme une plante dans la rocaille.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Relisez : « Jardins parfaits ne me connaissent pas, seules les terres blessées me voient fleurir. » = résilience.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Relisez : « Jardins parfaits ne me connaissent pas, seules les terres blessées me voient fleurir. » = résilience.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Identifier la résilience. Indication : Elle pousse dans les fissures, plus la terre est sèche plus ses racines plongent, les jardins parfaits ne la connaissent pas.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 250
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.063897+00:00",
+          "updated_at": "2026-05-04T13:24:37.063897+00:00"
+        }
+      ],
+      "created_at": "2026-05-04T11:39:28.134033+00:00",
+      "updated_at": "2026-05-04T11:39:28.134033+00:00"
+    },
+    {
+      "id": "98b50e2d-dc99-43ef-b387-052637738c05",
+      "title_fr": "Le Festival – Défi Final Chefchaouen",
+      "title_ar": "",
+      "description_fr": "Mentor: Nabil. Soft Skill: Synthèse (stress + équipe + décision). Gérer une crise en milieu isolé.",
+      "description_ar": "",
+      "type": "challenge",
+      "xp_reward": 1000,
+      "bloom_level": "",
+      "soft_skill_dominant": "",
+      "duration_minutes": null,
+      "success_threshold": 70,
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "",
+        "location_fr": "",
+        "location_ar": ""
+      },
+      "scripts": {
+        "opening_fr": "",
+        "opening_ar": "",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "",
+        "text_ar": "",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Chefchaoun.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Chefchaoun/chefhchaoun%20mission%205.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "theories_ar": "",
+      "exercises": [
+        {
+          "id": "46c415a8-7d05-487c-9ddf-a2247f48d41a",
+          "type": "scenario_decision",
+          "question_fr": "7h, 3 crises : stand non monté, artisans mécontents, traiteur annule. Que faire ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Stand d’abord",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Déléguer stand aux bénévoles, gérer artisans, Nabil remplace traiteur.",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Traiteur d’abord",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Artisans d’abord seul",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Gestion parallèle parfaite. Eisenhower + délégation Belbin.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Ne pas déléguer ou tout faire soi-même est inefficace. Répartissez.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Ne pas déléguer ou tout faire soi-même est inefficace. Répartissez.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Gérer trois crises simultanées par délégation. Indication : Stand → bénévoles, artisans → toi, traiteur → Nabil.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.412602+00:00",
+          "updated_at": "2026-05-04T13:24:37.412602+00:00"
+        },
+        {
+          "id": "fcdeae20-c6e4-4730-b18e-d1cab122e2d0",
+          "type": "team_roles",
+          "question_fr": "Attribuez les 6 postes aux 6 profils pour le festival.",
+          "question_ar": "",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Accueil",
+                "left_ar": "",
+                "right_fr": "Yassine (extraverti, 3 langues)",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Sécurité",
+                "left_ar": "",
+                "right_fr": "Soukaina (sportive, secours)",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Logistique",
+                "left_ar": "",
+                "right_fr": "Mehdi (costaud, manutention)",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Communication",
+                "left_ar": "",
+                "right_fr": "Lina (photographe)",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Restauration",
+                "left_ar": "",
+                "right_fr": "Rachid (chef cuisinier)",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Médiation",
+                "left_ar": "",
+                "right_fr": "Hind (médiatrice familiale)",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Distribution optimale. Right person, right place.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Révisez : accueil = souriant, sécurité = sportif, logistique = manutention, com’ = photo, resto = cuisinier, médiation = calme.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Révisez : accueil = souriant, sécurité = sportif, logistique = manutention, com’ = photo, resto = cuisinier, médiation = calme.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Attribuer des postes à des bénévoles selon leurs forces. Indication : Yassine (accueil), Soukaina (sécurité), Mehdi (logistique), Lina (communication), Rachid (restauration), Hind (médiation).",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.412602+00:00",
+          "updated_at": "2026-05-04T13:24:37.412602+00:00"
+        },
+        {
+          "id": "aed65c29-2d2c-40de-9d58-16f78955aedc",
+          "type": "scenario_cascade",
+          "question_fr": "Conflit artisans : stand à côté des toilettes.",
+          "question_ar": "",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Artisan potier furieux car son stand est à côté des toilettes. Première réaction ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Crier",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Je comprends votre frustration. Laissez-moi voir ce qu’on peut faire. »",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Pas de stand libre. Solution ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Ne rien faire",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "Paravent décoratif + titre « Artisan d’honneur » dans la brochure.",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Mustapha demande une compensation financière. Réponse ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Payer",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Le titre + visibilité sont plus précieux. Vos ventes vont augmenter. »",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Validation + engagement. Solution créative. Négociation par les intérêts.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "« C’est le tirage au sort » aggrave le conflit. Ne rien faire est inacceptable. Refuser sèchement est perdant.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "« C’est le tirage au sort » aggrave le conflit. Ne rien faire est inacceptable. Refuser sèchement est perdant.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Médiation avec validation, solution créative et négociation d’intérêts. Indication : Validez sa frustration, proposez un paravent et le titre « Artisan d’honneur », puis expliquez que la visibilité vaut plus que l’argent.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.412602+00:00",
+          "updated_at": "2026-05-04T13:24:37.412602+00:00"
+        },
+        {
+          "id": "e694d184-d534-433e-8842-2b64ba639ff3",
+          "type": "error_detection",
+          "question_fr": "Trouvez les 6 erreurs dans le programme du festival.",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "Discours 45 min (trop long)",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Tous ateliers même salle",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Pas de menu alternatif",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Jury = Nabil seul",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Pas de remerciement artisans",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "1 agent sécurité / 5 000 visiteurs",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Audit complet. Mêmes erreurs de planification que le ministère (R2).",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Relisez : discours, capacité des salles, régimes alimentaires, biais du jury, reconnaissance, sécurité.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Relisez : discours, capacité des salles, régimes alimentaires, biais du jury, reconnaissance, sécurité.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Auditer un programme de festival. Indication : Discours trop long, ateliers en même temps dans une même salle, pas de menu alternatif, jury unique, absence de remerciements, sécurité insuffisante.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.412602+00:00",
+          "updated_at": "2026-05-04T13:24:37.412602+00:00"
+        },
+        {
+          "id": "ae50d71b-4b58-4b73-8313-2ff0667b359e",
+          "type": "time_attack",
+          "question_fr": "URGENCES : Visiteur fait un malaise. Action ?",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Ombre + eau + Soukaina (secouriste)",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Attendre",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "A",
+          "feedback_positive": {
+            "fr": "Urgence médicale = protocole. Bon réflexe.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Attendre ou appeler d’abord perd du temps. Agissez immédiatement.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Attendre ou appeler d’abord perd du temps. Agissez immédiatement.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Réagir à 5 urgences de festival. Indication : Malaise → ombre+eau+secouriste ; vol → médiation discrète ; orage → bâches+plan B ; journaliste → répondre soi-même ; enfant perdu → rester avec lui+annonce.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.412602+00:00",
+          "updated_at": "2026-05-04T13:24:37.412602+00:00"
+        },
+        {
+          "id": "0c976ad8-d81b-4a36-80e0-0f39051665bb",
+          "type": "matching",
+          "question_fr": "Reliez chaque problème à la solution SDT (Autonomie, Compétence, Affiliation).",
+          "question_ar": "",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Bénévole démotivé",
+                "left_ar": "",
+                "right_fr": "Compétence",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Artisan frustré",
+                "left_ar": "",
+                "right_fr": "Autonomie",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Visiteur perdu",
+                "left_ar": "",
+                "right_fr": "Affiliation",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "SDT appliquée au festival. Les 3 besoins sont universels.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Révisez : compétence = reconnaissance, autonomie = liberté, affiliation = appartenance.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Révisez : compétence = reconnaissance, autonomie = liberté, affiliation = appartenance.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Appliquer la théorie de l’autodétermination (SDT). Indication : Bénévole démotivé → compétence (remerciements) ; artisan frustré → autonomie (liberté) ; visiteur perdu → affiliation (accompagnement).",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.412602+00:00",
+          "updated_at": "2026-05-04T13:24:37.412602+00:00"
+        },
+        {
+          "id": "47a4802b-885b-42f6-b48d-5a1dbda85b70",
+          "type": "fill_blanks",
+          "question_fr": "Complétez le plan de communication de crise du festival.",
+          "question_ar": "",
+          "options": {
+            "bank": [
+              {
+                "text_fr": "public",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "canal",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "timing",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "empathie",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "transparence",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "solution",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "action",
+                "text_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "public, canal, timing, empathie, transparence, solution, action",
+          "feedback_positive": {
+            "fr": "Même protocole que le Wali (R5). Universel.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Retenez : public, canal, timing, empathie, transparence, solution, action.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Retenez : public, canal, timing, empathie, transparence, solution, action.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Connaître les clés de la communication de crise. Indication : Public, canal, timing, empathie, transparence, solution, action.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.412602+00:00",
+          "updated_at": "2026-05-04T13:24:37.412602+00:00"
+        },
+        {
+          "id": "e3eda271-43d1-4f90-9936-597bad606a34",
+          "type": "scenario_cascade",
+          "question_fr": "Dilemme éthique : Sponsor offre 50 000 DH.",
+          "question_ar": "",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Sponsor offre 50 000 DH pour exclure un artisan concurrent. Conseil ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Accepter",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "Refuser le chantage. Chercher autre sponsor ou réduire budget.",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Sponsor menace : « Sans moi, pas de festival l’année prochaine. » Réponse ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Céder",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Un festival qui exclut perd sa crédibilité. C’est plus cher que 50 000 DH. »",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Sponsor part. Comment compenser 50 000 DH ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Annuler",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "Crowdfunding communautaire + réduire coûts logistiques + contribution symbolique artisans.",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive": {
+            "fr": "Intégrité absolue. Argumentation stratégique. Pivot stratégique.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Accepter le chantage détruit la crédibilité. Céder par peur est une erreur. Annuler ou emprunter sans plan est irresponsable.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Accepter le chantage détruit la crédibilité. Céder par peur est une erreur. Annuler ou emprunter sans plan est irresponsable.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Gérer un dilemme éthique avec intégrité et pivot stratégique. Indication : Refusez le chantage, argumentez sur la perte de crédibilité, puis compensez par crowdfunding et réductions.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.412602+00:00",
+          "updated_at": "2026-05-04T13:24:37.412602+00:00"
+        },
+        {
+          "id": "93d4836a-9bee-410e-8436-c15c61bfbc91",
+          "type": "short_answer",
+          "question_fr": "Rédigez un bilan (120-150 mots) : réussites, améliorations, recommandations pour le festival.",
+          "question_ar": "",
+          "options": [],
+          "correct_answer": "bilan festival",
+          "feedback_positive": {
+            "fr": "Bilan professionnel complet. Vous passez de stagiaire à analyste.",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Il manque une des trois sections ou des justifications.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Il manque une des trois sections ou des justifications.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Rédiger un bilan de festival structuré. Indication : 3 réussites, 3 échecs, 3 recommandations concrètes pour l’année prochaine.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 100
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.412602+00:00",
+          "updated_at": "2026-05-04T13:24:37.412602+00:00"
+        },
+        {
+          "id": "3ea4c9c7-31ec-4106-84e8-1ff0985e8263",
+          "type": "puzzle_riddle",
+          "question_fr": "« Je suis ce qui reste quand tu as tout appris et tout oublié. Aziz me voit dans la montagne, Khadija me tisse… Qui suis-je ? »",
+          "question_ar": "",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Le savoir",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "La compétence",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "L’intelligence",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Le talent",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive": {
+            "fr": "Magnifique ! La compétence est le pont entre théorie (Rabat) et pratique (Chefchaouen).",
+            "ar": ""
+          },
+          "feedback_negative": {
+            "fr": "Relisez : « À Rabat tu m’as découverte, à Chefchaouen tu m’as vécue. » C’est la compétence.",
+            "ar": ""
+          },
+          "hint": {
+            "fr": "Relisez : « À Rabat tu m’as découverte, à Chefchaouen tu m’as vécue. » C’est la compétence.",
+            "ar": ""
+          },
+          "explanation": {
+            "fr": "Identifier la compétence comme pont entre théorie et pratique. Indication : Ce qui reste quand on a tout appris et tout oublié ; Aziz la voit en montagne, Khadija la tisse, Omar la cuisine, Amina la cultive.",
+            "ar": ""
+          },
+          "context_dialogue": null,
+          "presentation": {
+            "fr": "",
+            "ar": ""
+          },
+          "scores": {
+            "decision": 0,
+            "equipe": 0,
+            "stress": 0,
+            "xp": 250
+          },
+          "time_limit_sec": 45,
+          "soft_skills_impact": {},
+          "audio_url_fr": "",
+          "audio_url_ar": "",
+          "created_at": "2026-05-04T13:24:37.412602+00:00",
+          "updated_at": "2026-05-04T13:24:37.412602+00:00"
+        }
+      ],
+      "created_at": "2026-05-04T11:39:28.556265+00:00",
+      "updated_at": "2026-05-04T11:39:28.556265+00:00"
+    }
+  ],
+  "created_at": "2026-05-04T11:39:26.30875+00:00",
+  "updated_at": "2026-05-04T11:39:26.30875+00:00"
+}

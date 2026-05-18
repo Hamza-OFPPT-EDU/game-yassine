@@ -1,0 +1,728 @@
+{
+    "id": "98b50e2d-dc99-43ef-b387-052637738f64",
+    "city_id": "marrakech",
+    "name_fr": "Marrakech",
+    "name_ar": "مراكش",
+    "color": "#e11d48",
+    "icon": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Cities%20icons/Marrakech.png",
+    "headline_fr": "La Perle du Sud",
+    "headline_ar": "لؤلؤة الجنوب",
+    "description_fr": "Ishaq évalue startups, riads, souk, événements et sommet international pour maîtriser le jugement argumenté.",
+    "description_ar": "يقوم إسحاق بتقييم الشركات الناشئة والرياض والأسواق والفعاليات والقمة الدولية لإتقان الحكم المنطقي.",
+    "focus_fr": "Jugement & Évaluation",
+    "focus_ar": "الحكم والتقييم",
+    "illustration_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/challenge-illustrations/marrakech/1775866461317-lgr7dl7gvb%20(1).jpg",
+    "pedagogical_theories_fr": [
+        "Évaluer des méthodes de décision (Lean Startup)",
+        "Juger des arguments avec des pourcentages de validité",
+        "Réaliser une due diligence d’investissement",
+        "Adapter son leadership selon la situation (Hersey & Blanchard)",
+        "Évaluer des performances humaines avec critères multiples",
+        "Maîtriser l’intelligence interculturelle (Hofstede)",
+        "Négocier avec la méthode BATNA",
+        "Évaluer des risques avec matrice Impact × Contrôlabilité",
+        "Utiliser une matrice de décision pondérée",
+        "Défendre une vision stratégique face à l’opposition"
+    ],
+    "pedagogical_theories_ar": [
+        "تقييم طرق اتخاذ القرار (الشركة الناشئة الرشيقة)",
+        "إصدار أحكام على الحجج بنسب مئوية من الصحة",
+        "إجراء العناية الواجبة للاستثمار",
+        "تكييف القيادة حسب الموقف (هيرسي وبلانشارد)",
+        "تقييم الأداء البشري بمعايير متعددة",
+        "إتقان الذكاء بين الثقافات (هوفستيد)",
+        "التفاوض بطريقة BATNA",
+        "تقييم المخاطر بمصفوفة التأثير × قابلية التحكم",
+        "استخدام مصفوفة القرار المرجحة",
+        "الدفاع عن رؤية استراتيجية أمام المعارضة"
+    ],
+    "learning_outcomes_fr": [
+        "Marrakech, ville du business et du tourisme, vous invite à évaluer : juger la qualité des décisions, critiquer avec des arguments solides, choisir entre des options toutes valables, et justifier vos choix avec des critères explicites."
+    ],
+    "learning_outcomes_ar": [
+        "مراكش، مدينة الأعمال والسياحة، تدعوك للتقييم: إصدار حكم على جودة القرارات، النقد بحجج قوية، الاختيار بين خيارات صالحة جميعها، وتبرير اختياراتك بمعايير صريحة."
+    ],
+    "missions": [
+        {
+            "id": "98b50e2d-dc99-43ef-b387-052637738a01",
+            "title_fr": "Mission 1: La Startup Tech",
+            "title_ar": "المهمة 1: الشركة التقنية الناشئة",
+            "description_fr": "Lieu: Startup tech. \nSoft skill: Prise de décision (évaluation).\nÉvaluer des méthodes de décision (Lean Startup).",
+            "description_ar": "المكان: شركة تقنية ناشئة.\nالمهارة الناعمة: اتخاذ القرار (تقييم).\nتقييم طرق اتخاذ القرار (الشركة الناشئة الرشيقة).",
+            "type": "challenge",
+            "xp_reward": 1000,
+            "bloom_level": "",
+            "soft_skill_dominant": "",
+            "duration_minutes": null,
+            "success_threshold": 70,
+            "mentor": {
+                "name_fr": "",
+                "name_ar": "هشام",
+                "age": null,
+                "role_fr": "",
+                "role_ar": "مؤسس شركة ناشئة",
+                "location_fr": "",
+                "location_ar": "مساحة العمل المشترك 'المركز'، كليز، مراكش"
+            },
+            "scripts": {
+                "opening_fr": "Espace de coworking \"Le Hub\", Guéliz, Marrakech, Mardi 9h. Bureau moderne. 12 développeurs, designers, marketeurs. Ambiance startup : tableaux blancs, post-its, café. Hicham : « J'ai fondé MarocDigital il y a 3 ans. Application de livraison pour artisans. 50 000 utilisateurs. On grandit vite. Mais on est à un CARREFOUR STRATÉGIQUE : lever des fonds ou rester indépendant ? Pivoter ou persévérer ? À Fès tu as analysé pourquoi les décisions échouent. Ici, tu vas ÉVALUER laquelle est la MEILLEURE. »",
+                "opening_ar": "مساحة العمل المشترك 'المركز'، كليز، مراكش، الثلاثاء 9 صباحاً. مكتب حديث. 12 مطوراً ومصمماً ومسوقاً. أجواء الشركة الناشئة: سبورات بيضاء، ملاحظات لاصقة، قهوة. هشام: « أسست MarocDigital منذ 3 سنوات. تطبيق توصيل للحرفيين. 50.000 مستخدم. ننمو بسرعة. لكننا على مفترق طرق استراتيجي: جمع الأموال أم البقاء مستقلين؟ التغيير أم المثابرة؟ في فاس حللت لماذا تفشل القرارات. هنا، ستقيم أيها الأفضل. »",
+                "closing_fr": "",
+                "closing_ar": ""
+            },
+            "cinematic": {
+                "text_fr": "Espace de coworking \"Le Hub\", Guéliz, Marrakech, Mardi 9h. Bureau moderne. 12 développeurs, designers, marketeurs. Ambiance startup : tableaux blancs, post-its, café. Hicham : « J'ai fondé MarocDigital il y a 3 ans. Application de livraison pour artisans. 50 000 utilisateurs. On grandit vite. Mais on est à un CARREFOUR STRATÉGIQUE : lever des fonds ou rester indépendant ? Pivoter ou persévérer ? À Fès tu as analysé pourquoi les décisions échouent. Ici, tu vas ÉVALUER laquelle est la MEILLEURE. »",
+                "text_ar": "مساحة العمل المشترك 'المركز'، كليز، مراكش، الثلاثاء 9 صباحاً. مكتب حديث. 12 مطوراً ومصمماً ومسوقاً. أجواء الشركة الناشئة: سبورات بيضاء، ملاحظات لاصقة، قهوة. هشام: « أسست MarocDigital منذ 3 سنوات. تطبيق توصيل للحرفيين. 50.000 مستخدم. ننمو بسرعة. لكننا على مفترق طرق استراتيجي: جمع الأموال أم البقاء مستقلين؟ التغيير أم المثابرة؟ في فاس حللت لماذا تفشل القرارات. هنا، ستقيم أيها الأفضل. »",
+                "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Marrakech.gif",
+                "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Marrakech/MArrakech%20mission%201.mp3",
+                "audio_url_ar": ""
+            },
+            "theories_fr": "",
+            "theories_ar": "",
+            "exercises": [
+                {
+                    "id": "10b893e6-de1b-480f-998e-96af3b3f67c5",
+                    "type": "qcm",
+                    "question_fr": "MarocDigital doit décider : investir 500K DH dans une fonctionnalité OU améliorer le marketing. Quelle méthode est la plus appropriée ?",
+                    "question_ar": "يجب على MarocDigital أن تقرر: استثمار 500 ألف درهم في ميزة أم تحسين التسويق؟ أي طريقة هي الأكثر ملاءمة؟",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "Vote à main levée",
+                            "label_ar": "تصويت برفع اليد"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "Intuition",
+                            "label_ar": "حدس"
+                        },
+                        {
+                            "id": "C",
+                            "label_fr": "Analyse coûts-bénéfices + test A/B + décision comité.",
+                            "label_ar": "تحليل التكلفة والفائدة + اختبار أ/ب + قرار لجنة."
+                        }
+                    ],
+                    "correct_answer": "C",
+                    "feedback_positive": {
+                        "fr": "Évaluation méthodologique parfaite ! Données + test + comité = objectivité.",
+                        "ar": "تقييم منهجي ممتاز! بيانات + اختبار + لجنة = موضوعية."
+                    },
+                    "feedback_negative": {
+                        "fr": "Vote = Groupthink. Optez pour des preuves.",
+                        "ar": "التصويت = تفكير جماعي. اختر الأدلة."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Évaluer des méthodes de décision (Lean Startup, évitement des biais). Indication : La meilleure méthode combine données quantifiées (ROI), test A/B et comité restreint – ni vote massif, ni intuition seule, ni copie.",
+                        "ar": "تقييم طرق اتخاذ القرار (الشركة الناشئة الرشيقة، تجنب التحيزات). دلالة: أفضل طريقة تجمع بيانات كمية (عائد الاستثمار)، اختبار أ/ب ولجنة محدودة – لا تصويت جماعي، لا حدس فقط، ولا نسخ."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:24:56.828678+00:00",
+                    "updated_at": "2026-05-04T13:24:56.828678+00:00"
+                },
+                {
+                    "id": "72958436-78a8-4b06-ba68-d8f7d8b5dc0e",
+                    "type": "scenario_cascade",
+                    "question_fr": "Évaluation des arguments",
+                    "question_ar": "تقييم الحجج",
+                    "options": {
+                        "steps": [
+                            {
+                                "question_fr": "CTO dit « Le pivot va tout casser ». Évaluez.",
+                                "question_ar": "مدير التكنولوجيا يقول « التغيير سيكسر كل شيء ». قيم.",
+                                "correct": "B",
+                                "responses": [
+                                    {
+                                        "id": "A",
+                                        "text_fr": "Vrai",
+                                        "text_ar": "صحيح"
+                                    },
+                                    {
+                                        "id": "B",
+                                        "text_fr": "Crainte légitime mais ignore le coût de ne pas changer. Valide à 60%.",
+                                        "text_ar": "خوف مشروع لكن يتجاهل تكلفة عدم التغيير. صحيح بنسبة 60%."
+                                    }
+                                ]
+                            },
+                            {
+                                "question_fr": "CFO dit « Les chiffres disent : restez ». Évaluez.",
+                                "question_ar": "المدير المالي يقول « الأرقام تقول: ابقوا ». قيم.",
+                                "correct": "A",
+                                "responses": [
+                                    {
+                                        "id": "A",
+                                        "text_fr": "Argument solide (75%) mais insuffisant seul : les chiffres décrivent le passé.",
+                                        "text_ar": "حجة قوية (75%) لكنها غير كافية وحدها: الأرقام تصف الماضي."
+                                    },
+                                    {
+                                        "id": "B",
+                                        "text_fr": "Infaillible",
+                                        "text_ar": "لا يُخطئ"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "correct_answer": "",
+                    "feedback_positive": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "feedback_negative": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Évaluer des arguments avec pourcentages de validité et synthèse. Indication : Q1 → crainte légitime mais raisonnement incomplet (60%) ; Q2 → argument optimiste vague (40%) ; Q3 → argument le plus solide mais tourné vers le passé (75%). Synthèse : rester sur l’artisanal + tester le tourisme.",
+                        "ar": "تقييم الحجج بنسب مئوية من الصحة والتجميع. دلالة: س1 ← خوف مشروع لكن تفكير ناقص (60%)؛ س2 ← حجة متفائلة مبهمة (40%)؛ س3 ← الحجة الأقوى لكنها موجهة للماضي (75%). التجميع: البقاء على الحرفي + اختبار السياحة."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:24:56.828678+00:00",
+                    "updated_at": "2026-05-04T13:24:56.828678+00:00"
+                },
+                {
+                    "id": "f8d622d4-bb86-4d66-8e04-3e52f3092aff",
+                    "type": "error_detection",
+                    "question_fr": "Évaluez la proposition d’investissement. Trouvez les 7 erreurs.",
+                    "question_ar": "قيم عرض الاستثمار. ابحث عن الأخطاء السبعة.",
+                    "options": {
+                        "errors": [
+                            {
+                                "id": "1",
+                                "text_fr": "51% = perte de contrôle",
+                                "is_error": true,
+                                "label_ar": "51% = فقدان السيطرة"
+                            },
+                            {
+                                "id": "2",
+                                "text_fr": "Non-concurrence 10 ans",
+                                "is_error": true,
+                                "label_ar": "عدم المنافسة 10 سنوات"
+                            },
+                            {
+                                "id": "3",
+                                "text_fr": "Rendement 500% en 3 ans",
+                                "is_error": true,
+                                "label_ar": "عائد 500% في 3 سنوات"
+                            },
+                            {
+                                "id": "4",
+                                "text_fr": "Signez avant vendredi (pression)",
+                                "is_error": true,
+                                "label_ar": "وقع قبل الجمعة (ضغط)"
+                            }
+                        ]
+                    },
+                    "correct_answer": "",
+                    "feedback_positive": {
+                        "fr": "Due diligence parfaite ! Chaque clause évaluée.",
+                        "ar": "عناية واجبة ممتازة! كل بند تم تقييمه."
+                    },
+                    "feedback_negative": {
+                        "fr": "Relisez les clauses de contrôle et de pression.",
+                        "ar": "أعد قراءة بنود السيطرة والضغط."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Réaliser une due diligence d’investissement (évaluation des clauses). Indication : 7 erreurs : perte de contrôle (51%), non‑concurrence 10 ans, 3 directeurs imposés, rendement 500% en 3 ans, liquidation préférentielle totale, clause de pression, absence de droit de veto.",
+                        "ar": "إجراء العناية الواجبة للاستثمار (تقييم البنود). دلالة: 7 أخطاء: فقدان السيطرة (51%)، عدم المنافسة 10 سنوات، 3 مديرين مفروضين، عائد 500% في 3 سنوات، تصفية تفضيلية كاملة، بند الضغط، غياب حق النقض."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:24:56.828678+00:00",
+                    "updated_at": "2026-05-04T13:24:56.828678+00:00"
+                },
+                {
+                    "id": "a7afb9ea-195a-4c80-a2a2-438b11b7cf09",
+                    "type": "vrai_faux",
+                    "question_fr": "« La meilleure décision est celle qui plaît à tout le monde. »",
+                    "question_ar": "« أفضل قرار هو الذي يعجب الجميع. »",
+                    "options": null,
+                    "correct_answer": "faux",
+                    "feedback_positive": {
+                        "fr": "Le consensus n’est pas l’objectif. L’important est d’être juste.",
+                        "ar": "الإجماع ليس الهدف. المهم هو أن تكون عادلاً."
+                    },
+                    "feedback_negative": {
+                        "fr": "Les grandes décisions déplaisent parfois.",
+                        "ar": "القرارات الكبيرة لا ترضي أحياناً."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Nuancer les affirmations sur l’entrepreneuriat, l’échec and la décision collective. Indication : Écouter ≠ obéir (FAUX) ; l’échec est utile seulement si analysé (FAUX) ; une décision qui plaît à tous est souvent médiocre (FAUX).",
+                        "ar": "التفريق بين التأكيدات حول ريادة الأعمال والفشل والقرار الجماعي. دلالة: الاستماع ≠ الطاعة (خطأ)؛ الفشل مفيد فقط إذا تم تحليله (خطأ)؛ القرار الذي يعجب الجميع غالباً ما يكون رديئاً (خطأ)."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:24:56.828678+00:00",
+                    "updated_at": "2026-05-04T13:24:56.828678+00:00"
+                },
+                {
+                    "id": "8eb1936c-bf0d-405c-b1d7-2633376d9410",
+                    "type": "matching",
+                    "question_fr": "Reliez chaque situation au style Hersey & Blanchard.",
+                    "question_ar": "اربط كل حالة بأسلوب هيرسي وبلانشارد.",
+                    "options": {
+                        "pairs": [
+                            {
+                                "left_fr": "Novice motivé",
+                                "left_ar": "مبتدئ متحفز",
+                                "right_fr": "Directif",
+                                "right_ar": "توجيهي"
+                            },
+                            {
+                                "left_fr": "Expert démotivé",
+                                "left_ar": "خبير غير متحفز",
+                                "right_fr": "Participatif",
+                                "right_ar": "تشاركي"
+                            },
+                            {
+                                "left_fr": "Expert motivé",
+                                "left_ar": "خبير متحفز",
+                                "right_fr": "Délégatif",
+                                "right_ar": "تفويضي"
+                            }
+                        ]
+                    },
+                    "correct_answer": "",
+                    "feedback_positive": {
+                        "fr": "Évaluation situationnelle parfaite !",
+                        "ar": "تقييم موقفي ممتاز!"
+                    },
+                    "feedback_negative": {
+                        "fr": "Adaptez le style au niveau de maturité.",
+                        "ar": "كيِّف الأسلوب حسب مستوى النضج."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Adapter son style de leadership selon la situation (Hersey & Blanchard). Indication : Junior (incompétent + motivé) → directif ; senior démotivé (expert + démotivé) → participatif ; stagiaire (semi‑compétent + motivé) → persuasif ; CTO (expert + motivé) → délégatif.",
+                        "ar": "تكييف أسلوب القيادة حسب الموقف (هيرسي وبلانشارد). دلالة: مبتدئ (غير كفؤ + متحفز) ← توجيهي؛ كبير غير متحفز (خبير + غير متحفز) ← تشاركي؛ متدرب (نصف كفؤ + متحفز) ← إقناعي؛ مدير التكنولوجيا (خبير + متحفز) ← تفويضي."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:24:56.828678+00:00",
+                    "updated_at": "2026-05-04T13:24:56.828678+00:00"
+                },
+                {
+                    "id": "a1ed2b1e-c52b-42b4-8515-1961b5c71c7d",
+                    "type": "fill_blanks",
+                    "question_fr": "Cycle Lean Startup",
+                    "question_ar": "دورة الشركة الناشئة الرشيقة",
+                    "options": [
+                        {
+                            "id": "1",
+                            "label_fr": "hypothèse",
+                            "label_ar": ""
+                        },
+                        {
+                            "id": "2",
+                            "label_fr": "mesurer",
+                            "label_ar": ""
+                        },
+                        {
+                            "id": "3",
+                            "label_fr": "pivoter",
+                            "label_ar": ""
+                        }
+                    ],
+                    "correct_answer": "hypothèse, mesurer, pivoter",
+                    "feedback_positive": {
+                        "fr": "Cycle Lean Startup maîtrisé !",
+                        "ar": "إتقان دورة الشركة الناشئة الرشيقة!"
+                    },
+                    "feedback_negative": {
+                        "fr": "Hypothèse → Mesure → Pivot.",
+                        "ar": "فرضية → قياس → محور."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Maîtriser le cycle Lean Startup (Build‑Measure‑Learn). Indication : hypothèse, minimum (MVP), tester, mesurer, données, persévérer, pivoter, échec.",
+                        "ar": "إتقان دورة الشركة الناشئة الرشيقة (بناء-قياس-تعلم). دلالة: فرضية، الحد الأدنى (MVP)، اختبار، قياس، بيانات، مثابرة، محور، فشل."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:24:56.828678+00:00",
+                    "updated_at": "2026-05-04T13:24:56.828678+00:00"
+                },
+                {
+                    "id": "7ba03b94-1c0a-4bac-8f5c-c6821463bec2",
+                    "type": "time_attack",
+                    "question_fr": "Évaluations flash en startup",
+                    "question_ar": "تقييمات سريعة في الشركة الناشئة",
+                    "options": null,
+                    "correct_answer": "",
+                    "feedback_positive": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "feedback_negative": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Évaluer rapidement des situations commerciales (demande, copie, salaire, article). Indication : 3 clients ne justifient pas 100K ; copier l’expérience utilisateur est impossible ; évaluer objectivement avant négocier ; un article n’est pas une preuve.",
+                        "ar": "تقييم سريع لمواقف تجارية (طلب، نسخ، راتب، مقال). دلالة: 3 زبائن لا يبررون 100 ألف؛ نسخ تجربة المستخدم مستحيل؛ التقييم الموضوعي قبل التفاوض؛ مقال ليس دليلاً."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:24:56.828678+00:00",
+                    "updated_at": "2026-05-04T13:24:56.828678+00:00"
+                },
+                {
+                    "id": "a3959f05-cb71-4da4-bdd2-6c360d1bde30",
+                    "type": "short_answer",
+                    "question_fr": "Évaluez MarocDigital (150 mots) : SWOT + Recommandation.",
+                    "question_ar": "قيم MarocDigital (150 كلمة): نقاط القوة والضعف والفرص والتهديدات + توصية.",
+                    "options": null,
+                    "correct_answer": "",
+                    "feedback_positive": {
+                        "fr": "Évaluation SWOT argumentée !",
+                        "ar": "تقييم SWOT مقنع!"
+                    },
+                    "feedback_negative": {
+                        "fr": "Justifiez vos choix.",
+                        "ar": "برر اختياراتك."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Évaluer une startup (SWOT argumenté). Indication : forces (niche, base utilisateurs, équipe), faiblesses (dépendance fondateur, mono‑produit, modèle pas rentable), recommandation (recruter un DAF et lancer un service premium).",
+                        "ar": "تقييم شركة ناشئة (SWOT مقنع). دلالة: قوة (مجال متخصص، قاعدة مستخدمين، فريق)، ضعف (اعتماد على المؤسس، منتج واحد، نموذج غير مربح)، توصية (توظيف مدير مالي وإطلاق خدمة متميزة)."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:24:56.828678+00:00",
+                    "updated_at": "2026-05-04T13:24:56.828678+00:00"
+                },
+                {
+                    "id": "adcdefa6-cba8-46d3-be5e-dc6f9c9a37b8",
+                    "type": "scenario_decision",
+                    "question_fr": "Choisir le financement : A) BA (500K/15%), B) Fonds éthique (1.5M/30% + réseau).",
+                    "question_ar": "اختيار التمويل: أ) مستثمر ملاك (500 ألف/15%)، ب) صندوق أخلاقي (1.5 مليون/30% + شبكة).",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "A",
+                            "label_ar": "أ"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "B. Ratio acceptable + valeur ajoutée réseau.",
+                            "label_ar": "ب. نسبة مقبولة + قيمة مضافة للشبكة."
+                        }
+                    ],
+                    "correct_answer": "B",
+                    "feedback_positive": {
+                        "fr": "La meilleure option n’est pas la plus riche mais la plus adaptée.",
+                        "ar": "الخيار الأفضل ليس الأغنى بل الأنسب."
+                    },
+                    "feedback_negative": {
+                        "fr": "Évaluez la gouvernance et le réseau.",
+                        "ar": "قيم الحوكمة والشبكة."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Évaluer des propositions de financement. Indication : Business Angel (réseau limité), Fonds éthique (ratio acceptable, gouvernance saine, alignement valeurs), Autofinancement (croissance trop lente) → choisir le fonds éthique.",
+                        "ar": "تقييم عروض التمويل. دلالة: مستثمر ملاك (شبكة محدودة)، صندوق أخلاقي (نسبة مقبولة، حوكمة سليمة، توافق قيم)، تمويل ذاتي (نمو بطيء جداً) ← اختر الصندوق الأخلاقي."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:24:56.828678+00:00",
+                    "updated_at": "2026-05-04T13:24:56.828678+00:00"
+                },
+                {
+                    "id": "95c2e776-ab6f-42a8-a785-83a0f2bccc2b",
+                    "type": "puzzle_riddle",
+                    "question_fr": "« L’amateur dit J’AIME, le maître dit VOICI POURQUOI… »",
+                    "question_ar": "« الهاوي يقول أحب، المعلم يقول لهذا السبب… »",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "L’opinion",
+                            "label_ar": "الرأي"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "Le jugement évaluatif",
+                            "label_ar": "الحكم التقييمي"
+                        }
+                    ],
+                    "correct_answer": "B",
+                    "feedback_positive": {
+                        "fr": "L’évaluation sépare l’amateur du maître.",
+                        "ar": "التقييم يفرق بين الهاوي والمعلم."
+                    },
+                    "feedback_negative": {
+                        "fr": "Opinion ≠ Jugement argumenté.",
+                        "ar": "الرأي ≠ حكم مسبب."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Identifier le jugement évaluatif (différence entre opinion et évaluation critique). Indication : « Je ne suis ni OUI ni NON, je suis le POURQUOI après chacun » – l’amateur dit J’AIME, le maître dit VOICI POURQUOI.",
+                        "ar": "تحديد الحكم التقييمي (الفرق بين الرأي والتقييم النقدي). دلالة: « أنا لا نعم ولا لا، أنا السبب وراء كل شيء » – الهاوي يقول أحب، المعلم يقول لهذا السبب."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 150
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:24:56.828678+00:00",
+                    "updated_at": "2026-05-04T13:24:56.828678+00:00"
+                }
+            ],
+            "created_at": "2026-05-04T12:42:06.305473+00:00",
+            "updated_at": "2026-05-04T12:42:06.305473+00:00"
+        },
+        {
+            "id": "98b50e2d-dc99-43ef-b387-052637738a02",
+            "title_fr": "Mission 2: Riad de Luxe – Interculturel",
+            "title_ar": "المهمة 2: رياض فاخر – بين الثقافات",
+            "description_fr": "Lieu: Riad de luxe. Soft skill: Travail en équipe (évaluation interculturelle). Maîtriser l’intelligence interculturelle (Hofstede).",
+            "description_ar": "المكان: رياض فاخر. المهارة الناعمة: العمل الجماعي (تقييم بين الثقافات). إتقان الذكاء بين الثقافات (هوفستيد).",
+            "type": "challenge",
+            "xp_reward": 1000,
+            "bloom_level": "",
+            "soft_skill_dominant": "",
+            "duration_minutes": null,
+            "success_threshold": 70,
+            "mentor": {
+                "name_fr": "",
+                "name_ar": "رشيدة",
+                "age": null,
+                "role_fr": "",
+                "role_ar": "مديرة الرياض",
+                "location_fr": "",
+                "location_ar": "رياض رويال بالمييه، مدينة مراكش القديمة"
+            },
+            "scripts": {
+                "opening_fr": "Riad Royal Palmier, Médina de Marrakech, Jeudi 8h. Luxe absolu. Marbre, fontaines, orangers. Rachida, élégante en tailleur, l’accueille : « Ishaq, Hicham dit que tu évalues bien les stratégies. Mais sais-tu évaluer les PERSONNES ? J'ai 40 employés : Marocains, Français, Sénégalais, Anglais, Espagnols, Indonésiens, Japonais, Américains. 8 cultures. 8 façons de travailler. 8 conceptions du respect, du temps, de l'autorité. ÉVALUE comment gérer une telle diversité. »",
+                "opening_ar": "رياض رويال بالمييه، مدينة مراكش القديمة، الخميس 8 صباحاً. فخامة مطلقة. رخام، نوافير، أشجار برتقال. رشيدة، أنيقة في بذلتها، تستقبله: « إسحاق، هشام يقول إنك تقيم الاستراتيجيات جيداً. لكن هل تعرف تقييم الأشخاص؟ لدي 40 موظفاً: مغاربة، فرنسيون، سنغاليون، إنجليز، إسبان، إندونيسيون، يابانيون، أمريكيون. 8 ثقافات. 8 طرق للعمل. 8 تصورات للاحترام، الوقت، السلطة. قيم كيف تدير هذا التنوع. »",
+                "closing_fr": "",
+                "closing_ar": ""
+            },
+            "cinematic": {
+                "text_fr": "Riad Royal Palmier, Médina de Marrakech, Jeudi 8h. Luxe absolu. Marbre, fontaines, orangers. Rachida, élégante en tailleur, l’accueille : « Ishaq, Hicham dit que tu évalues bien les stratégies. Mais sais-tu évaluer les PERSONNES ? J'ai 40 employés : Marocains, Français, Sénégalais, Anglais, Espagnols, Indonésiens, Japonais, Américains. 8 cultures. 8 façons de travailler. 8 conceptions du respect, du temps, de l'autorité. ÉVALUE comment gérer une telle diversité. »",
+                "text_ar": "رياض رويال بالمييه، مدينة مراكش القديمة، الخميس 8 صباحاً. فخامة مطلقة. رخام، نوافير، أشجار برتقال. رشيدة، أنيقة في بذلتها، تستقبله: « إسحاق، هشام يقول إنك تقيم الاستراتيجيات جيداً. لكن هل تعرف تقييم الأشخاص؟ لدي 40 موظفاً: مغاربة، فرنسيون، سنغاليون، إنجليز، إسبان، إندونيسيون، يابانيون، أمريكيون. 8 ثقافات. 8 طرق للعمل. 8 تصورات للاحترام، الوقت، السلطة. قيم كيف تدير هذا التنوع. »",
+                "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Marrakech.gif",
+                "audio_url_fr": "",
+                "audio_url_ar": ""
+            },
+            "theories_fr": "",
+            "theories_ar": "",
+            "exercises": [
+                {
+                    "id": "f58e26b4-bf7d-4029-9955-3d26d3a0d464",
+                    "type": "qcm",
+                    "question_fr": "Chef Kenji (japonais) dit « oui » puis fait à sa façon. Problème ?",
+                    "question_ar": "الطاهي كينجي (ياباني) يقول « نعم » ثم يفعل بطريقته. مشكلة؟",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "Incompétence",
+                            "label_ar": "عدم كفاءة"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "Culturel : dire « non » à un chef est impoli au Japon.",
+                            "label_ar": "ثقافي: قول « لا » لرئيس غير مهذب في اليابان."
+                        }
+                    ],
+                    "correct_answer": "B",
+                    "feedback_positive": {
+                        "fr": "Évaluation interculturelle juste (Hofstede).",
+                        "ar": "تقييم بين الثقافات صحيح (هوفستيد)."
+                    },
+                    "feedback_negative": {
+                        "fr": "C’est une différence culturelle.",
+                        "ar": "إنه اختلاف ثقافي."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Évaluer les dimensions culturelles (Hofstede – distance hiérarchique). Indication : Kenji ne dit jamais non car au Japon dire non à un supérieur est irrespectueux – c’est culturel, ni incompétence ni insubordination.",
+                        "ar": "تقييم الأبعاد الثقافية (هوفستيد – مسافة السلطة). دلالة: كينجي لا يقول لا أبداً لأنه في اليابان قول لا لرئيس غير محترم – إنه ثقافي، لا عدم كفاءة ولا عصيان."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:24:57.334073+00:00",
+                    "updated_at": "2026-05-04T13:24:57.334073+00:00"
+                }
+            ]
+        }
+    ]
+}

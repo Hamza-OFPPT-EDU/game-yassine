@@ -92,15 +92,20 @@ export type Mission = {
   mission_type: 'challenge' | 'dialogue' | 'minigame' | 'scenario';
   xp_reward: number;
   mentor_name?: string;
+  mentor_name_ar?: string;
   mentor_role?: string;
+  mentor_role_ar?: string;
   script_opening?: string;
+  script_opening_ar?: string;
   script_closing?: string;
+  script_closing_ar?: string;
   soft_skill_dominant?: string;
   narration?: {
     intro?: { texte: string; consigne?: string; objectif?: string };
     conclusion?: { texte_reussite: string };
   };
   cinematic_text?: string;
+  cinematic_text_ar?: string;
   cinematic_gif_url?: string;
   cinematic_audio_url?: string;
   illustration_url?: string;
@@ -122,6 +127,7 @@ export type Challenge = {
   feedbackNegative?: string;
   presentation_fr?: string;
   explanation_fr?: string;
+  explanation_ar?: string;
   context_dialogue?: string;
   illustration_url?: string;
   time_limit_sec?: number;

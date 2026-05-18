@@ -1,0 +1,1982 @@
+{
+  "city": {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "name_fr": "Rabat",
+    "headline_fr": "Réorganisation & Administration",
+    "description_fr": "Ishaq découvre hôpital, ministère, université, ONG et Wilaya. Il apprend à gérer stress, décisions et équipe.",
+    "focus_fr": "Gestion du stress & Décision",
+    "pedagogical_theories_fr": [
+      "Reconnaître et classer le stress (aigu, chronique, positif)",
+      "Appliquer la technique de respiration 4-7-8",
+      "Maîtriser le processus de décision en 6 étapes (Simon)",
+      "Utiliser la matrice d’Eisenhower",
+      "Identifier les biais cognitifs",
+      "Distribuer les rôles d’équipe (Belbin)",
+      "Pratiquer la communication non-violente (CNV)",
+      "Détecter les signes du burnout",
+      "Gérer une crise avec empathie et transparence"
+    ],
+    "learning_outcomes_fr": [
+      "Rabat, capitale administrative et politique, vous plonge dans des contextes professionnels exigeants : urgences médicales, administration publique, recherche universitaire, gestion de crise et gouvernance territoriale."
+    ]
+  },
+  "missions": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655441111",
+      "title_fr": "Urgences à l’Hôpital Ibn Sina",
+      "description_fr": "Mentor: Dr. Amina Fassi. Soft Skill: Gestion du stress. Apprendre à identifier les types de stress, les symptômes physiques et pratiquer la technique 4-7-8.",
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "",
+        "location_fr": "",
+        "location_ar": ""
+      },
+      "scripts": {
+        "opening_fr": "Hôpital Ibn Sina, Rabat - Samedi 22h30\n\nIshaq accompagne Dr. Amina Fassi, urgentiste, pour découvrir comment elle gère le stress extrême de son métier.\n\n\"Ishaq, viens avec moi. Tu vas apprendre que le stress n'est pas un ennemi. C'est un outil qu'on apprend à maîtriser. Observe bien...\"",
+        "opening_ar": "",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "Hôpital Ibn Sina, Rabat – Samedi 22h30. Ishaq accompagne Dr. Amina Fassi, urgentiste, pour découvrir comment elle gère le stress extrême de son métier. « Ishaq, viens avec moi. Tu vas apprendre que le stress n'est pas un ennemi. C'est un outil qu'on apprend à maîtriser. Observe bien... »",
+        "text_ar": "",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Rabat.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Rabat/Rabat%20M1.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "exercises": [
+        {
+          "id": "ad31f2ed-0342-4d5f-997a-89d5b2ea28f1",
+          "type": "qcm",
+          "question_fr": "C’est ton premier jour de stage. Tu dois présenter dans 5 minutes. Ton cœur bat fort, tu transpires, tes mains tremblent. De quel type de stress s’agit-il ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Stress chronique",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Stress aigu",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Stress positif",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Pas de stress",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive_fr": "Bravo ! Stress aigu : court, intense, déclenché par un événement précis.",
+          "feedback_negative_fr": "Non. Chronique dure des semaines. Ici c’est bref et intense → stress aigu.",
+          "hint_fr": "Non. Chronique dure des semaines. Ici c’est bref et intense → stress aigu.",
+          "explanation_fr": "Reconnaître les différents types de stress (aigu, chronique, positif). Indication : Un stress bref et intense lié à un événement précis comme une présentation imminente est un stress aigu.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "f2cd80af-f489-4381-bad0-8d7ce97639cb",
+          "type": "vrai_faux",
+          "question_fr": "« Le stress est toujours mauvais pour la santé. »",
+          "options": [
+            {
+              "id": "vrai",
+              "label_fr": "Vrai",
+              "label_ar": ""
+            },
+            {
+              "id": "faux",
+              "label_fr": "Faux",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "faux",
+          "feedback_positive_fr": "Excellent ! Le stress positif motive. Seul le stress chronique est dangereux.",
+          "feedback_negative_fr": "Faux. Un athlète avant compétition a du stress qui l’aide à performer.",
+          "hint_fr": "Faux. Un athlète avant compétition a du stress qui l’aide à performer.",
+          "explanation_fr": "Démystifier les idées reçues sur le stress. Indication : Le stress positif motive (FAUX le stress est toujours mauvais) ; la gestion du stress s’apprend (VRAI) ; le stress n’est pas un signe de faiblesse (FAUX).",
+          "presentation_fr": ""
+        },
+        {
+          "id": "21a48fdd-c9d8-4a56-8138-0c7c0579b211",
+          "type": "matching",
+          "question_fr": "Relie chaque symptôme à sa catégorie : Physique, Émotionnel, Comportemental.",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Cœur qui bat vite",
+                "left_ar": "",
+                "right_fr": "Physique",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Pleurer facilement",
+                "left_ar": "",
+                "right_fr": "Émotionnel",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Manger trop ou pas assez",
+                "left_ar": "",
+                "right_fr": "Comportemental",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Mal de tête",
+                "left_ar": "",
+                "right_fr": "Physique",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Se sentir triste sans raison",
+                "left_ar": "",
+                "right_fr": "Émotionnel",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "S’isoler des autres",
+                "left_ar": "",
+                "right_fr": "Comportemental",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Parfait ! Tu distingues les trois catégories : corps, sentiments, actions.",
+          "feedback_negative_fr": "Bien essayé. Physique = corps, émotionnel = cœur, comportemental = actions.",
+          "hint_fr": "Bien essayé. Physique = corps, émotionnel = cœur, comportemental = actions.",
+          "explanation_fr": "Classer les symptômes du stress en trois catégories : physique, émotionnel, comportemental. Indication : Cœur qui bat vite → physique ; pleurer → émotionnel ; manger trop → comportemental ; mal de tête → physique ; tristesse → émotionnel ; isolement → comportemental.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "089b7834-e444-4473-a942-bf64630ce3db",
+          "type": "scenario_dialogue",
+          "question_fr": "Une maman paniquée avec son fils qui hurle. Dr. Amina est occupée. Quelle est ta meilleure réaction ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Je panique aussi",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "« Calmez-vous, ce n’est rien »",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Je m’approche calmement, je m’agenouille vers l’enfant, je parle doucement à la maman.",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive_fr": "Bravo ! Corps calme, contact visuel enfant, voix douce = co-régulation émotionnelle.",
+          "feedback_negative_fr": "Face au stress, sois calme, valide l’émotion, n’ignore pas la détresse.",
+          "hint_fr": "Face au stress, sois calme, valide l’émotion, n’ignore pas la détresse.",
+          "explanation_fr": "Utiliser la co‑régulation émotionnelle pour calmer une personne paniquée. Indication : Approchez‑vous calmement, agenouillez‑vous vers l’enfant, parlez doucement à la maman – votre calme se transmet.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "b69b217d-0e87-48db-8504-7e15caf41db6",
+          "type": "fill_blanks",
+          "question_fr": "Complète le texte sur la technique 4-7-8.",
+          "options": {
+            "bank": [
+              {
+                "text_fr": "inspire",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "nez",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "4",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "bloque",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "7",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "expire",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "bouche",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "8",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "3 fois",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "parasympathique",
+                "text_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "inspire, nez, 4, bloque, 7, expire, bouche, 8, 3 fois, parasympathique",
+          "feedback_positive_fr": "Parfait ! Inspire 4s par nez, bloque 7s, expire 8s par bouche, répète 3 fois.",
+          "feedback_negative_fr": "Retiens : 4-7-8. Nez pour inspirer, bouche pour expirer.",
+          "hint_fr": "Retiens : 4-7-8. Nez pour inspirer, bouche pour expirer.",
+          "explanation_fr": "Maîtriser la technique de respiration 4-7-8 pour réduire le stress rapidement. Indication : Inspire par le nez 4s, bloque 7s, expire par la bouche 8s, répète 3 fois – active le système parasympathique.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "ef4c273b-e7e3-4c57-a9c8-9075cc1adf17",
+          "type": "time_attack",
+          "question_fr": "Suis le guide visuel pour faire 3 cycles complets de respiration 4-7-8. Comment te sens-tu maintenant ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Plus calme",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Pareil",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Un peu étourdi",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Concentré",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "A",
+          "feedback_positive_fr": "Bravo d’avoir essayé ! La pratique régulière développe les effets. Continue !",
+          "feedback_negative_fr": "L’essai est déjà une victoire. Réessaie 2-3 fois par jour.",
+          "hint_fr": "L’essai est déjà une victoire. Réessaie 2-3 fois par jour.",
+          "explanation_fr": "Pratiquer régulièrement une technique anti‑stress. Indication : Toute réponse est acceptée – l’essai est déjà une victoire, la pratique régulière développe les effets.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "30eee2f3-4b42-4600-92be-d34be57964b5",
+          "type": "scenario_cascade",
+          "question_fr": "Soutien émotionnel après un choc.",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Un jeune homme apprend le décès de sa grand-mère. Quelle est ta PREMIÈRE action ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Lui parler",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "M’asseoir à côté de lui en silence.",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Il commence à pleurer. Que fais-tu ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Lui dire d'arrêter",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "Lui tendre un mouchoir en silence.",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Il dit : « Elle était tout pour moi… ». Que réponds-tu ?",
+                "question_ar": "",
+                "correct": "C",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "« C'est la vie »",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "C",
+                    "text_fr": "« Elle comptait beaucoup pour toi. Raconte-moi si tu veux. »",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Excellent ! Validation + invitation + non-jugement = base du soutien émotionnel.",
+          "feedback_negative_fr": "Le silence et l'écoute sont souvent plus puissants que les mots.",
+          "hint_fr": "Le silence et l'écoute sont souvent plus puissants que les mots.",
+          "explanation_fr": "Accompagner une person en deuil par présence silencieuse, respect des larmes, écoute active et validation. Indication : Asseyez‑vous en silence, tendez un mouchoir, puis dites « Elle comptait beaucoup pour toi. Raconte‑moi si tu veux. »",
+          "presentation_fr": ""
+        },
+        {
+          "id": "485c0388-1184-42ea-8822-38e7a5e15c26",
+          "type": "error_detection",
+          "question_fr": "Identifie les 5 erreurs majeures dans le planning du Dr. Rachid.",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "Aucune pause quotidienne",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Sommeil insuffisant (4-5h)",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Aucun jour de repos complet",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Nutrition catastrophique (8 cafés)",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Aucun loisir / zéro sport",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive_fr": "Excellent diagnostic ! Tu identifies les 5 causes du burnout.",
+          "feedback_negative_fr": "Cherche les manques fondamentaux : sommeil, repos, nutrition, loisirs.",
+          "hint_fr": "Cherche les manques fondamentaux : sommeil, repos, nutrition, loisirs.",
+          "explanation_fr": "Identifier les facteurs de burnout (épuisement professionnel). Indication : Aucune pause, sommeil insuffisant, aucun jour de repos, nutrition catastrophique, zéro loisir/sport – voilà les 5 causes.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "147da4f2-526f-4324-acd7-7a3bf25fa592",
+          "type": "scenario_decision",
+          "question_fr": "Dr. Amina, épuisée après 12h de garde, doit décider : rester ou passer le relais ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Elle reste pour finir",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Elle passe le relais à un collègue frais.",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive_fr": "Décision professionnelle parfaite ! Reconnaître ses limites priorise la sécurité du patient.",
+          "feedback_negative_fr": "Un médecin épuisé commet 3 fois plus d’erreurs. Passer le relais est une force.",
+          "hint_fr": "Un médecin épuisé commet 3 fois plus d’erreurs. Passer le relais est une force.",
+          "explanation_fr": "Reconnaître ses limites pour protéger les patients. Indication : Un médecin épuisé commet 3 fois plus d’erreurs – la meilleure décision est de passer le relais à un collègue frais.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "326b303b-fd5d-4205-8c30-8193a562532a",
+          "type": "puzzle_riddle",
+          "question_fr": "« Je nais dans la poitrine, je grandis dans les pensées… Qui suis-je ? »",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "La peur",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "La fatigue",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Le stress",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive_fr": "Bravo ! Le stress naît dans le cœur, grandit dans l’esprit. Apprivoisé, il devient force.",
+          "feedback_negative_fr": "Indice : cœur qui bat vite, chaleur, mains qui tremblent.",
+          "hint_fr": "Indice : cœur qui bat vite, chaleur, mains qui tremblent.",
+          "explanation_fr": "Comprendre que le stress, bien géré, devient une force. Indication : Il naît dans la poitrine, grandit dans les pensées, dangereux si fui, puissant si apprivoisé – c’est le stress.",
+          "presentation_fr": ""
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655442222",
+      "title_fr": "Ministère & Prise de décision",
+      "description_fr": "Mentor: Le Directeur. Soft Skill: Prise de décision. Maîtriser le processus de Simon (6 étapes), la matrice d’Eisenhower et identifier les biais cognitifs.",
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "",
+        "location_fr": "",
+        "location_ar": ""
+      },
+      "scripts": {
+        "opening_fr": "",
+        "opening_ar": "",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "Ministère de l'Intérieur – Rabat, Lundi 9h. Ishaq rencontre Fatima Zerhouni, DRH du Ministère. Elle supervise 200 fonctionnaires et doit prendre des décisions vitales en quelques secondes. « Ishaq, choisir, c'est renoncer. Mais ne pas choisir, c'est échouer. Je vais t'apprendre à décider avec clarté, même dans le brouillard de l'urgence. »",
+        "text_ar": "",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Rabat.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Rabat/rabat%20M2.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "exercises": [
+        {
+          "id": "40f6ff19-b6fe-41a0-8a02-dfd0469b5dd4",
+          "type": "qcm",
+          "question_fr": "Le directeur de ton ISTA veut acheter 50 ordinateurs (500 000 DH). Quel type de décision ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Opérationnelle",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Tactique",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Stratégique",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive_fr": "Exact ! Tactique : budget moyen, impact 2-3 ans.",
+          "feedback_negative_fr": "Règle : <10K = op, 10K-1M = tactique, >1M = stratégique.",
+          "hint_fr": "Règle : <10K = op, 10K-1M = tactique, >1M = stratégique.",
+          "explanation_fr": "Classer une décision selon son budget et son impact temporel. Indication : Budget moyen (500K DH) et impact 2‑3 ans → décision tactique (ni opérationnelle, ni stratégique).",
+          "presentation_fr": ""
+        },
+        {
+          "id": "047e74f0-116d-4e05-9ff0-f14125630b1d",
+          "type": "ranking",
+          "question_fr": "Classe les 6 étapes de la décision selon Simon.",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive_fr": "Parfait ! Tu maîtrises le processus Simon : Identifier, Collecter, Générer, Évaluer, Choisir, Agir.",
+          "feedback_negative_fr": "Retiens la logique : d’abord identifier, puis comprendre, explorer, évaluer, choisir.",
+          "hint_fr": "Retiens la logique : d’abord identifier, puis comprendre, explorer, évaluer, choisir.",
+          "explanation_fr": "Maîtriser les 6 étapes du processus décisionnel de Simon. Indication : Ordre logique : identifier le problème, collecter les infos, générer les options, évaluer, choisir, mettre en œuvre et suivre.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "80cffac2-05a8-40bd-9249-bc1c49056df5",
+          "type": "scenario_dialogue",
+          "question_fr": "Citoyen furieux : « Ça fait 3 fois que je viens ! » Ton supérieur absent. Quelle réaction ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "« Revenez demain »",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "« Je m’excuse, j’écoute, je note tout, je promets un suivi. »",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "« Je lui donne un faux numéro »",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive_fr": "Bravo ! Écoute active, validation, engagement réaliste = gestion client mécontent.",
+          "feedback_negative_fr": "Montrer de l’intérêt résout souvent 80% du problème émotionnel.",
+          "hint_fr": "Montrer de l’intérêt résout souvent 80% du problème émotionnel.",
+          "explanation_fr": "Gérer un citoyen mécontent par l’écoute active et l’engagement. Indication : Excusez‑vous, écoutez, notez tout, promettez un suivi – l’écoute résout 80 % du problème.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "3c51ea18-52d6-4c74-acae-98093da9a970",
+          "type": "vrai_faux",
+          "question_fr": "« Ne pas décider = décider. »",
+          "options": [],
+          "correct_answer": "vrai",
+          "feedback_positive_fr": "Vrai. L’indécision laisse les événements décider pour toi.",
+          "feedback_negative_fr": "L’indécision est une forme de décision passive.",
+          "hint_fr": "L’indécision est une forme de décision passive.",
+          "explanation_fr": "Distinguer les idées reçues sur la décision. Indication : Bonnes décisions ≠ rapides (FAUX) ; intuition et logique se complètent (FAUX l’intuition n’est pas > logique) ; ne pas décider = décider (VRAI).",
+          "presentation_fr": ""
+        },
+        {
+          "id": "811ffc3a-5fe0-47bf-969f-c2433b0b6fee",
+          "type": "ranking",
+          "question_fr": "Classe ces tâches par priorité (Matrice d’Eisenhower).",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive_fr": "Excellent ! Matrice Eisenhower maîtrisée : urgent/important d'abord.",
+          "feedback_negative_fr": "Urgent + Important = Faire ; Important non urgent = Planifier.",
+          "hint_fr": "Urgent + Important = Faire ; Important non urgent = Planifier.",
+          "explanation_fr": "Utiliser la matrice d’Eisenhower pour prioriser des tâches. Indication : Urgent + important d’abord (email Ministre, appel journaliste), puis urgent (préparer réunion), puis important non urgent (réserver salle, fournitures), enfin le reste.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "9a4a6b39-5359-46a2-860a-862a9fa80042",
+          "type": "fill_blanks",
+          "question_fr": "Complète le texte sur les biais cognitifs.",
+          "options": {
+            "bank": [
+              {
+                "text_fr": "ancrage",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "première",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "confirmation",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "disponibilité",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "récents",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "biais",
+                "text_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "ancrage, première, confirmation, disponibilité, récents, biais",
+          "feedback_positive_fr": "Parfait ! Ancrage, confirmation, disponibilité : trois pièges à éviter.",
+          "feedback_negative_fr": "Ancrage = 1er chiffre, Confirmation = chercher ce qui conforte, Disponibilité = souvenirs récents.",
+          "hint_fr": "Ancrage = 1er chiffre, Confirmation = chercher ce qui conforte, Disponibilité = souvenirs récents.",
+          "explanation_fr": "Identifier trois biais cognitifs (ancrage, confirmation, disponibilité). Indication : Ancrage (1er chiffre), confirmation (chercher ce qui confirme), disponibilité (juger par souvenirs récents).",
+          "presentation_fr": ""
+        },
+        {
+          "id": "7785c4fe-975b-42de-982d-34101ece238a",
+          "type": "scenario_cascade",
+          "question_fr": "Dilemme éthique : l'erreur de Karim.",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Erreur de 500 DH sur les frais de Karim. Première réaction ?",
+                "question_ar": "",
+                "correct": "C",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Le dénoncer",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "C",
+                    "text_fr": "Parler D’ABORD à Karim",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Karim nie l'erreur. Que fais-tu ?",
+                "question_ar": "",
+                "correct": "C",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Laisser tomber",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "C",
+                    "text_fr": "Lui montrer les preuves calmement",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Il demande le secret. Que réponds-tu ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "D'accord",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Je vais devoir signaler à Fatima. Veux-tu le faire toi-même ? »",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Intégrité exemplaire ! Le dialogue avant l'escalade, mais sans compromission.",
+          "feedback_negative_fr": "L'éthique demande de la transparence et du courage.",
+          "hint_fr": "L'éthique demande de la transparence et du courage.",
+          "explanation_fr": "Résoudre un dilemme éthique par le dialogue privé, les preuves et l’intégrité. Indication : Parlez d’abord à Karim, montrez les preuves calmement, puis proposez‑lui de se dénoncer lui‑même.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "52317c29-2dff-4819-9773-af2fb0efa53a",
+          "type": "error_detection",
+          "question_fr": "Identifie les 5 erreurs de décision dans le projet Digitalisation.",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "Budget décidé trop vite (30 min)",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Pas d’appel d’offres",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Zéro consultation employés",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Deadline irréaliste (6 mois)",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Aucun test pilote",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive_fr": "Diagnostic parfait ! Tu as identifié les violations du processus Simon.",
+          "feedback_negative_fr": "Cherche la précipitation et l'absence de consultation.",
+          "hint_fr": "Cherche la précipitation et l'absence de consultation.",
+          "explanation_fr": "Repérer les erreurs classiques de décision en projet. Indication : Budget trop rapide, pas d’appel d’offres, absence de consultation des employés, délai irréaliste, aucun test pilote.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "84f05ba9-694f-4138-b0f0-97fd425c07ca",
+          "type": "scenario_decision",
+          "question_fr": "100 000 DH à dépenser. Trois projets possibles. Quel choix ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Formation",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Logiciel",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Je demande aux employés de voter",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "D",
+          "feedback_positive_fr": "Leadership participatif ! L'engagement est garanti quand les utilisateurs choisissent.",
+          "feedback_negative_fr": "Imposer une solution crée de la résistance.",
+          "hint_fr": "Imposer une solution crée de la résistance.",
+          "explanation_fr": "Adopter un leadership participatif pour allouer un budget. Indication : Demandez l’avis de tous les employés par un vote démocratique – l’engagement est ainsi garanti.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "4ee82767-5edb-4526-b95c-0eee4e10459a",
+          "type": "short_answer",
+          "question_fr": "Rédige ton plan de décision personnel (Décision, 6 étapes, Biais).",
+          "options": [],
+          "correct_answer": "décision, étapes, biais",
+          "feedback_positive_fr": "Superbe réflexion métacognitive ! Plan concret.",
+          "feedback_negative_fr": "Vérifie que tu as cité une décision, les étapes et un biais.",
+          "hint_fr": "Vérifie que tu as cité une décision, les étapes et un biais.",
+          "explanation_fr": "Appliquer les 6 étapes Simon à une décision personnelle, en anticipant un biais. Indication : Choisissez une décision réelle, suivez les étapes, et nommez un biais (ex : ancrage, confirmation, disponibilité).",
+          "presentation_fr": ""
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655443333",
+      "title_fr": "Projet collaboratif à l’Université",
+      "description_fr": "Mentor: Dr. Sarah. Soft Skill: Travail en équipe. Découvrir les rôles Belbin, pratiquer la CNV et comprendre le cycle de vie d'une équipe (Tuckman).",
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "",
+        "location_fr": "",
+        "location_ar": ""
+      },
+      "scripts": {
+        "opening_fr": "Université Mohammed V - Rabat, Mercredi 14h\n\nIshaq rencontre Pr. Youssef Benjelloun, coordinateur d'un projet recherche interdisciplinaire (5 chercheurs de 3 disciplines).\n\n\"Ishaq, le travail d'équipe n'est pas naturel. C'est un ART qu'on apprend. Je vais te montrer les règles essentielles...\"",
+        "opening_ar": "",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "Université Mohammed V - Rabat, Mercredi 14h. Ishaq rencontre Pr. Youssef Benjelloun, coordinateur d'un projet recherche interdisciplinaire. « Ishaq, le travail d'équipe n'est pas naturel. C'est un ART qu'on apprend. Je vais te montrer les règles essentielles pour transformer un groupe en une force cohérente. »",
+        "text_ar": "",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Rabat.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Rabat/rabat%20m3.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "exercises": [
+        {
+          "id": "b2ba689c-6f27-46a8-9076-0cb9b6e64381",
+          "type": "qcm",
+          "question_fr": "Aicha a TOUJOURS 10 idées nouvelles, mais ne finit jamais rien. Quel rôle Belbin ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Leader",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Créatif",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Analyste",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Réalisateur",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive_fr": "Exact ! Créative : génère des idées mais manque d’exécution.",
+          "feedback_negative_fr": "Nadia invente → créative.",
+          "hint_fr": "Nadia invente → créative.",
+          "explanation_fr": "Reconnaître les rôles Belbin dans une équipe. Indication : Une personne qui génère 10 idées mais ne les exécute jamais incarne le rôle Créatif.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "0544222e-72e0-4914-9049-1ad340692319",
+          "type": "team_roles",
+          "question_fr": "Attribue à chaque membre le rôle Belbin.",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Karim",
+                "left_ar": "",
+                "right_fr": "Analyste",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Sarah",
+                "left_ar": "",
+                "right_fr": "Harmonisateur",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Omar",
+                "left_ar": "",
+                "right_fr": "Leader",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Nadia",
+                "left_ar": "",
+                "right_fr": "Créatif",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Hassan",
+                "left_ar": "",
+                "right_fr": "Réalisateur",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Bravo ! Équipe parfaitement distribuée selon Belbin.",
+          "feedback_negative_fr": "Analyste (données), Harmonisateur (calme), Leader (dirige), Créatif (idées), Réalisateur (action).",
+          "hint_fr": "Analyste (données), Harmonisateur (calme), Leader (dirige), Créatif (idées), Réalisateur (action).",
+          "explanation_fr": "Distribuer les rôles Belbin selon les forces de chacun. Indication : Karim → Analyste, Sarah → Harmonisateur, Omar → Leader, Nadia → Créatif, Hassan → Réalisateur.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "87bb8bb7-f169-495e-8442-716caf42fb68",
+          "type": "scenario_dialogue",
+          "question_fr": "Karim attaque Nadia : « Tes idées sont n’importe quoi ! » Quelle intervention ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "« Tu es méchant »",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "« Karim, peux-tu reformuler de façon constructive ? »",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Je ne dis rien",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive_fr": "Magnifique ! Recadrage sans juger, demande de feedback constructif.",
+          "feedback_negative_fr": "Reformule la critique en demande d’amélioration technique.",
+          "hint_fr": "Reformule la critique en demande d’amélioration technique.",
+          "explanation_fr": "Médier un conflit d’équipe par reformulation constructive. Indication : Demandez à Karim de reformuler sa critique en améliorations techniques sur les idées de Nadia.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "444195d3-63bd-4fa5-ba8a-d99c3e1149bf",
+          "type": "vrai_faux",
+          "question_fr": "« Les conflits dans une équipe sont TOUJOURS mauvais. »",
+          "options": [],
+          "correct_answer": "faux",
+          "feedback_positive_fr": "Faux. Conflit de tâches (idées) = sain. Conflit relationnel = toxique.",
+          "feedback_negative_fr": "Les conflits d'idées stimulent la créativité.",
+          "hint_fr": "Les conflits d'idées stimulent la créativité.",
+          "explanation_fr": "Distinguer les mythes sur les équipes performantes. Indication : Diversité cognitive = +35 % performance (FAUX mêmes profils) ; leader admet ses erreurs (FAUX doit toujours avoir raison) ; conflit d’idées = sain (FAUX toujours mauvais).",
+          "presentation_fr": ""
+        },
+        {
+          "id": "54ace88b-be1f-4eb5-bd7a-ce4059bdf020",
+          "type": "fill_blanks",
+          "question_fr": "Complète les 4 étapes de la CNV (OSBD).",
+          "options": {
+            "bank": [
+              {
+                "text_fr": "Observation",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "jugement",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "tu",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "Sentiment",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "je",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "Besoin",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "Demande",
+                "text_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "Observation, jugement, tu, Sentiment, je, Besoin, Demande",
+          "feedback_positive_fr": "Parfait ! Observation, Sentiment, Besoin, Demande. Base de la CNV.",
+          "feedback_negative_fr": "Faits sans jugement, Sentiment avec « je », Besoin expliqué.",
+          "hint_fr": "Faits sans jugement, Sentiment avec « je », Besoin expliqué.",
+          "explanation_fr": "Maîtriser les 4 étapes de la Communication Non‑Violente (CNV). Indication : Observation (faits sans jugement), Sentiment (avec « je »), Besoin, Demande concrète.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "c9c025fa-ca2e-47b1-9109-71f67321172c",
+          "type": "scenario_cascade",
+          "question_fr": "Youssef est passif dans l'équipe.",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Youssef ne contribue pas. Première approche ?",
+                "question_ar": "",
+                "correct": "C",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Le critiquer",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "C",
+                    "text_fr": "Lui parler en privé avec bienveillance",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Il dit : « Ma mère est malade, je suis épuisé. » Réaction ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "« Sois pro »",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Je suis désolé. Comment l’équipe peut t’aider ? »",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Il demande la discrétion. Que dis-tu à l’équipe ?",
+                "question_ar": "",
+                "correct": "C",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Tout dire",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "C",
+                    "text_fr": "Expliquer qu’il a des difficultés personnelles sans détail.",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Bienveillance et transparence respectueuse. Tu as gagné sa confiance.",
+          "feedback_negative_fr": "Le dialogue privé évite l'humiliation et renforce la solidarité.",
+          "hint_fr": "Le dialogue privé évite l'humiliation et renforce la solidarité.",
+          "explanation_fr": "Gérer un membre passif par bienveillance, soutien et confidentialité. Indication : Parlez‑lui en privé, proposez de l’aide face à sa difficulté personnelle, puis dites simplement à l’équipe qu’il traverse une période difficile.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "70f8d80f-6e2f-4c0d-a2cb-0a5ae134d774",
+          "type": "ranking",
+          "question_fr": "Classe les 5 étapes de Tuckman.",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive_fr": "Bravo ! Formation, Tempête, Normalisation, Performance, Dissolution.",
+          "feedback_negative_fr": "On forme, on se confronte, on s’organise, on performe.",
+          "hint_fr": "On forme, on se confronte, on s’organise, on performe.",
+          "explanation_fr": "Ordonner les 5 phases de vie d’une équipe (Tuckman). Indication : Forming, Storming, Norming, Performing, Adjourning.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "48629e54-b6b8-4478-88e6-3bca75afcb47",
+          "type": "matching",
+          "question_fr": "Relie chaque lettre de DESC à sa signification.",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "D",
+                "left_ar": "",
+                "right_fr": "Décris les faits",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "E",
+                "left_ar": "",
+                "right_fr": "Exprime ton ressenti",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "S",
+                "left_ar": "",
+                "right_fr": "Suggère une solution",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "C",
+                "left_ar": "",
+                "right_fr": "Conséquences",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Parfait ! DESC est la clé du feedback sans conflit.",
+          "feedback_negative_fr": "D=faits, E=sentiment, S=solution, C=impact.",
+          "hint_fr": "D=faits, E=sentiment, S=solution, C=impact.",
+          "explanation_fr": "Utiliser la méthode DESC pour un feedback sans conflit. Indication : D → Décrire les faits ; E → Exprimer son ressenti ; S → Suggérer une solution ; C → Conséquences.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "9217e4a1-1ccb-48ee-ab48-8cc3a3937344",
+          "type": "scenario_decision",
+          "question_fr": "Attribue chaque tâche au bon profil Belbin.",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Design -> Nadia (créative)",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Données -> Karim (analyste)",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Rapport -> Hassan (réalisateur)",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Conflit -> Sarah (harmonisateur)",
+              "label_ar": ""
+            },
+            {
+              "id": "E",
+              "label_fr": "Présentation -> Omar (leader)",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "A",
+          "feedback_positive_fr": "Attribution optimale ! Chacun dans sa force = productivité maximale.",
+          "feedback_negative_fr": "Répartis selon l'expertise naturelle : créatif (design), analyste (chiffres).",
+          "hint_fr": "Répartis selon l'expertise naturelle : créatif (design), analyste (chiffres).",
+          "explanation_fr": "Déléguer les tâches selon les profils Belbin. Indication : Design → Créatif (Nadia) ; données → Analyste (Karim) ; rapport → Réalisateur (Hassan) ; conflit → Harmonisateur (Sarah) ; présentation → Leader (Omar).",
+          "presentation_fr": ""
+        },
+        {
+          "id": "06de8469-b062-4782-b80f-ec01c25f49c8",
+          "type": "puzzle_riddle",
+          "question_fr": "« Seule, je ne suis rien. À deux, je deviens force. À trois, magie... »",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "La force",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "La confiance",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "L’argent",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive_fr": "Magnifique ! La confiance est le ciment invisible de toute équipe.",
+          "feedback_negative_fr": "Sans moi, tout s'effondre.",
+          "hint_fr": "Sans moi, tout s'effondre.",
+          "explanation_fr": "Identifier le ciment invisible de toute équipe : la confiance. Indication : Seule, elle est rien ; à deux, force ; à plusieurs, légende. Si elle se brise, tout s’effondre.",
+          "presentation_fr": ""
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655444444",
+      "title_fr": "ONG Espoir Maroc",
+      "description_fr": "Mentor: Salma. Soft Skill: Résilience. Identifier le burnout, pratiquer le coping adaptatif et maîtriser les piliers de la résilience (Cyrulnik).",
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "",
+        "location_fr": "",
+        "location_ar": ""
+      },
+      "scripts": {
+        "opening_fr": "",
+        "opening_ar": "",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "Rabat – Jeudi 11h. Ishaq rejoint Khalid, chef de chantier sur un projet d'infrastructure majeur. « La coordination, c'est comme une chorégraphie, Ishaq. Si un seul danseur perd le rythme, tout le spectacle s'arrête. Apprends à synchroniser les talents pour bâtir l'avenir. »",
+        "text_ar": "",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Rabat.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Rabat/Rabat%20m4.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "exercises": [
+        {
+          "id": "1d06d753-7c27-4e34-97bf-d5d11f1304b7",
+          "type": "qcm",
+          "question_fr": "Employé travaille 14h/j depuis 6 mois, vide émotionnel, plus de motivation. Quel mal ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Stress aigu",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Anxiété",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Burnout",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive_fr": "Exact ! Burnout : épuisement émotionnel, cynisme, inefficacité.",
+          "feedback_negative_fr": "Stress aigu est bref. Ici c'est l'épuisement chronique.",
+          "hint_fr": "Stress aigu est bref. Ici c'est l'épuisement chronique.",
+          "explanation_fr": "Diagnostiquer un burnout (épuisement émotionnel, cynisme, inefficacité). Indication : 14h/jour pendant 6 mois, perte de motivation, vide émotionnel → burnout.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "8ba04d81-3b10-48af-a3d3-8cb7ca9c832f",
+          "type": "matching",
+          "question_fr": "Relie chaque action à sa catégorie : Adaptatif ou Inadaptatif.",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Parler à un ami",
+                "left_ar": "",
+                "right_fr": "Adaptatif",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Alcool",
+                "left_ar": "",
+                "right_fr": "Inadaptatif",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Sport",
+                "left_ar": "",
+                "right_fr": "Adaptatif",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Nier le problème",
+                "left_ar": "",
+                "right_fr": "Inadaptatif",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Méditer",
+                "left_ar": "",
+                "right_fr": "Adaptatif",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Blâmer les autres",
+                "left_ar": "",
+                "right_fr": "Inadaptatif",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Excellent ! Coping adaptatif = affronter. Inadaptatif = éviter.",
+          "feedback_negative_fr": "Adaptatif = solutions saines. Inadaptatif = fuite ou déni.",
+          "hint_fr": "Adaptatif = solutions saines. Inadaptatif = fuite ou déni.",
+          "explanation_fr": "Distinguer les stratégies de coping adaptatives (saines) des inadaptatives (évitement). Indication : Adaptatif : parler, sport, aide pro, méditer. Inadaptatif : alcool, déni, isolement, blâme.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "5196f205-cf56-4887-85e2-1474d0768966",
+          "type": "scenario_dialogue",
+          "question_fr": "Salma doit annoncer 4 licenciements. Meilleure approche ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Email générique",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Réunir individuellement d'abord, puis réunion collective.",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive_fr": "Approche professionnelle ! Dignité individuelle et transparence collective.",
+          "feedback_negative_fr": "L’email ou la réunion collective directe humilie les personnes.",
+          "hint_fr": "L’email ou la réunion collective directe humilie les personnes.",
+          "explanation_fr": "Annoncer une mauvaise nouvelle avec dignité et transparence. Indication : Réunissez d’abord individuellement les licenciés, puis organisez une réunion collective transparente.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "270fb862-7e41-4b19-874f-553e6866fa6c",
+          "type": "time_attack",
+          "question_fr": "Vrai/Faux rapide : \"Le coping par isolement est adaptatif.\"",
+          "options": [],
+          "correct_answer": "faux",
+          "feedback_positive_fr": "Exact. L’isolement aggrave le stress au lieu de le résoudre.",
+          "feedback_negative_fr": "Le soutien social est un pilier de la résilience.",
+          "hint_fr": "Le soutien social est un pilier de la résilience.",
+          "explanation_fr": "Connaître les techniques anti‑stress et les modèles de burnout. Indication : Respiration 4‑7‑8, 3 dimensions du burnout (Maslach), isolement = coping inadaptatif.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "bc36307d-4eef-4822-b70d-2e2df5c0e8b9",
+          "type": "fill_blanks",
+          "question_fr": "Complète les 8 piliers de la résilience de Cyrulnik.",
+          "options": {
+            "bank": [
+              {
+                "text_fr": "sens",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "relations",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "humour",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "corps",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "apprentissage",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "créativité",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "espoir",
+                "text_ar": ""
+              },
+              {
+                "text_fr": "spiritualité",
+                "text_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité",
+          "feedback_positive_fr": "Parfait ! Les piliers de Cyrulnik permettent de se reconstruire.",
+          "feedback_negative_fr": "Pourquoi, avec qui, rire, bouger, apprendre, créer...",
+          "hint_fr": "Pourquoi, avec qui, rire, bouger, apprendre, créer...",
+          "explanation_fr": "Mémoriser les 8 piliers de la résilience (Cyrulnik). Indication : sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "e1d09da1-3771-4c7c-b120-5ac95a1b7f77",
+          "type": "error_detection",
+          "question_fr": "Identifie 6 erreurs dans le plan d’urgence de Salma.",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "Mentir aux employés",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Travailler 16h/jour",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Salaires -50% sans discussion",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Supplier le financeur",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Embaucher en CDI pendant la crise",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Sacrifier sa propre santé",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive_fr": "Diagnostic parfait ! Ces erreurs sont classiques en gestion de crise.",
+          "feedback_negative_fr": "Cherche le déni, le surtravail et le manque de stratégie.",
+          "hint_fr": "Cherche le déni, le surtravail et le manque de stratégie.",
+          "explanation_fr": "Repérer les erreurs classiques d’un plan d’urgence en ONG. Indication : mentir, 16h/jour, salaire -50% unilatéral, supplier, embauche CDI, sacrifice de santé.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "1b155607-e4dc-41b1-86ae-60c01886cbaf",
+          "type": "scenario_cascade",
+          "question_fr": "Recadrage cognitif de Salma.",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Salma dit : « J’ai échoué ». Comment recadrer ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "« C'est vrai »",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Un événement n’est pas un échec si tu apprends. »",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Elle dit : « Je suis nulle ». Recadrage ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "« Non t'es forte »",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Tu as fait des erreurs mais tu n’es pas TA performance. »",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "« J’ai ruiné la vie de 10 personnes. » Recadrage ?",
+                "question_ar": "",
+                "correct": "A",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "« Tu leur as offert des années de travail. L’économie est difficile. »",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« C'est ta faute »",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Excellent recadrage ! Dissocier l'être de l'acte et transformer l'erreur en leçon.",
+          "feedback_negative_fr": "La résilience commence par le changement de regard sur les faits.",
+          "hint_fr": "La résilience commence par le changement de regard sur les faits.",
+          "explanation_fr": "Recadrer des pensées négatives (Beck) pour restaurer la confiance. Indication : « J’ai échoué » → « tu as appris » ; « je suis nulle » → dissocier personne et action ; « j’ai ruiné 10 vies » → rappeler les aspects positifs et les facteurs externes.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "fdafd8e1-9424-4b88-8468-1b507539fd85",
+          "type": "scenario_decision",
+          "question_fr": "Budget coupé de 60%. Quelle stratégie de survie ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Fermer immédiatement",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Pivot stratégique : réduire l'équipe et se recentrer sur 2 projets forts.",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive_fr": "Stratégie gagnante ! Réalisme, focus et pivot sauvent les organisations.",
+          "feedback_negative_fr": "Miser sur une seule solution (comme le crowdfunding) est trop risqué.",
+          "hint_fr": "Miser sur une seule solution (comme le crowdfunding) est trop risqué.",
+          "explanation_fr": "Effectuer un pivot stratégique intelligent en période de crise. Indication : Réduisez à 5 employés, recentrez sur 2 projets forts, diversifiez les financeurs.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "24165562-52b4-4f0e-af17-e03fcc744e68",
+          "type": "short_answer",
+          "question_fr": "Rédige le message de restructuration (Transparence, Empathie, Vision).",
+          "options": [],
+          "correct_answer": "message",
+          "feedback_positive_fr": "Message exemplaire ! Leadership en temps de crise.",
+          "feedback_negative_fr": "N'oublie pas d'inclure l'empathie et une vision claire pour la suite.",
+          "hint_fr": "N'oublie pas d'inclure l'empathie et une vision claire pour la suite.",
+          "explanation_fr": "Communiquer une restructuration avec empathie, transparence et vision. Indication : Le message doit contenir : transparence, empathie, options, vision, engagement personnel.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "074eb261-75d7-4c39-af92-957f301945f2",
+          "type": "puzzle_riddle",
+          "question_fr": "« Je suis plus forte quand tu me casses et me reconstruis… Qui suis-je ? »",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "La foi",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "La résilience",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "La patience",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive_fr": "Magnifique ! La résilience naît de l’adversité.",
+          "feedback_negative_fr": "Indice : apprendre à se relever.",
+          "hint_fr": "Indice : apprendre à se relever.",
+          "explanation_fr": "Identifier la résilience. Indication : « Je suis plus forte quand tu me casses et me reconstruis. Les enfants l’ont naturellement, les adultes doivent la réapprendre. »",
+          "presentation_fr": ""
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655445555",
+      "title_fr": "Le Grand Défi Final – Wilaya",
+      "description_fr": "Mentor: Le Wali. Synthèse des 3 soft skills (Stress, Décision, Équipe). Gérer une crise sanitaire majeure et arbitrer des dilemmes éthiques de haut niveau.",
+      "mentor": {
+        "name_fr": "",
+        "name_ar": "",
+        "age": null,
+        "role_fr": "",
+        "role_ar": "",
+        "location_fr": "",
+        "location_ar": ""
+      },
+      "scripts": {
+        "opening_fr": "Wilaya de Rabat, Vendredi 10h - Crise Sanitaire\n\nIshaq est invité par le Wali (Gouverneur) Mohamed Azhari. Une intoxication alimentaire massive s'est déclarée dans un quartier populaire. 200 personnes à l'hôpital. Les médias arrivent. La population panique.\n\n\"Ishaq, pendant 24h, tu seras mon stagiaire d'observation. Tu vas voir comment on gère une CRISE RÉELLE où DÉCISION, ÉQUIPE et STRESS sont testés ensemble. Prêt ?\"",
+        "opening_ar": "",
+        "closing_fr": "",
+        "closing_ar": ""
+      },
+      "cinematic": {
+        "text_fr": "Wilaya de Rabat, Vendredi 10h. Ishaq est l'invité du Wali pour observer la gestion d'une crise réelle. « Ici, Ishaq, la théorie s'arrête et l'action commence. Tu vas voir comment le stress, la décision et l'équipe fusionnent pour sauver des situations désespérées. Bienvenue dans le monde réel. »",
+        "text_ar": "",
+        "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/welcome%20narration%20Rabat.gif",
+        "audio_url_fr": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Audio_narration%20cenimatique/Rabat/Rabat%20m5.mp3",
+        "audio_url_ar": ""
+      },
+      "theories_fr": "",
+      "exercises": [
+        {
+          "id": "19c408f7-07e4-4ca2-96c5-7865b018d59b",
+          "type": "scenario_decision",
+          "question_fr": "Crise sanitaire : 200 hospitalisés. Une décision en 60 secondes. Laquelle ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Donner une interview",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Envoyer plus de médecins à l’hôpital (sauver des vies)",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "B",
+          "feedback_positive_fr": "Priorité correcte ! Sauver les vies avant d’expliquer ou d'enquêter.",
+          "feedback_negative_fr": "La hiérarchie : 1) Vies, 2) Enquête, 3) Com, 4) Empathie.",
+          "hint_fr": "La hiérarchie : 1) Vies, 2) Enquête, 3) Com, 4) Empathie.",
+          "explanation_fr": "Prioriser la sauvegarde des vies en situation de crise. Indication : Envoyez plus de médecins à l’hôpital (sauver des vies) avant toute communication.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "26d707ab-83eb-4ded-924f-01ca1b2bf4de",
+          "type": "team_roles",
+          "question_fr": "Attribue chaque rôle de la cellule de crise.",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Chef",
+                "left_ar": "",
+                "right_fr": "Fatima (expérience)",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Médical",
+                "left_ar": "",
+                "right_fr": "Dr. Karim",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Enquêteur",
+                "left_ar": "",
+                "right_fr": "Hassan",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Porte-parole",
+                "left_ar": "",
+                "right_fr": "Sarah",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Empathie",
+                "left_ar": "",
+                "right_fr": "Imam",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Données",
+                "left_ar": "",
+                "right_fr": "Youssef",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Cellule de crise optimale ! Expertise, légitimité et diversité.",
+          "feedback_negative_fr": "Apparie selon la fonction : médecin (médical), police (enquête), imam (empathie).",
+          "hint_fr": "Apparie selon la fonction : médecin (médical), police (enquête), imam (empathie).",
+          "explanation_fr": "Constituer une cellule de crise avec des profils complémentaires. Indication : Chef (Fatima), Médical (Dr. Karim), Enquêteur (Capitaine Hassan), Porte‑parole (Sarah), Empathie (Imam), Données (Youssef).",
+          "presentation_fr": ""
+        },
+        {
+          "id": "57e3e6d3-939e-4753-8130-f0887f81ecb1",
+          "type": "scenario_cascade",
+          "question_fr": "Communication médias en temps de crise.",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Premier message aux journalistes ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "« Pas de détails »",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Voici ce que nous savons, cherchons et faisons. »",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "« Combien de morts ? »",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "« Beaucoup »",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« 3 décès confirmés. Nous sommes avec les familles. »",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "« C’est votre faute ! »",
+                "question_ar": "",
+                "correct": "C",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Attaquer",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "C",
+                    "text_fr": "« Je comprends votre colère. L'enquête déterminera tout. Je sauve des vies. »",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Professionnalisme parfait ! Factuel, empathique et recentré sur l'action.",
+          "feedback_negative_fr": "Ne jamais attaquer en retour, reste sur les faits et la compassion.",
+          "hint_fr": "Ne jamais attaquer en retour, reste sur les faits et la compassion.",
+          "explanation_fr": "Communiquer en crise avec transparence, empathie et recentrage sur l’action. Indication : Dites ce que vous savez/ignorez, donnez les chiffres avec compassion, reconnaissez la colère puis recentrez sur l’action.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "555ffff0-b2c1-473c-8463-5fe72e855c96",
+          "type": "error_detection",
+          "question_fr": "Trouve les 5 erreurs dans le rapport d’analyse de crise.",
+          "options": [
+            {
+              "id": "",
+              "label_fr": "Données « 100% homme » suspectes",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Projections sans modèle justifié",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Conclusion sur seulement 10 témoignages",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Accusations sans preuves",
+              "label_ar": ""
+            },
+            {
+              "id": "",
+              "label_fr": "Promesse : « Tout sera fini dans 24h »",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "",
+          "feedback_positive_fr": "Vigilance professionnelle ! Tu as évité les conclusions hâtives et les sur-promesses.",
+          "feedback_negative_fr": "Cherche les biais de données et les promesses intenables.",
+          "hint_fr": "Cherche les biais de données et les promesses intenables.",
+          "explanation_fr": "Analyser un rapport erroné en évitant les pièges fréquents. Indication : Données suspectes (100% homme), projection non justifiée, conclusion hâtive (10 témoignages), accusation sans preuve, promesse intenable (24h).",
+          "presentation_fr": ""
+        },
+        {
+          "id": "13b08bea-cdd4-44dd-ae23-d620d38f0846",
+          "type": "time_attack",
+          "question_fr": "5 decisions rapides en crise. Agent paniqué ? Enfant peur ? Gaffe Sarah ?",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "Respirer 4-7-8",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Agenouiller/Doux",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "Analyser erreur ensemble",
+              "label_ar": ""
+            },
+            {
+              "id": "D",
+              "label_fr": "Dormir d'abord",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "A",
+          "feedback_positive_fr": "Leadership juste et humain. Calme avant l'action, limites reconnues.",
+          "feedback_negative_fr": "La panique demande du souffle, la fatigue demande du repos.",
+          "hint_fr": "La panique demande du souffle, la fatigue demande du repos.",
+          "explanation_fr": "Prendre 5 décisions rapides sous pression en utilisant les acquis précédents. Indication : Panique → 4-7-8 ; enfant → s’agenouiller ; opposant → ignorer ; gaffe → analyse collective ; fatigue → passer le relais.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "6f6a477f-4888-4d85-8e04-93eeb4ea25d2",
+          "type": "matching",
+          "question_fr": "Relie les piliers de l'autodétermination (SDT).",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "Autonomie",
+                "left_ar": "",
+                "right_fr": "« Gère comme tu le sens »",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Compétence",
+                "left_ar": "",
+                "right_fr": "« Célèbre l’expertise »",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "Affiliation",
+                "left_ar": "",
+                "right_fr": "« Repas d’équipe »",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Maîtrise de la SDT ! Base de la motivation intrinsèque.",
+          "feedback_negative_fr": "Autonomie (liberté), Compétence (maîtrise), Affiliation (lien).",
+          "hint_fr": "Autonomie (liberté), Compétence (maîtrise), Affiliation (lien).",
+          "explanation_fr": "Appliquer les trois piliers de l’autodétermination (SDT). Indication : Autonomie → « gère comme tu le sens » ; Compétence → « célèbre l’expertise » ; Affiliation → « repas d’équipe ».",
+          "presentation_fr": ""
+        },
+        {
+          "id": "efe93cd3-a41a-4482-8fc5-cbf2a63f25af",
+          "type": "scenario_cascade",
+          "question_fr": "Dilemme éthique avec le Ministre.",
+          "options": {
+            "steps": [
+              {
+                "question_fr": "Le Ministre demande de cacher un nom. Conseil ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Obéir",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "« Dialoguez d’abord. »",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Il menace. Que réponds-tu ?",
+                "question_ar": "",
+                "correct": "C",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Céder",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "C",
+                    "text_fr": "Expliquer les risques énormes du secret s'il est découvert.",
+                    "text_ar": ""
+                  }
+                ]
+              },
+              {
+                "question_fr": "Il reste ferme. Action ?",
+                "question_ar": "",
+                "correct": "B",
+                "responses": [
+                  {
+                    "id": "A",
+                    "text_fr": "Se taire",
+                    "text_ar": ""
+                  },
+                  {
+                    "id": "B",
+                    "text_fr": "Dire la vérité publiquement.",
+                    "text_ar": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "correct_answer": "",
+          "feedback_positive_fr": "Intégrité absolue. Votre carrière finira, votre intégrité jamais.",
+          "feedback_negative_fr": "L'obéissance aveugle est une faute dans la gestion publique.",
+          "hint_fr": "L'obéissance aveugle est une faute dans la gestion publique.",
+          "explanation_fr": "Résoudre un dilemme éthique avec intégrité. Indication : Dialoguez d’abord, montrez les risques de la dissimulation, puis, si nécessaire, dites la vérité publiquement.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "abcca1d7-d9f6-4890-b558-258bfb3e522e",
+          "type": "short_answer",
+          "question_fr": "Rédige ton plan 100 jours comme Wali (Priorités, Équipe, Prévention).",
+          "options": [],
+          "correct_answer": "plan",
+          "feedback_positive_fr": "Vision stratégique excellente ! Plan structuré et réaliste.",
+          "feedback_negative_fr": "Assure-toi de couvrir les priorités, l'équipe et la prévention.",
+          "hint_fr": "Assure-toi de couvrir les priorités, l'équipe et la prévention.",
+          "explanation_fr": "Élaborer un plan d’action 100 jours structuré. Indication : 3 priorités claires, équipe précisée, prévention concrète, communication citoyenne engagée.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "f3ae2dbe-48d5-4e32-ac5a-917a2145a3d4",
+          "type": "team_roles",
+          "question_fr": "Délégation finale des 8 tâches aux 6 membres.",
+          "options": {
+            "pairs": [
+              {
+                "left_fr": "",
+                "left_ar": "",
+                "right_fr": "",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "",
+                "left_ar": "",
+                "right_fr": "",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "",
+                "left_ar": "",
+                "right_fr": "",
+                "right_ar": ""
+              },
+              {
+                "left_fr": "",
+                "left_ar": "",
+                "right_fr": "",
+                "right_ar": ""
+              }
+            ]
+          },
+          "correct_answer": "A",
+          "feedback_positive_fr": "Délégation stratégique parfaite ! Charge équilibrée.",
+          "feedback_negative_fr": "Fais correspondre chaque tâche à l'expertise du membre.",
+          "hint_fr": "Fais correspondre chaque tâche à l'expertise du membre.",
+          "explanation_fr": "Déléguer des tâches de crise selon les expertises. Indication : Conf presse et réseaux sociaux → Sarah ; visite hôpital → Imam ; fermeture source → Hassan ; rapport et leçons apprises → Fatima ; data → Youssef ; coordination hôpitaux → Dr. Karim.",
+          "presentation_fr": ""
+        },
+        {
+          "id": "5d32fc8c-1edf-493e-bdad-d300dbc08129",
+          "type": "puzzle_riddle",
+          "question_fr": "« Je naîtrai quand tu équilibreras la tête, le cœur et les mains… »",
+          "options": [
+            {
+              "id": "A",
+              "label_fr": "L’expérience",
+              "label_ar": ""
+            },
+            {
+              "id": "B",
+              "label_fr": "Le charisme",
+              "label_ar": ""
+            },
+            {
+              "id": "C",
+              "label_fr": "La sagesse",
+              "label_ar": ""
+            }
+          ],
+          "correct_answer": "C",
+          "feedback_positive_fr": "Magnifique ! La sagesse = équilibre entre raison, empathie et action.",
+          "feedback_negative_fr": "Équilibre entre stress et calme, moi et nous.",
+          "hint_fr": "Équilibre entre stress et calme, moi et nous.",
+          "explanation_fr": "Identifier la sagesse comme équilibre entre raison, empathie et action. Indication : « Je naîtrai quand tu équilibreras la tête, le cœur et les mains. Entre stress et calme, moi et nous, maintenant et demain. »",
+          "presentation_fr": ""
+        }
+      ]
+    }
+  ]
+}

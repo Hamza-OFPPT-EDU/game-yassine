@@ -235,43 +235,53 @@ export const CHEFCHAOUEN_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Appliquer la technique STOP pour interrompre une panique en montagne. Indication : La première chose à faire est d’arrêter le mouvement, de respirer avec la personne, puis d’observer avant d’agir."
+          "explication": "Appliquer la technique STOP pour interrompre une panique en montagne. Indication : La première chose à faire est d’arrêter le mouvement, de respirer avec la personne, puis d’observer avant d’agir.",
+          "explication_ar": "تطبيق تقنية STOP لقطع الذعر في الجبل. دلالة: أول شيء تفعله هو إيقاف الحركة، التنفس مع الشخص، ثم الملاحظة قبل التصرف."
         },
         "2": {
           "type": "Appariement",
-          "explication": "Associer chaque stresseur à une stratégie de coping adaptée. Indication : Panique → respiration, orage → abri, épuisement → encouragement, dispute → médiation, blessure → secours, perte → orientation."
+          "explication": "Associer chaque stresseur à une stratégie de coping adaptée. Indication : Panique → respiration, orage → abri, épuisement → encouragement, dispute → médiation, blessure → secours, perte → orientation.",
+          "explication_ar": "ربط كل مسبب توتر باستراتيجية تأقلم مناسبة. دلالة: ذعر ← تنفس، عاصفة ← مأوى، إرهاق ← تشجيع، خلاف ← وساطة، إصابة ← إسعافات، فقدان ← توجيه."
         },
         "3": {
           "type": "Dialogue de situation",
-          "explication": "Gérer une urgence médicale en montagne par co‑régulation et collecte d’informations. Indication : Installez-vous à côté de la personne, respirez ensemble, puis demandez quand a eu lieu la dernière injection d’insuline."
+          "explication": "Gérer une urgence médicale en montagne par co‑régulation et collecte d’informations. Indication : Installez-vous à côté de la personne, respirez ensemble, puis demandez quand a eu lieu la dernière injection d’insuline.",
+          "explication_ar": "إدارة حالة طبية طارئة في الجبل بالتنظيم المشترك وجمع المعلومات. دلالة: اجلس بجانب الشخص، تنفسا معاً، ثم اسأل متى كان آخر حقنة أنسولين."
         },
         "4": {
           "type": "Texte à trous",
-          "explication": "Maîtriser la visualisation positive pour calmer l’esprit. Indication : Fermez les yeux, imaginez un lieu sûr, ajoutez des détails avec les 5 sens, restez dans ce calme, puis rouvrez les yeux."
+          "explication": "Maîtriser la visualisation positive pour calmer l’esprit. Indication : Fermez les yeux, imaginez un lieu sûr, ajoutez des détails avec les 5 sens, restez dans ce calme, puis rouvrez les yeux.",
+          "explication_ar": "إتقان التصور الإيجابي لتهدئة العقل. دلالة: أغمض عينيك، تخيل مكاناً آمناً، أضف تفاصيل بالحواس الخمس، ابق في هذا الهدوء، ثم افتح عينيك."
         },
         "5": {
           "type": "Vrai/Faux",
-          "explication": "Distinguer les idées reçues sur le stress en nature. Indication : La nature aide (VRAI), un guide ressent du stress (FAUX), en urgence il faut d’abord réfléchir (FAUX)."
+          "explication": "Distinguer les idées reçues sur le stress en nature. Indication : La nature aide (VRAI), un guide ressent du stress (FAUX), en urgence il faut d’abord réfléchir (FAUX).",
+          "explication_ar": "التمييز بين الأفكار الخاطئة عن التوتر في الطبيعة. دلالة: الطبيعة تساعد (صحيح)، المرشد يشعر بالتوتر (خطأ)، في الطوارئ يجب التفكير أولاً (خطأ)."
         },
         "6": {
           "type": "Contre-la-montre",
-          "explication": "Prendre des décisions rapides sous pression en environnement hostile. Indication : Malaise → ombre et eau ; orage → descendre ; enfant → s’agenouiller et voix douce ; fatigue → passer le relais."
+          "explication": "Prendre des décisions rapides sous pression en environnement hostile. Indication : Malaise → ombre et eau ; orage → descendre ; enfant → s’agenouiller et voix douce ; fatigue → passer le relais.",
+          "explication_ar": "اتخاذ قرارات سريعة تحت الضغط في بيئة عدائية. دلالة: إعياء ← ظل وماء؛ عاصفة ← النزول؛ طفل ← الركوع وصوت لطيف؛ تعب ← تسليم المهمة."
         },
         "7": {
           "type": "Scénario en cascade",
-          "explication": "Gérer une blessure en montagne avec STOP, organisation d’équipe et recadrage. Indication : Immobilisez d’abord, organisez la descente avec deux soutiens, puis rassurez sur le rythme et l’entraide."
+          "explication": "Gérer une blessure en montagne avec STOP, organisation d’équipe et recadrage. Indication : Immobilisez d’abord, organisez la descente avec deux soutiens, puis rassurez sur le rythme et l’entraide.",
+          "explication_ar": "إدارة إصابة في الجبل بـ STOP، تنظيم الفريق وإعادة الصياغة. دلالة: ثبّت أولاً، نظم النزول مع مساعدين اثنين، ثم طمئن بشأن الإيقاع والتعاون."
         },
         "8": {
           "type": "Détection d’erreurs",
-          "explication": "Anticiper les risques en repérant les erreurs de préparation. Indication : Baskets, 50 cl d’eau, départ à 13h, personne ne sait où il va, téléphone à 40 %."
+          "explication": "Anticiper les risques en repérant les erreurs de préparation. Indication : Baskets, 50 cl d’eau, départ à 13h, personne ne sait où il va, téléphone à 40 %.",
+          "explication_ar": "توقع المخاطر بتحديد أخطاء التحضير. دلالة: حذاء رياضي، 50 مل ماء، انطلاق الساعة 13:00، لا أحد يعرف أين يذهب، هاتف 40%."
         },
         "9": {
           "type": "Classement",
-          "explication": "Ordonner les actions d’évacuation. Indication : Sécurisez d’abord, puis évaluez, protégez, appelez, donnez les coordonnées, enfin rassurez."
+          "explication": "Ordonner les actions d’évacuation. Indication : Sécurisez d’abord, puis évaluez, protégez, appelez, donnez les coordonnées, enfin rassurez.",
+          "explication_ar": "ترتيب إجراءات الإخلاء. دلالة: تأمين أولاً، ثم تقييم، حماية، اتصال، إعطاء الإحداثيات، أخيراً الطمأنة."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier l’état de calme intérieur, essentiel en situation critique. Indication : Ce qui est invisible mais maintient debout, perdu en montagne ou en réunion, naturel chez l’enfant."
+          "explication": "Identifier l’état de calme intérieur, essentiel en situation critique. Indication : Ce qui est invisible mais maintient debout, perdu en montagne ou en réunion, naturel chez l’enfant.",
+          "explication_ar": "تحديد حالة الهدوء الداخلي، الأساسية في الوضع الحرج. دلالة: ما هو غير مرئي لكنه يبقيك واقفاً، يضيع في الجبل أو الاجتماع، طبيعي عند الطفل."
         }
       }
     },
@@ -280,43 +290,53 @@ export const CHEFCHAOUEN_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Reconnaître les rôles Belbin dans une équipe artisanale. Indication : Une personne qui ne tisse plus mais corrige, encourage et apaise les conflits joue le rôle d’harmonisatrice."
+          "explication": "Reconnaître les rôles Belbin dans une équipe artisanale. Indication : Une personne qui ne tisse plus mais corrige, encourage et apaise les conflits joue le rôle d’harmonisatrice.",
+          "explication_ar": "التعرف على أدوار بلبين في فريق حرفي. دلالة: شخص لم يعد ينسج لكنه يصحح، يشجع ويهدئ النزاعات يلعب دور المنسق."
         },
         "2": {
           "type": "Rôles d’équipe",
-          "explication": "Distribuer les rôles Belbin selon les forces de chacun. Indication : Fatima (rapide, motif fixe) → réalisatrice ; Nora (invente) → créative ; Zahra (voit les erreurs) → analyste ; Halima (gère les conflits) → harmonisatrice ; Meryem (commande, comptes) → leader."
+          "explication": "Distribuer les rôles Belbin selon les forces de chacun. Indication : Fatima (rapide, motif fixe) → réalisatrice ; Nora (invente) → créative ; Zahra (voit les erreurs) → analyste ; Halima (gère les conflits) → harmonisatrice ; Meryem (commande, comptes) → leader.",
+          "explication_ar": "توزيع أدوار بلبين حسب نقاط قوة كل واحدة. دلالة: فاطمة (سريعة، نمط ثابت) ← منفذة؛ نورة (تبتكر) ← مبدعة؛ زهرة (ترى الأخطاء) ← محللة؛ حليمة (تدير النزاعات) ← منسقة؛ مريم (تطلب، حسابات) ← قائدة."
         },
         "3": {
           "type": "Dialogue de situation",
-          "explication": "Médier un conflit générationnel par la technique « Oui ET… ». Indication : Proposez de garder les symboles traditionnels dans une composition moderne."
+          "explication": "Médier un conflit générationnel par la technique « Oui ET… ». Indication : Proposez de garder les symboles traditionnels dans une composition moderne.",
+          "explication_ar": "الوساطة في نزاع بين الأجيال بتقنية « نعم و… ». دلالة: اقترح الاحتفاظ بالرموز التقليدية في تركيبة عصرية."
         },
         "4": {
           "type": "Texte à trous",
-          "explication": "Comprendre la différence entre « Oui MAIS » (bloque) et « Oui ET » (enrichit). Indication : Le mot « mais » annule, « et » construit."
+          "explication": "Comprendre la différence entre « Oui MAIS » (bloque) et « Oui ET » (enrichit). Indication : Le mot « mais » annule, « et » construit.",
+          "explication_ar": "فهم الفرق بين « نعم لكن » (يسد) و « نعم و » (يثري). دلالة: كلمة « لكن » تلغي، « و » تبني."
         },
         "5": {
           "type": "Vrai/Faux",
-          "explication": "Démystifier les stéréotypes sur le travail collaboratif. Indication : Genre ≠ collaboration (FAUX) ; la pratique transmet mieux (VRAI) ; toutes les décisions ne se prennent pas par vote (FAUX)."
+          "explication": "Démystifier les stéréotypes sur le travail collaboratif. Indication : Genre ≠ collaboration (FAUX) ; la pratique transmet mieux (VRAI) ; toutes les décisions ne se prennent pas par vote (FAUX).",
+          "explication_ar": "تفنيد القوالب النمطية حول العمل التعاوني. دلالة: الجنس ≠ التعاون (خطأ)؛ الممارسة تنقل بشكل أفضل (صحيح)؛ لا تُتخذ جميع القرارات بالتصويت (خطأ)."
         },
         "6": {
           "type": "Scénario en cascade",
-          "explication": "Gérer un membre en difficulté par dialogue privé, soutien et confidentialité. Indication : Parlez-lui seul à seul, proposez de l’aide, puis dites simplement qu’elle traverse une période difficile."
+          "explication": "Gérer un membre en difficulté par dialogue privé, soutien et confidentialité. Indication : Parlez-lui seul à seul, proposez de l’aide, puis dites simplement qu’elle traverse une période difficile.",
+          "explication_ar": "إدارة عضو في صعوبة بالحوار الخاص والدعم والسرية. دلالة: تحدث معه على انفراد، اعرض المساعدة، ثم قل ببساطة إنه يمر بفترة صعبة."
         },
         "7": {
           "type": "Classement",
-          "explication": "Ordonner les étapes de la création collaborative. Indication : Comprendre la commande, choisir les motifs, distribuer les tâches, produire, contrôler, ajuster, livrer."
+          "explication": "Ordonner les étapes de la création collaborative. Indication : Comprendre la commande, choisir les motifs, distribuer les tâches, produire, contrôler, ajuster, livrer.",
+          "explication_ar": "ترتيب خطوات الإبداع التعاوني. دلالة: فهم الطلبية، اختيار الأنماط، توزيع المهام، الإنتاج، المراقبة، التعديل، التسليم."
         },
         "8": {
           "type": "Détection d’erreurs",
-          "explication": "Identifier les 5 dysfonctions de Lencioni. Indication : Décision unilatérale, attaque personnelle, désengagement, oubli de la qualité, réunion sans résolution."
+          "explication": "Identifier les 5 dysfonctions de Lencioni. Indication : Décision unilatérale, attaque personnelle, désengagement, oubli de la qualité, réunion sans résolution.",
+          "explication_ar": "تحديد اختلالات لينسيوني الخمسة. دلالة: قرار من جانب واحد، هجوم شخصي، انسحاب، نسيان الجودة، اجتماع دون حل."
         },
         "9": {
           "type": "Prise de décision",
-          "explication": "Négocier un compromis win‑win face à un client difficile. Indication : Proposez de garder 50 % des floraux existants à prix réduit et 50 % de nouveaux géométriques, surcoût partagé."
+          "explication": "Négocier un compromis win‑win face à un client difficile. Indication : Proposez de garder 50 % des floraux existants à prix réduit et 50 % de nouveaux géométriques, surcoût partagé.",
+          "explication_ar": "التفاوض على حل رابح-رابح مع عميل صعب. دلالة: اقترح الاحتفاظ بـ 50% من الأزهار الموجودة بسعر مخفض و 50% من الأشكال الهندسية الجديدة، بتكلفة إضافية مشتركة."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Comprendre la force collective. Indication : Un fil seul est fragile, ensemble ils font un tapis. Une personne seule est limitée, ensemble elles deviennent une force."
+          "explication": "Comprendre la force collective. Indication : Un fil seul est fragile, ensemble ils font un tapis. Une personne seule est limitée, ensemble elles deviennent une force.",
+          "explication_ar": "فهم القوة الجماعية. دلالة: خيط واحد هش، معاً يصنعون بساطاً. شخص واحد محدود، معاً يصبحون قوة."
         }
       }
     },
@@ -325,43 +345,53 @@ export const CHEFCHAOUEN_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Classer les décisions selon leur horizon et leur budget. Indication : 50 DH → opérationnelle ; changer le menu → tactique ; ouvrir un second restaurant → stratégique."
+          "explication": "Classer les décisions selon leur horizon et leur budget. Indication : 50 DH → opérationnelle ; changer le menu → tactique ; ouvrir un second restaurant → stratégique.",
+          "explication_ar": "تصنيف القرارات حسب أفقها وميزانيتها. دلالة: 50 درهماً ← تشغيلي؛ تغيير القائمة ← تكتيكي؛ فتح مطعم ثانٍ ← استراتيجي."
         },
         "2": {
           "type": "Dialogue de situation",
-          "explication": "Négocier par les intérêts plutôt que par les positions. Indication : Proposez un prix moyen (40 DH) en échange d’un volume garanti chaque semaine."
+          "explication": "Négocier par les intérêts plutôt que par les positions. Indication : Proposez un prix moyen (40 DH) en échange d’un volume garanti chaque semaine.",
+          "explication_ar": "التفاوض بالمصالح بدلاً من المواقف. دلالة: اقترح سعراً متوسطاً (40 درهماً) مقابل حجم مضمون كل أسبوع."
         },
         "3": {
           "type": "Appariement",
-          "explication": "Identifier les biais cognitifs dans des situations commerciales. Indication : Note Google → confirmation ; premier prix élevé → ancrage ; ami malade → disponibilité ; plat le plus commandé → conformité."
+          "explication": "Identifier les biais cognitifs dans des situations commerciales. Indication : Note Google → confirmation ; premier prix élevé → ancrage ; ami malade → disponibilité ; plat le plus commandé → conformité.",
+          "explication_ar": "تحديد التحيزات المعرفية في مواقف تجارية. دلالة: تقييم جوجل ← تأكيد؛ أول سعر مرتفع ← ارتساء؛ صديق مريض ← توفر؛ الطبق الأكثر طلباً ← مطابقة اجتماعية."
         },
         "4": {
           "type": "Classement",
-          "explication": "Prioriser des tâches avec la matrice d’Eisenhower. Indication : Urgent + important d’abord (allergie, serveur absent), puis urgent (VIP, avis), puis important non urgent (légumes, menu), enfin le reste."
+          "explication": "Prioriser des tâches avec la matrice d’Eisenhower. Indication : Urgent + important d’abord (allergie, serveur absent), puis urgent (VIP, avis), puis important non urgent (légumes, menu), enfin le reste.",
+          "explication_ar": "تحديد أولويات المهام بمصفوفة أيزنهاور. دلالة: عاجل+مهم أولاً (حساسية، نادل غائب)، ثم عاجل (VIP، رأي)، ثم مهم غير عاجل (خضروات، قائمة)، أخيراً الباقي."
         },
         "5": {
           "type": "Scénario en cascade",
-          "explication": "Gérer une intoxication alimentaire with empathie, transparence et responsabilité. Indication : Demandez des détails, retirez tous les plats suspects, prévenez les autres clients, puis assumez pleinement."
+          "explication": "Gérer une intoxication alimentaire with empathie, transparence et responsabilité. Indication : Demandez des détails, retirez tous les plats suspects, prévenez les autres clients, puis assumez pleinement.",
+          "explication_ar": "إدارة التسمم الغذائي بتعاطف وشفافية ومسؤولية. دلالة: اطلب التفاصيل، أزل جميع الأطباق المشبوهة، حذر الزبائن الآخرين، ثم تحمل المسؤولية كاملة."
         },
         "6": {
           "type": "Texte à trous",
-          "explication": "Mémoriser les 7 principes de la négociation raisonnée (Fisher & Ury). Indication : Intérêts, positions, options, critères, BATNA, relation, écoute."
+          "explication": "Mémoriser les 7 principes de la négociation raisonnée (Fisher & Ury). Indication : Intérêts, positions, options, critères, BATNA, relation, écoute.",
+          "explication_ar": "حفظ مبادئ التفاوض العقلاني السبعة (فيشر وأوري). دلالة: مصالح، مواقف، خيارات، معايير، BATNA، علاقة، استماع."
         },
         "7": {
           "type": "Contre-la-montre",
-          "explication": "Prendre des décisions rapides en service. Indication : Enfant qui pleure → priorité ; plat épuisé → alternative + offrir thé ; cuisinier coupé → sortir et remplacer."
+          "explication": "Prendre des décisions rapides en service. Indication : Enfant qui pleure → priorité ; plat épuisé → alternative + offrir thé ; cuisinier coupé → sortir et remplacer.",
+          "explication_ar": "اتخاذ قرارات سريعة في الخدمة. دلالة: طفل يبكي ← أولوية؛ طبق ناضب ← بديل + عرض شاي؛ طباخ مصاب ← إخراجه واستبداله."
         },
         "8": {
           "type": "Détection d’erreurs",
-          "explication": "Repérer les erreurs d’un business plan de restaurant. Indication : 100 % économies (risque ruine), étude subjective, emplacement non visité, charge seule (burnout), menu identique sans adaptation."
+          "explication": "Repérer les erreurs d’un business plan de restaurant. Indication : 100 % économies (risque ruine), étude subjective, emplacement non visité, charge seule (burnout), menu identique sans adaptation.",
+          "explication_ar": "تحديد أخطاء خطة عمل مطعم. دلالة: 100% مدخرات (خطر الإفلاس)، دراسة ذاتية، موقع غير مزار، عبء بمفرده (احتراق)، قائمة متطابقة دون تكيف."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Construire un plan d’expansion. Indication : Étude de marché (2 mois), financement mixte (50/50), équipe autonome, menu adapté (60/40), calendrier 8 mois."
+          "explication": "Construire un plan d’expansion. Indication : Étude de marché (2 mois), financement mixte (50/50), équipe autonome, menu adapté (60/40), calendrier 8 mois.",
+          "explication_ar": "بناء خطة توسع. دلالة: دراسة سوق (شهرين)، تمويل مختلط (50/50)، فريق مستقل، قائمة مكيفة (60/40)، جدول زمني 8 أشهر."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier la décision comme compétence transverse du commerce. Indication : Elle naît au souk, vit en cuisine, brille en négociation ; Omar la pratique 200 fois par jour."
+          "explication": "Identifier la décision comme compétence transverse du commerce. Indication : Elle naît au souk, vit en cuisine, brille en négociation ; Omar la pratique 200 fois par jour.",
+          "explication_ar": "تحديد القرار كمهارة عرضية للتجارة. دلالة: تولد في السوق، تعيش في المطبخ، تتألق في التفاوض؛ عمر يمارسها 200 مرة يومياً."
         }
       }
     },
@@ -370,43 +400,53 @@ export const CHEFCHAOUEN_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Diagnostiquer un burnout (épuisement émotionnel, cynisme, inefficacité). Indication : Pleurs, insomnie depuis 4 mois, sentiment d’inutilité → burnout."
+          "explication": "Diagnostiquer un burnout (épuisement émotionnel, cynisme, inefficacité). Indication : Pleurs, insomnie depuis 4 mois, sentiment d’inutilité → burnout.",
+          "explication_ar": "تشخيص الاحتراق المهني (إرهاق عاطفي، سخرية، عدم فعالية). دلالة: بكاء، أرق منذ 4 أشهر، شعور بعدم الفائدة ← احتراق مهني."
         },
         "2": {
           "type": "Texte à trous",
-          "explication": "Appliquer les 8 piliers de Cyrulnik. Indication : Sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité."
+          "explication": "Appliquer les 8 piliers de Cyrulnik. Indication : Sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité.",
+          "explication_ar": "تطبيق ركائز سيرولنيك الثمانية. دلالة: معنى، علاقات، فكاهة، جسد، تعلم، إبداع، أمل، روحانية."
         },
         "3": {
           "type": "Dialogue de situation",
-          "explication": "Pratiquer l’écoute active face à une détresse émotionnelle. Indication : Invitez la personne à s’asseoir, raconter, puis demandez quand elle a vu son fils pour la dernière fois."
+          "explication": "Pratiquer l’écoute active face à une détresse émotionnelle. Indication : Invitez la personne à s’asseoir, raconter, puis demandez quand elle a vu son fils pour la dernière fois.",
+          "explication_ar": "ممارسة الاستماع النشط أمام ضائقة عاطفية. دلالة: ادع الشخص للجلوس، السرد، ثم اسأل متى رأى ابنه آخر مرة."
         },
         "4": {
           "type": "Appariement",
-          "explication": "Relier des plantes médicinales aux piliers de résilience. Indication : Verveine → calme émotionnel ; romarin → apprentissage ; safran → espoir ; thym → corps."
+          "explication": "Relier des plantes médicinales aux piliers de résilience. Indication : Verveine → calme émotionnel ; romarin → apprentissage ; safran → espoir ; thym → corps.",
+          "explication_ar": "ربط النباتات الطبية بركائز المرونة. دلالة: لويزة ← هدوء عاطفي؛ إكليل الجبل ← تعلم؛ زعفران ← أمل؛ زعتر ← جسد."
         },
         "5": {
           "type": "Scénario en cascade",
-          "explication": "Recadrer des pensées négatives par les faits, la nuance et les données. Indication : « Personne » → donnez un chiffre ; « préfèrent chimique » → complémentarité ; « herboristerie morte » → marché bio mondial."
+          "explication": "Recadrer des pensées négatives par les faits, la nuance et les données. Indication : « Personne » → donnez un chiffre ; « préfèrent chimique » → complémentarité ; « herboristerie morte » → marché bio mondial.",
+          "explication_ar": "إعادة صياغة الأفكار السلبية بالحقائق، التدرج والبيانات. دلالة: « لا أحد » ← أعط رقماً؛ « يفضلون الكيميائي » ← تكامل؛ « طب الأعشاب مات » ← السوق الحيوي العالمي."
         },
         "6": {
           "type": "Détection d’erreurs",
-          "explication": "Repérer les erreurs d’une routine toxique menant au burnout. Indication : 13h30 sans pause, écran 3h avant coucher, zéro sport, isolement, aucune vacance, 3 cafés à jeun."
+          "explication": "Repérer les erreurs d’une routine toxique menant au burnout. Indication : 13h30 sans pause, écran 3h avant coucher, zéro sport, isolement, aucune vacance, 3 cafés à jeun.",
+          "explication_ar": "تحديد أخطاء روتين سام يؤدي إلى الاحتراق المهني. دلالة: 13:30 بدون استراحة، شاشة 3 ساعات قبل النوم، بدون رياضة، عزلة، لا إجازات، 3 قهوات على معدة فارغة."
         },
         "7": {
           "type": "Classement",
-          "explication": "Prioriser les actions de récupération. Indication : D’abord médecin, puis vacances, réduire les heures, éteindre les écrans, sport, enfin amie."
+          "explication": "Prioriser les actions de récupération. Indication : D’abord médecin, puis vacances, réduire les heures, éteindre les écrans, sport, enfin amie.",
+          "explication_ar": "تحديد أولويات إجراءات الاسترداد. دلالة: أولاً طبيب، ثم إجازات، تقليل الساعات، إطفاء الشاشات، رياضة، أخيراً صديقة."
         },
         "8": {
           "type": "Contre-la-montre",
-          "explication": "Réagir avec prudence face à des situations de stress client. Indication : Mal de tête → consulter un médecin ; adolescente → verveine + 4-7-8 ; femme enceinte → précaution, consulter."
+          "explication": "Réagir avec prudence face à des situations de stress client. Indication : Mal de tête → consulter un médecin ; adolescente → verveine + 4-7-8 ; femme enceinte → précaution, consulter.",
+          "explication_ar": "التفاعل بحذر أمام حالات توتر الزبون. دلالة: صداع ← استشارة طبيب؛ مراهقة ← لويزة + 4-7-8؛ امرأة حامل ← احتياط، استشارة."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Écrire une lettre d’encouragement utilisant les 8 piliers de résilience. Indication : Citez chaque pilier avec un petit geste concret (sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité)."
+          "explication": "Écrire une lettre d’encouragement utilisant les 8 piliers de résilience. Indication : Citez chaque pilier avec un petit geste concret (sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité).",
+          "explication_ar": "كتابة رسالة تشجيع باستخدام ركائز المرونة الثمانية. دلالة: اذكر كل ركيزة بإشارة صغيرة ملموسة (معنى، علاقات، فكاهة، جسد، تعلم، إبداع، أمل، روحانية)."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier la résilience. Indication : Elle pousse dans les fissures, plus la terre est sèche plus ses racines plongent, les jardins parfaits ne la connaissent pas."
+          "explication": "Identifier la résilience. Indication : Elle pousse dans les fissures, plus la terre est sèche plus ses racines plongent, les jardins parfaits ne la connaissent pas.",
+          "explication_ar": "تحديد المرونة. دلالة: تنمو في الشقوق، كلما كانت الأرض أكثر جفافاً كلما تعمقت جذورها، الحدائق المثالية لا تعرفها."
         }
       }
     },
@@ -415,43 +455,53 @@ export const CHEFCHAOUEN_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "Prise de décision",
-          "explication": "Gérer trois crises simultanées par délégation. Indication : Stand → bénévoles, artisans → toi, traiteur → Nabil."
+          "explication": "Gérer trois crises simultanées par délégation. Indication : Stand → bénévoles, artisans → toi, traiteur → Nabil.",
+          "explication_ar": "إدارة ثلاث أزمات متزامنة بالتفويض. دلالة: جناح ← متطوعون، حرفيون ← أنت، مُطعم ← نبيل."
         },
         "2": {
           "type": "Rôles d’équipe",
-          "explication": "Attribuer des postes à des bénévoles selon leurs forces. Indication : Yassine (accueil), Soukaina (sécurité), Mehdi (logistique), Lina (communication), Rachid (restauration), Hind (médiation)."
+          "explication": "Attribuer des postes à des bénévoles selon leurs forces. Indication : Yassine (accueil), Soukaina (sécurité), Mehdi (logistique), Lina (communication), Rachid (restauration), Hind (médiation).",
+          "explication_ar": "تخصيص مناصب للمتطوعين حسب قوتهم. دلالة: ياسين (استقبال)، سكينة (أمن)، مهدي (لوجستية)، لينا (تواصل)، رشيد (مطعم)، هند (وساطة)."
         },
         "3": {
           "type": "Scénario en cascade",
-          "explication": "Médiation avec validation, solution créative et négociation d’intérêts. Indication : Validez sa frustration, proposez un paravent et le titre « Artisan d’honneur », puis expliquez que la visibilité vaut plus que l’argent."
+          "explication": "Médiation avec validation, solution créative et négociation d’intérêts. Indication : Validez sa frustration, proposez un paravent et le titre « Artisan d’honneur », puis expliquez que la visibilité vaut plus que l’argent.",
+          "explication_ar": "وساطة مع تحقق، حل إبداعي وتفاوض بالمصالح. دلالة: تحقق من إحباطه، اقترح حاجزاً ولقب « حرفي فخري »، ثم اشرح أن الرؤية تساوي أكثر من المال."
         },
         "4": {
           "type": "Détection d’erreurs",
-          "explication": "Auditer un programme de festival. Indication : Discours trop long, ateliers en même temps dans une même salle, pas de menu alternatif, jury unique, absence de remerciements, sécurité insuffisante."
+          "explication": "Auditer un programme de festival. Indication : Discours trop long, ateliers en même temps dans une même salle, pas de menu alternatif, jury unique, absence de remerciements, sécurité insuffisante.",
+          "explication_ar": "تدقيق برنامج مهرجان. دلالة: خطاب طويل جداً، ورش في نفس الوقت في قاعة واحدة، لا قائمة بديلة، لجنة تحكيم وحيدة، غياب شكر، أمن غير كافٍ."
         },
         "5": {
           "type": "Contre-la-montre",
-          "explication": "Réagir à 5 urgences de festival. Indication : Malaise → ombre+eau+secouriste ; vol → médiation discrète ; orage → bâches+plan B ; journaliste → répondre soi-même ; enfant perdu → rester avec lui+annonce."
+          "explication": "Réagir à 5 urgences de festival. Indication : Malaise → ombre+eau+secouriste ; vol → médiation discrète ; orage → bâches+plan B ; journaliste → répondre soi-même ; enfant perdu → rester avec lui+annonce.",
+          "explication_ar": "التفاعل مع 5 حالات طوارئ مهرجان. دلالة: إعياء ← ظل+ماء+مسعف؛ سرقة ← وساطة سرية؛ عاصفة ← أغطية بلاستيكية+خطة بديلة؛ صحفي ← الرد بنفسك؛ طفل ضائع ← البقاء معه+إعلان."
         },
         "6": {
           "type": "Appariement",
-          "explication": "Appliquer la théorie de l’autodétermination (SDT). Indication : Bénévole démotivé → compétence (remerciements) ; artisan frustré → autonomie (liberté) ; visiteur perdu → affiliation (accompagnement)."
+          "explication": "Appliquer la théorie de l’autodétermination (SDT). Indication : Bénévole démotivé → compétence (remerciements) ; artisan frustré → autonomie (liberté) ; visiteur perdu → affiliation (accompagnement).",
+          "explication_ar": "تطبيق نظرية تقرير المصير (SDT). دلالة: متطوع غير متحفز ← كفاءة (شكر)؛ حرفي محبط ← استقلالية (حرية)؛ زائر تائه ← انتماء (مرافقة)."
         },
         "7": {
           "type": "Texte à trous",
-          "explication": "Connaître les clés de la communication de crise. Indication : Public, canal, timing, empathie, transparence, solution, action."
+          "explication": "Connaître les clés de la communication de crise. Indication : Public, canal, timing, empathie, transparence, solution, action.",
+          "explication_ar": "معرفة مفاتيح التواصل في الأزمات. دلالة: جمهور، قناة، توقيت، تعاطف، شفافية، حل، عمل."
         },
         "8": {
           "type": "Scénario en cascade",
-          "explication": "Gérer un dilemme éthique avec intégrité et pivot stratégique. Indication : Refusez le chantage, argumentez sur la perte de crédibilité, puis compensez par crowdfunding et réductions."
+          "explication": "Gérer un dilemme éthique avec intégrité et pivot stratégique. Indication : Refusez le chantage, argumentez sur la perte de crédibilité, puis compensez par crowdfunding et réductions.",
+          "explication_ar": "إدارة معضلة أخلاقية بنزاهة ومحور استراتيجي. دلالة: ارفض الابتزاز، جادل حول فقدان المصداقية، ثم عوض بالتمويل الجماعي والتخفيضات."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Rédiger un bilan de festival structuré. Indication : 3 réussites, 3 échecs, 3 recommandations concrètes pour l’année prochaine."
+          "explication": "Rédiger un bilan de festival structuré. Indication : 3 réussites, 3 échecs, 3 recommandations concrètes pour l’année prochaine.",
+          "explication_ar": "كتابة تقييم مهرجان منظم. دلالة: 3 نجاحات، 3 إخفاقات، 3 توصيات ملموسة للعام القادم."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier la compétence comme pont entre théorie et pratique. Indication : Ce qui reste quand on a tout appris et tout oublié ; Aziz la voit en montagne, Khadija la tisse, Omar la cuisine, Amina la cultive."
+          "explication": "Identifier la compétence comme pont entre théorie et pratique. Indication : Ce qui reste quand on a tout appris et tout oublié ; Aziz la voit en montagne, Khadija la tisse, Omar la cuisine, Amina la cultive.",
+          "explication_ar": "تحديد الكفاءة كجسر بين النظرية والتطبيق. دلالة: ما يتبقى عندما تتعلم كل شيء وتنسى كل شيء؛ عزيز يراه في الجبل، خديجة تنسجه، عمر يطبخه، أمينة تزرعه."
         }
       }
     }
@@ -465,43 +515,53 @@ export const FES_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Analyser les avantages du modèle maître-apprenti (apprentissage situé, feedback immédiat, progressivité ZPD). Indication : L’avantage principal réside dans la pratique réelle avec un retour rapide et une progression par étapes, non dans la rapidité ou le coût."
+          "explication": "Analyser les avantages du modèle maître-apprenti (apprentissage situé, feedback immédiat, progressivité ZPD). Indication : L’avantage principal réside dans la pratique réelle avec un retour rapide et une progression par étapes, non dans la rapidité ou le coût.",
+          "explication_ar": "الكفاءة: تحليل مزايا نموذج المعلم-المتدرب (التعلم الموقعي، التغذية الراجعة الفورية، تدرج منطقة التطور القريب). دلالة: الميزة الرئيسية تكمن في الممارسة الحقيقية مع عودة سريعة وتقدم تدريجي، وليس في السرعة أو التكلفة."
         },
         "2": {
           "type": "Appariement",
-          "explication": "Identifier les 5 dysfonctions d’équipe de Lencioni. Indication : Cacher ses erreurs → absence de confiance ; éviter la critique → peur du conflit ; pas concerné par les délais → évitement de responsabilité ; chacun pour soi → inattention aux résultats ; refus d’engagement → manque d’engagement."
+          "explication": "Identifier les 5 dysfonctions d’équipe de Lencioni. Indication : Cacher ses erreurs → absence de confiance ; éviter la critique → peur du conflit ; pas concerné par les délais → évitement de responsabilité ; chacun pour soi → inattention aux résultats ; refus d’engagement → manque d’engagement.",
+          "explication_ar": "الكفاءة: تحديد اختلالات الفريق الخمسة حسب لينسيوني. دلالة: إخفاء الأخطاء ← غياب الثقة؛ تجنب النقد ← الخوف من النزاع؛ عدم الاهتمام بالمواعيد ← تجنب المسؤولية؛ كل لنفسه ← عدم الاهتمام بالنتائج؛ رفض الالتزام ← غياب الالتزام."
         },
         "3": {
           "type": "Dialogue de situation",
-          "explication": "Analyser la cause profonde d’un conflit (feedback insuffisant, disproportion effort/reconnaissance). Indication : 3 mois sans retour puis critique totale = choc émotionnel. La cause n’est ni le caractère ni la sévérité, mais l’absence de feedback progressif."
+          "explication": "Analyser la cause profonde d’un conflit (feedback insuffisant, disproportion effort/reconnaissance). Indication : 3 mois sans retour puis critique totale = choc émotionnel. La cause n’est ni le caractère ni la sévérité, mais l’absence de feedback progressif.",
+          "explication_ar": "الكفاءة: تحليل السبب الجذري لنزاع (تغذية راجعة غير كافية، عدم تناسب الجهد/التقدير). دلالة: 3 أشهر بدون عودة ثم نقد كامل = صدمة عاطفية. السبب ليس الشخصية أو القسوة، بل غياب التغذية الراجعة التدريجية."
         },
         "4": {
           "type": "Scénario en cascade",
-          "explication": "Diagnostiquer une phase d’équipe (Tuckman), un conflit de rôles Belbin, et proposer une restructuration systémique. Indication : Q1 → Storming ; Q2 → Analyste vs Réalisateur ; Q3 → complémentarité (contrôle qualité vs production)."
+          "explication": "Diagnostiquer une phase d’équipe (Tuckman), un conflit de rôles Belbin, et proposer une restructuration systémique. Indication : Q1 → Storming ; Q2 → Analyste vs Réalisateur ; Q3 → complémentarité (contrôle qualité vs production).",
+          "explication_ar": "الكفاءة: تشخيص مرحلة فريق (تكمان)، نزاع أدوار بلبين، واقتراح إعادة هيكلة نظامية. دلالة: س1 ← العاصفة؛ س2 ← محلل مقابل منفذ؛ س3 ← تكامل (مراقبة الجودة مقابل الإنتاج)."
         },
         "5": {
           "type": "Vrai/Faux",
-          "explication": "Démystifier le leadership, le conflit et le mentorat. Indication : Meilleur artisan ≠ meilleur leader (FAUX) ; conflit d’idées améliore la qualité (VRAI) ; modèle maître-apprenti toujours actuel (FAUX)."
+          "explication": "Démystifier le leadership, le conflit et le mentorat. Indication : Meilleur artisan ≠ meilleur leader (FAUX) ; conflit d’idées améliore la qualité (VRAI) ; modèle maître-apprenti toujours actuel (FAUX).",
+          "explication_ar": "الكفاءة: تفنيد القيادة والنزاع والإرشاد. دلالة: أفضل حرفي ≠ أفضل قائد (خطأ)؛ نزاع الأفكار يحسن الجودة (صحيح)؛ نموذج المعلم-المتدرب لا يزال حالياً (خطأ)."
         },
         "6": {
           "type": "Détection d’erreurs",
-          "explication": "Analyser les erreurs systémiques d’un atelier (absence de hiérarchie, spécialisation, feedback, recrutement, progression). Indication : Pas de hiérarchie, pas de spécialisation, feedback annuel, recrutement sur diplômes, 2 jours de théorie puis production, turnover 80 %."
+          "explication": "Analyser les erreurs systémiques d’un atelier (absence de hiérarchie, spécialisation, feedback, recrutement, progression). Indication : Pas de hiérarchie, pas de spécialisation, feedback annuel, recrutement sur diplômes, 2 jours de théorie puis production, turnover 80 %.",
+          "explication_ar": "الكفاءة: تحليل الأخطاء النظامية في ورشة (غياب هيكل، تخصص، تغذية راجعة، توظيف، تقدم). دلالة: لا هيكل، لا تخصص، تغذية راجعة سنوية، توظيف بالشهادات، يومان نظرية ثم إنتاج، دوران 80%."
         },
         "7": {
           "type": "Classement",
-          "explication": "Prioriser la transmission des savoirs (éthique, philosophie, enseignement, geste, gestion, client, innovation). Indication : Éthique d’abord, puis philosophie, puis capacité à enseigner, ensuite le geste technique, la gestion, la relation client, enfin l’innovation."
+          "explication": "Prioriser la transmission des savoirs (éthique, philosophie, enseignement, geste, gestion, client, innovation). Indication : Éthique d’abord, puis philosophie, puis capacité à enseigner, ensuite le geste technique, la gestion, la relation client, enfin l’innovation.",
+          "explication_ar": "الكفاءة: تحديد أولويات نقل المعارف (أخلاق، فلسفة، تعليم، إيماءة، إدارة، عميل، ابتكار). دلالة: أخلاق أولاً، ثم فلسفة، ثم قدرة على التعليم، ثم الإيماءة التقنية، الإدارة، علاقة العميل، أخيراً الابتكار."
         },
         "8": {
           "type": "Texte à trous",
-          "explication": "Maîtriser les concepts de Lave & Wenger (communauté de pratique, participation périphérique légitime). Indication : Communauté de pratique, participation périphérique légitime, observation, participation, identité."
+          "explication": "Maîtriser les concepts de Lave & Wenger (communauté de pratique, participation périphérique légitime). Indication : Communauté de pratique, participation périphérique légitime, observation, participation, identité.",
+          "explication_ar": "الكفاءة: إتقان مفاهيم لاف ووينغر (مجتمع الممارسة، المشاركة المحيطية الشرعية). دلالة: مجتمع ممارسة، مشاركة محيطية شرعية، ملاحظة، مشاركة، هوية."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Analyser le leadership d’une autorité avec des références théoriques (Belbin, Lencioni, SDT). Indication : Forces (expertise, sens), faiblesses (feedback rare et négatif), recommandation (point hebdomadaire 1 positif + 1 amélioration + 1 objectif)."
+          "explication": "Analyser le leadership d’une autorité avec des références théoriques (Belbin, Lencioni, SDT). Indication : Forces (expertise, sens), faiblesses (feedback rare et négatif), recommandation (point hebdomadaire 1 positif + 1 amélioration + 1 objectif).",
+          "explication_ar": "الكفاءة: تحليل قيادة سلطة بمراجع نظرية (بلبين، لينسيوني، تقرير المصير). دلالة: قوة (خبرة، معنى)، ضعف (تغذية راجعة نادرة وسلبية)، توصية (نقطة أسبوعية: 1 إيجابي + 1 تحسين + 1 هدف)."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier la confiance comme base de toute équipe (Lencioni). Indication : Outil invisible sans lequel les rois tombent et les équipes se déchirent ; Lencioni la place à la base de la pyramide."
+          "explication": "Identifier la confiance comme base de toute équipe (Lencioni). Indication : Outil invisible sans lequel les rois tombent et les équipes se déchirent ; Lencioni la place à la base de la pyramide.",
+          "explication_ar": "الكفاءة: تحديد الثقة كقاعدة لأي فريق (لينسيوني). دلالة: أداة غير مرئية بدونها يسقط الملوك وتتمزق الفرق؛ لينسيوني يضعها في قاعدة الهرم."
         }
       }
     },
@@ -510,43 +570,53 @@ export const FES_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Analyser la différence entre stress aigu (pics courts) et stress chronique (constant). Indication : Dr. Karim subit des pics intenses et courts (aigu), Saïd une usure modérée mais constante (chronique)."
+          "explication": "Analyser la différence entre stress aigu (pics courts) et stress chronique (constant). Indication : Dr. Karim subit des pics intenses et courts (aigu), Saïd une usure modérée mais constante (chronique).",
+          "explication_ar": "الكفاءة: تحليل الفرق بين التوتر الحاد (نوبات قصيرة) والتوتر المزمن (مستمر). دلالة: الدكتور كريم يعاني من نوبات شديدة وقصيرة (حاد)، سعيد من تآكل معتدل لكن مستمر (مزمن)."
         },
         "2": {
           "type": "Appariement",
-          "explication": "Classer les sources de stress selon leur nature (ergonomique, chimique, environnemental, biomécanique, psychosocial, financier). Indication : Posture penchée → ergonomique ; odeurs → chimique ; soleil → environnemental ; gestes répétitifs → biomécanique ; isolement → psychosocial ; revenus instables → financier."
+          "explication": "Classer les sources de stress selon leur nature (ergonomique, chimique, environnemental, biomécanique, psychosocial, financier). Indication : Posture penchée → ergonomique ; odeurs → chimique ; soleil → environnemental ; gestes répétitifs → biomécanique ; isolement → psychosocial ; revenus instables → financier.",
+          "explication_ar": "الكفاءة: تصنيف مصادر التوتر حسب طبيعتها (بيئة العمل، كيميائي، بيئي، ميكانيكي حيوي، نفسي اجتماعي، مالي). دلالة: وضعية منحنية ← بيئة عمل؛ روائح ← كيميائي؛ شمس ← بيئي؛ حركات متكررة ← ميكانيكي حيوي؛ عزلة ← نفسي اجتماعي؛ دخل غير مستقر ← مالي."
         },
         "3": {
           "type": "Scénario en cascade",
-          "explication": "Appliquer le modèle du fromage suisse (Reason) pour analyser accident et proposer des défenses multicouches. Indication : Cause immédiate = multi‑facteurs ; cause systémique = absence de protocole ; plan = équipement, environnement, formation, culture (signalement sans punition)."
+          "explication": "Appliquer le modèle du fromage suisse (Reason) pour analyser accident et proposer des défenses multicouches. Indication : Cause immédiate = multi‑facteurs ; cause systémique = absence de protocole ; plan = équipement, environnement, formation, culture (signalement sans punition).",
+          "explication_ar": "الكفاءة: تطبيق نموذج الجبن السويسري (ريزون) لتحليل حادث واقتراح دفاعات متعددة الطبقات. دلالة: سبب مباشر = متعدد العوامل؛ سبب نظامي = غياب بروتوكول؛ خطة = معدات، بيئة، تكوين، ثقافة (الإبلاغ دون عقاب)."
         },
         "4": {
           "type": "Dialogue de situation",
-          "explication": "Identifier le pilier de résilience le plus déterminant (sens – Frankl). Indication : Ce qui l’a fait revenir : sa famille avait besoin de lui → le sens (pilier n°1 de Cyrulnik)."
+          "explication": "Identifier le pilier de résilience le plus déterminant (sens – Frankl). Indication : Ce qui l’a fait revenir : sa famille avait besoin de lui → le sens (pilier n°1 de Cyrulnik).",
+          "explication_ar": "الكفاءة: تحديد ركيزة المرونة الأكثر حاسماً (المعنى – فرانكل). دلالة: ما جعله يعود: كانت أسرته بحاجة إليه ← المعنى (الركيزة رقم 1 لسيرولنيك)."
         },
         "5": {
           "type": "Détection d’erreurs",
-          "explication": "Repérer les facteurs de burnout physique (pauses, hydratation, protection, durée, étirements). Indication : 5h sans pause, boire quand on a soif, pas de gants, pause 15 min pour 11h, « étirements c’est pour les jeunes »."
+          "explication": "Repérer les facteurs de burnout physique (pauses, hydratation, protection, durée, étirements). Indication : 5h sans pause, boire quand on a soif, pas de gants, pause 15 min pour 11h, « étirements c’est pour les jeunes ».",
+          "explication_ar": "الكفاءة: تحديد عوامل الاحتراق الجسدي (استراحات، ترطيب، حماية، مدة، تمطيط). دلالة: 5 ساعات بدون استراحة، شرب عند العطش، لا قفازات، استراحة 15 دقيقة لـ11 ساعة، « التمطيط للشباب »."
         },
         "6": {
           "type": "Texte à trous",
-          "explication": "Maîtriser les trois phases du syndrome général d’adaptation de Selye. Indication : Alarme (cortisol), résistance (adaptation limitée), épuisement (stress chronique sans récupération)."
+          "explication": "Maîtriser les trois phases du syndrome général d’adaptation de Selye. Indication : Alarme (cortisol), résistance (adaptation limitée), épuisement (stress chronique sans récupération).",
+          "explication_ar": "الكفاءة: إتقان المراحل الثلاث لمتلازمة التكيف العامة لسيلي. دلالة: إنذار (كورتيزول)، مقاومة (تكيف محدود)، إرهاق (توتر مزمن دون استرداد)."
         },
         "7": {
           "type": "Contre-la-montre",
-          "explication": "Analyser rapidement des situations de stress et de résistance. Indication : Q1 → transition résistance‑épuisement ; Q2 → habitude + pression + culture + absence d’alternative ; Q3 → ancien plus à risque (accumulation) ; Q4 → mêmes mécanismes (cortisol)."
+          "explication": "Analyser rapidement des situations de stress et de résistance. Indication : Q1 → transition résistance‑épuisement ; Q2 → habitude + pression + culture + absence d’alternative ; Q3 → ancien plus à risque (accumulation) ; Q4 → mêmes mécanismes (cortisol).",
+          "explication_ar": "الكفاءة: تحليل سريع لحالات التوتر والمقاومة. دلالة: س1 ← انتقال مقاومة-إرهاق؛ س2 ← عادة + ضغط + ثقافة + غياب بديل؛ س3 ← الأقدم أكثر عرضة للخطر (تراكم)؛ س4 ← نفس الآليات (كورتيزول)."
         },
         "8": {
           "type": "Prise de décision",
-          "explication": "Résoudre un dilemme tradition vs modernité par synthèse dialectique. Indication : Ni tout moderniser (perte identité), ni tout préserver (sacrifice santé) – moderniser la protection (gants, drainage, ventilation) mais garder les techniques traditionnelles."
+          "explication": "Résoudre un dilemme tradition vs modernité par synthèse dialectique. Indication : Ni tout moderniser (perte identité), ni tout préserver (sacrifice santé) – moderniser la protection (gants, drainage, ventilation) mais garder les techniques traditionnelles.",
+          "explication_ar": "الكفاءة: حل معضلة التقليد مقابل الحداثة بتركيب جدلي. دلالة: لا تحديث كامل (فقدان هوية) ولا حفظ كامل (تضحية بالصحة) – تحديث الحماية (قفازات، تصريف، تهوية) لكن الحفاظ على التقنيات التقليدية."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Rédiger un rapport analytique (3 risques, 3 solutions, 1 priorité). Indication : Risques (chimique, ergonomique, psychosocial), solutions (équipement, formation, rotation), priorité (protection immédiate des mains et voies respiratoires)."
+          "explication": "Rédiger un rapport analytique (3 risques, 3 solutions, 1 priorité). Indication : Risques (chimique, ergonomique, psychosocial), solutions (équipement, formation, rotation), priorité (protection immédiate des mains et voies respiratoires).",
+          "explication_ar": "الكفاءة: كتابة تقرير تحليلي (3 مخاطر، 3 حلول، أولوية واحدة). دلالة: مخاطر (كيميائي، بيئة عمل، نفسي اجتماعي)، حلول (معدات، تكوين، تناوب)، أولوية (حماية فورية للأيدي والمجاري التنفسية)."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier le stress comme phénomène à analyser, ni bon ni mauvais. Indication : Invisible dans le corps mais sculpte les visages ; Selye l’a cartographié, Dr. Karim combattu, Aziz apprivoisé, Saïd analysé."
+          "explication": "Identifier le stress comme phénomène à analyser, ni bon ni mauvais. Indication : Invisible dans le corps mais sculpte les visages ; Selye l’a cartographié, Dr. Karim combattu, Aziz apprivoisé, Saïd analysé.",
+          "explication_ar": "الكفاءة: تحديد التوتر كظاهرة للتحليل، لا خير ولا شر. دلالة: غير مرئي في الجسد لكنه ينحت الوجوه؛ سيلي رسم خرائطه، الدكتور كريم قاتله، عزيز روّضه، سعيد حلله."
         }
       }
     },
@@ -555,43 +625,53 @@ export const FES_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Reconnaître l’erreur sociale de conformité (Groupthink). Indication : Le président s’exprime en premier, les autres se taisent malgré leurs doutes – c’est une pression sociale, non un biais cognitif ni un manque d’information."
+          "explication": "Reconnaître l’erreur sociale de conformité (Groupthink). Indication : Le président s’exprime en premier, les autres se taisent malgré leurs doutes – c’est une pression sociale, non un biais cognitif ni un manque d’information.",
+          "explication_ar": "الكفاءة: التعرف على الخطأ الاجتماعي للامتثال (التفكير الجماعي). دلالة: الرئيس يتحدث أولاً، الآخرون يصمتون رغم شكوكهم – هذا ضغط اجتماعي، لا تحيز معرفي ولا نقص معلومات."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Analyser un échec de décision par les phases Simon, les biais et la méthode Lean Startup. Indication : Q1 → collecte d’info bâclée (données manquantes) ; Q2 → biais de disponibilité + jeunisme + Groupthink ; Q3 → phase pilote (tester avec 10% du budget)."
+          "explication": "Analyser un échec de décision par les phases Simon, les biais et la méthode Lean Startup. Indication : Q1 → collecte d’info bâclée (données manquantes) ; Q2 → biais de disponibilité + jeunisme + Groupthink ; Q3 → phase pilote (tester avec 10% du budget).",
+          "explication_ar": "الكفاءة: تحليل فشل قرار بمراحل سيمون، والتحيزات وطريقة الشركة الناشئة الرشيقة. دلالة: س1 ← جمع معلومات مهمل (بيانات ناقصة)؛ س2 ← تحيز التوفر + الاندفاع الشبابي + التفكير الجماعي؛ س3 ← مرحلة تجريبية (اختبار بـ10% من الميزانية)."
         },
         "3": {
           "type": "Appariement",
-          "explication": "Relier des décisions réelles à leurs biais cognitifs. Indication : Tramway car Rabat en a un → conformité ; « mon père vendait à ce prix » → ancrage ; choisir l’artisan médiatique → halo ; refuser tous touristes après un vol → généralisation ; copier menu voisin → imitation."
+          "explication": "Relier des décisions réelles à leurs biais cognitifs. Indication : Tramway car Rabat en a un → conformité ; « mon père vendait à ce prix » → ancrage ; choisir l’artisan médiatique → halo ; refuser tous touristes après un vol → généralisation ; copier menu voisin → imitation.",
+          "explication_ar": "الكفاءة: ربط القرارات الحقيقية بتحيزاتها المعرفية. دلالة: ترامواي لأن الرباط لديها واحد ← مطابقة؛ « كان والدي يبيع بهذا السعر » ← ارتساء؛ اختيار الحرفي المتوسطي ← هالة؛ رفض كل السياح بعد سرقة ← تعميم؛ نسخ قائمة الجار ← تقليد."
         },
         "4": {
           "type": "Détection d’erreurs",
-          "explication": "Identifier les biais méthodologiques dans une étude de marché. Indication : Échantillon 15 amis (non représentatif), 1 jour dimanche (période non représentative), « 100% disent oui » (complaisance), « tout le monde veut » (généralisation), « mon instinct » (surconfiance), 3M DH sans business plan."
+          "explication": "Identifier les biais méthodologiques dans une étude de marché. Indication : Échantillon 15 amis (non représentatif), 1 jour dimanche (période non représentative), « 100% disent oui » (complaisance), « tout le monde veut » (généralisation), « mon instinct » (surconfiance), 3M DH sans business plan.",
+          "explication_ar": "الكفاءة: تحديد التحيزات المنهجية في دراسة سوق. دلالة: عينة 15 صديقاً (غير تمثيلية)، يوم واحد الأحد (فترة غير تمثيلية)، « 100% يقولون نعم » (مجاملة)، « الكل يريد » (تعميم)، « حدسي » (ثقة مفرطة)، 3 ملايين درهم بدون خطة عمل."
         },
         "5": {
           "type": "Classement",
-          "explication": "Hiérarchiser les facteurs de succès d’un artisan (qualité, adaptation, réseau, coûts, bien-être, transmission, innovation). Indication : Qualité d’abord (base), puis adaptation au marché, réseau clients, maîtrise des coûts, bien-être, transmission, innovation (après tradition maîtrisée)."
+          "explication": "Hiérarchiser les facteurs de succès d’un artisan (qualité, adaptation, réseau, coûts, bien-être, transmission, innovation). Indication : Qualité d’abord (base), puis adaptation au marché, réseau clients, maîtrise des coûts, bien-être, transmission, innovation (après tradition maîtrisée).",
+          "explication_ar": "الكفاءة: ترتيب عوامل نجاح حرفي (جودة، تكيف، شبكة، تكاليف، رفاهية، نقل، ابتكار). دلالة: الجودة أولاً (قاعدة)، ثم التكيف مع السوق، شبكة الزبائن، التحكم في التكاليف، الرفاهية، النقل، الابتكار (بعد إتقان التقليد)."
         },
         "6": {
           "type": "Texte à trous",
-          "explication": "Mémoriser les 8 étapes du processus anti‑Groupthink. Indication : définir, collecter, générer, évaluer, choisir, agir, feedback, groupthink (avec avocat du diable)."
+          "explication": "Mémoriser les 8 étapes du processus anti‑Groupthink. Indication : définir, collecter, générer, évaluer, choisir, agir, feedback, groupthink (avec avocat du diable).",
+          "explication_ar": "الكفاءة: حفظ الخطوات الثماني لعملية مقاومة التفكير الجماعي. دلالة: تعريف، جمع، توليد، تقييم، اختيار، تنفيذ، تغذية راجعة، تفكير جماعي (مع محامي الشيطان)."
         },
         "7": {
           "type": "Dialogue de situation",
-          "explication": "Analyser pourquoi imiter sans analyser mène à l’échec (stratégie océan bleu). Indication : La copie ignore les différences de clientèle, d’emplacement et de relation de confiance – il faut adapter, pas copier."
+          "explication": "Analyser pourquoi imiter sans analyser mène à l’échec (stratégie océan bleu). Indication : La copie ignore les différences de clientèle, d’emplacement et de relation de confiance – il faut adapter, pas copier.",
+          "explication_ar": "الكفاءة: تحليل لماذا التقليد دون تحليل يؤدي إلى الفشل (استراتيجية المحيط الأزرق). دلالة: النسخ يتجاهل اختلافات الزبائن، الموقع وعلاقة الثقة – يجب التكيف، لا النسخ."
         },
         "8": {
           "type": "Contre-la-montre",
-          "explication": "Diagnostiquer rapidement des biais et risques décisionnels. Indication : « tout le monde est pauvre » → biais d’attribution externe ; demander à 10 amis → biais de sélection ; « on a toujours fait comme ça » → biais du statu quo ; « j’investis tout » → absence de diversification."
+          "explication": "Diagnostiquer rapidement des biais et risques décisionnels. Indication : « tout le monde est pauvre » → biais d’attribution externe ; demander à 10 amis → biais de sélection ; « on a toujours fait comme ça » → biais du statu quo ; « j’investis tout » → absence de diversification.",
+          "explication_ar": "الكفاءة: تشخيص سريع للتحيزات والمخاطر القرارية. دلالة: « الجميع فقير » ← تحيز الإسناد الخارجي؛ سؤال 10 أصدقاء ← تحيز الاختيار؛ « لطالما فعلنا هكذا » ← تحيز الوضع الراهن؛ « استثمر كل شيء » ← غياب التنويع."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Rédiger une recommandation pour une coopérative en utilisant les 8 étapes anti‑Groupthink. Indication : Définir le problème, collecter des données diversifiées, générer des options (dont test pilote), évaluer avec critères objectifs, choisir, agir, feedback, instituer un « avocat du diable »."
+          "explication": "Rédiger une recommandation pour une coopérative en utilisant les 8 étapes anti‑Groupthink. Indication : Définir le problème, collecter des données diversifiées, générer des options (dont test pilote), évaluer avec critères objectifs, choisir, agir, feedback, instituer un « avocat du diable ».",
+          "explication_ar": "الكفاءة: كتابة توصية لتعاونية باستخدام الخطوات الثماني لمقاومة التفكير الجماعي. دلالة: تعريف المشكلة، جمع بيانات متنوعة، توليد خيارات (منها اختبار تجريبي)، تقييم بمعايير موضوعية، اختيار، تنفيذ، تغذية راجعة، إنشاء « محامي شيطان »."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier le biais cognitif (Kahneman). Indication : « Je suis ce que tu ne vois pas dans les chiffres que tu lis, je me cache derrière les certitudes et je fais échouer les meilleures décisions. »"
+          "explication": "Identifier le biais cognitif (Kahneman). Indication : « Je suis ce que tu ne vois pas dans les chiffres que tu lis, je me cache derrière les certitudes et je fais échouer les meilleures décisions. »",
+          "explication_ar": "الكفاءة: تحديد التحيز المعرفي (كانمان). دلالة: « أنا ما لا تراه في الأرقام التي تقرأها، أختبئ وراء اليقينيات وأفشل أفضل القرارات. »"
         }
       }
     },
@@ -600,43 +680,53 @@ export const FES_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Distinguer complexe (interactions imprévisibles) de compliqué (beaucoup d’étapes connues). Indication : Restaurer un monument exige de préserver l’authenticité, respecter les normes modernes, coordonner des experts et anticiper l’imprévisible – c’est complexe."
+          "explication": "Distinguer complexe (interactions imprévisibles) de compliqué (beaucoup d’étapes connues). Indication : Restaurer un monument exige de préserver l’authenticité, respecter les normes modernes, coordonner des experts et anticiper l’imprévisible – c’est complexe.",
+          "explication_ar": "الكفاءة: التمييز بين المعقد (تفاعلات غير متوقعة) والصعب (خطوات كثيرة معروفة). دلالة: ترميم نصب يتطلب الحفاظ على الأصالة، احترام المعايير الحديثة، تنسيق الخبراء وتوقع غير المتوقع – هذا معقد."
         },
         "2": {
           "type": "Rôles d’équipe",
-          "explication": "Identifier le chemin critique dans un projet interdépendant (CPM). Indication : La plus longue chaîne d’interdépendances est : Historien → Chimiste → Maçon → Zelligeur → Sculpteur."
+          "explication": "Identifier le chemin critique dans un projet interdépendant (CPM). Indication : La plus longue chaîne d’interdépendances est : Historien → Chimiste → Maçon → Zelligeur → Sculpteur.",
+          "explication_ar": "الكفاءة: تحديد المسار الحرج في مشروع مترابط (CPM). دلالة: أطول سلسلة ترابطات هي: مؤرخ → كيميائي → بناء → زليجي → نحات."
         },
         "3": {
           "type": "Scénario en cascade",
-          "explication": "Résoudre un dilemme éthique complexe (deux valeurs légitimes). Indication : Q1 → dilemme éthique complexe (patrimoine vs santé) ; Q2 → solution hybride (pigments modernes imitant les originaux + documentation) ; Q3 → comité pluridisciplinaire."
+          "explication": "Résoudre un dilemme éthique complexe (deux valeurs légitimes). Indication : Q1 → dilemme éthique complexe (patrimoine vs santé) ; Q2 → solution hybride (pigments modernes imitant les originaux + documentation) ; Q3 → comité pluridisciplinaire.",
+          "explication_ar": "الكفاءة: حل معضلة أخلاقية معقدة (قيمتان مشروعتان). دلالة: س1 ← معضلة أخلاقية معقدة (تراث مقابل صحة)؛ س2 ← حل هجين (أصباغ حديثة تقلد الأصلية + توثيق)؛ س3 ← لجنة متعددة التخصصات."
         },
         "4": {
           "type": "Détection d’erreurs",
-          "explication": "Analyser un plan de restauration à plusieurs niveaux (technique, managérial, procédural, financier, humain, patrimonial). Indication : 1 seule phase, ciment Portland, 1 chef pour 15, pas de documentation, budget sans imprévu, 12h/jour, décisions par l’architecte seul."
+          "explication": "Analyser un plan de restauration à plusieurs niveaux (technique, managérial, procédural, financier, humain, patrimonial). Indication : 1 seule phase, ciment Portland, 1 chef pour 15, pas de documentation, budget sans imprévu, 12h/jour, décisions par l’architecte seul.",
+          "explication_ar": "الكفاءة: تحليل خطة ترميم على عدة مستويات (تقني، إداري، إجرائي، مالي، بشري، تراثي). دلالة: مرحلة واحدة، إسمنت بورتلاند، رئيس واحد لـ15، لا توثيق، ميزانية بدون طوارئ، 12 ساعة/يوم، قرارات المهندس وحده."
         },
         "5": {
           "type": "Texte à trous",
-          "explication": "Connaître les 7 principes de la Charte de Venise (minimalisme, réversibilité, compatibilité, authenticité, documentation, phasage, interdisciplinarité). Indication : Minimalisme, réversibilité, compatibilité, authenticité, documentation, phasage, interdisciplinaire."
+          "explication": "Connaître les 7 principes de la Charte de Venise (minimalisme, réversibilité, compatibilité, authenticité, documentation, phasage, interdisciplinarité). Indication : Minimalisme, réversibilité, compatibilité, authenticité, documentation, phasage, interdisciplinaire.",
+          "explication_ar": "الكفاءة: معرفة المبادئ السبعة لميثاق البندقية (أقلية، عكسية، توافق، أصالة، توثيق، تدرج، تعدد تخصصات). دلالة: أقلية، عكسية، توافق، أصالة، توثيق، تدرج، متعدد التخصصات."
         },
         "6": {
           "type": "Dialogue de situation",
-          "explication": "Proposer un compromis structuré entre tradition et modernité (répartition des couches de décision). Indication : L’artisan conserve la surface visible (authenticité), l’architecte impose la structure cachée (sécurité) + documentation."
+          "explication": "Proposer un compromis structuré entre tradition et modernité (répartition des couches de décision). Indication : L’artisan conserve la surface visible (authenticité), l’architecte impose la structure cachée (sécurité) + documentation.",
+          "explication_ar": "الكفاءة: اقتراح حل وسط منظم بين التقليد والحداثة (توزيع طبقات القرار). دلالة: الحرفي يحافظ على السطح المرئي (أصالة)، المهندس يفرض الهيكل الخفي (سلامة) + توثيق."
         },
         "7": {
           "type": "Classement",
-          "explication": "Prioriser des zones de restauration par urgence, importance et irréversibilité. Indication : Fondations → toiture → murs porteurs → mosaïques extérieures → stuc intérieur → bois cèdre → fontaines → sols."
+          "explication": "Prioriser des zones de restauration par urgence, importance et irréversibilité. Indication : Fondations → toiture → murs porteurs → mosaïques extérieures → stuc intérieur → bois cèdre → fontaines → sols.",
+          "explication_ar": "الكفاءة: تحديد أولويات مناطق الترميم حسب الاستعجال، الأهمية وعدم العكسية. دلالة: أساسات ← سقف ← جدران حاملة ← فسيفساء خارجية ← جص داخلي ← خشب أرز ← نوافير ← أرضيات."
         },
         "8": {
           "type": "Contre-la-montre",
-          "explication": "Analyser des causes systémiques sur un chantier. Indication : Carreaux trop serrés → formation insuffisante (dilatation) ; bois fissuré → mauvais séchage ; 3 accidents → pas de briefing + fatigue + matériel non vérifié ; budget +40% → pas de suivi + découvertes imprévues."
+          "explication": "Analyser des causes systémiques sur un chantier. Indication : Carreaux trop serrés → formation insuffisante (dilatation) ; bois fissuré → mauvais séchage ; 3 accidents → pas de briefing + fatigue + matériel non vérifié ; budget +40% → pas de suivi + découvertes imprévues.",
+          "explication_ar": "الكفاءة: تحليل أسباب نظامية في ورشة بناء. دلالة: بلاط ضيق جداً ← تكوين غير كافٍ (تمدد)؛ خشب متشقق ← تجفيف سيء؛ 3 حوادث ← لا إحاطة + تعب + مواد غير مفحوصة؛ ميزانية +40% ← لا متابعة + اكتشافات غير متوقعة."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Rédiger un rapport analytique avec forces, faiblesses et recommandations. Indication : Forces (expertise, engagement), faiblesses (gouvernance, marges), recommandations (comité pluridisciplinaire, budget imprévu, formation continue)."
+          "explication": "Rédiger un rapport analytique avec forces, faiblesses et recommandations. Indication : Forces (expertise, engagement), faiblesses (gouvernance, marges), recommandations (comité pluridisciplinaire, budget imprévu, formation continue).",
+          "explication_ar": "الكفاءة: كتابة تقرير تحليلي مع نقاط قوة، ضعف وتوصيات. دلالة: قوة (خبرة، التزام)، ضعف (حوكمة، هوامش)، توصيات (لجنة متعددة التخصصات، ميزانية طوارئ، تكوين مستمر)."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier la tradition, qui se renouvelle par l’analyse (ni figée ni détruite). Indication : Vieille de 700 ans mais neuve chaque matin ; tombe si on la force, tient si on la respecte ; Youssef la restaure sans la transformer."
+          "explication": "Identifier la tradition, qui se renouvelle par l’analyse (ni figée ni détruite). Indication : Vieille de 700 ans mais neuve chaque matin ; tombe si on la force, tient si on la respecte ; Youssef la restaure sans la transformer.",
+          "explication_ar": "الكفاءة: تحديد التقليد، الذي يتجدد بالتحليل (لا جامد ولا مدمر). دلالة: عمره 700 سنة لكنه جديد كل صباح؛ يسقط إذا أُجبر، يثبت إذا حُترم؛ يوسف يرممه دون تغييره."
         }
       }
     },
@@ -645,43 +735,53 @@ export const FES_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "Prise de décision",
-          "explication": "Prioriser en situation de crise avec une analyse multicritère (instabilité, réparabilité, gérabilité). Indication : Conflit humain (instable) d’abord, puis sono (réparable), enfin ministre (gérable)."
+          "explication": "Prioriser en situation de crise avec une analyse multicritère (instabilité, réparabilité, gérabilité). Indication : Conflit humain (instable) d’abord, puis sono (réparable), enfin ministre (gérable).",
+          "explication_ar": "الكفاءة: تحديد الأولويات في حالة أزمة بتحليل متعدد المعايير (عدم الاستقرار، قابلية الإصلاح، قابلية التدبير). دلالة: نزاع بشري (غير مستقر) أولاً، ثم الصوتيات (قابلة للإصلاح)، أخيراً الوزير (قابل للتدبير)."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Analyser un conflit institutionnel (couches surface/profondeur/structure) et proposer une solution institutionnelle. Indication : Q1 → statut et pouvoir (l’eau est prétexte) ; Q2 → absence de structure de résolution (pas de règles écrites) ; Q3 → comité mixte avec données objectives et charte."
+          "explication": "Analyser un conflit institutionnel (couches surface/profondeur/structure) et proposer une solution institutionnelle. Indication : Q1 → statut et pouvoir (l’eau est prétexte) ; Q2 → absence de structure de résolution (pas de règles écrites) ; Q3 → comité mixte avec données objectives et charte.",
+          "explication_ar": "الكفاءة: تحليل نزاع مؤسساتي (طبقات سطح/عمق/هيكل) واقتراح حل مؤسساتي. دلالة: س1 ← وضع وسلطة (الماء ذريعة)؛ س2 ← غياب هيكل حل (لا قواعد مكتوبة)؛ س3 ← لجنة مختلطة ببيانات موضوعية وميثاق."
         },
         "3": {
           "type": "Détection d’erreurs",
-          "explication": "Auditer un budget de festival (dépendance, biais d’optimisme, disproportion, sous‑paiement, absence d’imprévu, zéro marge). Indication : 1 seul sponsor, estimation optimiste, communication 36% du budget, artisans 7%, imprévu = 0, budget = revenus."
+          "explication": "Auditer un budget de festival (dépendance, biais d’optimisme, disproportion, sous‑paiement, absence d’imprévu, zéro marge). Indication : 1 seul sponsor, estimation optimiste, communication 36% du budget, artisans 7%, imprévu = 0, budget = revenus.",
+          "explication_ar": "الكفاءة: تدقيق ميزانية مهرجان (تبعية، تحيز تفاؤلي، عدم تناسب، نقص أجر، غياب طوارئ، هامش صفر). دلالة: راع واحد فقط، تقدير متفائل، اتصالات 36% من الميزانية، حرفيون 7%، طوارئ = 0، ميزانية = إيرادات."
         },
         "4": {
           "type": "Rôles d’équipe",
-          "explication": "Attribuer des comités selon les besoins des groupes (technique, conflits, communication, logistique, stratégique). Indication : Zelligeurs+Maçons → technique ; Tanneurs+Teinturiers → conflits ; Brodeurs+Joailliers → communication ; Menuisiers+Ferronniers → logistique ; petites corporations → stratégique."
+          "explication": "Attribuer des comités selon les besoins des groupes (technique, conflits, communication, logistique, stratégique). Indication : Zelligeurs+Maçons → technique ; Tanneurs+Teinturiers → conflits ; Brodeurs+Joailliers → communication ; Menuisiers+Ferronniers → logistique ; petites corporations → stratégique.",
+          "explication_ar": "الكفاءة: تخصيص لجان حسب احتياجات المجموعات (تقني، نزاعات، تواصل، لوجستي، استراتيجي). دلالة: زليجيون+بناؤون ← تقني؛ دباغون+صباغون ← نزاعات؛ طرزون+صائغون ← تواصل؛ نجارون+حدادون ← لوجستي؛ حرف صغيرة ← استراتيجي."
         },
         "5": {
           "type": "Vrai/Faux analytique",
-          "explication": "Nuancer les paradoxes du management culturel. Indication : Tradition ne bloque pas toujours l’innovation (FAUX) ; festival n’a pas à être rentable financièrement (FAUX) ; conflits peuvent être constructifs (FAUX s’ils ont une structure)."
+          "explication": "Nuancer les paradoxes du management culturel. Indication : Tradition ne bloque pas toujours l’innovation (FAUX) ; festival n’a pas à être rentable financièrement (FAUX) ; conflits peuvent être constructifs (FAUX s’ils ont une structure).",
+          "explication_ar": "الكفاءة: التمييز بين مفارقات الإدارة الثقافية. دلالة: التقليد لا يعيق الابتكار دائماً (خطأ)؛ ليس على المهرجان أن يكون مربحاً مالياً (خطأ)؛ يمكن للنزاعات أن تكون بناءة (خطأ إذا كان لها هيكل)."
         },
         "6": {
           "type": "Contre-la-montre",
-          "explication": "Analyser rapidement 5 crises de festival. Indication : Feu → éteindre d’abord ; bug billet → plan B (scan papier) ; contrefaçon → exclusion + transparence ; bénévoles épuisés → rotation + pauses ; riverains → comité de liaison + navettes."
+          "explication": "Analyser rapidement 5 crises de festival. Indication : Feu → éteindre d’abord ; bug billet → plan B (scan papier) ; contrefaçon → exclusion + transparence ; bénévoles épuisés → rotation + pauses ; riverains → comité de liaison + navettes.",
+          "explication_ar": "الكفاءة: تحليل سريع لـ5 أزمات مهرجان. دلالة: حريق ← إطفاء أولاً؛ خلل تذكرة ← خطة بديلة (مسح ورقي)؛ تقليد ← استبعاد + شفافية؛ متطوعون مرهقون ← تناوب + استراحات؛ جيران ← لجنة تنسيق + حافلات نقل."
         },
         "7": {
           "type": "Texte à trous",
-          "explication": "Maîtriser le modèle des parties prenantes (Freeman). Indication : identifier, cartographier (intérêts, pouvoir, légitimité, urgence), prioriser, engager."
+          "explication": "Maîtriser le modèle des parties prenantes (Freeman). Indication : identifier, cartographier (intérêts, pouvoir, légitimité, urgence), prioriser, engager.",
+          "explication_ar": "الكفاءة: إتقان نموذج الأطراف المعنية (فريمان). دلالة: تحديد، رسم خرائط (مصالح، سلطة، شرعية، استعجال)، تحديد أولويات، إشراك."
         },
         "8": {
           "type": "Dialogue de situation",
-          "explication": "Répondre à une accusation médiatique par reconnaissance, nuance et proposition structurelle. Indication : Reconnaître le sous‑paiement, nuancer (pas intentionnel), proposer fonds de redistribution + siège au conseil."
+          "explication": "Répondre à une accusation médiatique par reconnaissance, nuance et proposition structurelle. Indication : Reconnaître le sous‑paiement, nuancer (pas intentionnel), proposer fonds de redistribution + siège au conseil.",
+          "explication_ar": "الكفاءة: الرد على اتهام إعلامي بالاعتراف، التدرج واقتراح هيكلي. دلالة: الاعتراف بنقص الأجر، التدرج (ليس متعمداً)، اقتراح صندوق إعادة توزيع + مقعد في المجلس."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Réaliser une analyse SWOT du festival avec recommandations stratégiques. Indication : Forces (patrimoine, artisans), faiblesses (gouvernance, budget), opportunités (tourisme, digital), menaces (crise, concurrence), recommandations (comité paritaire, diversification sponsors, fonds de réserve)."
+          "explication": "Réaliser une analyse SWOT du festival avec recommandations stratégiques. Indication : Forces (patrimoine, artisans), faiblesses (gouvernance, budget), opportunités (tourisme, digital), menaces (crise, concurrence), recommandations (comité paritaire, diversification sponsors, fonds de réserve).",
+          "explication_ar": "الكفاءة: إجراء تحليل SWOT للمهرجان مع توصيات استراتيجية. دلالة: قوة (تراث، حرفيون)، ضعف (حوكمة، ميزانية)، فرص (سياحة، رقمنة)، تهديدات (أزمة، منافسة)، توصيات (لجنة متساوية الأعضاء، تنويع الرعاة، صندوق احتياطي)."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier l’analyse comme pont entre connaissance et sagesse. Indication : Décompose ce qui semble simple, simplifie ce qui semble complexe ; à Rabat tu as appris sans moi, à Chefchaouen agi sans moi, à Fès tu m’as rencontrée."
+          "explication": "Identifier l’analyse comme pont entre connaissance et sagesse. Indication : Décompose ce qui semble simple, simplifie ce qui semble complexe ; à Rabat tu as appris sans moi, à Chefchaouen agi sans moi, à Fès tu m’as rencontrée.",
+          "explication_ar": "الكفاءة: تحديد التحليل كجسر بين المعرفة والحكمة. دلالة: يفكك ما يبدو بسيطاً، يبسط ما يبدو معقداً؛ في الرباط تعلمت دوني، في شفشاون تصرفت دوني، في فاس قابلتني."
         }
       }
     }
@@ -695,43 +795,53 @@ export const MARRAKECH_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Évaluer des méthodes de décision (Lean Startup, évitement des biais). Indication : La meilleure méthode combine données quantifiées (ROI), test A/B et comité restreint – ni vote massif, ni intuition seule, ni copie."
+          "explication": "Évaluer des méthodes de décision (Lean Startup, évitement des biais). Indication : La meilleure méthode combine données quantifiées (ROI), test A/B et comité restreint – ni vote massif, ni intuition seule, ni copie.",
+          "explication_ar": "الكفاءة: تقييم طرق اتخاذ القرار (الشركة الناشئة الرشيقة، تجنب التحيزات). دلالة: أفضل طريقة تجمع بيانات كمية (عائد الاستثمار)، اختبار أ/ب ولجنة محدودة – لا تصويت جماعي، لا حدس فقط، ولا نسخ."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Évaluer des arguments avec pourcentages de validité et synthèse. Indication : Q1 → crainte légitime mais raisonnement incomplet (60%) ; Q2 → argument optimiste vague (40%) ; Q3 → argument le plus solide mais tourné vers le passé (75%). Synthèse : rester sur l’artisanal + tester le tourisme."
+          "explication": "Évaluer des arguments avec pourcentages de validité et synthèse. Indication : Q1 → crainte légitime mais raisonnement incomplet (60%) ; Q2 → argument optimiste vague (40%) ; Q3 → argument le plus solide mais tourné vers le passé (75%). Synthèse : rester sur l’artisanal + tester le tourisme.",
+          "explication_ar": "الكفاءة: تقييم الحجج بنسب مئوية من الصحة والتجميع. دلالة: س1 ← خوف مشروع لكن تفكير ناقص (60%)؛ س2 ← حجة متفائلة مبهمة (40%)؛ س3 ← الحجة الأقوى لكنها موجهة للماضي (75%). التجميع: البقاء على الحرفي + اختبار السياحة."
         },
         "3": {
           "type": "Détection d’erreurs",
-          "explication": "Réaliser une due diligence d’investissement (évaluation des clauses). Indication : 7 erreurs : perte de contrôle (51%), non‑concurrence 10 ans, 3 directeurs imposés, rendement 500% en 3 ans, liquidation préférentielle totale, clause de pression, absence de droit de veto."
+          "explication": "Réaliser une due diligence d’investissement (évaluation des clauses). Indication : 7 erreurs : perte de contrôle (51%), non‑concurrence 10 ans, 3 directeurs imposés, rendement 500% en 3 ans, liquidation préférentielle totale, clause de pression, absence de droit de veto.",
+          "explication_ar": "الكفاءة: إجراء العناية الواجبة للاستثمار (تقييم البنود). دلالة: 7 أخطاء: فقدان السيطرة (51%)، عدم المنافسة 10 سنوات، 3 مديرين مفروضين، عائد 500% في 3 سنوات، تصفية تفضيلية كاملة، بند ضغط، غياب حق النقض."
         },
         "4": {
           "type": "Vrai/Faux",
-          "explication": "Nuancer les affirmations sur l’entrepreneuriat, l’échec and la décision collective. Indication : Écouter ≠ obéir (FAUX) ; l’échec est utile seulement si analysé (FAUX) ; une décision qui plaît à tous est souvent médiocre (FAUX)."
+          "explication": "Nuancer les affirmations sur l’entrepreneuriat, l’échec and la décision collective. Indication : Écouter ≠ obéir (FAUX) ; l’échec est utile seulement si analysé (FAUX) ; une décision qui plaît à tous est souvent médiocre (FAUX).",
+          "explication_ar": "الكفاءة: التفريق بين التأكيدات حول ريادة الأعمال والفشل والقرار الجماعي. دلالة: الاستماع ≠ الطاعة (خطأ)؛ الفشل مفيد فقط إذا تم تحليله (خطأ)؛ القرار الذي يعجب الجميع غالباً ما يكون رديئاً (خطأ)."
         },
         "5": {
           "type": "Appariement",
-          "explication": "Adapter son style de leadership selon la situation (Hersey & Blanchard). Indication : Junior (incompétent + motivé) → directif ; senior démotivé (expert + démotivé) → participatif ; stagiaire (semi‑compétent + motivé) → persuasif ; CTO (expert + motivé) → délégatif."
+          "explication": "Adapter son style de leadership selon la situation (Hersey & Blanchard). Indication : Junior (incompétent + motivé) → directif ; senior démotivé (expert + démotivé) → participatif ; stagiaire (semi‑compétent + motivé) → persuasif ; CTO (expert + motivé) → délégatif.",
+          "explication_ar": "الكفاءة: تكييف أسلوب القيادة حسب الموقف (هيرسي وبلانشارد). دلالة: مبتدئ (غير كفؤ + متحفز) ← توجيهي؛ كبير غير متحفز (خبير + غير متحفز) ← تشاركي؛ متدرب (نصف كفؤ + متحفز) ← إقناعي؛ مدير التكنولوجيا (خبير + متحفز) ← تفويضي."
         },
         "6": {
           "type": "Texte à trous",
-          "explication": "Maîtriser le cycle Lean Startup (Build‑Measure‑Learn). Indication : hypothèse, minimum (MVP), tester, mesurer, données, persévérer, pivoter, échec."
+          "explication": "Maîtriser le cycle Lean Startup (Build‑Measure‑Learn). Indication : hypothèse, minimum (MVP), tester, mesurer, données, persévérer, pivoter, échec.",
+          "explication_ar": "الكفاءة: إتقان دورة الشركة الناشئة الرشيقة (بناء-قياس-تعلم). دلالة: فرضية، الحد الأدنى (MVP)، اختبار، قياس، بيانات، مثابرة، محور، فشل."
         },
         "7": {
           "type": "Contre-la-montre",
-          "explication": "Évaluer rapidement des situations commerciales (demande, copie, salaire, article). Indication : 3 clients ne justifient pas 100K ; copier l’expérience utilisateur est impossible ; évaluer objectivement avant négocier ; un article n’est pas une preuve."
+          "explication": "Évaluer rapidement des situations commerciales (demande, copie, salaire, article). Indication : 3 clients ne justifient pas 100K ; copier l’expérience utilisateur est impossible ; évaluer objectivement avant négocier ; un article n’est pas une preuve.",
+          "explication_ar": "الكفاءة: تقييم سريع لمواقف تجارية (طلب، نسخ، راتب، مقال). دلالة: 3 زبائن لا يبررون 100 ألف؛ نسخ تجربة المستخدم مستحيل؛ التقييم الموضوعي قبل التفاوض؛ مقال ليس دليلاً."
         },
         "8": {
           "type": "Réponse courte",
-          "explication": "Évaluer une startup (SWOT argumenté). Indication : forces (niche, base utilisateurs, équipe), faiblesses (dépendance fondateur, mono‑produit, modèle pas rentable), recommandation (recruter un DAF et lancer un service premium)."
+          "explication": "Évaluer une startup (SWOT argumenté). Indication : forces (niche, base utilisateurs, équipe), faiblesses (dépendance fondateur, mono‑produit, modèle pas rentable), recommandation (recruter un DAF et lancer un service premium).",
+          "explication_ar": "الكفاءة: تقييم شركة ناشئة (SWOT مقنع). دلالة: قوة (مجال متخصص، قاعدة مستخدمين، فريق)، ضعف (اعتماد على المؤسس، منتج واحد، نموذج غير مربح)، توصية (توظيف مدير مالي وإطلاق خدمة متميزة)."
         },
         "9": {
           "type": "Prise de décision",
-          "explication": "Évaluer des propositions de financement. Indication : Business Angel (réseau limité), Fonds éthique (ratio acceptable, gouvernance saine, alignement valeurs), Autofinancement (croissance trop lente) → choisir le fonds éthique."
+          "explication": "Évaluer des propositions de financement. Indication : Business Angel (réseau limité), Fonds éthique (ratio acceptable, gouvernance saine, alignement valeurs), Autofinancement (croissance trop lente) → choisir le fonds éthique.",
+          "explication_ar": "الكفاءة: تقييم عروض التمويل. دلالة: مستثمر ملاك (شبكة محدودة)، صندوق أخلاقي (نسبة مقبولة، حوكمة سليمة، توافق قيم)، تمويل ذاتي (نمو بطيء جداً) ← اختر الصندوق الأخلاقي."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier le jugement évaluatif (différence entre opinion et évaluation critique). Indication : « Je ne suis ni OUI ni NON, je suis le POURQUOI après chacun » – l’amateur dit J’AIME, le maître dit VOICI POURQUOI."
+          "explication": "Identifier le jugement évaluatif (différence entre opinion et évaluation critique). Indication : « Je ne suis ni OUI ni NON, je suis le POURQUOI après chacun » – l’amateur dit J’AIME, le maître dit VOICI POURQUOI.",
+          "explication_ar": "الكفاءة: تحديد الحكم التقييمي (الفرق بين الرأي والتقييم النقدي). دلالة: « أنا لا نعم ولا لا، أنا السبب وراء كل شيء » – الهاوي يقول أحب، المعلم يقول لهذا السبب."
         }
       }
     },
@@ -740,43 +850,53 @@ export const MARRAKECH_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Évaluer les dimensions culturelles (Hofstede – distance hiérarchique). Indication : Kenji ne dit jamais non car au Japon dire non à un supérieur est irrespectueux – c’est culturel, ni incompétence ni insubordination."
+          "explication": "Évaluer les dimensions culturelles (Hofstede – distance hiérarchique). Indication : Kenji ne dit jamais non car au Japon dire non à un supérieur est irrespectueux – c’est culturel, ni incompétence ni insubordination.",
+          "explication_ar": "الكفاءة: تقييم الأبعاد الثقافية (هوفستيد – مسافة السلطة). دلالة: كينجي لا يقول لا أبداً لأنه في اليابان قول لا لرئيس غير محترم – إنه ثقافي، لا عدم كفاءة ولا عصيان."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Évaluer des plaintes interculturelles with pourcentages de validité et biais. Indication : Q1 → ressenti légitime (50%) + généralisation abusive (50%) ; Q2 → observation partielle (30%) + interprétation erronée (70%) ; Q3 → médiation with co‑création de règles."
+          "explication": "Évaluer des plaintes interculturelles with pourcentages de validité et biais. Indication : Q1 → ressenti légitime (50%) + généralisation abusive (50%) ; Q2 → observation partielle (30%) + interprétation erronée (70%) ; Q3 → médiation with co‑création de règles.",
+          "explication_ar": "الكفاءة: تقييم شكاوى بين الثقافات بنسب مئوية من الصحة والتحيزات. دلالة: س1 ← شعور مشروع (50%) + تعميم مسيء (50%)؛ س2 ← ملاحظة جزئية (30%) + تفسير خاطئ (70%)؛ س3 ← وساطة مع إبداع مشترك للقواعد."
         },
         "3": {
           "type": "Rôles d’équipe",
-          "explication": "Évaluer des performances humaines with critères multiples (technique + management). Indication : Karim (toxique) → 5/10 ; Sarah (bienveillante sans exigence) → 6/10 ; Omar (rigide) → 7/10 ; Nadia (désorganisée) → 6/10 ; Youssef (équilibré) → 8/10. Classement : Youssef > Omar > Sarah = Nadia > Karim."
+          "explication": "Évaluer des performances humaines with critères multiples (technique + management). Indication : Karim (toxique) → 5/10 ; Sarah (bienveillante sans exigence) → 6/10 ; Omar (rigide) → 7/10 ; Nadia (désorganisée) → 6/10 ; Youssef (équilibré) → 8/10. Classement : Youssef > Omar > Sarah = Nadia > Karim.",
+          "explication_ar": "الكفاءة: تقييم الأداء البشري بمعايير متعددة (تقني + إداري). دلالة: كريم (سام) ← 5/10؛ سارة (لطيفة دون صرامة) ← 6/10؛ عمر (صارم) ← 7/10؛ نادية (غير منظمة) ← 6/10؛ يوسف (متوازن) ← 8/10. الترتيب: يوسف > عمر > سارة = نادية > كريم."
         },
         "4": {
           "type": "Détection d’erreurs",
-          "explication": "Évaluer une stratégie RH en identifiant 7 erreurs (horaires, pauses, confidentialité, reconnaissance, sanctions, langue, réunions). Indication : 10h/jour, pause 30 min, caméras partout, bonus unique, 50 DH/min retard, formation en français seulement, réunion 3h/mois."
+          "explication": "Évaluer une stratégie RH en identifiant 7 erreurs (horaires, pauses, confidentialité, reconnaissance, sanctions, langue, réunions). Indication : 10h/jour, pause 30 min, caméras partout, bonus unique, 50 DH/min retard, formation en français seulement, réunion 3h/mois.",
+          "explication_ar": "الكفاءة: تقييم استراتيجية موارد بشرية بتحديد 7 أخطاء (ساعات العمل، الاستراحات، السرية، التقدير، العقوبات، اللغة، الاجتماعات). دلالة: 10 ساعات/يوم، استراحة 30 دقيقة، كاميرات في كل مكان، مكافأة وحيدة، 50 درهماً/دقيقة تأخير، تكوين بالفرنسية فقط، اجتماع 3 ساعات/شهر."
         },
         "5": {
           "type": "Dialogue de situation",
-          "explication": "Évaluer une plainte client and répondre with compensation proportionnelle. Indication : Identifier le vrai (poussière, spa bondé), nuancer l’interprétation (lenteur = style marocain), compenser uniquement ce qui est justifié."
+          "explication": "Évaluer une plainte client and répondre with compensation proportionnelle. Indication : Identifier le vrai (poussière, spa bondé), nuancer l’interprétation (lenteur = style marocain), compenser uniquement ce qui est justifié.",
+          "explication_ar": "الكفاءة: تقييم شكوى زبون والرد بتعويض متناسب. دلالة: تحديد الصحيح (غبار، سبا مزدحم)، تدرج التفسير (بطء = أسلوب مغربي)، تعويض فقط ما هو مبرر."
         },
         "6": {
           "type": "Texte à trous",
-          "explication": "Maîtriser les 6 dimensions culturelles de Hofstede. Indication : distance, individualisme, masculinité, évitement, long terme, indulgence."
+          "explication": "Maîtriser les 6 dimensions culturelles de Hofstede. Indication : distance, individualisme, masculinité, évitement, long terme, indulgence.",
+          "explication_ar": "الكفاءة: إتقان الأبعاد الثقافية الستة لهوفستيد. دلالة: مسافة، فردانية، ذكورية، تجنب، طويل المدى، تساهل."
         },
         "7": {
           "type": "Scénario en cascade",
-          "explication": "Évaluer un licenciement (gravité, alternatives, annonce). Indication : Q1 → gravité 8/10 (pattern de toxicité) ; Q2 → licenciement inévitable mais with indemnité transactionnelle ; Q3 → annonce en privé with respect."
+          "explication": "Évaluer un licenciement (gravité, alternatives, annonce). Indication : Q1 → gravité 8/10 (pattern de toxicité) ; Q2 → licenciement inévitable mais with indemnité transactionnelle ; Q3 → annonce en privé with respect.",
+          "explication_ar": "الكفاءة: تقييم فصل (خطورة، بدائل، إعلان). دلالة: س1 ← خطورة 8/10 (نمط سمية)؛ س2 ← فصل حتمي لكن مع تعويض تسوية؛ س3 ← إعلان على انفراد باحترام."
         },
         "8": {
           "type": "Contre-la-montre",
-          "explication": "Évaluer rapidement des situations managériales (CV, plainte, congé, conflit). Indication : CV → demander pourquoi chaque départ ; plainte → vérifier les raisons ; congé → évaluer validité et remplacement ; conflit → écouter les deux parties and regarder les données."
+          "explication": "Évaluer rapidement des situations managériales (CV, plainte, congé, conflit). Indication : CV → demander pourquoi chaque départ ; plainte → vérifier les raisons ; congé → évaluer validité et remplacement ; conflit → écouter les deux parties and regarder les données.",
+          "explication_ar": "الكفاءة: تقييم سريع لمواقف إدارية (سيرة ذاتية، شكوى، إجازة، نزاع). دلالة: سيرة ذاتية ← اسأل عن سبب كل مغادرة؛ شكوى ← تحقق من الأسباب؛ إجازة ← قيم الصلاحية والاستبدال؛ نزاع ← استمع للطرفين وانظر للبيانات."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Rédiger un plan d’amélioration pour un riad (3 points, 3 actions, 1 indicateur). Indication : Améliorer la formation interculturelle, la communication feedback, la rotation des tâches ; actions : ateliers Hofstede, DESC mensuel, binômes ; indicateur : baisse des conflits signalés."
+          "explication": "Rédiger un plan d’amélioration pour un riad (3 points, 3 actions, 1 indicateur). Indication : Améliorer la formation interculturelle, la communication feedback, la rotation des tâches ; actions : ateliers Hofstede, DESC mensuel, binômes ; indicateur : baisse des conflits signalés.",
+          "explication_ar": "الكفاءة: كتابة خطة تحسين لرياض (3 نقاط، 3 إجراءات، مؤشر واحد). دلالة: تحسين التكوين بين الثقافات، التواصل التغذية الراجعة، تناوب المهام؛ إجراءات: ورش هوفستيد، DESC شهري، أزواج؛ مؤشر: انخفاض النزاعات المبلغ عنها."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier l’intelligence interculturelle. Indication : « Je vois 8 couleurs là où d’autres n’en voient qu’une, je ne juge pas les personnes mais les comportements » – Rachida la pratique chaque jour with 40 âmes de 8 pays."
+          "explication": "Identifier l’intelligence interculturelle. Indication : « Je vois 8 couleurs là où d’autres n’en voient qu’une, je ne juge pas les personnes mais les comportements » – Rachida la pratique chaque jour with 40 âmes de 8 pays.",
+          "explication_ar": "الكفاءة: تحديد الذكاء بين الثقافات. دلالة: « أرى 8 ألوان حيث لا يرى الآخرون سوى لون واحد، لا أحكم على الأشخاص بل على السلوكيات » – رشيدة تمارسه كل يوم مع 40 روحاً من 8 بلدان."
         }
       }
     },
@@ -785,43 +905,53 @@ export const MARRAKECH_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM",
-          "explication": "Évaluer une stratégie de prix selon des critères économiques and culturels. Indication : Économiquement rationnel (ancrage bas) mais culturellement inadéquat (offrir <40% est une offense au souk marocain)."
+          "explication": "Évaluer une stratégie de prix selon des critères économiques and culturels. Indication : Économiquement rationnel (ancrage bas) mais culturellement inadéquat (offrir <40% est une offense au souk marocain).",
+          "explication_ar": "الكفاءة: تقييم استراتيجية تسعير حسب معايير اقتصادية وثقافية. دلالة: منطقي اقتصادياً (ارتساء منخفض) لكن غير ملائم ثقافياً (العرض بأقل من 40% إهانة في السوق المغربي)."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Évaluer comparativement trois négociations (walk away, win‑win, silence). Indication : A (walk away) → panique, cède 55% → mauvaise ; B (win‑win) → -17% + thé → bonne (8/10) ; C (silence) → négocie seul → mauvaise (3/10)."
+          "explication": "Évaluer comparativement trois négociations (walk away, win‑win, silence). Indication : A (walk away) → panique, cède 55% → mauvaise ; B (win‑win) → -17% + thé → bonne (8/10) ; C (silence) → négocie seul → mauvaise (3/10).",
+          "explication_ar": "الكفاءة: تقييم مقارن لثلاث مفاوضات (الانسحاب، رابح-رابح، الصمت). دلالة: أ (انسحاب) ← ذعر، يتنازل 55% ← سيئة؛ ب (رابح-رابح) ← -17% + شاي ← جيدة (8/10)؛ ج (صمت) ← يتفاوض وحده ← سيئة (3/10)."
         },
         "3": {
           "type": "Détection d’erreurs",
-          "explication": "Évaluer des mesures commerciales (guerre des prix, identité, commission, différenciation, mono‑cible, ROI caché). Indication : Baisser 30% → 2/10 ; prix fixes → 4/10 ; Amazon → 5/10 ; machine → 1/10 ; uniquement Chinois → 3/10 ; supprimer le thé → 0/10 (ROI 30 000%)."
+          "explication": "Évaluer des mesures commerciales (guerre des prix, identité, commission, différenciation, mono‑cible, ROI caché). Indication : Baisser 30% → 2/10 ; prix fixes → 4/10 ; Amazon → 5/10 ; machine → 1/10 ; uniquement Chinois → 3/10 ; supprimer le thé → 0/10 (ROI 30 000%).",
+          "explication_ar": "الكفاءة: تقييم إجراءات تجارية (حرب أسعار، هوية، عمولة، تمييز، استهداف أحادي، عائد استثمار خفي). دلالة: تخفيض 30% ← 2/10؛ أسعار ثابتة ← 4/10؛ أمازون ← 5/10؛ آلة ← 1/10؛ صينيون فقط ← 3/10؛ إلغاء الشاي ← 0/10 (عائد استثمار 30.000%)."
         },
         "4": {
           "type": "Appariement",
-          "explication": "Évaluer des stratégies de négociation (efficace / risquée selon contexte). Indication : Prix très élevé → risquée ; montrer défaut → efficace ; concession‑demande concession → efficace ; silence → efficace ; complimenter concurrent → risquée."
+          "explication": "Évaluer des stratégies de négociation (efficace / risquée selon contexte). Indication : Prix très élevé → risquée ; montrer défaut → efficace ; concession‑demande concession → efficace ; silence → efficace ; complimenter concurrent → risquée.",
+          "explication_ar": "الكفاءة: تقييم استراتيجيات التفاوض (فعالة / خطيرة حسب السياق). دلالة: سعر مرتفع جداً ← خطيرة؛ إظهار عيب ← فعالة؛ تنازل-طلب تنازل ← فعالة؛ صمت ← فعالة؛ مدح منافس ← خطيرة."
         },
         "5": {
           "type": "Dialogue de situation",
-          "explication": "Évaluer un bluff client and déjouer sans humilier. Indication : Offrir d’acheter au prix prétendu (« à 500 DH, je vous en achète 100 pièces ») puis recadrer sur le prix réel."
+          "explication": "Évaluer un bluff client and déjouer sans humilier. Indication : Offrir d’acheter au prix prétendu (« à 500 DH, je vous en achète 100 pièces ») puis recadrer sur le prix réel.",
+          "explication_ar": "الكفاءة: تقييم خداع زبون وكشفه دون إهانة. دلالة: عرض الشراء بالسعر المزعوم (« بـ500 درهم، أشتري منك 100 قطعة») ثم إعادة الصياغة على السعر الحقيقي."
         },
         "6": {
           "type": "Classement",
-          "explication": "Évaluer des stratégies de fidélisation par ROI long terme. Indication : Qualité constante (10x) > expérience personnalisée (8x) > service 24/7 (5x) > programme fidélité (3x) > réduction surprise (2x) > newsletter (1.5x) > prix bas (-2x)."
+          "explication": "Évaluer des stratégies de fidélisation par ROI long terme. Indication : Qualité constante (10x) > expérience personnalisée (8x) > service 24/7 (5x) > programme fidélité (3x) > réduction surprise (2x) > newsletter (1.5x) > prix bas (-2x).",
+          "explication_ar": "الكفاءة: تقييم استراتيجيات الولاء بعائد استثمار طويل المدى. دلالة: جودة ثابتة (10x) > تجربة مخصصة (8x) > خدمة 24/7 (5x) > برنامج ولاء (3x) > تخفيض مفاجئ (2x) > نشرة إخبارية (1.5x) > سعر منخفض (-2x)."
         },
         "7": {
           "type": "Texte à trous",
-          "explication": "Maîtriser la méthode BATNA (meilleure alternative à un accord négocié). Indication : meilleure, alternative, négocié, alternatives, BATNA, seuil, pouvoir."
+          "explication": "Maîtriser la méthode BATNA (meilleure alternative à un accord négocié). Indication : meilleure, alternative, négocié, alternatives, BATNA, seuil, pouvoir.",
+          "explication_ar": "الكفاءة: إتقان طريقة BATNA (أفضل بديل لاتفاق مفاوض). دلالة: أفضل، بديل، مفاوض، بدائل، BATNA، عتبة، قوة."
         },
         "8": {
           "type": "Contre-la-montre",
-          "explication": "Évaluer rapidement des situations commerciales (client qui ne revient pas, photos, allers‑retours, concurrence prix). Indication : Ne pas conclure « pas intéressé » ; 90% des touristes ne copient pas ; indécis = intéressé ; maintenir le prix and augmenter la valeur."
+          "explication": "Évaluer rapidement des situations commerciales (client qui ne revient pas, photos, allers‑retours, concurrence prix). Indication : Ne pas conclure « pas intéressé » ; 90% des touristes ne copient pas ; indécis = intéressé ; maintenir le prix and augmenter la valeur.",
+          "explication_ar": "الكفاءة: تقييم سريع لمواقف تجارية (زبون لا يعود، صور، تردد، منافسة سعرية). دلالة: لا تستنتج « غير مهتم »؛ 90% من السياح لا ينسخون؛ المتردد = مهتم؛ حافظ على السعر وزد القيمة."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Évaluer ce qui doit changer and être préservé au souk. Indication : Préserver la négociation and l’artisanat, moderniser la présentation, le paiement digital and la formation des vendeurs."
+          "explication": "Évaluer ce qui doit changer and être préservé au souk. Indication : Préserver la négociation and l’artisanat, moderniser la présentation, le paiement digital and la formation des vendeurs.",
+          "explication_ar": "الكفاءة: تقييم ما يجب تغييره والحفاظ عليه في السوق. دلالة: الحفاظ على التفاوض والحرف، تحديث العرض، الدفع الرقمي وتكوين البائعين."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier la négociation évaluée. Indication : « Je suis l’art de savoir quand dire OUI and NON, quand pousser and reculer. Au souk je suis reine. Omar m’a pratiquée, Hassan m’a perfectionnée. »"
+          "explication": "Identifier la négociation évaluée. Indication : « Je suis l’art de savoir quand dire OUI and NON, quand pousser and reculer. Au souk je suis reine. Omar m’a pratiquée, Hassan m’a perfectionnée. »",
+          "explication_ar": "الكفاءة: تحديد المفاوضة المقيمة. دلالة: « أنا فن معرفة متى أقول نعم ومتى لا، متى أدفع ومتى أتراجع. في السوق أنا ملكة. عمر مارسني، حسن أتقنني. »"
         }
       }
     },
@@ -830,43 +960,53 @@ export const MARRAKECH_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "Prise de décision",
-          "explication": "Évaluer des crises simultanées with une matrice Impact × Contrôlabilité. Indication : Mariée (impact 10, contrôlable) → traiteur (9, 7) → DJ (7, 6) → chaises (5, 8) → photographe (4, 2). Ordre : B → A → C → E → D."
+          "explication": "Évaluer des crises simultanées with une matrice Impact × Contrôlabilité. Indication : Mariée (impact 10, contrôlable) → traiteur (9, 7) → DJ (7, 6) → chaises (5, 8) → photographe (4, 2). Ordre : B → A → C → E → D.",
+          "explication_ar": "الكفاءة: تقييم أزمات متزامنة بمصفوفة التأثير × قابلية التحكم. دلالة: عروس (تأثير 10، قابلة للتحكم) ← مُطعم (9، 7) ← ديجي (7، 6) ← كراسي (5، 8) ← مصور (4، 2). الترتيب: ب ← أ ← ج ← ه ← د."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Évaluer une crise émotionnelle (panique, doute, interférence familiale). Indication : Q1 → crise d’anxiété, 4‑7‑8 + présence ; Q2 → aider la mariée à retrouver ses raisons ; Q3 → protéger la mariée du stress externe (« donnez‑nous 5 minutes »)."
+          "explication": "Évaluer une crise émotionnelle (panique, doute, interférence familiale). Indication : Q1 → crise d’anxiété, 4‑7‑8 + présence ; Q2 → aider la mariée à retrouver ses raisons ; Q3 → protéger la mariée du stress externe (« donnez‑nous 5 minutes »).",
+          "explication_ar": "الكفاءة: تقييم أزمة عاطفية (ذعر، شك، تدخل عائلي). دلالة: س1 ← نوبة قلق، 4-7-8 + حضور؛ س2 ← مساعدة العروس على استعادة أسبابها؛ س3 ← حماية العروس من التوتر الخارجي (« امنحونا 5 دقائق »)."
         },
         "3": {
           "type": "Détection d’erreurs",
-          "explication": "Évaluer un planning événementiel (8 erreurs). Indication : pas de marge, orchestre non testé, pas de menu végétarien, 1 serveur/50 invités, pas de micro secours, gâteau non réfrigéré, DJ sans playlist, zéro plan B."
+          "explication": "Évaluer un planning événementiel (8 erreurs). Indication : pas de marge, orchestre non testé, pas de menu végétarien, 1 serveur/50 invités, pas de micro secours, gâteau non réfrigéré, DJ sans playlist, zéro plan B.",
+          "explication_ar": "الكفاءة: تقييم جدول فعالية (8 أخطاء). دلالة: لا هامش، أوركسترا غير مختبر، لا قائمة نباتية، نادل واحد/50 ضيفاً، لا ميكروفون احتياطي، كعكة غير مبردة، ديجي بدون قائمة تشغيل، لا خطة بديلة."
         },
         "4": {
           "type": "Rôles d’équipe",
-          "explication": "Évaluer and restructurer une équipe événementielle (placer selon forces). Indication : Amal (accueil), Karim (logistique), Nadia (back‑office), Youssef (gestion crise), Fatima (budget), Hamid (création), Leila (secrétariat), Samir (assistant)."
+          "explication": "Évaluer and restructurer une équipe événementielle (placer selon forces). Indication : Amal (accueil), Karim (logistique), Nadia (back‑office), Youssef (gestion crise), Fatima (budget), Hamid (création), Leila (secrétariat), Samir (assistant).",
+          "explication_ar": "الكفاءة: تقييم وإعادة هيكلة فريق فعاليات (وضع حسب القوى). دلالة: أمل (استقبال)، كريم (لوجستية)، نادية (مكتب خلفي)، يوسف (إدارة أزمات)، فاطمة (ميزانية)، حامد (إبداع)، ليلى (سكرتارية)، سمير (مساعد)."
         },
         "5": {
           "type": "Texte à trous",
-          "explication": "Maîtriser le protocole de gestion de crise en 8 étapes (Zineb). Indication : respirer, évaluer, prioriser, déléguer, communiquer, exécuter, documenter, anticiper."
+          "explication": "Maîtriser le protocole de gestion de crise en 8 étapes (Zineb). Indication : respirer, évaluer, prioriser, déléguer, communiquer, exécuter, documenter, anticiper.",
+          "explication_ar": "الكفاءة: إتقان بروتوكول إدارة الأزمات في 8 خطوات (زينب). دلالة: تنفس، قيم، حدد الأولويات، فوّض، تواصل، نفّذ، وثّق، توقع."
         },
         "6": {
           "type": "Dialogue de situation",
-          "explication": "Évaluer un prestataire défaillant and négocier une solution. Indication : Paiement partiel (70%), livraison d’urgence, fin de relation après l’événement."
+          "explication": "Évaluer un prestataire défaillant and négocier une solution. Indication : Paiement partiel (70%), livraison d’urgence, fin de relation après l’événement.",
+          "explication_ar": "الكفاءة: تقييم مزود متقاعس والتفاوض على حل. دلالة: دفع جزئي (70%)، تسليم طارئ، إنهاء العلاقة بعد الفعالية."
         },
         "7": {
           "type": "Scénario en cascade",
-          "explication": "Évaluer la gravité d’un orage, choisir la solution rapide and communiquer with autonomie. Indication : Q1 → gravité élevée (8/10) ; Q2 → bâches immédiatement + préparation intérieur ; Q3 → annonce calme with choix (rester ou rentrer)."
+          "explication": "Évaluer la gravité d’un orage, choisir la solution rapide and communiquer with autonomie. Indication : Q1 → gravité élevée (8/10) ; Q2 → bâches immédiatement + préparation intérieur ; Q3 → annonce calme with choix (rester ou rentrer).",
+          "explication_ar": "الكفاءة: تقييم خطورة عاصفة، اختيار الحل السريع والتواصل باستقلالية. دلالة: س1 ← خطورة عالية (8/10)؛ س2 ← أغطية فوراً + تحضير داخلي؛ س3 ← إعلان هادئ مع خيار (البقاء أو العودة)."
         },
         "8": {
           "type": "Contre-la-montre",
-          "explication": "Évaluer 5 micro‑urgences (gâteau effondré, malaise, discours long, fausse alerte, voisin). Indication : Gâteau → dégât esthétique ; malaise → ombre, eau, observer ; discours → signe discret ; fausse alerte → annonce calme ; voisin → négocier une baisse temporaire."
+          "explication": "Évaluer 5 micro‑urgences (gâteau effondré, malaise, discours long, fausse alerte, voisin). Indication : Gâteau → dégât esthétique ; malaise → ombre, eau, observer ; discours → signe discret ; fausse alerte → annonce calme ; voisin → négocier une baisse temporaire.",
+          "explication_ar": "الكفاءة: تقييم 5 حالات طوارئ صغيرة (كعكة منهارة، إعياء، خطاب طويل، إنذار كاذب، جار). دلالة: كعكة ← ضرر جمالي؛ إعياء ← ظل، ماء، مراقبة؛ خطاب ← إشارة سرية؛ إنذار كاذب ← إعلان هادئ؛ جار ← تفاوض على تخفيض مؤقت."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Rédiger un bilan post‑événement (3 réussites, 3 échecs, 3 recommandations). Indication : Réussites (gestion de la mariée, solution orage, coordination), échecs (prestataire défaillant, micro, fausse alerte), recommandations (plan B systématique, test matériel, formation équipe)."
+          "explication": "Rédiger un bilan post‑événement (3 réussites, 3 échecs, 3 recommandations). Indication : Réussites (gestion de la mariée, solution orage, coordination), échecs (prestataire défaillant, micro, fausse alerte), recommandations (plan B systématique, test matériel, formation équipe).",
+          "explication_ar": "الكفاءة: كتابة تقييم ما بعد الفعالية (3 نجاحات، 3 إخفاقات، 3 توصيات). دلالة: نجاحات (إدارة العروس، حل العاصفة، تنسيق)، إخفاقات (مزود متقاعس، ميكروفون، إنذار كاذب)، توصيات (خطة بديلة منهجية، اختبار معدات، تكوين فريق)."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier la lucidité sous pression. Indication : « Sous pression je ne casse pas, je deviens plus claire. Quand tout le monde panique, je reste le dernier debout. Zineb me maîtrise après 200 mariages. »"
+          "explication": "Identifier la lucidité sous pression. Indication : « Sous pression je ne casse pas, je deviens plus claire. Quand tout le monde panique, je reste le dernier debout. Zineb me maîtrise après 200 mariages. »",
+          "explication_ar": "الكفاءة: تحديد صفاء الذهن تحت الضغط. دلالة: « تحت الضغط لا أنكسر، بل أصبح أكثر وضوحاً. عندما يشعر الجميع بالذعر، أبقى واقفاً آخرهم. زينب تتقنني بعد 200 حفل زفاف. »"
         }
       }
     },
@@ -875,43 +1015,53 @@ export const MARRAKECH_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "Prise de décision",
-          "explication": "Évaluer des modèles de tourisme durable selon adaptabilité, écologie, économie, faisabilité, résilience. Indication : Maroc hybride (E) + Portugal diversifié (D) sont les mieux adaptés au contexte marocain."
+          "explication": "Évaluer des modèles de tourisme durable selon adaptabilité, écologie, économie, faisabilité, résilience. Indication : Maroc hybride (E) + Portugal diversifié (D) sont les mieux adaptés au contexte marocain.",
+          "explication_ar": "الكفاءة: تقييم نماذج السياحة المستدامة حسب القابلية للتكيف، البيئة، الاقتصاد، الجدوى، المرونة. دلالة: المغرب الهجين (E) + البرتغال المتنوع (D) هما الأكثر تكيفاً مع السياق المغربي."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Évaluer une menace diplomatique and y répondre with inclusion sans adopter. Indication : Q1 → bluff probable (20%) ; Q2 → intégrer l’expertise comme composante ; Q3 → éthique (honnête, stratégique)."
+          "explication": "Évaluer une menace diplomatique and y répondre with inclusion sans adopter. Indication : Q1 → bluff probable (20%) ; Q2 → intégrer l’expertise comme composante ; Q3 → éthique (honnête, stratégique).",
+          "explication_ar": "الكفاءة: تقييم تهديد دبلوماسي والرد عليه بالإدماج دون تبني. دلالة: س1 ← خداع محتمل (20%)؛ س2 ← دمج الخبرة كمكون؛ س3 ← أخلاقي (صادق، استراتيجي)."
         },
         "3": {
           "type": "Rôles d’équipe",
-          "explication": "Évaluer la composition d’un comité international (représentativité, expertise, équilibre). Indication : Maroc (hôte), Portugal (diversification), Costa Rica (écotourisme), Bhoutan (haute valeur), Rwanda (Afrique)."
+          "explication": "Évaluer la composition d’un comité international (représentativité, expertise, équilibre). Indication : Maroc (hôte), Portugal (diversification), Costa Rica (écotourisme), Bhoutan (haute valeur), Rwanda (Afrique).",
+          "explication_ar": "الكفاءة: تقييم تكوين لجنة دولية (تمثيلية، خبرة، توازن). دلالة: المغرب (مضيف)، البرتغال (تنويع)، كوستاريكا (سياحة بيئية)، بوتان (قيمة عالية)، رواندا (أفريقيا)."
         },
         "4": {
           "type": "Détection d’erreurs",
-          "explication": "Évaluer 8 recommandations politiques (nuancer entre excellent, bon, dangereux, populiste, irréaliste). Indication : Subvention hôtels écolos → bonne mais insuffisante ; 10 nouveaux riads → risque ; formation guides → excellent ; baisser prix → dangereux ; label → bonne idée ; interdire jets privés → populiste ; rail → excellent ; budget 10M/1 an → irréaliste."
+          "explication": "Évaluer 8 recommandations politiques (nuancer entre excellent, bon, dangereux, populiste, irréaliste). Indication : Subvention hôtels écolos → bonne mais insuffisante ; 10 nouveaux riads → risque ; formation guides → excellent ; baisser prix → dangereux ; label → bonne idée ; interdire jets privés → populiste ; rail → excellent ; budget 10M/1 an → irréaliste.",
+          "explication_ar": "الكفاءة: تقييم 8 توصيات سياسية (تمييز بين ممتاز، جيد، خطير، شعبوي، غير واقعي). دلالة: دعم فنادق إيكولوجية ← جيدة لكن غير كافية؛ 10 رياض جديدة ← خطر؛ تكوين مرشدين ← ممتاز؛ خفض الأسعار ← خطير؛ علامة ← فكرة جيدة؛ حظر الطائرات الخاصة ← شعبوي؛ سكة حديدية ← ممتاز؛ ميزانية 10 ملايين/سنة واحدة ← غير واقعي."
         },
         "5": {
           "type": "Vrai/Faux analytique",
-          "explication": "Nuancer les affirmations sur le tourisme durable (coût, acceptation, faux dilemme). Indication : Coût initial plus élevé, mais ROI long terme inférieur (FAUX) ; 73% des touristes veulent du durable (FAUX) ; le Costa Rica s’est développé PAR l’écotourisme (FAUX dilemme)."
+          "explication": "Nuancer les affirmations sur le tourisme durable (coût, acceptation, faux dilemme). Indication : Coût initial plus élevé, mais ROI long terme inférieur (FAUX) ; 73% des touristes veulent du durable (FAUX) ; le Costa Rica s’est développé PAR l’écotourisme (FAUX dilemme).",
+          "explication_ar": "الكفاءة: التمييز بين التأكيدات حول السياحة المستدامة (تكلفة، قبول، معضلة خاطئة). دلالة: التكلفة الأولية أعلى، لكن عائد الاستثمار طويل المدى أقل (خطأ)؛ 73% من السياح يريدون الاستدامة (خطأ)؛ كوستاريكا تطورت بالسياحة البيئية (معضلة خاطئة)."
         },
         "6": {
           "type": "Texte à trous",
-          "explication": "Utiliser une matrice de décision pondérée. Indication : critères, pondération, pondéré, total, priorité, subjective."
+          "explication": "Utiliser une matrice de décision pondérée. Indication : critères, pondération, pondéré, total, priorité, subjective.",
+          "explication_ar": "الكفاءة: استخدام مصفوفة القرار المرجحة. دلالة: معايير، ترجيح، مرجح، مجموع، أولوية، ذاتي."
         },
         "7": {
           "type": "Dialogue de situation",
-          "explication": "Répondre à une accusation de greenwashing par des preuves vérifiables (engagements chiffrés). Indication : Valider le scepticisme, donner 3 engagements concrets with dates and budgets, inviter au contrôle futur."
+          "explication": "Répondre à une accusation de greenwashing par des preuves vérifiables (engagements chiffrés). Indication : Valider le scepticisme, donner 3 engagements concrets with dates and budgets, inviter au contrôle futur.",
+          "explication_ar": "الكفاءة: الرد على اتهام بالتبييض البيئي بأدلة قابلة للتحقق (التزامات رقمية). دلالة: تحقق من الشك، أعط 3 التزامات ملموسة مع تواريخ وميزانيات، ادعُ للمراقبة المستقبلية."
         },
         "8": {
           "type": "Contre-la-montre",
-          "explication": "Évaluer rapidement 5 propositions politiques (ministère, taxe, fermeture, campagne, interdiction). Indication : Ministère → bureaucratie (mieux : mission permanente) ; taxe → acceptable si réinvestie localement ; fermeture → nécessaire mais progressive ; campagne → co‑créer with habitants ; interdiction plastiques → délai 12 mois + alternative."
+          "explication": "Évaluer rapidement 5 propositions politiques (ministère, taxe, fermeture, campagne, interdiction). Indication : Ministère → bureaucratie (mieux : mission permanente) ; taxe → acceptable si réinvestie localement ; fermeture → nécessaire mais progressive ; campagne → co‑créer with habitants ; interdiction plastiques → délai 12 mois + alternative.",
+          "explication_ar": "الكفاءة: تقييم سريع لـ5 مقترحات سياسية (وزارة، ضريبة، إغلاق، حملة، حظر). دلالة: وزارة ← بيروقراطية (أفضل: مهمة دائمة)؛ ضريبة ← مقبولة إذا أعيد استثمارها محلياً؛ إغلاق ← ضروري لكن تدريجي؛ حملة ← إبداع مشترك مع السكان؛ حظر بلاستيك ← مهلة 12 شهراً + بديل."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Rédiger un discours de clôture (bilan, critiques entendues, engagements concrets). Indication : Bilan honeste (3 réussites), citer 2 critiques, proposer 3 engagements vérifiables (audit, formation, comité citoyen)."
+          "explication": "Rédiger un discours de clôture (bilan, critiques entendues, engagements concrets). Indication : Bilan honeste (3 réussites), citer 2 critiques, proposer 3 engagements vérifiables (audit, formation, comité citoyen).",
+          "explication_ar": "الكفاءة: كتابة خطاب ختامي (حصيلة، انتقادات مسموعة، التزامات ملموسة). دلالة: حصيلة صادقة (3 نجاحات)، اذكر نقدين، اقترح 3 التزامات قابلة للتحقق (تدقيق، تكوين، لجنة مواطنين)."
         },
         "10": {
           "type": "Puzzle/Énigme",
-          "explication": "Identifier l’évaluation critique (sommet de Marrakech). Indication : « Je sépare l’amateur du maître, l’opinion de la vérité. L’amateur dit J’AIME, le maître dit VOICI POURQUOI. À Rabat tu as appris sans moi, à Fès tu m’as cherchée, à Marrakech tu m’as trouvée. »"
+          "explication": "Identifier l’évaluation critique (sommet de Marrakech). Indication : « Je sépare l’amateur du maître, l’opinion de la vérité. L’amateur dit J’AIME, le maître dit VOICI POURQUOI. À Rabat tu as appris sans moi, à Fès tu m’as cherchée, à Marrakech tu m’as trouvée. »",
+          "explication_ar": "الكفاءة: تحديد التقييم النقدي (قمة مراكش). دلالة: « أفصل الهاوي عن المعلم، الرأي عن الحقيقة. الهاوي يقول أحب، المعلم يقول لهذا السبب. في الرباط تعلمت دوني، في فاس بحثت عني، في مراكش وجدتني. »"
         }
       }
     }
@@ -925,43 +1075,53 @@ export const LAAYOUNE_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "Prise de décision créative",
-          "explication": "Créer un protocole d’urgence en 5 étapes (communication, préparation, départ à l’accalmie, triage, suivi). Indication : Il faut informer rapidement, préparer deux véhicules (redondance), partir dès l’accalmie, trier sur place, puis tirer des leçons."
+          "explication": "Créer un protocole d’urgence en 5 étapes (communication, préparation, départ à l’accalmie, triage, suivi). Indication : Il faut informer rapidement, préparer deux véhicules (redondance), partir dès l’accalmie, trier sur place, puis tirer des leçons.",
+          "explication_ar": "ابتكار بروتوكول طوارئ في 5 خطوات (اتصال، تحضير، انطلاق عند هدوء العاصفة، فرز، متابعة). دلالة: يجب إعلام سريع، تحضير سيارتين (تكرار)، الانطلاق فور الهدوء، الفرز في المكان، ثم استخلاص الدروس."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Innover sous contrainte (transformer un véhicule en panne en relais radio, distribuer l’eau proportionnellement aux besoins, choisir une solution hybride évacuation/ravitaillement). Indication : Q1 → transformer le véhicule en station fixe ; Q2 → triage 15 critiques (10L) / 60 fragiles (6L) / 125 stables (3L) ; Q3 → évacuer les critiques, ravitailler les autres."
+          "explication": "Innover sous contrainte (transformer un véhicule en panne en relais radio, distribuer l’eau proportionnellement aux besoins, choisir une solution hybride évacuation/ravitaillement). Indication : Q1 → transformer le véhicule en station fixe ; Q2 → triage 15 critiques (10L) / 60 fragiles (6L) / 125 stables (3L) ; Q3 → évacuer les critiques, ravitailler les autres.",
+          "explication_ar": "الابتكار تحت الضغط (تحويل سيارة معطلة إلى مرحل راديو، توزيع الماء حسب الحاجة، اختيار حل هجين إخلاء/تموين). دلالة: س1 ← تحويل السيارة إلى محطة ثابتة؛ س2 ← فرز 15 حرجاً (10 لترات) / 60 هشاً (6 لترات) / 125 مستقراً (3 لترات)؛ س3 ← إجلاء الحرجين، تموين الآخرين."
         },
         "3": {
           "type": "Texte à trous",
-          "explication": "Adapter les 8 piliers de la résilience au désert (métaphores). Indication : chameau (sens), tribu (relations), vent (humour), soleil (corps), sable (apprentissage), oasis (créativité), étoiles (espoir), silence (spiritualité)."
+          "explication": "Adapter les 8 piliers de la résilience au désert (métaphores). Indication : chameau (sens), tribu (relations), vent (humour), soleil (corps), sable (apprentissage), oasis (créativité), étoiles (espoir), silence (spiritualité).",
+          "explication_ar": "تكييف ركائز المرونة الثمانية مع الصحراء (استعارات). دلالة: جمل (معنى)، قبيلة (علاقات)، ريح (فكاهة)، شمس (جسد)، رمل (تعلم)، واحة (إبداع)، نجوم (أمل)، صمت (روحانية)."
         },
         "4": {
           "type": "Contre-la-montre créatif",
-          "explication": "Créer des solutions low‑tech (signal fumée, filtre à eau, protocole psychologique PAIR, discours mobilisateur). Indication : Q1 → feu + tissu mouillé (code fumée) ; Q2 → filtre bouteille + charbon + gravier ; Q3 → PAIR (Pause, Accompagnement, Invitation, Réintégration) ; Q4 → discours court valorisant le sens, la compétence et l’affiliation."
+          "explication": "Créer des solutions low‑tech (signal fumée, filtre à eau, protocole psychologique PAIR, discours mobilisateur). Indication : Q1 → feu + tissu mouillé (code fumée) ; Q2 → filtre bouteille + charbon + gravier ; Q3 → PAIR (Pause, Accompagnement, Invitation, Réintégration) ; Q4 → discours court valorisant le sens, la compétence et l’affiliation.",
+          "explication_ar": "ابتكار حلول منخفضة التقنية (إشارة دخان، فلتر ماء، بروتوكول نفسي PAIR، خطاب تعبوي). دلالة: س1 ← نار + قماش مبلل (كود دخان)؛ س2 ← فلتر زجاجة + فحم + حصى؛ س3 ← PAIR (توقف، مرافقة، دعوة، إعادة إدماج)؛ س4 ← خطاب قصير يقدر المعنى والكفاءة والانتماء."
         },
         "5": {
           "type": "Détection d’erreurs + création",
-          "explication": "Améliorer un plan par la détection d’erreurs et la création d’une version V2 (départ tôt, GPS+boussole, 2 véhicules, satellite+radio+fumée, 5L d’eau, kit bivouac, plans B/C/D, formation trimestrielle). Indication : Remplacez chaque élément défaillant par une solution plus robuste."
+          "explication": "Améliorer un plan par la détection d’erreurs et la création d’une version V2 (départ tôt, GPS+boussole, 2 véhicules, satellite+radio+fumée, 5L d’eau, kit bivouac, plans B/C/D, formation trimestrielle). Indication : Remplacez chaque élément défaillant par une solution plus robuste.",
+          "explication_ar": "تحسين خطة باكتشاف الأخطاء وإنشاء نسخة V2 (انطلاق مبكر، GPS+بوصلة، سيارتان، قمر صناعي+راديو+دخان، 5 لترات ماء، عدة تخييم، خطط بديلة B/C/D، تكوين فصلي). دلالة: استبدل كل عنصر معيب بحل أكثر قوة."
         },
         "6": {
           "type": "Vrai/Faux créatif",
-          "explication": "Comprendre que l’innovation naît de la contrainte (frugalité), que le leader reconnaît sa peur, et que créer c’est recombiner. Indication : Affirmation 1 → FAUX (contrainte) ; Affirmation 2 → FAUX (reconnaître sa peur) ; Affirmation 3 → FAUX (recombiner, pas à partir de rien)."
+          "explication": "Comprendre que l’innovation naît de la contrainte (frugalité), que le leader reconnaît sa peur, et que créer c’est recombiner. Indication : Affirmation 1 → FAUX (contrainte) ; Affirmation 2 → FAUX (reconnaître sa peur) ; Affirmation 3 → FAUX (recombiner, pas à partir de rien).",
+          "explication_ar": "فهم أن الابتكار يولد من القيد (الاقتدار)، وأن القائد يعترف بخوفه، وأن الإبداع هو إعادة تركيب. دلالة: التأكيد 1 ← خطأ (قيد)؛ التأكيد 2 ← خطأ (الاعتراف بالخوف)؛ التأكيد 3 ← خطأ (إعادة تركيب، ليس من لا شيء)."
         },
         "7": {
           "type": "Dialogue créatif",
-          "explication": "Créer un protocole psychologique post‑traumatique adapté au désert (PAIR amélioré). Indication : Protéger (tente calme), Accueillir (silence 15‑30 min), Inviter (« quand tu voudras parler »), Réintégrer (tâche simple le lendemain). Suivi visio dans 48h."
+          "explication": "Créer un protocole psychologique post‑traumatique adapté au désert (PAIR amélioré). Indication : Protéger (tente calme), Accueillir (silence 15‑30 min), Inviter (« quand tu voudras parler »), Réintégrer (tâche simple le lendemain). Suivi visio dans 48h.",
+          "explication_ar": "ابتكار بروتوكول نفسي ما بعد الصدمة ملائم للصحراء (PAIR محسّن). دلالة: حماية (خيمة هادئة)، استقبال (صمت 15-30 دقيقة)، دعوة (« عندما تريد التحدث »)، إعادة إدماج (مهمة بسيطة في اليوم التالي). متابعة مرئية خلال 48 ساعة."
         },
         "8": {
           "type": "Classement créatif",
-          "explication": "Établir sa propre hiérarchie de survie au désert (abri, eau, secours, communication, orientation, signalisation, moral, nourriture). Indication : L’ombre passe avant l’eau, et l’eau avant la nourriture (30 jours sans manger vs 48h sans eau)."
+          "explication": "Établir sa propre hiérarchie de survie au désert (abri, eau, secours, communication, orientation, signalisation, moral, nourriture). Indication : L’ombre passe avant l’eau, et l’eau avant la nourriture (30 jours sans manger vs 48h sans eau).",
+          "explication_ar": "تأسيس تسلسل هرمي خاص للبقاء في الصحراء (مأوى، ماء، إسعاف، اتصال، توجيه، إشارات، معنويات، طعام). دلالة: الظل يأتي قبل الماء، والماء قبل الطعام (30 يوماً بدون أكل مقابل 48 ساعة بدون ماء)."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Rédiger une introduction de manuel de survie psychologique (outils concrets : STOP, 4‑7‑8, PAIR, pyramide, recadrage). Indication : Mentionnez les cinq outils clés et rassurez sur le fait que la peur est normale."
+          "explication": "Rédiger une introduction de manuel de survie psychologique (outils concrets : STOP, 4‑7‑8, PAIR, pyramide, recadrage). Indication : Mentionnez les cinq outils clés et rassurez sur le fait que la peur est normale.",
+          "explication_ar": "كتابة مقدمة لدليل البقاء النفسي (أدوات ملموسة: STOP، 4-7-8، PAIR، هرم، إعادة صياغة). دلالة: اذكر الأدوات الخمسة الرئيسية وطمئن بأن الخوف طبيعي."
         },
         "10": {
           "type": "Énigme",
-          "explication": "Identifier l’ingéniosité (elle naît du manque, se révèle dans le vide). Indication : « Dans l’abondance je me cache, dans le vide je me révèle. Ishaq l’a découverte à Rabat, mais c’est au désert qu’il l’a créée. »"
+          "explication": "Identifier l’ingéniosité (elle naît du manque, se révèle dans le vide). Indication : « Dans l’abondance je me cache, dans le vide je me révèle. Ishaq l’a découverte à Rabat, mais c’est au désert qu’il l’a créée. »",
+          "explication_ar": "تحديد البراعة (تولد من النقص، تظهر في الفراغ). دلالة: « في الوفرة أختبئ، في الفراغ أظهر. إسحاق اكتشفها في الرباط، لكنه في الصحراء ابتكرها. »"
         }
       }
     },
@@ -970,7 +1130,8 @@ export const LAAYOUNE_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM créatif",
-          "explication": "Concevoir une gouvernance adaptée (3 cercles : aînées, expérimentées, nouvelles). Indication : Ni démocratie pure (ignore l’expertise) ni hiérarchie militaire (tue la motivation) – choisissez le modèle hybride à trois cercles avec rotation."
+          "explication": "Concevoir une gouvernance adaptée (3 cercles : aînées, expérimentées, nouvelles). Indication : Ni démocratie pure (ignore l’expertise) ni hiérarchie militaire (tue la motivation) – choisissez le modèle hybride à trois cercles avec rotation.",
+          "explication_ar": "تصميم حوكمة ملائمة (3 دوائر: كبيرات، خبيرات، جديدات). دلالة: لا ديمقراطية خالصة (تتجاهل الخبرة) ولا تسلسل هرمي عسكري (يقتل الدافع) – اختر النموذج الهجين ثلاثي الدوائر مع التناوب."
         },
         "2": {
           "type": "Scénario en cascade",
@@ -1155,7 +1316,8 @@ export const DAKHLA_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "Situation immersive",
-          "explication": "Agir with calme et donner des ordres clairs en situation de crise (maîtrise). Indication : Rester calme, prendre la barre, donner trois ordres simples (gilets, vider l’eau, surveiller le moteur) et respirer discrètement."
+          "explication": "Agir with calme et donner des ordres clairs en situation de crise (maîtrise). Indication : Rester calme, prendre la barre, donner trois ordres simples (gilets, vider l’eau, surveiller le moteur) et respirer discrètement.",
+          "explication_ar": "التصرف بهدوء وإعطاء أوامر واضحة في حالة الأزمة (إتقان). دلالة: ابق هادئاً، تول الدفة، أعط ثلاثة أوامر بسيطة (سترات، تفريغ الماء، مراقبة المحرك) وتنفس بهدوء."
         },
         "2": {
           "type": "Scénario en cascade",
@@ -1200,7 +1362,8 @@ export const DAKHLA_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM de maîtrise",
-          "explication": "Diagnostiquer la cause racine dans un écosystème (pensée systémique). Indication : Le phytoplancton est la base de la chaîne alimentaire ; sans lui, tout s’effondre – c’est la cause profonde, les autres sont des symptômes."
+          "explication": "Diagnostiquer la cause racine dans un écosystème (pensée systémique). Indication : Le phytoplancton est la base de la chaîne alimentaire ; sans lui, tout s’effondre – c’est la cause profonde, les autres sont des symptômes.",
+          "explication_ar": "تشخيص السبب الجذري في نظام بيئي (تفكير نظمي). دلالة: العوالق النباتية هي قاعدة السلسلة الغذائية؛ بدونها، كل شيء ينهار – هذا هو السبب العميق، والباقي أعراض."
         },
         "2": {
           "type": "Scénario en cascade",
@@ -1245,7 +1408,8 @@ export const DAKHLA_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM maîtrise",
-          "explication": "Prendre une décision systémique équilibrée (ni argent ni dogme). Indication : Proposer un contrat hybride : 50% brut à prix élevé (finance R&D) + 50% transformé localement (emplois) + investissement du client dans la ferme."
+          "explication": "Prendre une décision systémique équilibrée (ni argent ni dogme). Indication : Proposer un contrat hybride : 50% brut à prix élevé (finance R&D) + 50% transformé localement (emplois) + investissement du client dans la ferme.",
+          "explication_ar": "اتخاذ قرار نظامي متوازن (لا مال ولا عقيدة). دلالة: اقترح عقداً هجيناً: 50% خام بسعر مرتفع (تمويل البحث والتطوير) + 50% محول محلياً (فرص عمل) + استثمار العميل في المزرعة."
         },
         "2": {
           "type": "Scénario en cascade",
@@ -1290,7 +1454,8 @@ export const DAKHLA_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "QCM maîtrise",
-          "explication": "Intégrer les intérêts des parties prenantes (économique, social, éducatif, esthétique). Indication : Proposer 10% d’électricité gratuite pour les foyers, un fonds communal, des visites scolaires, et une plantation d’arbres."
+          "explication": "Intégrer les intérêts des parties prenantes (économique, social, éducatif, esthétique). Indication : Proposer 10% d’électricité gratuite pour les foyers, un fonds communal, des visites scolaires, et une plantation d’arbres.",
+          "explication_ar": "دمج مصالح الأطراف المعنية (اقتصادية، اجتماعية، تعليمية، جمالية). دلالة: اقترح 10% كهرباء مجانية للمنازل، صندوق بلدي، زيارات مدرسية، وزراعة أشجار."
         },
         "2": {
           "type": "Scénario en cascade",
@@ -1335,7 +1500,8 @@ export const DAKHLA_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "Création synthétique",
-          "explication": "Rédiger une vision 2040 intégrant énergie, eau, agriculture, tourisme, économie bleue, éducation. Indication : Structurez en paragraphes : énergie (solaire/éolien), eau (dessalement), agriculture (hydroponique), tourisme durable, économie bleue (algues, pêche), éducation (université des océans, mentorat)."
+          "explication": "Rédiger une vision 2040 intégrant énergie, eau, agriculture, tourisme, économie bleue, éducation. Indication : Structurez en paragraphes : énergie (solaire/éolien), eau (dessalement), agriculture (hydroponique), tourisme durable, économie bleue (algues, pêche), éducation (université des océans, mentorat).",
+          "explication_ar": "كتابة رؤية 2040 تدمج الطاقة، الماء، الزراعة، السياحة، الاقتصاد الأزرق، التعليم. دلالة: نظم في فقرات: الطاقة (شمسية/ريحية)، الماء (تحلية)، الزراعة (مائية)، سياحة مستدامة، اقتصاد أزرق (طحالب، صيد)، تعليم (جامعة المحيطات، إرشاد)."
         },
         "2": {
           "type": "Scénario en cascade",

@@ -17,6 +17,7 @@ import { useSupabaseCities, useSupabaseMissions } from '../hooks/useSupabase';
 import { useAutoScroll } from '../hooks/useAutoScroll';
 import { getCityTheme, resolveCityIcon, optimizeSupabaseUrl, resolveAssetUrl } from '../lib/city-theme';
 import GameButton from '../components/GameButton';
+import { useSettings } from '../contexts/SettingsContext';
 
 // ── MapJourneyScreen ─────────────────────────────────────────────────────────
 
@@ -31,6 +32,7 @@ export default function MapJourneyScreen({
   stats, completedCities, completedMissions, onSelectCity
 }: MapJourneyScreenProps) {
   const { playSound, playVoice } = useAudio();
+  const { language } = useSettings();
   const { cities, loading } = useSupabaseCities(completedCities, completedMissions);
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
   const [cinematicCity, setCinematicCity] = useState<City | null>(null);
@@ -82,14 +84,14 @@ export default function MapJourneyScreen({
   // ── Loading ──────────────────────────────────────────────────────────────
   if (loading) {
     return (
-      <div className="h-full w-full map-bg flex flex-col items-center justify-center gap-6">
+      <div className="h-full w-full map-bg flex flex-col items-center justify-center gap-6" dir={language === 'ar' ? 'rtl' : 'ltr'}>
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
           className="w-16 h-16 rounded-full border-[6px] border-[#7B3F1A]/20 border-t-voyage-accent"
         />
-        <p className="font-headline font-black text-[#7B3F1A] uppercase tracking-widest text-[11px] opacity-70">
-          Préparation du voyage...
+        <p className={cn("font-headline font-black text-[#7B3F1A] uppercase tracking-widest text-[11px] opacity-70", language === 'ar' && "arabic-font text-[14px]")}>
+          {language === 'ar' ? "جاري تحضير الرحلة..." : "Préparation du voyage..."}
         </p>
       </div>
     );
@@ -115,7 +117,7 @@ export default function MapJourneyScreen({
           >
             <button
               onClick={() => setCinematicCity(null)}
-              className="absolute top-8 right-8 p-3 bg-white/10 hover:bg-white/20 rounded-2xl text-white transition-all z-20 backdrop-blur-md border border-white/20 shadow-xl"
+              className={cn("absolute top-8 p-3 bg-white/10 hover:bg-white/20 rounded-2xl text-white transition-all z-20 backdrop-blur-md border border-white/20 shadow-xl", language === 'ar' ? "left-8" : "right-8")}
             >
               <X size={24} strokeWidth={3} />
             </button>
@@ -135,7 +137,7 @@ export default function MapJourneyScreen({
             ))}
 
             {/* Contenu scrollable */}
-            <div className="absolute inset-0 overflow-y-auto scrollbar-hide">
+            <div className="absolute inset-0 overflow-y-auto scrollbar-hide" dir={language === 'ar' ? 'rtl' : 'ltr'}>
               <div className="min-h-full flex flex-col items-center justify-center p-8 text-center">
                 <motion.div
                   initial={{ scale: 0.8, y: 30 }}
@@ -152,13 +154,15 @@ export default function MapJourneyScreen({
                   </motion.div>
 
                   <div className="space-y-2.5">
-                    <p className="text-voyage-accent font-black uppercase tracking-[0.3em] text-[12px]">
-                      Le Voyage des Compétences
+                    <p className={cn("text-voyage-accent font-black uppercase tracking-[0.3em] text-[12px]", language === 'ar' && "arabic-font text-[14px]")}>
+                      {language === 'ar' ? "رحلة المهارات" : "Le Voyage des Compétences"}
                     </p>
-                    <h1 className="text-[41px] font-headline font-black text-white tracking-tight">
-                      {cinematicCity.name}
+                    <h1 className={cn("text-[41px] font-headline font-black text-white tracking-tight", language === 'ar' && "arabic-font text-[43px]")}>
+                      {language === 'ar' ? cinematicCity.arabicHeadline || cinematicCity.arabicName || cinematicCity.name : cinematicCity.name}
                     </h1>
-                    <p className="arabic-font text-voyage-secondary text-[17px]">{cinematicCity.arabicName}</p>
+                    {language !== 'ar' && (
+                      <p className="arabic-font text-voyage-secondary text-[17px]">{cinematicCity.arabicName}</p>
+                    )}
                   </div>
 
                   <div className="space-y-6">
@@ -198,14 +202,17 @@ export default function MapJourneyScreen({
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4, duration: 0.8 }}
-                      className="bg-black/20 backdrop-blur-2xl p-8 rounded-[40px] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.4)] mx-4 relative overflow-hidden group max-w-[550px]"
+                      className={cn("bg-black/20 backdrop-blur-2xl p-8 rounded-[40px] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.4)] mx-4 relative overflow-hidden group max-w-[550px]", language === 'ar' ? "text-right" : "text-left")}
+                      dir={language === 'ar' ? 'rtl' : 'ltr'}
                     >
                       {/* Decorative elements */}
                       <div className="absolute -top-24 -left-24 w-48 h-48 bg-voyage-accent/10 blur-[60px] rounded-full transition-all duration-700" />
 
                       <div className="flex flex-col items-center gap-2 mb-5">
                         <div className="h-1 w-12 bg-voyage-accent/40 rounded-full" />
-                        <p className="text-voyage-accent font-black text-[10px] uppercase tracking-[0.5em] opacity-90">Guide de l'aventure</p>
+                        <p className={cn("text-voyage-accent font-black text-[10px] uppercase tracking-[0.5em] opacity-90", language === 'ar' && "arabic-font text-[12px] tracking-normal")}>
+                          {language === 'ar' ? "مرشد المغامرة" : "Guide de l'aventure"}
+                        </p>
                       </div>
 
                       <motion.div
@@ -218,9 +225,9 @@ export default function MapJourneyScreen({
                             transition: { staggerChildren: 0.015 }
                           }
                         }}
-                        className="text-white/95 text-[19px] font-medium leading-[1.8] italic font-serif"
+                        className={cn("text-white/95 text-[19px] font-medium leading-[1.8] italic font-serif", language === 'ar' && "arabic-font text-[21px] text-right font-medium not-italic")}
                       >
-                        {cinematicCity.cinematicIntro.split('').map((char, index) => (
+                        {(cinematicCity.cinematicIntro || '').split('').map((char, index) => (
                           <motion.span
                             key={index}
                             variants={{
@@ -242,13 +249,13 @@ export default function MapJourneyScreen({
                       playSound('click');
                       const c = cinematicCity; setCinematicCity(null); onSelectCity(c);
                     }}
-                    className="flex items-center justify-center gap-3 text-white text-[17px] py-4 px-9 rounded-2xl font-black shadow-xl hover:brightness-110 active:scale-95 transition-all w-full"
+                    className={cn("flex items-center justify-center gap-3 text-white text-[17px] py-4 px-9 rounded-2xl font-black shadow-xl hover:brightness-110 active:scale-95 transition-all w-full", language === 'ar' && "arabic-font")}
                     style={{
                       background: `linear-gradient(135deg, ${getCityTheme(cinematicCity).colorLight || getCityTheme(cinematicCity).color}, ${getCityTheme(cinematicCity).colorDark || getCityTheme(cinematicCity).color})`,
                       boxShadow: `0 8px 25px ${getCityTheme(cinematicCity).color}50`,
                     }}
                   >
-                    🚀 Commencer l'Aventure
+                    {language === 'ar' ? "🚀 ابدأ المغامرة" : "🚀 Commencer l'Aventure"}
                   </motion.button>
                 </motion.div>
               </div>
@@ -258,7 +265,7 @@ export default function MapJourneyScreen({
       </AnimatePresence>
 
       {/* ── Corps principal ──────────────────────────────────────────────── */}
-      <main className="grow overflow-y-auto relative pt-16 pb-48 scrollbar-hide" ref={scrollContainerRef}>
+      <main className="grow overflow-y-auto relative pt-16 pb-48 scrollbar-hide" ref={scrollContainerRef} dir={language === 'ar' ? 'rtl' : 'ltr'}>
 
         {/* ── SVG Path + Nœuds ────────────────────────────────────────────── */}
         <div className="relative max-w-sm mx-auto px-4">
@@ -374,6 +381,7 @@ export default function MapJourneyScreen({
                 exit={{ y: 320, opacity: 0 }}
                 onClick={e => e.stopPropagation()}
                 className="w-full max-w-lg mb-20"
+                dir={language === 'ar' ? 'rtl' : 'ltr'}
               >
                 <div
                   className="rounded-[2.5rem] shadow-2xl relative overflow-hidden backdrop-blur-3xl border border-white/40 flex flex-col"
@@ -392,7 +400,7 @@ export default function MapJourneyScreen({
                     <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent" />
 
                     {/* Floating Icon over Banner - Now using the CityOrb for consistency */}
-                    <div className="absolute bottom-[-9px] left-8 z-10 scale-[0.85] origin-bottom-left">
+                    <div className={cn("absolute bottom-[-9px] z-10 scale-[0.85]", language === 'ar' ? "right-8 origin-bottom-right" : "left-8 origin-bottom-left")}>
                       <CityOrb
                         city={displayCity}
                         isSelected={false}
@@ -406,7 +414,7 @@ export default function MapJourneyScreen({
                         playSound('click');
                         setSelectedCityId(null);
                       }}
-                      className="absolute top-4 right-4 p-2 bg-black/20 backdrop-blur-md hover:bg-black/40 rounded-xl transition-all z-50 border border-white/20 group"
+                      className={cn("absolute top-4 p-2 bg-black/20 backdrop-blur-md hover:bg-black/40 rounded-xl transition-all z-50 border border-white/20 group", language === 'ar' ? "left-4" : "right-4")}
                     >
                       <X size={20} className="text-white group-hover:rotate-90 transition-transform" />
                     </button>
@@ -415,9 +423,11 @@ export default function MapJourneyScreen({
                   <div className="p-8 pt-10">
                     {/* Header Info */}
                     <div className="flex justify-between items-start mb-6">
-                      <div className="space-y-1">
+                      <div className="space-y-1 text-left">
                         <div className="flex items-center gap-2">
-                          <span className="text-[8.5px] font-black text-voyage-accent uppercase tracking-[0.2em]">{displayCity.headline || displayCity.focus}</span>
+                          <span className={cn("text-[8.5px] font-black text-voyage-accent uppercase tracking-[0.2em]", language === 'ar' && "arabic-font text-[10.5px] tracking-normal")}>
+                            {language === 'ar' ? displayCity.arabicHeadline || displayCity.arabicName || displayCity.headline || displayCity.focus : displayCity.headline || displayCity.focus}
+                          </span>
                           <div className="w-1.5 h-1.5 rounded-full bg-voyage-accent animate-pulse" />
                           {displayCity.acteTitle && (
                             <>
@@ -426,17 +436,19 @@ export default function MapJourneyScreen({
                             </>
                           )}
                         </div>
-                        <h2 className="text-[28px] font-black text-[#4E2510] tracking-tight leading-none">
-                          {displayCity.name}
+                        <h2 className={cn("text-[28px] font-black text-[#4E2510] tracking-tight leading-none", language === 'ar' && "arabic-font text-[28px] leading-normal")}>
+                          {language === 'ar' ? displayCity.arabicName || displayCity.name : displayCity.name}
                         </h2>
-                        <p className="arabic-font text-[17px] font-black text-[#7B3F1A] opacity-70">
-                          {displayCity.arabicHeadline || displayCity.arabicName}
+                        <p className={cn("text-[17px] font-black text-[#7B3F1A] opacity-70", language === 'ar' ? "font-sans text-[13px] tracking-wide" : "arabic-font")}>
+                          {language === 'ar' ? displayCity.name : displayCity.arabicName}
                         </p>
                       </div>
 
                       <div className="flex flex-col items-end">
                         <div className="bg-white/50 border border-[#E5D5B8] px-3 py-1.5 rounded-2xl shadow-sm text-right">
-                          <span className="block text-[7.5px] font-black text-[#7B3F1A]/50 uppercase tracking-widest">Progression</span>
+                          <span className={cn("block text-[7.5px] font-black text-[#7B3F1A]/50 uppercase tracking-widest", language === 'ar' && "arabic-font text-[10.5px] tracking-normal")}>
+                            {language === 'ar' ? "التقدم" : "Progression"}
+                          </span>
                           <span className="font-black text-[17px] text-voyage-accent">
                             {Math.round((displayCity.stepNum / displayCity.totalSteps) * 100)}%
                           </span>
@@ -446,8 +458,8 @@ export default function MapJourneyScreen({
 
                     {/* Description Section */}
                     <div className="bg-[#7B3F1A]/5 rounded-[24px] p-5 border border-[#7B3F1A]/10 mb-6">
-                      <p className="text-[#4E2510]/90 text-[13px] leading-relaxed font-medium italic">
-                        "{displayCity.description || displayCity.arabicDescription}"
+                      <p className={cn("text-[#4E2510]/90 text-[13px] leading-relaxed font-medium italic", language === 'ar' && "arabic-font text-[15px] not-italic text-right")}>
+                        "{language === 'ar' ? displayCity.arabicDescription || displayCity.description : displayCity.description || displayCity.arabicDescription}"
                       </p>
                     </div>
 
@@ -465,11 +477,11 @@ export default function MapJourneyScreen({
                             <Sparkles size={16} />
                           </div>
                           <div className="text-left">
-                            <h4 className="text-[9.5px] font-black text-[#7B3F1A] uppercase tracking-[0.2em] leading-none mb-1">
-                              {displayCity.missionsTitle || "Missions Disponibles"}
+                            <h4 className={cn("text-[9.5px] font-black text-[#7B3F1A] uppercase tracking-[0.2em] leading-none mb-1", language === 'ar' && "arabic-font text-[12px] tracking-normal")}>
+                              {language === 'ar' ? "المهمات المتاحة" : displayCity.missionsTitle || "Missions Disponibles"}
                             </h4>
-                            <p className="text-[8.5px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest">
-                              {displayCity.stepNum}/{displayCity.totalSteps} complétées
+                            <p className={cn("text-[8.5px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest", language === 'ar' && "arabic-font text-[10.5px] tracking-normal")}>
+                              {language === 'ar' ? `${displayCity.stepNum}/${displayCity.totalSteps} مكتملة` : `${displayCity.stepNum}/${displayCity.totalSteps} complétées`}
                             </p>
                           </div>
                         </div>
@@ -514,10 +526,12 @@ export default function MapJourneyScreen({
                         transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
                         className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent skew-x-12"
                       />
-                      <span className="font-black uppercase tracking-widest relative z-10">
-                        {displayCity.status === 'completed' ? 'Relever de nouveau' : 'Lancer l\'aventure'}
+                      <span className={cn("font-black uppercase tracking-widest relative z-10", language === 'ar' && "arabic-font tracking-normal")}>
+                        {displayCity.status === 'completed'
+                          ? (language === 'ar' ? 'تحدي مجدداً' : 'Relever de nouveau')
+                          : (language === 'ar' ? 'ابدأ المغامرة' : "Lancer l'aventure")}
                       </span>
-                      <ChevronRight size={22} strokeWidth={3} className="relative z-10" />
+                      <ChevronRight size={22} strokeWidth={3} className={cn("relative z-10 transition-transform", language === 'ar' && "rotate-180")} />
                     </GameButton>
                   </div>
                 </div>
@@ -668,6 +682,7 @@ const CityNode: React.FC<{
   scrollDone?: boolean;
 }> = ({ city, onSelect, isSelected, delay, index, isScrollTarget = false, scrollDone = false }) => {
   const isLocked = city.status === 'locked';
+  const { language } = useSettings();
 
   return (
     <motion.div
@@ -686,15 +701,16 @@ const CityNode: React.FC<{
       <div className="mt-4 text-center">
         <h3 className={cn(
           "text-[13px] font-black tracking-tight leading-none mb-1 uppercase",
-          isLocked ? "text-slate-500" : "text-slate-900"
+          isLocked ? "text-slate-500" : "text-slate-900",
+          language === 'ar' && "arabic-font text-[15px]"
         )}>
-          {city.name}
+          {language === 'ar' ? city.arabicName || city.name : city.name}
         </h3>
         <p className={cn(
-          "arabic-font text-[11px] font-bold",
-          isLocked ? "text-slate-400" : "text-voyage-accent"
+          isLocked ? "text-slate-400" : "text-voyage-accent",
+          language === 'ar' ? "font-sans text-[10px] uppercase tracking-wider opacity-70" : "arabic-font text-[11px] font-bold"
         )}>
-          {city.arabicName}
+          {language === 'ar' ? city.name : city.arabicName}
         </p>
       </div>
 
@@ -703,9 +719,9 @@ const CityNode: React.FC<{
         <motion.div
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute -top-6 bg-voyage-accent text-white text-[7.5px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 whitespace-nowrap z-30"
+          className={cn("absolute -top-6 bg-voyage-accent text-white text-[7.5px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 whitespace-nowrap z-30", language === 'ar' && "arabic-font text-[9.5px]")}
         >
-          MISSION EN COURS
+          {language === 'ar' ? "المهمة الحالية" : "MISSION EN COURS"}
         </motion.div>
       )}
     </motion.div>
@@ -723,16 +739,19 @@ const MissionsList: React.FC<{
 }) => {
     const { missions, loading } = useSupabaseMissions(city.id, completedMissions);
     const { playSound, playVoice } = useAudio();
+    const { language } = useSettings();
 
     if (loading) return (
-      <div className="flex flex-col items-center justify-center py-10 gap-3">
+      <div className="flex flex-col items-center justify-center py-10 gap-3" dir={language === 'ar' ? 'rtl' : 'ltr'}>
         <Loader2 className="animate-spin text-voyage-accent" size={24} />
-        <span className="text-[9.5px] font-black text-[#7B3F1A]/40 uppercase tracking-widest">Chargement des défis...</span>
+        <span className={cn("text-[9.5px] font-black text-[#7B3F1A]/40 uppercase tracking-widest", language === 'ar' && "arabic-font text-[12px] tracking-normal")}>
+          {language === 'ar' ? "جاري تحميل التحديات..." : "Chargement des défis..."}
+        </span>
       </div>
     );
 
     return (
-      <div className="space-y-3">
+      <div className="space-y-3" dir={language === 'ar' ? 'rtl' : 'ltr'}>
         {missions.length > 0 ? missions.map((mission, idx) => {
           const isDone = mission.status === 'completed';
           const isLocked = mission.status === 'locked';
@@ -741,11 +760,12 @@ const MissionsList: React.FC<{
           return (
             <motion.button
               key={mission.id}
-              whileHover={{ scale: 1.01, x: 4 }}
+              whileHover={{ scale: 1.01, x: language === 'ar' ? -4 : 4 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => onSelectMission?.(mission)}
               className={cn(
-                'w-full p-4 rounded-[20px] border flex items-center justify-between transition-all backdrop-blur-md text-left group relative overflow-hidden',
+                'w-full p-4 rounded-[20px] border flex items-center justify-between transition-all backdrop-blur-md group relative overflow-hidden',
+                language === 'ar' ? 'text-right' : 'text-left',
                 isDone ? 'bg-white shadow-sm' : 'bg-white/40 border-white/60 hover:bg-white/60 shadow-none'
               )}
               style={isDone ? {
@@ -767,19 +787,19 @@ const MissionsList: React.FC<{
 
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className={cn('text-[13px] font-black', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]')}>
-                      {mission.title_fr}
+                    <p className={cn('text-[13px] font-black', isDone ? 'text-[#7B3F1A]' : 'text-[#4E2510]', language === 'ar' && "arabic-font text-[15px]")}>
+                      {language === 'ar' ? mission.title_ar || mission.title_fr : mission.title_fr}
                     </p>
                     {mission.is_bonus && (
                       <Sparkles size={12} className="text-voyage-accent" />
                     )}
                   </div>
                   <div className="flex items-center gap-3 mt-0.5">
-                    <span className="text-[8.5px] font-black text-voyage-accent uppercase tracking-wider flex items-center gap-1">
-                      <Star size={10} fill-voyage-accent /> +{mission.xp_reward} XP
+                    <span className={cn("text-[8.5px] font-black text-voyage-accent uppercase tracking-wider flex items-center gap-1", language === 'ar' && "arabic-font text-[10.5px] tracking-normal")}>
+                      <Star size={10} className="fill-voyage-accent text-voyage-accent" /> {language === 'ar' ? `+${mission.xp_reward} نقطة` : `+${mission.xp_reward} XP`}
                     </span>
-                    <span className="text-[8.5px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest">
-                      {mission.estimated_time || '5 min'}
+                    <span className={cn("text-[8.5px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest", language === 'ar' && "arabic-font text-[10.5px] tracking-normal")}>
+                      {language === 'ar' ? "٥ دقائق" : (mission.estimated_time || '5 min')}
                     </span>
                   </div>
                 </div>
@@ -794,7 +814,7 @@ const MissionsList: React.FC<{
                     ))}
                   </div>
                 ) : (
-                  <ChevronRight size={18} className="text-[#7B3F1A]/20 group-hover:text-[#7B3F1A] transition-colors" />
+                  <ChevronRight size={18} className={cn("text-[#7B3F1A]/20 group-hover:text-[#7B3F1A] transition-all", language === 'ar' && "rotate-180")} />
                 )}
               </div>
 
@@ -804,8 +824,8 @@ const MissionsList: React.FC<{
         }) : (
           <div className="py-12 flex flex-col items-center justify-center border-2 border-dashed border-[#E5D5B8] rounded-[30px] opacity-40">
             <MapPin size={32} className="text-[#7B3F1A] mb-2" />
-            <p className="text-[11px] font-black text-[#7B3F1A] uppercase tracking-widest">
-              En attente d'expédition...
+            <p className={cn("text-[11px] font-black text-[#7B3F1A] uppercase tracking-widest", language === 'ar' && "arabic-font")}>
+              {language === 'ar' ? 'في انتظار المغامرة...' : "En attente d'expédition..."}
             </p>
           </div>
         )}

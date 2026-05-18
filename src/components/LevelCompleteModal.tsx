@@ -10,6 +10,7 @@ import { type MissionCompletionSummary } from '../types';
 import { cn } from '../lib/utils';
 import { useSupabaseProfile, useSupabaseMissionLeaderboard } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
+import { useSettings } from '../contexts/SettingsContext';
 
 interface LevelCompleteModalProps {
   summary: MissionCompletionSummary | null;
@@ -25,6 +26,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
   const { profile } = useSupabaseProfile();
   const { leaderboard, loading: loadingLeaderboard } = useSupabaseMissionLeaderboard(summary?.missionId || '');
   const { playSound } = useAudio();
+  const { language } = useSettings();
   
   const totalXp = summary?.totalXp ?? 0;
   const totalStars = summary?.totalStars ?? 0;
@@ -85,14 +87,14 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
   }, [summary?.missionId]);
 
   return (
-    <div className="fixed inset-0 z-[100] bg-amber-50/60 backdrop-blur-md px-4 py-5 sm:px-6 flex items-center justify-center">
+    <div className="fixed inset-0 z-100 bg-amber-50/60 backdrop-blur-md px-4 py-5 sm:px-6 flex items-center justify-center">
       {/* Celebration Confetti - Toujours affiché pour le classement */}
       <AnimatePresence>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 pointer-events-none z-[101]"
+          className="fixed inset-0 pointer-events-none z-101"
         >
           {[...Array(isPerfect ? 60 : 30)].map((_, i) => (
             <motion.div
@@ -189,21 +191,25 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
           </p>
         </div>
 
-        <div className="relative flex-grow overflow-y-auto scrollbar-hide px-6 pb-40">
+        <div className="relative grow overflow-y-auto scrollbar-hide px-6 pb-40">
           <div className="max-w-3xl mx-auto space-y-8">
             
             {/* Score Section */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-4 rounded-[1.5rem] shadow-sm text-center">
-                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-[#A08363] mb-1">Score</p>
+            <div className={cn("grid grid-cols-2 gap-3", language === 'ar' && "flex-row-reverse")}>
+              <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-4 rounded-3xl shadow-sm text-center">
+                <p className={cn("text-[9px] font-black uppercase tracking-[0.15em] text-[#A08363] mb-1", language === 'ar' && "arabic-font")}>
+                  {language === 'ar' ? 'النقاط' : 'Score'}
+                </p>
                 <div className="flex items-baseline justify-center gap-1">
                   <span className="text-3xl font-black text-voyage-primary">{countedXp}</span>
-                  <span className="text-xs font-black text-voyage-primary/60">XP</span>
+                  <span className={cn("text-xs font-black text-voyage-primary/60", language === 'ar' && "arabic-font")}>XP</span>
                 </div>
               </div>
               
-              <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-4 rounded-[1.5rem] shadow-sm text-center">
-                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-[#A08363] mb-1">Précision</p>
+              <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-4 rounded-3xl shadow-sm text-center">
+                <p className={cn("text-[9px] font-black uppercase tracking-[0.15em] text-[#A08363] mb-1", language === 'ar' && "arabic-font")}>
+                  {language === 'ar' ? 'الدقة' : 'Précision'}
+                </p>
                 <div className="flex items-baseline justify-center gap-1">
                   <span className="text-3xl font-black text-amber-600">{countedRate}</span>
                   <span className="text-xs font-black text-amber-600/60">%</span>
@@ -212,11 +218,11 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
             </div>
 
             {/* Ranking Section */}
-            <div className="bg-white/40 backdrop-blur-md rounded-[2.5rem] border border-white/60 shadow-lg overflow-hidden">
+            <div className="bg-white/40 backdrop-blur-md rounded-[2.5rem] border border-white/60 shadow-lg overflow-hidden" dir={language === 'ar' ? 'rtl' : 'ltr'}>
               <div className="px-6 py-4 border-b border-[#E5D5B8]/30 bg-white/30">
-                <h3 className="text-sm font-black text-[#24160D] uppercase tracking-widest flex items-center gap-2">
+                <h3 className={cn("text-sm font-black text-[#24160D] uppercase tracking-widest flex items-center gap-2", language === 'ar' && "arabic-font")}>
                   <Trophy size={16} className="text-amber-500" />
-                  Top 5 - Classement Mondial
+                  {language === 'ar' ? 'أفضل 5 - الترتيب العالمي' : 'Top 5 - Classement Mondial'}
                 </h3>
               </div>
               
@@ -236,17 +242,21 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
             </div>
 
             {/* Questions Section */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between px-2">
-                <h3 className="text-sm font-black text-[#24160D] uppercase tracking-widest">Détail des questions</h3>
-                <span className="text-[10px] font-black text-[#A08363] uppercase tracking-widest">{summary?.correctCount}/{summary?.totalQuestions} Correctes</span>
+            <div className="space-y-4" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+              <div className={cn("flex items-center justify-between px-2", language === 'ar' && "flex-row-reverse")}>
+                <h3 className={cn("text-sm font-black text-[#24160D] uppercase tracking-widest", language === 'ar' && "arabic-font")}>
+                  {language === 'ar' ? 'تفاصيل الأسئلة' : 'Détail des questions'}
+                </h3>
+                <span className={cn("text-[10px] font-black text-[#A08363] uppercase tracking-widest", language === 'ar' && "arabic-font")}>
+                  {language === 'ar' ? `${summary?.correctCount}/${summary?.totalQuestions} صحيحة` : `${summary?.correctCount}/${summary?.totalQuestions} Correctes`}
+                </span>
               </div>
               
               <div className="grid gap-3">
                 {summary?.questions.map((q, idx) => (
                   <div 
                     key={q.questionId}
-                    className="flex items-center gap-4 p-4 bg-white/60 backdrop-blur-md rounded-2xl border border-white/80 shadow-sm"
+                    className={cn("flex items-center gap-4 p-4 bg-white/60 backdrop-blur-md rounded-2xl border border-white/80 shadow-sm", language === 'ar' && "flex-row-reverse text-right")}
                   >
                     <div className={cn(
                       "shrink-0 w-8 h-8 rounded-lg flex items-center justify-center",
@@ -254,17 +264,17 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                     )}>
                       {q.isCorrect ? <CheckCircle2 size={18} /> : <XCircle size={18} />}
                     </div>
-                    <div className="flex-grow">
-                      <p className="text-[13px] font-bold text-[#24160D] leading-tight">
+                    <div className="grow">
+                      <p className={cn("text-[13px] font-bold text-[#24160D] leading-tight", language === 'ar' && "arabic-font")}>
                         {q.question}
                       </p>
                     </div>
                     {!q.isCorrect && (
                       <button 
                         onClick={() => onRedoIncorrect([q.questionId])}
-                        className="text-[9px] font-black uppercase tracking-widest text-voyage-primary bg-voyage-primary/10 px-3 py-1.5 rounded-lg hover:bg-voyage-primary/20 transition-colors"
+                        className={cn("text-[9px] font-black uppercase tracking-widest text-voyage-primary bg-voyage-primary/10 px-3 py-1.5 rounded-lg hover:bg-voyage-primary/20 transition-colors", language === 'ar' && "arabic-font")}
                       >
-                        Revoir
+                        {language === 'ar' ? 'مراجعة' : 'Revoir'}
                       </button>
                     )}
                   </div>
@@ -274,20 +284,22 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
           </div>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 border-t border-white/40 bg-[linear-gradient(180deg,rgba(255,250,243,0.62),rgba(248,240,230,0.95))] px-6 py-4 backdrop-blur-2xl sm:px-8 lg:px-10 z-20">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex flex-col">
-              <span className="text-[10px] font-black uppercase tracking-widest text-[#A08363]">Total gagné</span>
-              <span className="text-xl font-black text-[#2A1A10]">{countedXp} XP</span>
+        <div className="absolute inset-x-0 bottom-0 border-t border-white/40 bg-[linear-gradient(180deg,rgba(255,250,243,0.62),rgba(248,240,230,0.95))] px-6 py-4 backdrop-blur-2xl sm:px-8 lg:px-10 z-20" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+          <div className={cn("flex items-center justify-between gap-4", language === 'ar' && "flex-row-reverse")}>
+            <div className={cn("flex flex-col", language === 'ar' && "items-start text-right")}>
+              <span className={cn("text-[10px] font-black uppercase tracking-widest text-[#A08363]", language === 'ar' && "arabic-font")}>
+                {language === 'ar' ? 'إجمالي ما ربحته' : 'Total gagné'}
+              </span>
+              <span className={cn("text-xl font-black text-[#2A1A10]", language === 'ar' && "arabic-font")}>{countedXp} XP</span>
             </div>
             
-            <div className="flex items-center gap-3">
+            <div className={cn("flex items-center gap-3", language === 'ar' && "flex-row-reverse")}>
               <motion.button
                 whileHover={{ scale: 1.1, backgroundColor: '#fff' }}
                 whileTap={{ scale: 0.9 }}
                 onClick={onReplayMission}
                 className="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-[#D7C4AD] bg-white/50 text-[#A77C55] shadow-sm backdrop-blur-md transition-colors hover:text-amber-600 hover:border-amber-400"
-                title="Rejouer"
+                title={language === 'ar' ? 'إعادة اللعب' : 'Rejouer'}
               >
                 <RotateCcw size={22} strokeWidth={2.5} />
               </motion.button>
@@ -297,20 +309,22 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setShowQuitConfirm(true)}
                 className="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-[#D7C4AD] bg-white/50 text-[#A77C55] shadow-sm backdrop-blur-md transition-colors hover:text-rose-600 hover:border-rose-400"
-                title="Quitter"
+                title={language === 'ar' ? 'خروج' : 'Quitter'}
               >
                 <LogOut size={22} strokeWidth={2.5} />
               </motion.button>
 
               {onContinue && (
                 <motion.button
-                  whileHover={{ scale: 1.1, x: 5 }}
+                  whileHover={{ scale: 1.1, x: language === 'ar' ? -5 : 5 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onContinue}
-                  className="h-12 px-8 flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#24160D] to-[#2A1A10] text-white shadow-lg shadow-black/10"
+                  className="h-12 px-8 flex items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-[#24160D] to-[#2A1A10] text-white shadow-lg shadow-black/10"
                 >
-                  <span className="font-black text-xs uppercase tracking-widest">Suivant</span>
-                  <ArrowRight size={20} strokeWidth={3} />
+                  <span className={cn("font-black text-xs uppercase tracking-widest", language === 'ar' && "arabic-font")}>
+                    {language === 'ar' ? 'المهمة التالية' : 'Suivant'}
+                  </span>
+                  <ArrowRight size={20} strokeWidth={3} className={cn(language === 'ar' && "rotate-180")} />
                 </motion.button>
               )}
             </div>
@@ -325,7 +339,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[110] flex items-center justify-center px-4 bg-[#1e1510]/60 backdrop-blur-sm"
+            className="fixed inset-0 z-110 flex items-center justify-center px-4 bg-[#1e1510]/60 backdrop-blur-sm"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -337,23 +351,25 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                 <AlertTriangle size={40} />
               </div>
               
-              <h3 className="text-2xl font-black text-[#2A1A10] mb-3">Vraiment partir ?</h3>
-              <p className="text-slate-500 font-bold text-sm mb-8 leading-relaxed">
-                Êtes-vous sûr de vouloir quitter le classement et retourner à la ville ?
+              <h3 className={cn("text-2xl font-black text-[#2A1A10] mb-3", language === 'ar' && "arabic-font")}>
+                {language === 'ar' ? 'هل تريد المغادرة حقاً؟' : 'Vraiment partir ?'}
+              </h3>
+              <p className={cn("text-slate-500 font-bold text-sm mb-8 leading-relaxed", language === 'ar' && "arabic-font")}>
+                {language === 'ar' ? 'هل أنت متأكد من رغبتك في مغادرة الترتيب والعودة إلى المدينة؟' : 'Êtes-vous sûr de vouloir quitter le classement et retourner à la ville ?'}
               </p>
               
               <div className="space-y-3">
                 <button
                   onClick={onBackToCity}
-                  className="w-full py-4 bg-rose-500 hover:bg-rose-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-lg shadow-rose-500/20 active:scale-95"
+                  className={cn("w-full py-4 bg-rose-500 hover:bg-rose-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-lg shadow-rose-500/20 active:scale-95", language === 'ar' && "arabic-font")}
                 >
-                  Oui, quitter
+                  {language === 'ar' ? 'نعم، مغادرة' : 'Oui, quitter'}
                 </button>
                 <button
                   onClick={() => setShowQuitConfirm(false)}
-                  className="w-full py-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-2xl font-black uppercase tracking-widest text-xs transition-all active:scale-95"
+                  className={cn("w-full py-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-2xl font-black uppercase tracking-widest text-xs transition-all active:scale-95", language === 'ar' && "arabic-font")}
                 >
-                  Non, rester ici
+                  {language === 'ar' ? 'لا، البقاء هنا' : 'Non, rester ici'}
                 </button>
               </div>
             </motion.div>
@@ -371,17 +387,17 @@ function StatTile({ label, value, suffix, accent }: { label: string; value: numb
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="rounded-[1.5rem] border border-white/70 bg-white/60 p-3.5 shadow-[0_10px_30px_rgba(58,41,27,0.07)] backdrop-blur-xl overflow-hidden relative group"
+      className="rounded-3xl border border-white/70 bg-white/60 p-3.5 shadow-[0_10px_30px_rgba(58,41,27,0.07)] backdrop-blur-xl overflow-hidden relative group"
     >
       {/* Glow effect au hover */}
       <motion.div 
-        className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100"
+        className="absolute inset-0 bg-linear-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100"
         transition={{ duration: 0.3 }}
         style={{ pointerEvents: 'none' }}
       />
 
       <motion.div
-        className={`mb-3 h-1.5 w-16 rounded-full bg-gradient-to-r ${accent}`}
+        className={`mb-3 h-1.5 w-16 rounded-full bg-linear-to-r ${accent}`}
         animate={{ width: [64, 80, 64] }}
         transition={{ duration: 2, repeat: Infinity }}
       />
@@ -411,7 +427,7 @@ function AnswerPanel({ label, value, muted = false }: { label: string; value: st
     >
       {/* Hover glow */}
       <motion.div 
-        className={`absolute inset-0 ${muted ? 'bg-gradient-to-br from-white/10 to-transparent' : 'bg-gradient-to-br from-amber-100/10 to-transparent'} opacity-0 group-hover:opacity-100`}
+        className={`absolute inset-0 ${muted ? 'bg-linear-to-br from-white/10 to-transparent' : 'bg-linear-to-br from-amber-100/10 to-transparent'} opacity-0 group-hover:opacity-100`}
         transition={{ duration: 0.3 }}
         style={{ pointerEvents: 'none' }}
       />
@@ -423,6 +439,7 @@ function AnswerPanel({ label, value, muted = false }: { label: string; value: st
 }
 
 function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]; currentUserId?: string; missionXp: number }) {
+  const { language } = useSettings();
   const [displayPlayers, setDisplayPlayers] = useState<any[]>([]);
   const [animationProgress, setAnimationProgress] = useState(0);
 
@@ -490,10 +507,12 @@ function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]
           return (
             <div key={player.id}>
               {showSeparator && (
-                <div className="px-6 py-2 bg-[#F6EFE6] flex items-center justify-center gap-2">
-                  <div className="h-px flex-grow bg-[#D7C4AD]" />
-                  <span className="text-[9px] font-black text-[#A08363] uppercase tracking-[0.3em]">Ta Position</span>
-                  <div className="h-px flex-grow bg-[#D7C4AD]" />
+                <div className="px-6 py-2 bg-[#F6EFE6] flex items-center justify-center gap-2" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+                  <div className="h-px grow bg-[#D7C4AD]" />
+                  <span className={cn("text-[9px] font-black text-[#A08363] uppercase tracking-[0.3em]", language === 'ar' && "arabic-font")}>
+                    {language === 'ar' ? 'ترتيبك الحالي' : 'Ta Position'}
+                  </span>
+                  <div className="h-px grow bg-[#D7C4AD]" />
                 </div>
               )}
               <motion.div 
@@ -511,7 +530,8 @@ function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]
                 }}
                 className={cn(
                   "flex items-center gap-4 px-6 py-4 transition-all duration-700", 
-                  isMe ? "bg-amber-100/40 border-y border-amber-200/50 shadow-inner z-10" : "bg-transparent"
+                  isMe ? "bg-amber-100/40 border-y border-amber-200/50 shadow-inner z-10" : "bg-transparent",
+                  language === 'ar' && "flex-row-reverse text-right"
                 )}
               >
                 <div className="w-8 flex flex-col items-center">
@@ -553,19 +573,21 @@ function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]
                   )}
                 </div>
 
-                <div className="flex-grow">
-                  <p className={cn("text-[15px] font-black tracking-tight", isMe ? "text-amber-900" : "text-[#4E2510]")}>
-                    {player.name} {isMe && "(Toi)"}
+                <div className="grow">
+                  <p className={cn("text-[15px] font-black tracking-tight", isMe ? "text-amber-900" : "text-[#4E2510]", language === 'ar' && "arabic-font")}>
+                    {player.name} {isMe && (language === 'ar' ? '(أنت)' : '(Toi)')}
                   </p>
-                  <div className="flex items-center gap-2">
-                    <p className="text-[10px] font-bold text-[#A08363] uppercase tracking-widest">Niveau {player.level}</p>
+                  <div className={cn("flex items-center gap-2", language === 'ar' && "flex-row-reverse")}>
+                    <p className={cn("text-[10px] font-bold text-[#A08363] uppercase tracking-widest", language === 'ar' && "arabic-font")}>
+                      {language === 'ar' ? `المستوى ${player.level}` : `Niveau ${player.level}`}
+                    </p>
                     {isMe && animationProgress < 1 && (
                        <motion.span 
-                         animate={{ x: [0, 5, 0] }}
+                         animate={{ x: language === 'ar' ? [0, -5, 0] : [0, 5, 0] }}
                          transition={{ repeat: Infinity, duration: 0.8 }}
-                         className="text-[9px] font-black text-amber-600 uppercase tracking-tighter"
+                         className={cn("text-[9px] font-black text-amber-600 uppercase tracking-tighter", language === 'ar' && "arabic-font")}
                        >
-                         🚀 En pleine remontée !
+                         {language === 'ar' ? '🚀 في تقدم مستمر !' : '🚀 En pleine remontée !'}
                        </motion.span>
                     )}
                   </div>

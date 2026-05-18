@@ -1,8 +1,13 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, CheckCircle2, Award, Zap, Globe, Lock, MapPin, LogOut } from 'lucide-react';
+import { 
+  Settings, MessageCircle, GitBranch, Users, Brain, ChevronRight, ChevronLeft, 
+  TrendingUp, Trophy, Star, Shield, Flame, Loader2, Volume2, Music, Bell, 
+  CheckCircle2, Award, Zap, Globe, Lock, MapPin, LogOut 
+} from 'lucide-react';
 import { useAuth, useSupabaseProfile, useSupabaseBadges, useSupabaseUserHistory, useSupabaseSettings, useSupabaseCities } from '../hooks/useSupabase';
 import { useAudio } from '../hooks/useAudio';
+import { useSettings } from '../contexts/SettingsContext';
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { optimizeSupabaseUrl } from '../lib/city-theme';
@@ -20,7 +25,44 @@ interface BadgeDetailProps {
   onClose: () => void;
 }
 
+const cityTranslations: Record<string, string> = {
+  'Tous': 'الكل',
+  'Rabat': 'الرباط',
+  'Chefchaouen': 'شفشاون',
+  'Fès': 'فاس',
+  'Marrakech': 'مراكش',
+  'Laâyoune': 'العيون',
+  'Dakhla': 'الداخلة',
+  'Culture': 'ثقافة',
+  'Succès': 'نجاح'
+};
+
+const translateBadgeDescription = (desc: string, city: string, lang: string) => {
+  if (lang !== 'ar') return desc;
+  if (!desc) return '';
+  
+  if (desc.includes('Bijou traditionnel de la ville de')) {
+    const cityName = desc.split('ville de')[1]?.trim()?.replace('.', '');
+    const arCity = cityTranslations[cityName] || cityName || cityTranslations[city] || city;
+    return `مجوهرات تقليدية لمدينة ${arCity}.`;
+  }
+  
+  if (desc === 'Connaissance Amazighe') return 'المعرفة الأمازيغية';
+  if (desc === 'Guerrier Uni') return 'المحارب المتحد';
+  if (desc === 'Maître Amazighe') return 'سيد الأمازيغ';
+  
+  if (desc.startsWith('Bijou de')) {
+    const cityName = desc.replace('Bijou de', '').trim();
+    const arCity = cityTranslations[cityName] || cityName || cityTranslations[city] || city;
+    return `مجوهرات لمدينة ${arCity}`;
+  }
+  
+  return desc;
+};
+
 function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
+  const { language } = useSettings();
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -57,23 +99,29 @@ function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
         
         <div className="p-8 text-center space-y-4">
           <div className="space-y-1">
-            <h3 className="text-2xl font-black text-voyage-primary-dark">{badge.badge_name}</h3>
+            <h3 className={cn("text-2xl font-black text-voyage-primary-dark", language === 'ar' ? 'arabic-font' : '')}>
+              {badge.badge_name}
+            </h3>
             <p className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.2em]">
               {badge.rarity}
-              {!isEarned && badge.xp_requirement > 0 && ` • Déverrouillage à ${badge.xp_requirement} XP`}
+              {!isEarned && badge.xp_requirement > 0 && (
+                language === 'ar' 
+                  ? ` • الفتح عند ${badge.xp_requirement} نقطة` 
+                  : ` • Déverrouillage à ${badge.xp_requirement} XP`
+              )}
             </p>
           </div>
           
-          <p className="text-sm text-voyage-primary/70 leading-relaxed font-medium">
+          <p className={cn("text-sm text-voyage-primary/70 leading-relaxed font-medium", language === 'ar' ? 'arabic-font' : '')}>
             {badge.description_fr}
           </p>
           
           <div className="pt-4">
              <button 
                 onClick={onClose}
-                className="w-full py-4 bg-voyage-primary text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-voyage-primary-dark transition-colors"
+                className={cn("w-full py-4 bg-voyage-primary text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-voyage-primary-dark transition-colors", language === 'ar' ? 'arabic-font' : '')}
              >
-               Fermer
+               {language === 'ar' ? 'إغلاق' : 'Fermer'}
              </button>
           </div>
         </div>
@@ -93,6 +141,8 @@ interface DevModalProps {
 }
 
 function DevModal({ devInfo, onClose }: DevModalProps) {
+  const { language } = useSettings();
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -131,11 +181,15 @@ function DevModal({ devInfo, onClose }: DevModalProps) {
         <div className="p-10 pt-20 text-center space-y-6">
           <div className="space-y-1">
             <h3 className="text-3xl font-black text-voyage-primary-dark tracking-tight">{devInfo.name || 'Développeur'}</h3>
-            <p className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.3em]">Concepteur & Développeur</p>
+            <p className={cn("text-[10px] font-black text-voyage-accent uppercase tracking-[0.3em]", language === 'ar' ? 'arabic-font' : '')}>
+              {language === 'ar' ? 'المصمم والمطور' : 'Concepteur & Développeur'}
+            </p>
           </div>
 
-          <p className="text-sm text-voyage-primary/70 leading-relaxed font-medium px-4">
-            Passionné par la création d'expériences numériques innovantes et éducatives. Retrouvez-moi sur LinkedIn pour échanger !
+          <p className={cn("text-sm text-voyage-primary/70 leading-relaxed font-medium px-4", language === 'ar' ? 'arabic-font' : '')}>
+            {language === 'ar' 
+              ? 'شغوف بإنشاء تجارب رقمية مبتكرة وتعليمية. تجدني على LinkedIn للتواصل!'
+              : "Passionné par la création d'expériences numériques innovantes et éducatives. Retrouvez-moi sur LinkedIn pour échanger !"}
           </p>
 
           <div className="flex flex-col items-center gap-4 py-4">
@@ -154,15 +208,17 @@ function DevModal({ devInfo, onClose }: DevModalProps) {
                 alt="LinkedIn QR"
               />
             </motion.a>
-            <span className="text-[9px] font-black text-voyage-accent uppercase tracking-widest animate-pulse">Scannez pour visiter</span>
+            <span className={cn("text-[9px] font-black text-voyage-accent uppercase tracking-widest animate-pulse", language === 'ar' ? 'arabic-font' : '')}>
+              {language === 'ar' ? 'امسح للزيارة' : 'Scannez pour visiter'}
+            </span>
           </div>
 
           <div className="pt-2">
              <button 
                 onClick={onClose}
-                className="w-full py-5 bg-voyage-primary-dark text-white rounded-[24px] font-black text-xs uppercase tracking-widest shadow-lg shadow-voyage-primary-dark/20 active:shadow-none transition-all active:scale-95"
+                className={cn("w-full py-5 bg-voyage-primary-dark text-white rounded-[24px] font-black text-xs uppercase tracking-widest shadow-lg shadow-voyage-primary-dark/20 active:shadow-none transition-all active:scale-95", language === 'ar' ? 'arabic-font' : '')}
              >
-               Retour au jeu
+               {language === 'ar' ? 'العودة إلى اللعبة' : 'Retour au jeu'}
              </button>
           </div>
         </div>
@@ -188,6 +244,7 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
   const { settings, loading: settingsLoading, getSetting } = useSupabaseSettings();
   const { cities, loading: citiesLoading } = useSupabaseCities(completedCities, completedMissions);
   const { settings: audio, updateSettings: updateAudio, saveToCloud, playSound } = useAudio();
+  const { language } = useSettings();
   const [selectedBadge, setSelectedBadge] = useState<any>(null);
   const [activeCity, setActiveCity] = useState('Tous');
   const [showDevModal, setShowDevModal] = useState(false);
@@ -205,16 +262,15 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
       xp: [{ date: '', xp: 0 }], 
       skills: [{ name: 'Com', value: 0 }, { name: 'Déc', value: 0 }, { name: 'Eq', value: 0 }, { name: 'Str', value: 0 }], 
       success: [{ name: '', score: 0 }], 
-      activity: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map(day => ({ day, count: 0 })) 
+      activity: (language === 'ar' ? ['إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت', 'أحد'] : ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']).map(day => ({ day, count: 0 })) 
     };
 
     // 1. XP Progress
     let totalXp = 0;
     const xpData = history.map(h => {
-      totalXp += h.xp || 0;
       return { 
-        date: new Date(h.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }), 
-        xp: totalXp 
+        date: new Date(h.created_at).toLocaleDateString(language === 'ar' ? 'ar-MA' : 'fr-FR', { day: '2-digit', month: '2-digit' }), 
+        xp: totalXp += h.xp || 0
       };
     });
 
@@ -235,19 +291,23 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
     // 4. Activity (Daily missions count)
     const dayMap: Record<string, number> = {};
     history.forEach(h => {
-      const day = new Date(h.created_at).toLocaleDateString('fr-FR', { weekday: 'short' });
-      const formattedDay = day.charAt(0).toUpperCase() + day.slice(1, 3);
+      const locale = language === 'ar' ? 'ar-MA' : 'fr-FR';
+      const day = new Date(h.created_at).toLocaleDateString(locale, { weekday: 'short' });
+      const formattedDay = language === 'ar' ? day : (day.charAt(0).toUpperCase() + day.slice(1, 3));
       dayMap[formattedDay] = (dayMap[formattedDay] || 0) + 1;
     });
     
-    const daysFr = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
-    const activityData = daysFr.map(day => ({
+    const days = language === 'ar' 
+      ? ['إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت', 'أحد'] 
+      : ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+
+    const activityData = days.map(day => ({
       day,
       count: dayMap[day] || 0
     }));
 
     return { xp: xpData, skills: skillData, success: successData, activity: activityData };
-  }, [history]);
+  }, [history, language]);
 
   const handleToggleAudio = async (patch: any) => {
     updateAudio(patch);
@@ -272,7 +332,6 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
         rawUrl += '.png';
       }
       
-      // Determine city/category
       let city = staticInfo?.city;
       if (!city) {
         if (b.category === 'cultural' || b.category === 'culture') city = 'Culture';
@@ -281,7 +340,6 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
         else city = 'Succès';
       }
 
-      // Logic for unlocking by XP if defined
       const playerXp = profile?.xp || 0;
       const xpRequirement = b.xp_requirement || 0;
       const isUnlockedByXp = xpRequirement > 0 && playerXp >= xpRequirement;
@@ -322,20 +380,20 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
   const skills = [
     { name: 'Communication', label: 'التواصل', level: Math.floor(stats.xp / 2000) + 1, xp: (stats.xp % 2000) / 20, icon: MessageCircle, color: 'text-voyage-accent', bg: 'bg-voyage-accent/10', border: 'border-voyage-accent/20' },
     { name: 'Décision', label: 'القرار', level: Math.floor(stats.xp / 2500) + 1, xp: (stats.xp % 2500) / 25, icon: GitBranch, color: 'text-duo-orange', bg: 'bg-duo-orange/10', border: 'border-duo-orange/20' },
-    { name: 'Travail d\'équipe', label: 'العمل الجماعي', level: Math.floor(stats.xp / 1500) + 1, xp: (stats.xp % 1500) / 15, icon: Users, color: 'text-voyage-primary', bg: 'bg-voyage-primary/10', border: 'border-voyage-primary/20' },
+    { name: "Travail d'équipe", label: 'العمل الجماعي', level: Math.floor(stats.xp / 1500) + 1, xp: (stats.xp % 1500) / 15, icon: Users, color: 'text-voyage-primary', bg: 'bg-voyage-primary/10', border: 'border-voyage-primary/20' },
     { name: 'Gestion Stress', label: 'إدارة الضغط', level: Math.floor(stats.xp / 3000) + 1, xp: (stats.xp % 3000) / 30, icon: Brain, color: 'text-duo-red', bg: 'bg-duo-red/10', border: 'border-duo-red/20' },
   ];
 
+  const ChevronIcon = language === 'ar' ? ChevronLeft : ChevronRight;
+
   return (
     <div className="h-full w-full bg-[#FAFAFA] flex flex-col relative overflow-hidden">
-      {/* Decorative Background Elements */}
       <div className="absolute top-0 left-0 w-full h-64 bg-linear-to-b from-voyage-primary/10 to-transparent pointer-events-none" />
       
-      <TopAppBar stats={stats} title="Ton Profil" onBack={onBack} />
+      <TopAppBar stats={stats} title={language === 'ar' ? 'ملفك الشخصي' : 'Ton Profil'} onBack={onBack} />
       
       <main className="grow overflow-y-auto px-6 pt-24 pb-32 space-y-8 max-w-2xl mx-auto w-full relative z-10 scrollbar-hide">
 
-        
         {/* User Profile Card */}
         <section className="relative flex flex-col items-center text-center pt-8 pb-4">
            <div className="relative group">
@@ -389,38 +447,49 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                   playSound('click');
                   onSettings();
                 }}
-                className="absolute -bottom-3 -right-3 w-12 h-12 bg-white border-4 border-voyage-primary rounded-2xl flex items-center justify-center shadow-2xl cursor-pointer z-30 transition-all"
+                className={cn(
+                  "absolute -bottom-3 w-12 h-12 bg-white border-4 border-voyage-primary rounded-2xl flex items-center justify-center shadow-2xl cursor-pointer z-30 transition-all",
+                  language === 'ar' ? "-left-3" : "-right-3"
+                )}
               >
                 <Settings size={22} className="text-voyage-primary fill-voyage-primary/10" />
               </motion.button>
            </div>
            
            <div className="mt-8 space-y-3 text-center">
-              <h1 className="text-4xl font-black text-voyage-primary-dark tracking-tight">
-                {profile?.full_name || 'Explorateur'}
+              <h1 className={cn("text-4xl font-black text-voyage-primary-dark tracking-tight", language === 'ar' ? 'arabic-font text-3xl' : '')}>
+                {profile?.full_name || (language === 'ar' ? 'مستكشف' : 'Explorateur')}
               </h1>
               
               <div className="flex flex-col items-center gap-2">
                 <p className="text-voyage-primary/60 font-bold text-sm tracking-wide">
-                  {profile?.username ? `@${profile.username}` : (session?.user?.email || 'Explorateur des Savoirs')}
+                  {profile?.username ? `@${profile.username}` : (session?.user?.email || (language === 'ar' ? 'مستكشف المعارف' : 'Explorateur des Savoirs'))}
                 </p>
                 
                 <div className="flex items-center gap-3">
                   <div className="inline-flex items-center gap-2 bg-voyage-accent/10 px-4 py-1.5 rounded-full border border-voyage-accent/20">
                     <Shield size={14} className="text-voyage-accent" />
-                    <span className="font-black text-voyage-primary uppercase tracking-[0.2em] text-[10px]">Niveau {profile?.level || 1}</span>
+                    <span className={cn("font-black text-voyage-primary uppercase tracking-[0.2em] text-[10px]", language === 'ar' ? 'arabic-font' : '')}>
+                      {language === 'ar' ? `المستوى ${profile?.level || 1}` : `Niveau ${profile?.level || 1}`}
+                    </span>
                   </div>
                   
                   <div className="inline-flex items-center gap-2 bg-voyage-primary/5 px-4 py-1.5 rounded-full border border-voyage-primary/10">
-                    <span className="font-black text-voyage-primary uppercase tracking-widest text-[10px]">
-                      {profile?.group_name || 'SPÉCIALITÉ NON DÉFINIE'}
+                    <span className={cn("font-black text-voyage-primary uppercase tracking-widest text-[10px]", language === 'ar' ? 'arabic-font' : '')}>
+                      {profile?.group_name ? (
+                        profile.group_name === 'GROUPE NON DÉFINI' && language === 'ar' ? 'تخصص غير محدد' : profile.group_name
+                      ) : (
+                        language === 'ar' ? 'تخصص غير محدد' : 'SPÉCIALITÉ NON DÉFINIE'
+                      )}
                     </span>
                   </div>
                 </div>
 
                 {profile?.birth_date && (
-                  <p className="text-[10px] font-black text-voyage-primary/40 uppercase tracking-[0.3em] mt-1">
-                    Né le {new Date(profile.birth_date).toLocaleDateString('fr-FR')}
+                  <p className={cn("text-[10px] font-black text-voyage-primary/40 uppercase tracking-[0.3em] mt-1", language === 'ar' ? 'arabic-font' : '')}>
+                    {language === 'ar' 
+                      ? `ولد في ${new Date(profile.birth_date).toLocaleDateString('ar-MA')}` 
+                      : `Né le ${new Date(profile.birth_date).toLocaleDateString('fr-FR')}`}
                   </p>
                 )}
               </div>
@@ -430,45 +499,46 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
         {/* Big Stats Row */}
         <section className="grid grid-cols-3 gap-4">
            {[
-             { icon: Flame, color: 'text-orange-500', bg: 'bg-orange-50', label: 'JOURS', val: '12' },
-             { icon: TrendingUp, color: 'text-voyage-accent', bg: 'bg-voyage-accent/5', label: 'XP TOTAL', val: (stats.xp/1000).toFixed(1) + 'k' },
-             { icon: Trophy, color: 'text-amber-500', bg: 'bg-amber-50', label: 'BADGES', val: allGameBadges.filter(b => b.isEarned).length },
+             { icon: Flame, color: 'text-orange-500', bg: 'bg-orange-50', label: language === 'ar' ? 'أيام' : 'JOURS', val: '12' },
+             { icon: TrendingUp, color: 'text-voyage-accent', bg: 'bg-voyage-accent/5', label: language === 'ar' ? 'إجمالي الخبرة' : 'XP TOTAL', val: (stats.xp/1000).toFixed(1) + 'k' },
+             { icon: Trophy, color: 'text-amber-500', bg: 'bg-amber-50', label: language === 'ar' ? 'الأوسمة' : 'BADGES', val: allGameBadges.filter(b => b.isEarned).length },
            ].map((stat, i) => (
              <motion.div 
-               key={i}
-               initial={{ opacity: 0, y: 20 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ delay: 0.1 * i }}
-               className={cn("bg-white border border-voyage-secondary-light p-5 rounded-3xl flex flex-col items-center gap-2 shadow-sm relative overflow-hidden group")}
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * i }}
+                className={cn("bg-white border border-voyage-secondary-light p-5 rounded-3xl flex flex-col items-center gap-2 shadow-sm relative overflow-hidden group")}
              >
                 <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center mb-1", stat.bg)}>
                   <stat.icon size={22} className={stat.color} />
                 </div>
                 <span className="font-black text-xl text-voyage-primary-dark">{stat.val}</span>
-                <span className="text-[9px] font-black text-voyage-primary/50 uppercase tracking-widest">{stat.label}</span>
+                <span className={cn("text-[9px] font-black text-voyage-primary/50 uppercase tracking-widest text-center", language === 'ar' ? 'arabic-font' : '')}>{stat.label}</span>
              </motion.div>
            ))}
         </section>
 
         {/* Engagement & Analytics Section */}
-
         <section className="space-y-6">
-           <div className="flex justify-between items-end px-2">
+           <div className={cn("flex justify-between items-end px-2", language === 'ar' ? 'flex-row-reverse' : '')}>
              <div className="flex flex-col">
-               <h2 className="text-2xl font-black text-voyage-primary-dark">Carte du Royaume</h2>
-               <p className="text-[10px] font-black text-voyage-accent uppercase tracking-widest text-left mt-1">
-                  Ta conquête du territoire marocain
-               </p>
+                <h2 className={cn("text-2xl font-black text-voyage-primary-dark", language === 'ar' ? 'arabic-font text-right' : '')}>
+                  {language === 'ar' ? 'خريطة المملكة' : 'Carte du Royaume'}
+                </h2>
+                <p className={cn("text-[10px] font-black text-voyage-accent uppercase tracking-widest mt-1", language === 'ar' ? 'arabic-font text-right' : 'text-left')}>
+                   {language === 'ar' ? 'غزوك للمجال المغربي' : 'Ta conquête du territoire marocain'}
+                </p>
              </div>
              <MapPin size={20} className="text-voyage-accent mb-1" />
            </div>
 
            <div className="bg-white border border-voyage-secondary-light rounded-[40px] p-2 shadow-sm relative overflow-hidden aspect-4/3 flex items-center justify-center">
               <div className="absolute inset-0 bg-voyage-sand/30 opacity-40">
-                 <svg width="100%" height="100%" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="scale-110">
-                    <path d="M100 50C150 20 250 80 300 120C350 160 300 250 250 280C200 310 100 280 50 220C0 160 50 80 100 50Z" fill="#E5D5B8" fillOpacity="0.3" />
-                    <path d="M50 100C80 80 120 120 150 100C180 80 220 140 250 120" stroke="#7B3F1A" strokeOpacity="0.1" strokeWidth="2" strokeDasharray="4 4" />
-                 </svg>
+                  <svg width="100%" height="100%" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="scale-110">
+                     <path d="M100 50C150 20 250 80 300 120C350 160 300 250 250 280C200 310 100 280 50 220C0 160 50 80 100 50Z" fill="#E5D5B8" fillOpacity="0.3" />
+                     <path d="M50 100C80 80 120 120 150 100C180 80 220 140 250 120" stroke="#7B3F1A" strokeOpacity="0.1" strokeWidth="2" strokeDasharray="4 4" />
+                  </svg>
               </div>
 
               <div className="relative w-full h-full">
@@ -500,9 +570,10 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                       </div>
                       <span className={cn(
                         "text-[7px] font-black uppercase tracking-tighter px-1.5 py-0.5 rounded-full bg-white/80 backdrop-blur-sm border shadow-sm",
-                        city.status === 'locked' ? "text-gray-400 border-gray-100" : "text-voyage-primary-dark border-voyage-secondary-light"
+                        city.status === 'locked' ? "text-gray-400 border-gray-100" : "text-voyage-primary-dark border-voyage-secondary-light",
+                        language === 'ar' ? 'arabic-font font-bold' : ''
                       )}>
-                        {city.name}
+                        {language === 'ar' ? (cityTranslations[city.name] || city.name) : city.name}
                       </span>
                     </motion.div>
                   );
@@ -517,12 +588,22 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
            <div className="relative z-10 p-8 space-y-6">
               <div className="flex justify-between items-end">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-black text-voyage-accent uppercase tracking-[0.3em]">PROCHAINE ÉTAPE</span>
-                  <h3 className="text-2xl font-black text-white">Niveau {stats.level + 1}</h3>
+                  <span className={cn("text-[10px] font-black text-voyage-accent uppercase tracking-[0.3em]", language === 'ar' ? 'arabic-font' : '')}>
+                    {language === 'ar' ? 'الخطوة التالية' : 'PROCHAINE ÉTAPE'}
+                  </span>
+                  <h3 className={cn("text-2xl font-black text-white", language === 'ar' ? 'arabic-font' : '')}>
+                    {language === 'ar' ? `المستوى ${stats.level + 1}` : `Niveau ${stats.level + 1}`}
+                  </h3>
                 </div>
-                <div className="text-right">
-                  <span className="block font-black text-white text-xl">{Math.max(0, (stats.level + 1) * 1000 - stats.xp)} XP</span>
-                  <span className="text-[10px] font-bold text-voyage-accent/70 uppercase tracking-widest text-right">Restant</span>
+                <div className={language === 'ar' ? 'text-left' : 'text-right'}>
+                  <span className={cn("block font-black text-white text-xl", language === 'ar' ? 'arabic-font' : '')}>
+                    {language === 'ar' 
+                      ? `${Math.max(0, (stats.level + 1) * 1000 - stats.xp)} نقطة` 
+                      : `${Math.max(0, (stats.level + 1) * 1000 - stats.xp)} XP`}
+                  </span>
+                  <span className={cn("block text-[10px] font-bold text-voyage-accent/70 uppercase tracking-widest", language === 'ar' ? 'arabic-font text-left' : 'text-right')}>
+                    {language === 'ar' ? 'متبقي' : 'Restant'}
+                  </span>
                 </div>
               </div>
               
@@ -548,27 +629,32 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
 
         {/* Badges Section - Dynamic with Toggle */}
         <section className="space-y-6">
-           <div className="flex items-center justify-between px-2">
+           <div className={cn("flex items-center justify-between px-2", language === 'ar' ? 'flex-row-reverse' : '')}>
               <div>
-                <h2 className="text-[10px] font-black text-voyage-primary/40 uppercase tracking-[0.2em]">Médiathèque des Bijoux</h2>
-                <p className="text-[8px] font-bold text-voyage-accent uppercase tracking-widest mt-0.5">
-                  Collection des trésors déverrouillés par tes exploits
+                <h2 className={cn("text-[10px] font-black text-voyage-primary/40 uppercase tracking-[0.2em]", language === 'ar' ? 'arabic-font text-right' : '')}>
+                  {language === 'ar' ? 'مكتبة المجوهرات' : 'Médiathèque des Bijoux'}
+                </h2>
+                <p className={cn("text-[8px] font-bold text-voyage-accent uppercase tracking-widest mt-0.5", language === 'ar' ? 'arabic-font text-right' : '')}>
+                  {language === 'ar' ? 'مجموعة الكنوز المفتوحة بإنجازاتك' : 'Collection des trésors déverrouillés par tes exploits'}
                 </p>
               </div>
               <div className="flex flex-col items-end gap-1">
-                <span className="text-[10px] font-black text-voyage-accent bg-voyage-accent/10 px-3 py-1 rounded-full border border-voyage-accent/20">
-                  {allGameBadges.filter(b => b.isEarned).length} / {allGameBadges.length} ACQUIS
+                <span className={cn("text-[10px] font-black text-voyage-accent bg-voyage-accent/10 px-3 py-1 rounded-full border border-voyage-accent/20", language === 'ar' ? 'arabic-font' : '')}>
+                  {language === 'ar' 
+                    ? `${allGameBadges.filter(b => b.isEarned).length} / ${allGameBadges.length} مكتسب` 
+                    : `${allGameBadges.filter(b => b.isEarned).length} / ${allGameBadges.length} ACQUIS`}
                 </span>
               </div>
             </div>
 
            {/* Toggle Menu - Cities */}
-           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide px-1">
+           <div className={cn("flex gap-2 overflow-x-auto pb-2 scrollbar-hide px-1", language === 'ar' ? 'flex-row-reverse' : '')}>
              {badgeFilterTabs.map((city) => {
                const cityBadges = allGameBadges.filter(b => 
                  city === 'Tous' ? true : b.city?.toLowerCase() === city.toLowerCase()
                );
                const earned = cityBadges.filter(b => b.isEarned).length;
+               const displayTab = language === 'ar' ? (cityTranslations[city] || city) : city;
                
                return (
                  <button
@@ -582,8 +668,8 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                    )}
                  >
                    <MapPin size={14} className={activeCity === city ? "text-white" : "text-voyage-accent"} />
-                   <div className="flex flex-col items-start leading-tight">
-                     <span>{city}</span>
+                   <div className={cn("flex flex-col items-start leading-tight", language === 'ar' ? 'items-end' : 'items-start')}>
+                     <span className={language === 'ar' ? 'arabic-font' : ''}>{displayTab}</span>
                      <span className={cn(
                        "text-[8px] font-bold",
                        activeCity === city ? "text-white/60" : "text-voyage-accent"
@@ -603,7 +689,9 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                     <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-gray-300">
                       <Lock size={32} />
                     </div>
-                    <p className="text-sm font-bold text-voyage-primary/40 uppercase tracking-tight">Aucun badge dans cette ville</p>
+                    <p className={cn("text-sm font-bold text-voyage-primary/40 uppercase tracking-tight", language === 'ar' ? 'arabic-font' : '')}>
+                      {language === 'ar' ? 'لا توجد أوسمة في هذه المدينة' : 'Aucun badge dans cette ville'}
+                    </p>
                   </div>
                 ) : (
                   <motion.div 
@@ -667,16 +755,21 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                             )}
                           </div>
                           <div className="text-center space-y-0.5 px-1">
-                            <p className={cn("text-[10px] font-black uppercase tracking-tight leading-tight", isEarned ? "text-voyage-primary-dark" : "text-gray-400")}>
-                              {badge.name}
+                            <p className={cn("text-[10px] font-black uppercase tracking-tight leading-tight", isEarned ? "text-voyage-primary-dark" : "text-gray-400", language === 'ar' ? 'arabic-font text-xs' : '')}>
+                              {language === 'ar' ? (badge.nameAr || badge.name) : badge.name}
                             </p>
-                            {badge.nameAr && (
+                            {badge.nameAr && language !== 'ar' && (
                               <p className="text-[9px] font-bold text-voyage-primary/40 arabic-font leading-none mb-1">
                                 {badge.nameAr}
                               </p>
                             )}
-                            <p className="text-[8px] font-black text-voyage-accent uppercase tracking-tighter">
-                              {badge.city}
+                            {language === 'ar' && badge.nameAr && (
+                              <p className="text-[9px] font-bold text-voyage-primary/40 leading-none mb-1">
+                                {badge.name}
+                              </p>
+                            )}
+                            <p className={cn("text-[8px] font-black text-voyage-accent uppercase tracking-tighter", language === 'ar' ? 'arabic-font font-bold' : '')}>
+                              {language === 'ar' ? (cityTranslations[badge.city] || badge.city) : badge.city}
                             </p>
                           </div>
                         </motion.div>
@@ -692,11 +785,11 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
           {selectedBadge && (
             <BadgeDetail 
               badge={{ 
-                badge_name: selectedBadge.name, 
+                badge_name: language === 'ar' ? (selectedBadge.nameAr || selectedBadge.name) : selectedBadge.name, 
                 url: selectedBadge.url, 
-                rarity: selectedBadge.rarity || selectedBadge.city, 
+                rarity: language === 'ar' ? (cityTranslations[selectedBadge.city] || selectedBadge.city) : (selectedBadge.rarity || selectedBadge.city), 
                 xp_requirement: selectedBadge.xp_requirement,
-                description_fr: selectedBadge.description_fr || `Badge obtenu lors de votre mission à ${selectedBadge.city}.` 
+                description_fr: translateBadgeDescription(selectedBadge.description_fr, selectedBadge.city, language)
               }} 
               isEarned={selectedBadge.isEarned} 
               onClose={() => setSelectedBadge(null)} 
@@ -707,7 +800,9 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
         {/* Skills Section */}
         <section className="space-y-5">
           <div className="flex justify-between items-center px-2">
-            <h2 className="text-2xl font-black text-voyage-primary-dark">Compétences <span className="text-[10px] font-black text-voyage-accent bg-voyage-accent/10 px-2 py-0.5 rounded ml-2">SOFT SKILLS</span></h2>
+            <h2 className={cn("text-2xl font-black text-voyage-primary-dark", language === 'ar' ? 'arabic-font' : '')}>
+              {language === 'ar' ? 'المهارات الشخصية' : 'Compétences'} <span className="text-[10px] font-black text-voyage-accent bg-voyage-accent/10 px-2 py-0.5 rounded ml-2">SOFT SKILLS</span>
+            </h2>
           </div>
           <div className="grid grid-cols-2 gap-5">
             {skills.map((skill, idx) => (
@@ -722,8 +817,8 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                     <skill.icon className={skill.color} size={32} />
                  </div>
                  <div>
-                    <p className="font-black text-voyage-primary-dark text-sm leading-tight mb-1">{skill.name}</p>
-                    <p className="text-[10px] font-bold text-voyage-primary/40 arabic-font leading-none">{skill.label}</p>
+                    <p className={cn("font-black text-voyage-primary-dark leading-tight mb-1", language === 'ar' ? 'text-base arabic-font' : 'text-sm')}>{language === 'ar' ? skill.label : skill.name}</p>
+                    <p className="text-[10px] font-bold text-voyage-primary/40 leading-none">{language === 'ar' ? skill.name : skill.label}</p>
                  </div>
                  <div className="w-full h-1.5 bg-[#F0F0F0] rounded-full overflow-hidden">
                     <motion.div 
@@ -732,7 +827,9 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                       className={cn("h-full rounded-full", skill.color.replace('text-', 'bg-'))}
                     />
                  </div>
-                 <span className="text-[10px] font-black text-voyage-primary/60 uppercase tracking-widest">Niveau {skill.level}</span>
+                 <span className={cn("text-[10px] font-black text-voyage-primary/60 uppercase tracking-widest", language === 'ar' ? 'arabic-font' : '')}>
+                   {language === 'ar' ? `المستوى ${skill.level}` : `Niveau ${skill.level}`}
+                 </span>
               </motion.div>
             ))}
           </div>
@@ -740,7 +837,9 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
 
         {/* Audio Settings */}
         <section className="space-y-5">
-           <h2 className="text-2xl font-black text-voyage-primary-dark px-2">Réglages Audio</h2>
+           <h2 className={cn("text-2xl font-black text-voyage-primary-dark px-2", language === 'ar' ? 'arabic-font text-right' : '')}>
+             {language === 'ar' ? 'إعدادات الصوت' : 'Réglages Audio'}
+           </h2>
            <div className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm grid grid-cols-2 gap-4">
               <button 
                 onClick={() => handleToggleAudio({ soundEffectsEnabled: !audio.soundEffectsEnabled })}
@@ -753,8 +852,12 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                   <Bell size={24} />
                 </div>
                 <div className="text-center">
-                  <p className="font-black text-voyage-primary-dark text-sm uppercase tracking-tight">Effets</p>
-                  <p className="text-[9px] font-bold text-voyage-primary/40 uppercase tracking-widest">Sonores</p>
+                  <p className={cn("font-black text-voyage-primary-dark text-sm uppercase tracking-tight", language === 'ar' ? 'arabic-font' : '')}>
+                    {language === 'ar' ? 'مؤثرات' : 'Effets'}
+                  </p>
+                  <p className={cn("text-[9px] font-bold text-voyage-primary/40 uppercase tracking-widest", language === 'ar' ? 'arabic-font' : '')}>
+                    {language === 'ar' ? 'صوتية' : 'Sonores'}
+                  </p>
                 </div>
               </button>
 
@@ -769,8 +872,12 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                   <Music size={24} />
                 </div>
                 <div className="text-center">
-                  <p className="font-black text-voyage-primary-dark text-sm uppercase tracking-tight">Musique</p>
-                  <p className="text-[9px] font-bold text-voyage-primary/40 uppercase tracking-widest">De fond</p>
+                  <p className={cn("font-black text-voyage-primary-dark text-sm uppercase tracking-tight", language === 'ar' ? 'arabic-font' : '')}>
+                    {language === 'ar' ? 'موسيقى' : 'Musique'}
+                  </p>
+                  <p className={cn("text-[9px] font-bold text-voyage-primary/40 uppercase tracking-widest", language === 'ar' ? 'arabic-font' : '')}>
+                    {language === 'ar' ? 'الخلفية' : 'De fond'}
+                  </p>
                 </div>
               </button>
            </div>
@@ -785,18 +892,25 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
               playSound('click');
               setShowDevModal(true);
             }}
-            className="w-full py-6 rounded-[32px] font-black text-voyage-accent border-2 border-voyage-accent/30 bg-voyage-accent/5 hover:bg-voyage-accent/10 transition-all flex items-center justify-between px-8 shadow-sm group"
+            className={cn(
+              "w-full py-6 rounded-[32px] font-black text-voyage-accent border-2 border-voyage-accent/30 bg-voyage-accent/5 hover:bg-voyage-accent/10 transition-all flex items-center justify-between px-8 shadow-sm group",
+              language === 'ar' ? 'flex-row-reverse' : ''
+            )}
           >
-            <div className="flex items-center gap-4">
+            <div className={cn("flex items-center gap-4", language === 'ar' ? 'flex-row-reverse' : '')}>
               <div className="p-3 bg-voyage-accent rounded-2xl text-white shadow-lg shadow-voyage-accent/20 group-hover:rotate-12 transition-transform">
                 <Users size={20} />
               </div>
-              <div className="text-left">
-                <span className="block text-sm font-black uppercase tracking-tight text-voyage-primary-dark">Connaître le développeur</span>
-                <span className="block text-[10px] font-bold text-voyage-accent uppercase tracking-widest mt-0.5">Design & Développement</span>
+              <div className={language === 'ar' ? 'text-right' : 'text-left'}>
+                <span className={cn("block text-sm font-black uppercase tracking-tight text-voyage-primary-dark", language === 'ar' ? 'arabic-font' : '')}>
+                  {language === 'ar' ? 'التعرف على المطور' : 'Connaître le développeur'}
+                </span>
+                <span className={cn("block text-[10px] font-bold text-voyage-accent uppercase tracking-widest mt-0.5", language === 'ar' ? 'arabic-font' : '')}>
+                  {language === 'ar' ? 'التصميم والتطوير' : 'Design & Développement'}
+                </span>
               </div>
             </div>
-            <ChevronRight size={20} className="text-voyage-accent/60 group-hover:translate-x-1 transition-transform" />
+            <ChevronIcon size={20} className={cn("text-voyage-accent/60 transition-transform", language === 'ar' ? "group-hover:-translate-x-1" : "group-hover:translate-x-1")} />
           </motion.button>
         </div>
         
@@ -814,8 +928,12 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
           >
             <LogOut size={22} className="text-voyage-primary/40" />
             <div className="flex flex-col items-center leading-none">
-              <span className="tracking-tight text-lg uppercase text-voyage-primary">Se déconnecter</span>
-              <span className="text-[10px] opacity-40 font-bold mt-1 tracking-widest uppercase">تسجيل الخروج</span>
+              <span className={cn("tracking-tight text-lg uppercase text-voyage-primary", language === 'ar' ? 'arabic-font' : '')}>
+                {language === 'ar' ? 'تسجيل الخروج' : 'Se déconnecter'}
+              </span>
+              <span className={cn("text-[10px] opacity-40 font-bold mt-1 tracking-widest uppercase", language === 'ar' ? '' : 'arabic-font')}>
+                {language === 'ar' ? 'Se déconnecter' : 'تسجيل الخروج'}
+              </span>
             </div>
           </motion.button>
         </div>

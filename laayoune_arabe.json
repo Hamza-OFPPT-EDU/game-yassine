@@ -1,0 +1,714 @@
+{
+    "id": "98b50e2d-dc99-43ef-b387-052637738f65",
+    "city_id": "laayoune",
+    "name_fr": "Laâyoune",
+    "name_ar": "العيون",
+    "color": "#f59e0b",
+    "icon": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Cities%20icons/Laayoune.png",
+    "headline_fr": "Porte du Désert",
+    "headline_ar": "بوابة الصحراء",
+    "description_fr": "Ishaq crée des protocoles d’urgence, une coopérative, une santé décentralisée, des innovations frugales et un plan de développement.",
+    "description_ar": "يبتكر إسحاق بروتوكولات الطوارئ، تعاونية، صحة لامركزية، ابتكارات مقتصدة وخطة تنموية.",
+    "focus_fr": "Création & Innovation Frugale",
+    "focus_ar": "الابتكار والإبداع المقتصد",
+    "illustration_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/challenge-illustrations/Laayoune/Laayoune%20illustration%20%20(1)-compressed.jpg",
+    "pedagogical_theories_fr": [
+        "Créer un protocole d’urgence sans modèle existant",
+        "Inventer une gouvernance communautaire adaptée",
+        "Concevoir une formation pour personnes analphabètes",
+        "Créer un système de santé décentralisé",
+        "Innover avec des ressources minimales (frugalité)",
+        "Élaborer une vision stratégique provinciale",
+        "Défendre une création face à l’opposition",
+        "Transformer chaque contrainte en opportunité",
+        "Maîtriser la pensée design (Design Thinking)",
+        "Produire du nouveau par combinaison d’existants"
+    ],
+    "pedagogical_theories_ar": [
+        "ابتكار بروتوكول طوارئ دون نموذج موجود",
+        "اختراع حوكمة مجتمعية ملائمة",
+        "تصميم تكوين للأشخاص الأميين",
+        "إنشاء نظام صحي لامركزي",
+        "الابتكار بموارد محدودة (الاقتدار)",
+        "وضع رؤية استراتيجية إقليمية",
+        "الدفاع عن ابتكار أمام المعارضة",
+        "تحويل كل قيد إلى فرصة",
+        "إتقان التفكير التصميمي",
+        "إنتاج الجديد بمزج الموجود"
+    ],
+    "learning_outcomes_fr": [
+        "Laâyoune, porte du désert, vous invite à créer là où rien n’existe. Ici, pas de manuels, pas de protocoles tout faits, pas de solutions toutes prêtes. Vous allez inventer des réponses originales à des problèmes inédits, avec des ressources limitées."
+    ],
+    "learning_outcomes_ar": [
+        "العيون، بوابة الصحراء، تدعوك للإبداع حيث لا شيء موجود. هنا لا كتيبات، لا بروتوكولات جاهزة، لا حلول مسبقة. ستخترع إجابات أصلية لمشاكل غير مسبوقة، بموارد محدودة."
+    ],
+    "missions": [
+        {
+            "id": "98b50e2d-dc99-43ef-b387-052637738b01",
+            "title_fr": "La Base du Désert",
+            "title_ar": "قاعدة الصحراء",
+            "description_fr": "Lieu: Base de protection civile. Soft skill: Gestion du stress (création). Créer un protocole d’urgence sans modèle existant.",
+            "description_ar": "المكان: قاعدة الحماية المدنية. المهارة الناعمة: إدارة التوتر (ابتكار). ابتكار بروتوكول طوارئ دون نموذج موجود.",
+            "type": "challenge",
+            "xp_reward": 1000,
+            "bloom_level": "",
+            "soft_skill_dominant": "",
+            "duration_minutes": null,
+            "success_threshold": 70,
+            "mentor": {
+                "name_fr": "",
+                "name_ar": "القائد رشيد",
+                "age": null,
+                "role_fr": "",
+                "role_ar": "قائد",
+                "location_fr": "",
+                "location_ar": "قاعدة الحماية المدنية، 40 كلم من العيون"
+            },
+            "scripts": {
+                "opening_fr": "Base de protection civile, 40 km de Laâyoune, Dimanche 6h. Terrain aride. Tentes, véhicules tout-terrain, antenne satellite. 30 agents. Commandant Rachid : « Ishaq, dans le désert, il n'y a pas de protocole pour TOUTES les situations. Parfois, tu dois INVENTER la solution sur place. Aucun manuel. Aucun expert au téléphone. Juste toi, ton cerveau, et le sable. Aujourd'hui, tu vas CRÉER des protocoles qui n'existent pas encore. »",
+                "opening_ar": "قاعدة الحماية المدنية، 40 كلم من العيون، الأحد 6 صباحاً. أرض قاحلة. خيام، سيارات رباعية الدفع، هوائي قمر صناعي. 30 عميلاً. القائد رشيد: « إسحاق، في الصحراء، لا يوجد بروتوكول لكل الحالات. أحياناً، يجب أن تبتكر الحل في المكان. لا كتيب، لا خبير على الهاتف. فقط أنت، عقلك، والرمال. اليوم، ستبتكر بروتوكولات غير موجودة بعد. »",
+                "closing_fr": "",
+                "closing_ar": ""
+            },
+            "cinematic": {
+                "text_fr": "Base de protection civile, 40 km de Laâyoune, Dimanche 6h. Terrain aride. Tentes, véhicules tout-terrain, antenne satellite. 30 agents. Commandant Rachid : « Ishaq, dans le désert, il n'y a pas de protocole pour TOUTES les situations. Parfois, tu dois INVENTER la solution sur place. Aucun manuel. Aucun expert au téléphone. Juste toi, ton cerveau, et le sable. Aujourd'hui, tu vas CRÉER des protocoles qui n'existent pas encore. »",
+                "text_ar": "قاعدة الحماية المدنية، 40 كلم من العيون، الأحد 6 صباحاً. أرض قاحلة. خيام، سيارات رباعية الدفع، هوائي قمر صناعي. 30 عميلاً. القائد رشيد: « إسحاق، في الصحراء، لا يوجد بروتوكول لكل الحالات. أحياناً، يجب أن تبتكر الحل في المكان. لا كتيب، لا خبير على الهاتف. فقط أنت، عقلك، والرمال. اليوم، ستبتكر بروتوكولات غير موجودة بعد. »",
+                "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif",
+                "audio_url_fr": "",
+                "audio_url_ar": ""
+            },
+            "theories_fr": "",
+            "theories_ar": "",
+            "exercises": [
+                {
+                    "id": "f42a661d-6cfc-46e3-b1b7-18d396b95c98",
+                    "type": "short_answer",
+                    "question_fr": "Tempête de sable, village isolé (200 pers., plus d’eau depuis 48h). Créez un plan d’intervention en 5 étapes.",
+                    "question_ar": "عاصفة رملية، قرية معزولة (200 شخص، لا ماء منذ 48 ساعة). ابتكر خطة تدخل في 5 خطوات.",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "Attendre",
+                            "label_ar": "الانتظار"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "1) Comm, 2) Prépa, 3) Départ accalmie, 4) Triage, 5) Suivi",
+                            "label_ar": "1) اتصال، 2) تحضير، 3) انطلاق عند هدوء العاصفة، 4) فرز، 5) متابعة"
+                        }
+                    ],
+                    "correct_answer": "B",
+                    "feedback_positive": {
+                        "fr": "Création géniale ! Redondance, triage, documentation.",
+                        "ar": "ابتكار رائع! تكرار، فرز، توثيق."
+                    },
+                    "feedback_negative": {
+                        "fr": "Attendre = mort. Votre plan doit être robuste.",
+                        "ar": "الانتظار = موت. خطتك يجب أن تكون قوية."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Créer un protocole d’urgence en 5 étapes (communication, préparation, départ à l’accalmie, triage, suivi). Indication : Il faut informer rapidement, préparer deux véhicules (redondance), partir dès l’accalmie, trier sur place, puis tirer des leçons.",
+                        "ar": "ابتكار بروتوكول طوارئ في 5 خطوات (اتصال، تحضير، انطلاق عند هدوء العاصفة، فرز، متابعة). دلالة: يجب إعلام سريع، تحضير سيارتين (تكرار)، الانطلاق فور الهدوء، الفرز في المكان، ثم استخلاص الدروس."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:02.659019+00:00",
+                    "updated_at": "2026-05-04T13:25:02.659019+00:00"
+                },
+                {
+                    "id": "74300525-5a6b-4fc4-97f5-1849776cf48f",
+                    "type": "scenario_cascade",
+                    "question_fr": "Gestion de panne",
+                    "question_ar": "إدارة عطل",
+                    "options": {
+                        "steps": [
+                            {
+                                "question_fr": "Véhicule en panne à mi-chemin. Solution ?",
+                                "question_ar": "سيارة معطلة في منتصف الطريق. حل؟",
+                                "correct": "B",
+                                "responses": [
+                                    {
+                                        "id": "A",
+                                        "text_fr": "Attendre",
+                                        "text_ar": "الانتظار"
+                                    },
+                                    {
+                                        "id": "B",
+                                        "text_fr": "Transférer l’eau. Le véhicule en panne devient station radio fixe.",
+                                        "text_ar": "نقل الماء. السيارة المعطلة تصبح محطة راديو ثابتة."
+                                    }
+                                ]
+                            },
+                            {
+                                "question_fr": "Distribution d’eau limitée. Plan ?",
+                                "question_ar": "توزيع مياه محدود. خطة؟",
+                                "correct": "B",
+                                "responses": [
+                                    {
+                                        "id": "A",
+                                        "text_fr": "Égalité",
+                                        "text_ar": "مساواة"
+                                    },
+                                    {
+                                        "id": "B",
+                                        "text_fr": "Triage : Critiques (10L), Fragiles (6L), Stables (3L).",
+                                        "text_ar": "فرز: حرجون (10 لترات)، هشون (6 لترات)، مستقرون (3 لترات)."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "correct_answer": "",
+                    "feedback_positive": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "feedback_negative": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Innover sous contrainte (transformer un véhicule en panne en relais radio, distribuer l’eau proportionnellement aux besoins, choisir une solution hybride évacuation/ravitaillement). Indication : Q1 → transformer le véhicule en station fixe ; Q2 → triage 15 critiques (10L) / 60 fragiles (6L) / 125 stables (3L) ; Q3 → évacuer les critiques, ravitailler les autres.",
+                        "ar": "الابتكار تحت الضغط (تحويل سيارة معطلة إلى مرحل راديو، توزيع الماء حسب الحاجة، اختيار حل هجين إخلاء/تموين). دلالة: س1 ← تحويل السيارة إلى محطة ثابتة؛ س2 ← فرز 15 حرجاً (10 لترات) / 60 هشاً (6 لترات) / 125 مستقراً (3 لترات)؛ س3 ← إجلاء الحرجين، تموين الآخرين."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:02.659019+00:00",
+                    "updated_at": "2026-05-04T13:25:02.659019+00:00"
+                },
+                {
+                    "id": "33d4d9f8-d3e4-4622-88cc-172eaab19254",
+                    "type": "fill_blanks",
+                    "question_fr": "Piliers de résilience désert",
+                    "question_ar": "ركائز المرونة في الصحراء",
+                    "options": {
+                        "bank": [
+                            {
+                                "text_fr": "chameau",
+                                "text_ar": "جمل"
+                            },
+                            {
+                                "text_fr": "tribu",
+                                "text_ar": "قبيلة"
+                            },
+                            {
+                                "text_fr": "oasis",
+                                "text_ar": "واحة"
+                            }
+                        ]
+                    },
+                    "correct_answer": "chameau, tribu, oasis",
+                    "feedback_positive": {
+                        "fr": "Métaphores justes et puissantes.",
+                        "ar": "استعارات صحيحة وقوية."
+                    },
+                    "feedback_negative": {
+                        "fr": "Révisez les piliers de résilience.",
+                        "ar": "راجع ركائز المرونة."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Adapter les 8 piliers de la résilience au désert (métaphores). Indication : chameau (sens), tribu (relations), vent (humour), soleil (corps), sable (apprentissage), oasis (créativité), étoiles (espoir), silence (spiritualité).",
+                        "ar": "تكييف ركائز المرونة الثمانية مع الصحراء (استعارات). دلالة: جمل (معنى)، قبيلة (علاقات)، ريح (فكاهة)، شمس (جسد)، رمل (تعلم)، واحة (إبداع)، نجوم (أمل)، صمت (روحانية)."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:02.659019+00:00",
+                    "updated_at": "2026-05-04T13:25:02.659019+00:00"
+                },
+                {
+                    "id": "995401f0-9d89-4b83-8865-93154f8ee3a3",
+                    "type": "time_attack",
+                    "question_fr": "Urgences isolées",
+                    "question_ar": "حالات طوارئ معزولة",
+                    "options": null,
+                    "correct_answer": "",
+                    "feedback_positive": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "feedback_negative": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Créer des solutions low‑tech (signal fumée, filtre à eau, protocole psychologique PAIR, discours mobilisateur). Indication : Q1 → feu + tissu mouillé (code fumée) ; Q2 → filtre bouteille + charbon + gravier ; Q3 → PAIR (Pause, Accompagnement, Invitation, Réintégration) ; Q4 → discours court valorisant le sens, la compétence et l’affiliation.",
+                        "ar": "ابتكار حلول منخفضة التقنية (إشارة دخان، فلتر ماء، بروتوكول نفسي PAIR، خطاب تعبوي). دلالة: س1 ← نار + قماش مبلل (كود دخان)؛ س2 ← فلتر زجاجة + فحم + حصى؛ س3 ← PAIR (توقف، مرافقة، دعوة، إعادة إدماج)؛ س4 ← خطاب قصير يقدر المعنى والكفاءة والانتماء."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:02.659019+00:00",
+                    "updated_at": "2026-05-04T13:25:02.659019+00:00"
+                },
+                {
+                    "id": "e67365f2-be7f-494d-a671-9de67696a14b",
+                    "type": "error_detection",
+                    "question_fr": "Audit Plan Évacuation. Erreurs ?",
+                    "question_ar": "تدقيق خطة الإخلاء. أخطاء؟",
+                    "options": {
+                        "errors": [
+                            {
+                                "id": "1",
+                                "text_fr": "Départ 12h (chaleur)",
+                                "is_error": true,
+                                "label_ar": "انطلاق 12:00 (حرارة)"
+                            },
+                            {
+                                "id": "2",
+                                "text_fr": "1 seul véhicule",
+                                "is_error": true,
+                                "label_ar": "سيارة واحدة فقط"
+                            },
+                            {
+                                "id": "3",
+                                "text_fr": "Pas de plan B",
+                                "is_error": true,
+                                "label_ar": "لا خطة بديلة"
+                            }
+                        ]
+                    },
+                    "correct_answer": "",
+                    "feedback_positive": {
+                        "fr": "Transformation créative réussie.",
+                        "ar": "تحول إبداعي ناجح."
+                    },
+                    "feedback_negative": {
+                        "fr": "Sécurité d’abord.",
+                        "ar": "السلامة أولاً."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Améliorer un plan par la détection d’erreurs et la création d’une version V2 (départ tôt, GPS+boussole, 2 véhicules, satellite+radio+fumée, 5L d’eau, kit bivouac, plans B/C/D, formation trimestrielle). Indication : Remplacez chaque élément défaillant par une solution plus robuste.",
+                        "ar": "تحسين خطة باكتشاف الأخطاء وإنشاء نسخة V2 (انطلاق مبكر، GPS+بوصلة، سيارتان، قمر صناعي+راديو+دخان، 5 لترات ماء، عدة تخييم، خطط بديلة B/C/D، تكوين فصلي). دلالة: استبدل كل عنصر معيب بحل أكثر قوة."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:02.659019+00:00",
+                    "updated_at": "2026-05-04T13:25:02.659019+00:00"
+                },
+                {
+                    "id": "e4347d19-6481-4b14-9170-d5eefa318e14",
+                    "type": "vrai_faux",
+                    "question_fr": "« L’innovation naît de l’abondance. »",
+                    "question_ar": "« الابتكار يولد من الوفرة. »",
+                    "options": null,
+                    "correct_answer": "faux",
+                    "feedback_positive": {
+                        "fr": "L’innovation frugale naît de la contrainte.",
+                        "ar": "الابتكار المقتصد يولد من القيد."
+                    },
+                    "feedback_negative": {
+                        "fr": "Le manque est un moteur.",
+                        "ar": "النقص محرك."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Comprendre que l’innovation naît de la contrainte (frugalité), que le leader reconnaît sa peur, et que créer c’est recombiner. Indication : Affirmation 1 → FAUX (contrainte) ; Affirmation 2 → FAUX (reconnaître sa peur) ; Affirmation 3 → FAUX (recombiner, pas à partir de rien).",
+                        "ar": "فهم أن الابتكار يولد من القيد (الاقتدار)، وأن القائد يعترف بخوفه، وأن الإبداع هو إعادة تركيب. دلالة: التأكيد 1 ← خطأ (قيد)؛ التأكيد 2 ← خطأ (الاعتراف بالخوف)؛ التأكيد 3 ← خطأ (إعادة تركيب، ليس من لا شيء)."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:02.659019+00:00",
+                    "updated_at": "2026-05-04T13:25:02.659019+00:00"
+                },
+                {
+                    "id": "61b35c94-c938-4e46-bf3b-af80c55e2414",
+                    "type": "scenario_dialogue",
+                    "question_fr": "Collègue en état de choc. Protocole ?",
+                    "question_ar": "زميل في حالة صدمة. بروتوكول؟",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "« Sois fort »",
+                            "label_ar": "« كن قوياً »"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "Protocole PAIR : Protéger, Accueillir, Inviter, Réintégrer.",
+                            "label_ar": "بروتوكول PAIR: حماية، استقبال، دعوة، إعادة إدماج."
+                        }
+                    ],
+                    "correct_answer": "B",
+                    "feedback_positive": {
+                        "fr": "Création originale et utile.",
+                        "ar": "ابتكار أصلي ومفيد."
+                    },
+                    "feedback_negative": {
+                        "fr": "Nécessite de l’empathie.",
+                        "ar": "يتطلب تعاطفاً."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Créer un protocole psychologique post‑traumatique adapté au désert (PAIR amélioré). Indication : Protéger (tente calme), Accueillir (silence 15‑30 min), Inviter (« quand tu voudras parler »), Réintégrer (tâche simple le lendemain). Suivi visio dans 48h.",
+                        "ar": "ابتكار بروتوكول نفسي ما بعد الصدمة ملائم للصحراء (PAIR محسّن). دلالة: حماية (خيمة هادئة)، استقبال (صمت 15-30 دقيقة)، دعوة (« عندما تريد التحدث »)، إعادة إدماج (مهمة بسيطة في اليوم التالي). متابعة مرئية خلال 48 ساعة."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:02.659019+00:00",
+                    "updated_at": "2026-05-04T13:25:02.659019+00:00"
+                },
+                {
+                    "id": "a3c7eead-d991-4252-b2e1-d58ac100d8ce",
+                    "type": "ranking",
+                    "question_fr": "Priorités survie désert",
+                    "question_ar": "أولويات البقاء في الصحراء",
+                    "options": {
+                        "order": [
+                            {
+                                "id": "1",
+                                "label_fr": "Ombre"
+                            },
+                            {
+                                "id": "2",
+                                "label_fr": "Eau"
+                            },
+                            {
+                                "id": "3",
+                                "label_fr": "Moral"
+                            },
+                            {
+                                "id": "4",
+                                "label_fr": "Nourriture"
+                            }
+                        ]
+                    },
+                    "correct_answer": "",
+                    "feedback_positive": {
+                        "fr": "Pyramide contextuelle juste.",
+                        "ar": "هرم سياقي صحيح."
+                    },
+                    "feedback_negative": {
+                        "fr": "L’ombre avant l’eau.",
+                        "ar": "الظل قبل الماء."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Établir sa propre hiérarchie de survie au désert (abri, eau, secours, communication, orientation, signalisation, moral, nourriture). Indication : L’ombre passe avant l’eau, et l’eau avant la nourriture (30 jours sans manger vs 48h sans eau).",
+                        "ar": "تأسيس تسلسل هرمي خاص للبقاء في الصحراء (مأوى، ماء، إسعاف، اتصال، توجيه، إشارات، معنويات، طعام). دلالة: الظل يأتي قبل الماء، والماء قبل الطعام (30 يوماً بدون أكل مقابل 48 ساعة بدون ماء)."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:02.659019+00:00",
+                    "updated_at": "2026-05-04T13:25:02.659019+00:00"
+                },
+                {
+                    "id": "5f5a77e8-96fb-45e4-bd3d-0fc5389ce141",
+                    "type": "short_answer",
+                    "question_fr": "Manuel de survie psychologique (200 mots).",
+                    "question_ar": "دليل البقاء النفسي (200 كلمة).",
+                    "options": null,
+                    "correct_answer": "",
+                    "feedback_positive": {
+                        "fr": "Création littéraire et technique.",
+                        "ar": "إبداع أدبي وتقني."
+                    },
+                    "feedback_negative": {
+                        "fr": "Incluez des outils concrets.",
+                        "ar": "أدرج أدوات ملموسة."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Rédiger une introduction de manuel de survie psychologique (outils concrets : STOP, 4‑7‑8, PAIR, pyramide, recadrage). Indication : Mentionnez les cinq outils clés et rassurez sur le fait que la peur est normale.",
+                        "ar": "كتابة مقدمة لدليل البقاء النفسي (أدوات ملموسة: STOP، 4-7-8، PAIR، هرم، إعادة صياغة). دلالة: اذكر الأدوات الخمسة الرئيسية وطمئن بأن الخوف طبيعي."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:02.659019+00:00",
+                    "updated_at": "2026-05-04T13:25:02.659019+00:00"
+                },
+                {
+                    "id": "84deb59a-9ab2-4e43-9be7-122af966062e",
+                    "type": "puzzle_riddle",
+                    "question_fr": "« Quand tu n’as rien, je suis ta seule arme… »",
+                    "question_ar": "« عندما لا تملك شيئاً، أنا سلاحك الوحيد… »",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "L’argent",
+                            "label_ar": "المال"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "L’ingéniosité",
+                            "label_ar": "البراعة"
+                        }
+                    ],
+                    "correct_answer": "B",
+                    "feedback_positive": {
+                        "fr": "L’ingéniosité naît du vide.",
+                        "ar": "البراعة تولد من الفراغ."
+                    },
+                    "feedback_negative": {
+                        "fr": "Indice : Ishaq au désert.",
+                        "ar": "تلميح: إسحاق في الصحراء."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Identifier l’ingéniosité (elle naît du manque, se révèle dans le vide). Indication : « Dans l’abondance je me cache, dans le vide je me révèle. Ishaq l’a découverte à Rabat, mais c’est au désert qu’il l’a créée. »",
+                        "ar": "تحديد البراعة (تولد من النقص، تظهر في الفراغ). دلالة: « في الوفرة أختبئ، في الفراغ أظهر. إسحاق اكتشفها في الرباط، لكنه في الصحراء ابتكرها. »"
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 150
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:02.659019+00:00",
+                    "updated_at": "2026-05-04T13:25:02.659019+00:00"
+                }
+            ],
+            "created_at": "2026-05-04T12:45:05.834294+00:00",
+            "updated_at": "2026-05-04T12:45:05.834294+00:00"
+        },
+        {
+            "id": "98b50e2d-dc99-43ef-b387-052637738b02",
+            "title_fr": "Coopérative de femmes",
+            "title_ar": "تعاونية نسائية",
+            "description_fr": "Lieu: Coopérative de femmes. Soft skill: Travail en équipe (création). Inventer une gouvernance communautaire adaptée.",
+            "description_ar": "المكان: تعاونية نسائية. المهارة الناعمة: العمل الجماعي (ابتكار). اختراع حوكمة مجتمعية ملائمة.",
+            "type": "challenge",
+            "xp_reward": 1000,
+            "bloom_level": "",
+            "soft_skill_dominant": "",
+            "duration_minutes": null,
+            "success_threshold": 70,
+            "mentor": {
+                "name_fr": "",
+                "name_ar": "عائشة",
+                "age": null,
+                "role_fr": "",
+                "role_ar": "مؤسسة تعاونية",
+                "location_fr": "",
+                "location_ar": "تعاونية 'نجوم الصحراء'، العيون"
+            },
+            "scripts": {
+                "opening_fr": "Coopérative \"Étoiles du Sahara\", quartier populaire, Mardi 9h. Un local modeste. 25 femmes fabriquent des produits à base de cactus (huile, crème, savon). La coopérative a 18 mois et génère déjà 15 000 DH/mois. Aicha : « Ishaq, il y a 18 mois, il n'y avait RIEN ici. Pas de local, pas d'argent, pas de formation. J'ai CRÉÉ tout. La structure, les processus, les formations, le marketing, la gouvernance. Tu connais Belbin, Tuckman, Lencioni ? Oublie tout. Ici, j'ai dû INVENTER MON PROPRE modèle. »",
+                "opening_ar": "تعاونية 'نجوم الصحراء'، حي شعبي، الثلاثاء 9 صباحاً. مكان متواضع. 25 امرأة يصنعن منتجات من الصبار (زيت، كريم، صابون). التعاونية عمرها 18 شهراً وتدر بالفعل 15.000 درهم شهرياً. عائشة: « إسحاق، قبل 18 شهراً، لم يكن هناك شيء هنا. لا مكان، لا مال، لا تكوين. لقد ابتكرت كل شيء. الهيكل، العمليات، التكوينات، التسويق، الحوكمة. هل تعرف بلبين، تكمان، لينسيوني؟ انس كل شيء. هنا، كان عليّ أن أخترع نموذجي الخاص. »",
+                "closing_fr": "",
+                "closing_ar": ""
+            },
+            "cinematic": {
+                "text_fr": "Coopérative \"Étoiles du Sahara\", quartier populaire, Mardi 9h. Un local modeste. 25 femmes fabriquent des produits à base de cactus (huile, crème, savon). La coopérative a 18 mois et génère déjà 15 000 DH/mois. Aicha : « Ishaq, il y a 18 mois, il n'y avait RIEN ici. Pas de local, pas d'argent, pas de formation. J'ai CRÉÉ tout. La structure, les processus, les formations, le marketing, la gouvernance. Tu connais Belbin, Tuckman, Lencioni ? Oublie tout. Ici, j'ai dû INVENTER MON PROPRE modèle. »",
+                "text_ar": "تعاونية 'نجوم الصحراء'، حي شعبي، الثلاثاء 9 صباحاً. مكان متواضع. 25 امرأة يصنعن منتجات من الصبار (زيت، كريم، صابون). التعاونية عمرها 18 شهراً وتدر بالفعل 15.000 درهم شهرياً. عائشة: « إسحاق، قبل 18 شهراً، لم يكن هناك شيء هنا. لا مكان، لا مال، لا تكوين. لقد ابتكرت كل شيء. الهيكل، العمليات، التكوينات، التسويق، الحوكمة. هل تعرف بلبين، تكمان، لينسيوني؟ انس كل شيء. هنا، كان عليّ أن أخترع نموذجي الخاص. »",
+                "gif_url": "",
+                "audio_url_fr": "",
+                "audio_url_ar": ""
+            },
+            "theories_fr": "",
+            "theories_ar": "",
+            "exercises": [
+                {
+                    "id": "b8eef399-14b9-4627-9fde-4491e820cf0c",
+                    "type": "qcm",
+                    "question_fr": "Gouvernance coopérative (analphabète). Modèle ?",
+                    "question_ar": "حوكمة تعاونية (أميين). نموذج؟",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "Hiérarchie",
+                            "label_ar": "تسلسل هرمي"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "Modèle 3 cercles : Aînées, Expérimentées, Nouvelles. Rotation.",
+                            "label_ar": "نموذج 3 دوائر: كبيرات، خبيرات، جديدات. تناوب."
+                        }
+                    ],
+                    "correct_answer": "B",
+                    "feedback_positive": {
+                        "fr": "Respect culturel et autonomie.",
+                        "ar": "احترام ثقافي واستقلالية."
+                    },
+                    "feedback_negative": {
+                        "fr": "Privilégiez le consensus.",
+                        "ar": "فضل الإجماع."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Concevoir une gouvernance adaptée (3 cercles : aînées, expérimentées, nouvelles). Indication : Ni démocratie pure (ignore l’expertise) ni hiérarchie militaire (tue la motivation) – choisissez le modèle hybride à trois cercles avec rotation.",
+                        "ar": "تصميم حوكمة ملائمة (3 دوائر: كبيرات، خبيرات، جديدات). دلالة: لا ديمقراطية خالصة (تتجاهل الخبرة) ولا تسلسل هرمي عسكري (يقتل الدافع) – اختر النموذج الهجين ثلاثي الدوائر مع التناوب."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:03.00323+00:00",
+                    "updated_at": "2026-05-04T13:25:03.00323+00:00"
+                }
+            ]
+        }
+    ]
+}

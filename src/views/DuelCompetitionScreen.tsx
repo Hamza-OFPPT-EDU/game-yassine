@@ -5,12 +5,60 @@ import { cn } from '../lib/utils';
 import { useAudio } from '../contexts/AudioContext';
 import { supabase } from '../lib/supabase';
 import { AVATAR_MALE_URL, AVATAR_FEMALE_URL } from '../types';
+import { useSettings } from '../contexts/SettingsContext';
 
 interface Question {
   id: string;
   situation: string;
   options: { id: string; text: string; isCorrect: boolean }[];
 }
+
+const translations = {
+  fr: {
+    liveDuel: "Duel en direct ⚔️",
+    mayBestWin: "Que le meilleur gagne !",
+    team1: "Équipe 1",
+    team2: "Équipe 2",
+    moi: "Moi",
+    adversaire: "Adversaire",
+    home: "Accueil",
+    defis: "Défis de",
+    missions: "Missions",
+    choix: "Choix",
+    pts: "points",
+    analyzing: "Vérification...",
+    analysisDone: "Analyse Terminée",
+    verifyAnswers: "VÉRIFIER MES RÉPONSES",
+    victory: "Victoire !",
+    defeat: "Défaite !",
+    finalScore: "Score Final :",
+    continueAdventure: "Continuer l'aventure",
+    defaultSoftSkill: "Défi Soft Skills",
+    loading: "Chargement..."
+  },
+  ar: {
+    liveDuel: "مبارزة مباشرة ⚔️",
+    mayBestWin: "فليكن الفوز للأفضل !",
+    team1: "الفريق 1",
+    team2: "الفريق 2",
+    moi: "أنا",
+    adversaire: "المنافس",
+    home: "الرئيسية",
+    defis: "تحديات",
+    missions: "مهمات",
+    choix: "خيارات",
+    pts: "نقاط",
+    analyzing: "جاري التحقق...",
+    analysisDone: "تم التحليل",
+    verifyAnswers: "التحقق من إجاباتي",
+    victory: "انتصار !",
+    defeat: "هزيمة !",
+    finalScore: "النتيجة النهائية :",
+    continueAdventure: "متابعة المغامرة",
+    defaultSoftSkill: "تحدي المهارات الناعمة",
+    loading: "جاري التحميل..."
+  }
+};
 
 const MOCK_QUESTIONS: Question[] = [
   {
@@ -35,6 +83,9 @@ interface DuelCompetitionScreenProps {
 
 export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: DuelCompetitionScreenProps) {
   const { playSound } = useAudio();
+  const { language } = useSettings();
+  const t = translations[language] || translations.fr;
+
   const [team1Score, setTeam1Score] = useState(2);
   const [team2Score, setTeam2Score] = useState(3);
   const [timer, setTimer] = useState(110);
@@ -45,6 +96,8 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
   const [loading, setLoading] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState<Question>(MOCK_QUESTIONS[0]);
   const [opponentProfile, setOpponentProfile] = useState<any>(null);
+  const [cityNameAr, setCityNameAr] = useState('الرباط');
+  const [cityNameFr, setCityNameFr] = useState('Rabat');
 
   useEffect(() => {
     async function fetchOpponent() {
@@ -73,12 +126,16 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
         // 1. Find Rabat's city UUID
         const { data: cityData, error: cityError } = await supabase
           .from('challenges')
-          .select('id')
+          .select('id, city_name_fr, city_name_ar')
           .or('id.eq.rabat,name_fr.ilike.Rabat')
           .single();
 
         if (cityError) console.warn("City lookup error:", cityError);
         const rabatId = cityData?.id || 'rabat';
+        if (cityData) {
+          setCityNameAr(cityData.city_name_ar || 'الرباط');
+          setCityNameFr(cityData.city_name_fr || 'Rabat');
+        }
 
         // 2. Fetch missions for Rabat
         const { data: missions, error: missionsError } = await supabase
@@ -92,7 +149,6 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
           const missionIds = missions.map(m => m.id);
 
           // 3. Fetch questions for these missions
-          // Try selecting all columns first to avoid mismatch errors if we're not sure about the schema
           const { data, error } = await supabase
             .from('questions')
             .select('*') 
@@ -100,15 +156,24 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
             .limit(30);
 
           if (!error && data && data.length > 0) {
-            const mapped: Question[] = data.map(q => ({
-              id: q.id,
-              situation: q.question_fr || q.text || q.title || "Défi Soft Skills",
-              options: (q.options || []).map((o: any) => ({
-                id: o.id || Math.random().toString(),
-                text: o.text || '',
-                isCorrect: !!o.isCorrect || !!o.correct
-              }))
-            })).filter(q => q.options.length > 0);
+            const mapped: Question[] = data.map(q => {
+              const situation = language === 'ar'
+                ? (q.question_ar || q.question_fr || q.text || q.title || t.defaultSoftSkill)
+                : (q.question_fr || q.text || q.title || t.defaultSoftSkill);
+
+              const options = (q.options || []).map((o: any) => {
+                const text = language === 'ar'
+                  ? (o.text_ar || o.label_ar || o.text || o.label_fr || '')
+                  : (o.text || o.label_fr || o.text_ar || '');
+                return {
+                  id: o.id || Math.random().toString(),
+                  text,
+                  isCorrect: !!o.isCorrect || !!o.correct
+                };
+              });
+
+              return { id: q.id, situation, options };
+            }).filter(q => q.options.length > 0);
             
             if (mapped.length > 0) {
               setAllExercises(mapped);
@@ -132,7 +197,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
       setLoading(false);
     }
     fetchExercises();
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     if (timer > 0 && !isComplete) {
@@ -174,28 +239,46 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
 
   // Tug of war movement logic
   // Rope center is 0. Team 1 pulling moves it negative (left), Team 2 moves it positive (right)
-  const ropePosition = (team2Score - team1Score) * 30;
+  const ropePosition = language === 'ar'
+    ? (team1Score - team2Score) * 30
+    : (team2Score - team1Score) * 30;
 
   return (
-    <div className="flex flex-col h-full bg-[#FAFAFA] relative overflow-hidden font-sans">
+    <div className="flex flex-col h-full bg-radial from-amber-50/20 via-slate-50 to-blue-50/10 relative overflow-hidden font-sans" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      {/* Decorative Glowing Mesh Gradient Blobs */}
+      <motion.div 
+        animate={{ scale: [1, 1.12, 1], opacity: [0.15, 0.28, 0.15] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[-10%] left-[-20%] w-[60%] aspect-square rounded-full bg-blue-400/10 blur-[130px] pointer-events-none" 
+      />
+      <motion.div 
+        animate={{ scale: [1, 1.15, 1], opacity: [0.1, 0.22, 0.1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        className="absolute bottom-[-10%] right-[-20%] w-[60%] aspect-square rounded-full bg-red-400/10 blur-[130px] pointer-events-none" 
+      />
+
       {/* Players Avatars Floaters */}
       <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-30 pointer-events-none">
         {/* Current User */}
         <motion.div 
-          initial={{ x: -50, opacity: 0 }}
+          initial={{ x: language === 'ar' ? 50 : -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          className="flex items-center gap-3 bg-white/90 backdrop-blur-md p-1.5 pr-4 rounded-full border border-blue-100 shadow-lg pointer-events-auto"
+          className={cn(
+            "flex items-center gap-3 bg-white/80 backdrop-blur-xl p-1.5 rounded-full border border-white/60 shadow-[0_10px_35px_rgba(0,0,0,0.05)] pointer-events-auto",
+            language === 'ar' ? 'pl-4 pr-1.5 flex-row-reverse' : 'pr-4 pl-1.5 flex-row'
+          )}
         >
-          <div className="w-10 h-10 rounded-full border-2 border-blue-500 overflow-hidden bg-blue-50">
+          <div className="w-10 h-10 rounded-full border-2 border-blue-400 overflow-hidden bg-blue-50 relative">
             <img 
               src={userProfile?.avatar_url || (userProfile?.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL)} 
-              alt="Moi" 
+              alt={t.moi} 
               className="w-full h-full object-cover"
             />
+            <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full shadow-[0_0_8px_#10B981] animate-pulse" />
           </div>
           <div className="flex flex-col">
-            <span className="text-[8px] font-black text-blue-600 uppercase tracking-tighter">Équipe 1</span>
-            <span className="text-[10px] font-black text-slate-800 truncate max-w-[80px]">{userProfile?.full_name?.split(' ')[0] || 'Moi'}</span>
+            <span className="text-[8px] font-black text-blue-600 uppercase tracking-widest">{t.team1}</span>
+            <span className="text-[10px] font-black text-slate-800 truncate max-w-[80px]">{userProfile?.full_name?.split(' ')[0] || t.moi}</span>
           </div>
         </motion.div>
 
@@ -203,27 +286,31 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
         <motion.div 
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="w-8 h-8 bg-voyage-primary rounded-lg flex items-center justify-center border-2 border-white shadow-md rotate-45"
+          className="w-9 h-9 bg-linear-to-br from-voyage-primary to-slate-900 rounded-xl flex items-center justify-center border-2 border-white shadow-lg rotate-45"
         >
-          <span className="text-white font-black text-[10px] -rotate-45">VS</span>
+          <span className="text-white font-black text-[11px] -rotate-45">VS</span>
         </motion.div>
 
         {/* Opponent */}
         <motion.div 
-          initial={{ x: 50, opacity: 0 }}
+          initial={{ x: language === 'ar' ? -50 : 50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          className="flex items-center flex-row-reverse gap-3 bg-white/90 backdrop-blur-md p-1.5 pl-4 rounded-full border border-red-100 shadow-lg pointer-events-auto"
+          className={cn(
+            "flex items-center gap-3 bg-white/80 backdrop-blur-xl p-1.5 rounded-full border border-white/60 shadow-[0_10px_35px_rgba(0,0,0,0.05)] pointer-events-auto",
+            language === 'ar' ? 'pr-4 pl-1.5 flex-row' : 'pl-4 pr-1.5 flex-row-reverse'
+          )}
         >
-          <div className="w-10 h-10 rounded-full border-2 border-red-500 overflow-hidden bg-red-50">
+          <div className="w-10 h-10 rounded-full border-2 border-red-400 overflow-hidden bg-red-50 relative">
             <img 
               src={opponentProfile?.avatar_url || (opponentProfile?.gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL)} 
-              alt="Adversaire" 
+              alt={t.adversaire} 
               className="w-full h-full object-cover"
             />
+            <span className="absolute bottom-0 left-0 w-2.5 h-2.5 bg-rose-500 border-2 border-white rounded-full shadow-[0_0_8px_#F43F5E] animate-pulse" />
           </div>
-          <div className="flex flex-col items-end">
-            <span className="text-[8px] font-black text-red-600 uppercase tracking-tighter">Équipe 2</span>
-            <span className="text-[10px] font-black text-slate-800 truncate max-w-[80px]">{opponentProfile?.full_name?.split(' ')[0] || 'Adversaire'}</span>
+          <div className={cn("flex flex-col", language === 'ar' ? "items-start" : "items-end")}>
+            <span className="text-[8px] font-black text-red-600 uppercase tracking-widest">{t.team2}</span>
+            <span className="text-[10px] font-black text-slate-800 truncate max-w-[80px]">{opponentProfile?.full_name?.split(' ')[0] || t.adversaire}</span>
           </div>
         </motion.div>
       </div>
@@ -232,72 +319,88 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
       <header className="px-6 pt-24 pb-4 flex items-center justify-between z-20">
         <button 
           onClick={onHome}
-          className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-100 shadow-sm text-voyage-primary font-black text-[10px] uppercase tracking-widest"
+          className="flex items-center gap-2 bg-white/85 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-100 shadow-sm text-voyage-primary hover:text-voyage-accent transition-colors font-black text-[10px] uppercase tracking-widest active:scale-95"
         >
           <Home size={14} />
-          <span>Home</span>
+          <span>{t.home}</span>
         </button>
         
         <div className="text-center">
-          <h1 className="text-[10px] font-black text-voyage-primary uppercase tracking-widest">Duel en direct ⚔️</h1>
-          <p className="text-[8px] font-bold text-voyage-accent uppercase tracking-tighter">Que le meilleur gagne !</p>
+          <h1 className="text-[10px] font-black text-voyage-primary uppercase tracking-widest">{t.liveDuel}</h1>
+          <p className="text-[8px] font-bold text-voyage-accent uppercase tracking-tighter">{t.mayBestWin}</p>
         </div>
 
-        <div className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-slate-100 shadow-sm">
+        <div className="flex items-center gap-2 bg-white/85 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-slate-100 shadow-sm">
           <div className="flex flex-col items-center">
-            <span className="text-[10px] font-black text-blue-500 uppercase">{team1Score}</span>
+            <span className="text-[10px] font-black text-blue-500 uppercase">{language === 'ar' ? team2Score : team1Score}</span>
           </div>
           <div className="w-px h-4 bg-slate-200 mx-1" />
           <div className="flex flex-col items-center">
-            <span className="text-[10px] font-black text-red-500 uppercase">{team2Score}</span>
+            <span className="text-[10px] font-black text-red-500 uppercase">{language === 'ar' ? team1Score : team2Score}</span>
           </div>
         </div>
       </header>
 
       {/* Main Content Area (Scrollable) */}
-      <main className="grow overflow-y-auto px-6 pb-32 space-y-4">
+      <main className="grow overflow-y-auto px-6 pb-32 space-y-5">
         
         {/* Team Headers */}
-        <div className="grid grid-cols-2 gap-2 mt-2">
-          <div className="h-8 bg-blue-600 rounded-xl relative flex items-center px-4 overflow-hidden shadow-lg shadow-blue-600/20">
-            <span className="text-white font-black text-[10px] uppercase tracking-widest z-10">Team 1</span>
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 bg-white rounded-full flex items-center justify-center">
+        <div className="grid grid-cols-2 gap-3 mt-2">
+          <div className="h-10 bg-linear-to-r from-blue-500 to-indigo-600 rounded-2xl relative flex items-center px-4 overflow-hidden shadow-lg shadow-blue-500/20 border-b-4 border-blue-700">
+            <span className="text-white font-black text-[10px] uppercase tracking-widest z-10">{t.team1}</span>
+            <div className={cn(
+              "absolute top-1/2 -translate-y-1/2 w-5.5 h-5.5 bg-white rounded-full flex items-center justify-center shadow-md",
+              language === 'ar' ? "left-2.5" : "right-2.5"
+            )}>
               <span className="text-blue-600 font-black text-[10px]">{team1Score}</span>
             </div>
             <motion.div 
-              className="absolute inset-0 bg-blue-500/50"
-              animate={{ x: ['-100%', '100%'] }}
+              className="absolute inset-0 bg-blue-50/20"
+              animate={{ x: language === 'ar' ? ['100%', '-100%'] : ['-100%', '100%'] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
             />
           </div>
-          <div className="h-8 bg-red-600 rounded-xl relative flex items-center justify-end px-4 overflow-hidden shadow-lg shadow-red-600/20">
-            <span className="text-white font-black text-[10px] uppercase tracking-widest z-10">Team 2</span>
-            <div className="absolute left-2 top-1/2 -translate-y-1/2 w-5 h-5 bg-white rounded-full flex items-center justify-center">
+          <div className={cn(
+            "h-10 bg-linear-to-l from-rose-550 to-red-600 rounded-2xl relative flex items-center px-4 overflow-hidden shadow-lg shadow-rose-500/20 border-b-4 border-red-800",
+            language === 'ar' ? "justify-start" : "justify-end"
+          )}>
+            <span className="text-white font-black text-[10px] uppercase tracking-widest z-10">{t.team2}</span>
+            <div className={cn(
+              "absolute top-1/2 -translate-y-1/2 w-5.5 h-5.5 bg-white rounded-full flex items-center justify-center shadow-md",
+              language === 'ar' ? "right-2.5" : "left-2.5"
+            )}>
               <span className="text-red-600 font-black text-[10px]">{team2Score}</span>
             </div>
             <motion.div 
-              className="absolute inset-0 bg-red-500/50"
-              animate={{ x: ['100%', '-100%'] }}
+              className="absolute inset-0 bg-red-500/20"
+              animate={{ x: language === 'ar' ? ['-100%', '100%'] : ['100%', '-100%'] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
             />
           </div>
         </div>
 
         {/* Tug of War Visual Area */}
-        <div className="bg-white rounded-[32px] border-2 border-slate-100 overflow-hidden relative shadow-sm aspect-4/3 flex items-center justify-center">
-          {/* Background Split */}
+        <div className="bg-white/80 backdrop-blur-xl rounded-[40px] border-2 border-white/60 overflow-hidden relative shadow-[0_20px_50px_rgba(31,38,135,0.04)] aspect-4/3 flex items-center justify-center">
+          {/* Background Split & Grid */}
           <div className="absolute inset-0 flex">
-            <div className="flex-1 bg-blue-50/30" />
-            <div className="flex-1 bg-red-50/30" />
+            <div className="flex-1 bg-linear-to-br from-blue-50/20 via-blue-500/5 to-transparent" />
+            <div className="flex-1 bg-linear-to-bl from-red-50/20 via-red-500/5 to-transparent" />
           </div>
+          {/* Neon Field Grid Lines */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-size-[3rem_3rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30" />
           
           {/* Center Line */}
-          <div className="absolute top-0 bottom-0 left-1/2 w-px border-l-2 border-dashed border-slate-200 -translate-x-1/2" />
+          <div className="absolute top-0 bottom-0 left-1/2 w-px border-l-2 border-dashed border-slate-200/60 -translate-x-1/2" />
           
           {/* Timer Overlay */}
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-2 rounded-2xl border border-slate-100 shadow-xl z-20 flex items-center gap-2">
-            <Timer size={18} className={cn("text-voyage-primary", timer < 5 && "text-red-500 animate-pulse")} />
-            <span className={cn("font-black text-xl tabular-nums", timer < 5 ? "text-red-500" : "text-voyage-primary")}>
+          <div className={cn(
+            "absolute top-4 left-1/2 -translate-x-1/2 px-5 py-2.5 rounded-full border shadow-[0_8px_32px_rgba(0,0,0,0.06)] z-20 flex items-center gap-2.5 backdrop-blur-xl transition-all",
+            timer < 10 
+              ? "bg-rose-50/90 border-rose-200 text-rose-600 shadow-rose-100/50" 
+              : "bg-white/90 border-white/60 text-voyage-primary"
+          )}>
+            <Timer size={16} className={cn(timer < 10 && "animate-bounce")} />
+            <span className="font-black text-lg tabular-nums tracking-tight">
               {Math.floor(timer / 60).toString().padStart(2, '0')}:{(timer % 60).toString().padStart(2, '0')}
             </span>
           </div>
@@ -325,39 +428,59 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
         </div>
 
         {/* Situation Description */}
-        <div className="bg-white rounded-[24px] p-6 border-2 border-slate-100 shadow-sm space-y-3">
-          <h3 className="font-black text-[#4E2510] text-sm leading-relaxed">
+        <div className="bg-white/80 backdrop-blur-xl rounded-[32px] p-7 border-2 border-white/60 shadow-[0_10px_30px_rgba(0,0,0,0.02)] space-y-4 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-voyage-primary/5 rounded-full blur-xl pointer-events-none" />
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-voyage-accent animate-ping" />
+            <span className="text-[9px] font-black text-voyage-accent uppercase tracking-widest">
+              {language === 'ar' ? 'موقف القرار المشترك' : 'CONFLIT DE DÉCISION'}
+            </span>
+          </div>
+          <h3 className="font-bold text-slate-800 text-sm leading-relaxed" style={{ wordBreak: 'break-word' }}>
             {currentQuestion.situation}
           </h3>
         </div>
 
         {/* Answer Options Grid */}
-        <div className="grid grid-cols-2 gap-3 pb-10">
-          {currentQuestion.options.map((option) => (
-            <motion.button
-              key={option.id}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleToggleAnswer(option.id)}
-              className={cn(
-                "p-4 rounded-[20px] text-left border-2 transition-all min-h-[80px] flex flex-col justify-center gap-2 relative overflow-hidden",
-                selectedAnswers.includes(option.id)
-                  ? "bg-white border-voyage-accent shadow-lg shadow-voyage-accent/10"
-                  : "bg-white border-slate-100 text-slate-500"
-              )}
-            >
-              <span className="text-[10px] font-bold leading-tight z-10">{option.text}</span>
-              {selectedAnswers.includes(option.id) && (
-                <CheckCircle2 size={16} className="text-voyage-accent absolute top-2 right-2" />
-              )}
-            </motion.button>
-          ))}
+        <div className="grid grid-cols-2 gap-4 pb-8">
+          {currentQuestion.options.map((option) => {
+            const isSelected = selectedAnswers.includes(option.id);
+            return (
+              <motion.button
+                key={option.id}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => handleToggleAnswer(option.id)}
+                className={cn(
+                  "p-5 rounded-[28px] border-2 transition-all min-h-[96px] flex flex-col justify-center gap-2 relative overflow-hidden border-b-4 active:translate-y-0.5 active:border-b-0",
+                  language === 'ar' ? 'text-right' : 'text-left',
+                  isSelected
+                    ? "bg-linear-to-br from-voyage-accent to-amber-600 text-white border-amber-600 shadow-[0_4px_20px_rgba(245,158,11,0.25),0_4px_0_0_#D97706]"
+                    : "bg-white border-slate-100 hover:border-slate-300 hover:shadow-md text-slate-600 border-b-slate-200"
+                )}
+              >
+                <span className={cn(
+                  "text-[10px] font-bold leading-relaxed z-10 transition-colors",
+                  isSelected ? "text-white" : "text-slate-800"
+                )}>
+                  {option.text}
+                </span>
+                {isSelected && (
+                  <CheckCircle2 size={16} className={cn("text-white absolute top-3 stroke-[3px]", language === 'ar' ? "left-3" : "right-3")} />
+                )}
+              </motion.button>
+            );
+          })}
         </div>
 
         {/* Exercises Selection List */}
         <div className="space-y-4 pb-24">
           <div className="flex items-center justify-between px-2">
-            <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Défis de Rabat</h2>
-            <div className="bg-voyage-accent/10 text-voyage-accent text-[8px] font-black px-2 py-0.5 rounded-full uppercase">{allExercises.length} Missions</div>
+            <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+              {language === 'ar' ? `${t.defis} ${cityNameAr}` : `${t.defis} ${cityNameFr}`}
+            </h2>
+            <div className="bg-voyage-accent/10 text-voyage-accent text-[8px] font-black px-2 py-0.5 rounded-full uppercase">
+              {allExercises.length} {t.missions}
+            </div>
           </div>
           
           {loading ? (
@@ -366,45 +489,55 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
             </div>
           ) : (
             <div className="flex flex-col gap-3">
-              {allExercises.map((ex) => (
-                <motion.button
-                  key={ex.id}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    setCurrentQuestion(ex);
-                    setSelectedAnswers([]);
-                    setIsComplete(false);
-                    setTimer(110);
-                    playSound('click');
-                    // Scroll to top to focus on the new question
-                    document.querySelector('main')?.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className={cn(
-                    "p-4 rounded-2xl border-2 transition-all text-left flex items-center gap-4",
-                    currentQuestion.id === ex.id 
-                      ? "bg-voyage-accent/5 border-voyage-accent shadow-md shadow-voyage-accent/10" 
-                      : "bg-white border-slate-100 hover:border-slate-200"
-                  )}
-                >
-                  <div className={cn(
-                    "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
-                    currentQuestion.id === ex.id ? "bg-voyage-accent text-white" : "bg-slate-50 text-slate-400"
-                  )}>
-                    <Trophy size={18} />
-                  </div>
-                  <div className="min-w-0">
-                    <p className={cn(
-                      "text-[10px] font-black uppercase tracking-tight truncate",
-                      currentQuestion.id === ex.id ? "text-voyage-accent" : "text-voyage-primary"
+              {allExercises.map((ex) => {
+                const isActive = currentQuestion.id === ex.id;
+                return (
+                  <motion.button
+                    key={ex.id}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => {
+                      setCurrentQuestion(ex);
+                      setSelectedAnswers([]);
+                      setIsComplete(false);
+                      setTimer(110);
+                      playSound('click');
+                      // Scroll to top to focus on the new question
+                      document.querySelector('main')?.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className={cn(
+                      "p-4 rounded-[24px] border-2 transition-all flex items-center gap-4 shadow-sm relative overflow-hidden border-b-4 active:translate-y-0.5 active:border-b-0",
+                      language === 'ar' ? 'text-right' : 'text-left',
+                      isActive 
+                        ? "bg-white border-voyage-accent border-b-amber-500 shadow-md shadow-voyage-accent/5" 
+                        : "bg-white border-slate-100 hover:border-slate-200 border-b-slate-200"
+                    )}
+                  >
+                    {isActive && (
+                      <div className={cn(
+                        "absolute top-0 bottom-0 w-1 bg-voyage-accent",
+                        language === 'ar' ? "right-0" : "left-0"
+                      )} />
+                    )}
+                    <div className={cn(
+                      "w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 transition-colors",
+                      isActive ? "bg-amber-100 text-voyage-accent" : "bg-slate-50 text-slate-400"
                     )}>
-                      {ex.situation}
-                    </p>
-                    <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
-                      {ex.options.length} Choix • 15 points
-                    </p>
-                  </div>
-                </motion.button>
-              ))}
+                      <Trophy size={18} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className={cn(
+                        "text-[10px] font-black uppercase tracking-tight truncate transition-colors",
+                        isActive ? "text-voyage-accent" : "text-voyage-primary"
+                      )}>
+                        {ex.situation}
+                      </p>
+                      <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-0.5">
+                        {ex.options.length} {t.choix} • 15 {t.pts}
+                      </p>
+                    </div>
+                  </motion.button>
+                );
+              })}
             </div>
           )}
         </div>
@@ -421,7 +554,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
             </div>
             <div className="flex gap-2">
                <div className="w-8 h-8 rounded-lg border border-slate-100 flex items-center justify-center text-slate-400">
-                  <ChevronRight size={16} />
+                  <ChevronRight size={16} className={cn(language === 'ar' && "rotate-180")} />
                </div>
             </div>
           </div>
@@ -430,10 +563,10 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
             onClick={handleVerify}
             disabled={selectedAnswers.length === 0 || isVerifying || isComplete}
             className={cn(
-              "w-full py-5 rounded-[24px] font-black text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-xl",
+              "w-full py-5 rounded-[28px] font-black text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-xl border-b-4",
               selectedAnswers.length === 0 || isVerifying || isComplete
-                ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                : "bg-blue-600 text-white shadow-blue-600/30 active:scale-95"
+                ? "bg-slate-100 text-slate-400 border-b-slate-200 cursor-not-allowed"
+                : "bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-blue-500/20 active:translate-y-0.5 active:border-b-0 border-blue-800"
             )}
           >
             {isVerifying ? (
@@ -441,10 +574,10 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
             ) : isComplete ? (
               <>
                 <CheckCircle2 size={20} />
-                <span>Analyse Terminée</span>
+                <span>{t.analysisDone}</span>
               </>
             ) : (
-              <span>VÉRIFIER MES RÉPONSES</span>
+              <span>{t.verifyAnswers}</span>
             )}
           </button>
         </div>
@@ -456,34 +589,48 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-md p-8"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-xl p-8"
           >
             <motion.div 
-              initial={{ scale: 0.9, y: 20 }}
+              initial={{ scale: 0.9, y: 30 }}
               animate={{ scale: 1, y: 0 }}
-              className="bg-white rounded-[40px] w-full max-w-xs overflow-hidden shadow-2xl text-center p-8 space-y-6"
+              exit={{ scale: 0.9, y: 30 }}
+              className="bg-white rounded-[48px] w-full max-w-sm overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] text-center p-8 space-y-8 border border-slate-100 relative"
             >
+              {team1Score > team2Score && (
+                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[48px]">
+                  <div className="absolute top-[-20%] left-[-20%] w-[140%] aspect-square bg-gradient-radial from-emerald-500/10 via-transparent to-transparent" />
+                </div>
+              )}
+
               <div className={cn(
-                "w-20 h-20 rounded-3xl flex items-center justify-center mx-auto",
-                team1Score > team2Score ? "bg-emerald-50 text-emerald-500" : "bg-red-50 text-red-500"
+                "w-24 h-24 rounded-[36px] flex items-center justify-center mx-auto shadow-lg transition-all",
+                team1Score > team2Score 
+                  ? "bg-emerald-500 text-white shadow-emerald-500/30 scale-110" 
+                  : "bg-rose-500 text-white shadow-rose-500/30"
               )}>
-                {team1Score > team2Score ? <Trophy size={40} /> : <AlertCircle size={40} />}
+                {team1Score > team2Score ? <Trophy size={48} className="animate-bounce" /> : <AlertCircle size={48} className="animate-pulse" />}
               </div>
               
-              <div className="space-y-2">
-                <h2 className="text-2xl font-black text-voyage-primary">
-                  {team1Score > team2Score ? "Victoire !" : "Défaite !"}
+              <div className="space-y-3">
+                <h2 className="text-3xl font-black text-voyage-primary tracking-tight">
+                  {team1Score > team2Score ? t.victory : t.defeat}
                 </h2>
-                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">
-                  Score Final : {team1Score} - {team2Score}
-                </p>
+                <div className="inline-block bg-slate-50 border border-slate-100 px-5 py-2.5 rounded-2xl">
+                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] mb-1">
+                    {t.finalScore}
+                  </p>
+                  <p className="text-2xl font-black text-slate-800 tracking-wider">
+                    {language === 'ar' ? `${team2Score} - ${team1Score}` : `${team1Score} - ${team2Score}`}
+                  </p>
+                </div>
               </div>
 
               <button 
                 onClick={onBack}
-                className="w-full py-4 bg-voyage-primary text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-voyage-primary/20"
+                className="w-full py-5 bg-voyage-primary text-white rounded-[24px] font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-voyage-primary/30 border-b-4 border-voyage-primary/70 active:translate-y-0.5 active:border-b-0 hover:bg-voyage-primary/95 transition-all"
               >
-                Continuer l'aventure
+                {t.continueAdventure}
               </button>
             </motion.div>
           </motion.div>

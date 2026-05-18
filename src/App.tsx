@@ -15,6 +15,8 @@ import { useAudio } from './contexts/AudioContext';
 import BottomNavBar from './components/BottomNavBar';
 import { Loader2 } from 'lucide-react';
 import { lazy, Suspense } from 'react';
+import { useSettings } from './contexts/SettingsContext';
+import { cn } from './lib/utils';
 const SplashScreen = lazy(() => import('./views/SplashScreen'));
 const WelcomeScreen = lazy(() => import('./views/WelcomeScreen'));
 const MapJourneyScreen = lazy(() => import('./views/MapJourneyScreen'));
@@ -61,6 +63,7 @@ export default function App() {
     }
   }, []);
 
+  const { language } = useSettings();
   const { session, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
   const { earnedBadges } = useSupabaseBadges(session?.user?.id);
@@ -436,10 +439,12 @@ export default function App() {
       const isInitialScreen = [Screen.Splash, Screen.Welcome, Screen.Login, Screen.Register].includes(currentScreen);
       if (authLoading && !isInitialScreen) {
         return (
-          <div className="h-full w-full flex items-center justify-center bg-voyage-sand">
+          <div className="h-full w-full flex items-center justify-center bg-voyage-sand" dir={language === 'ar' ? 'rtl' : 'ltr'}>
             <div className="flex flex-col items-center gap-4">
               <Loader2 className="animate-spin text-voyage-primary" size={40} />
-              <p className="text-[10px] font-black text-voyage-primary uppercase tracking-widest animate-pulse">Vérification de session...</p>
+              <p className={cn("text-[10px] font-black text-voyage-primary uppercase tracking-widest animate-pulse", language === 'ar' && "arabic-font")}>
+                {language === 'ar' ? 'جاري التحقق من الجلسة...' : 'Vérification de session...'}
+              </p>
             </div>
           </div>
         );
@@ -630,7 +635,13 @@ export default function App() {
   };
 
   return (
-    <div className="relative h-screen w-full bg-white overflow-hidden flex flex-col font-sans select-none touch-none">
+    <div 
+      className={cn(
+        "relative h-screen w-full bg-white overflow-hidden flex flex-col font-sans select-none touch-none",
+        language === 'ar' && "arabic-font"
+      )}
+      dir={language === 'ar' ? 'rtl' : 'ltr'}
+    >
         <div className="grow overflow-hidden relative">
           <AnimatePresence>
             <motion.div
@@ -642,10 +653,12 @@ export default function App() {
               className="absolute inset-0"
             >
               <Suspense fallback={
-                <div className="h-full w-full flex items-center justify-center bg-voyage-sand">
+                <div className="h-full w-full flex items-center justify-center bg-voyage-sand" dir={language === 'ar' ? 'rtl' : 'ltr'}>
                   <div className="flex flex-col items-center gap-4">
                     <Loader2 className="animate-spin text-voyage-primary" size={32} />
-                    <p className="text-[10px] font-black text-voyage-primary uppercase tracking-widest animate-pulse">Initialisation...</p>
+                    <p className={cn("text-[10px] font-black text-voyage-primary uppercase tracking-widest animate-pulse", language === 'ar' && "arabic-font")}>
+                      {language === 'ar' ? 'جاري التحميل...' : 'Initialisation...'}
+                    </p>
                   </div>
                 </div>
               }>

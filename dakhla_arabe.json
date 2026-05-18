@@ -1,0 +1,513 @@
+{
+    "id": "98b50e2d-dc99-43ef-b387-052637738f66",
+    "city_id": "dakhla",
+    "name_fr": "Dakhla",
+    "name_ar": "الداخلة",
+    "color": "#0ea5e9",
+    "icon": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Cities%20icons/dakhla.png",
+    "headline_fr": "La Lagune Bleue",
+    "headline_ar": "البحيرة الزرقاء",
+    "description_fr": "Ishaq maîtrise mer, biologie, économie circulaire, énergie éolienne et vision intégrée pour devenir un leader accompli.",
+    "description_ar": "يتقن إسحاق البحر، علم الأحياء، الاقتصاد الدائري، طاقة الرياح والرؤية المتكاملة ليصبح قائداً متمكناً.",
+    "focus_fr": "Maîtrise & Synthèse Holistique",
+    "focus_ar": "الإتقان والتركيب الشمولي",
+    "illustration_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/challenge-illustrations/dakhla/1775912215516-390zqh5fuyc-compressed.jpg",
+    "pedagogical_theories_fr": [
+        "Maîtriser la gestion de crise avec fluidité (plus de protocole)",
+        "Diagnostiquer un écosystème en 3 questions clés",
+        "Créer une économie circulaire intégrant tous les acteurs",
+        "Gérer un parc éolien et les relations avec les riverains",
+        "Défendre une vision stratégique avec des preuves terrain",
+        "Écrire un discours de clôture inspirant (synthèse du voyage)",
+        "Agir sans réfléchir : l’intuition du maître",
+        "Intégrer stress, décision et équipe en une seule compétence",
+        "Maîtriser la pensée systémique (Senge)",
+        "Devenir soi-même un mentor pour les générations futures"
+    ],
+    "pedagogical_theories_ar": [
+        "إتقان إدارة الأزمة بسلاسة (بدون بروتوكول)",
+        "تشخيص نظام بيئي بثلاثة أسئلة رئيسية",
+        "إنشاء اقتصاد دائري يدمج جميع الفاعلين",
+        "إدارة حقل رياح والعلاقات مع السكان المجاورين",
+        "الدفاع عن رؤية استراتيجية بأدلة ميدانية",
+        "كتابة خطاب ختامي ملهم (تجميع الرحلة)",
+        "التصرف دون تفكير: حدس المعلم",
+        "دمج التوتر والقرار والفريق في كفاءة واحدة",
+        "إتقان التفكير النظمي (سينج)",
+        "أن تصبح أنت نفسك مرشداً للأجيال القادمة"
+    ],
+    "learning_outcomes_fr": [
+        "Dakhla, perle de l’Atlantique, est l’ultime étape du voyage. Ici, vous ne découvrirez pas de nouveaux concepts : vous maîtriserez tous ceux que vous avez appris. La maîtrise, c’est agir avec fluidité et intuition, sans protocole, parce que les compétences sont devenues naturelles."
+    ],
+    "learning_outcomes_ar": [
+        "الداخلة، لؤلؤة الأطلسي، هي المحطة الأخيرة من الرحلة. هنا لن تكتشف مفاهيم جديدة: بل ستتقن كل ما تعلمته. الإتقان هو التصرف بسلاسة وحدس، بدون بروتوكول، لأن المهارات أصبحت طبيعية."
+    ],
+    "missions": [
+        {
+            "id": "98b50e2d-dc99-43ef-b387-052637738d01",
+            "title_fr": "Mission 1: Le Port de Pêche",
+            "title_ar": "المهمة 1: ميناء الصيد",
+            "description_fr": "",
+            "description_ar": "",
+            "type": "challenge",
+            "xp_reward": 50,
+            "bloom_level": "",
+            "soft_skill_dominant": "",
+            "duration_minutes": null,
+            "success_threshold": 70,
+            "mentor": {
+                "name_fr": "",
+                "name_ar": "القبطان عزيز",
+                "age": null,
+                "role_fr": "",
+                "role_ar": "قبطان",
+                "location_fr": "",
+                "location_ar": "ميناء الصيد بالداخلة"
+            },
+            "scripts": {
+                "opening_fr": "Port de pêche de Dakhla, Jeudi 5h30. Le soleil se lève sur la lagune. 25 barques de pêche. Le Capitaine Aziz, sans carte, sans GPS, montre le large du doigt. « Ishaq, un pêcheur ne 'gère pas son stress'. Il est CALME. Parce qu'il CONNAÎT la mer mieux que sa propre maison. Parce qu'il a DÉJÀ affronté la tempête 1000 fois. Aujourd'hui, tu vas MAÎTRISER. Pas appliquer. Pas analyser. Pas évaluer. Pas créer. MAÎTRISER. C'est à dire : TOUT ce que tu as appris devient INSTINCT. »",
+                "opening_ar": "ميناء الصيد بالداخلة، الخميس 5:30 صباحاً. تشرق الشمس على البحيرة. 25 قارب صيد. القبطان عزيز، بدون خريطة، بدون GPS، يشير إلى البحر بإصبعه. « إسحاق، الصياد لا 'يدير توتره'. إنه هادئ. لأنه يعرف البحر أفضل من بيته. لأنه واجه العاصفة 1000 مرة. اليوم، ستتقن. لا تطبق. لا تحلل. لا تقيم. لا تبتكر. ستتقن. أي: كل ما تعلمته يصبح غريزة. »",
+                "closing_fr": "",
+                "closing_ar": ""
+            },
+            "cinematic": {
+                "text_fr": "Port de pêche de Dakhla, Jeudi 5h30. Le soleil se lève sur la lagune. 25 barques de pêche. Le Capitaine Aziz, sans carte, sans GPS, montre le large du doigt. « Ishaq, un pêcheur ne 'gère pas son stress'. Il est CALME. Parce qu'il CONNAÎT la mer mieux que sa propre maison. Parce qu'il a DÉJÀ affronté la tempête 1000 fois. Aujourd'hui, tu vas MAÎTRISER. Pas appliquer. Pas analyser. Pas évaluer. Pas créer. MAÎTRISER. C'est à dire : TOUT ce que tu as appris devient INSTINCT. »",
+                "text_ar": "ميناء الصيد بالداخلة، الخميس 5:30 صباحاً. تشرق الشمس على البحيرة. 25 قارب صيد. القبطان عزيز، بدون خريطة، بدون GPS، يشير إلى البحر بإصبعه. « إسحاق، الصياد لا 'يدير توتره'. إنه هادئ. لأنه يعرف البحر أفضل من بيته. لأنه واجه العاصفة 1000 مرة. اليوم، ستتقن. لا تطبق. لا تحلل. لا تقيم. لا تبتكر. ستتقن. أي: كل ما تعلمته يصبح غريزة. »",
+                "gif_url": "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif",
+                "audio_url_fr": "",
+                "audio_url_ar": ""
+            },
+            "theories_fr": "",
+            "theories_ar": "",
+            "exercises": [
+                {
+                    "id": "460c355c-8af5-447e-a0ad-5112e1bf0e87",
+                    "type": "scenario_decision",
+                    "question_fr": "Tempête soudaine, moteur tousse, 4 pêcheurs paniquent. En 30 secondes, que faites-vous ?",
+                    "question_ar": "عاصفة مفاجئة، المحرك يتعثر، 4 صيادين يشعرون بالذعر. في 30 ثانية، ماذا تفعل؟",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "Crier",
+                            "label_ar": "الصراخ"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "Prendre la barre, donner 3 ordres clairs, respirer 4-7-8.",
+                            "label_ar": "تولي الدفة، إعطاء 3 أوامر واضحة، تنفس 4-7-8."
+                        }
+                    ],
+                    "correct_answer": "B",
+                    "feedback_positive": {
+                        "fr": "Maîtrise absolue ! Calme, ordres, respiration intégrée.",
+                        "ar": "إتقان مطلق! هدوء، أوامر، تنفس مدمج."
+                    },
+                    "feedback_negative": {
+                        "fr": "Paniquer aggrave la tempête.",
+                        "ar": "الذعر يزيد العاصفة سوءاً."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Agir with calme et donner des ordres clairs en situation de crise (maîtrise). Indication : Rester calme, prendre la barre, donner trois ordres simples (gilets, vider l’eau, surveiller le moteur) et respirer discrètement.",
+                        "ar": "التصرف بهدوء وإعطاء أوامر واضحة في حالة الأزمة (إتقان). دلالة: ابق هادئاً، تول الدفة، أعط ثلاثة أوامر بسيطة (سترات، تفريغ الماء، مراقبة المحرك) وتنفس بهدوء."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:08.097492+00:00",
+                    "updated_at": "2026-05-04T13:25:08.097492+00:00"
+                }
+            ],
+            "created_at": "2026-05-04T13:25:07.411319+00:00",
+            "updated_at": "2026-05-04T13:25:07.411319+00:00"
+        },
+        {
+            "id": "98b50e2d-dc99-43ef-b387-052637738d02",
+            "title_fr": "Mission 2: Biologie Marine – Systémique",
+            "title_ar": "المهمة 2: بيولوجيا بحرية – نظمية",
+            "description_fr": "",
+            "description_ar": "",
+            "type": "challenge",
+            "xp_reward": 50,
+            "bloom_level": "",
+            "soft_skill_dominant": "",
+            "duration_minutes": null,
+            "success_threshold": 70,
+            "mentor": {
+                "name_fr": "",
+                "name_ar": "سعيد",
+                "age": null,
+                "role_fr": "",
+                "role_ar": "عالم بيولوجيا بحرية",
+                "location_fr": "",
+                "location_ar": "مختبر البحيرة، الداخلة"
+            },
+            "scripts": {
+                "opening_fr": "",
+                "opening_ar": "",
+                "closing_fr": "",
+                "closing_ar": ""
+            },
+            "cinematic": {
+                "text_fr": "",
+                "text_ar": "",
+                "gif_url": "",
+                "audio_url_fr": "",
+                "audio_url_ar": ""
+            },
+            "theories_fr": "",
+            "theories_ar": "",
+            "exercises": [
+                {
+                    "id": "8fc899bf-5617-46b4-9508-e4f83a6b5e07",
+                    "type": "qcm",
+                    "question_fr": "Poissons chutent. Cause racine ?",
+                    "question_ar": "الأسماك تتناقص. السبب الجذري؟",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "Surchauffe",
+                            "label_ar": "ارتفاع الحرارة"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "Baisse du phytoplancton (base)",
+                            "label_ar": "انخفاض العوالق النباتية (القاعدة)"
+                        }
+                    ],
+                    "correct_answer": "B",
+                    "feedback_positive": {
+                        "fr": "Pensée systémique : tout part de la base.",
+                        "ar": "تفكير نظمي: كل شيء يبدأ من القاعدة."
+                    },
+                    "feedback_negative": {
+                        "fr": "Cherchez la source.",
+                        "ar": "ابحث عن المصدر."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Diagnostiquer la cause racine dans un écosystème (pensée systémique). Indication : Le phytoplancton est la base de la chaîne alimentaire ; sans lui, tout s’effondre – c’est la cause profonde, les autres sont des symptômes.",
+                        "ar": "تشخيص السبب الجذري في نظام بيئي (تفكير نظمي). دلالة: العوالق النباتية هي قاعدة السلسلة الغذائية؛ بدونها، كل شيء ينهار – هذا هو السبب العميق، والباقي أعراض."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 100
+                    },
+                    "time_limit_sec": 45,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-04T13:25:08.592858+00:00",
+                    "updated_at": "2026-05-04T13:25:08.592858+00:00"
+                }
+            ],
+            "created_at": "2026-05-04T13:25:08.271975+00:00",
+            "updated_at": "2026-05-04T13:25:08.271975+00:00"
+        },
+        {
+            "id": "eab76c75-3644-4e72-95b2-264520cdeef0",
+            "title_fr": "Mission D3 : La Ferme d’Algues – Économie Circulaire",
+            "title_ar": "المهمة 3: مزرعة الطحالب – الاقتصاد الدائري",
+            "description_fr": "",
+            "description_ar": "",
+            "type": "challenge",
+            "xp_reward": 1000,
+            "bloom_level": "",
+            "soft_skill_dominant": "",
+            "duration_minutes": null,
+            "success_threshold": 70,
+            "mentor": {
+                "name_fr": "Younès",
+                "name_ar": "يونس",
+                "age": null,
+                "role_fr": "Expert en Économie Circulaire",
+                "role_ar": "خبير في الاقتصاد الدائري",
+                "location_fr": "",
+                "location_ar": "مزرعة الطحالب، الداخلة"
+            },
+            "scripts": {
+                "opening_fr": "Bienvenue à la ferme d'algues de Dakhla. Ici, nous ne jetons rien, nous transformons tout. Êtes-vous prêt à maîtriser les boucles de l'économie circulaire ?",
+                "opening_ar": "مرحباً بكم في مزرعة الطحالب بالداخلة. هنا، لا نرمي شيئاً، بل نحول كل شيء. هل أنتم مستعدون لإتقان حلقات الاقتصاد الدائري؟",
+                "closing_fr": "",
+                "closing_ar": ""
+            },
+            "cinematic": {
+                "text_fr": "Le vent de Dakhla porte l'odeur de l'iode et de l'innovation. Younès vous attend devant des bassins d'algues d'un vert émeraude. 'Le futur est circulaire, ou il ne sera pas', dit-il.",
+                "text_ar": "رياح الداخلة تحمل رائحة اليود والابتكار. ينتظركم يونس أمام أحواض طحالب خضراء زمردية. 'المستقبل دائري، أو لن يكون'، كما يقول.",
+                "gif_url": "",
+                "audio_url_fr": "",
+                "audio_url_ar": ""
+            },
+            "theories_fr": "",
+            "theories_ar": "",
+            "exercises": [
+                {
+                    "id": "dc59aacd-2826-4b18-80cc-256884bd72a2",
+                    "type": "qcm",
+                    "question_fr": "Client propose 2x le prix pour exporter les algues brutes (non transformées), mais cela épuise la ressource et crée moins d’emplois locaux. Décision ?",
+                    "question_ar": "عميل يعرض ضعف السعر لتصدير الطحالب الخام (غير المحولة)، لكن هذا يستنزف المورد ويخلق فرص عمل محلية أقل. القرار؟",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "A) Accepter (profit court terme)",
+                            "label_ar": "أ) قبول (ربح قصير المدى)"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "B) Refuser (principe)",
+                            "label_ar": "ب) رفض (مبدأ)"
+                        },
+                        {
+                            "id": "C",
+                            "label_fr": "C) Contrat hybride : 50% brut à prix élevé (finance R&D), 50% transformé localement (emplois). Investissement du client dans la ferme.",
+                            "label_ar": "ج) عقد هجين: 50% خام بسعر مرتفع (تمويل البحث والتطوير)، 50% محول محلياً (فرص عمل). استثمار العميل في المزرعة."
+                        }
+                    ],
+                    "correct_answer": "C",
+                    "feedback_positive": {
+                        "fr": "Décision systémique équilibrée. Ni argent, ni dogme.",
+                        "ar": "قرار نظامي متوازن. لا مال ولا عقيدة."
+                    },
+                    "feedback_negative": {
+                        "fr": "Le binaire conduit à une perte. La créativité est la solution.",
+                        "ar": "الثنائية تؤدي إلى خسارة. الإبداع هو الحل."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Prendre une décision systémique équilibrée (ni argent ni dogme). Indication : Proposer un contrat hybride : 50% brut à prix élevé (finance R&D) + 50% transformé localement (emplois) + investissement du client dans la ferme.",
+                        "ar": "اتخاذ قرار نظامي متوازن (لا مال ولا عقيدة). دلالة: اقترح عقداً هجيناً: 50% خام بسعر مرتفع (تمويل البحث والتطوير) + 50% محول محلياً (فرص عمل) + استثمار العميل في المزرعة."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 20
+                    },
+                    "time_limit_sec": 30,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-09T14:36:04.08149+00:00",
+                    "updated_at": "2026-05-09T14:36:04.08149+00:00"
+                }
+            ],
+            "created_at": "2026-05-09T14:28:12.132727+00:00",
+            "updated_at": "2026-05-09T14:28:12.132727+00:00"
+        },
+        {
+            "id": "f83e1989-e001-470a-bda4-722124c346f1",
+            "title_fr": "Mission D4 : Le Parc Éolien – Énergie Invisible",
+            "title_ar": "المهمة 4: الحقل الرياحي – الطاقة غير المرئية",
+            "description_fr": "",
+            "description_ar": "",
+            "type": "challenge",
+            "xp_reward": 1200,
+            "bloom_level": "",
+            "soft_skill_dominant": "",
+            "duration_minutes": null,
+            "success_threshold": 70,
+            "mentor": {
+                "name_fr": "Fatima-Zahra",
+                "name_ar": "فاطمة الزهراء",
+                "age": null,
+                "role_fr": "Directrice Énergie Éolienne",
+                "role_ar": "مديرة طاقة الرياح",
+                "location_fr": "",
+                "location_ar": "حقل الرياح، الداخلة"
+            },
+            "scripts": {
+                "opening_fr": "Bienvenue sur les hauteurs de Dakhla. Le vent ici ne s'arrête jamais. Saurez-vous dompter cette puissance invisible pour éclairer la ville ?",
+                "opening_ar": "مرحباً بكم في مرتفعات الداخلة. الرياح هنا لا تتوقف أبداً. هل ستتمكنون من ترويض هذه القوة غير المرئية لإضاءة المدينة؟",
+                "closing_fr": "",
+                "closing_ar": ""
+            },
+            "cinematic": {
+                "text_fr": "Fatima-Zahra vous accueille au pied d'un géant d'acier. Le sifflement des pales rythme la conversation. 'Ici, chaque souffle de vent est une promesse d'avenir', dit-elle en ajustant son casque.",
+                "text_ar": "فاطمة الزهراء تستقبلكم عند قدم عملاق فولاذي. صفير الشفرات يضبط إيقاع المحادثة. 'هنا، كل نسمة ريح هي وعد بالمستقبل'، تقول وهي تعدل خوذتها.",
+                "gif_url": "",
+                "audio_url_fr": "",
+                "audio_url_ar": ""
+            },
+            "theories_fr": "",
+            "theories_ar": "",
+            "exercises": [
+                {
+                    "id": "6d3cdcda-3449-4fac-9ab2-62618cb16983",
+                    "type": "qcm",
+                    "question_fr": "Des habitants demandent l’arrêt des éoliennes. Quelle argumentation intégrée ?",
+                    "question_ar": "سكان يطلبون إيقاف التوربينات الرياحية. أي حجة متكاملة؟",
+                    "options": [
+                        {
+                            "id": "A",
+                            "label_fr": "A) « C’est obligatoire »",
+                            "label_ar": "أ) « هذا إلزامي »"
+                        },
+                        {
+                            "id": "B",
+                            "label_fr": "B) « On vous paiera »",
+                            "label_ar": "ب) « سندفع لكم »"
+                        },
+                        {
+                            "id": "C",
+                            "label_fr": "C) 10% électricité gratuite + fonds communal + visites écoles + plantation d’arbres",
+                            "label_ar": "ج) 10% كهرباء مجانية + صندوق بلدي + زيارات مدرسية + زراعة أشجار"
+                        }
+                    ],
+                    "correct_answer": "C",
+                    "feedback_positive": {
+                        "fr": "Intégration parfaite des intérêts : économique, social, éducatif, esthétique.",
+                        "ar": "دمج مثالي للمصالح: اقتصادية، اجتماعية، تعليمية، جمالية."
+                    },
+                    "feedback_negative": {
+                        "fr": "L’argent seul ou l’injonction ne fonctionnent pas.",
+                        "ar": "المال وحده أو الإلزام لا يعملان."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Intégrer les intérêts des parties prenantes (économique, social, éducatif, esthétique). Indication : Proposer 10% d’électricité gratuite pour les foyers, un fonds communal, des visites scolaires, et une plantation d’arbres.",
+                        "ar": "دمج مصالح الأطراف المعنية (اقتصادية، اجتماعية، تعليمية، جمالية). دلالة: اقترح 10% كهرباء مجانية للمنازل، صندوق بلدي، زيارات مدرسية، وزراعة أشجار."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 20
+                    },
+                    "time_limit_sec": 30,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-09T14:36:06.426911+00:00",
+                    "updated_at": "2026-05-09T14:36:06.426911+00:00"
+                }
+            ],
+            "created_at": "2026-05-09T14:28:12.83109+00:00",
+            "updated_at": "2026-05-09T14:28:12.83109+00:00"
+        },
+        {
+            "id": "0f576c5b-6cba-4efc-a85d-ddc0aa307dc3",
+            "title_fr": "Mission D5 : Le Palais des Congrès – Maîtrise Absolue",
+            "title_ar": "المهمة 5: قصر المؤتمرات – الإتقان المطلق",
+            "description_fr": "",
+            "description_ar": "",
+            "type": "challenge",
+            "xp_reward": 2000,
+            "bloom_level": "",
+            "soft_skill_dominant": "",
+            "duration_minutes": null,
+            "success_threshold": 70,
+            "mentor": {
+                "name_fr": "Aziz",
+                "name_ar": "عزيز",
+                "age": null,
+                "role_fr": "Maître Explorateur",
+                "role_ar": "المستكشف المعلم",
+                "location_fr": "",
+                "location_ar": "قصر المؤتمرات، الداخلة"
+            },
+            "scripts": {
+                "opening_fr": "C'est l'étape finale. Le moment de montrer que vous avez intégré toutes les leçons du voyage. Maîtrisez-vous votre destin ?",
+                "opening_ar": "هذه هي المحطة النهائية. لحظة إظهار أنكم استوعبتم كل دروس الرحلة. هل تتقنون قدركم؟",
+                "closing_fr": "",
+                "closing_ar": ""
+            },
+            "cinematic": {
+                "text_fr": "Le Palais des Congrès de Dakhla brille sous le soleil de midi. Aziz vous attend à l'entrée. 'Aujourd'hui, vous ne répondez plus à des questions, vous devenez la réponse', dit-il solennellement.",
+                "text_ar": "قصر المؤتمرات بالداخلة يلمع تحت شمس الظهيرة. عزيز ينتظركم عند المدخل. 'اليوم، أنتم لا تجيبون على الأسئلة، بل تصبحون أنتم الإجابة'، يقول بجدية.",
+                "gif_url": "",
+                "audio_url_fr": "",
+                "audio_url_ar": ""
+            },
+            "theories_fr": "",
+            "theories_ar": "",
+            "exercises": [
+                {
+                    "id": "80238199-f8b4-46f4-b8a6-fd8d6b7a5789",
+                    "type": "short_answer",
+                    "question_fr": "Rédigez la vision 2040 de la région Dakhla-Oued Ed-Dahab.",
+                    "question_ar": "اكتب رؤية 2040 لجهة الداخلة وادي الذهب.",
+                    "options": null,
+                    "correct_answer": "développement intégré",
+                    "feedback_positive": {
+                        "fr": "Synthèse parfaite. Cohérente, inspirante, ancrée localement.",
+                        "ar": "تجميع مثالي. متماسك، ملهم، متجذر محلياً."
+                    },
+                    "feedback_negative": {
+                        "fr": "Trop vague ou trop technique.",
+                        "ar": "غامض جداً أو تقني جداً."
+                    },
+                    "hint": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "explanation": {
+                        "fr": "Rédiger une vision 2040 intégrant énergie, eau, agriculture, tourisme, économie bleue, éducation. Indication : Structurez en paragraphes : énergie (solaire/éolien), eau (dessalement), agriculture (hydroponique), tourisme durable, économie bleue (algues, pêche), éducation (université des océans, mentorat).",
+                        "ar": "كتابة رؤية 2040 تدمج الطاقة، الماء، الزراعة، السياحة، الاقتصاد الأزرق، التعليم. دلالة: نظم في فقرات: الطاقة (شمسية/ريحية)، الماء (تحلية)، الزراعة (مائية)، سياحة مستدامة، اقتصاد أزرق (طحالب، صيد)، تعليم (جامعة المحيطات، إرشاد)."
+                    },
+                    "context_dialogue": null,
+                    "presentation": {
+                        "fr": "",
+                        "ar": ""
+                    },
+                    "scores": {
+                        "decision": 0,
+                        "equipe": 0,
+                        "stress": 0,
+                        "xp": 20
+                    },
+                    "time_limit_sec": 30,
+                    "soft_skills_impact": {},
+                    "audio_url_fr": "",
+                    "audio_url_ar": "",
+                    "created_at": "2026-05-09T14:36:10.016884+00:00",
+                    "updated_at": "2026-05-09T14:36:10.016884+00:00"
+                }
+            ],
+            "created_at": "2026-05-09T14:28:13.344286+00:00",
+            "updated_at": "2026-05-09T14:28:13.344286+00:00"
+        }
+    ],
+    "created_at": "2026-05-04T12:48:29.899524+00:00",
+    "updated_at": "2026-05-04T12:48:29.899524+00:00"
+}

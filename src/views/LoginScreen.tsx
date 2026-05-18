@@ -107,7 +107,7 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
         </div>
       </header>
 
-      <main className="relative z-10 flex-grow flex flex-col px-6 justify-center max-w-md mx-auto w-full pb-12">
+      <main className="relative z-10 grow flex flex-col px-6 justify-center max-w-md mx-auto w-full pb-12">
         <motion.div
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -184,7 +184,7 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={loading || !username || !password}
-                className="w-full bg-gradient-to-br from-[#7B3F1A] to-[#4E2510] text-white py-5 rounded-3xl font-black text-lg uppercase tracking-wider flex items-center justify-center gap-3 shadow-xl shadow-[#7B3F1A]/30 hover:shadow-[#7B3F1A]/50 disabled:opacity-50 transition-all border-b-4 border-black/20"
+                className="w-full bg-linear-to-br from-[#7B3F1A] to-[#4E2510] text-white py-5 rounded-3xl font-black text-lg uppercase tracking-wider flex items-center justify-center gap-3 shadow-xl shadow-[#7B3F1A]/30 hover:shadow-[#7B3F1A]/50 disabled:opacity-50 transition-all border-b-4 border-black/20"
               >
                 {loading ? (
                   <Loader2 className="animate-spin" size={24} />

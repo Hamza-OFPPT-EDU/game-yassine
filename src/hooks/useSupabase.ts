@@ -65,7 +65,7 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
   const [cities, setCities] = useState<City[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { freeExploration } = useSettings();
+  const { freeExploration, language } = useSettings();
 
   useEffect(() => {
     async function fetchData() {
@@ -153,16 +153,16 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
             id: city.id,
             name: city.city_name_fr,
             arabicName: city.city_name_ar,
-            description: city.description_fr,
+            description: language === 'ar' ? (city.description_ar || city.description_fr) : city.description_fr,
             arabicDescription: city.description_ar || '',
-            focus: city.focus_fr,
+            focus: language === 'ar' ? (city.focus_ar || city.focus_fr) : city.focus_fr,
             points: 500,
             image: displayImage,
             iconUrl: city.icon_name,
             status,
             stepNum: completedInCity + 1 > totalSteps ? totalSteps : completedInCity + 1,
             totalSteps,
-            cinematicIntro: city.cinematic_intro,
+            cinematicIntro: language === 'ar' ? (city.cinematic_intro_ar || city.cinematic_intro) : city.cinematic_intro,
             cinematicCharacter: city.cinematic_character,
             color: city.city_color,
             iconName: city.icon_name,
@@ -173,9 +173,9 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
             map_y: city.map_y,
             map_size: city.map_size,
             sort_order: city.sort_order,
-            headline: city.headline_fr,
+            headline: language === 'ar' ? (city.headline_ar || city.headline_fr) : city.headline_fr,
             arabicHeadline: city.headline_ar,
-            missionsTitle: city.missions_title_fr,
+            missionsTitle: language === 'ar' ? (city.missions_title_ar || city.missions_title_fr) : city.missions_title_fr,
             acteTitle: city.acte_title,
           };
         });
@@ -204,7 +204,7 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
 export function useSupabaseMissions(cityId: string, completedMissions: string[] = []) {
   const [missions, setMissions] = useState<Mission[]>([]);
   const [loading, setLoading] = useState(true);
-  const { freeExploration } = useSettings();
+  const { freeExploration, language } = useSettings();
 
   useEffect(() => {
     async function fetchMissions() {
@@ -268,10 +268,14 @@ export function useSupabaseMissions(cityId: string, completedMissions: string[] 
             ...m,
             status,
             xp_reward: m.xp_reward || 0,
-            mentor_name: mentorName,
-            mentor_role: mentorRole,
-            script_opening: scriptOpening,
-            cinematic_text: m.cinematic_text,
+            title_fr: language === 'ar' ? (m.title_ar || m.title_fr) : m.title_fr,
+            title_ar: m.title_ar,
+            description_fr: language === 'ar' ? (m.description_ar || m.description_fr) : m.description_fr,
+            description_ar: m.description_ar,
+            mentor_name: language === 'ar' ? (m.mentor_name_ar || mentorName) : mentorName,
+            mentor_role: language === 'ar' ? (m.mentor_role_ar || mentorRole) : mentorRole,
+            script_opening: language === 'ar' ? (m.script_opening_ar || m.script_opening || scriptOpening) : scriptOpening,
+            cinematic_text: language === 'ar' ? (m.cinematic_text_ar || m.cinematic_text) : m.cinematic_text,
             cinematic_gif_url: m.cinematic_gif_url,
             cinematic_audio_url: m.cinematic_audio_url,
             illustration_url: m.illustration_url
@@ -291,6 +295,7 @@ export function useSupabaseMissions(cityId: string, completedMissions: string[] 
 export function useSupabaseQuestions(missionId: string) {
   const [questions, setQuestions] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState(true);
+  const { language } = useSettings();
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -313,35 +318,65 @@ export function useSupabaseQuestions(missionId: string) {
             // Standard array format
             options = q.options.map((opt: any, idx: number) => ({
               id: opt.id || String(idx),
-              text: opt.text_fr || opt.left_fr || opt.left || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : ''),
+              text: language === 'ar'
+                ? (opt.text_ar || opt.label_ar || opt.text_fr || opt.left_fr || opt.left || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : ''))
+                : (opt.text_fr || opt.left_fr || opt.left || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : '')),
               label: opt.label || opt.label_fr || String.fromCharCode(65 + idx),
-              match: opt.match || opt.right_fr || opt.right || '',
+              match: language === 'ar'
+                ? (opt.match_ar || opt.right_ar || opt.match || opt.right_fr || opt.right || '')
+                : (opt.match || opt.right_fr || opt.right || ''),
               isError: !!opt.is_error
             }));
           } else if (q.options?.pairs) {
             // Matching question format: { pairs: [{ left, right }] }
             options = q.options.pairs.map((p: any, idx: number) => ({
               id: String(idx),
-              text: p.item || p.left || p.left_fr || '',
+              text: language === 'ar'
+                ? (p.left_ar || p.item_ar || p.left_fr || p.item || p.left || '')
+                : (p.left_fr || p.item || p.left || ''),
               label: String.fromCharCode(65 + idx),
-              match: p.match || p.right || p.right_fr || ''
+              match: language === 'ar'
+                ? (p.right_ar || p.match_ar || p.right_fr || p.match || p.right || '')
+                : (p.right_fr || p.match || p.right || '')
             }));
           } else if (q.options?.bank) {
             // Fill-in-blanks format: { bank: [...] }
             options = (q.options.bank || []).map((item: any, idx: number) => ({
               id: String(idx),
-              text: typeof item === 'string' ? item : (item.text || item.text_fr || ''),
+              text: language === 'ar'
+                ? (typeof item === 'string' ? item : (item.text_ar || item.text || item.text_fr || ''))
+                : (typeof item === 'string' ? item : (item.text_fr || item.text || '')),
               label: String.fromCharCode(65 + idx)
             }));
           } else if (q.options?.steps || q.options?.errors) {
             // Handle scenario-cascade (steps) or error-detection (errors)
             if (q.options.steps) {
-              steps = q.options.steps;
+              steps = q.options.steps.map((st: any) => {
+                if (language === 'ar') {
+                  return {
+                    ...st,
+                    question: st.question_ar || st.question || st.question_fr,
+                    responses: Array.isArray(st.responses) ? st.responses.map((resp: any) => ({
+                      ...resp,
+                      text: resp.text_ar || resp.text || resp.text_fr
+                    })) : undefined,
+                    options: Array.isArray(st.options) ? st.options.map((opt: any) => ({
+                      ...opt,
+                      text: opt.text_ar || opt.text || opt.text_fr
+                    })) : undefined
+                  };
+                }
+                return st;
+              });
               options = (q.options.options || []).map((opt: any, idx: number) => ({
                 id: opt.id || String(idx),
-                text: opt.text_fr || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : ''),
+                text: language === 'ar'
+                  ? (opt.text_ar || opt.text_fr || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : ''))
+                  : (opt.text_fr || opt.label_fr || opt.label || opt.text || (typeof opt === 'string' ? opt : '')),
                 label: opt.label || opt.label_fr || String.fromCharCode(65 + idx),
-                match: opt.match || opt.right_fr || ''
+                match: language === 'ar'
+                  ? (opt.match_ar || opt.right_ar || opt.match || opt.right_fr || '')
+                  : (opt.match || opt.right_fr || '')
               }));
               
               // If no top-level options, try to extract from the first step
@@ -349,14 +384,18 @@ export function useSupabaseQuestions(missionId: string) {
                 const stepOptions = steps[0].responses || steps[0].options;
                 options = stepOptions.map((opt: any, idx: number) => ({
                   id: opt.id || String(idx),
-                  text: opt.text || opt.text_fr || opt.label || opt.label_fr || '',
+                  text: language === 'ar'
+                    ? (opt.text_ar || opt.text || opt.text_fr || opt.label || opt.label_fr || '')
+                    : (opt.text || opt.text_fr || opt.label || opt.label_fr || ''),
                   label: opt.label || String.fromCharCode(65 + idx)
                 }));
               }
             } else if (q.options.errors) {
               options = q.options.errors.map((err: any, idx: number) => ({
                 id: err.id || String(idx),
-                text: err.text_fr || err.text || '',
+                text: language === 'ar'
+                  ? (err.text_ar || err.text_fr || err.text || '')
+                  : (err.text_fr || err.text || ''),
                 label: String.fromCharCode(65 + idx),
                 isError: !!err.is_error || err.isError || false
               }));
@@ -365,25 +404,33 @@ export function useSupabaseQuestions(missionId: string) {
             // Ranking format: { order: [...] }
             options = q.options.order.map((item: any, idx: number) => ({
               id: item.id || String(idx),
-              text: item.text_fr || item.label_fr || item.text || '',
+              text: language === 'ar'
+                ? (item.text_ar || item.label_ar || item.text_fr || item.label_fr || item.text || '')
+                : (item.text_fr || item.label_fr || item.text || ''),
               label: String.fromCharCode(65 + idx)
             }));
           } else if (!q.options) {
             // No options provided - check type for defaults
             if (type === 'true-false') {
-              options = [
-                { id: 'vrai', text: 'Vrai', label: 'V' },
-                { id: 'faux', text: 'Faux', label: 'F' }
-              ];
+              options = language === 'ar'
+                ? [
+                    { id: 'vrai', text: 'صحيح', label: 'ص' },
+                    { id: 'faux', text: 'خطأ', label: 'خ' }
+                  ]
+                : [
+                    { id: 'vrai', text: 'Vrai', label: 'V' },
+                    { id: 'faux', text: 'Faux', label: 'F' }
+                  ];
             } else {
               options = [];
             }
           }
 
           // Format content for fill-in-blanks if it uses underscores or is missing placeholders
-          let content = q.presentation_fr || q.question_fr 
-            ? [q.presentation_fr || q.question_fr] 
-            : [];
+          const basePresentation = language === 'ar' 
+            ? (q.presentation_ar || q.presentation_fr || q.question_ar || q.question_fr)
+            : (q.presentation_fr || q.question_fr);
+          let content = basePresentation ? [basePresentation] : [];
           
           if (type === 'fill-in-blanks' && content.length > 0) {
             let processed = content[0];
@@ -411,19 +458,22 @@ export function useSupabaseQuestions(missionId: string) {
             id: q.id,
             type,
             xp_reward: q.xp_reward || 20,
-            title: q.question_fr ? (q.question_fr.length > 40 ? q.question_fr.substring(0, 40) + '...' : q.question_fr) : 'Défi',
-            question: q.question_fr,
+            title: language === 'ar'
+              ? (q.question_ar ? (q.question_ar.length > 40 ? q.question_ar.substring(0, 40) + '...' : q.question_ar) : 'تحدي')
+              : (q.question_fr ? (q.question_fr.length > 40 ? q.question_fr.substring(0, 40) + '...' : q.question_fr) : 'Défi'),
+            question: language === 'ar' ? (q.question_ar || q.question_fr) : q.question_fr,
             arabicQuestion: q.question_ar,
             options: Array.isArray(options) ? options : [],
             steps,
             correctOptionId: q.correct_answer || (type === 'scenario-cascade' && steps?.length > 0 ? (steps[0].correct_response_id || steps[0].correct) : (type === 'ranking' && q.options?.order ? q.options.order.map((o:any) => o.id || '').join(',') : undefined)),
-            hint: q.hint_fr,
+            hint: language === 'ar' ? (q.hint_ar || q.hint_fr) : q.hint_fr,
             content,
-            feedbackPositive: q.feedback_positive_fr,
-            feedbackNegative: q.feedback_negative_fr,
+            feedbackPositive: language === 'ar' ? (q.feedback_positive_ar || q.feedback_positive_fr) : q.feedback_positive_fr,
+            feedbackNegative: language === 'ar' ? (q.feedback_negative_ar || q.feedback_negative_fr) : q.feedback_negative_fr,
             presentation_fr: q.presentation_fr,
             explanation_fr: q.explanation_fr,
-            context_dialogue: q.context_dialogue,
+            explanation_ar: q.explanation_ar,
+            context_dialogue: language === 'ar' ? (q.context_dialogue_ar || q.context_dialogue) : q.context_dialogue,
             illustration_url: q.illustration_url,
             time_limit_sec: q.time_limit_sec
           };

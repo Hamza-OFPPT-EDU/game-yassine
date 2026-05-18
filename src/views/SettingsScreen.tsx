@@ -98,16 +98,16 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
   };
 
   return (
-    <div className="h-full w-full bg-voyage-sand flex flex-col overflow-hidden">
-      <TopAppBar stats={stats} title="Réglages" onBack={onBack} showProgress={false} />
+    <div className="h-full w-full bg-voyage-sand flex flex-col overflow-hidden" dir={globalLanguage === 'ar' ? 'rtl' : 'ltr'}>
+      <TopAppBar stats={stats} title={globalLanguage === 'ar' ? "الإعدادات" : "Réglages"} onBack={onBack} showProgress={false} />
       
-      <main className="flex-grow overflow-y-auto px-6 py-10 space-y-10 max-w-md mx-auto w-full relative scrollbar-hide">
+      <main className="grow overflow-y-auto px-6 py-10 space-y-10 max-w-md mx-auto w-full relative scrollbar-hide">
         <div className="absolute inset-0 zellige-pattern pointer-events-none opacity-5" />
 
         {/* Profile Section */}
         <section className="flex flex-col items-center">
           <div className="relative group">
-            <div className="w-32 h-32 rounded-[2rem] overflow-hidden shadow-xl ring-4 ring-white bg-white">
+            <div className="w-32 h-32 rounded-4xl overflow-hidden shadow-xl ring-4 ring-white bg-white">
               <img 
                 alt="User Avatar" 
                 className="w-full h-full object-cover" 
@@ -119,35 +119,47 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
               <User size={20} />
             </button>
           </div>
-          <h2 className="mt-6 text-2xl font-headline font-black text-voyage-primary tracking-tight">Paramètres du profil</h2>
-          <p className="text-slate-400 font-bold text-xs uppercase tracking-widest mt-1">إعدادات الملف الشخصي</p>
+          <h2 className={cn("mt-6 text-2xl font-headline font-black text-voyage-primary tracking-tight", globalLanguage === 'ar' && "arabic-font text-3xl")}>
+            {globalLanguage === 'ar' ? "إعدادات الملف الشخصي" : "Paramètres du profil"}
+          </h2>
+          <p className={cn("text-slate-400 font-bold text-xs uppercase tracking-widest mt-1", globalLanguage === 'ar' && "font-sans tracking-wide text-[10px]")}>
+            {globalLanguage === 'ar' ? "Paramètres du profil" : "إعدادات الملف الشخصي"}
+          </p>
         </section>
 
         {/* User Details Entry */}
-        <section className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-50 space-y-6">
+        <section className="bg-white p-8 rounded-4xl shadow-sm border border-slate-50 space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="flex justify-between items-end">
-                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">Prénom</label>
-                <span className="text-[10px] font-bold text-voyage-accent opacity-60">الاسم</span>
+                <label className={cn("block text-xs font-black text-slate-400 uppercase tracking-widest", globalLanguage === 'ar' && "arabic-font tracking-normal text-[11px]")}>
+                  {globalLanguage === 'ar' ? "الاسم الشخصي" : "Prénom"}
+                </label>
+                <span className="text-[10px] font-bold text-voyage-accent opacity-60">
+                  {globalLanguage === 'ar' ? "Prénom" : "الاسم"}
+                </span>
               </div>
               <input 
                 className="w-full bg-slate-50 border-none rounded-xl px-4 py-4 text-slate-800 focus:ring-2 focus:ring-voyage-primary/10 font-bold text-sm" 
                 type="text" 
-                placeholder="Votre prénom"
+                placeholder={globalLanguage === 'ar' ? "اسمك الشخصي" : "Votre prénom"}
                 value={firstName} 
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
             <div className="space-y-2">
               <div className="flex justify-between items-end">
-                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">Nom</label>
-                <span className="text-[10px] font-bold text-voyage-accent opacity-60">النسب</span>
+                <label className={cn("block text-xs font-black text-slate-400 uppercase tracking-widest", globalLanguage === 'ar' && "arabic-font tracking-normal text-[11px]")}>
+                  {globalLanguage === 'ar' ? "الاسم العائلي" : "Nom"}
+                </label>
+                <span className="text-[10px] font-bold text-voyage-accent opacity-60">
+                  {globalLanguage === 'ar' ? "Nom" : "النسب"}
+                </span>
               </div>
               <input 
                 className="w-full bg-slate-50 border-none rounded-xl px-4 py-4 text-slate-800 focus:ring-2 focus:ring-voyage-primary/10 font-bold text-sm" 
                 type="text" 
-                placeholder="Votre nom"
+                placeholder={globalLanguage === 'ar' ? "اسمك العائلي" : "Votre nom"}
                 value={lastName} 
                 onChange={(e) => setLastName(e.target.value)}
               />
@@ -156,8 +168,12 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
 
           <div className="space-y-2">
             <div className="flex justify-between items-end">
-              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">Date de naissance</label>
-              <span className="text-[10px] font-bold text-voyage-accent opacity-60">تاريخ الازدياد</span>
+              <label className={cn("block text-xs font-black text-slate-400 uppercase tracking-widest", globalLanguage === 'ar' && "arabic-font tracking-normal text-[11px]")}>
+                {globalLanguage === 'ar' ? "تاريخ الازدياد" : "Date de naissance"}
+              </label>
+              <span className="text-[10px] font-bold text-voyage-accent opacity-60">
+                {globalLanguage === 'ar' ? "Date de naissance" : "تاريخ الازدياد"}
+              </span>
             </div>
             <input 
               className="w-full bg-slate-50 border-none rounded-xl px-4 py-4 text-slate-800 focus:ring-2 focus:ring-voyage-primary/10 font-bold text-sm" 
@@ -169,15 +185,19 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
 
           <div className="space-y-2">
             <div className="flex justify-between items-end">
-              <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">Groupe / Organisation</label>
-              <span className="text-[10px] font-bold text-voyage-accent opacity-60">المجموعة</span>
+              <label className={cn("block text-xs font-black text-slate-400 uppercase tracking-widest", globalLanguage === 'ar' && "arabic-font tracking-normal text-[11px]")}>
+                {globalLanguage === 'ar' ? "المجموعة / المؤسسة" : "Groupe / Organisation"}
+              </label>
+              <span className="text-[10px] font-bold text-voyage-accent opacity-60">
+                {globalLanguage === 'ar' ? "Groupe" : "المجموعة"}
+              </span>
             </div>
             <select 
               className="w-full bg-slate-50 border-none rounded-xl px-4 py-4 text-slate-800 focus:ring-2 focus:ring-voyage-primary/10 font-bold text-sm appearance-none" 
               value={organizationId} 
               onChange={(e) => setOrganizationId(e.target.value)}
             >
-              <option value="">Sélectionnez un groupe...</option>
+              <option value="">{globalLanguage === 'ar' ? "اختر مجموعة..." : "Sélectionnez un groupe..."}</option>
               {organizations.map(org => (
                 <option key={org.id} value={org.id}>{org.name}</option>
               ))}
@@ -189,8 +209,11 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
         <section className="space-y-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-1 rounded-full bg-duo-yellow" />
-            <h3 className="text-lg font-headline font-black text-voyage-primary tracking-tight flex items-center gap-2">
-              Taille du texte <span className="font-normal text-slate-300 text-xs">حجم النص</span>
+            <h3 className={cn("text-lg font-headline font-black text-voyage-primary tracking-tight flex items-center gap-2", globalLanguage === 'ar' && "arabic-font text-2xl")}>
+              {globalLanguage === 'ar' ? "حجم الخط" : "Taille du texte"} 
+              <span className={cn("font-normal text-slate-300 text-xs", globalLanguage === 'ar' && "font-sans text-[10px]")}>
+                {globalLanguage === 'ar' ? "Taille du texte" : "حجم النص"}
+              </span>
             </h3>
           </div>
           
@@ -208,7 +231,8 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                   playSound('click');
                 }}
                 className={cn(
-                  "flex items-center gap-3 p-4 rounded-2xl transition-all border-2 text-left",
+                  "flex items-center gap-3 p-4 rounded-2xl transition-all border-2",
+                  globalLanguage === 'ar' ? "text-right" : "text-left",
                   fontSize === size.id 
                     ? "bg-voyage-primary text-white border-voyage-primary shadow-lg" 
                     : "bg-white text-slate-400 border-transparent hover:border-slate-100 shadow-sm"
@@ -216,8 +240,12 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
               >
                 <ZoomIn size={size.size} className={fontSize === size.id ? "text-white" : "text-slate-300"} />
                 <div>
-                  <div className="text-xs font-black uppercase tracking-widest leading-none">{size.label}</div>
-                  <div className="text-[9px] opacity-60 font-bold mt-1 leading-none">{size.ar}</div>
+                  <div className={cn("text-xs font-black uppercase tracking-widest leading-none", globalLanguage === 'ar' && "arabic-font tracking-normal text-[14px]")}>
+                    {globalLanguage === 'ar' ? size.ar : size.label}
+                  </div>
+                  <div className="text-[9px] opacity-60 font-bold mt-1 leading-none">
+                    {globalLanguage === 'ar' ? size.label : size.ar}
+                  </div>
                 </div>
               </button>
             ))}
@@ -228,8 +256,11 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
         <section className="space-y-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-1 rounded-full bg-voyage-accent" />
-            <h3 className="text-lg font-headline font-black text-voyage-primary tracking-tight flex items-center gap-2">
-              Mode d'affichage <span className="font-normal text-slate-300 text-xs">وضع العرض</span>
+            <h3 className={cn("text-lg font-headline font-black text-voyage-primary tracking-tight flex items-center gap-2", globalLanguage === 'ar' && "arabic-font text-2xl")}>
+              {globalLanguage === 'ar' ? "وضع العرض" : "Mode d'affichage"}
+              <span className={cn("font-normal text-slate-300 text-xs", globalLanguage === 'ar' && "font-sans text-[10px]")}>
+                {globalLanguage === 'ar' ? "Mode d'affichage" : "وضع العرض"}
+              </span>
             </h3>
           </div>
           
@@ -252,27 +283,35 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                     : "bg-white text-slate-400 border-transparent hover:border-slate-100"
                 )}
               >
-                <mode.icon size={24} />
+                <motion.div animate={{ rotate: displayMode === mode.id ? [0, 15, -15, 0] : 0 }} transition={{ duration: 0.5 }}>
+                  <mode.icon size={24} />
+                </motion.div>
                 <div className="text-center">
-                  <div className="text-xs font-black uppercase tracking-widest">{mode.label}</div>
-                  <div className="text-[9px] opacity-60 font-bold mt-0.5">{mode.ar}</div>
+                  <div className={cn("text-xs font-black uppercase tracking-widest", globalLanguage === 'ar' && "arabic-font tracking-normal text-[13px]")}>
+                    {globalLanguage === 'ar' ? mode.ar : mode.label}
+                  </div>
+                  <div className="text-[9px] opacity-60 font-bold mt-0.5">
+                    {globalLanguage === 'ar' ? mode.label : mode.ar}
+                  </div>
                 </div>
               </button>
             ))}
           </div>
         </section>
 
-
         {/* Free Exploration Mode */}
         <section className="space-y-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-1 rounded-full bg-duo-green" />
-            <h3 className="text-lg font-headline font-black text-voyage-primary tracking-tight flex items-center gap-2">
-              Mode Libre <span className="font-normal text-slate-300 text-xs">الوضع الحر</span>
+            <h3 className={cn("text-lg font-headline font-black text-voyage-primary tracking-tight flex items-center gap-2", globalLanguage === 'ar' && "arabic-font text-2xl")}>
+              {globalLanguage === 'ar' ? "الوضع الحر" : "Mode Libre"}
+              <span className={cn("font-normal text-slate-300 text-xs", globalLanguage === 'ar' && "font-sans text-[10px]")}>
+                {globalLanguage === 'ar' ? "Mode Libre" : "الوضع الحر"}
+              </span>
             </h3>
           </div>
           
-          <div className="bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm">
+          <div className="bg-white rounded-4xl border border-slate-100 overflow-hidden shadow-sm">
             <div className="flex items-center justify-between px-6 py-6">
               <div className="flex items-center gap-4">
                 <div className={cn(
@@ -282,8 +321,12 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                   <Play size={20} className={freeExploration ? "text-duo-green" : "text-slate-400"} />
                 </div>
                 <div>
-                  <p className="font-black text-voyage-primary text-sm">Déverrouiller tout</p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">فتح جميع المستويات</p>
+                  <p className={cn("font-black text-voyage-primary text-sm", globalLanguage === 'ar' && "arabic-font text-[15px] leading-none")}>
+                    {globalLanguage === 'ar' ? "إلغاء قفل جميع المدن" : "Déverrouiller tout"}
+                  </p>
+                  <p className={cn("text-[10px] font-bold text-slate-400 uppercase tracking-widest", globalLanguage === 'ar' && "font-sans tracking-wide text-[9px] opacity-70")}>
+                    {globalLanguage === 'ar' ? "Déverrouiller tout" : "فتح جميع المستويات"}
+                  </p>
                 </div>
               </div>
               <button
@@ -309,8 +352,11 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
               </button>
             </div>
             <div className="px-6 pb-6 pt-0">
-              <p className="text-[11px] text-slate-400 font-medium leading-relaxed italic">
-                Activez ce mode pour accéder à toutes les villes et missions sans restriction de progression.
+              <p className={cn("text-[11px] text-slate-400 font-medium leading-relaxed italic", globalLanguage === 'ar' && "arabic-font text-[13px] not-italic")}>
+                {globalLanguage === 'ar' 
+                  ? "قم بتفعيل هذا الوضع للوصول إلى جميع المدن والمهام دون قيود على تقدمك العلمي." 
+                  : "Activez ce mode pour accéder à toutes les villes et missions sans restriction de progression."
+                }
               </p>
             </div>
           </div>
@@ -320,29 +366,35 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
         <section className="space-y-5">
           <div className="flex items-center gap-3">
             <div className="w-10 h-1 rounded-full bg-voyage-accent" />
-            <h3 className="text-lg font-headline font-black text-voyage-primary tracking-tight flex items-center gap-2">
-              Audio &amp; Effets Sonores
-              <span className="font-normal text-slate-300 text-xs">الصوت والمؤثرات</span>
+            <h3 className={cn("text-lg font-headline font-black text-voyage-primary tracking-tight flex items-center gap-2", globalLanguage === 'ar' && "arabic-font text-2xl")}>
+              {globalLanguage === 'ar' ? "الصوت والمؤثرات" : "Audio & Effets Sonores"}
+              <span className={cn("font-normal text-slate-300 text-xs", globalLanguage === 'ar' && "font-sans text-[10px]")}>
+                {globalLanguage === 'ar' ? "Audio & Effets Sonores" : "الصوت والمؤثرات"}
+              </span>
             </h3>
           </div>
 
-          <div className="bg-white rounded-[2rem] border border-slate-100 divide-y divide-slate-50 overflow-hidden shadow-sm">
+          <div className="bg-white rounded-4xl border border-slate-100 divide-y divide-slate-50 overflow-hidden shadow-sm">
             {/* Slider – Volume Global */}
-            <div className="px-6 py-6 space-y-4 bg-voyage-primary/[0.02]">
+            <div className="px-6 py-6 space-y-4 bg-voyage-primary/2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-voyage-primary/10 flex items-center justify-center text-voyage-primary">
                     <Volume2 size={20} />
                   </div>
                   <div>
-                    <p className="font-black text-voyage-primary text-sm">Volume Global</p>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">مستوى الصوت العام</p>
+                    <p className={cn("font-black text-voyage-primary text-sm", globalLanguage === 'ar' && "arabic-font text-[15px] leading-none")}>
+                      {globalLanguage === 'ar' ? "الصوت العام" : "Volume Global"}
+                    </p>
+                    <p className={cn("text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1", globalLanguage === 'ar' && "font-sans tracking-wide text-[9px] opacity-70")}>
+                      {globalLanguage === 'ar' ? "Volume Global" : "مستوى الصوت العام"}
+                    </p>
                   </div>
                 </div>
                 <span className="text-xs font-black text-voyage-primary bg-voyage-primary/10 px-2 py-1 rounded-lg">{audio.masterVolume}%</span>
               </div>
               <div className="flex items-center gap-4">
-                <VolumeX size={16} className="text-slate-300" />
+                <VolumeX size={16} className="text-slate-300 animate-pulse" />
                 <input
                   type="range" min={0} max={100}
                   value={audio.masterVolume}
@@ -360,11 +412,15 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                   "w-11 h-11 rounded-2xl flex items-center justify-center transition-colors",
                   audio.soundEffectsEnabled ? "bg-voyage-accent/10" : "bg-slate-100"
                 )}>
-                  <Bell size={20} className={audio.soundEffectsEnabled ? "text-voyage-accent" : "text-slate-400"} />
+                  <Bell size={20} className={audio.soundEffectsEnabled ? "text-voyage-accent animate-bounce" : "text-slate-400"} />
                 </div>
                 <div>
-                  <p className="font-black text-voyage-primary text-sm">Effets Sonores</p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">مؤثرات صوتية</p>
+                  <p className={cn("font-black text-voyage-primary text-sm", globalLanguage === 'ar' && "arabic-font text-[15px] leading-none")}>
+                    {globalLanguage === 'ar' ? "المؤثرات الصوتية" : "Effets Sonores"}
+                  </p>
+                  <p className={cn("text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1", globalLanguage === 'ar' && "font-sans tracking-wide text-[9px] opacity-70")}>
+                    {globalLanguage === 'ar' ? "Effets Sonores" : "مؤثرات صوتية"}
+                  </p>
                 </div>
               </div>
               <button
@@ -399,9 +455,9 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                 >
                   <div className="px-6 pb-5 pt-1 space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest">
+                      <div className={cn("flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest", globalLanguage === 'ar' && "arabic-font tracking-normal text-[12px]")}>
                         <VolumeX size={14} />
-                        <span>Volume des effets</span>
+                        <span>{globalLanguage === 'ar' ? "مستوى صوت المؤثرات" : "Volume des effets"}</span>
                       </div>
                       <span className="text-xs font-black text-voyage-accent">{audio.effectsVolume}%</span>
                     </div>
@@ -416,29 +472,6 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                       />
                       <Volume2 size={16} className="text-voyage-accent shrink-0" />
                     </div>
-                    {/* Aperçu sons */}
-                    <div className="flex gap-2 pt-1 flex-wrap">
-                      {([
-                        { type: 'correct' as const, label: '✓ Correct',  color: 'bg-voyage-primary/10  text-voyage-primary  border-voyage-primary/20'  },
-                        { type: 'wrong'   as const, label: '✗ Erreur',   color: 'bg-voyage-terracotta/10 text-voyage-terracotta border-voyage-terracotta/20' },
-                        { type: 'match'   as const, label: '🔗 Match',   color: 'bg-voyage-accent/10   text-voyage-accent   border-voyage-accent/20'   },
-                        { type: 'success' as const, label: '🏆 Succès',  color: 'bg-voyage-accent/20 text-voyage-primary border-voyage-accent/30' },
-                        { type: 'whoosh'  as const, label: '💨 Whoosh',  color: 'bg-slate-50     text-slate-400 border-slate-100'    },
-                        { type: 'click'   as const, label: '🖱 Clic',    color: 'bg-slate-50      text-slate-400  border-slate-100'     },
-                      ]).map(s => (
-                        <button
-                          key={s.type}
-                          onClick={() => playSound(s.type)}
-                          className={cn(
-                            "flex items-center gap-1.5 px-3 py-2 rounded-xl text-[10px] font-black border-2 border-b-4 uppercase tracking-widest active:border-b-0 active:translate-y-[2px] transition-all",
-                            s.color
-                          )}
-                        >
-                          <Play size={10} />
-                          {s.label}
-                        </button>
-                      ))}
-                    </div>
                   </div>
                 </motion.div>
               )}
@@ -451,11 +484,15 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                   "w-11 h-11 rounded-2xl flex items-center justify-center transition-colors",
                   audio.musicEnabled ? "bg-voyage-primary/10" : "bg-slate-100"
                 )}>
-                  <Music size={20} className={audio.musicEnabled ? "text-voyage-primary" : "text-slate-400"} />
+                  <Music size={20} className={audio.musicEnabled ? "text-voyage-primary animate-pulse" : "text-slate-400"} />
                 </div>
                 <div>
-                  <p className="font-black text-voyage-primary text-sm">Musique de fond</p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">موسيقى الخلفية</p>
+                  <p className={cn("font-black text-voyage-primary text-sm", globalLanguage === 'ar' && "arabic-font text-[15px] leading-none")}>
+                    {globalLanguage === 'ar' ? "موسيقى الخلفية" : "Musique de fond"}
+                  </p>
+                  <p className={cn("text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1", globalLanguage === 'ar' && "font-sans tracking-wide text-[9px] opacity-70")}>
+                    {globalLanguage === 'ar' ? "Musique de fond" : "موسيقى الخلفية"}
+                  </p>
                 </div>
               </div>
               <button
@@ -490,9 +527,9 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                 >
                   <div className="px-6 pb-5 pt-1 space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest">
+                      <div className={cn("flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest", globalLanguage === 'ar' && "arabic-font tracking-normal text-[12px]")}>
                         <VolumeX size={14} />
-                        <span>Volume de la musique</span>
+                        <span>{globalLanguage === 'ar' ? "مستوى صوت الموسيقى" : "Volume de la musique"}</span>
                       </div>
                       <span className="text-xs font-black text-voyage-primary">{audio.musicVolume}%</span>
                     </div>
@@ -517,11 +554,15 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                   "w-11 h-11 rounded-2xl flex items-center justify-center transition-colors",
                   audio.voicesEnabled ? "bg-voyage-terracotta/10" : "bg-slate-100"
                 )}>
-                  <User size={20} className={audio.voicesEnabled ? "text-voyage-terracotta" : "text-slate-400"} />
+                  <User size={20} className={audio.voicesEnabled ? "text-voyage-terracotta animate-pulse" : "text-slate-400"} />
                 </div>
                 <div>
-                  <p className="font-black text-voyage-primary text-sm">Voix & Narrations</p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">الصوت والراوي</p>
+                  <p className={cn("font-black text-voyage-primary text-sm", globalLanguage === 'ar' && "arabic-font text-[15px] leading-none")}>
+                    {globalLanguage === 'ar' ? "الأصوات والرواية" : "Voix & Narrations"}
+                  </p>
+                  <p className={cn("text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1", globalLanguage === 'ar' && "font-sans tracking-wide text-[9px] opacity-70")}>
+                    {globalLanguage === 'ar' ? "Voix & Narrations" : "الصوت والراوي"}
+                  </p>
                 </div>
               </div>
               <button
@@ -556,9 +597,9 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                 >
                   <div className="px-6 pb-5 pt-1 space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest">
+                      <div className={cn("flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest", globalLanguage === 'ar' && "arabic-font tracking-normal text-[12px]")}>
                         <VolumeX size={14} />
-                        <span>Volume des voix</span>
+                        <span>{globalLanguage === 'ar' ? "مستوى صوت الرواية" : "Volume des voix"}</span>
                       </div>
                       <span className="text-xs font-black text-voyage-terracotta">{audio.voiceVolume}%</span>
                     </div>
@@ -607,8 +648,12 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                 >
                   <CheckCircle2 size={24} />
                   <div className="flex flex-col items-center leading-none">
-                    <span className="tracking-tight">SAUVEGARDÉ !</span>
-                    <span className="text-xs opacity-60 font-bold mt-1 tracking-widest">تم الحفظ !</span>
+                    <span className={cn("tracking-tight", globalLanguage === 'ar' && "arabic-font text-[18px]")}>
+                      {globalLanguage === 'ar' ? "تم الحفظ بنجاح !" : "SAUVEGARDÉ !"}
+                    </span>
+                    <span className="text-xs opacity-60 font-bold mt-1 tracking-widest">
+                      {globalLanguage === 'ar' ? "SAUVEGARDÉ !" : "تم الحفظ !"}
+                    </span>
                   </div>
                 </motion.div>
               ) : (
@@ -620,8 +665,18 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                   className="flex items-center gap-4"
                 >
                   <div className="flex flex-col items-center leading-none">
-                    <span className="tracking-tight">{isSaving ? 'SAUVEGARDE...' : 'ENREGISTRER LES MODIFICATIONS'}</span>
-                    <span className="text-xs opacity-60 font-bold mt-1 tracking-widest">{isSaving ? 'جاري الحفظ...' : 'حفظ التغييرات'}</span>
+                    <span className={cn("tracking-tight", globalLanguage === 'ar' && "arabic-font text-[18px]")}>
+                      {isSaving 
+                        ? (globalLanguage === 'ar' ? "جاري الحفظ..." : "SAUVEGARDE...") 
+                        : (globalLanguage === 'ar' ? "حفظ التغييرات" : "ENREGISTRER LES MODIFICATIONS")
+                      }
+                    </span>
+                    <span className="text-xs opacity-60 font-bold mt-1 tracking-widest">
+                      {isSaving 
+                        ? (globalLanguage === 'ar' ? "SAUVEGARDE..." : "جاري الحفظ...") 
+                        : (globalLanguage === 'ar' ? "ENREGISTRER LES MODIFICATIONS" : "حفظ التغييرات")
+                      }
+                    </span>
                   </div>
                   {isSaving ? (
                     <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
@@ -645,8 +700,12 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
             }}
             className="w-full mt-6 py-4 rounded-2xl font-headline font-black text-slate-400 border-2 border-slate-100 hover:bg-slate-50 transition-all flex flex-col items-center leading-none"
           >
-            <span className="tracking-tight">SE DÉCONNECTER</span>
-            <span className="text-[10px] opacity-60 font-bold mt-1 tracking-widest">تسجيل الخروج</span>
+            <span className={cn("tracking-tight", globalLanguage === 'ar' && "arabic-font text-[16px]")}>
+              {globalLanguage === 'ar' ? "تسجيل الخروج" : "SE DÉCONNECTER"}
+            </span>
+            <span className="text-[10px] opacity-60 font-bold mt-1 tracking-widest">
+              {globalLanguage === 'ar' ? "SE DÉCONNECTER" : "تسجيل الخروج"}
+            </span>
           </motion.button>
         </div>
       </main>

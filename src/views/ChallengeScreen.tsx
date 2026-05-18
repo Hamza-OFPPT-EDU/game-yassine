@@ -23,14 +23,15 @@ import { useAudio } from '../hooks/useAudio';
 import { useTimer } from '../hooks/useTimer';
 import { TimerBar } from '../components/TimerBar';
 import { resolveAssetUrl } from '../lib/city-theme';
+import { useSettings } from '../contexts/SettingsContext';
 
 // Helper for dynamic theming based on exercise type
-const getThemeConfig = (type: string) => {
+const getThemeConfig = (type: string, lang: string = 'fr') => {
   const t = type.toLowerCase();
-  
+
   if (['scenario-decision', 'scenario-dialogue', 'scenario-cascade', 'decision', 'dialogue'].includes(t)) {
     return {
-      category: 'Histoire',
+      category: lang === 'ar' ? 'قصة' : 'Histoire',
       icon: <Clapperboard size={16} />,
       bgClass: 'bg-amber-50',
       accentColor: 'text-amber-600',
@@ -40,10 +41,10 @@ const getThemeConfig = (type: string) => {
       pattern: 'parchment'
     };
   }
-  
+
   if (['zellige', 'puzzle-riddle', 'riddle', 'mosaic', 'glitch'].includes(t)) {
     return {
-      category: 'Atelier',
+      category: lang === 'ar' ? 'ورشة عمل' : 'Atelier',
       icon: <Sparkles size={16} />,
       bgClass: 'bg-teal-50',
       accentColor: 'text-teal-600',
@@ -53,10 +54,10 @@ const getThemeConfig = (type: string) => {
       pattern: 'mosaic'
     };
   }
-  
+
   if (['matching', 'ranking', 'team-roles', 'fill-in-blanks', 'sorting-challenge'].includes(t)) {
     return {
-      category: 'Mise en Situation',
+      category: lang === 'ar' ? 'محاكاة' : 'Mise en Situation',
       icon: <LayoutGrid size={16} />,
       bgClass: 'bg-voyage-sand',
       accentColor: 'text-voyage-primary',
@@ -66,9 +67,9 @@ const getThemeConfig = (type: string) => {
       pattern: 'grid'
     };
   }
-  
+
   return {
-    category: 'Défi',
+    category: lang === 'ar' ? 'تحدي' : 'Défi',
     icon: <Compass size={16} />,
     bgClass: 'bg-white',
     accentColor: 'text-voyage-accent',
@@ -79,6 +80,78 @@ const getThemeConfig = (type: string) => {
   };
 };
 
+const translations = {
+  fr: {
+    loading: "Chargement des questions...",
+    atelierZellige: "Atelier Zellige",
+    zelligeInstruct: "Oriente correctement les carreaux pour restaurer le motif fassi.",
+    excellent: "Excellent !",
+    pasToutAFait: "Pas tout à fait...",
+    correctFallback: "C'est la bonne réponse ! +15 XP",
+    wrongFallback: "Retente ta chance !",
+    explanation: "Obtenir une explication",
+    viewResult: "VOIR LE RÉSULTAT",
+    continue: "CONTINUER",
+    reset: "Refaire l'exercice",
+    hint: "Obtenir un indice",
+    skip: "Passer cette question (0 points)",
+    verify: "Vérifier",
+    pedagogicHelp: "Coup de pouce pédagogique",
+    hintExplanation: "Indice & Explication",
+    continueExercise: "CONTINUER L'EXERCICE",
+    missionContext: "Contexte de la mission",
+    understood: "J'ai compris",
+    target: "Cible",
+    optionsToRank: "Options à classer",
+    allRanked: "Toutes les options sont classées.",
+    dropHere: "Dépose ici...",
+    memberName: "Nom du membre...",
+    writeAnswer: "Écris ta réponse ici...",
+    glitchInstruct: "Clique sur le mot qui contient une erreur",
+    correctAnswerBadge: "Réponse Correcte",
+    solutionBadge: "Solution",
+    resetConfirm: "Réinitialiser",
+    back: "Retour",
+    question: "Question",
+    seconds: "s"
+  },
+  ar: {
+    loading: "جاري تحميل الأسئلة...",
+    atelierZellige: "ورشة الزليج",
+    zelligeInstruct: "قم بتوجيه البلاطات بشكل صحيح لاستعادة النقش الفاسي.",
+    excellent: "ممتاز !",
+    pasToutAFait: "ليس تماماً...",
+    correctFallback: "إجابة صحيحة! +١٥ نقطة خبرة",
+    wrongFallback: "حاول مرة أخرى!",
+    explanation: "الحصول على تفسير",
+    viewResult: "عرض النتيجة",
+    continue: "متابعة",
+    reset: "إعادة التمرين",
+    hint: "الحصول على تلميح",
+    skip: "تخطي هذا السؤال (٠ نقطة)",
+    verify: "تحقق",
+    pedagogicHelp: "دعم تعليمي",
+    hintExplanation: "تلميح وتفسير",
+    continueExercise: "متابعة التمرين",
+    missionContext: "سياق المهمة",
+    understood: "فهمت",
+    target: "الهدف",
+    optionsToRank: "الخيارات المراد ترتيبها",
+    allRanked: "تم ترتيب جميع الخيارات.",
+    dropHere: "ضع هنا...",
+    memberName: "اسم العضو...",
+    writeAnswer: "اكتب إجابتك هنا...",
+    glitchInstruct: "اضغط على الكلمة التي تحتوي على خطأ",
+    correctAnswerBadge: "إجابة صحيحة",
+    solutionBadge: "الحل",
+    resetConfirm: "إعادة تعيين",
+    back: "رجوع",
+    question: "السؤال",
+    seconds: "ثواني"
+  }
+};
+
+
 interface ChallengeScreenProps {
   city: City;
   mission: Mission;
@@ -88,14 +161,15 @@ interface ChallengeScreenProps {
 }
 
 export default function ChallengeScreen({ city, mission, onComplete, onBack, redoQuestionIds }: ChallengeScreenProps) {
+  const { language } = useSettings();
   const { playSound } = useAudio();
   const { questions: allQuestions, loading: loadingQuestions } = useSupabaseQuestions(mission.id);
-  
+
   // Filter questions if redoQuestionIds is provided
   const questions = redoQuestionIds && redoQuestionIds.length > 0
     ? allQuestions.filter(q => redoQuestionIds.includes(q.id))
     : allQuestions;
-  
+
   const [currentIdx, setCurrentIdx] = useState(redoQuestionIds ? 0 : 0);
   const [currentStepIdx, setCurrentStepIdx] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
@@ -105,7 +179,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const [blanksValues, setBlanksValues] = useState<{ [key: string]: string }>({});
   const [teamRoleValues, setTeamRoleValues] = useState<{ [key: string]: string }>({});
   const [selectedMultiIds, setSelectedMultiIds] = useState<string[]>([]);
-  
+
   const [showFeedback, setShowFeedback] = useState(false);
   const [showCinematic, setShowCinematic] = useState(false);
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
@@ -117,9 +191,9 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const [showExplanationModal, setShowExplanationModal] = useState(false);
   const [isSavingAudio, setIsSavingAudio] = useState(false);
   const { settings: audio, updateSettings: updateAudio, playSound: playEffect, playVoice, saveToCloud: saveAudioToCloud, openSettings } = useAudio();
-  
+
   const challenge = questions[currentIdx];
-  
+
   // Timer & Skip state
   const DEFAULT_QUESTION_TIME = 110; // seconds (1 minute 50 seconds)
   const timer = useTimer({
@@ -127,7 +201,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
     enabled: !showFeedback,
     onTimeExpired: () => handleTimeExpired(),
   });
-  
+
   const [timerStartTime, setTimerStartTime] = useState(Date.now());
   const [isTimerPaused, setIsTimerPaused] = useState(false);
 
@@ -140,11 +214,11 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const currentQuestionResultRef = useRef<MissionQuestionResult | null>(null);
   const timeoutHandledRef = useRef(false);
   const autoNextTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  
+
   // Options are now normalized in useSupabaseQuestions hook
   // Ensure options is always an array for safe .map() calls
   const normalizedOptions = Array.isArray(challenge?.options) ? challenge.options : [];
-  
+
   const matchingOptions = normalizedOptions;
   const matchingTargets = Array.from(
     new Set(matchingOptions.map((option) => option.match).filter(Boolean)),
@@ -385,7 +459,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
     if (type === 'matching') return Object.keys(matchingSelections).length === matchingOptions.length;
     if (type === 'team-roles') return Object.keys(teamRoleValues).length > 0;
     if (type === 'error-detection') return selectedMultiIds.length > 0;
-    if (type === 'zellige') return true; 
+    if (type === 'zellige') return true;
     return false;
   };
 
@@ -409,7 +483,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
     if (type === 'matching') {
       return matchingOptions.every((opt, idx) => matchingSelections[String(idx)] === opt.match);
     }
-    if (type === 'team-roles') return true; 
+    if (type === 'team-roles') return true;
     if (type === 'zellige') {
       return Object.values(matchingSelections).every(angle => parseInt(angle as string) % 360 === 0);
     }
@@ -443,9 +517,9 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
 
     return {
       missionId: mission.id,
-      missionTitle: mission.title_fr,
+      missionTitle: language === 'ar' ? (mission.title_ar || mission.title_fr) : mission.title_fr,
       cityId: city.id,
-      cityName: city.name,
+      cityName: language === 'ar' ? (city.arabicName || city.name) : city.name,
       questions: results,
       totalXp,
       totalStars,
@@ -459,110 +533,65 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   const getExplanation = () => {
     if (!challenge) return null;
 
-    // Try to find in JSON first (fallback for Rabat & Chefchaouen)
-    if (city.id.toLowerCase() === 'rabat') {
-      const cityData = RABAT_EXPLANATIONS["Rabat"];
-      if (cityData) {
-        // Find mission code (R1, R2, etc.) based on title
-        let missionCode = "";
-        const title = mission.title_fr?.toUpperCase() || "";
-        if (title.includes("HÔPITAL") || title.includes("IBN SINA")) missionCode = "R1";
-        else if (title.includes("MINISTÈRE")) missionCode = "R2";
-        else if (title.includes("UNIVERSITÉ")) missionCode = "R3";
-        else if (title.includes("ONG ESPOIR") || title.includes("ENTREPRENEURIAT")) missionCode = "R4";
-        else if (title.includes("WILAYA") || title.includes("DÉFI FINAL")) missionCode = "R5";
+    if (language === 'ar' && challenge.explanation_ar) {
+      return challenge.explanation_ar;
+    }
 
-        if (missionCode && cityData[missionCode]) {
-          const exerciseKey = String(currentIdx + 1);
-          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
-          if (explanation) return explanation;
-        }
-      }
-    } else if (city.id.toLowerCase() === 'chefchaouen') {
-      const cityData = CHEFCHAOUEN_EXPLANATIONS["Chefchaouen"];
-      if (cityData) {
-        let missionCode = "";
-        const title = mission.title_fr?.toUpperCase() || "";
-        if (title.includes("TALASSEMTANE") || title.includes("RANDONNÉE")) missionCode = "C1";
-        else if (title.includes("COOPÉRATIVE") || title.includes("TISSEUSE")) missionCode = "C2";
-        else if (title.includes("SOUK") || title.includes("RESTAURANT")) missionCode = "C3";
-        else if (title.includes("HERBORISTERIE") || title.includes("RÉSILIENCE")) missionCode = "C4";
-        else if (title.includes("FESTIVAL") || title.includes("DÉFI FINAL")) missionCode = "C5";
+    let cityData: any = null;
+    let missionCode = "";
+    const title = mission.title_fr?.toUpperCase() || "";
 
-        if (missionCode && cityData[missionCode]) {
-          const exerciseKey = String(currentIdx + 1);
-          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
-          if (explanation) return explanation;
-        }
-      }
-    } else if (city.id.toLowerCase() === 'fès' || city.id.toLowerCase() === 'fes') {
-      const cityData = FES_EXPLANATIONS["Fès"];
-      if (cityData) {
-        let missionCode = "";
-        const title = mission.title_fr?.toUpperCase() || "";
-        if (title.includes("CALLIGRAPHIE") || title.includes("ATELIER")) missionCode = "F1";
-        else if (title.includes("TANNERIES") || title.includes("CHOUARA")) missionCode = "F2";
-        else if (title.includes("UNIVERSITÉ")) missionCode = "F3";
-        else if (title.includes("BOU INANIA") || title.includes("RESTAURATION")) missionCode = "F4";
-        else if (title.includes("FESTIVAL") || title.includes("DÉFI FINAL")) missionCode = "F5";
+    const cityId = city.id.toLowerCase();
+    if (cityId === 'rabat') {
+      cityData = RABAT_EXPLANATIONS["Rabat"];
+      if (title.includes("HÔPITAL") || title.includes("IBN SINA")) missionCode = "R1";
+      else if (title.includes("MINISTÈRE")) missionCode = "R2";
+      else if (title.includes("UNIVERSITÉ")) missionCode = "R3";
+      else if (title.includes("ONG ESPOIR") || title.includes("ENTREPRENEURIAT")) missionCode = "R4";
+      else if (title.includes("WILAYA") || title.includes("DÉFI FINAL")) missionCode = "R5";
+    } else if (cityId === 'chefchaouen') {
+      cityData = CHEFCHAOUEN_EXPLANATIONS["Chefchaouen"];
+      if (title.includes("TALASSEMTANE") || title.includes("RANDONNÉE")) missionCode = "C1";
+      else if (title.includes("COOPÉRATIVE") || title.includes("TISSEUSE")) missionCode = "C2";
+      else if (title.includes("SOUK") || title.includes("RESTAURANT")) missionCode = "C3";
+      else if (title.includes("HERBORISTERIE") || title.includes("RÉSILIENCE")) missionCode = "C4";
+      else if (title.includes("FESTIVAL") || title.includes("DÉFI FINAL")) missionCode = "C5";
+    } else if (cityId === 'fès' || cityId === 'fes') {
+      cityData = FES_EXPLANATIONS["Fès"];
+      if (title.includes("CALLIGRAPHIE") || title.includes("ATELIER")) missionCode = "F1";
+      else if (title.includes("TANNERIES") || title.includes("CHOUARA")) missionCode = "F2";
+      else if (title.includes("UNIVERSITÉ")) missionCode = "F3";
+      else if (title.includes("BOU INANIA") || title.includes("RESTAURATION")) missionCode = "F4";
+      else if (title.includes("FESTIVAL") || title.includes("DÉFI FINAL")) missionCode = "F5";
+    } else if (cityId === 'marrakech') {
+      cityData = MARRAKECH_EXPLANATIONS["Marrakech"];
+      if (title.includes("STARTUP") || title.includes("TECH")) missionCode = "M1";
+      else if (title.includes("RIAD") || title.includes("LUXE")) missionCode = "M2";
+      else if (title.includes("SOUK") || title.includes("SEMMARINE")) missionCode = "M3";
+      else if (title.includes("ÉVÉNEMENTIEL") || title.includes("PRESSION")) missionCode = "M4";
+      else if (title.includes("SOMMET") || title.includes("DÉFI FINAL")) missionCode = "M5";
+    } else if (cityId === 'laâyoune' || cityId === 'laayoune') {
+      cityData = LAAYOUNE_EXPLANATIONS["Laâyoune"];
+      if (title.includes("BASE") || title.includes("DÉSERT")) missionCode = "L1";
+      else if (title.includes("COOPÉRATIVE") || title.includes("FEMMES")) missionCode = "L2";
+      else if (title.includes("MÉDECIN")) missionCode = "L3";
+      else if (title.includes("FERME") || title.includes("SOLAIRE")) missionCode = "L4";
+      else if (title.includes("PLAN") || title.includes("DÉVELOPPEMENT") || title.includes("DÉFI FINAL")) missionCode = "L5";
+    } else if (cityId === 'dakhla') {
+      cityData = DAKHLA_EXPLANATIONS["Dakhla"];
+      if (title.includes("PORT") || title.includes("PÊCHE")) missionCode = "D1";
+      else if (title.includes("STATION") || title.includes("BIOLOGIE")) missionCode = "D2";
+      else if (title.includes("FERME D'ALGUES") || title.includes("CIRCULAIRE")) missionCode = "D3";
+      else if (title.includes("PARC ÉOLIEN") || title.includes("ÉNERGIE")) missionCode = "D4";
+      else if (title.includes("PALAIS") || title.includes("CONGRÈS") || title.includes("MAÎTRISE ABSOLUE")) missionCode = "D5";
+    }
 
-        if (missionCode && cityData[missionCode]) {
-          const exerciseKey = String(currentIdx + 1);
-          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
-          if (explanation) return explanation;
-        }
-      }
-    } else if (city.id.toLowerCase() === 'marrakech') {
-      const cityData = MARRAKECH_EXPLANATIONS["Marrakech"];
-      if (cityData) {
-        let missionCode = "";
-        const title = mission.title_fr?.toUpperCase() || "";
-        if (title.includes("STARTUP") || title.includes("TECH")) missionCode = "M1";
-        else if (title.includes("RIAD") || title.includes("LUXE")) missionCode = "M2";
-        else if (title.includes("SOUK") || title.includes("SEMMARINE")) missionCode = "M3";
-        else if (title.includes("ÉVÉNEMENTIEL") || title.includes("PRESSION")) missionCode = "M4";
-        else if (title.includes("SOMMET") || title.includes("DÉFI FINAL")) missionCode = "M5";
-
-        if (missionCode && cityData[missionCode]) {
-          const exerciseKey = String(currentIdx + 1);
-          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
-          if (explanation) return explanation;
-        }
-      }
-    } else if (city.id.toLowerCase() === 'laâyoune' || city.id.toLowerCase() === 'laayoune') {
-      const cityData = LAAYOUNE_EXPLANATIONS["Laâyoune"];
-      if (cityData) {
-        let missionCode = "";
-        const title = mission.title_fr?.toUpperCase() || "";
-        if (title.includes("BASE") || title.includes("DÉSERT")) missionCode = "L1";
-        else if (title.includes("COOPÉRATIVE") || title.includes("FEMMES")) missionCode = "L2";
-        else if (title.includes("MÉDECIN")) missionCode = "L3";
-        else if (title.includes("FERME") || title.includes("SOLAIRE")) missionCode = "L4";
-        else if (title.includes("PLAN") || title.includes("DÉVELOPPEMENT") || title.includes("DÉFI FINAL")) missionCode = "L5";
-
-        if (missionCode && cityData[missionCode]) {
-          const exerciseKey = String(currentIdx + 1);
-          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
-          if (explanation) return explanation;
-        }
-      }
-    } else if (city.id.toLowerCase() === 'dakhla') {
-      const cityData = DAKHLA_EXPLANATIONS["Dakhla"];
-      if (cityData) {
-        let missionCode = "";
-        const title = mission.title_fr?.toUpperCase() || "";
-        if (title.includes("PORT") || title.includes("PÊCHE")) missionCode = "D1";
-        else if (title.includes("STATION") || title.includes("BIOLOGIE")) missionCode = "D2";
-        else if (title.includes("FERME D'ALGUES") || title.includes("CIRCULAIRE")) missionCode = "D3";
-        else if (title.includes("PARC ÉOLIEN") || title.includes("ÉNERGIE")) missionCode = "D4";
-        else if (title.includes("PALAIS") || title.includes("CONGRÈS") || title.includes("MAÎTRISE ABSOLUE")) missionCode = "D5";
-
-        if (missionCode && cityData[missionCode]) {
-          const exerciseKey = String(currentIdx + 1);
-          const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
-          if (explanation) return explanation;
-        }
-      }
+    if (cityData && missionCode && cityData[missionCode]) {
+      const exerciseKey = String(currentIdx + 1);
+      const explanationAr = cityData[missionCode].exercices?.[exerciseKey]?.explication_ar;
+      if (language === 'ar' && explanationAr) return explanationAr;
+      const explanation = cityData[missionCode].exercices?.[exerciseKey]?.explication;
+      if (explanation) return explanation;
     }
 
     // Fallback to database value
@@ -677,20 +706,20 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
     return (
       <div className="h-full w-full bg-white flex flex-col items-center justify-center">
         <Loader2 className="animate-spin text-voyage-accent" size={48} />
-        <p className="mt-4 font-headline font-black text-voyage-accent uppercase tracking-widest text-xs">Chargement du défi...</p>
+        <p className="mt-4 font-headline font-black text-voyage-accent uppercase tracking-widest text-xs">{translations[language].loading}</p>
       </div>
     );
   }
 
   if (questions.length === 0) {
     return (
-      <div className="h-full w-full bg-white flex flex-col items-center justify-center p-8 text-center">
+      <div className="h-full w-full bg-white flex flex-col items-center justify-center p-8 text-center" dir={language === 'ar' ? 'rtl' : 'ltr'}>
         <div className="w-32 h-32 bg-duo-orange/10 rounded-full flex items-center justify-center mb-6">
-           <MapIcon size={64} className="text-duo-orange" />
+          <MapIcon size={64} className="text-duo-orange" />
         </div>
-        <h2 className="font-headline font-black text-2xl text-duo-eel mb-2">Oups !</h2>
-        <p className="font-bold text-duo-wolf mb-8">Nous n'avons pas trouvé de questions pour cette mission.</p>
-        <button onClick={onBack} className="btn-voyage-accent px-12 py-4 uppercase font-black tracking-tight">Retour</button>
+        <h2 className="font-headline font-black text-2xl text-duo-eel mb-2">{language === 'ar' ? 'أوبس !' : 'Oups !'}</h2>
+        <p className="font-bold text-duo-wolf mb-8">{language === 'ar' ? 'لم نجد أسئلة لهذه المهمة.' : "Nous n'avons pas trouvé de questions pour cette mission."}</p>
+        <button onClick={onBack} className="btn-voyage-accent px-12 py-4 uppercase font-black tracking-tight">{translations[language].back}</button>
       </div>
     );
   }
@@ -699,29 +728,29 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
   if (challenge && (!challenge.options || (Array.isArray(challenge.options) && challenge.options.length === 0))) {
     const typeNoOptions = ['short-answer', 'puzzle-riddle', 'glitch', 'scenario-cascade', 'scenario-decision', 'scenario-dialogue', 'zellige', 'team-roles'];
     if (!typeNoOptions.includes(challenge.type)) {
-       return (
-        <div className="flex flex-col items-center justify-center h-full text-center space-y-6 px-8 bg-white">
+      return (
+        <div className="flex flex-col items-center justify-center h-full text-center space-y-6 px-8 bg-white" dir={language === 'ar' ? 'rtl' : 'ltr'}>
           <div className="w-24 h-24 bg-duo-swan/20 rounded-full flex items-center justify-center border-2 border-duo-swan">
-             <LayoutGrid className="text-duo-wolf opacity-40" size={48} />
+            <LayoutGrid className="text-duo-wolf opacity-40" size={48} />
           </div>
           <div className="space-y-2">
-             <h2 className="text-2xl font-black text-duo-eel tracking-tight">Oups ! Données manquantes</h2>
-             <p className="text-duo-wolf font-bold">Cet exercice n'est pas encore prêt. Ne t'inquiète pas, tu peux le passer !</p>
+            <h2 className="text-2xl font-black text-duo-eel tracking-tight">{language === 'ar' ? 'أوبس ! بيانات مفقودة' : 'Oups ! Données manquantes'}</h2>
+            <p className="text-duo-wolf font-bold">{language === 'ar' ? 'هذا التمرين ليس جاهزاً بعد. لا تقلق، يمكنك تخطيه !' : "Cet exercice n'est pas encore prêt. Ne t'inquiète pas, tu peux le passer !"}</p>
           </div>
-          <button 
-             onClick={() => setCurrentIdx(prev => prev + 1)}
-             className="btn-voyage-accent w-full max-w-xs"
+          <button
+            onClick={() => setCurrentIdx(prev => prev + 1)}
+            className="btn-voyage-accent w-full max-w-xs"
           >
-             Passer cet exercice
+            {language === 'ar' ? 'تخطي هذا التمرين' : 'Passer cet exercice'}
           </button>
-          <button 
-             onClick={onBack}
-             className="text-voyage-accent font-black uppercase tracking-widest text-xs hover:underline"
+          <button
+            onClick={onBack}
+            className="text-voyage-accent font-black uppercase tracking-widest text-xs hover:underline"
           >
-             Retour à la mission
+            {language === 'ar' ? 'الرجوع إلى المهمة' : 'Retour à la mission'}
           </button>
         </div>
-       );
+      );
     }
   }
 
@@ -729,10 +758,10 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
 
 
   const progress = ((currentIdx + 1) / questions.length) * 100;
-  const theme = getThemeConfig(challenge?.type || 'multiple-choice');
+  const theme = getThemeConfig(challenge?.type || 'multiple-choice', language);
 
   return (
-    <div className={cn("h-full w-full flex flex-col relative overflow-hidden transition-colors duration-500", theme.bgClass)}>
+    <div dir={language === 'ar' ? 'rtl' : 'ltr'} className={cn("h-full w-full flex flex-col relative overflow-hidden transition-colors duration-500", theme.bgClass)}>
       {/* Dynamic Background Pattern */}
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
         {theme.pattern === 'grid' && (
@@ -753,34 +782,34 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
           <X size={24} className="text-duo-wolf" />
         </button>
 
-        <button 
+        <button
           onClick={openSettings}
           className="p-2 hover:bg-duo-swan rounded-xl transition-colors shrink-0"
-          title="Réglages audio"
+          title={language === 'ar' ? 'إعدادات الصوت' : 'Réglages audio'}
         >
           <Volume2 size={22} className="text-voyage-primary" />
         </button>
-        
+
         <div className="grow">
           <div className="h-6 w-full bg-duo-swan rounded-full overflow-hidden border-2 border-duo-swan relative shadow-inner">
-            <motion.div 
+            <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               className="h-full bg-voyage-primary rounded-full shadow-[0_0_15px_rgba(45,106,79,0.4)] relative"
             >
-               <div className="absolute top-0.5 left-1 right-1 h-1.5 bg-white/40 rounded-full" />
+              <div className="absolute top-0.5 left-1 right-1 h-1.5 bg-white/40 rounded-full" />
             </motion.div>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-           <div className="w-8 h-8 rounded-lg bg-duo-orange/10 flex items-center justify-center">
-              <TrendingUp size={16} className="text-duo-orange" />
-           </div>
-           <span className="font-black text-duo-orange text-sm">{currentIdx + 1}/{questions.length}</span>
+          <div className="w-8 h-8 rounded-lg bg-duo-orange/10 flex items-center justify-center">
+            <TrendingUp size={16} className="text-duo-orange" />
+          </div>
+          <span className="font-black text-duo-orange text-sm">{currentIdx + 1}/{questions.length}</span>
         </div>
       </header>
-      
+
       {/* Timer Bar */}
       <div className="fixed top-20 left-0 right-0 z-40">
         <TimerBar
@@ -791,7 +820,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
           isPaused={isTimerPaused}
         />
       </div>
-      
+
       <main className={cn(
         "grow pt-40 pb-32 px-6 max-w-2xl mx-auto w-full relative z-10 overflow-y-auto scrollbar-hide",
         theme.layout === 'artistic' && "flex flex-col justify-center pt-32"
@@ -799,9 +828,9 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
         {/* Fond atmosphérique dynamique */}
         {(mission.title_fr?.toLowerCase().includes('hôpital') || mission.title_fr?.toLowerCase().includes('santé')) && (
           <div className="fixed inset-0 z-0 opacity-20 pointer-events-none">
-            <img 
-              src={resolveAssetUrl('hospital_bg', '')} 
-              alt="Background" 
+            <img
+              src={resolveAssetUrl('hospital_bg', '')}
+              alt="Background"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-linear-to-b from-transparent via-voyage-primary-dark/40 to-voyage-primary-dark/95 pointer-events-none" />
@@ -810,12 +839,12 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
 
         <div className="mb-8 space-y-4">
           <div className={cn("inline-flex items-center gap-2 px-3 py-1 rounded-full border transition-all", theme.bgClass, theme.borderColor)}>
-             <span className={cn("shrink-0", theme.accentColor)}>{theme.icon}</span>
-             <span className={cn("text-[10px] font-black uppercase tracking-widest", theme.accentColor)}>
-               {theme.category}
-             </span>
+            <span className={cn("shrink-0", theme.accentColor)}>{theme.icon}</span>
+            <span className={cn("text-[10px] font-black uppercase tracking-widest", theme.accentColor)}>
+              {theme.category}
+            </span>
           </div>
-          
+
           {challenge.content && challenge.content[0] && challenge.type !== 'fill-in-blanks' && challenge.content[0] !== challenge.question && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -837,7 +866,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                 }}
                 transition={{
                   duration: 19,
-                  times: [0, 4/19, 11/19, 1],
+                  times: [0, 4 / 19, 11 / 19, 1],
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
@@ -846,21 +875,25 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                 <Wind size={32} className="text-voyage-accent" />
               </motion.div>
               <div className="mt-4 flex gap-3">
-                <span className="text-[10px] font-black text-voyage-accent uppercase tracking-tighter bg-voyage-accent/10 px-2 py-1 rounded-md">Inspire (4s)</span>
-                <span className="text-[10px] font-black text-voyage-accent uppercase tracking-tighter bg-voyage-accent/10 px-2 py-1 rounded-md">Bloque (7s)</span>
-                <span className="text-[10px] font-black text-voyage-accent uppercase tracking-tighter bg-voyage-accent/10 px-2 py-1 rounded-md">Expire (8s)</span>
+                <span className="text-[10px] font-black text-voyage-accent uppercase tracking-tighter bg-voyage-accent/10 px-2 py-1 rounded-md">
+                  {language === 'ar' ? 'شهيق (٤ ث)' : 'Inspire (4s)'}
+                </span>
+                <span className="text-[10px] font-black text-voyage-accent uppercase tracking-tighter bg-voyage-accent/10 px-2 py-1 rounded-md">
+                  {language === 'ar' ? 'زفير (٨ ث)' : 'Expire (8s)'}
+                </span>
               </div>
             </div>
           )}
+
           {challenge.illustration_url && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               className="mb-8 rounded-[40px] overflow-hidden border-4 border-white shadow-2xl bg-white/50"
             >
-              <img 
-                src={challenge.illustration_url} 
-                alt="Illustration" 
+              <img
+                src={challenge.illustration_url}
+                alt="Illustration"
                 className="w-full h-auto max-h-[300px] object-cover"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';
@@ -871,11 +904,13 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
 
           <div className="space-y-4 text-center mb-10">
             <h2 className="text-3xl font-semibold text-duo-eel leading-tight tracking-tight px-4">
-              {challenge.type === 'scenario-cascade' && challenge.steps && challenge.steps[currentStepIdx] 
-                ? challenge.steps[currentStepIdx].question 
-                : challenge.question}
+              {challenge.type === 'scenario-cascade' && challenge.steps && challenge.steps[currentStepIdx]
+                ? challenge.steps[currentStepIdx].question
+                : challenge.type === 'puzzle-riddle'
+                  ? (language === 'ar' ? "حل هذا اللغز !" : "Résous cette énigme !")
+                  : challenge.question}
             </h2>
-            {challenge.arabicQuestion && (
+            {challenge.arabicQuestion && language !== 'ar' && (
               <h3 className="text-4xl font-bold text-voyage-accent leading-tight arabic-font" dir="rtl">
                 {challenge.arabicQuestion}
               </h3>
@@ -883,7 +918,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
           </div>
         </div>
 
-        <motion.div 
+        <motion.div
           key={challenge?.id || 'empty'}
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -896,7 +931,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                 const isSelected = selectedOptionId === opt.id;
                 const showSuccess = showFeedback && isCorrect;
                 const showWrong = showFeedback && isSelected && !isCorrect;
-                
+
                 // Truncate long labels
                 const displayLabel = opt.label && opt.label.length <= 2 ? opt.label : String.fromCharCode(65 + normalizedOptions.indexOf(opt));
 
@@ -909,8 +944,9 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                       setSelectedOptionId(opt.id);
                     }}
                     className={cn(
-                      "w-full flex items-center gap-4 p-5 text-left rounded-2xl border-2 transition-all duration-100 group relative",
-                      isSelected 
+                      "w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all duration-100 group relative",
+                      language === 'ar' ? 'text-right flex-row-reverse' : 'text-left',
+                      isSelected
                         ? "bg-voyage-primary/5 border-voyage-primary shadow-[0_4px_0_0_#8B4513] -translate-y-0.5"
                         : showSuccess
                           ? "bg-emerald-50 border-emerald-400 border-b-4 hover:bg-emerald-100/50 active:translate-y-0.5 active:border-b-0 ring-4 ring-emerald-400/20 shadow-emerald-200/50 shadow-lg"
@@ -920,9 +956,9 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                     )}
                   >
                     <div className={cn(
-                      "w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm border-2 transition-colors",
-                      isSelected 
-                        ? "bg-voyage-primary border-voyage-primary text-white" 
+                      "w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm border-2 transition-colors shrink-0",
+                      isSelected
+                        ? "bg-voyage-primary border-voyage-primary text-white"
                         : showSuccess
                           ? "bg-emerald-500 border-emerald-600 text-white shadow-emerald-200 shadow-sm"
                           : "bg-white border-voyage-secondary/30 text-voyage-secondary group-hover:border-voyage-primary/30"
@@ -931,17 +967,17 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                     </div>
                     <span className={cn(
                       "font-bold text-xl",
-                      isSelected 
-                        ? "text-voyage-primary" 
+                      isSelected
+                        ? "text-voyage-primary"
                         : showSuccess
                           ? "text-emerald-700"
                           : "text-duo-eel"
                     )}>{opt.text}</span>
 
                     {showSuccess && (
-                      <div className="ml-auto bg-emerald-500 text-white px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-tight border-2 border-emerald-600 flex items-center gap-1.5 shadow-md animate-pulse-slow">
+                      <div className="ms-auto bg-emerald-500 text-white px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-tight border-2 border-emerald-600 flex items-center gap-1.5 shadow-md animate-pulse-slow">
                         <CheckCircle2 size={12} className="stroke-[3px]" />
-                        Réponse Correcte
+                        {translations[language].correctAnswerBadge}
                       </div>
                     )}
                   </button>
@@ -954,8 +990,8 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
             <div className="space-y-8 py-4">
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-amber-100 flex items-center justify-center shrink-0 border-2 border-amber-200 shadow-md overflow-hidden p-1">
-                  <img 
-                    src={resolveAssetUrl(mission.mentor_name?.toLowerCase().includes('amina') ? 'dr_amina' : 'guide', DEFAULT_AVATAR_URL)} 
+                  <img
+                    src={resolveAssetUrl(mission.mentor_name?.toLowerCase().includes('amina') ? 'dr_amina' : 'guide', DEFAULT_AVATAR_URL)}
                     alt={mission.mentor_name}
                     className="w-full h-full object-cover rounded-xl"
                   />
@@ -964,49 +1000,54 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                   <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1 block">
                     {mission.mentor_name || 'Mentor'}
                   </span>
-                  <div className="bg-white border-2 border-amber-200 p-5 rounded-2xl rounded-tl-none relative shadow-sm">
-                    <div className="absolute -top-2 -left-2 w-4 h-4 bg-white border-t-2 border-l-2 border-amber-200 rotate-45" />
-                    <p className="font-bold text-duo-eel leading-relaxed italic">"{challenge.context_dialogue || challenge.question}"</p>
+                  <div className={cn("bg-white border-2 border-amber-200 p-5 rounded-2xl relative shadow-sm", language === 'ar' ? 'rounded-tr-none' : 'rounded-tl-none')}>
+                    <div className={cn("absolute -top-2 w-4 h-4 bg-white border-t-2 border-amber-200 rotate-45", language === 'ar' ? '-right-2 border-r-2' : '-left-2 border-l-2')} />
+                    <p className="font-bold text-duo-eel leading-relaxed italic">
+                      "{challenge.context_dialogue || (language === 'ar' ? 'ما رأيك؟ اختر الإجابة الأفضل أدناه لمتابعة الحوار.' : 'Qu\'en penses-tu ? Choisis la meilleure réponse ci-dessous pour continuer.')}"
+                    </p>
                   </div>
                 </div>
               </div>
 
 
-              <div className="space-y-3 pl-18">
-                <p className="text-[10px] font-black text-voyage-secondary uppercase tracking-widest mb-2 opacity-60">Ta réponse :</p>
+              <div className={cn("space-y-3", language === 'ar' ? 'pr-18' : 'pl-18')}>
+                <p className="text-[10px] font-black text-voyage-secondary uppercase tracking-widest mb-2 opacity-60">
+                  {language === 'ar' ? 'إجابتك :' : 'Ta réponse :'}
+                </p>
                 {normalizedOptions.map((opt) => {
-                    const isCorrect = opt.id === challenge.correctOptionId;
-                    const isSelected = selectedOptionId === opt.id;
-                    const showSuccess = showFeedback && isCorrect;
+                  const isCorrect = opt.id === challenge.correctOptionId;
+                  const isSelected = selectedOptionId === opt.id;
+                  const showSuccess = showFeedback && isCorrect;
 
-                    return (
-                      <button
-                        key={opt.id}
-                        disabled={showFeedback}
-                        onClick={() => {
-                          playSound('click');
-                          setSelectedOptionId(opt.id);
-                        }}
-                        className={cn(
-                          "w-full p-4 text-left rounded-2xl border-2 transition-all group relative",
-                          isSelected 
-                            ? "bg-amber-600 text-white border-amber-600 shadow-[0_4px_0_0_#92400E] -translate-y-0.5"
-                            : showSuccess
-                              ? "bg-emerald-50 border-emerald-400 border-b-4 hover:bg-emerald-100/50"
-                              : "bg-white border-amber-200 text-duo-eel border-b-4 hover:bg-amber-50"
+                  return (
+                    <button
+                      key={opt.id}
+                      disabled={showFeedback}
+                      onClick={() => {
+                        playSound('click');
+                        setSelectedOptionId(opt.id);
+                      }}
+                      className={cn(
+                        "w-full p-4 rounded-2xl border-2 transition-all group relative",
+                        language === 'ar' ? 'text-right' : 'text-left',
+                        isSelected
+                          ? "bg-amber-600 text-white border-amber-600 shadow-[0_4px_0_0_#92400E] -translate-y-0.5"
+                          : showSuccess
+                            ? "bg-emerald-50 border-emerald-400 border-b-4 hover:bg-emerald-100/50"
+                            : "bg-white border-amber-200 text-duo-eel border-b-4 hover:bg-amber-50"
+                      )}
+                    >
+                      <div className={cn("flex items-center justify-between w-full", language === 'ar' ? 'flex-row-reverse' : 'flex-row')}>
+                        <span className="font-bold">{opt.text}</span>
+                        {showSuccess && (
+                          <div className="shrink-0 bg-emerald-500 text-white px-2 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-tight flex items-center gap-1 shadow-sm">
+                            <CheckCircle2 size={10} />
+                            {translations[language].solutionBadge}
+                          </div>
                         )}
-                      >
-                        <div className="flex items-center justify-between w-full">
-                          <span className="font-bold">{opt.text}</span>
-                          {showSuccess && (
-                            <div className="shrink-0 bg-emerald-500 text-white px-2 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-tight flex items-center gap-1 shadow-sm">
-                              <CheckCircle2 size={10} />
-                              Solution
-                            </div>
-                          )}
-                        </div>
-                      </button>
-                    );
+                      </div>
+                    </button>
+                  );
                 })}
               </div>
             </div>
@@ -1021,14 +1062,14 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                     {i < arr.length - 1 && (
                       <span className={cn(
                         "inline-flex items-center justify-center min-w-[120px] h-11 border-b-4 mx-1.5 rounded-xl transition-all px-4 font-black text-voyage-accent bg-white shadow-sm align-middle mb-1",
-                        blanksValues[String(i+1)] ? "border-voyage-accent text-voyage-accent" : "border-voyage-secondary/20 text-transparent"
+                        blanksValues[String(i + 1)] ? "border-voyage-accent text-voyage-accent" : "border-voyage-secondary/20 text-transparent"
                       )}>
-                        {blanksValues[String(i+1)] || "...."}
+                        {blanksValues[String(i + 1)] || "...."}
                       </span>
                     )}
                   </span>
                 )) : (
-                  <div className="italic text-voyage-secondary/50">Prépare-toi à compléter ce texte...</div>
+                  <div className="italic text-voyage-secondary/50">{language === 'ar' ? 'استعد لإكمال هذا النص...' : "Prépare-toi à compléter ce texte..."}</div>
                 )}
               </div>
               <div className="flex flex-wrap gap-3 justify-center">
@@ -1045,8 +1086,8 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                       }}
                       className={cn(
                         "px-6 py-4 rounded-2xl font-black transition-all shadow-md border-b-4",
-                        isUsed 
-                          ? "bg-duo-swan text-duo-wolf/40 border-transparent translate-y-1 shadow-none" 
+                        isUsed
+                          ? "bg-duo-swan text-duo-wolf/40 border-transparent translate-y-1 shadow-none"
                           : "bg-white border-duo-swan text-duo-eel hover:bg-duo-swan/20 active:translate-y-0.5 active:border-b-0"
                       )}
                     >
@@ -1056,7 +1097,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                 })}
               </div>
               <div className="flex justify-center">
-                 <button onClick={() => setBlanksValues({})} disabled={showFeedback} className="text-xs font-black text-voyage-accent uppercase tracking-widest hover:opacity-70 disabled:opacity-30">Réinitialiser</button>
+                <button onClick={() => setBlanksValues({})} disabled={showFeedback} className="text-xs font-black text-voyage-accent uppercase tracking-widest hover:opacity-70 disabled:opacity-30">{translations[language].resetConfirm}</button>
               </div>
             </div>
           )}
@@ -1083,7 +1124,8 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                         id={`match-src-${idx}`}
                         disabled={showFeedback}
                         className={cn(
-                          "w-full p-4 rounded-2xl text-left text-sm font-black border-b-4 transition-all",
+                          "w-full p-4 rounded-2xl text-sm font-black border-b-4 transition-all",
+                          language === 'ar' ? 'text-right' : 'text-left',
                           isAssigned
                             ? "bg-voyage-primary/10 border-voyage-primary/40 text-voyage-primary"
                             : "bg-white border-duo-swan text-duo-eel"
@@ -1106,33 +1148,34 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                         key={dropId}
                         id={dropId}
                         className={cn(
-                          "w-full p-4 rounded-2xl text-left text-sm font-black border-b-4 transition-all",
+                          "w-full p-4 rounded-2xl text-sm font-black border-b-4 transition-all",
+                          language === 'ar' ? 'text-right' : 'text-left',
                           hoverDropId === dropId
                             ? "bg-voyage-accent/15 border-voyage-accent text-voyage-primary"
                             : showFeedback
-                              ? isCorrect() 
-                                ? "bg-emerald-50 border-emerald-400 text-emerald-700" 
+                              ? isCorrect()
+                                ? "bg-emerald-50 border-emerald-400 text-emerald-700"
                                 : "bg-red-50 border-red-400 text-red-700"
                               : "bg-white border-duo-swan text-duo-eel"
                         )}
                       >
                         <div className="flex flex-col gap-1">
-                          <span className="text-duo-wolf/70 text-[10px] uppercase tracking-widest">Cible</span>
+                          <span className="text-duo-wolf/70 text-[10px] uppercase tracking-widest">{language === 'ar' ? 'الهدف' : 'Cible'}</span>
                           <span>{target}</span>
                           {linkedSourceTexts.length > 0 && (
                             <div className="mt-2 flex flex-col gap-1">
                               {linkedSourceTexts.map((sourceText) => {
                                 const sourceIdx = matchingOptions.findIndex(o => o.text === sourceText);
                                 const isMatchCorrect = showFeedback && matchingOptions[sourceIdx]?.match === target;
-                                
+
                                 return (
                                   <span
                                     key={sourceText}
                                     className={cn(
                                       "inline-flex w-fit px-2 py-1 rounded-full text-[10px] uppercase tracking-wide border",
                                       showFeedback
-                                        ? isMatchCorrect 
-                                          ? "bg-emerald-500 text-white border-emerald-600" 
+                                        ? isMatchCorrect
+                                          ? "bg-emerald-500 text-white border-emerald-600"
                                           : "bg-red-500 text-white border-red-600"
                                         : "bg-voyage-primary/10 text-voyage-primary border-voyage-primary/20"
                                     )}
@@ -1181,20 +1224,23 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                       : "border-duo-swan bg-duo-swan/10"
                   )}
                 >
-                  <p className="text-[10px] font-black text-duo-wolf uppercase tracking-widest mb-2">Options à classer</p>
+                  <p className="text-[10px] font-black text-duo-wolf uppercase tracking-widest mb-2">{language === 'ar' ? 'خيارات للترتيب' : 'Options à classer'}</p>
                   <div className="space-y-2">
                     {rankingOptions.filter((opt) => !selectedRankIds.includes(opt.id)).map((opt) => (
                       <DraggableCard
                         key={`rank-opt-${opt.id}`}
                         id={`rank-opt-${opt.id}`}
                         disabled={showFeedback}
-                        className="w-full flex items-center gap-4 p-4 text-left rounded-2xl border-b-4 bg-white border-duo-swan"
+                        className={cn(
+                          "w-full flex items-center gap-4 p-4 rounded-2xl border-b-4 bg-white border-duo-swan",
+                          language === 'ar' ? 'text-right flex-row-reverse' : 'text-left'
+                        )}
                       >
                         <span className="font-bold text-duo-eel text-base">{opt.text}</span>
                       </DraggableCard>
                     ))}
                     {rankingOptions.filter((opt) => !selectedRankIds.includes(opt.id)).length === 0 && (
-                      <p className="text-xs font-bold text-duo-wolf/60">Toutes les options sont classées.</p>
+                      <p className="text-xs font-bold text-duo-wolf/60">{language === 'ar' ? 'تم ترتيب جميع الخيارات.' : 'Toutes les options sont classées.'}</p>
                     )}
                   </div>
                 </DroppableZone>
@@ -1210,12 +1256,13 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                         id={slotId}
                         className={cn(
                           "w-full flex items-center gap-4 p-4 rounded-2xl border-b-4 transition-all min-h-18",
+                          language === 'ar' ? 'flex-row-reverse' : 'flex-row',
                           hoverDropId === slotId
                             ? "bg-voyage-primary/10 border-voyage-primary"
                             : "bg-white border-duo-swan"
                         )}
                       >
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm border-2 bg-duo-orange/10 border-duo-orange text-duo-orange">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm border-2 bg-duo-orange/10 border-duo-orange text-duo-orange shrink-0">
                           {slotIdx + 1}
                         </div>
                         {assignedOption ? (
@@ -1227,7 +1274,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                             <span className="font-bold text-duo-eel text-lg">{assignedOption.text}</span>
                           </DraggableCard>
                         ) : (
-                          <span className="text-duo-wolf/50 font-bold">Dépose ici...</span>
+                          <span className="text-duo-wolf/50 font-bold">{language === 'ar' ? 'ضع هنا...' : 'Dépose ici...'}</span>
                         )}
                       </DroppableZone>
                     );
@@ -1251,8 +1298,11 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                   <span className="text-[10px] font-black text-duo-wolf uppercase tracking-widest">{roleObj.role}</span>
                   <input
                     type="text"
-                    placeholder="Nom du membre..."
-                    className="p-2 bg-duo-swan/10 border-b-2 border-duo-swan font-bold text-duo-eel focus:border-voyage-accent outline-none transition-all"
+                    placeholder={language === 'ar' ? 'اسم العضو...' : 'Nom du membre...'}
+                    className={cn(
+                      "p-2 bg-duo-swan/10 border-b-2 border-duo-swan font-bold text-duo-eel focus:border-voyage-accent outline-none transition-all",
+                      language === 'ar' ? 'text-right' : 'text-left'
+                    )}
                     onChange={(e) => setTeamRoleValues(prev => ({ ...prev, [roleObj.role]: e.target.value }))}
                   />
                 </div>
@@ -1261,38 +1311,43 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
           )}
 
           {challenge.type === 'short-answer' && (
-             <div className="bg-duo-swan/10 rounded-3xl p-6 border-2 border-duo-swan focus-within:border-voyage-accent transition-colors">
-               <textarea 
-                 value={selectedOptionId || ''}
-                 onChange={(e) => setSelectedOptionId(e.target.value)}
-                 disabled={showFeedback}
-                 placeholder="Écris ta réponse ici..."
-                 className="w-full bg-transparent border-none focus:ring-0 text-xl font-bold text-duo-eel placeholder:text-duo-wolf/30 min-h-37.5 resize-none"
-               />
-             </div>
+            <div className="bg-duo-swan/10 rounded-3xl p-6 border-2 border-duo-swan focus-within:border-voyage-accent transition-colors">
+              <textarea
+                value={selectedOptionId || ''}
+                onChange={(e) => setSelectedOptionId(e.target.value)}
+                disabled={showFeedback}
+                placeholder={language === 'ar' ? 'اكتب إجابتك هنا...' : 'Écris ta réponse ici...'}
+                className={cn(
+                  "w-full bg-transparent border-none focus:ring-0 text-xl font-bold text-duo-eel placeholder:text-duo-wolf/30 min-h-37.5 resize-none",
+                  language === 'ar' ? 'text-right' : 'text-left'
+                )}
+              />
+            </div>
           )}
 
           {challenge.type === 'glitch' && (
             <div className="bg-white border-2 border-duo-swan p-8 rounded-[2.5rem] leading-[2.5] text-xl font-bold text-duo-eel text-center">
-               {challenge.content?.[0]?.split(' ').map((word, i) => (
-                 <button
-                   key={i}
-                   disabled={showFeedback}
-                   onClick={() => {
-                     playSound('click');
-                     setSelectedWordIdx(i);
-                   }}
-                   className={cn(
-                     "inline-block px-2 mx-0.5 rounded-lg transition-all",
-                     selectedWordIdx === i 
-                       ? "bg-voyage-accent text-white shadow-[0_4px_0_0_#A8862E] -translate-y-0.5" 
-                       : "hover:bg-duo-swan/30 cursor-pointer"
-                   )}
-                 >
-                   {word}
-                 </button>
-               ))}
-               <p className="mt-8 text-xs font-black text-duo-wolf uppercase tracking-widest opacity-60">Clique sur le mot qui contient une erreur</p>
+              {challenge.content?.[0]?.split(' ').map((word, i) => (
+                <button
+                  key={i}
+                  disabled={showFeedback}
+                  onClick={() => {
+                    playSound('click');
+                    setSelectedWordIdx(i);
+                  }}
+                  className={cn(
+                    "inline-block px-2 mx-0.5 rounded-lg transition-all",
+                    selectedWordIdx === i
+                      ? "bg-voyage-accent text-white shadow-[0_4px_0_0_#A8862E] -translate-y-0.5"
+                      : "hover:bg-duo-swan/30 cursor-pointer"
+                  )}
+                >
+                  {word}
+                </button>
+              ))}
+              <p className="mt-8 text-xs font-black text-duo-wolf uppercase tracking-widest opacity-60">
+                {language === 'ar' ? 'انقر على الكلمة التي تحتوي على خطأ' : 'Clique sur le mot qui contient une erreur'}
+              </p>
             </div>
           )}
 
@@ -1311,13 +1366,14 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                       disabled={showFeedback}
                       onClick={() => {
                         playSound('click');
-                        setSelectedMultiIds(prev => 
+                        setSelectedMultiIds(prev =>
                           prev.includes(opt.id) ? prev.filter(id => id !== opt.id) : [...prev, opt.id]
                         );
                       }}
                       className={cn(
-                        "w-full flex items-center justify-between p-5 text-left rounded-2xl border-2 transition-all duration-200",
-                        isSelected 
+                        "w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200",
+                        language === 'ar' ? 'text-right flex-row-reverse' : 'text-left',
+                        isSelected
                           ? "bg-voyage-primary/5 border-voyage-primary shadow-[0_4px_0_0_#8B4513] -translate-y-0.5"
                           : "bg-white border-voyage-secondary/30 hover:bg-voyage-secondary/10 border-b-4",
                         showSuccess && "bg-emerald-50 border-emerald-500 shadow-[0_4px_0_0_#10B981]",
@@ -1335,9 +1391,9 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                       {isSelected && (
                         <div className={cn(
                           "w-6 h-6 rounded-full flex items-center justify-center border-2",
-                          showSuccess ? "bg-emerald-500 border-emerald-600 text-white" : 
-                          showDanger ? "bg-red-500 border-red-600 text-white" :
-                          "bg-voyage-primary border-voyage-primary text-white"
+                          showSuccess ? "bg-emerald-500 border-emerald-600 text-white" :
+                            showDanger ? "bg-red-500 border-red-600 text-white" :
+                              "bg-voyage-primary border-voyage-primary text-white"
                         )}>
                           <Check size={14} strokeWidth={4} />
                         </div>
@@ -1351,70 +1407,74 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
 
           {challenge.type === 'puzzle-riddle' && (
             <div className="bg-linear-to-br from-voyage-primary to-voyage-primary/80 p-8 rounded-[3rem] border-4 border-voyage-accent shadow-2xl relative overflow-hidden">
-               <div className="absolute top-0 right-0 p-4 opacity-10">
-                  <Sparkles size={120} className="text-white" />
-               </div>
-               <div className="relative z-10 space-y-8">
-                 <div className="flex justify-center">
-                    <div className="bg-voyage-accent/20 p-4 rounded-full border border-voyage-accent/30 backdrop-blur-sm">
-                       <MessageSquare className="text-voyage-accent" size={32} />
-                    </div>
-                 </div>
-                 <p className="text-2xl font-semibold text-white text-center leading-relaxed italic">
-                   "{challenge.question}"
-                 </p>
-                 <div className="grid grid-cols-2 gap-4">
-                    {normalizedOptions.map((opt) => (
-                      <button
-                        key={opt.id}
-                        disabled={showFeedback}
-                        onClick={() => {
-                          playSound('click');
-                          setSelectedOptionId(opt.id);
-                        }}
-                        className={cn(
-                          "p-4 rounded-2xl font-black transition-all border-b-4",
-                          selectedOptionId === opt.id 
-                            ? "bg-voyage-accent text-voyage-primary border-voyage-accent-dark -translate-y-0.5" 
-                            : "bg-white/10 text-white border-white/20 hover:bg-white/20"
-                        )}
-                      >
-                        {opt.text}
-                      </button>
-                    ))}
-                 </div>
-               </div>
+              <div className="absolute top-0 right-0 p-4 opacity-10">
+                <Sparkles size={120} className="text-white" />
+              </div>
+              <div className="relative z-10 space-y-8">
+                <div className="flex justify-center">
+                  <div className="bg-voyage-accent/20 p-4 rounded-full border border-voyage-accent/30 backdrop-blur-sm">
+                    <MessageSquare className="text-voyage-accent" size={32} />
+                  </div>
+                </div>
+                <p className="text-2xl font-semibold text-white text-center leading-relaxed italic">
+                  "{challenge.question}"
+                </p>
+                <div className="grid grid-cols-2 gap-4">
+                  {normalizedOptions.map((opt) => (
+                    <button
+                      key={opt.id}
+                      disabled={showFeedback}
+                      onClick={() => {
+                        playSound('click');
+                        setSelectedOptionId(opt.id);
+                      }}
+                      className={cn(
+                        "p-4 rounded-2xl font-black transition-all border-b-4",
+                        selectedOptionId === opt.id
+                          ? "bg-voyage-accent text-voyage-primary border-voyage-accent-dark -translate-y-0.5"
+                          : "bg-white/10 text-white border-white/20 hover:bg-white/20"
+                      )}
+                    >
+                      {opt.text}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
           {challenge.type === 'zellige' && (
             <div className="flex flex-col items-center gap-8 py-4">
-               <div className="grid grid-cols-3 gap-2 w-full max-w-sm aspect-square bg-voyage-primary/5 p-4 rounded-3xl border-4 border-voyage-secondary/20 shadow-inner">
-                  {[...Array(9)].map((_, i) => (
-                    <motion.button 
-                      key={i}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => {
-                        if (showFeedback) return;
-                        playSound('click');
-                        setMatchingSelections(prev => ({ ...prev, [i]: String((parseInt(prev[i] || '0') + 90) % 360) }));
-                      }}
-                      className="bg-white rounded-xl border-2 border-voyage-secondary/10 flex items-center justify-center relative overflow-hidden group shadow-sm"
+              <div className="grid grid-cols-3 gap-2 w-full max-w-sm aspect-square bg-voyage-primary/5 p-4 rounded-3xl border-4 border-voyage-secondary/20 shadow-inner">
+                {[...Array(9)].map((_, i) => (
+                  <motion.button
+                    key={i}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => {
+                      if (showFeedback) return;
+                      playSound('click');
+                      setMatchingSelections(prev => ({ ...prev, [i]: String((parseInt(prev[i] || '0') + 90) % 360) }));
+                    }}
+                    className="bg-white rounded-xl border-2 border-voyage-secondary/10 flex items-center justify-center relative overflow-hidden group shadow-sm"
+                  >
+                    <motion.div
+                      animate={{ rotate: parseInt(matchingSelections[i] || '0') }}
+                      className="w-full h-full flex items-center justify-center bg-linear-to-tr from-voyage-primary/10 to-voyage-accent/10"
                     >
-                       <motion.div 
-                         animate={{ rotate: parseInt(matchingSelections[i] || '0') }}
-                         className="w-full h-full flex items-center justify-center bg-linear-to-tr from-voyage-primary/10 to-voyage-accent/10"
-                       >
-                          <LayoutGrid className="text-voyage-primary opacity-30" size={32} />
-                       </motion.div>
-                       <div className="absolute inset-0 border-2 border-transparent group-hover:border-voyage-accent/30 rounded-xl transition-colors" />
-                    </motion.button>
-                  ))}
-               </div>
-               <div className="flex flex-col items-center gap-2">
-                 <p className="text-voyage-primary font-black uppercase tracking-widest text-xs">Atelier Zellige</p>
-                 <p className="text-duo-wolf font-bold italic text-center">Oriente correctement les carreaux pour restaurer le motif fassi.</p>
-               </div>
+                      <LayoutGrid className="text-voyage-primary opacity-30" size={32} />
+                    </motion.div>
+                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-voyage-accent/30 rounded-xl transition-colors" />
+                  </motion.button>
+                ))}
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-voyage-primary font-black uppercase tracking-widest text-xs">
+                  {language === 'ar' ? 'ورشة الزليج' : 'Atelier Zellige'}
+                </p>
+                <p className="text-duo-wolf font-bold italic text-center">
+                  {language === 'ar' ? 'قم بتوجيه البلاط بشكل صحيح لاستعادة النقش الفاسي.' : 'Oriente correctement les carreaux pour restaurer le motif fassi.'}
+                </p>
+              </div>
             </div>
           )}
 
@@ -1423,77 +1483,91 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
 
       <AnimatePresence>
         {showFeedback ? (
-          <motion.footer 
+          <motion.footer
             initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             className={cn(
               "fixed bottom-0 left-0 w-full z-50 p-6 pb-12 pt-8 flex flex-col items-center gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]",
               isCorrect() ? "bg-voyage-sand border-t-4 border-voyage-accent" : "bg-[#FFF1EE] border-t-4 border-voyage-terracotta"
             )}
           >
-            <div className="max-w-2xl w-full flex items-start gap-6 px-4 text-left">
+            <div className={cn("max-w-2xl w-full flex items-start gap-6 px-4", language === 'ar' ? 'text-right flex-row-reverse' : 'text-left')}>
               <div className={cn("w-20 h-20 rounded-3xl flex items-center justify-center shrink-0 border-b-8 shadow-xl", isCorrect() ? "bg-voyage-primary border-voyage-primary-dark" : "bg-voyage-terracotta border-voyage-terracotta-dark")}>
                 {isCorrect() ? <CheckCircle2 size={48} className="text-white stroke-[3px]" /> : <X size={48} className="text-white stroke-[3px]" />}
               </div>
               <div className="space-y-2">
                 <h3 className={cn("text-3xl font-black tracking-tight", isCorrect() ? "text-voyage-primary" : "text-voyage-terracotta")}>
-                  {isCorrect() ? "Excellent !" : "Pas tout à fait..."}
+                  {isCorrect() ? (language === 'ar' ? 'ممتاز !' : 'Excellent !') : (language === 'ar' ? 'ليس تماماً...' : 'Pas tout à fait...')}
                 </h3>
                 <p className={cn("font-bold leading-relaxed", isCorrect() ? "text-voyage-primary/80" : "text-voyage-terracotta/80")}>
-                  {isCorrect() ? (challenge.feedbackPositive || "C'est la bonne réponse ! +10 XP") : (challenge.feedbackNegative || "Retente ta chance !")}
+                  {isCorrect()
+                    ? (challenge.feedbackPositive || (language === 'ar' ? "إجابة صحيحة! +١٠ نقطة خبرة" : "C'est la bonne réponse ! +10 XP"))
+                    : (challenge.feedbackNegative || (language === 'ar' ? "حاول مرة أخرى!" : "Retente ta chance !"))}
                 </p>
-                {challenge.explanation_fr && (
+                 {getExplanation() && (
                   <div className={cn("mt-2 p-3 rounded-xl text-sm italic font-medium", isCorrect() ? "bg-voyage-primary/5 text-voyage-primary/70" : "bg-voyage-terracotta/5 text-voyage-terracotta/70")}>
-                    {challenge.explanation_fr}
+                    {getExplanation()}
                   </div>
                 )}
                 {isCorrect() && (
-                   <div className="bg-white/40 backdrop-blur-sm px-4 py-2 rounded-2xl inline-flex items-center gap-2 border border-white/40">
-                      <PartyPopper size={18} className="text-voyage-primary" />
-                      <span className="text-voyage-primary font-black text-sm uppercase tracking-tight">+15 XP</span>
-                   </div>
+                  <div className="bg-white/40 backdrop-blur-sm px-4 py-2 rounded-2xl inline-flex items-center gap-2 border border-white/40">
+                    <PartyPopper size={18} className="text-voyage-primary" />
+                    <span className="text-voyage-primary font-black text-sm uppercase tracking-tight">
+                      {language === 'ar' ? '+١٥ نقطة خبرة' : '+15 XP'}
+                    </span>
+                  </div>
                 )}
               </div>
             </div>
-            <div className="w-full max-w-2xl px-4 flex gap-4">
-               <motion.button 
-                  whileTap={{ scale: 0.95 }} 
-                  onClick={() => { playSound('click'); setShowExplanationModal(true); }}
-                  className="p-5 bg-voyage-accent/20 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/30 transition-colors border-b-4 shrink-0"
-                  title="Obtenir une explication"
-                >
-                  <Lightbulb size={24} />
-                </motion.button>
-               <motion.button whileTap={{ scale: 0.95 }} onClick={handleNext} className={cn("grow text-xl py-5 font-black uppercase tracking-tight", isCorrect() ? "btn-voyage-primary" : "bg-voyage-terracotta text-white border-b-4 border-voyage-terracotta-dark rounded-2xl")}>
-                 {currentIdx === questions.length - 1 ? "VOIR LE RÉSULTAT" : "CONTINUER"}
-               </motion.button>
+            <div className={cn("w-full max-w-2xl px-4 flex gap-4", language === 'ar' ? 'flex-row-reverse' : 'flex-row')}>
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={() => { playSound('click'); setShowExplanationModal(true); }}
+                className="p-5 bg-voyage-accent/20 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/30 transition-colors border-b-4 shrink-0"
+                title={language === 'ar' ? 'الحصول على تفسير' : 'Obtenir une explication'}
+              >
+                <Lightbulb size={24} />
+              </motion.button>
+              <motion.button whileTap={{ scale: 0.95 }} onClick={handleNext} className={cn("grow text-xl py-5 font-black uppercase tracking-tight", isCorrect() ? "btn-voyage-primary" : "bg-voyage-terracotta text-white border-b-4 border-voyage-terracotta-dark rounded-2xl")}>
+                {currentIdx === questions.length - 1
+                  ? (language === 'ar' ? 'عرض النتيجة' : "VOIR LE RÉSULTAT")
+                  : (language === 'ar' ? 'متابعة' : "CONTINUER")}
+              </motion.button>
             </div>
           </motion.footer>
         ) : (
           <footer className="fixed bottom-0 left-0 w-full z-40 bg-white border-t-[3px] border-voyage-secondary/20 p-6 pb-14 flex justify-center">
-            <div className="w-full max-w-2xl flex items-center gap-4 px-4">
-              <button 
-                onClick={() => { 
-                  playSound('click'); 
-                  handleReset(); 
+            <div className={cn("w-full max-w-2xl flex items-center gap-4 px-4", language === 'ar' ? 'flex-row-reverse' : 'flex-row')}>
+              <button
+                onClick={() => {
+                  playSound('click');
+                  handleReset();
                   timer.reset(DEFAULT_QUESTION_TIME);
                   setTimerStartTime(Date.now());
-                }} 
-                className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4 tooltip" 
-                title="Refaire l'exercice"
+                }}
+                className="p-4 bg-voyage-sand/30 border-2 border-voyage-secondary/20 rounded-2xl text-voyage-accent hover:bg-voyage-sand/50 transition-colors border-b-4 tooltip"
+                title={language === 'ar' ? 'إعادة التمرين' : "Refaire l'exercice"}
               >
                 <RotateCcw size={24} />
               </button>
-              <button onClick={() => { playSound('click'); setShowExplanationModal(true); }} className="p-4 bg-voyage-accent/10 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/20 transition-colors border-b-4 tooltip" title="Obtenir un indice">
+              <button
+                onClick={() => { playSound('click'); setShowExplanationModal(true); }}
+                className="p-4 bg-voyage-accent/10 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/20 transition-colors border-b-4 tooltip"
+                title={language === 'ar' ? 'الحصول على تلميح' : "Obtenir un indice"}
+              >
                 <Lightbulb size={24} />
               </button>
-              <button onClick={handleSkip} className="p-4 bg-voyage-accent/10 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/20 transition-colors border-b-4 tooltip" title="Passer cette question (0 points)">
+              <button
+                onClick={handleSkip}
+                className="p-4 bg-voyage-accent/10 border-2 border-voyage-accent/30 rounded-2xl text-voyage-accent hover:bg-voyage-accent/20 transition-colors border-b-4 tooltip"
+                title={language === 'ar' ? 'تخطي هذا السؤال (٠ نقطة)' : "Passer cette question (0 points)"}
+              >
                 <SkipForward size={24} />
               </button>
               <motion.button
                 disabled={!canConfirm()} whileTap={{ scale: 0.95 }} onClick={handleConfirm}
                 className={cn("grow text-xl py-5 font-black uppercase tracking-tight transition-all", canConfirm() ? "btn-voyage" : "bg-voyage-secondary/20 text-voyage-primary/30 border-voyage-secondary/10 cursor-not-allowed border-b-0")}
               >
-                Vérifier
+                {language === 'ar' ? 'تحقق' : 'Vérifier'}
               </motion.button>
             </div>
           </footer>
@@ -1517,7 +1591,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
               className="bg-white rounded-4xl p-6 w-full max-w-lg shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative border-2 border-voyage-accent/20"
               onClick={e => e.stopPropagation()}
             >
-              <button 
+              <button
                 onClick={() => setShowExplanationModal(false)}
                 className="absolute top-6 right-6 p-2 hover:bg-black/5 rounded-full transition-colors"
               >
@@ -1525,28 +1599,32 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
               </button>
 
               <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-voyage-accent/10 rounded-2xl flex items-center justify-center border-b-4 border-voyage-accent/20">
+                <div className={cn("flex items-center gap-4", language === 'ar' ? 'flex-row-reverse text-right' : 'flex-row text-left')}>
+                  <div className="w-16 h-16 bg-voyage-accent/10 rounded-2xl flex items-center justify-center border-b-4 border-voyage-accent/20 shrink-0">
                     <Lightbulb size={32} className="text-voyage-accent" />
                   </div>
                   <div>
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-voyage-accent/60">Coup de pouce pédagogique</h3>
-                    <h2 className="text-2xl font-black text-duo-eel">Indice & Explication</h2>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-voyage-accent/60">
+                      {translations[language].helpTitle}
+                    </h3>
+                    <h2 className="text-2xl font-black text-duo-eel">
+                      {translations[language].helpSubtitle}
+                    </h2>
                   </div>
                 </div>
 
                 <div className="bg-voyage-sand/30 p-6 rounded-3xl border-2 border-dashed border-voyage-accent/20">
-                  <p className="text-lg text-duo-eel leading-relaxed text-justify italic">
+                  <p className={cn("text-lg text-duo-eel leading-relaxed italic", language === 'ar' ? 'text-right' : 'text-justify')}>
                     {getExplanation()}
                   </p>
                 </div>
 
                 <div className="flex justify-center pt-2">
-                   <button 
+                  <button
                     onClick={() => setShowExplanationModal(false)}
-                    className="btn-voyage-accent px-10 py-4 w-full"
+                    className="btn-voyage-accent px-10 py-4 w-full font-black"
                   >
-                    CONTINUER L'EXERCICE
+                    {translations[language].continueExercise}
                   </button>
                 </div>
               </div>
@@ -1573,7 +1651,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
               className="bg-white rounded-[2.5rem] p-8 max-w-md w-full shadow-2xl relative"
               onClick={e => e.stopPropagation()}
             >
-              <button 
+              <button
                 onClick={() => setShowCinematic(false)}
                 className="absolute top-4 right-4 p-2 hover:bg-black/5 rounded-full"
               >
@@ -1581,25 +1659,31 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
               </button>
 
               <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-voyage-primary/10 rounded-xl">
+                <div className={cn("flex items-center gap-3", language === 'ar' ? 'flex-row-reverse text-right' : 'flex-row text-left')}>
+                  <div className="p-2 bg-voyage-primary/10 rounded-xl shrink-0">
                     <Clapperboard size={20} className="text-voyage-primary" />
                   </div>
-                  <h3 className="text-xs font-black uppercase tracking-widest text-voyage-primary/60">Contexte de la mission</h3>
+                  <h3 className="text-xs font-black uppercase tracking-widest text-voyage-primary/60">
+                    {language === 'ar' ? 'سياق المهمة' : 'Contexte de la mission'}
+                  </h3>
                 </div>
 
                 <div className="space-y-4">
-                  <h2 className="text-2xl font-black text-duo-eel leading-tight">{mission.title_fr}</h2>
-                  <p className="text-duo-wolf font-bold leading-relaxed italic">
-                    {mission.cinematic_text || mission.description_fr || "Aucun texte cinématique défini."}
+                  <h2 className={cn("text-2xl font-black text-duo-eel leading-tight", language === 'ar' ? 'text-right' : 'text-left')}>
+                    {language === 'ar' ? (mission.title_ar || mission.title_fr) : mission.title_fr}
+                  </h2>
+                  <p className={cn("text-duo-wolf font-bold leading-relaxed italic", language === 'ar' ? 'text-right' : 'text-left')}>
+                    {language === 'ar'
+                      ? (mission.cinematic_text_ar || mission.description_ar || "لم يتم تحديد نص سينمائي.")
+                      : (mission.cinematic_text || mission.description_fr || "Aucun texte cinématique défini.")}
                   </p>
                 </div>
 
-                <button 
+                <button
                   onClick={() => setShowCinematic(false)}
-                  className="w-full py-4 bg-voyage-primary text-white rounded-2xl font-black uppercase tracking-wide shadow-lg shadow-voyage-primary/20"
+                  className="w-full py-4 bg-voyage-primary text-white rounded-2xl font-black uppercase tracking-wide shadow-lg shadow-voyage-primary/20 animate-pulse-subtle"
                 >
-                  J'ai compris
+                  {language === 'ar' ? 'فهمت' : "J'ai compris"}
                 </button>
               </div>
             </motion.div>
@@ -1621,31 +1705,31 @@ const DraggableCard: FC<{
   children,
   disabled = false,
 }) => {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-    id,
-    disabled,
-  });
+    const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+      id,
+      disabled,
+    });
 
-  const style = {
-    transform: CSS.Translate.toString(transform),
-    touchAction: 'none' as const,
-    opacity: isDragging ? 0.45 : 1,
-    zIndex: isDragging ? 20 : 1,
+    const style = {
+      transform: CSS.Translate.toString(transform),
+      touchAction: 'none' as const,
+      opacity: isDragging ? 0.45 : 1,
+      zIndex: isDragging ? 20 : 1,
+    };
+
+    return (
+      <motion.div
+        layout
+        ref={setNodeRef}
+        style={style}
+        {...listeners}
+        {...attributes}
+        className={cn(className, 'cursor-grab active:cursor-grabbing')}
+      >
+        {children}
+      </motion.div>
+    );
   };
-
-  return (
-    <motion.div
-      layout
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
-      className={cn(className, 'cursor-grab active:cursor-grabbing')}
-    >
-      {children}
-    </motion.div>
-  );
-};
 
 const DroppableZone: FC<{
   id: string;
@@ -1656,16 +1740,16 @@ const DroppableZone: FC<{
   className,
   children,
 }) => {
-  const { setNodeRef, isOver } = useDroppable({ id });
+    const { setNodeRef, isOver } = useDroppable({ id });
 
-  return (
-    <motion.div
-      layout
-      ref={setNodeRef}
-      className={cn(className, isOver && 'ring-2 ring-voyage-accent/50')}
-    >
-      {children}
-    </motion.div>
-  );
-};
+    return (
+      <motion.div
+        layout
+        ref={setNodeRef}
+        className={cn(className, isOver && 'ring-2 ring-voyage-accent/50')}
+      >
+        {children}
+      </motion.div>
+    );
+  };
 
