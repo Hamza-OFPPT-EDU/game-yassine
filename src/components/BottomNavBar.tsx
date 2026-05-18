@@ -45,7 +45,7 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
               isActive ? "bg-voyage-primary/5 scale-110" : "group-hover:bg-voyage-sand"
             )}>
               <Icon 
-                size={36} 
+                size={44} 
                 className={cn(
                   "transition-all duration-300",
                   isActive ? "stroke-[3px]" : "stroke-[2px] opacity-70"

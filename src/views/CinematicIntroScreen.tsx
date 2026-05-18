@@ -27,7 +27,8 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
   // Priority: 1. Mission specific field from dashboard, 2. Resolve technical names, 3. City level fallback
   const rawGifUrl = mission.cinematic_gif_url || (mission as any).cinematic_gif || (mission as any).cinematic_character;
   const cinematicGif = resolveAssetUrl(rawGifUrl, city.cinematicCharacter || (city as any).cinematic_character || "/assets/intro_caracter.gif");
-  const cinematicText = mission.cinematic_text || mission.description_fr || "Préparez-vous pour une nouvelle aventure passionnante !";
+  const isAr = language === 'ar';
+  const cinematicText = isAr ? (mission.cinematic_text_ar || mission.description_ar || mission.description_fr) : (mission.cinematic_text || mission.description_fr || "Préparez-vous pour une nouvelle aventure passionnante !");
 
   useEffect(() => {
     console.log("🎬 CinematicIntroScreen mounted for mission:", mission.title_fr);
@@ -57,7 +58,7 @@ export default function CinematicIntroScreen({ city, mission, onNext, onClose }:
     setIsAudioPlaying(!isAudioPlaying);
   };
 
-  const isAr = language === 'ar';
+
 
   return (
     <div className="h-screen w-full bg-slate-50 text-slate-900 overflow-hidden flex flex-col relative font-sans">

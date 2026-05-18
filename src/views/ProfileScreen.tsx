@@ -582,6 +582,92 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
            </div>
         </section>
 
+        {/* Advanced Stats Section (Charts) */}
+        <section className="space-y-6">
+           <div className={cn("flex justify-between items-end px-2", language === 'ar' ? 'flex-row-reverse' : '')}>
+             <div className="flex flex-col">
+                <h2 className={cn("text-2xl font-black text-voyage-primary-dark", language === 'ar' ? 'arabic-font text-right' : '')}>
+                  {language === 'ar' ? 'الإحصائيات والتقدم' : 'Statistiques & Progression'}
+                </h2>
+                <p className={cn("text-[10px] font-black text-voyage-accent uppercase tracking-widest mt-1", language === 'ar' ? 'arabic-font text-right' : 'text-left')}>
+                   {language === 'ar' ? 'تحليل أدائك' : 'Analyse de tes performances'}
+                </p>
+             </div>
+             <TrendingUp size={20} className="text-voyage-accent mb-1" />
+           </div>
+
+           <div className="grid grid-cols-1 gap-6">
+             {/* XP Progression Chart */}
+             <div className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm">
+               <h3 className={cn("text-sm font-black text-voyage-primary-dark mb-4", language === 'ar' ? 'arabic-font text-right' : '')}>
+                 {language === 'ar' ? 'تطور الخبرة (XP)' : 'Évolution de l\'XP'}
+               </h3>
+               <div className="h-48 w-full" dir="ltr">
+                 <ResponsiveContainer width="100%" height="100%">
+                   <AreaChart data={chartData.xp} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                     <defs>
+                       <linearGradient id="colorXp" x1="0" y1="0" x2="0" y2="1">
+                         <stop offset="5%" stopColor="#D4A43E" stopOpacity={0.3}/>
+                         <stop offset="95%" stopColor="#D4A43E" stopOpacity={0}/>
+                       </linearGradient>
+                     </defs>
+                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5D5B8" opacity={0.4} />
+                     <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#8C8C8C' }} dy={10} />
+                     <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#8C8C8C' }} width={30} />
+                     <Tooltip 
+                       contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
+                       labelStyle={{ fontWeight: 'bold', color: '#2D6A4F' }}
+                     />
+                     <Area type="monotone" dataKey="xp" stroke="#D4A43E" strokeWidth={3} fillOpacity={1} fill="url(#colorXp)" />
+                   </AreaChart>
+                 </ResponsiveContainer>
+               </div>
+             </div>
+
+             {/* Soft Skills Radar Chart */}
+             <div className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm">
+               <h3 className={cn("text-sm font-black text-voyage-primary-dark mb-4", language === 'ar' ? 'arabic-font text-right' : '')}>
+                 {language === 'ar' ? 'توازن المهارات الناعمة' : 'Équilibre des Soft Skills'}
+               </h3>
+               <div className="h-56 w-full" dir="ltr">
+                 <ResponsiveContainer width="100%" height="100%">
+                   <RadarChart cx="50%" cy="50%" outerRadius="70%" data={chartData.skills}>
+                     <PolarGrid stroke="#E5D5B8" opacity={0.5} />
+                     <PolarAngleAxis dataKey="name" tick={{ fontSize: 10, fill: '#7B3F1A', fontWeight: 'bold' }} />
+                     <PolarRadiusAxis angle={30} domain={[0, 'dataMax']} tick={false} axisLine={false} />
+                     <Radar name="Soft Skills" dataKey="value" stroke="#2D6A4F" strokeWidth={2} fill="#2D6A4F" fillOpacity={0.3} />
+                     <Tooltip 
+                       contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
+                       itemStyle={{ fontWeight: 'bold', color: '#2D6A4F' }}
+                     />
+                   </RadarChart>
+                 </ResponsiveContainer>
+               </div>
+             </div>
+
+             {/* Engagement Bar Chart */}
+             <div className="bg-white border border-voyage-secondary-light rounded-[40px] p-6 shadow-sm">
+               <h3 className={cn("text-sm font-black text-voyage-primary-dark mb-4", language === 'ar' ? 'arabic-font text-right' : '')}>
+                 {language === 'ar' ? 'المشاركة الأسبوعية' : 'Engagement Hebdomadaire'}
+               </h3>
+               <div className="h-48 w-full" dir="ltr">
+                 <ResponsiveContainer width="100%" height="100%">
+                   <BarChart data={chartData.activity} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5D5B8" opacity={0.4} />
+                     <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#8C8C8C' }} dy={10} />
+                     <YAxis allowDecimals={false} axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#8C8C8C' }} />
+                     <Tooltip 
+                       cursor={{ fill: '#F3F4F6' }}
+                       contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
+                     />
+                     <Bar dataKey="count" name={language === 'ar' ? 'مهام' : 'Missions'} fill="#E25C3D" radius={[6, 6, 0, 0]} barSize={30} />
+                   </BarChart>
+                 </ResponsiveContainer>
+               </div>
+             </div>
+           </div>
+        </section>
+
         {/* Progress Card */}
         <section className="relative overflow-hidden group">
            <div className="absolute inset-0 bg-linear-to-br from-voyage-primary to-voyage-primary-dark rounded-[40px] shadow-2xl" />

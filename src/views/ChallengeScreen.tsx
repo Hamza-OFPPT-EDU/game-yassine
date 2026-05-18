@@ -1486,12 +1486,12 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
           <motion.footer
             initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             className={cn(
-              "fixed bottom-0 left-0 w-full z-50 p-6 pb-12 pt-8 flex flex-col items-center gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]",
+              "fixed bottom-0 left-0 w-full z-50 p-2 pb-6 pt-8 flex flex-col items-center gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]",
               isCorrect() ? "bg-voyage-sand border-t-4 border-voyage-accent" : "bg-[#FFF1EE] border-t-4 border-voyage-terracotta"
             )}
           >
             <div className={cn("max-w-2xl w-full flex items-start gap-6 px-4", language === 'ar' ? 'text-right flex-row-reverse' : 'text-left')}>
-              <div className={cn("w-20 h-20 rounded-3xl flex items-center justify-center shrink-0 border-b-8 shadow-xl", isCorrect() ? "bg-voyage-primary border-voyage-primary-dark" : "bg-voyage-terracotta border-voyage-terracotta-dark")}>
+              <div className={cn("w-13 h-13 rounded-3xl flex items-center justify-center shrink-0 border-b-8 shadow-xl", isCorrect() ? "bg-voyage-primary border-voyage-primary-dark" : "bg-voyage-terracotta border-voyage-terracotta-dark")}>
                 {isCorrect() ? <CheckCircle2 size={48} className="text-white stroke-[3px]" /> : <X size={48} className="text-white stroke-[3px]" />}
               </div>
               <div className="space-y-2">
@@ -1503,9 +1503,21 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                     ? (challenge.feedbackPositive || (language === 'ar' ? "إجابة صحيحة! +١٠ نقطة خبرة" : "C'est la bonne réponse ! +10 XP"))
                     : (challenge.feedbackNegative || (language === 'ar' ? "حاول مرة أخرى!" : "Retente ta chance !"))}
                 </p>
-                 {getExplanation() && (
+                {getExplanation() && (
                   <div className={cn("mt-2 p-3 rounded-xl text-sm italic font-medium", isCorrect() ? "bg-voyage-primary/5 text-voyage-primary/70" : "bg-voyage-terracotta/5 text-voyage-terracotta/70")}>
-                    {getExplanation()}
+                    {(getExplanation() || '')
+                      .split(/([.;؛])/)
+                      .reduce((acc, val, i) => {
+                        if (i % 2 === 0) acc.push(val);
+                        else acc[acc.length - 1] += val;
+                        return acc;
+                      }, [] as string[])
+                      .filter(s => s.trim().length > 0)
+                      .map((sentence, idx) => (
+                        <span key={idx} className="block mb-1">
+                          {sentence.trim()}
+                        </span>
+                      ))}
                   </div>
                 )}
                 {isCorrect() && (
@@ -1535,7 +1547,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
             </div>
           </motion.footer>
         ) : (
-          <footer className="fixed bottom-0 left-0 w-full z-40 bg-white border-t-[3px] border-voyage-secondary/20 p-6 pb-14 flex justify-center">
+          <footer className="fixed bottom-0 left-0 w-full z-40 bg-white border-t-[3px] border-voyage-secondary/20 p-6 pb-5 flex justify-center">
             <div className={cn("w-full max-w-2xl flex items-center gap-4 px-4", language === 'ar' ? 'flex-row-reverse' : 'flex-row')}>
               <button
                 onClick={() => {
@@ -1614,9 +1626,21 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                 </div>
 
                 <div className="bg-voyage-sand/30 p-6 rounded-3xl border-2 border-dashed border-voyage-accent/20">
-                  <p className={cn("text-lg text-duo-eel leading-relaxed italic", language === 'ar' ? 'text-right' : 'text-justify')}>
-                    {getExplanation()}
-                  </p>
+                  <div className={cn("text-lg text-duo-eel leading-relaxed italic", language === 'ar' ? 'text-right' : 'text-justify')}>
+                    {(getExplanation() || '')
+                      .split(/([.;؛])/)
+                      .reduce((acc, val, i) => {
+                        if (i % 2 === 0) acc.push(val);
+                        else acc[acc.length - 1] += val;
+                        return acc;
+                      }, [] as string[])
+                      .filter(s => s.trim().length > 0)
+                      .map((sentence, idx) => (
+                        <span key={idx} className="block mb-2">
+                          {sentence.trim()}
+                        </span>
+                      ))}
+                  </div>
                 </div>
 
                 <div className="flex justify-center pt-2">

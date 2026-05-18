@@ -531,8 +531,8 @@
             "audio_url_ar": ""
           },
           "scripts": {
-            "opening_fr": "Bienvenue à la ferme d'algues de Dakhla. Ici, nous ne jetons rien, nous transformons tout. Êtes-vous prêt à maîtriser les boucles de l'économie circulaire ?",
-            "opening_ar": "مرحباً بكم في مزرعة الطحالب بالداخلة. هنا، لا نرمي شيئاً، بل نحول كل شيء. هل أنتم مستعدون لإتقان حلقات الاقتصاد الدائري؟",
+            "opening_fr": "Le vent de Dakhla porte l'odeur de l'iode et de l'innovation. Younès vous attend devant des bassins d'algues d'un vert émeraude. 'Le futur est circulaire, ou il ne sera pas', dit-il.",
+            "opening_ar": "رياح الداخلة تحمل رائحة اليود والابتكار. ينتظركم يونس أمام أحواض طحالب خضراء زمردية. 'المستقبل دائري، أو لن يكون'، كما يقول.",
             "closing_fr": "",
             "closing_ar": ""
           }
@@ -553,8 +553,8 @@
             "audio_url_ar": ""
           },
           "scripts": {
-            "opening_fr": "Bienvenue sur les hauteurs de Dakhla. Le vent ici ne s'arrête jamais. Saurez-vous dompter cette puissance invisible pour éclairer la ville ?",
-            "opening_ar": "مرحباً بكم في مرتفعات الداخلة. الرياح هنا لا تتوقف أبداً. هل ستتمكنون من ترويض هذه القوة غير المرئية لإضاءة المدينة؟",
+            "opening_fr": "Fatima-Zahra vous accueille au pied d'un géant d'acier. Le sifflement des pales rythme la conversation. 'Ici, chaque souffle de vent est une promesse d'avenir', dit-elle en ajustant son casque.",
+            "opening_ar": "فاطمة الزهراء تستقبلكم عند قدم عملاق فولاذي. صفير الشفرات يضبط إيقاع المحادثة. 'هنا، كل نسمة ريح هي وعد بالمستقبل'، تقول وهي تعدل خوذتها.",
             "closing_fr": "",
             "closing_ar": ""
           }
@@ -575,8 +575,8 @@
             "audio_url_ar": ""
           },
           "scripts": {
-            "opening_fr": "C'est l'étape finale. Le moment de montrer que vous avez intégré toutes les leçons du voyage. Maîtrisez-vous votre destin ?",
-            "opening_ar": "هذه هي المحطة النهائية. لحظة إظهار أنكم استوعبتم كل دروس الرحلة. هل تتقنون قدركم؟",
+            "opening_fr": "Le Palais des Congrès de Dakhla brille sous le soleil de midi. Aziz vous attend à l'entrée. 'Aujourd'hui, vous ne répondez plus à des questions, vous devenez la réponse', dit-il solennellement.",
+            "opening_ar": "قصر المؤتمرات بالداخلة يلمع تحت شمس الظهيرة. عزيز ينتظركم عند المدخل. 'اليوم، أنتم لا تجيبون على الأسئلة، بل تصبحون أنتم الإجابة'، يقول بجدية.",
             "closing_fr": "",
             "closing_ar": ""
           }
@@ -641,14 +641,14 @@
         "description_ar": "المكان: عيادة متنقلة (4x4). المهارة الناعمة: ابتكار قرار طبي.",
         "narrations": {
           "cinematic": {
-            "text_fr": "Dispensaire mobile (4x4 aménagé), 150 km de Laâyoune, Jeudi 7h. Dr. Mourad, barbe de 3 jours, mains calleuses, ouvre l’arrière de son 4x4 transformé en mini-clinique. « Ishaq, ici pas d'échographie. Pas de labo. Pas de spécialiste. Pas d'internet 90% du temps. Moi seul. Mon stéthoscope. Mon cerveau. Chaque jour je dois CRÉER des DÉCISIONS MÉDICALES avec 10% des outils qu'un médecin de Rabat utilise. Tu vas comprendre ce que CRÉER sous contrainte signifie VRAIMENT. »",
+            "text_fr": "Dispensaire mobile (4x4 aménagé), 150 km de Laâyoune, Jeudi 7h. Dr. Mourad, barbe de 3 jours, mains calleuses, ouvre l’arrière de son 4x4 transformé en mini-clinique. « Ishaq, ici pas d'échographie. Pas de labo. Pas de spécialiste. Pas d'internet 90% du temps. Moi seul. Mon stéthoscope. My cerveau. Chaque jour je dois CRÉER des DÉCISIONS MÉDICALES avec 10% des outils qu'un médecin de Rabat utilise. Tu vas comprendre ce que CRÉER sous contrainte signifie VRAIMENT. »",
             "text_ar": "عيادة متنقلة (4x4 مهيأة)، 150 كم من العيون، الخميس 7 صباحاً. الدكتور مراد، لحية 3 أيام، أيدٍ خشنة، يفتح الجزء الخلفي من سيارته 4x4 المحولة إلى عيادة صغيرة. « إسحاق، هنا لا موجات فوق صوتية. لا مختبر. لا اختصاصي. لا إنترنت 90% من الوقت. أنا وحدي. سماعتي الطبية. عقلي. كل يوم يجب أن أبتكر قرارات طبية بـ10% من الأدوات التي يستخدمها طبيب في الرباط. ستفهم ماذا يعني الابتكار تحت الضغط حقاً. »",
             "gif_url": "",
             "audio_url_fr": "",
             "audio_url_ar": ""
           },
           "scripts": {
-            "opening_fr": "Dispensaire mobile (4x4 aménagé), 150 km de Laâyoune, Jeudi 7h. Dr. Mourad, barbe de 3 jours, mains calleuses, ouvre l’arrière de son 4x4 transformé en mini-clinique. « Ishaq, ici pas d'échographie. Pas de labo. Pas de spécialiste. Pas d'internet 90% du temps. Moi seul. Mon stéthoscope. Mon cerveau. Chaque jour je dois CRÉER des DÉCISIONS MÉDICALES avec 10% des outils qu'un médecin de Rabat utilise. Tu vas comprendre ce que CRÉER sous contrainte signifie VRAIMENT. »",
+            "opening_fr": "Dispensaire mobile (4x4 aménagé), 150 km de Laâyoune, Jeudi 7h. Dr. Mourad, barbe de 3 jours, mains calleuses, ouvre l’arrière de son 4x4 transformé en mini-clinique. « Ishaq, ici pas d'échographie. Pas de labo. Pas de spécialiste. Pas d'internet 90% du temps. Moi seul. Mon stéthoscope. My cerveau. Chaque jour je dois CRÉER des DÉCISIONS MÉDICALES avec 10% des outils qu'un médecin de Rabat utilise. Tu vas comprendre ce que CRÉER sous contrainte signifie VRAIMENT. »",
             "opening_ar": "عيادة متنقلة (4x4 مهيأة)، 150 كم من العيون، الخميس 7 صباحاً. الدكتور مراد، لحية 3 أيام، أيدٍ خشنة، يفتح الجزء الخلفي من سيارته 4x4 المحولة إلى عيادة صغيرة. « إسحاق، هنا لا موجات فوق صوتية. لا مختبر. لا اختصاصي. لا إنترنت 90% من الوقت. أنا وحدي. سماعتي الطبية. عقلي. كل يوم يجب أن أبتكر قرارات طبية بـ10% من الأدوات التي يستخدمها طبيب في الرباط. ستفهم ماذا يعني الابتكار تحت الضغط حقاً. »",
             "closing_fr": "",
             "closing_ar": ""
@@ -663,14 +663,14 @@
         "description_ar": "المكان: مزرعة شمسية. المهارة الناعمة: الابتكار المقتصد.",
         "narrations": {
           "cinematic": {
-            "text_fr": "Ferme solaire \"Noor Sahara\", 30 km de Laâyoune, Samedi 8h. 500 panneaux solaires alignés dans le désert. La station alimente 3 villages (2 000 personnes). Brahim : « Ishaq, l'innovation FRUGALE c'est : MAXIMUM d'impact avec MINIMUM de ressources. Au désert, chaque watt, chaque litre, chaque dirham compte. Tu ne peux pas GASPILLER. Tu vas CRÉER des innovations qui fonctionnent avec PRESQUE RIEN. »",
+            "text_fr": "Ferme solaire \"Noor Sahara\", 30 km de Laâyoune, Samedi 8h. 500 panneaux solaires alignés dans le désert. La station alimente 3 villages (2 000 personnes). Brahim : « Ishaq, l'innovation FRUGALE c'est : MAXIMUM d'impact avec MINIMUM de ressources. Au désert, chaque watt, chaque livre, chaque dirham compte. Tu ne peux pas GASPILLER. Tu vas CRÉER des innovations qui fonctionnent avec PRESQUE RIEN. »",
             "text_ar": "مزرعة شمسية 'نور الصحراء'، 30 كم من العيون، السبت 8 صباحاً. 500 لوح شمسي مصطفة في الصحراء. المحطة تغذي 3 قرى (2000 شخص). إبراهيم: « إسحاق، الابتكار المقتصد هو: أقصى تأثير بأقل الموارد. في الصحراء، كل واط، كل لتر، كل درهم مهم. لا يمكنك التبذير. ستبتكر ابتكارات تعمل بتقريباً لا شيء. »",
             "gif_url": "",
             "audio_url_fr": "",
             "audio_url_ar": ""
           },
           "scripts": {
-            "opening_fr": "Ferme solaire \"Noor Sahara\", 30 km de Laâyoune, Samedi 8h. 500 panneaux solaires alignés dans le désert. La station alimente 3 villages (2 000 personnes). Brahim : « Ishaq, l'innovation FRUGALE c'est : MAXIMUM d'impact avec MINIMUM de ressources. Au désert, chaque watt, chaque litre, chaque dirham compte. Tu ne peux pas GASPILLER. Tu vas CRÉER des innovations qui fonctionnent avec PRESQUE RIEN. »",
+            "opening_fr": "Ferme solaire \"Noor Sahara\", 30 km de Laâyoune, Samedi 8h. 500 panneaux solaires alignés dans le désert. La station alimente 3 villages (2 000 personnes). Brahim : « Ishaq, l'innovation FRUGALE c'est : MAXIMUM d'impact avec MINIMUM de ressources. Au désert, chaque watt, chaque livre, chaque dirham compte. Tu ne peux pas GASPILLER. Tu vas CRÉER des innovations qui fonctionnent avec PRESQUE RIEN. »",
             "opening_ar": "مزرعة شمسية 'نور الصحراء'، 30 كم من العيون، السبت 8 صباحاً. 500 لوح شمسي مصطفة في الصحراء. المحطة تغذي 3 قرى (2000 شخص). إبراهيم: « إسحاق، الابتكار المقتصد هو: أقصى تأثير بأقل الموارد. في الصحراء، كل واط، كل لتر، كل درهم مهم. لا يمكنك التبذير. ستبتكر ابتكارات تعمل بتقريباً لا شيء. »",
             "closing_fr": "",
             "closing_ar": ""
@@ -693,7 +693,7 @@
           },
           "scripts": {
             "opening_fr": "Wilaya de Laâyoune, Lundi 9h. Le Gouverneur, homme imposant en costume gris : « Ishaq, le Commandant Rachid, Aicha, Dr. Mourad et Brahim m'ont TOUS écrit. Ils disent que tu CRÉES. Bien. CRÉE-MOI un plan de développement. Population : 250 000 personnes. Budget limité. Défis : isolement, chaleur, eau rare, emploi insuffisant. Atouts : soleil, espace, jeunesse, position stratégique. Je veux un plan en 5 AXES. Original. Ambitieux. Réaliste. En 48h. »",
-            "opening_ar": "ولاية العيون، الاثنين 9 صباحاً. الحاكم, رجل مهيب ببدلة رمادية: « إسحاق، القائد رشيد، عائشة، الدكتور مراد وإبراهيم كلهم كتبوا لي. يقولون إنك تبتكر. حسناً. ابتكر لي خطة تنموية. عدد السكان: 250.000 نسمة. ميزانية محدودة. تحديات: عزلة، حرارة، ماء نادر، تشغيل غير كافٍ. مزايا: شمس، فضاء، شباب، موقع استراتيجي. أريد خطة في 5 محاور. أصلية. طموحة. واقعية. في 48 ساعة. »",
+            "opening_ar": "ولاية العيون، الاثنين 9 صباحاً. الحاكم، رجل مهيب ببدلة رمادية: « إسحاق، القائد رشيد، عائشة، الدكتور مراد وإبراهيم كلهم كتبوا لي. يقولون إنك تبتكر. حسناً. ابتكر لي خطة تنموية. عدد السكان: 250.000 نسمة. ميزانية محدودة. تحديات: عزلة، حرارة، ماء نادر، تشغيل غير كافٍ. مزايا: شمس، فضاء، شباب، موقع استراتيجي. أريد خطة في 5 محاور. أصلية. طموحة. واقعية. في 48 ساعة. »",
             "closing_fr": "",
             "closing_ar": ""
           }

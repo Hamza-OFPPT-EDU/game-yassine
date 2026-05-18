@@ -251,8 +251,8 @@
         "location_ar": "مزرعة الطحالب، الداخلة"
       },
       "scripts": {
-        "opening_fr": "Bienvenue à la ferme d'algues de Dakhla. Ici, nous ne jetons rien, nous transformons tout. Êtes-vous prêt à maîtriser les boucles de l'économie circulaire ?",
-        "opening_ar": "مرحباً بكم في مزرعة الطحالب بالداخلة. هنا، لا نرمي شيئاً، بل نحول كل شيء. هل أنتم مستعدون لإتقان حلقات الاقتصاد الدائري؟",
+        "opening_fr": "Le vent de Dakhla porte l'odeur de l'iode et de l'innovation. Younès vous attend devant des bassins d'algues d'un vert émeraude. 'Le futur est circulaire, ou il ne sera pas', dit-il.",
+        "opening_ar": "رياح الداخلة تحمل رائحة اليود والابتكار. ينتظركم يونس أمام أحواض طحالب خضراء زمردية. 'المستقبل دائري، أو لن يكون'، كما يقول.",
         "closing_fr": "",
         "closing_ar": ""
       },
@@ -349,8 +349,8 @@
         "location_ar": "حقل الرياح، الداخلة"
       },
       "scripts": {
-        "opening_fr": "Bienvenue sur les hauteurs de Dakhla. Le vent ici ne s'arrête jamais. Saurez-vous dompter cette puissance invisible pour éclairer la ville ?",
-        "opening_ar": "مرحباً بكم في مرتفعات الداخلة. الرياح هنا لا تتوقف أبداً. هل ستتمكنون من ترويض هذه القوة غير المرئية لإضاءة المدينة؟",
+        "opening_fr": "Fatima-Zahra vous accueille au pied d'un géant d'acier. Le sifflement des pales rythme la conversation. 'Ici, chaque souffle de vent est une promesse d'avenir', dit-elle en ajustant son casque.",
+        "opening_ar": "فاطمة الزهراء تستقبلكم عند قدم عملاق فولاذي. صفير الشفرات يضبط إيقاع المحادثة. 'هنا، كل نسمة ريح هي وعد بالمستقبل'، تقول وهي تعدل خوذتها.",
         "closing_fr": "",
         "closing_ar": ""
       },
@@ -447,8 +447,8 @@
         "location_ar": "قصر المؤتمرات، الداخلة"
       },
       "scripts": {
-        "opening_fr": "C'est l'étape finale. Le moment de montrer que vous avez intégré toutes les leçons du voyage. Maîtrisez-vous votre destin ?",
-        "opening_ar": "هذه هي المحطة النهائية. لحظة إظهار أنكم استوعبتم كل دروس الرحلة. هل تتقنون قدركم؟",
+        "opening_fr": "Le Palais des Congrès de Dakhla brille sous le soleil de midi. Aziz vous attend à l'entrée. 'Aujourd'hui, vous ne répondez plus à des questions, vous devenez la réponse', dit-il solennellement.",
+        "opening_ar": "قصر المؤتمرات بالداخلة يلمع تحت شمس الظهيرة. عزيز ينتظركم عند المدخل. 'اليوم، أنتم لا تجيبون على الأسئلة، بل تصبحون أنتم الإجابة'، يقول بجدية.",
         "closing_fr": "",
         "closing_ar": ""
       },

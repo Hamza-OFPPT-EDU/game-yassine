@@ -219,6 +219,7 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
           
           <div className="grid grid-cols-2 gap-3">
             {[
+              { id: 'extra-small', label: 'Très Petit', ar: 'صغير جداً', size: 14 },
               { id: 'small', label: 'Petit', ar: 'صغير', size: 16 },
               { id: 'medium', label: 'Moyen', ar: 'متوسط', size: 19 },
               { id: 'large', label: 'Grand', ar: 'كبير', size: 22 },

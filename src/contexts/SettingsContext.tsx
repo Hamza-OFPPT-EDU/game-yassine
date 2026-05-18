@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type FontSize = 'small' | 'medium' | 'large' | 'extra-large';
+export type FontSize = 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large';
 export type DisplayMode = 'light' | 'dark' | 'system';
 export type Language = 'fr' | 'ar';
 
@@ -19,7 +19,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [fontSize, setFontSize] = useState<FontSize>(() => {
-    return (localStorage.getItem('voyage-font-size') as FontSize) || 'medium';
+    return (localStorage.getItem('voyage-font-size') as FontSize) || 'small';
   });
 
   const [freeExploration, setFreeExploration] = useState<boolean>(() => {
@@ -40,6 +40,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     // Apply to document root font-size
     const root = document.documentElement;
     switch (fontSize) {
+      case 'extra-small': root.style.fontSize = '11px'; break;
       case 'small': root.style.fontSize = '13.3px'; break;
       case 'medium': root.style.fontSize = '15.2px'; break;
       case 'large': root.style.fontSize = '17.1px'; break;

@@ -265,7 +265,7 @@ export default function MapJourneyScreen({
       </AnimatePresence>
 
       {/* ── Corps principal ──────────────────────────────────────────────── */}
-      <main className="grow overflow-y-auto relative pt-16 pb-48 scrollbar-hide" ref={scrollContainerRef} dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      <main className="grow overflow-y-auto relative pt-16 pb-0 scrollbar-hide" ref={scrollContainerRef} dir={language === 'ar' ? 'rtl' : 'ltr'}>
 
         {/* ── SVG Path + Nœuds ────────────────────────────────────────────── */}
         <div className="relative max-w-sm mx-auto px-4">
@@ -312,7 +312,7 @@ export default function MapJourneyScreen({
 
           {/* Nœuds des villes */}
           <div
-            className="relative z-10 flex flex-col-reverse items-center gap-0 py-8"
+            className="relative z-10 flex flex-col-reverse items-center gap-0 pt-8 pb-0"
             style={{ gap: 0 }}
           >
             {cities.map((city, index) => (
