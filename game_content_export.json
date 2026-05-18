@@ -108,8 +108,8 @@
               "ar": "لا. الضغط المزمن يستمر لأسابيع. هنا الأمر قصير وشديد ← ضغط حاد."
             },
             "explanation": {
-              "fr": "Reconnaître les différents types de stress (aigu, chronique, positif). Indication : Un stress bref et intense lié à un événement précis comme une présentation imminente est un stress aigu.",
-              "ar": "التعرف على أنواع الضغط المختلفة (حاد، مزمن، إيجابي). إشارة: ضغط قصير وشديد مرتبط بحدث محدد كعرض وشيك هو ضغط حاد."
+              "fr": "Compétence : Reconnaître les différents types de stress (aigu, chronique, positif). Indication : Un stress bref et intense lié à un événement précis comme une présentation imminente est un stress aigu.",
+              "ar": "الكفاءة: التعرف على أنواع التوتر المختلفة (حاد، مزمن، إيجابي). دلالة: التوتر القصير والشديد المرتبط بحدث محدد كتقديم وشيك هو توتر حاد."
             },
             "context_dialogue": null,
             "presentation": {
@@ -160,8 +160,8 @@
               "ar": "خطأ. الرياضي قبل المنافسة يشعر بضغط يساعده على الأداء."
             },
             "explanation": {
-              "fr": "Démystifier les idées reçues sur le stress. Indication : Le stress positif motive (FAUX le stress est toujours mauvais) ; la gestion du stress s’apprend (VRAI) ; le stress n’est pas un signe de faiblesse (FAUX).",
-              "ar": "تبديد الأفكار الخاطئة حول الضغط. إشارة: الضغط الإيجابي يُحفز (خطأ أن الضغط دائمًا سيء)؛ إدارة الضغط مهارة مكتسبة (صحيح)؛ الضغط ليس علامة ضعف (خطأ)."
+              "fr": "Compétence : Démystifier les idées reçues sur le stress. Indication : Le stress positif motive (FAUX le stress est toujours mauvais) ; la gestion du stress s’apprend (VRAI) ; le stress n’est pas un signe de faiblesse (FAUX).",
+              "ar": "الكفاءة: تفنيد الأفكار الخاطئة عن التوتر. دلالة: التوتر الإيجابي يحفز (خطأ أن التوتر دائماً سيء)؛ إدارة التوتر تُتعلم (صحيح)؛ التوتر ليس علامة ضعف (خطأ)."
             },
             "context_dialogue": null,
             "presentation": {
@@ -240,8 +240,8 @@
               "ar": "حاول مجددًا. جسدي = الجسم، عاطفي = المشاعر، سلوكي = التصرفات."
             },
             "explanation": {
-              "fr": "Classer les symptômes du stress en trois catégories : physique, émotionnel, comportemental. Indication : Cœur qui bat vite → physique ; pleurer → émotionnel ; manger trop → comportemental ; mal de tête → physique ; tristesse → émotionnel ; isolement → comportemental.",
-              "ar": "تصنيف أعراض الضغط في ثلاث فئات: جسدي، عاطفي، سلوكي. إشارة: تسارع نبض القلب ← جسدي؛ البكاء ← عاطفي؛ الأكل المفرط ← سلوكي؛ صداع الرأس ← جسدي؛ الحزن ← عاطفي؛ العزلة ← سلوكي."
+              "fr": "Compétence : Classer les symptômes du stress en trois catégories : physique, émotionnel, comportemental. Indication : Cœur qui bat vite → physique ; pleurer → émotionnel ; manger trop → comportemental ; mal de tête → physique ; tristesse → émotionnel ; isolement → comportemental.",
+              "ar": "الكفاءة: تصنيف أعراض التوتر إلى ثلاث فئات: جسدية، عاطفية، سلوكية. دلالة: قلب ينبض بسرعة ← جسدي؛ البكاء ← عاطفي؛ الأكل كثيراً ← سلوكي؛ صداع ← جسدي؛ حزن ← عاطفي؛ عزلة ← سلوكي."
             },
             "context_dialogue": null,
             "presentation": {
@@ -297,8 +297,8 @@
               "ar": "في مواجهة الضغط، كن هادئًا، تقبّل المشاعر، لا تتجاهل الضائقة."
             },
             "explanation": {
-              "fr": "Utiliser la co‑régulation émotionnelle pour calmer une personne paniquée. Indication : Approchez‑vous calmement, agenouillez‑vous vers l’enfant, parlez doucement à la maman – votre calme se transmet.",
-              "ar": "استخدام التنظيم المشترك للمشاعر لتهدئة شخص مذعور. إشارة: اقترب بهدوء، انزل إلى مستوى الطفل، تحدث بلطف مع الأم – هدوؤك ينتقل إليهم."
+              "fr": "Compétence : Utiliser la co‑régulation émotionnelle pour calmer une personne paniquée. Indication : Approchez‑vous calmement, agenouillez‑vous vers l’enfant, parlez doucement à la maman – votre calme se transmet.",
+              "ar": "الكفاءة: استخدام التنظيم العاطفي المشترك لتهدئة شخص مذعور. دلالة: اقترب بهدوء، انحنِ تجاه الطفل، تحدث بلطف إلى الأم – هدوءك ينتقل."
             },
             "context_dialogue": null,
             "presentation": {
@@ -381,8 +381,8 @@
               "ar": "تذكر: 4-7-8. الأنف للشهيق، الفم للزفير."
             },
             "explanation": {
-              "fr": "Maîtriser la technique de respiration 4-7-8 pour réduire le stress rapidement. Indication : Inspire par le nez 4s, bloque 7s, expire par la bouche 8s, répète 3 fois – active le système parasympathique.",
-              "ar": "إتقان تقنية التنفس 4-7-8 لتقليل الضغط بسرعة. إشارة: استنشق من الأنف 4 ثوانٍ، احبس 7 ثوانٍ، ازفر من الفم 8 ثوانٍ، كرر 3 مرات – ينشط الجهاز العصبي نظير الودي."
+              "fr": "Compétence : Maîtriser la technique de respiration 4-7-8 pour réduire le stress rapidement. Indication : Inspire par le nez 4s, bloque 7s, expire par la bouche 8s, répète 3 fois – active le système parasympathique.",
+              "ar": "الكفاءة: إتقان تقنية التنفس 4-7-8 لتقليل التوتر بسرعة. دلالة: شهيق من الأنف 4ث، احبس 7ث، زفير من الفم 8ث، كرر 3 مرات – ينشط الجهاز السمبتاوي."
             },
             "context_dialogue": null,
             "presentation": {
@@ -443,8 +443,8 @@
               "ar": "المحاولة بحد ذاتها انتصار. أعد المحاولة 2-3 مرات يوميًا."
             },
             "explanation": {
-              "fr": "Pratiquer régulièrement une technique anti‑stress. Indication : Toute réponse est acceptée – l’essai est déjà une victoire, la pratique régulière développe les effets.",
-              "ar": "ممارسة تقنية مضادة للضغط بانتظام. إشارة: أي إجابة مقبولة – المحاولة بحد ذاتها انتصار، والممارسة المنتظمة تعزز الآثار."
+              "fr": "Compétence : Pratiquer régulièrement une technique anti‑stress. Indication : Toute réponse est acceptée – l’essai est déjà une victoire, la pratique régulière développe les effets.",
+              "ar": "الكفاءة: ممارسة تقنية مضادة للتوتر بانتظام. دلالة: أي إجابة مقبولة – المحاولة هي بالفعل انتصار، والممارسة المنتظمة تطور التأثيرات."
             },
             "context_dialogue": null,
             "presentation": {
@@ -538,8 +538,8 @@
               "ar": "الصمت والإنصات غالبًا أقوى من الكلمات."
             },
             "explanation": {
-              "fr": "Accompagner une person en deuil par présence silencieuse, respect des larmes, écoute active et validation. Indication : Asseyez‑vous en silence, tendez un mouchoir, puis dites « Elle comptait beaucoup pour toi. Raconte‑moi si tu veux. »",
-              "ar": "مرافقة شخص حزين بالحضور الصامت واحترام الدموع والإنصات الفعال والتقبّل. إشارة: اجلس بصمت، قدم منديلًا، ثم قل «كانت تعني لك الكثير. أخبرني إن أردت.»"
+              "fr": "Compétence : Accompagner une personne en deuil par présence silencieuse, respect des larmes, écoute active et validation. Indication : Asseyez‑vous en silence, tendez un mouchoir, puis dites « Elle comptait beaucoup pour toi. Raconte‑moi si tu veux. »",
+              "ar": "الكفاءة: مرافقة شخص حزين بالوجود الصامت، واحترام الدموع، والاستماع النشط والتحقق. دلالة: اجلس بصمت، مدّ منديلاً، ثم قل « لقد كانت تعني الكثير لك. احك لي إذا أردت. »"
             },
             "context_dialogue": null,
             "presentation": {
@@ -605,8 +605,8 @@
               "ar": "ابحث عن النقص الأساسي: النوم، الراحة، التغذية، الترفيه."
             },
             "explanation": {
-              "fr": "Identifier les facteurs de burnout (épuisement professionnel). Indication : Aucune pause, sommeil insuffisant, aucun jour de repos, nutrition catastrophique, zéro loisir/sport – voilà les 5 causes.",
-              "ar": "تحديد عوامل الاحتراق الوظيفي. إشارة: لا استراحة، نوم غير كافٍ، لا يوم راحة كامل، تغذية كارثية، صفر ترفيه/رياضة – هذه الأسباب الخمسة."
+              "fr": "Compétence : Identifier les facteurs de burnout (épuisement professionnel). Indication : Aucune pause, sommeil insuffisant, aucun jour de repos, nutrition catastrophique, zéro loisir/sport – voilà les 5 causes.",
+              "ar": "الكفاءة: تحديد عوامل الاحتراق المهني. دلالة: لا فترات راحة، نوم غير كافٍ، لا أيام راحة، تغذية كارثية، لا هوايات/رياضة – هذه الأسباب الخمسة."
             },
             "context_dialogue": null,
             "presentation": {
@@ -657,8 +657,8 @@
               "ar": "الطبيب المنهك يرتكب 3 أضعاف الأخطاء. تسليم المناوبة قوة."
             },
             "explanation": {
-              "fr": "Reconnaître ses limites pour protéger les patients. Indication : Un médecin épuisé commet 3 fois plus d’erreurs – la meilleure décision est de passer le relais à un collègue frais.",
-              "ar": "الاعتراف بحدودك لحماية المرضى. إشارة: الطبيب المنهك يرتكب 3 أضعاف الأخطاء – أفضل قرار هو تسليم المناوبة لزميل مرتاح."
+              "fr": "Compétence : Reconnaître ses limites pour protéger les patients. Indication : Un médecin épuisé commet 3 fois plus d’erreurs – la meilleure décision est de passer le relais à un collègue frais.",
+              "ar": "الكفاءة: الاعتراف بالحدود لحماية المرضى. دلالة: الطبيب المنهك يرتكب أخطاء أكثر بثلاث مرات – أفضل قرار هو تسليم المهمة لزميل منتعش."
             },
             "context_dialogue": null,
             "presentation": {
@@ -714,8 +714,8 @@
               "ar": "دليل: قلب ينبض بسرعة، حرارة، أيدٍ ترتجف."
             },
             "explanation": {
-              "fr": "Comprendre que le stress, bien géré, devient une force. Indication : Il naît dans la poitrine, grandit dans les pensées, dangereux si fui, puissant si apprivoisé – c’est le stress.",
-              "ar": "فهم أن الضغط، إذا أُحسنت إدارته، يصبح قوة. إشارة: يولد في الصدر، يكبر في الأفكار، خطير إذا هربت منه، قوي إذا روّضته – إنه الضغط."
+              "fr": "Compétence : Comprendre que le stress, bien géré, devient une force. Indication : Il naît dans la poitrine, grandit dans les pensées, dangereux si fui, puissant si apprivoisé – c’est le stress.",
+              "ar": "الكفاءة: فهم أن التوتر، إذا أُحسن التعامل معه، يصبح قوة. دلالة: يولد في الصدر، يكبر في الأفكار، خطير إذا هربت منه، قوي إذا روّضته – إنه التوتر."
             },
             "context_dialogue": null,
             "presentation": {
@@ -812,8 +812,8 @@
               "ar": "القاعدة: <10 آلاف = تشغيلي، 10 آلاف-مليون = تكتيكي، >مليون = استراتيجي."
             },
             "explanation": {
-              "fr": "Classer une décision selon son budget et son impact temporel. Indication : Budget moyen (500K DH) et impact 2‑3 ans → décision tactique (ni opérationnelle, ni stratégique).",
-              "ar": "تصنيف القرار حسب ميزانيته وأثره الزمني. إشارة: ميزانية متوسطة (500 ألف درهم) وأثر 2-3 سنوات ← قرار تكتيكي (لا تشغيلي ولا استراتيجي)."
+              "fr": "Compétence : Classer une décision selon son budget et son impact temporel. Indication : Budget moyen (500K DH) et impact 2‑3 ans → décision tactique (ni opérationnelle, ni stratégique).",
+              "ar": "الكفاءة: تصنيف القرار حسب ميزانيته وتأثيره الزمني. دلالة: ميزانية متوسطة (500 ألف درهم) وتأثير 2-3 سنوات → قرار تكتيكي (ليس تشغيلياً ولا استراتيجياً)."
             },
             "context_dialogue": null,
             "presentation": {
@@ -884,8 +884,8 @@
               "ar": "اتبع المنطق: أولًا حدد المشكلة، ثم افهم، استكشف، قيّم، اختر."
             },
             "explanation": {
-              "fr": "Maîtriser les 6 étapes du processus décisionnel de Simon. Indication : Ordre logique : identifier le problème, collecter les infos, générer les options, évaluer, choisir, mettre en œuvre et suivre.",
-              "ar": "إتقان الخطوات الست لعملية اتخاذ القرار وفق سيمون. إشارة: الترتيب المنطقي: تحديد المشكلة، جمع المعلومات، توليد الخيارات، التقييم، الاختيار، التنفيذ والمتابعة."
+              "fr": "Compétence : Maîtriser les 6 étapes du processus décisionnel de Simon. Indication : Ordre logique : identifier le problème, collecter les infos, générer les options, évaluer, choisir, mettre en œuvre et suivre.",
+              "ar": "الكفاءة: إتقان خطوات عملية اتخاذ القرار الست حسب سيمون. دلالة: الترتيب المنطقي: تحديد المشكلة، جمع المعلومات، توليد الخيارات، تقييم، اختيار، تنفيذ ومتابعة."
             },
             "context_dialogue": null,
             "presentation": {
@@ -941,8 +941,8 @@
               "ar": "إظهار الاهتمام يحل غالبًا 80% من المشكلة العاطفية."
             },
             "explanation": {
-              "fr": "Gérer un citoyen mécontent par l’écoute active et l’engagement. Indication : Excusez‑vous, écoutez, notez tout, promettez un suivi – l’écoute résout 80 % du problème.",
-              "ar": "التعامل مع مواطن غاضب بالإنصات الفعال والالتزام. إشارة: اعتذر، أنصت، دوّن كل شيء، التزم بالمتابعة – الإنصات يحل 80% من المشكلة."
+              "fr": "Compétence : Gérer un citoyen mécontent par l’écoute active et l’engagement. Indication : Excusez‑vous, écoutez, notez tout, promettez un suivi – l’écoute résout 80 % du problème.",
+              "ar": "الكفاءة: إدارة مواطن غير راضٍ بالاستماع النشط والالتزام. دلالة: اعتذر، استمع، دوّن كل شيء، واعد بمتابعة – الاستماع يحل 80% من المشكلة."
             },
             "context_dialogue": null,
             "presentation": {
@@ -982,8 +982,8 @@
               "ar": "التردد شكل من أشكال القرار السلبي."
             },
             "explanation": {
-              "fr": "Distinguer les idées reçues sur la décision. Indication : Bonnes décisions ≠ rapides (FAUX) ; intuition et logique se complètent (FAUX l’intuition n’est pas > logique) ; ne pas décider = décider (VRAI).",
-              "ar": "تمييز الأفكار الخاطئة حول اتخاذ القرار. إشارة: القرارات الجيدة ≠ سريعة (خطأ)؛ الحدس والمنطق يتكاملان (خطأ أن الحدس أفضل من المنطق)؛ عدم القرار = قرار (صحيح)."
+              "fr": "Compétence : Distinguer les idées reçues sur la décision. Indication : Bonnes décisions ≠ rapides (FAUX) ; intuition et logique se complètent (FAUX l’intuition n’est pas > logique) ; ne pas décider = décider (VRAI).",
+              "ar": "الكفاءة: التمييز بين الأفكار الخاطئة عن اتخاذ القرار. دلالة: القرارات الجيدة ≠ سريعة (خطأ)؛ الحدس والمنطق يكملان بعضهما (خطأ، الحدس ليس > المنطق)؛ عدم اتخاذ قرار = اتخاذ قرار (صحيح)."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1054,8 +1054,8 @@
               "ar": "عاجل + مهم = نفّذ؛ مهم غير عاجل = خطط."
             },
             "explanation": {
-              "fr": "Utiliser la matrice d’Eisenhower pour prioriser des tâches. Indication : Urgent + important d’abord (email Ministre, appel journaliste), puis urgent (préparer réunion), puis important non urgent (réserver salle, fournitures), enfin le reste.",
-              "ar": "استخدام مصفوفة أيزنهاور لترتيب المهام. إشارة: عاجل + مهم أولًا (بريد الوزير، اتصال الصحفي)، ثم عاجل (تحضير الاجتماع)، ثم مهم غير عاجل (حجز القاعة، اللوازم)، وأخيرًا الباقي."
+              "fr": "Compétence : Utiliser la matrice d’Eisenhower pour prioriser des tâches. Indication : Urgent + important d’abord (email Ministre, appel journaliste), puis urgent (préparer réunion), puis important non urgent (réserver salle, fournitures), enfin le reste.",
+              "ar": "الكفاءة: استخدام مصفوفة أيزنهاور لتحديد أولويات المهام. دلالة: عاجل+مهم أولاً (بريد الوزير، اتصال الصحفي)، ثم عاجل (تحضير الاجتماع)، ثم مهم غير عاجل (حجز قاعة، لوازم)، أخيراً الباقي."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1122,8 +1122,8 @@
               "ar": "الترسيخ = الرقم الأول، التأكيد = البحث عما يعزز، التوفر = الذكريات الأخيرة."
             },
             "explanation": {
-              "fr": "Identifier trois biais cognitifs (ancrage, confirmation, disponibilité). Indication : Ancrage (1er chiffre), confirmation (chercher ce qui confirme), disponibilité (juger par souvenirs récents).",
-              "ar": "تحديد ثلاثة تحيزات معرفية (الترسيخ، التأكيد، التوفر). إشارة: الترسيخ (الرقم الأول)، التأكيد (البحث عما يؤكد)، التوفر (الحكم بالذكريات الأخيرة)."
+              "fr": "Compétence : Identifier three biais cognitifs (ancrage, confirmation, disponibilité). Indication : Ancrage (1er chiffre), confirmation (chercher ce qui confirme), disponibilité (juger par souvenirs récents).",
+              "ar": "الكفاءة: تحديد ثلاثة تحيزات معرفية (الارتساء، التأكيد، التوفر). دلالة: الارتساء (الرقم الأول)، التأكيد (البحث عن ما يؤكد)، التوفر (الحكم بالذكريات الأخيرة)."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1217,8 +1217,8 @@
               "ar": "الأخلاق تتطلب الشفافية والشجاعة."
             },
             "explanation": {
-              "fr": "Résoudre un dilemme éthique par le dialogue privé, les preuves et l’intégrité. Indication : Parlez d’abord à Karim, montrez les preuves calmement, puis proposez‑lui de se dénoncer lui‑même.",
-              "ar": "حل معضلة أخلاقية بالحوار الخاص والأدلة والنزاهة. إشارة: تحدث أولًا مع كريم، أظهر الأدلة بهدوء، ثم اقترح عليه أن يبلّغ بنفسه."
+              "fr": "Compétence : Résoudre un dilemme éthique par le dialogue privé, les preuves et l’intégrité. Indication : Parlez d’abord à Karim, montrez les preuves calmement, puis proposez‑lui de se dénoncer lui‑même.",
+              "ar": "الكفاءة: حل معضلة أخلاقية بالحوار الخاص، الأدلة والنزاهة. دلالة: تحدث أولاً إلى كريم، أرِه الأدلة بهدوء، ثم اقترح عليه أن يبلغ عن نفسه."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1284,8 +1284,8 @@
               "ar": "ابحث عن التسرع وغياب الاستشارة."
             },
             "explanation": {
-              "fr": "Repérer les erreurs classiques de décision en projet. Indication : Budget trop rapide, pas d’appel d’offres, absence de consultation des employés, délai irréaliste, aucun test pilote.",
-              "ar": "رصد الأخطاء الشائعة في اتخاذ قرارات المشاريع. إشارة: ميزانية سريعة جدًا، لا طلب عروض، عدم استشارة الموظفين، موعد نهائي غير واقعي، لا اختبار تجريبي."
+              "fr": "Compétence : Repérer les erreurs classiques de décision en projet. Indication : Budget trop rapide, pas d’appel d’offres, absence de consultation des employés, délai irréaliste, aucun test pilote.",
+              "ar": "الكفاءة: تحديد أخطاء القرار النمطية في المشاريع. دلالة: ميزانية سريعة جداً، لا طلب عروض، غياب استشارة الموظفين، موعد نهائي غير واقعي، لا اختبار تجريبي."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1341,8 +1341,8 @@
               "ar": "فرض حل يخلق مقاومة."
             },
             "explanation": {
-              "fr": "Adopter un leadership participatif pour allouer un budget. Indication : Demandez l’avis de tous les employés par un vote démocratique – l’engagement est ainsi garanti.",
-              "ar": "تبني قيادة تشاركية لتوزيع الميزانية. إشارة: اطلب رأي جميع الموظفين عبر تصويت ديمقراطي – الالتزام مضمون."
+              "fr": "Compétence : Adopter un leadership participatif pour allouer un budget. Indication : Demandez l’avis de tous les employés par un vote démocratique – l’engagement est ainsi garanti.",
+              "ar": "الكفاءة: تبني قيادة تشاركية لتخصيص ميزانية. دلالة: اطلب رأي جميع الموظفين بتصويت ديمقراطي – الالتزام مضمون بذلك."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1382,8 +1382,8 @@
               "ar": "تحقق من ذكر قرار واحد، والخطوات، وتحيز معرفي."
             },
             "explanation": {
-              "fr": "Appliquer les 6 étapes Simon à une décision personnelle, en anticipant un biais. Indication : Choisissez une décision réelle, suivez les étapes, et nommez un biais (ex : ancrage, confirmation, disponibilité).",
-              "ar": "تطبيق خطوات سيمون الست على قرار شخصي مع توقع تحيز. إشارة: اختر قرارًا حقيقيًا، اتبع الخطوات، وسمِّ تحيزًا (مثل: الترسيخ، التأكيد، التوفر)."
+              "fr": "Compétence : Appliquer les 6 étapes Simon à une décision personnelle, en anticipant un biais. Indication : Choisissez une décision réelle, suivez les étapes, et nommez un biais (ex : ancrage, confirmation, disponibilité).",
+              "ar": "الكفاءة: تطبيق خطوات سيمون الست على قرار شخصي، مع توقع تحيز. دلالة: اختر قراراً حقيقياً، اتبع الخطوات، وسمِّ تحيزاً (مثال: ارتساء، تأكيد، توفر)."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1485,8 +1485,8 @@
               "ar": "نادية تبتكر ← مبدعة."
             },
             "explanation": {
-              "fr": "Reconnaître les rôles Belbin dans une équipe. Indication : Une personne qui génère 10 idées mais ne les exécute jamais incarne le rôle Créatif.",
-              "ar": "التعرف على أدوار بلبين في الفريق. إشارة: شخص يولّد 10 أفكار لكن لا ينفذها يجسّد دور المبدع."
+              "fr": "Compétence : Reconnaître les rôles Belbin dans une équipe. Indication : Une personne qui génère 10 idées mais ne les exécute jamais incarne le rôle Créatif.",
+              "ar": "الكفاءة: التعرف على أدوار بلبين في فريق. دلالة: شخص يولد 10 أفكار لكن لا ينفذها أبداً يجسد دور المبدع."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1559,8 +1559,8 @@
               "ar": "المحلل (بيانات)، المنسق (هدوء)، القائد (يقود)، المبدع (أفكار)، المنفذ (عمل)."
             },
             "explanation": {
-              "fr": "Distribuer les rôles Belbin selon les forces de chacun. Indication : Karim → Analyste, Sarah → Harmonisateur, Omar → Leader, Nadia → Créatif, Hassan → Réalisateur.",
-              "ar": "توزيع أدوار بلبين حسب نقاط القوة. إشارة: كريم ← محلل، سارة ← منسقة، عمر ← قائد، نادية ← مبدعة، حسن ← منفذ."
+              "fr": "Compétence : Distribuer les rôles Belbin selon les forces de chacun. Indication : Karim → Analyste, Sarah → Harmonisateur, Omar → Leader, Nadia → Créatif, Hassan → Réalisateur.",
+              "ar": "الكفاءة: توزيع أدوار بلبين حسب نقاط قوة كل واحد. دلالة: كريم ← محلل، سارة ← منسق، عمر ← قائد، نادية ← مبدع، حسن ← منفذ."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1616,8 +1616,8 @@
               "ar": "أعد صياغة النقد كطلب تحسين تقني."
             },
             "explanation": {
-              "fr": "Médier un conflit d’équipe par reformulation constructive. Indication : Demandez à Karim de reformuler sa critique en améliorations techniques sur les idées de Nadia.",
-              "ar": "التوسط في صراع فريق بإعادة الصياغة البنّاءة. إشارة: اطلب من كريم إعادة صياغة نقده كتحسينات تقنية لأفكار نادية."
+              "fr": "Compétence : Médier un conflit d’équipe par reformulation constructive. Indication : Demandez à Karim de reformuler sa critique en améliorations techniques sur les idées de Nadia.",
+              "ar": "الكفاءة: الوساطة في نزاع فريق بإعادة صياغة بناءة. دلالة: اطلب من كريم إعادة صياغة نقده كتحسينات تقنية على أفكار نادية."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1657,8 +1657,8 @@
               "ar": "صراعات الأفكار تحفز الإبداع."
             },
             "explanation": {
-              "fr": "Distinguer les mythes sur les équipes performantes. Indication : Diversité cognitive = +35 % performance (FAUX mêmes profils) ; leader admet ses erreurs (FAUX doit toujours avoir raison) ; conflit d’idées = sain (FAUX toujours mauvais).",
-              "ar": "تمييز الخرافات حول الفرق عالية الأداء. إشارة: التنوع المعرفي = +35% أداء (خطأ نفس الملامح)؛ القائد يعترف بأخطائه (خطأ يجب أن يكون دائمًا على حق)؛ صراع الأفكار = صحي (خطأ دائمًا سيء)."
+              "fr": "Compétence : Distinguer les mythes sur les équipes performantes. Indication : Diversité cognitive = +35 % performance (FAUX mêmes profils) ; leader admet ses erreurs (FAUX doit toujours avoir raison) ; conflit d’idées = sain (FAUX toujours mauvais).",
+              "ar": "الكفاءة: التمييز بين الخرافات حول الفرق عالية الأداء. دلالة: التنوع المعرفي = +35% أداء (خطأ، نفس الملامح)؛ القائد يعترف بأخطائه (خطأ، يجب أن يكون على حق دائماً)؛ نزاع الأفكار = صحي (خطأ، دائماً سيء)."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1729,8 +1729,8 @@
               "ar": "وقائع بدون حكم، شعور بـ «أنا»، حاجة مُوضَّحة."
             },
             "explanation": {
-              "fr": "Maîtriser les 4 étapes de la Communication Non‑Violente (CNV). Indication : Observation (faits sans jugement), Sentiment (avec « je »), Besoin, Demande concrète.",
-              "ar": "إتقان الخطوات الأربع للتواصل اللاعنفي (CNV). إشارة: الملاحظة (وقائع بدون حكم)، الشعور (بـ «أنا»)، الحاجة، الطلب الملموس."
+              "fr": "Compétence : Maîtriser les 4 étapes de la Communication Non‑Violente (CNV). Indication : Observation (faits sans jugement), Sentiment (avec « je »), Besoin, Demande concrète.",
+              "ar": "الكفاءة: إتقان خطوات التواصل اللاعنفي الأربع. دلالة: ملاحظة (حقائق دون حكم)، شعور (مع « أنا »)، حاجة، طلب ملموس."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1824,8 +1824,8 @@
               "ar": "الحوار الخاص يتجنب الإذلال ويعزز التضامن."
             },
             "explanation": {
-              "fr": "Gérer un membre passif par bienveillance, soutien et confidentialité. Indication : Parlez‑lui en privé, proposez de l’aide face à sa difficulté personnelle, puis dites simplement à l’équipe qu’il traverse une période difficile.",
-              "ar": "إدارة عضو سلبي بالرفق والدعم والسرية. إشارة: تحدث معه على انفراد، اعرض المساعدة أمام صعوبته الشخصية، ثم أخبر الفريق ببساطة أنه يمر بفترة صعبة."
+              "fr": "Compétence : Gérer un membre passif par bienveillance, soutien et confidentialité. Indication : Parlez‑lui en privé, proposez de l’aide face à sa difficulty personnelle, puis dites simplement à l’équipe qu’il traverse une période difficile.",
+              "ar": "الكفاءة: إدارة عضو سلبي باللطف والدعم والسرية. دلالة: تحدث معه على انفراد، اعرض المساعدة في مواجهة صعوبته الشخصية، ثم قل ببساطة للفريق إنه يمر بفترة صعبة."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1891,8 +1891,8 @@
               "ar": "نتشكّل، نتصارع، ننظّم، نؤدي."
             },
             "explanation": {
-              "fr": "Ordonner les 5 phases de vie d’une équipe (Tuckman). Indication : Forming, Storming, Norming, Performing, Adjourning.",
-              "ar": "ترتيب المراحل الخمس لحياة الفريق (تاكمان). إشارة: التشكيل، العاصفة، التطبيع، الأداء، الانفصال."
+              "fr": "Compétence : Ordonner les 5 phases de vie d’une équipe (Tuckman). Indication : Forming, Storming, Norming, Performing, Adjourning.",
+              "ar": "الكفاءة: ترتيب المراحل الخمس لحياة الفريق (تكمان). دلالة: التشكيل، العاصفة، المعايرة، الأداء، الحل."
             },
             "context_dialogue": null,
             "presentation": {
@@ -1959,8 +1959,8 @@
               "ar": "D=وقائع، E=شعور، S=حل، C=نتائج."
             },
             "explanation": {
-              "fr": "Utiliser la méthode DESC pour un feedback sans conflit. Indication : D → Décrire les faits ; E → Exprimer son ressenti ; S → Suggérer une solution ; C → Conséquences.",
-              "ar": "استخدام طريقة DESC للملاحظات بدون صراع. إشارة: D ← صِف الوقائع؛ E ← عبّر عن شعورك؛ S ← اقترح حلًا؛ C ← النتائج."
+              "fr": "Compétence : Utiliser la méthode DESC pour un feedback sans conflit. Indication : D → Décrire les faits ; E → Exprimer son ressenti ; S → Suggérer une solution ; C → Conséquences.",
+              "ar": "الكفاءة: استخدام طريقة DESC لتغذية راجعة دون نزاع. دلالة: D ← وصف الحقائق؛ E ← التعبير عن الشعور؛ S ← اقتراح حل؛ C ← العواقب."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2026,8 +2026,8 @@
               "ar": "وزّع حسب الخبرة الطبيعية: مبدع (تصميم)، محلل (أرقام)."
             },
             "explanation": {
-              "fr": "Déléguer les tâches selon les profils Belbin. Indication : Design → Créatif (Nadia) ; données → Analyste (Karim) ; rapport → Réalisateur (Hassan) ; conflit → Harmonisateur (Sarah) ; présentation → Leader (Omar).",
-              "ar": "تفويض المهام حسب ملامح بلبين. إشارة: التصميم ← المبدع (نادية)؛ البيانات ← المحلل (كريم)؛ التقرير ← المنفذ (حسن)؛ الصراع ← المنسق (سارة)؛ العرض ← القائد (عمر)."
+              "fr": "Compétence : Déléguer les tâches selon les profils Belbin. Indication : Design → Créatif (Nadia) ; données → Analyste (Karim) ; rapport → Réalisateur (Hassan) ; conflit → Harmonisateur (Sarah) ; présentation → Leader (Omar).",
+              "ar": "الكفاءة: تفويض المهام حسب ملامح بلبين. دلالة: تصميم ← مبدع (نادية)؛ بيانات ← محلل (كريم)؛ تقرير ← منفذ (حسن)؛ نزاع ← منسق (سارة)؛ عرض ← قائد (عمر)."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2083,8 +2083,8 @@
               "ar": "بدوني، ينهار كل شيء."
             },
             "explanation": {
-              "fr": "Identifier le ciment invisible de toute équipe : la confiance. Indication : Seule, elle est rien ; à deux, force ; à plusieurs, légende. Si elle se brise, tout s’effondre.",
-              "ar": "تحديد الأسمنت الخفي لكل فريق: الثقة. إشارة: وحدها لا شيء؛ في اثنين قوة؛ في عدة أشخاص أسطورة. إن انكسرت، انهار كل شيء."
+              "fr": "Compétence : Identifier le ciment invisible de toute équipe : la confiance. Indication : Seule, elle est rien ; à deux, force ; à plusieurs, légende. Si elle se brise, tout s’effondre.",
+              "ar": "الكفاءة: تحديد الإسمنت غير المرئي لأي فريق: الثقة. دلالة: وحدها لا شيء؛ مع اثنين قوة؛ مع عدة أسطورة. إذا انكسرت، كل شيء ينهار."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2181,8 +2181,8 @@
               "ar": "الضغط الحاد قصير. هنا إنهاك مزمن."
             },
             "explanation": {
-              "fr": "Diagnostiquer un burnout (épuisement émotionnel, cynisme, inefficacité). Indication : 14h/jour pendant 6 mois, perte de motivation, vide émotionnel → burnout.",
-              "ar": "تشخيص الاحتراق الوظيفي (إنهاك عاطفي، سخرية، عدم فعالية). إشارة: 14 ساعة/يوم لمدة 6 أشهر، فقدان الحافز، فراغ عاطفي ← احتراق وظيفي."
+              "fr": "Compétence : Diagnostiquer un burnout (épuisement émotionnel, cynisme, inefficacité). Indication : 14h/jour pendant 6 mois, perte de motivation, vide émotionnel → burnout.",
+              "ar": "الكفاءة: تشخيص الاحتراق المهني (إرهاق عاطفي، سخرية، عدم فعالية). دلالة: 14 ساعة/يوم لمدة 6 أشهر، فقدان الدافع، فراغ عاطفي ← احتراق مهني."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2261,8 +2261,8 @@
               "ar": "تكيفي = حلول صحية. غير تكيفي = هروب أو إنكار."
             },
             "explanation": {
-              "fr": "Distinguer les stratégies de coping adaptatives (saines) des inadaptatives (évitement). Indication : Adaptatif : parler, sport, aide pro, méditer. Inadaptatif : alcool, déni, isolement, blâme.",
-              "ar": "التمييز بين استراتيجيات التكيف الإيجابية (الصحية) والسلبية (التجنب). إشارة: تكيفي: التحدث، الرياضة، المساعدة المهنية، التأمل. غير تكيفي: الكحول، الإنكار، العزلة، اللوم."
+              "fr": "Compétence : Distinguer les stratégies de coping adaptatives (saines) des inadaptatives (évitement). Indication : Adaptatif : parler, sport, aide pro, méditer. Inadaptatif : alcool, déni, isolement, blâme.",
+              "ar": "الكفاءة: التمييز بين استراتيجيات التأقلم التكيفية (صحية) وغير التكيفية (تجنب). دلالة: تكيفي: التحدث، رياضة، مساعدة مهنية، تأمل. غير تكيفي: كحول، إنكار، عزلة، لوم."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2313,8 +2313,8 @@
               "ar": "البريد الإلكتروني أو الاجتماع الجماعي المباشر يُذل الأشخاص."
             },
             "explanation": {
-              "fr": "Annoncer une mauvaise nouvelle avec dignité et transparence. Indication : Réunissez d’abord individuellement les licenciés, puis organisez une réunion collective transparente.",
-              "ar": "إعلان خبر سيء بكرامة وشفافية. إشارة: اجتمع أولًا بشكل فردي مع المسرَّحين، ثم نظّم اجتماعًا جماعيًا شفافًا."
+              "fr": "Compétence : Annoncer une mauvaise nouvelle avec dignité et transparence. Indication : Réunissez d’abord individuellement les licenciés, puis organisez une réunion collective transparente.",
+              "ar": "الكفاءة: الإعلان عن خبر سيء بكرامة وشفافية. دلالة: اجمع المفصولين أولاً بشكل فردي، ثم نظم اجتماعاً جماعياً شفافاً."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2354,8 +2354,8 @@
               "ar": "الدعم الاجتماعي ركيزة من ركائز المرونة."
             },
             "explanation": {
-              "fr": "Connaître les techniques anti‑stress et les modèles de burnout. Indication : Respiration 4‑7‑8, 3 dimensions du burnout (Maslach), isolement = coping inadaptatif.",
-              "ar": "معرفة تقنيات مكافحة الضغط ونماذج الاحتراق الوظيفي. إشارة: تنفس 4-7-8، الأبعاد الثلاثة للاحتراق (ماسلاش)، العزلة = تكيف غير ملائم."
+              "fr": "Compétence : Connaître les techniques anti‑stress et les modèles de burnout. Indication : Respiration 4‑7‑8, 3 dimensions du burnout (Maslach), isolement = coping inadaptatif.",
+              "ar": "الكفاءة: معرفة التقنيات المضادة للتوتر ونماذج الاحتراق المهني. دلالة: تنفس 4-7-8، أبعاد الاحتراق الثلاثة (ماسلاخ)، العزلة = تأقلم غير تكيفي."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2430,8 +2430,8 @@
               "ar": "لماذا، مع من، الضحك، التحرك، التعلم، الابتكار..."
             },
             "explanation": {
-              "fr": "Mémoriser les 8 piliers de la résilience (Cyrulnik). Indication : sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité.",
-              "ar": "حفظ الركائز الثمان للمرونة (سيرولنيك). إشارة: المعنى، العلاقات، الفكاهة، الجسم، التعلم، الإبداع، الأمل، الروحانية."
+              "fr": "Compétence : Mémoriser les 8 piliers de la résilience (Cyrulnik). Indication : sens, relations, humour, corps, apprentissage, créativité, espoir, spiritualité.",
+              "ar": "الكفاءة: حفظ ركائز المرونة الثمانية (سيرولنيك). دلالة: المعنى، العلاقات، الفكاهة، الجسد، التعلم، الإبداع، الأمل، الروحانية."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2502,8 +2502,8 @@
               "ar": "ابحث عن الإنكار والعمل المفرط وغياب الاستراتيجية."
             },
             "explanation": {
-              "fr": "Repérer les erreurs classiques d’un plan d’urgence en ONG. Indication : mentir, 16h/jour, salaire -50% unilatéral, supplier, embauche CDI, sacrifice de santé.",
-              "ar": "رصد الأخطاء الكلاسيكية في خطة طوارئ المنظمات. إشارة: الكذب، 16 ساعة/يوم، تخفيض الرواتب 50% بشكل أحادي، التوسل، التوظيف بعقد دائم أثناء الأزمة، التضحية بالصحة."
+              "fr": "Compétence : Repérer les erreurs classiques d’un plan d’urgence en ONG. Indication : mentir, 16h/jour, salaire -50% unilatéral, supplier, embauche CDI, sacrifice de santé.",
+              "ar": "الكفاءة: تحديد الأخطاء النمطية لخطة طوارئ في منظمة غير حكومية. دلالة: الكذب، 16 ساعة/يوم، تخفيض راتب 50% من جانب واحد، التوسل، توظيف بعقود غير محددة، التضحية بالصحة."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2597,8 +2597,8 @@
               "ar": "المرونة تبدأ بتغيير النظرة للوقائع."
             },
             "explanation": {
-              "fr": "Recadrer des pensées négatives (Beck) pour restaurer la confiance. Indication : « J’ai échoué » → « tu as appris » ; « je suis nulle » → dissocier personne et action ; « j’ai ruiné 10 vies » → rappeler les aspects positifs et les facteurs externes.",
-              "ar": "إعادة تأطير الأفكار السلبية (بيك) لاستعادة الثقة. إشارة: «فشلت» ← «تعلمتِ»؛ «أنا فاشلة» ← فصل الشخص عن الفعل؛ «دمرت 10 حياة» ← التذكير بالجوانب الإيجابية والعوامل الخارجية."
+              "fr": "Compétence : Recadrer des pensées négatives (Beck) pour restaurer la confiance. Indication : « J’ai échoué » → « tu as appris » ; « je suis nulle » → dissocier personne et action ; « j’ai ruiné 10 vies » → rappeler les aspects positifs et les facteurs externes.",
+              "ar": "الكفاءة: إعادة صياغة الأفكار السلبية (بيك) لاستعادة الثقة. دلالة: « لقد فشلت » ← « لقد تعلمت »؛ « أنا لا شيء » ← فصل الشخص عن الفعل؛ « دمرت 10 حيوات » ← تذكير بالجوانب الإيجابية والعوامل الخارجية."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2649,8 +2649,8 @@
               "ar": "الرهان على حل واحد (مثل التمويل الجماعي) محفوف بالمخاطر."
             },
             "explanation": {
-              "fr": "Effectuer un pivot stratégique intelligent en période de crise. Indication : Réduisez à 5 employés, recentrez sur 2 projets forts, diversifiez les financeurs.",
-              "ar": "إجراء تحول استراتيجي ذكي في فترة الأزمة. إشارة: قلّصوا الفريق إلى 5 موظفين، ركّزوا على مشروعين قويين، نوّعوا مصادر التمويل."
+              "fr": "Compétence : Effectuer un pivot stratégique intelligent en période de crise. Indication : Réduisez à 5 employés, recentrez sur 2 projets forts, diversifiez les financeurs.",
+              "ar": "الكفاءة: تنفيذ محور استراتيجي ذكي في فترة الأزمة. دلالة: خفض إلى 5 موظفين، التركيز على مشروعين قويين، تنويع الممولين."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2690,8 +2690,8 @@
               "ar": "لا تنسَ تضمين التعاطف ورؤية واضحة للمستقبل."
             },
             "explanation": {
-              "fr": "Communiquer une restructuration avec empathie, transparence et vision. Indication : Le message doit contenir : transparence, empathie, options, vision, engagement personnel.",
-              "ar": "التواصل حول إعادة الهيكلة بتعاطف وشفافية ورؤية. إشارة: يجب أن تتضمن الرسالة: شفافية، تعاطف، خيارات، رؤية، التزام شخصي."
+              "fr": "Compétence : Communiquer une restructuration avec empathie, transparence et vision. Indication : Le message doit contenir : transparence, empathie, options, vision, engagement personnel.",
+              "ar": "الكفاءة: التواصل حول إعادة هيكلة بتعاطف وشفافية ورؤية. دلالة: يجب أن تحتوي الرسالة على: شفافية، تعاطف، خيارات، رؤية، التزام شخصي."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2747,8 +2747,8 @@
               "ar": "دليل: تعلّم النهوض من جديد."
             },
             "explanation": {
-              "fr": "Identifier la résilience. Indication : « Je suis plus forte quand tu me casses et me reconstruis. Les enfants l’ont naturellement, les adultes doivent la réapprendre. »",
-              "ar": "تحديد المرونة. إشارة: «أنا أقوى عندما تكسرني وتعيد بنائي. الأطفال يملكونها بالفطرة، والكبار يجب أن يتعلموها من جديد.»"
+              "fr": "Compétence : Identifier la résilience. Indication : « Je suis plus forte quand tu me casses et me reconstruis. Les enfants l’ont naturellement, les adultes doivent la réapprendre. »",
+              "ar": "الكفاءة: تحديد المرونة. دلالة: « أنا أقوى عندما تكسرني وتبنيني. الأطفال لديهم طبيعياً، البالغون عليهم إعادة تعلمها. »"
             },
             "context_dialogue": null,
             "presentation": {
@@ -2840,8 +2840,8 @@
               "ar": "التسلسل: 1) الأرواح، 2) التحقيق، 3) التواصل، 4) التعاطف."
             },
             "explanation": {
-              "fr": "Prioriser la sauvegarde des vies en situation de crise. Indication : Envoyez plus de médecins à l’hôpital (sauver des vies) avant toute communication.",
-              "ar": "إعطاء الأولوية لإنقاذ الأرواح في حالة الأزمة. إشارة: أرسل المزيد من الأطباء للمستشفى (إنقاذ الأرواح) قبل أي تواصل."
+              "fr": "Compétence : Prioriser la sauvegarde des vies en situation de crise. Indication : Envoyez plus de médecins à l’hôpital (sauver des vies) avant toute communication.",
+              "ar": "الكفاءة: إعطاء الأولوية لإنقاذ الأرواح في حالة الأزمة. دلالة: أرسل المزيد من الأطباء إلى المستشفى (إنقاذ الأرواح) قبل أي اتصال."
             },
             "context_dialogue": null,
             "presentation": {
@@ -2920,8 +2920,8 @@
               "ar": "طابق حسب الوظيفة: طبيب (طبي)، شرطة (تحقيق)، إمام (تعاطف)."
             },
             "explanation": {
-              "fr": "Constituer une cellule de crise avec des profils complémentaires. Indication : Chef (Fatima), Médical (Dr. Karim), Enquêteur (Capitaine Hassan), Porte‑parole (Sarah), Empathie (Imam), Données (Youssef).",
-              "ar": "تشكيل خلية أزمة بملامح متكاملة. إشارة: الرئيس (فاطمة)، طبي (د. كريم)، محقق (النقيب حسن)، المتحدث الرسمي (سارة)، التعاطف (الإمام)، البيانات (يوسف)."
+              "fr": "Compétence : Constituer une cellule de crise avec des profils complémentaires. Indication : Chef (Fatima), Médical (Dr. Karim), Enquêteur (Capitaine Hassan), Porte‑parole (Sarah), Empathie (Imam), Données (Youssef).",
+              "ar": "الكفاءة: تكوين خلية أزمة بملامح متكاملة. دلالة: رئيس (فاطمة)، طبي (د. كريم)، محقق (النقيب حسن)، متحدث رسمي (سارة)، تعاطف (إمام)، بيانات (يوسف)."
             },
             "context_dialogue": null,
             "presentation": {
@@ -3015,8 +3015,8 @@
               "ar": "لا تهاجم أبدًا، التزم بالوقائع والتعاطف."
             },
             "explanation": {
-              "fr": "Communiquer en crise avec transparence, empathie et recentrage sur l’action. Indication : Dites ce que vous savez/ignorez, donnez les chiffres avec compassion, reconnaissez la colère puis recentrez sur l’action.",
-              "ar": "التواصل في الأزمة بشفافية وتعاطف وإعادة التركيز على العمل. إشارة: أخبر بما تعرفه/لا تعرفه، أعطِ الأرقام بتعاطف، اعترف بالغضب ثم أعد التركيز على العمل."
+              "fr": "Compétence : Communiquer en crise avec transparence, empathie et recentrage sur l’action. Indication : Dites ce que vous savez/ignorez, donnez les chiffres avec compassion, reconnaissez la colère puis recentrez sur l’action.",
+              "ar": "الكفاءة: التواصل في الأزمة بشفافية وتعاطف وتركيز على العمل. دلالة: قل ما تعرفه/تجهله، أعط الأرقام برحمة، اعترف بالغضب ثم ركز على العمل."
             },
             "context_dialogue": null,
             "presentation": {
@@ -3082,8 +3082,8 @@
               "ar": "ابحث عن تحيزات البيانات والوعود المستحيلة."
             },
             "explanation": {
-              "fr": "Analyser un rapport erroné en évitant les pièges fréquents. Indication : Données suspectes (100% homme), projection non justifiée, conclusion hâtive (10 témoignages), accusation sans preuve, promesse intenable (24h).",
-              "ar": "تحليل تقرير خاطئ مع تجنب الأخطاء الشائعة. إشارة: بيانات مشبوهة (100% رجال)، إسقاطات غير مبررة، استنتاج متسرع (10 شهادات)، اتهام بدون دليل، وعد مستحيل (24 ساعة)."
+              "fr": "Compétence : Analyser un rapport erroné en évitant les pièges fréquents. Indication : Données suspectes (100% homme), projection non justifiée, conclusion hâtive (10 témoignages), accusation sans preuve, promesse intenable (24h).",
+              "ar": "الكفاءة: تحليل تقرير خاطئ وتجنب الأخطاء الشائعة. دلالة: بيانات مشبوهة (100% رجال)، توقع غير مبرر، استنتاج متسرع (10 شهادات)، اتهام بدون دليل، وعد غير قابل للتحقيق (24 ساعة)."
             },
             "context_dialogue": null,
             "presentation": {
@@ -3144,8 +3144,8 @@
               "ar": "الذعر يحتاج تنفسًا، والتعب يحتاج راحة."
             },
             "explanation": {
-              "fr": "Prendre 5 décisions rapides sous pression en utilisant les acquis précédents. Indication : Panique → 4-7-8 ; enfant → s’agenouiller ; opposant → ignorer ; gaffe → analyse collective ; fatigue → passer le relais.",
-              "ar": "اتخاذ 5 قرارات سريعة تحت الضغط باستخدام المكتسبات السابقة. إشارة: ذعر ← 4-7-8؛ طفل ← انزل لمستواه؛ معارض ← تجاهل؛ خطأ ← تحليل جماعي؛ إرهاق ← سلّم المناوبة."
+              "fr": "Compétence : Prendre 5 décisions rapides sous pression en utilisant les acquis précédents. Indication : Panique → 4-7-8 ; enfant → s’agenouiller ; opposant → ignorer ; gaffe → analyse collective ; fatigue → passer le relais.",
+              "ar": "الكفاءة: اتخاذ 5 قرارات سريعة تحت الضغط باستخدام المكتسبات السابقة. دلالة: ذعر ← 4-7-8؛ طفل ← الركوع؛ خصم ← تجاهل؛ خطأ ← تحليل جماعي؛ تعب ← تسليم المهمة."
             },
             "context_dialogue": null,
             "presentation": {
@@ -3206,8 +3206,8 @@
               "ar": "الاستقلالية (حرية)، الكفاءة (إتقان)، الانتماء (رابط)."
             },
             "explanation": {
-              "fr": "Appliquer les trois piliers de l’autodétermination (SDT). Indication : Autonomie → « gère comme tu le sens » ; Compétence → « célèbre l’expertise » ; Affiliation → « repas d’équipe ».",
-              "ar": "تطبيق الركائز الثلاث لتقرير المصير (SDT). إشارة: الاستقلالية ← «تصرّف كما تراه مناسبًا»؛ الكفاءة ← «احتفل بالخبرة»؛ الانتماء ← «وجبة جماعية»."
+              "fr": "Compétence : Appliquer les three piliers de l’autodétermination (SDT). Indication : Autonomie → « gère comme tu le sens » ; Compétence → « célèbre l’expertise » ; Affiliation → « repas d’équipe ».",
+              "ar": "الكفاءة: تطبيق ركائز تقرير المصير الثلاثة (SDT). دلالة: استقلالية ← « تصرف كما تراه مناسباً »؛ كفاءة ← « احتفل بالخبرة »؛ انتماء ← « وجبة فريق »."
             },
             "context_dialogue": null,
             "presentation": {
@@ -3301,8 +3301,8 @@
               "ar": "الطاعة العمياء خطأ في الإدارة العامة."
             },
             "explanation": {
-              "fr": "Résoudre un dilemme éthique avec intégrité. Indication : Dialoguez d’abord, montrez les risques de la dissimulation, puis, si nécessaire, dites la vérité publiquement.",
-              "ar": "حل معضلة أخلاقية بنزاهة. إشارة: تحاور أولًا، أظهر مخاطر الإخفاء، ثم إذا لزم الأمر، قل الحقيقة علنيًا."
+              "fr": "Compétence : Résoudre un dilemme éthique avec intégrité. Indication : Dialoguez d’abord, montrez les risques de la dissimulation, puis, si nécessaire, dites la vérité publiquement.",
+              "ar": "الكفاءة: حل معضلة أخلاقية بنزاهة. دلالة: تحاور أولاً، أظهر مخاطر الإخفاء، ثم، إذا لزم الأمر، قل الحقيقة علناً."
             },
             "context_dialogue": null,
             "presentation": {
@@ -3342,8 +3342,8 @@
               "ar": "تأكد من تغطية الأولويات والفريق والوقاية."
             },
             "explanation": {
-              "fr": "Élaborer un plan d’action 100 jours structuré. Indication : 3 priorités claires, équipe précisée, prévention concrète, communication citoyenne engagée.",
-              "ar": "وضع خطة عمل 100 يوم مهيكلة. إشارة: 3 أولويات واضحة، فريق محدد، وقاية ملموسة، تواصل مواطني ملتزم."
+              "fr": "Compétence : Élaborer un plan d’action 100 jours structuré. Indication : 3 priorités claires, équipe précisée, prévention concrète, communication citoyenne engagée.",
+              "ar": "الكفاءة: وضع خطة عمل 100 يوم منظمة. دلالة: 3 أولويات واضحة، فريق محدد، وقاية ملموسة، تواصل مع المواطنين ملتزم."
             },
             "context_dialogue": null,
             "presentation": {
@@ -3410,8 +3410,8 @@
               "ar": "طابق كل مهمة بخبرة العضو."
             },
             "explanation": {
-              "fr": "Déléguer des tâches de crise selon les expertises. Indication : Conf presse et réseaux sociaux → Sarah ; visite hôpital → Imam ; fermeture source → Hassan ; rapport et leçons apprises → Fatima ; data → Youssef ; coordination hôpitaux → Dr. Karim.",
-              "ar": "تفويض مهام الأزمة حسب الخبرات. إشارة: المؤتمر الصحفي ووسائل التواصل ← سارة؛ زيارة المستشفى ← الإمام؛ إغلاق المصدر ← حسن؛ التقرير والدروس المستفادة ← فاطمة؛ البيانات ← يوسف؛ تنسيق المستشفيات ← د. كريم."
+              "fr": "Compétence : Déléguer des tâches de crise selon les expertises. Indication : Conf presse et réseaux sociaux → Sarah ; visite hôpital → Imam ; fermeture source → Hassan ; rapport et leçons apprises → Fatima ; data → Youssef ; coordination hôpitaux → Dr. Karim.",
+              "ar": "الكفاءة: تفويض مهام الأزمة حسب الخبرات. دلالة: مؤتمر صحفي وشبكات اجتماعية ← سارة؛ زيارة المستشفى ← إمام؛ إغلاق المصدر ← حسن؛ تقرير ودروس مستفادة ← فاطمة؛ بيانات ← يوسف؛ تنسيق المستشفيات ← د. كريم."
             },
             "context_dialogue": null,
             "presentation": {
@@ -3467,8 +3467,8 @@
               "ar": "التوازن بين الضغط والهدوء، الأنا والنحن."
             },
             "explanation": {
-              "fr": "Identifier la sagesse comme équilibre entre raison, empathie et action. Indication : « Je naîtrai quand tu équilibreras la tête, le cœur et les mains. Entre stress et calme, moi et nous, maintenant et demain. »",
-              "ar": "تحديد الحكمة كتوازن بين العقل والتعاطف والعمل. إشارة: «سأولد عندما توازن الرأس والقلب واليدين. بين الضغط والهدوء، الأنا والنحن، الآن والغد.»"
+              "fr": "Compétence : Identifier la sagesse comme équilibre entre raison, empathie et action. Indication : « Je naîtrai quand tu équilibreras la tête, le cœur et les mains. Entre stress et calme, moi et nous, maintenant et demain. »",
+              "ar": "الكفاءة: تحديد الحكمة كتوازن بين العقل، التعاطف والعمل. دلالة: « سأولد عندما توازن بين الرأس، القلب واليدين. بين التوتر والهدوء، أنا ونحن، الآن وغداً. »"
             },
             "context_dialogue": null,
             "presentation": {

@@ -1076,52 +1076,52 @@ export const LAAYOUNE_EXPLANATIONS: Record<string, any> = {
         "1": {
           "type": "Prise de décision créative",
           "explication": "Créer un protocole d’urgence en 5 étapes (communication, préparation, départ à l’accalmie, triage, suivi). Indication : Il faut informer rapidement, préparer deux véhicules (redondance), partir dès l’accalmie, trier sur place, puis tirer des leçons.",
-          "explication_ar": "ابتكار بروتوكول طوارئ في 5 خطوات (اتصال، تحضير، انطلاق عند هدوء العاصفة، فرز، متابعة). دلالة: يجب إعلام سريع، تحضير سيارتين (تكرار)، الانطلاق فور الهدوء، الفرز في المكان، ثم استخلاص الدروس."
+          "explication_ar": "الكفاءة: ابتكار بروتوكول طوارئ في 5 خطوات (اتصال، تحضير، انطلاق عند هدوء العاصفة، فرز، متابعة). دلالة: يجب إعلام سريع، تحضير سيارتين (تكرار)، الانطلاق فور الهدوء، الفرز في المكان، ثم استخلاص الدروس."
         },
         "2": {
           "type": "Scénario en cascade",
           "explication": "Innover sous contrainte (transformer un véhicule en panne en relais radio, distribuer l’eau proportionnellement aux besoins, choisir une solution hybride évacuation/ravitaillement). Indication : Q1 → transformer le véhicule en station fixe ; Q2 → triage 15 critiques (10L) / 60 fragiles (6L) / 125 stables (3L) ; Q3 → évacuer les critiques, ravitailler les autres.",
-          "explication_ar": "الابتكار تحت الضغط (تحويل سيارة معطلة إلى مرحل راديو، توزيع الماء حسب الحاجة، اختيار حل هجين إخلاء/تموين). دلالة: س1 ← تحويل السيارة إلى محطة ثابتة؛ س2 ← فرز 15 حرجاً (10 لترات) / 60 هشاً (6 لترات) / 125 مستقراً (3 لترات)؛ س3 ← إجلاء الحرجين، تموين الآخرين."
+          "explication_ar": "الكفاءة: الابتكار تحت الضغط (تحويل سيارة معطلة إلى مرحل راديو، توزيع الماء حسب الحاجة، اختيار حل هجين إخلاء/تموين). دلالة: س1 ← تحويل السيارة إلى محطة ثابتة؛ س2 ← فرز 15 حرجاً (10 لترات) / 60 هشاً (6 لترات) / 125 مستقراً (3 لترات)؛ س3 ← إجلاء الحرجين، تموين الآخرين."
         },
         "3": {
           "type": "Texte à trous",
           "explication": "Adapter les 8 piliers de la résilience au désert (métaphores). Indication : chameau (sens), tribu (relations), vent (humour), soleil (corps), sable (apprentissage), oasis (créativité), étoiles (espoir), silence (spiritualité).",
-          "explication_ar": "تكييف ركائز المرونة الثمانية مع الصحراء (استعارات). دلالة: جمل (معنى)، قبيلة (علاقات)، ريح (فكاهة)، شمس (جسد)، رمل (تعلم)، واحة (إبداع)، نجوم (أمل)، صمت (روحانية)."
+          "explication_ar": "الكفاءة: تكييف ركائز المرونة الثمانية مع الصحراء (استعارات). دلالة: جمل (معنى)، قبيلة (علاقات)، ريح (فكاهة)، شمس (جسد)، رمل (تعلم)، واحة (إبداع)، نجوم (أمل)، صمت (روحانية)."
         },
         "4": {
           "type": "Contre-la-montre créatif",
           "explication": "Créer des solutions low‑tech (signal fumée, filtre à eau, protocole psychologique PAIR, discours mobilisateur). Indication : Q1 → feu + tissu mouillé (code fumée) ; Q2 → filtre bouteille + charbon + gravier ; Q3 → PAIR (Pause, Accompagnement, Invitation, Réintégration) ; Q4 → discours court valorisant le sens, la compétence et l’affiliation.",
-          "explication_ar": "ابتكار حلول منخفضة التقنية (إشارة دخان، فلتر ماء، بروتوكول نفسي PAIR، خطاب تعبوي). دلالة: س1 ← نار + قماش مبلل (كود دخان)؛ س2 ← فلتر زجاجة + فحم + حصى؛ س3 ← PAIR (توقف، مرافقة، دعوة، إعادة إدماج)؛ س4 ← خطاب قصير يقدر المعنى والكفاءة والانتماء."
+          "explication_ar": "الكفاءة: ابتكار حلول منخفضة التقنية (إشارة دخان، فلتر ماء، بروتوكول نفسي PAIR، خطاب تعبوي). دلالة: س1 ← نار + قماش مبلل (كود دخان)؛ س2 ← فلتر زجاجة + فحم + حصى؛ س3 ← PAIR (توقف، مرافقة، دعوة، إعادة إدماج)؛ س4 ← خطاب قصير يقدر المعنى والكفاءة والانتماء."
         },
         "5": {
           "type": "Détection d’erreurs + création",
           "explication": "Améliorer un plan par la détection d’erreurs et la création d’une version V2 (départ tôt, GPS+boussole, 2 véhicules, satellite+radio+fumée, 5L d’eau, kit bivouac, plans B/C/D, formation trimestrielle). Indication : Remplacez chaque élément défaillant par une solution plus robuste.",
-          "explication_ar": "تحسين خطة باكتشاف الأخطاء وإنشاء نسخة V2 (انطلاق مبكر، GPS+بوصلة، سيارتان، قمر صناعي+راديو+دخان، 5 لترات ماء، عدة تخييم، خطط بديلة B/C/D، تكوين فصلي). دلالة: استبدل كل عنصر معيب بحل أكثر قوة."
+          "explication_ar": "الكفاءة: تحسين خطة باكتشاف الأخطاء وإنشاء نسخة V2 (انطلاق مبكر، GPS+بوصلة، سيارتان، قمر صناعي+راديو+دخان، 5 لترات ماء، عدة تخييم، خطط بديلة B/C/D، تكوين فصلي). دلالة: استبدل كل عنصر معيب بحل أكثر قوة."
         },
         "6": {
           "type": "Vrai/Faux créatif",
           "explication": "Comprendre que l’innovation naît de la contrainte (frugalité), que le leader reconnaît sa peur, et que créer c’est recombiner. Indication : Affirmation 1 → FAUX (contrainte) ; Affirmation 2 → FAUX (reconnaître sa peur) ; Affirmation 3 → FAUX (recombiner, pas à partir de rien).",
-          "explication_ar": "فهم أن الابتكار يولد من القيد (الاقتدار)، وأن القائد يعترف بخوفه، وأن الإبداع هو إعادة تركيب. دلالة: التأكيد 1 ← خطأ (قيد)؛ التأكيد 2 ← خطأ (الاعتراف بالخوف)؛ التأكيد 3 ← خطأ (إعادة تركيب، ليس من لا شيء)."
+          "explication_ar": "الكفاءة: فهم أن الابتكار يولد من القيد (الاقتدار)، وأن القائد يعترف بخوفه، وأن الإبداع هو إعادة تركيب. دلالة: التأكيد 1 ← خطأ (قيد)؛ التأكيد 2 ← خطأ (الاعتراف بالخوف)؛ التأكيد 3 ← خطأ (إعادة تركيب، ليس من لا شيء)."
         },
         "7": {
           "type": "Dialogue créatif",
           "explication": "Créer un protocole psychologique post‑traumatique adapté au désert (PAIR amélioré). Indication : Protéger (tente calme), Accueillir (silence 15‑30 min), Inviter (« quand tu voudras parler »), Réintégrer (tâche simple le lendemain). Suivi visio dans 48h.",
-          "explication_ar": "ابتكار بروتوكول نفسي ما بعد الصدمة ملائم للصحراء (PAIR محسّن). دلالة: حماية (خيمة هادئة)، استقبال (صمت 15-30 دقيقة)، دعوة (« عندما تريد التحدث »)، إعادة إدماج (مهمة بسيطة في اليوم التالي). متابعة مرئية خلال 48 ساعة."
+          "explication_ar": "الكفاءة: ابتكار بروتوكول نفسي ما بعد الصدمة ملائم للصحراء (PAIR محسّن). دلالة: حماية (خيمة هادئة)، استقبال (صمت 15-30 دقيقة)، دعوة (« عندما تريد التحدث »)، إعادة إدماج (مهمة بسيطة في اليوم التالي). متابعة مرئية خلال 48 ساعة."
         },
         "8": {
           "type": "Classement créatif",
           "explication": "Établir sa propre hiérarchie de survie au désert (abri, eau, secours, communication, orientation, signalisation, moral, nourriture). Indication : L’ombre passe avant l’eau, et l’eau avant la nourriture (30 jours sans manger vs 48h sans eau).",
-          "explication_ar": "تأسيس تسلسل هرمي خاص للبقاء في الصحراء (مأوى، ماء، إسعاف، اتصال، توجيه، إشارات، معنويات، طعام). دلالة: الظل يأتي قبل الماء، والماء قبل الطعام (30 يوماً بدون أكل مقابل 48 ساعة بدون ماء)."
+          "explication_ar": "الكفاءة: تأسيس تسلسل هرمي خاص للبقاء في الصحراء (مأوى، ماء، إسعاف، اتصال، توجيه، إشارات، معنويات، طعام). دلالة: الظل يأتي قبل الماء، والماء قبل الطعام (30 يوماً بدون أكل مقابل 48 ساعة بدون ماء)."
         },
         "9": {
           "type": "Réponse courte",
           "explication": "Rédiger une introduction de manuel de survie psychologique (outils concrets : STOP, 4‑7‑8, PAIR, pyramide, recadrage). Indication : Mentionnez les cinq outils clés et rassurez sur le fait que la peur est normale.",
-          "explication_ar": "كتابة مقدمة لدليل البقاء النفسي (أدوات ملموسة: STOP، 4-7-8، PAIR، هرم، إعادة صياغة). دلالة: اذكر الأدوات الخمسة الرئيسية وطمئن بأن الخوف طبيعي."
+          "explication_ar": "الكفاءة: كتابة مقدمة لدليل البقاء النفسي (أدوات ملموسة: STOP، 4-7-8، PAIR، هرم، إعادة صياغة). دلالة: اذكر الأدوات الخمسة الرئيسية وطمئن بأن الخوف طبيعي."
         },
         "10": {
           "type": "Énigme",
           "explication": "Identifier l’ingéniosité (elle naît du manque, se révèle dans le vide). Indication : « Dans l’abondance je me cache, dans le vide je me révèle. Ishaq l’a découverte à Rabat, mais c’est au désert qu’il l’a créée. »",
-          "explication_ar": "تحديد البراعة (تولد من النقص، تظهر في الفراغ). دلالة: « في الوفرة أختبئ، في الفراغ أظهر. إسحاق اكتشفها في الرباط، لكنه في الصحراء ابتكرها. »"
+          "explication_ar": "الكفاءة: تحديد البراعة (تولد من النقص، تظهر في الفراغ). دلالة: « في الوفرة أختبئ، في الفراغ أظهر. إسحاق اكتشفها في الرباط، لكنه في الصحراء ابتكرها. »"
         }
       }
     },
@@ -1131,43 +1131,52 @@ export const LAAYOUNE_EXPLANATIONS: Record<string, any> = {
         "1": {
           "type": "QCM créatif",
           "explication": "Concevoir une gouvernance adaptée (3 cercles : aînées, expérimentées, nouvelles). Indication : Ni démocratie pure (ignore l’expertise) ni hiérarchie militaire (tue la motivation) – choisissez le modèle hybride à trois cercles avec rotation.",
-          "explication_ar": "تصميم حوكمة ملائمة (3 دوائر: كبيرات، خبيرات، جديدات). دلالة: لا ديمقراطية خالصة (تتجاهل الخبرة) ولا تسلسل هرمي عسكري (يقتل الدافع) – اختر النموذج الهجين ثلاثي الدوائر مع التناوب."
+          "explication_ar": "الكفاءة: تصميم حوكمة ملائمة (3 دوائر: كبيرات، خبيرات، جديدات). دلالة: لا ديمقراطية خالصة (تتجاهل الخبرة) ولا تسلسل هرمي عسكري (يقتل الدافع) – اختر النموذج الهجين ثلاثي الدوائر مع التناوب."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Créer une formation pour analphabètes (observation, guidage, production personnelle, binômes, mini‑équipe, célébration, suivi visuel par couleurs). Indication : Semaine 1 : observer, tâches simples, objet personnel ; semaine 2 : binômes, mini‑équipe, célébration ; suivi : tableau mural avec autocollants."
+          "explication": "Créer une formation pour analphabètes (observation, guidage, production personnelle, binômes, mini‑équipe, célébration, suivi visuel par couleurs). Indication : Semaine 1 : observer, tâches simples, objet personnel ; semaine 2 : binômes, mini‑équipe, célébration ; suivi : tableau mural avec autocollants.",
+          "explication_ar": "الكفاءة: ابتكار تكوين للأميين (ملاحظة، توجيه، إنتاج شخصي، أزواج، فريق مصغر، احتفال، متابعة بصرية بالألوان). دلالة: أسبوع 1: ملاحظة، مهام بسيطة، غرض شخصي؛ أسبوع 2: أزواج، فريق مصغر، احتفال؛ متابعة: لوحة حائطية بملصقات."
         },
         "3": {
           "type": "Dialogue créatif",
-          "explication": "Résoudre un conflit tribal par un projet commun supra‑ordonné (stratégie « Le Pont »). Indication : Ne pas parler du conflit, créer un produit nécessitant les deux savoir‑faire, superviser légèrement, célébrer ensemble."
+          "explication": "Résoudre un conflit tribal par un projet commun supra‑ordonné (stratégie « Le Pont »). Indication : Ne pas parler du conflit, créer un produit nécessitant les deux savoir‑faire, superviser légèrement, célébrer ensemble.",
+          "explication_ar": "الكفاءة: حل نزاع قبلي بمشروع مشترك أعلى (استراتيجية « الجسر »). دلالة: لا تتحدث عن النزاع، ابتكر منتجاً يحتاج المهارتين، أشرِف بخفة، احتفل معاً."
         },
         "4": {
           "type": "Texte à trous (création)",
-          "explication": "Élaborer une charte coopérative orale et visuelle. Indication : Respect, consensus des trois cercles, rotation des tâches, partage des bénéfices (50/50), formation par les pairs, résolution par les aînées, célébration, transmission."
+          "explication": "Élaborer une charte coopérative orale et visuelle. Indication : Respect, consensus des trois cercles, rotation des tâches, partage des bénéfices (50/50), formation par les pairs, résolution par les aînées, célébration, transmission.",
+          "explication_ar": "الكفاءة: وضع ميثاق تعاوني شفوي وبصري. دلالة: احترام، إجماع الدوائر الثلاث، تناوب المهام، تقاسم المنافع (50/50)، تكوين الأقران، حل النزاعات بواسطة الكبيرات، احتفال، نقل."
         },
         "5": {
           "type": "Détection + création",
-          "explication": "Analyser les faiblesses commerciales et proposer un plan marketing innovant. Indication : Absence digitale → Instagram ; dépendance client → prospecter ; prix trop bas → repositionnement premium ; etc. Créez des solutions adaptées."
+          "explication": "Analyser les faiblesses commerciales et proposer un plan marketing innovant. Indication : Absence digitale → Instagram ; dépendance client → prospecter ; prix trop bas → repositionnement premium ; etc. Créez des solutions adaptées.",
+          "explication_ar": "الكفاءة: تحليل الضعف التجاري واقتراح خطة تسويق مبتكرة. دلالة: غياب رقمي ← إنستغرام؛ اعتماد على زبون ← البحث عن زبائن؛ سعر منخفض جداً ← إعادة وضع متميز؛ إلخ. ابتكر حلولاً مناسبة."
         },
         "6": {
           "type": "Scénario en cascade",
-          "explication": "Créer un système de mentorat (critères, programme 6 mois, évaluation orale). Indication : Critères : expérience, patience, bienveillance, capacité à expliquer sans écrire. Programme : observation, production supervisée, production indépendante. Évaluation : orale, collective."
+          "explication": "Créer un système de mentorat (critères, programme 6 mois, évaluation orale). Indication : Critères : expérience, patience, bienveillance, capacité à expliquer sans écrire. Programme : observation, production supervisée, production indépendante. Évaluation : orale, collective.",
+          "explication_ar": "الكفاءة: إنشاء نظام إرشاد (معايير، برنامج 6 أشهر، تقييم شفوي). دلالة: معايير: خبرة، صبر، لطف، قدرة على الشرح دون كتابة. برنامج: ملاحظة، إنتاج موجه، إنتاج مستقل. تقييم: شفوي، جماعي."
         },
         "7": {
           "type": "Contre-la-montre créatif",
-          "explication": "Réagir à 4 crises (perte client, sécheresse, maladie, concurrence) avec des solutions frugales. Indication : Contacter anciens clients, récupérer eau de pluie/goutte‑à‑goutte, répartir les tâches, miser sur l’authenticité."
+          "explication": "Réagir à 4 crises (perte client, sécheresse, maladie, concurrence) avec des solutions frugales. Indication : Contacter anciens clients, récupérer eau de pluie/goutte‑à‑goutte, répartir les tâches, miser sur l’authenticité.",
+          "explication_ar": "الكفاءة: التفاعل مع 4 أزمات (فقدان زبون، جفاف، مرض، منافسة) بحلول مقتصدة. دلالة: الاتصال بالزبائن القدامى، جمع مياه الأمطار/الري بالتنقيط، توزيع المهام، الرهان على الأصالة."
         },
         "8": {
           "type": "Classement créatif",
-          "explication": "Planifier la croissance en 7 phases sur 5 ans. Indication : Stabiliser, former mentores, ouvrir 2ème atelier, recruter 20 nouvelles, lancer e‑commerce, partenariat hôtels, essaimage."
+          "explication": "Planifier la croissance en 7 phases sur 5 ans. Indication : Stabiliser, former mentores, ouvrir 2ème atelier, recruter 20 nouvelles, lancer e‑commerce, partenariat hôtels, essaimage.",
+          "explication_ar": "الكفاءة: تخطيط النمو في 7 مراحل على 5 سنوات. دلالة: استقرار، تكوين مرشدات، فتح ورشة ثانية، توظيف 20 جديدة، إطلاق تجارة إلكترونية، شراكة فنادق، تناثر."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Écrire une lettre d’accueil orale, simple et fraternelle. Indication : Soyez chaleureuse, courte (150‑200 mots), lisible à voix haute, avec des mots simples et une promesse de soutien."
+          "explication": "Écrire une lettre d’accueil orale, simple et fraternelle. Indication : Soyez chaleureuse, courte (150‑200 mots), lisible à voix haute, avec des mots simples et une promesse de soutien.",
+          "explication_ar": "الكفاءة: كتابة رسالة ترحيب شفوية، بسيطة وأخوية. دلالة: كن دافئاً، قصيراً (150-200 كلمة)، مقروءاً بصوت عالٍ، بكلمات بسيطة ووعد بالدعم."
         },
         "10": {
           "type": "Énigme",
-          "explication": "Identifier la communauté (construite grain par grain, par 25 mains). Indication : « Je ne suis pas donnée, je suis construite. 25 mains me tissent, 25 voix me chantent. Avant Aicha il n’y avait que du sable. »"
+          "explication": "Identifier la communauté (construite grain par grain, par 25 mains). Indication : « Je ne suis pas donnée, je suis construite. 25 mains me tissent, 25 voix me chantent. Avant Aicha il n’y avait que du sable. »",
+          "explication_ar": "الكفاءة: تحديد المجتمع (يُبنى حبة بحبة، بـ25 يداً). دلالة: « أنا لست معطاة، أنا مبنية. 25 يداً تنسجني، 25 صوتاً يغنيني. قبل عائشة لم يكن هناك سوى الرمال. »"
         }
       }
     },
@@ -1176,43 +1185,53 @@ export const LAAYOUNE_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "Prise de décision créative",
-          "explication": "Créer un système de triage visuel sans technologie (3 couleurs : rouge/jaune/vert). Indication : Rouge = ne marche pas ou ne parle pas ou fièvre haute ; Jaune = marche + parle + fièvre modérée ; Vert = marche + parle + pas de fièvre. Rubans de couleur."
+          "explication": "Créer un système de triage visuel sans technologie (3 couleurs : rouge/jaune/vert). Indication : Rouge = ne marche pas ou ne parle pas ou fièvre haute ; Jaune = marche + parle + fièvre modérée ; Vert = marche + parle + pas de fièvre. Rubans de couleur.",
+          "explication_ar": "الكفاءة: إنشاء نظام فرز بصري دون تقنية (3 ألوان: أحمر/أصفر/أخضر). دلالة: أحمر = لا يمشي أو لا يتكلم أو حرارة مرتفعة؛ أصفر = يمشي + يتكلم + حرارة متوسطة؛ أخضر = يمشي + يتكلم + لا حرارة. أشرطة ملونة."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Élaborer un diagnostic par 5 questions, un plan d’évacuation et une stabilisation sans outils. Indication : Q1 → 5 questions (localisation, durée, alimentation, signaux, antécédents) ; Q2 → appendicite probable, évacuation urgente ; Q3 → plan de stabilisation horaire (0‑1h, 1‑2h, 2‑4h)."
+          "explication": "Élaborer un diagnostic par 5 questions, un plan d’évacuation et une stabilisation sans outils. Indication : Q1 → 5 questions (localisation, durée, alimentation, signaux, antécédents) ; Q2 → appendicite probable, évacuation urgente ; Q3 → plan de stabilisation horaire (0‑1h, 1‑2h, 2‑4h).",
+          "explication_ar": "الكفاءة: وضع تشخيص بـ5 أسئلة، خطة إخلاء وتثبيت دون أدوات. دلالة: س1 ← 5 أسئلة (موقع، مدة، طعام، علامات، سوابق)؛ س2 ← التهاب زائدة دودية محتمل، إخلاء عاجل؛ س3 ← خطة تثبيت ساعية (0-1س، 1-2س، 2-4س)."
         },
         "3": {
           "type": "Rôles d’équipe (création)",
-          "explication": "Formation des agents de santé villageois (profil, formation 5 jours, kit <500 DH). Indication : Profil : personne respectée, sans diplôme, bilingue, motivée. Formation : triage, secours, signaux d’alerte, hygiène, simulation. Kit : trousse, rubans, thermomètre, sels, fiche plastifiée, radio."
+          "explication": "Formation des agents de santé villageois (profil, formation 5 jours, kit <500 DH). Indication : Profil : personne respectée, sans diplôme, bilingue, motivée. Formation : triage, secours, signaux d’alerte, hygiène, simulation. Kit : trousse, rubans, thermomètre, sels, fiche plastifiée, radio.",
+          "explication_ar": "الكفاءة: تكوين وكلاء صحة قرويين (ملف، تكوين 5 أيام، عدة <500 درهم). دلالة: ملف: شخص محترم، بدون شهادة، ثنائي اللغة، متحفز. تكوين: فرز، إسعاف، علامات إنذار، نظافة، محاكاة. عدة: حقيبة، أشرطة، ميزان حرارة، أملاح، بطاقة مغلفة، راديو."
         },
         "4": {
           "type": "Dialogue créatif",
-          "explication": "Créer un système de télémédecine low‑tech (SMS standardisé + photos + appel vocal). Indication : Utiliser un protocole écrit préétabli, des questions standardisées et l’envoi de photos pour les plaies."
+          "explication": "Créer un système de télémédecine low‑tech (SMS standardisé + photos + appel vocal). Indication : Utiliser un protocole écrit préétabli, des questions standardisées et l’envoi de photos pour les plaies.",
+          "explication_ar": "الكفاءة: إنشاء نظام طب عن بعد منخفض التقنية (رسائل نصية قياسية + صور + اتصال صوتي). دلالة: استخدام بروتوكول كتابي مُعد مسبقاً، أسئلة موحدة، وإرسال صور للجروح."
         },
         "5": {
           "type": "Texte à trous (création)",
-          "explication": "Établir un code d’éthique médicale pour l’isolement (8 principes). Indication : Primum non nocere, traiter/référer, consentement oral, reconnaître ses limites, documenter, prioriser vulnérables, maintenir sa santé, garder l’espoir."
+          "explication": "Établir un code d’éthique médicale pour l’isolement (8 principes). Indication : Primum non nocere, traiter/référer, consentement oral, reconnaître ses limites, documenter, prioriser vulnérables, maintenir sa santé, garder l’espoir.",
+          "explication_ar": "الكفاءة: وضع مدونة أخلاقيات طبية للعزلة (8 مبادئ). دلالة: أولاً لا تضر، علاج/تحويل، موافقة شفوية، الاعتراف بالحدود، توثيق، أولوية الضعفاء، الحفاظ على صحته، الحفاظ على الأمل."
         },
         "6": {
           "type": "Détection + création",
-          "explication": "Transformer les faiblesses du système en solutions innovantes. Indication : Absence radio → réseau de relais ; pas de stock → pharmacie communautaire ; manque formation → former des agents ; délais évacuation → points de rendez‑vous héliportés ; isolement → soutien par pairs ; absence dossier → carnet de santé visuel."
+          "explication": "Transformer les faiblesses du système en solutions innovantes. Indication : Absence radio → réseau de relais ; pas de stock → pharmacie communautaire ; manque formation → former des agents ; délais évacuation → points de rendez‑vous héliportés ; isolement → soutien par pairs ; absence dossier → carnet de santé visuel.",
+          "explication_ar": "الكفاءة: تحويل نقاط ضعف النظام إلى حلول مبتكرة. دلالة: غياب راديو ← شبكة مرحلات؛ لا مخزون ← صيدلية مجتمعية؛ نقص تكوين ← تكوين وكلاء؛ تأخير إخلاء ← نقاط التقاء مروحية؛ عزلة ← دعم الأقران؛ غياب ملف ← كشف صحي بصري."
         },
         "7": {
           "type": "Scénario en cascade",
-          "explication": "Gérer une épidémie isolée avec confinement souple, communication chaînée et ravitaillement décentralisé. Indication : Confinement par famille, signal visuel (drap rouge), dépôt de vivres à un point de rendez‑vous par moto‑croûte."
+          "explication": "Gérer une épidémie isolée avec confinement souple, communication chaînée et ravitaillement décentralisé. Indication : Confinement par famille, signal visuel (drap rouge), dépôt de vivres à un point de rendez‑vous par moto‑croûte.",
+          "explication_ar": "الكفاءة: إدارة وباء معزول بحجر مرن، اتصال متسلسل وتموين لامركزي. دلالة: حجر عائلي، إشارة بصرية (غطاء أحمر)، إيداع مؤن في نقطة التقاء بواسطة دراجة نارية."
         },
         "8": {
           "type": "Contre-la-montre créatif",
-          "explication": "Créer des innovations médicales de fortune (brancard, stérilisateur solaire, attelle, signal SOS). Indication : Brancard → deux perches + couverture ; stérilisateur → boîte métallique noire + couvercle en verre, 4h soleil ; attelle → branche droite + tissu ; SOS → triangle de tissu ou miroir."
+          "explication": "Créer des innovations médicales de fortune (brancard, stérilisateur solaire, attelle, signal SOS). Indication : Brancard → deux perches + couverture ; stérilisateur → boîte métallique noire + couvercle en verre, 4h soleil ; attelle → branche droite + tissu ; SOS → triangle de tissu ou miroir.",
+          "explication_ar": "الكفاءة: ابتكار أدوات طبية مرتجلة (نقالة، معقم شمسي، جبيرة، إشارة SOS). دلالة: نقالة ← عمودان + غطاء؛ معقم ← صندوق معدني أسود + غطاء زجاجي، 4 ساعات شمس؛ جبيرة ← غصن مستقيم + قماش؛ SOS ← مثلث قماش أو مرآة."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Rédiger une vision « Santé Sahara 2030 » intégrant technologie, tradition et communauté. Indication : Mentionnez les agents de santé villageois, la télémédecine low‑tech, la pharmacopée traditionnelle, et la solidarité communautaire."
+          "explication": "Rédiger une vision « Santé Sahara 2030 » intégrant technologie, tradition et communauté. Indication : Mentionnez les agents de santé villageois, la télémédecine low‑tech, la pharmacopée traditionnelle, et la solidarité communautaire.",
+          "explication_ar": "الكفاءة: كتابة رؤية « صحة الصحراء 2030 » تدمج التكنولوجيا والتقاليد والمجتمع. دلالة: اذكر وكلاء الصحة القرويين، الطب عن بعد منخفض التقنية، دستور الأدوية التقليدي، والتضامن المجتمعي."
         },
         "10": {
           "type": "Énigme",
-          "explication": "Identifier la médecine humaine (soin par l’écoute et la présence). Indication : « Je guéris sans hôpital, je soigne sans scanner, je sauve sans chirurgie. Mon seul outil : l’écoute. Dr. Karim l’a en abondance, Dr. Mourad en solitude. »"
+          "explication": "Identifier la médecine humaine (soin par l’écoute et la présence). Indication : « Je guéris sans hôpital, je soigne sans scanner, je sauve sans chirurgie. Mon seul outil : l’écoute. Dr. Karim l’a en abondance, Dr. Mourad en solitude. »",
+          "explication_ar": "الكفاءة: تحديد الطب الإنساني (العلاج بالاستماع والحضور). دلالة: « أشفي بلا مستشفى، أعالج بلا ماسح، أنقذ بلا جراحة. أداتي الوحيدة: الاستماع. الدكتور كريم يملكها بوفرة، الدكتور مراد في عزلة. »"
         }
       }
     },
@@ -1221,43 +1240,53 @@ export const LAAYOUNE_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "Prise de décision créative",
-          "explication": "Créer un système d’eau solaire à 50 000 DH (pompe solaire, réservoir surélevé, points d’eau communautaires, maintenance locale). Indication : Pompe solaire (20k) + réservoir (15k) + réseau simple (10k) + maintenance (5k) = 167 DH/personne."
+          "explication": "Créer un système d’eau solaire à 50 000 DH (pompe solaire, réservoir surélevé, points d’eau communautaires, maintenance locale). Indication : Pompe solaire (20k) + réservoir (15k) + réseau simple (10k) + maintenance (5k) = 167 DH/personne.",
+          "explication_ar": "الكفاءة: إنشاء نظام مياه شمسي بـ50.000 درهم (مضخة شمسية، خزان مرتفع، نقاط ماء مجتمعية، صيانة محلية). دلالة: مضخة شمسية (20 ألف) + خزان (15 ألف) + شبكة بسيطة (10 آلاف) + صيانة (5 آلاف) = 167 درهماً/للفرد."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Diagnostiquer une panne solaire sans outils, créer un système de backup et communiquer avec transparence. Indication : Q1 → inspection visuelle ; Q2 → batteries supplémentaires + rationnement ; Q3 → annonce orale claire : panne, réparation 24h, rationnement 2L/personne/jour."
+          "explication": "Diagnostiquer une panne solaire sans outils, créer un système de backup et communiquer avec transparence. Indication : Q1 → inspection visuelle ; Q2 → batteries supplémentaires + rationnement ; Q3 → annonce orale claire : panne, réparation 24h, rationnement 2L/personne/jour.",
+          "explication_ar": "الكفاءة: تشخيص عطل شمسي دون أدوات، إنشاء نظام احتياطي والتواصل بشفافية. دلالة: س1 ← تفتيش بصري؛ س2 ← بطاريات إضافية + تقنين؛ س3 ← إعلان شفوي واضح: عطل، إصلاح 24 ساعة، تقنين 2 لتر/شخص/يوم."
         },
         "3": {
           "type": "Texte à trous",
-          "explication": "Appliquer les 7 principes de l’innovation frugale (simplicité, créer avec ce qu’on a, zéro déchet, solutions partagées, maintenance locale, évolutivité, respect du contexte). Indication : Donnez un exemple concret du désert pour chaque principe."
+          "explication": "Appliquer les 7 principes de l’innovation frugale (simplicité, créer avec ce qu’on a, zéro déchet, solutions partagées, maintenance locale, évolutivité, respect du contexte). Indication : Donnez un exemple concret du désert pour chaque principe.",
+          "explication_ar": "الكفاءة: تطبيق مبادئ الابتكار المقتصد السبعة (بساطة، ابتكار بما هو متاح، صفر نفايات، حلول مشتركة، صيانة محلية، قابلية للتوسع، احترام السياق). دلالة: قدم مثالاً ملموساً من الصحراء لكل مبدأ."
         },
         "4": {
           "type": "Rôles d’équipe",
-          "explication": "Structurer une startup solaire (organigramme frugal). Indication : CEO (vision), CTO (technique), commercial (terrain), formateur (formation villageois), maintenance. Culture : frugale, terrain, transmission."
+          "explication": "Structurer une startup solaire (organigramme frugal). Indication : CEO (vision), CTO (technique), commercial (terrain), formateur (formation villageois), maintenance. Culture : frugale, terrain, transmission.",
+          "explication_ar": "الكفاءة: هيكلة شركة ناشئة شمسية (هيكل تنظيمي مقتصد). دلالة: مدير عام (رؤية)، مدير تقني (تقني)، تجاري (ميدان)، مُكوّن (تكوين القرويين)، صيانة. ثقافة: مقتصدة، ميدانية، نقل."
         },
         "5": {
           "type": "Dialogue créatif",
-          "explication": "Persuader un chef de village réfractaire par démonstration et implication. Indication : Ne pas argumenter frontalement ; installer un petit panneau pour l’éclairage de la mosquée ou de l’école ; associer les notables."
+          "explication": "Persuader un chef de village réfractaire par démonstration et implication. Indication : Ne pas argumenter frontalement ; installer un petit panneau pour l’éclairage de la mosquée ou de l’école ; associer les notables.",
+          "explication_ar": "الكفاءة: إقناع شيخ قرية معارض بالبرهان والإشراك. دلالة: لا تجادل مباشرة؛ ركّب لوحاً صغيراً لإضاءة المسجد أو المدرسة؛ أشرك الأعيان."
         },
         "6": {
           "type": "Détection + création",
-          "explication": "Créer 3 solutions anti‑sable frugales. Indication : Brosses fixes (effet vent), revêtement hydrophobe à l’huile végétale, inclinaison supplémentaire avec vibration manuelle."
+          "explication": "Créer 3 solutions anti‑sable frugales. Indication : Brosses fixes (effet vent), revêtement hydrophobe à l’huile végétale, inclinaison supplémentaire avec vibration manuelle.",
+          "explication_ar": "الكفاءة: ابتكار 3 حلول مضادة للرمال مقتصدة. دلالة: فرش ثابتة (تأثير الرياح)، طلاء كاره للماء بالزيت النباتي، إمالة إضافية بهز يدوي."
         },
         "7": {
           "type": "Classement créatif",
-          "explication": "Prioriser des villages avec une matrice multi‑critères (population, isolement, activité économique, engagement, impact femmes/enfants). Indication : Pondérez chaque critère, notez chaque village, calculez le score total."
+          "explication": "Prioriser des villages avec une matrice multi‑critères (population, isolement, activité économique, engagement, impact femmes/enfants). Indication : Pondérez chaque critère, notez chaque village, calculez le score total.",
+          "explication_ar": "الكفاءة: تحديد أولويات القرى بمصفوفة متعددة المعايير (عدد السكان، العزلة، النشاط الاقتصادي، الالتزام، تأثير النساء/الأطفال). دلالة: وزن كل معيار، قيم كل قرية، احسب المجموع الكلي."
         },
         "8": {
           "type": "Contre-la-montre",
-          "explication": "Créer 4 innovations express (four solaire, chargeur, réfrigérateur zeer, éclairage public). Indication : Four → boîte carton + papier alu ; chargeur → petit panneau 5V + régulateur + batterie USB ; zeer → deux pots en terre cuite avec sable mouillé ; éclairage → panneau 20W + batterie + détecteur + LED."
+          "explication": "Créer 4 innovations express (four solaire, chargeur, réfrigérateur zeer, éclairage public). Indication : Four → boîte carton + papier alu ; chargeur → petit panneau 5V + régulateur + batterie USB ; zeer → deux pots en terre cuite avec sable mouillé ; éclairage → panneau 20W + batterie + détecteur + LED.",
+          "explication_ar": "الكفاءة: ابتكار 4 ابتكارات سريعة (فرن شمسي، شاحن، ثلاجة زير، إنارة عمومية). دلالة: فرن ← صندوق كرتون + ورق ألومنيوم؛ شاحن ← لوح صغير 5 فولت + منظم + بطارية USB؛ زير ← قدران من الطين مع رمل مبلل؛ إنارة ← لوح 20 واط + بطارية + كاشف + ليد."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Rédiger un pitch pour lever 5M DH (impact social, rentabilité, simplicité). Indication : Chiffrez le nombre de villages, le coût par village, le retour sur investissement (économies d’énergie, création d’emplois, amélioration santé)."
+          "explication": "Rédiger un pitch pour lever 5M DH (impact social, rentabilité, simplicité). Indication : Chiffrez le nombre de villages, le coût par village, le retour sur investissement (économies d’énergie, création d’emplois, amélioration santé).",
+          "explication_ar": "الكفاءة: كتابة عرض ترويجي لجمع 5 ملايين درهم (تأثير اجتماعي، ربحية، بساطة). دلالة: حدد عدد القرى، التكلفة لكل قرية، عائد الاستثمار (توفير الطاقة، خلق فرص عمل، تحسين الصحة)."
         },
         "10": {
           "type": "Énigme",
-          "explication": "Identifier le soleil (ressource gratuite et infinie captée par l’ingéniosité). Indication : « Je brûle les imprudents mais je nourris les ingénieux. Brahim m’a capturé et transformé en lumière. »"
+          "explication": "Identifier le soleil (ressource gratuite et infinie captée par l’ingéniosité). Indication : « Je brûle les imprudents mais je nourris les ingénieux. Brahim m’a capturé et transformé en lumière. »",
+          "explication_ar": "الكفاءة: تحديد الشمس (مورد مجاني ولا نهائي يتم تسخيره بالبراعة). دلالة: « أحرق المتهورين لكني أُغذي المبتكرين. إبراهيم أسرني وحولني إلى نور. »"
         }
       }
     },
@@ -1266,43 +1295,53 @@ export const LAAYOUNE_EXPLANATIONS: Record<string, any> = {
       "exercices": {
         "1": {
           "type": "Création stratégique",
-          "explication": "Créer un plan de développement en 5 axes avec des noms évocateurs (SOLEIL, OASIS, CARAVANE, TRIBU, ÉTOILE). Indication : Chaque axe utilise un atout local (soleil, eau, culture, jeunesse, connectivité)."
+          "explication": "Créer un plan de développement en 5 axes avec des noms évocateurs (SOLEIL, OASIS, CARAVANE, TRIBU, ÉTOILE). Indication : Chaque axe utilise un atout local (soleil, eau, culture, jeunesse, connectivité).",
+          "explication_ar": "الكفاءة: إنشاء خطة تنموية في 5 محاور بأسماء موحية (شمس، واحة، قافلة، قبيلة، نجمة). دلالة: كل محور يستخدم ميزة محلية (شمس، ماء، ثقافة، شباب، اتصالية)."
         },
         "2": {
           "type": "Scénario en cascade",
-          "explication": "Défendre un plan face à l’opposition (ministre, opposant, jeune). Indication : Q1 → phase 1 (Soleil+Tribu) auto‑financée ; Q2 → montrer l’intégration des traditions (Caravane, Tribu) ; Q3 → proposer un parcours personnel de formation‑emploi‑entrepreneuriat."
+          "explication": "Défendre un plan face à l’opposition (ministre, opposant, jeune). Indication : Q1 → phase 1 (Soleil+Tribu) auto‑financée ; Q2 → montrer l’intégration des traditions (Caravane, Tribu) ; Q3 → proposer un parcours personnel de formation‑emploi‑entrepreneuriat.",
+          "explication_ar": "الكفاءة: الدفاع عن خطة أمام المعارضة (وزير، معارض، شاب). دلالة: س1 ← مرحلة 1 (شمس+قبيلة) ذاتية التمويل؛ س2 ← إظهار إدماج التقاليد (قافلة، قبيلة)؛ س3 ← اقتراح مسار شخصي تكوين-تشغيل-مقاولاتية."
         },
         "3": {
           "type": "Rôles d’équipe",
-          "explication": "Concevoir la gouvernance du plan (comités stratégique, technique, citoyen). Indication : Stratégique (Wali + chefs d’axes), Technique (experts), Citoyen (représentants élus), décisions en consensus ou super‑majorité (75%), réunions trimestrielles."
+          "explication": "Concevoir la gouvernance du plan (comités stratégique, technique, citoyen). Indication : Stratégique (Wali + chefs d’axes), Technique (experts), Citoyen (représentants élus), décisions en consensus ou super‑majorité (75%), réunions trimestrielles.",
+          "explication_ar": "الكفاءة: تصميم حوكمة الخطة (لجان استراتيجية، تقنية، مواطنين). دلالة: استراتيجية (والي + رؤساء محاور)، تقنية (خبراء)، مواطنين (ممثلين منتخبين)، قرارات بالإجماع أو أغلبية فائقة (75%)، اجتماعات فصلية."
         },
         "4": {
           "type": "Détection + création",
-          "explication": "Créer un plan de contingence pour 6 risques (sécheresse, financement, résistance, panne, politique, sanitaire). Indication : Stockage d’eau, fonds de réserve, comité de médiation, maintenance locale formée, transparence totale, kits d’urgence pré‑positionnés."
+          "explication": "Créer un plan de contingence pour 6 risques (sécheresse, financement, résistance, panne, politique, sanitaire). Indication : Stockage d’eau, fonds de réserve, comité de médiation, maintenance locale formée, transparence totale, kits d’urgence pré‑positionnés.",
+          "explication_ar": "الكفاءة: إنشاء خطة طوارئ لـ6 مخاطر (جفاف، تمويل، مقاومة، عطل، سياسي، صحي). دلالة: تخزين مياه، صندوق احتياطي، لجنة وساطة، صيانة محلية مكونة، شفافية تامة، عدات طوارئ مسبقة التموضع."
         },
         "5": {
           "type": "Texte à trous (création)",
-          "explication": "Établir une théorie du changement (Inputs → Activités → Outputs → Outcomes → Impact). Indication : Pour l’axe Soleil : 50M DH → installer 100 fermes → 500 emplois, 50 GWh → réduction facture énergie → autonomie énergétique régionale."
+          "explication": "Établir une théorie du changement (Inputs → Activités → Outputs → Outcomes → Impact). Indication : Pour l’axe Soleil : 50M DH → installer 100 fermes → 500 emplois, 50 GWh → réduction facture énergie → autonomie énergétique régionale.",
+          "explication_ar": "الكفاءة: وضع نظرية التغيير (مدخلات ← أنشطة ← مخرجات ← نتائج ← تأثير). دلالة: لمحور الشمس: 50 مليون درهم ← تركيب 100 مزرعة ← 500 وظيفة، 50 غيغاواط/ساعة ← تخفيض فاتورة الطاقة ← استقلالية طاقية جهوية."
         },
         "6": {
           "type": "Dialogue créatif",
-          "explication": "Mobiliser les communautés par un discours oral simple et concret. Indication : Parlez du désert comme d’une bénédiction, promettez des bénéfices tangibles (formation gratuite, emploi prioritaire), invitez à voir les projets pilotes."
+          "explication": "Mobiliser les communautés par un discours oral simple et concret. Indication : Parlez du désert comme d’une bénédiction, promettez des bénéfices tangibles (formation gratuite, emploi prioritaire), invitez à voir les projets pilotes.",
+          "explication_ar": "الكفاءة: تعبئة المجتمعات بخطاب شفوي بسيط وملموس. دلالة: تحدث عن الصحراء كنعمة، وعد بفوائد ملموسة (تكوين مجاني، تشغيل تفضيلي)، ادعُ لرؤية المشاريع التجريبية."
         },
         "7": {
           "type": "Contre-la-montre",
-          "explication": "Prendre 5 décisions rapides de gouverneur (crue, conflit puits, investissement, pénurie profs, migrants). Indication : Hélicoptère évacuation ; chaudière mixte ; refus sous conditions ; former des assistants locaux ; réquisition tentes + coordination ONG."
+          "explication": "Prendre 5 décisions rapides de gouverneur (crue, conflit puits, investissement, pénurie profs, migrants). Indication : Hélicoptère évacuation ; chaudière mixte ; refus sous conditions ; former des assistants locaux ; réquisition tentes + coordination ONG.",
+          "explication_ar": "الكفاءة: اتخاذ 5 قرارات سريعة كوال (فيضان، نزاع بئر، استثمار، نقص أساتذة، مهاجرون). دلالة: مروحية إخلاء؛ تسخينة مختلطة؛ رفض بشروط؛ تكوين مساعدين محليين؛ استيلاء على خيام + تنسيق مع منظمات غير حكومية."
         },
         "8": {
           "type": "Classement créatif",
-          "explication": "Séquencer les 5 axes sur 5 ans (logique de dépendance). Indication : Année 1 : SOLEIL + TRIBU (énergie + formation) ; Année 2 : OASIS (eau permise par énergie) ; Année 3 : CARAVANE (tourisme après eau) ; Année 4 : ÉTOILE (connectivité après attractivité) ; Année 5 : évaluation."
+          "explication": "Séquencer les 5 axes sur 5 ans (logique de dépendance). Indication : Année 1 : SOLEIL + TRIBU (énergie + formation) ; Année 2 : OASIS (eau permise par énergie) ; Année 3 : CARAVANE (tourisme après eau) ; Année 4 : ÉTOILE (connectivité après attractivité) ; Année 5 : évaluation.",
+          "explication_ar": "الكفاءة: تسلسل المحاور الخمسة على 5 سنوات (منطق الاعتماد). دلالة: سنة 1: شمس + قبيلة (طاقة + تكوين)؛ سنة 2: واحة (ماء ممكن بالطاقة)؛ سنة 3: قافلة (سياحة بعد الماء)؛ سنة 4: نجمة (اتصالية بعد الجاذبية)؛ سنة 5: تقييم."
         },
         "9": {
           "type": "Réponse courte",
-          "explication": "Écrire une lettre au Roi synthétisant le plan (respectueuse, claire, ambitieuse, réaliste). Indication : 200 mots, ton respectueux, 5 axes nommés, bénéfices chiffrés (emplois, autonomie énergétique, tourisme), appel à l’action."
+          "explication": "Écrire une lettre au Roi synthétisant le plan (respectueuse, claire, ambitieuse, réaliste). Indication : 200 mots, ton respectueux, 5 axes nommés, bénéfices chiffrés (emplois, autonomie énergétique, tourisme), appel à l’action.",
+          "explication_ar": "الكفاءة: كتابة رسالة إلى الملك تلخص الخطة (محترمة، واضحة، طموحة، واقعية). دلالة: 200 كلمة، نغمة محترمة، تسمية المحاور الخمسة، فوائد بالأرقام (وظائف، استقلالية طاقية، سياحة)، دعوة للعمل."
         },
         "10": {
           "type": "Énigme ultime",
-          "explication": "Identifier la créativité (sommet de Bloom 6). Indication : « Là où tout le monde voit du vide, je vois un commencement. Rabat m’a donné des briques, Chefchaouen des mains, Fès des yeux, Marrakech un jugement, Laâyoune des ailes. »"
+          "explication": "Identifier la créativité (sommet de Bloom 6). Indication : « Là où tout le monde voit du vide, je vois un commencement. Rabat m’a donné des briques, Chefchaouen des mains, Fès des yeux, Marrakech un jugement, Laâyoune des ailes. »",
+          "explication_ar": "الكفاءة: تحديد الإبداع (قمة بلوم 6). دلالة: « حيث يرى الجميع فراغاً، أرى بداية. الرباط أعطتني طوباً، شفشاون أيادياً، فاس عيوناً، مراكش حكماً، العيون أجنحة. »"
         }
       }
     }
