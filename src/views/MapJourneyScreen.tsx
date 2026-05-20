@@ -486,7 +486,7 @@ export default function MapJourneyScreen({
                       <CityOrb
                         city={displayCity}
                         isSelected={false}
-                        size="w-[92px] h-[92px]"
+                        size="w-[84px] h-[84px]"
                       />
                     </div>
 
@@ -665,7 +665,7 @@ const CityOrb: React.FC<{
   size?: string;
   onClick?: () => void;
   isLocked?: boolean;
-}> = ({ city, isSelected = false, size = "w-[92px] h-[92px]", onClick, isLocked: manualIsLocked }) => {
+}> = ({ city, isSelected = false, size = "w-[84px] h-[84px]", onClick, isLocked: manualIsLocked }) => {
   const isLocked = manualIsLocked ?? (city.status === 'locked');
   const isCompleted = city.status === 'completed';
   const isActive = city.status === 'active';
@@ -742,19 +742,19 @@ const CityOrb: React.FC<{
           {!isLocked && (
             <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none scale-105">
               <circle
-                cx="50%" cy="50%" r="42"
+                cx="50%" cy="50%" r="38"
                 fill="none"
                 stroke={isCompleted ? "#047857" : "var(--color-voyage-accent-dark)"}
                 strokeWidth="4"
                 strokeOpacity="0.15"
               />
               <circle
-                cx="50%" cy="50%" r="42"
+                cx="50%" cy="50%" r="38"
                 fill="none"
                 stroke={isCompleted ? "#34D399" : "var(--color-voyage-accent-light)"}
                 strokeWidth="4"
-                strokeDasharray={264}
-                strokeDashoffset={264 * (1 - progress)}
+                strokeDasharray={239}
+                strokeDashoffset={239 * (1 - progress)}
                 strokeLinecap="round"
                 className="transition-all duration-1000"
               />
@@ -806,7 +806,7 @@ const CityNode: React.FC<{
     >
       {/* Floating Player Avatar on top of active CityOrb */}
       {city.status === 'active' && (
-        <div className="absolute -top-[90px] z-40 flex flex-col items-center pointer-events-none">
+        <div className="absolute -top-[84px] z-40 flex flex-col items-center pointer-events-none">
           {/* Gentle Bouncing Avatar Container */}
           <motion.div
             animate={{ 
