@@ -347,34 +347,38 @@ export default function App() {
     fetchFirstMission();
   }, [selectedCity, completedMissions]);
 
+  const handleCorrectAnswer = (xpReward: number, starsReward: number) => {
+    if (!selectedMission || completedMissions.includes(selectedMission.id)) return;
+
+    const nextXp = userStats.xp + xpReward;
+    const nextLevel = Math.floor(nextXp / 1000) + 1;
+
+    const newStats = {
+      xp: nextXp,
+      stars: userStats.stars + starsReward,
+      level: nextLevel
+    };
+
+    setUserStats(newStats);
+
+    // Mise à jour temps réel dans Supabase
+    updateProfile({
+      xp: newStats.xp,
+      stars: newStats.stars,
+      level: newStats.level
+    });
+  };
+
   const handleMissionComplete = (summary: MissionCompletionSummary) => {
     setMissionSummary(summary);
 
     const wasAlreadyCompleted = completedMissions.includes(summary.missionId);
     if (!wasAlreadyCompleted) {
-      const nextXp = userStats.xp + summary.totalXp;
-      // Level calculation: 1 level every 1000 XP
-      const nextLevel = Math.floor(nextXp / 1000) + 1;
-      
-      const newStats = {
-        xp: nextXp,
-        stars: userStats.stars + summary.totalStars,
-        level: nextLevel
-      };
-      
       setCompletedMissions((prev) => [...prev, summary.missionId]);
-      setUserStats(newStats);
-
-      // Persist to Supabase (updates both app_users and player_profiles via useSupabaseProfile)
-      updateProfile({
-        xp: newStats.xp,
-        stars: newStats.stars,
-        level: newStats.level
-      });
 
       // Log detailed history to act_results and update player_city_progress
       if (session?.user?.id) {
-        saveMissionResult(summary, session.user.id, !!redoQuestionIds);
+        saveMissionResult(summary, session.user.id, !!redoQuestionIds, true);
       }
     }
 
@@ -474,6 +478,7 @@ export default function App() {
         return (
           <MapJourneyScreen 
             stats={userStats} 
+            profile={profile}
             completedCities={completedCities}
             completedMissions={completedMissions}
             onSelectCity={(city, mission) => {
@@ -517,6 +522,7 @@ export default function App() {
             onComplete={handleMissionComplete}
             onBack={() => setCurrentScreen(Screen.CinematicIntro)}
             redoQuestionIds={redoQuestionIds}
+            onCorrectAnswer={handleCorrectAnswer}
           />
         );
       case Screen.League:

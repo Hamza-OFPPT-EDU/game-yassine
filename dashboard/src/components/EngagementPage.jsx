@@ -4,7 +4,7 @@ import { useGlobalAnalytics } from '../hooks/useData';
 
 const COLORS = ['#7c3aed', '#10b981', '#f59e0b', '#ef4444', '#3b82f6'];
 
-export default function EngagementPage() {
+export default function EngagementPage({ onPlayerClick, players = [] }) {
   const { data, loading } = useGlobalAnalytics();
 
   if (loading) return <div className="loading"><div className="spinner" /> Analyse des données...</div>;
@@ -68,25 +68,38 @@ export default function EngagementPage() {
           </div>
           <div className="card-body">
             <div className="space-y-4">
-              {data.topPlayersByTime.map((player, i) => (
-                <div key={player.id} className="flex items-center justify-between p-3 bg-bg-surface border border-border-light rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary-light/10 flex items-center justify-center text-primary-light font-bold">
-                      {i + 1}
+              {data.topPlayersByTime.map((player, i) => {
+                const fullPlayer = players.find(p => p.id === player.id);
+                return (
+                  <div 
+                    key={player.id} 
+                    className="flex items-center justify-between p-3 bg-bg-surface border border-border-light rounded-xl hover:border-primary-light/40 hover:bg-white/5 cursor-pointer transition-all duration-200"
+                    onClick={() => {
+                      if (fullPlayer) {
+                        onPlayerClick?.(fullPlayer);
+                      } else {
+                        onPlayerClick?.({ id: player.id, display_name: player.name });
+                      }
+                    }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-primary-light/10 flex items-center justify-center text-primary-light font-bold">
+                        {i + 1}
+                      </div>
+                      <span className="font-semibold text-text-primary">{player.name}</span>
                     </div>
-                    <span className="font-semibold text-text-primary">{player.name}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-primary-light">{player.minutes} min</span>
-                    <div className="w-24 h-2 bg-white/5 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-primary-light" 
-                        style={{ width: `${(player.minutes / data.topPlayersByTime[0].minutes) * 100}%` }}
-                      />
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-bold text-primary-light">{player.minutes} min</span>
+                      <div className="w-24 h-2 bg-white/5 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-primary-light" 
+                          style={{ width: `${(player.minutes / data.topPlayersByTime[0].minutes) * 100}%` }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

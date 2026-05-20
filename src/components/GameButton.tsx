@@ -25,24 +25,24 @@ export default function GameButton({
   
   const variants = {
     primary: {
-      bg: 'bg-[#7B3F1A]',
-      depth: 'border-[#4E2510]',
+      bg: 'bg-voyage-primary',
+      depth: 'border-voyage-primary-dark',
       text: 'text-white'
     },
     secondary: {
-      bg: 'bg-[#F1Dbb1]',
-      depth: 'border-[#B58B60]',
-      text: 'text-[#4E2510]'
+      bg: 'bg-voyage-sand',
+      depth: 'border-voyage-secondary',
+      text: 'text-voyage-primary-dark'
     },
     accent: {
-      bg: 'bg-[#D4A43E]',
-      depth: 'border-[#A87D28]',
-      text: 'text-white'
+      bg: 'bg-voyage-accent',
+      depth: 'border-voyage-accent-dark',
+      text: 'text-voyage-primary-dark'
     },
     glass: {
-      bg: 'bg-white/10 backdrop-blur-md',
-      depth: 'border-white/20',
-      text: 'text-white'
+      bg: 'bg-white/12 backdrop-blur-md',
+      depth: 'border-white/25',
+      text: 'text-white shadow-xl'
     }
   };
 

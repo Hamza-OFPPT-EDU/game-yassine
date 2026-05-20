@@ -986,7 +986,7 @@ export function useSupabaseAssetConfigs(bucketId: string) {
 /**
  * Persists detailed mission history and updates city progress.
  */
-export async function saveMissionResult(summary: any, userId: string, isCorrection: boolean = false) {
+export async function saveMissionResult(summary: any, userId: string, isCorrection: boolean = false, alreadyUpdatedRealtime: boolean = false) {
   try {
     // 1. Update Mission History
     await supabase.from('mission_history').insert({
@@ -999,25 +999,27 @@ export async function saveMissionResult(summary: any, userId: string, isCorrecti
     });
 
     // 2. Update User Global Stats
-    const { data: profile } = await supabase
-      .from('app_users')
-      .select('xp, level')
-      .eq('id', userId)
-      .single();
-
-    if (profile) {
-      const newXp = (profile.xp || 0) + summary.totalXp;
-      const newLevel = Math.floor(newXp / 1000) + 1;
-      
-      await supabase
+    if (!alreadyUpdatedRealtime) {
+      const { data: profile } = await supabase
         .from('app_users')
-        .update({ xp: newXp, level: newLevel })
-        .eq('id', userId);
+        .select('xp, level')
+        .eq('id', userId)
+        .single();
+
+      if (profile) {
+        const newXp = (profile.xp || 0) + summary.totalXp;
+        const newLevel = Math.floor(newXp / 1000) + 1;
         
-      await supabase
-        .from('player_profiles')
-        .update({ xp: newXp, level: newLevel })
-        .eq('id', userId);
+        await supabase
+          .from('app_users')
+          .update({ xp: newXp, level: newLevel })
+          .eq('id', userId);
+          
+        await supabase
+          .from('player_profiles')
+          .update({ xp: newXp, level: newLevel })
+          .eq('id', userId);
+      }
     }
 
     // 3. Update City Progress

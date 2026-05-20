@@ -66,11 +66,11 @@ export default function LoadingModal({
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', stiffness: 280, damping: 30 }}
-            className="w-full max-w-lg bg-voyage-sand border-t-2 border-[#E5D5B8] rounded-t-[32px] shadow-[0_-20px_60px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden"
+            className="w-full max-w-lg bg-voyage-sand border-t-2 border-voyage-secondary/30 rounded-t-[32px] shadow-[0_-20px_60px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden"
             style={{ maxHeight: '75vh' }}
           >
             {/* Header */}
-            <div className="px-6 pt-5 pb-3 flex items-center justify-between border-b border-[#E5D5B8]/60">
+            <div className="px-6 pt-5 pb-3 flex items-center justify-between border-b border-voyage-secondary/20">
               <div className="flex items-center gap-3">
                 {!isComplete ? (
                   <Loader2 size={18} className="text-voyage-accent animate-spin" />
@@ -100,7 +100,7 @@ export default function LoadingModal({
             {/* Global Progress Bar */}
             <div className="px-6 py-3 space-y-1.5">
               {/* Total */}
-              <div className="relative h-2 w-full bg-[#E5D5B8]/60 rounded-full overflow-hidden">
+              <div className="relative h-2 w-full bg-voyage-secondary/20 rounded-full overflow-hidden">
                 <motion.div
                   animate={{ width: `${progress}%` }}
                   transition={{ type: 'spring', bounce: 0, duration: 0.6 }}
@@ -114,7 +114,7 @@ export default function LoadingModal({
                   <span className="text-[8px] font-black text-voyage-primary/40 uppercase tracking-widest shrink-0">
                     Groupe {currentGroup + 1}/{totalGroups}
                   </span>
-                  <div className="flex-1 h-1 bg-[#E5D5B8]/40 rounded-full overflow-hidden">
+                  <div className="flex-1 h-1 bg-voyage-secondary/15 rounded-full overflow-hidden">
                     <motion.div
                       animate={{ width: `${groupProgress}%` }}
                       transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
@@ -153,7 +153,7 @@ export default function LoadingModal({
             </div>
 
             {/* Footer Action */}
-            <div className="px-6 py-4 border-t border-[#E5D5B8]/60">
+            <div className="px-6 py-4 border-t border-voyage-secondary/20">
               <motion.button
                 whileHover={canDismiss ? { scale: 1.02 } : {}}
                 whileTap={canDismiss ? { scale: 0.98 } : {}}
@@ -163,7 +163,7 @@ export default function LoadingModal({
                   'w-full py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2',
                   canDismiss
                     ? 'bg-voyage-primary text-white shadow-lg shadow-voyage-primary/20 active:scale-95'
-                    : 'bg-[#E5D5B8]/40 text-voyage-primary/30 cursor-not-allowed',
+                    : 'bg-voyage-secondary/20 text-voyage-primary/30 cursor-not-allowed',
                 ].join(' ')}
               >
                 {isComplete ? (

@@ -45,7 +45,7 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
 
   return (
     <div
-      className="relative h-full w-full flex flex-col items-center justify-center bg-white overflow-hidden cursor-pointer"
+      className="relative h-full w-full flex flex-col items-center justify-center bg-voyage-sand overflow-hidden cursor-pointer"
       onClick={() => {
         if (videoRef.current) {
           videoRef.current.muted = true;
@@ -147,7 +147,7 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
                 />
               ))}
 
-              <div className="w-28 h-28 rounded-[32px] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex items-center justify-center relative border-4 border-[#E5D5B8] overflow-hidden group p-4">
+              <div className="w-28 h-28 rounded-[32px] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex items-center justify-center relative border-4 border-voyage-secondary/30 overflow-hidden group p-4">
                 <motion.div
                   animate={{ rotate: [0, 5, -5, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -172,7 +172,7 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.8, type: "spring" }}
-                className="absolute -top-1 -right-1 w-10 h-10 rounded-xl bg-voyage-accent flex items-center justify-center shadow-lg border-b-4 border-[#B58B60]"
+                className="absolute -top-1 -right-1 w-10 h-10 rounded-xl bg-voyage-accent flex items-center justify-center shadow-lg border-b-4 border-voyage-accent-dark"
               >
                 <Sparkles className="text-white" size={20} fill="currentColor" />
               </motion.div>
@@ -186,14 +186,14 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
                 transition={{ delay: 0.4 }}
                 className="space-y-1.5 text-center"
               >
-                <h1 className="font-headline font-black text-[18px] text-[#4E2510] tracking-tight">
+                <h1 className="font-headline font-black text-[18px] text-voyage-primary-dark tracking-tight">
                   Le Voyage des <span className="text-voyage-accent">Soft Skills</span>
                 </h1>
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6 }}
-                  className="text-[12px] font-black text-[#7B3F1A] arabic-font"
+                  className="text-[12px] font-black text-voyage-primary arabic-font"
                   dir="rtl"
                 >
                   رحلة المهارات الناعمة
@@ -215,12 +215,12 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
               transition={{ delay: 1 }}
               className="w-full max-w-[200px] space-y-3"
             >
-              <div className="relative h-1.5 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-50">
+              <div className="relative h-1.5 w-full bg-voyage-secondary-light/20 rounded-full overflow-hidden border border-slate-50/10">
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
                   transition={{ type: "spring", bounce: 0, duration: 0.5 }}
-                  className="absolute inset-0 bg-linear-to-r from-[#B58B60] via-voyage-accent to-[#B58B60] bg-size-[200%_100%]"
+                  className="absolute inset-0 bg-linear-to-r from-voyage-accent via-voyage-accent-light to-voyage-accent bg-size-[200%_100%]"
                 />
                 <motion.div
                   animate={{ x: ['-100%', '200%'] }}
@@ -228,7 +228,7 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
                   className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent"
                 />
               </div>
-              <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-[#7B3F1A]/60">
+              <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-voyage-primary/60">
                 <div className="flex items-center gap-1.5">
                   <Loader2 size={8} className="animate-spin" />
                   <span>Chargement des ressources</span>
@@ -245,7 +245,7 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
                 transition={{ delay: 1.2 }}
                 className="w-full max-w-[260px] mt-4"
               >
-                <div className="bg-[#1A0F07]/6 rounded-2xl p-3 max-h-[80px] overflow-hidden relative">
+                <div className="bg-voyage-primary-dark/5 rounded-2xl p-3 max-h-[80px] overflow-hidden relative">
                   <div className="space-y-0.5 overflow-y-auto max-h-[72px] scrollbar-hide">
                     {logs.slice(-6).map(log => (
                       <div key={log.id} className="flex items-center gap-1.5">
@@ -253,8 +253,8 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
                           'text-[8px] font-bold leading-tight break-all',
                           log.status === 'success' ? 'text-emerald-600' :
                           log.status === 'error'   ? 'text-red-400' :
-                          log.status === 'skip'    ? 'text-[#7B3F1A]/30' :
-                                                     'text-[#7B3F1A]/50'
+                          log.status === 'skip'    ? 'text-voyage-primary/30' :
+                                                     'text-voyage-primary/50'
                         ].join(' ')}>
                           {log.message}
                         </span>
@@ -263,7 +263,7 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
                     <div ref={logEndRef} />
                   </div>
                   {/* Fade overlay to hide overflow */}
-                  <div className="absolute bottom-0 inset-x-0 h-4 bg-linear-to-t from-voyage-sand/80 to-transparent rounded-b-2xl pointer-events-none" />
+                  <div className="absolute bottom-0 inset-x-0 h-4 bg-linear-to-t from-voyage-sand to-transparent rounded-b-2xl pointer-events-none" />
                 </div>
               </motion.div>
             )}

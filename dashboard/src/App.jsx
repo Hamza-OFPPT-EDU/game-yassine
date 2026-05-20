@@ -11,6 +11,8 @@ import EngagementPage from './components/EngagementPage';
 import CurriculumPreview from './components/cms/CurriculumPreview';
 import ThemeToggle from './components/ThemeToggle';
 import { useChallenges } from './hooks/useContent';
+import PlayerPanel from './components/PlayerPanel';
+import { usePlayers } from './hooks/useData';
 import {
   LayoutDashboard, Users, Award, FileEdit, Image as ImageIcon, Database,
   Settings as SettingsIcon, Map as MapIcon, Activity
@@ -53,7 +55,9 @@ const PAGE_TITLES = {
 export default function App() {
   const [page, setPage] = useState('dashboard');
   const [selectedChallenge, setSelectedChallenge] = useState(null);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
   const { challenges } = useChallenges();
+  const { players, deleteUser, updateUser } = usePlayers();
 
   const handleCityClick = (challenge) => {
     setSelectedChallenge(challenge);
@@ -132,10 +136,10 @@ export default function App() {
         </header>
 
         <main className="page-content">
-          {page === 'dashboard' && <Dashboard setPage={setPage} />}
-          {page === 'engagement' && <EngagementPage />}
-          {page === 'players'   && <Dashboard setPage={setPage} />}
-          {page === 'badges'    && <BadgesPage />}
+          {page === 'dashboard' && <Dashboard setPage={setPage} onPlayerClick={setSelectedPlayer} />}
+          {page === 'engagement' && <EngagementPage onPlayerClick={setSelectedPlayer} players={players} />}
+          {page === 'players'   && <Dashboard setPage={setPage} onPlayerClick={setSelectedPlayer} />}
+          {page === 'badges'    && <BadgesPage onPlayerClick={setSelectedPlayer} players={players} />}
           {page === 'content'   && <ContentPage />}
           {page === 'map'       && <MapEditorPage onNavigate={(id, city) => { setPage(id); if(city) setSelectedChallenge(city); }} />}
           {page === 'media'     && <MediaLibrary />}
@@ -149,6 +153,13 @@ export default function App() {
           )}
         </main>
       </div>
+
+      <PlayerPanel 
+        player={selectedPlayer} 
+        onClose={() => setSelectedPlayer(null)} 
+        onDelete={deleteUser}
+        onUpdate={updateUser}
+      />
     </div>
   );
 }

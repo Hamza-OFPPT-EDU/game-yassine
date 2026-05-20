@@ -93,16 +93,16 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
   };
 
   return (
-    <div className="h-full w-full flex flex-col relative bg-[#FFF8F0] text-[#1A1A2E] overflow-y-auto pb-10 font-sans" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="h-full w-full flex flex-col relative bg-voyage-sand text-voyage-duo-eel overflow-y-auto pb-10 font-sans" dir={isAr ? 'rtl' : 'ltr'}>
       {/* Dynamic Background with Moroccan Influence */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-[#7B3F1A]/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#F4A261]/10 rounded-full blur-[100px]" />
+        <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-voyage-primary/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-voyage-accent/10 rounded-full blur-[100px]" />
         
         <div 
-          className="absolute inset-0 opacity-[0.03]" 
+          className="absolute inset-0 opacity-[0.04]" 
           style={{ 
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 15-15 15-15-15zM0 30l15 15-15 15-15-15zM60 30l15 15-15 15-15-15zM30 60l15 15-15 15-15-15z' fill='%237B3F1A' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 15-15 15-15-15zM0 30l15 15-15 15-15-15zM60 30l15 15-15 15-15-15zM30 60l15 15-15 15-15-15z' fill='%235A2207' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
             backgroundSize: '60px 60px'
           }}
         />
@@ -114,15 +114,15 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={onBack}
-            className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-[#7B3F1A]/10 text-[#7B3F1A]"
+            className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-voyage-primary/25 text-voyage-primary"
           >
             <ArrowRight className={isAr ? "" : "rotate-180"} size={22} strokeWidth={2.5} />
           </motion.button>
           <div>
-            <h1 className={`text-2xl font-black uppercase tracking-tighter text-[#1A1A2E] ${isAr ? 'arabic-font' : ''}`}>
+            <h1 className={`text-2xl font-black uppercase tracking-tighter text-voyage-primary-dark ${isAr ? 'arabic-font' : ''}`}>
               {isAr ? "إنشاء حساب" : "Inscription"}
             </h1>
-            <p className={`text-[10px] font-bold text-[#7B3F1A]/60 uppercase tracking-widest ${isAr ? 'arabic-font' : ''}`}>
+            <p className={`text-[10px] font-bold text-voyage-primary/75 uppercase tracking-widest ${isAr ? 'arabic-font' : ''}`}>
               {isAr ? "مسافر جديد" : "Nouveau Voyageur"}
             </p>
           </div>
@@ -133,12 +133,12 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={openSettings}
-            className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-[#7B3F1A]/10 text-[#7B3F1A]"
+            className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white shadow-md border border-voyage-primary/25 text-voyage-primary"
             title="Réglages Audio"
           >
             <Volume2 size={22} strokeWidth={2.5} />
           </motion.button>
-          <div className="w-12 h-12 rounded-2xl bg-[#F4A261] flex items-center justify-center shadow-lg shadow-[#F4A261]/20">
+          <div className="w-12 h-12 rounded-2xl bg-voyage-accent flex items-center justify-center shadow-lg shadow-voyage-accent/30">
               <Sparkles size={24} className="text-white" fill="currentColor" />
           </div>
         </div>
@@ -148,12 +148,12 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/80 backdrop-blur-2xl border-2 border-white rounded-[40px] p-6 shadow-[0_20px_60px_rgba(45,106,79,0.1)] mb-6"
+          className="bg-white/95 backdrop-blur-2xl border-2 border-voyage-secondary/30 rounded-[40px] p-6 shadow-[0_20px_60px_rgba(90,34,7,0.15)] mb-6"
         >
           <form onSubmit={handleRegister} className="space-y-5">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className={`text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
+                <label className={`text-[10px] font-black text-voyage-primary-dark uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
                   {isAr ? "الاسم الشخصي" : "Prénom"}
                 </label>
                 <input
@@ -162,12 +162,12 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   placeholder={isAr ? "أمير" : "Amir"}
-                  className={`w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 px-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm ${isAr ? 'text-right arabic-font' : ''}`}
+                  className={`w-full bg-voyage-sand/30 border-2 border-voyage-secondary/40 rounded-2xl py-3 px-4 focus:outline-none focus:border-voyage-primary focus:ring-4 focus:ring-voyage-primary/10 transition-all font-bold text-sm text-voyage-primary-dark placeholder-voyage-primary/40 ${isAr ? 'text-right arabic-font' : ''}`}
                   disabled={loading}
                 />
               </div>
               <div className="space-y-1.5">
-                <label className={`text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
+                <label className={`text-[10px] font-black text-voyage-primary-dark uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
                   {isAr ? "الاسم العائلي" : "Nom"}
                 </label>
                 <input
@@ -176,18 +176,18 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   placeholder={isAr ? "بوليالي" : "Boulyali"}
-                  className={`w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 px-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm ${isAr ? 'text-right arabic-font' : ''}`}
+                  className={`w-full bg-voyage-sand/30 border-2 border-voyage-secondary/40 rounded-2xl py-3 px-4 focus:outline-none focus:border-voyage-primary focus:ring-4 focus:ring-voyage-primary/10 transition-all font-bold text-sm text-voyage-primary-dark placeholder-voyage-primary/40 ${isAr ? 'text-right arabic-font' : ''}`}
                   disabled={loading}
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className={`text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
+              <label className={`text-[10px] font-black text-voyage-primary-dark uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
                 {isAr ? "اسم المستخدم الخاص بك (تلقائي)" : "Ton Pseudo de voyageur"}
               </label>
               <div className="relative">
-                <div className={`absolute top-1/2 -translate-y-1/2 text-[#F4A261] ${isAr ? 'right-4' : 'left-4'}`}>
+                <div className={`absolute top-1/2 -translate-y-1/2 text-voyage-accent-dark ${isAr ? 'right-4' : 'left-4'}`}>
                   <User size={18} strokeWidth={2.5} />
                 </div>
                 <input
@@ -196,17 +196,17 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   value={username}
                   readOnly
                   placeholder="prenom.nom"
-                  className={`w-full bg-[#F4A261]/5 border-2 border-[#F4A261]/20 rounded-2xl py-3.5 text-[#F4A261] font-black italic cursor-not-allowed ${isAr ? 'pr-11 pl-4 text-right' : 'pl-11 pr-4'}`}
+                  className={`w-full bg-voyage-accent/5 border-2 border-voyage-accent/30 rounded-2xl py-3.5 text-voyage-accent-dark font-black italic cursor-not-allowed ${isAr ? 'pr-11 pl-4 text-right' : 'pl-11 pr-4'}`}
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className={`text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
+                <label className={`text-[10px] font-black text-voyage-primary-dark uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
                   {isAr ? "الجنس" : "Genre"}
                 </label>
-                <div className="flex gap-2 p-1 bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl">
+                <div className="flex gap-2 p-1 bg-voyage-sand/40 border-2 border-voyage-secondary/30 rounded-2xl">
                   {['H', 'F'].map((g) => (
                     <button
                       key={g}
@@ -214,8 +214,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                       onClick={() => setGender(g as 'H' | 'F')}
                       className={`flex-1 py-2.5 rounded-xl font-black text-xs transition-all ${
                         gender === g 
-                          ? 'bg-white text-[#7B3F1A] shadow-sm' 
-                          : 'text-[#7B3F1A]/40 hover:text-[#7B3F1A]/60'
+                          ? 'bg-white text-voyage-primary shadow-md border border-voyage-secondary/20' 
+                          : 'text-voyage-primary/60 hover:text-voyage-primary/95'
                       } ${isAr ? 'arabic-font' : ''}`}
                     >
                       {g === 'H' 
@@ -226,9 +226,9 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                 </div>
               </div>
               <div className="space-y-1.5">
-                <label className={`text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest flex items-center gap-1 ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
+                <label className={`text-[10px] font-black text-voyage-primary-dark uppercase tracking-widest flex items-center gap-1 ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
                   <span>{isAr ? "المؤسسة" : "Établissement"}</span> 
-                  <span className="text-[#7B3F1A]/40 lowercase font-bold text-[8px]">
+                  <span className="text-voyage-primary/60 lowercase font-bold text-[8px]">
                     {isAr ? "(اختياري)" : "(Optionnel)"}
                   </span>
                 </label>
@@ -238,7 +238,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   value={establishment}
                   onChange={(e) => setEstablishment(e.target.value)}
                   placeholder={isAr ? "مثال: مكتب التكوين" : "ex: OFPPT"}
-                  className={`w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 px-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm ${isAr ? 'text-right arabic-font' : ''}`}
+                  className={`w-full bg-voyage-sand/30 border-2 border-voyage-secondary/40 rounded-2xl py-3 px-4 focus:outline-none focus:border-voyage-primary focus:ring-4 focus:ring-voyage-primary/10 transition-all font-bold text-sm text-voyage-primary-dark placeholder-voyage-primary/40 ${isAr ? 'text-right arabic-font' : ''}`}
                   disabled={loading}
                 />
               </div>
@@ -246,9 +246,9 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className={`text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest flex items-center gap-1 ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
+                <label className={`text-[10px] font-black text-voyage-primary-dark uppercase tracking-widest flex items-center gap-1 ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
                   <span>{isAr ? "التخصص" : "Spécialité"}</span> 
-                  <span className="text-[#7B3F1A]/40 lowercase font-bold text-[8px]">
+                  <span className="text-voyage-primary/60 lowercase font-bold text-[8px]">
                     {isAr ? "(اختياري)" : "(Optionnel)"}
                   </span>
                 </label>
@@ -258,14 +258,14 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   value={specialty}
                   onChange={(e) => setSpecialty(e.target.value)}
                   placeholder={isAr ? "مثال: التطوير الرقمي" : "ex: Dév Digital"}
-                  className={`w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 px-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm ${isAr ? 'text-right arabic-font' : ''}`}
+                  className={`w-full bg-voyage-sand/30 border-2 border-voyage-secondary/40 rounded-2xl py-3 px-4 focus:outline-none focus:border-voyage-primary focus:ring-4 focus:ring-voyage-primary/10 transition-all font-bold text-sm text-voyage-primary-dark placeholder-voyage-primary/40 ${isAr ? 'text-right arabic-font' : ''}`}
                   disabled={loading}
                 />
               </div>
               <div className="space-y-1.5">
-                <label className={`text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest flex items-center gap-1 ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
+                <label className={`text-[10px] font-black text-voyage-primary-dark uppercase tracking-widest flex items-center gap-1 ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
                   <span>{isAr ? "المستوى" : "Niveau"}</span> 
-                  <span className="text-[#7B3F1A]/40 lowercase font-bold text-[8px]">
+                  <span className="text-voyage-primary/60 lowercase font-bold text-[8px]">
                     {isAr ? "(اختياري)" : "(Optionnel)"}
                   </span>
                 </label>
@@ -275,18 +275,18 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   value={academicLevel}
                   onChange={(e) => setAcademicLevel(e.target.value)}
                   placeholder={isAr ? "مثال: السنة الأولى" : "ex: 1ère année"}
-                  className={`w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3 px-4 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm ${isAr ? 'text-right arabic-font' : ''}`}
+                  className={`w-full bg-voyage-sand/30 border-2 border-voyage-secondary/40 rounded-2xl py-3 px-4 focus:outline-none focus:border-voyage-primary focus:ring-4 focus:ring-voyage-primary/10 transition-all font-bold text-sm text-voyage-primary-dark placeholder-voyage-primary/40 ${isAr ? 'text-right arabic-font' : ''}`}
                   disabled={loading}
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className={`text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
+              <label className={`text-[10px] font-black text-voyage-primary-dark uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
                 {isAr ? "تاريخ ميلادك" : "Ta date de naissance"}
               </label>
               <div className="relative group">
-                <div className={`absolute top-1/2 -translate-y-1/2 text-[#7B3F1A]/40 group-focus-within:text-[#7B3F1A] transition-colors pointer-events-none ${isAr ? 'right-4' : 'left-4'}`}>
+                <div className={`absolute top-1/2 -translate-y-1/2 text-voyage-primary/50 group-focus-within:text-voyage-primary transition-colors pointer-events-none ${isAr ? 'right-4' : 'left-4'}`}>
                   <Sparkles size={18} strokeWidth={2.5} />
                 </div>
                 <input
@@ -295,18 +295,18 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   value={birthDate}
                   onChange={(e) => setBirthDate(e.target.value)}
                   placeholder={isAr ? "يوم/شهر/سنة" : "JJ/MM/AAAA"}
-                  className={`w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3.5 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm ${isAr ? 'pr-11 pl-4 text-right arabic-font' : 'pl-11 pr-4'}`}
+                  className={`w-full bg-voyage-sand/30 border-2 border-voyage-secondary/40 rounded-2xl py-3.5 focus:outline-none focus:border-voyage-primary focus:ring-4 focus:ring-voyage-primary/10 transition-all font-bold text-sm text-voyage-primary-dark placeholder-voyage-primary/40 ${isAr ? 'pr-11 pl-4 text-right arabic-font' : 'pl-11 pr-4'}`}
                   disabled={loading}
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className={`text-[10px] font-black text-[#7B3F1A] uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
+              <label className={`text-[10px] font-black text-voyage-primary-dark uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
                 {isAr ? "كلمة المرور السرية" : "Mot de passe secret"}
               </label>
               <div className="relative group">
-                <div className={`absolute top-1/2 -translate-y-1/2 text-[#7B3F1A]/40 group-focus-within:text-[#7B3F1A] transition-colors ${isAr ? 'right-4' : 'left-4'}`}>
+                <div className={`absolute top-1/2 -translate-y-1/2 text-voyage-primary/50 group-focus-within:text-voyage-primary transition-colors ${isAr ? 'right-4' : 'left-4'}`}>
                   <Lock size={18} strokeWidth={2.5} />
                 </div>
                 <input
@@ -315,7 +315,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className={`w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-2xl py-3.5 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-sm ${isAr ? 'pr-11 pl-4 text-right' : 'pl-11 pr-4'}`}
+                  className={`w-full bg-voyage-sand/30 border-2 border-voyage-secondary/40 rounded-2xl py-3.5 focus:outline-none focus:border-voyage-primary focus:ring-4 focus:ring-voyage-primary/10 transition-all font-bold text-sm text-voyage-primary-dark placeholder-voyage-primary/40 ${isAr ? 'pr-11 pl-4 text-right' : 'pl-11 pr-4'}`}
                   disabled={loading}
                 />
               </div>
@@ -325,7 +325,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
               <motion.div 
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                className={`flex items-center gap-3 text-[#E76F51] bg-[#E76F51]/10 p-3 rounded-2xl border border-[#E76F51]/20 text-[11px] font-bold ${isAr ? 'arabic-font' : ''}`}
+                className={`flex items-center gap-3 text-red-700 bg-red-50 p-3 rounded-2xl border border-red-200/50 text-[11px] font-bold ${isAr ? 'arabic-font' : ''}`}
               >
                 <AlertCircle size={16} />
                 {error}
@@ -337,7 +337,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading || !password}
-              className="w-full bg-linear-to-br from-[#7B3F1A] to-[#4E2510] text-white py-4.5 rounded-3xl font-black text-lg uppercase tracking-tight flex items-center justify-center gap-3 shadow-xl shadow-[#7B3F1A]/20 hover:shadow-[#7B3F1A]/40 disabled:opacity-50 transition-all mt-4 border-b-4 border-black/20"
+              className="w-full bg-linear-to-br from-voyage-primary to-voyage-primary-dark text-white py-4.5 rounded-3xl font-black text-lg uppercase tracking-tight flex items-center justify-center gap-3 shadow-xl shadow-voyage-primary/20 hover:shadow-voyage-primary/40 disabled:opacity-50 transition-all mt-4 border-b-4 border-voyage-primary-dark/50"
             >
               {loading ? (
                 <Loader2 className="animate-spin" size={24} />
@@ -358,7 +358,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
               <span className={`text-[11px] font-bold text-[#6B7280] ${isAr ? 'arabic-font' : ''}`}>
                 {isAr ? "لديك حساب بالفعل ؟" : "Déjà un voyageur ?"}
               </span>
-              <span className={`text-sm font-black text-[#F4A261] group-hover:text-[#E76F51] transition-colors flex items-center gap-1 ${isAr ? 'arabic-font flex-row-reverse' : ''}`}>
+              <span className={`text-sm font-black text-voyage-accent-dark group-hover:text-voyage-primary transition-colors flex items-center gap-1 ${isAr ? 'arabic-font flex-row-reverse' : ''}`}>
                 <span>{isAr ? "سجل دخولك هنا" : "Connecte-toi ici"}</span>
                 <ArrowRight className={isAr ? "rotate-180" : ""} size={14} strokeWidth={3} />
               </span>
@@ -366,7 +366,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
           </div>
         </motion.div>
 
-        <p className={`text-center text-[#7B3F1A]/30 text-[10px] font-bold px-10 italic leading-relaxed ${isAr ? 'arabic-font text-[11px]' : ''}`}>
+        <p className={`text-center text-voyage-primary/50 text-[10px] font-bold px-10 italic leading-relaxed ${isAr ? 'arabic-font text-[11px]' : ''}`}>
           {isAr
             ? "تبدأ مغامرتك من هنا. اختر اسم المسافر الخاص بك واستعد لاستكشاف لا يُنسى."
             : "Ton aventure commence ici. Choisis ton nom de voyageur et prépare-toi pour une exploration inoubliable."}

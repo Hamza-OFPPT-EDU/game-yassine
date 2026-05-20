@@ -151,7 +151,7 @@ export const resolveCityIcon = (city: City, size = 72, className = "") => {
 
   // 3. Lucide Names Mapping
   const name = iconName.toLowerCase();
-  const props = { size, className };
+  const props = { size, className, strokeWidth: 2.5 };
   
   if (name === 'landmark') return <Landmark {...props} />;
   if (name === 'castle') return <Castle {...props} />;

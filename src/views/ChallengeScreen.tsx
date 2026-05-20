@@ -158,9 +158,10 @@ interface ChallengeScreenProps {
   onComplete: (summary: MissionCompletionSummary) => void;
   onBack: () => void;
   redoQuestionIds?: string[];
+  onCorrectAnswer?: (xpReward: number, starsReward: number) => void;
 }
 
-export default function ChallengeScreen({ city, mission, onComplete, onBack, redoQuestionIds }: ChallengeScreenProps) {
+export default function ChallengeScreen({ city, mission, onComplete, onBack, redoQuestionIds, onCorrectAnswer }: ChallengeScreenProps) {
   const { language } = useSettings();
   const { playSound } = useAudio();
   const { questions: allQuestions, loading: loadingQuestions } = useSupabaseQuestions(mission.id);
@@ -389,6 +390,10 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
       setShowFeedback(true);
       if (isCorrect()) {
         playSound('correct');
+        if (onCorrectAnswer) {
+          const xpReward = challenge.xp_reward ?? 20;
+          onCorrectAnswer(xpReward, 1);
+        }
       } else {
         playSound('wrong');
       }
@@ -910,11 +915,7 @@ export default function ChallengeScreen({ city, mission, onComplete, onBack, red
                   ? (language === 'ar' ? "حل هذا اللغز !" : "Résous cette énigme !")
                   : challenge.question}
             </h2>
-            {challenge.arabicQuestion && language !== 'ar' && (
-              <h3 className="text-4xl font-bold text-voyage-accent leading-tight arabic-font" dir="rtl">
-                {challenge.arabicQuestion}
-              </h3>
-            )}
+
           </div>
         </div>
 

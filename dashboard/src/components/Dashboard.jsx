@@ -256,14 +256,14 @@ function BulkImportModal({ isOpen, onClose, onSubmit }) {
   );
 }
 
-export default function Dashboard({ setPage }) {
+export default function Dashboard({ setPage, onPlayerClick }) {
   const { stats, loading: statsLoading } = useStats();
   const { players, loading: playersLoading, createUser, deleteUser, deleteUsersBulk, createUsersBulk, updateUser } = usePlayers();
   const { data: skillData } = useSkillDistribution();
   const { data: cityData } = useCityStats();
   const { badges, loading: badgesLoading } = useBadges();
 
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
+
   const [showNewUserModal, setShowNewUserModal] = useState(false);
   const [showBulkImportModal, setShowBulkImportModal] = useState(false);
   const [search, setSearch] = useState('');
@@ -378,12 +378,7 @@ export default function Dashboard({ setPage }) {
         onClose={() => setShowBulkImportModal(false)}
         onSubmit={createUsersBulk}
       />
-      <PlayerPanel 
-        player={selectedPlayer} 
-        onClose={() => setSelectedPlayer(null)} 
-        onDelete={deleteUser}
-        onUpdate={updateUser}
-      />
+
 
       {/* Stats Grid */}
       <div className="stats-grid fade-in">
@@ -658,7 +653,7 @@ export default function Dashboard({ setPage }) {
                   return (
                     <tr 
                       key={player.id} 
-                      onClick={() => setSelectedPlayer(player)} 
+                      onClick={() => onPlayerClick?.(player)} 
                       style={{ animationDelay: `${i * 0.04}s` }}
                       className={selectedIds.has(player.id) ? 'selected' : ''}
                     >

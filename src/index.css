@@ -7,46 +7,46 @@
   --font-arabic: "Cairo", sans-serif;
 
   /* ── Couleurs utilitaires neutres ─────────────────────── */
-  --color-duo-orange:      #FF9600;
-  --color-duo-red:         #FF4B4B;
-  --color-duo-red-dark:    #ea2b2b;
-  --color-duo-yellow:      #FFC800;
-  --color-duo-eel:         #4B4B4B;
-  --color-duo-wolf:        #777777;
-  --color-duo-swan:        #E5E5E5;
+  --color-duo-orange:      #E67E00;   /* orange plus dense */
+  --color-duo-red:         #E63946;   /* rouge plus dense */
+  --color-duo-red-dark:    #C1121F;   /* rouge sombre plus dense */
+  --color-duo-yellow:      #F5B700;   /* jaune plus dense */
+  --color-duo-eel:         #161616;   /* anthracite très sombre pour le texte principal (max lisibilité) */
+  --color-duo-wolf:        #404040;   /* gris plus sombre pour le texte secondaire (max lisibilité) */
+  --color-duo-swan:        #9B9B9B;   /* gris moyen pour les bordures plus visibles */
 
   /* ── Palette Marron — identité "Voyage des Compétences" ─ */
-  --color-voyage-primary:       #7B3F1A;   /* marron soutenu */
-  --color-voyage-primary-dark:  #4E2510;   /* marron très foncé */
-  --color-voyage-primary-light: #A0572B;   /* marron clair */
+  --color-voyage-primary:       #5A2207;   /* marron plus dense, saturé et contrasté */
+  --color-voyage-primary-dark:  #2C0F02;   /* marron très sombre pour le contraste maximal */
+  --color-voyage-primary-light: #803810;   /* marron clair plus soutenu et vif */
 
-  --color-voyage-secondary:      #C9A96E;  /* sable doré */
-  --color-voyage-secondary-dark: #A07840;  /* ocre profond */
-  --color-voyage-secondary-light:#E8D5B0;  /* sable pâle */
+  --color-voyage-secondary:      #A67C3B;  /* sable doré plus chaud, ocre dense */
+  --color-voyage-secondary-dark: #785120;  /* ocre profond plus sombre */
+  --color-voyage-secondary-light:#D3B780;  /* sable pâle plus visible */
 
-  --color-voyage-accent:        #D4A43E;   /* or marocain */
-  --color-voyage-accent-dark:   #A87D28;   /* or foncé */
-  --color-voyage-accent-light:  #F0CC7A;   /* or clair */
+  --color-voyage-accent:        #B57E12;   /* or marocain riche, très saturé et visible */
+  --color-voyage-accent-dark:   #825707;   /* or foncé plus sombre */
+  --color-voyage-accent-light:  #DBAD4C;   /* or clair plus soutenu */
 
-  --color-voyage-sand:          #FBF3E3;   /* parchemin */
-  --color-voyage-parchment:     #F5E8C8;   /* beige chaud */
-  --color-voyage-terracotta:    #C1440E;   /* terracotta */
-  --color-voyage-zellige:       #2C6E7F;   /* bleu zellij */
+  --color-voyage-sand:          #F3E1BD;   /* parchemin de fond plus soutenu pour faire ressortir les cartes */
+  --color-voyage-parchment:     #DFB882;   /* beige chaud et parchemin plus dense */
+  --color-voyage-terracotta:    #982C05;   /* terracotta rustique intense */
+  --color-voyage-zellige:       #164E5B;   /* bleu zellige profond et contrasté */
 
-  --color-grad-start:           #7B3F1A;
-  --color-grad-end:             #4E2510;
+  --color-grad-start:           #5A2207;
+  --color-grad-end:             #2C0F02;
 }
 
 
 @layer base {
   html {
-    font-size: 83.25%; /* Réduction cumulative des éléments de ~16.75% (0.95 * 0.95 * 0.98 * 0.98 * 0.98 * 0.98) */
+    font-size: 87%; /* Légère augmentation globale pour améliorer la lisibilité */
   }
   body {
-    background-color: #FBF3E3;
-    color: #4E2510;
+    background-color: var(--color-voyage-sand);
+    color: var(--color-voyage-primary-dark);
     font-family: var(--font-sans);
-    font-size: 0.885rem; /* Réduction cumulative du texte de ~21.8% (0.94 * 0.94 * 0.97 * 0.97 * 0.97 * 0.97) */
+    font-size: 0.93rem; /* Légère augmentation pour améliorer la lisibilité */
     -webkit-font-smoothing: antialiased;
   }
 
@@ -67,28 +67,28 @@
   /* --- Boutons Voyage (identité marron/or) --- */
   .btn-voyage {
     @apply text-white rounded-2xl font-black px-6 py-3 border-b-4 active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight shadow-lg;
-    background: linear-gradient(135deg, #A0572B, #7B3F1A);
-    border-bottom-color: #4E2510;
+    background: linear-gradient(135deg, var(--color-voyage-primary-light), var(--color-voyage-primary));
+    border-bottom-color: var(--color-voyage-primary-dark);
   }
-  .btn-voyage:hover { background: linear-gradient(135deg, #B0673B, #8B4F2A); }
+  .btn-voyage:hover { background: linear-gradient(135deg, var(--color-voyage-primary), var(--color-voyage-primary-dark)); }
 
   .btn-voyage-primary {
     @apply text-white rounded-2xl font-black px-6 py-3 border-b-4 border-voyage-primary-dark active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight shadow-lg;
-    background: linear-gradient(135deg, #A0572B, #7B3F1A);
+    background: linear-gradient(135deg, var(--color-voyage-primary-light), var(--color-voyage-primary));
   }
-  .btn-voyage-primary:hover { background: linear-gradient(135deg, #B0673B, #8B4F2A); }
+  .btn-voyage-primary:hover { background: linear-gradient(135deg, var(--color-voyage-primary), var(--color-voyage-primary-dark)); }
 
   .btn-voyage-accent {
     @apply text-voyage-primary-dark rounded-2xl font-black px-6 py-3 border-b-4 active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight shadow-lg;
-    background: linear-gradient(135deg, #F0CC7A, #D4A43E);
-    border-bottom-color: #A87D28;
+    background: linear-gradient(135deg, var(--color-voyage-accent-light), var(--color-voyage-accent));
+    border-bottom-color: var(--color-voyage-accent-dark);
   }
-  .btn-voyage-accent:hover { background: linear-gradient(135deg, #F5D68A, #E0B050); }
+  .btn-voyage-accent:hover { background: linear-gradient(135deg, var(--color-voyage-accent), var(--color-voyage-accent-dark)); }
 
   /* --- Boutons feedback (rouge/orange/jaune conservés) --- */
   .btn-duo-red    { @apply bg-duo-red    text-white rounded-2xl font-black px-6 py-3 border-b-4 border-duo-red-dark active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight; }
-  .btn-duo-orange { @apply bg-duo-orange text-white rounded-2xl font-black px-6 py-3 border-b-4 border-[#e68a00]   active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight; }
-  .btn-duo-yellow { @apply bg-duo-yellow text-white rounded-2xl font-black px-6 py-3 border-b-4 border-[#e6b400]   active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight; }
+  .btn-duo-orange { @apply bg-duo-orange text-white rounded-2xl font-black px-6 py-3 border-b-4 border-[#b86f00]   active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight; }
+  .btn-duo-yellow { @apply bg-duo-yellow text-white rounded-2xl font-black px-6 py-3 border-b-4 border-[#c49a00]   active:border-b-0 active:translate-y-1 transition-all uppercase tracking-tight; }
 
   /* --- Cartes --- */
   .card-duo    { @apply bg-white border-2 border-duo-swan rounded-3xl p-6 shadow-sm; }
@@ -112,29 +112,29 @@
       45deg,
       transparent,
       transparent 18px,
-      rgba(123,63,26,0.07) 18px,
-      rgba(123,63,26,0.07) 20px
+      rgba(107,50,16,0.1) 18px,
+      rgba(107,50,16,0.1) 20px
     ),
     repeating-linear-gradient(
       -45deg,
       transparent,
       transparent 18px,
-      rgba(212,164,62,0.06) 18px,
-      rgba(212,164,62,0.06) 20px
+      rgba(191,140,37,0.09) 18px,
+      rgba(191,140,37,0.09) 20px
     );
 }
 
 /* ── Fond parchemin carte ────────────────────────────────────────────────── */
 .map-bg {
-  background-color: #F9F1E2; /* Lighter parchment */
+  background-color: var(--color-voyage-sand);
   background-image:
     repeating-linear-gradient(
       0deg, transparent, transparent 39px,
-      rgba(123,63,26,0.06) 39px, rgba(123,63,26,0.06) 40px
+      rgba(107,50,16,0.08) 39px, rgba(107,50,16,0.08) 40px
     ),
     repeating-linear-gradient(
       90deg, transparent, transparent 39px,
-      rgba(123,63,26,0.06) 39px, rgba(123,63,26,0.06) 40px
+      rgba(107,50,16,0.08) 39px, rgba(107,50,16,0.08) 40px
     );
 }
 
@@ -182,35 +182,35 @@
 
 /* ── Glassmorphism ───────────────────────────────────────────────────────── */
 .glass-card {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   box-shadow: 
-    0 8px 32px 0 rgba(123, 63, 26, 0.1),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    0 8px 32px 0 rgba(107, 50, 16, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
 /* ── Adventure Theme Utilities ───────────────────────────────────────────── */
 .parchment-text {
   font-family: 'Outfit', sans-serif;
-  color: #4E2510;
+  color: var(--color-voyage-primary-dark);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .adventure-shadow {
   box-shadow: 
-    0 4px 6px -1px rgba(123, 63, 26, 0.1),
-    0 2px 4px -1px rgba(123, 63, 26, 0.06),
+    0 4px 6px -1px rgba(107, 50, 16, 0.12),
+    0 2px 4px -1px rgba(107, 50, 16, 0.08),
     inset 0 2px 4px 0 rgba(255, 255, 255, 0.3);
 }
 
 .map-path-glow {
-  filter: drop-shadow(0 0 8px rgba(212, 164, 62, 0.4));
+  filter: drop-shadow(0 0 8px rgba(191, 140, 37, 0.45));
 }
 .adventure-pattern {
-  background-image: radial-gradient(#7B3F1A 0.5px, transparent 0.5px), radial-gradient(#7B3F1A 0.5px, #ffffff 0.5px);
+  background-image: radial-gradient(var(--color-voyage-primary) 0.5px, transparent 0.5px), radial-gradient(var(--color-voyage-primary) 0.5px, #ffffff 0.5px);
   background-size: 20px 20px;
   background-position: 0 0, 10px 10px;
-  opacity: 0.03;
+  opacity: 0.04;
 }

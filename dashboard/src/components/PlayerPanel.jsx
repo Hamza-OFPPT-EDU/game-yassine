@@ -33,42 +33,111 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
   const { history, loading: historyLoading } = usePlayerHistory(player?.id);
   const { activity, loading: activityLoading } = usePlayerActivity(player?.id);
   const { stats: dailyStats, loading: dailyLoading } = usePlayerDailyStats(player?.id);
+  
+  const [fullPlayer, setFullPlayer] = useState(null);
+  const [profileLoading, setProfileLoading] = useState(false);
   const [expandedHistory, setExpandedHistory] = useState(null);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
     username: '', fullName: '', site: '', schoolLevel: '', password: ''
   });
+  const [lastPlayerId, setLastPlayerId] = useState(null);
   const [saveLoading, setSaveLoading] = useState(false);
   
   const open = !!player;
 
+  // Load and fetch full player profile dynamically
   useEffect(() => {
-    if (player) {
-      setEditForm({
-        username: player.username || '',
-        fullName: player.display_name || '',
-        site: player.site || '',
-        schoolLevel: player.school_level || '',
-        password: player.password || ''
-      });
-      setIsEditing(false);
-      setShowConfirmDelete(false);
+    if (!player?.id) {
+      setFullPlayer(null);
+      return;
     }
-  }, [player]);
+
+    setFullPlayer(player);
+
+    async function fetchFullProfile() {
+      setProfileLoading(true);
+      try {
+        const [profileRes, userRes] = await Promise.all([
+          supabase.from('player_profiles').select('*').eq('id', player.id).maybeSingle(),
+          supabase.from('app_users').select('*').eq('id', player.id).maybeSingle()
+        ]);
+
+        const profile = profileRes.data || {};
+        const user = userRes.data || {};
+
+        setFullPlayer(prev => {
+          if (!prev || prev.id !== player.id) return prev;
+          return {
+            ...prev,
+            ...profile,
+            ...user,
+            display_name: profile.display_name || user.full_name || prev.name || prev.display_name || 'Joueur',
+            xp: profile.xp || 0,
+            level: profile.level || 1,
+            streak_days: profile.streak_days || 0,
+            profile_type: profile.profile_type || 'Le Stratège',
+            username: user.username || prev.username || '',
+            password: user.password || prev.password || '',
+            site: user.site || prev.site || '',
+            school_level: user.school_level || prev.school_level || '',
+          };
+        });
+      } catch (err) {
+        console.error("Error fetching full profile inside PlayerPanel:", err);
+      } finally {
+        setProfileLoading(false);
+      }
+    }
+
+    fetchFullProfile();
+  }, [player?.id]);
+
+  // Sync edit form fields only when changing to a different player
+  useEffect(() => {
+    if (fullPlayer) {
+      if (fullPlayer.id !== lastPlayerId) {
+        setEditForm({
+          username: fullPlayer.username || '',
+          fullName: fullPlayer.display_name || '',
+          site: fullPlayer.site || '',
+          schoolLevel: fullPlayer.school_level || '',
+          password: fullPlayer.password || ''
+        });
+        setLastPlayerId(fullPlayer.id);
+        setIsEditing(false);
+        setShowConfirmDelete(false);
+      }
+    }
+  }, [fullPlayer, lastPlayerId]);
+
+  const p = fullPlayer || player;
+  const isPanelLoading = loading || profileLoading;
 
   const handleDelete = async () => {
-    if (onDelete && player) {
-      await onDelete(player.id);
+    if (onDelete && p) {
+      await onDelete(p.id);
       onClose();
     }
   };
 
   const handleUpdate = async () => {
-    if (onUpdate && player) {
+    if (onUpdate && p) {
       setSaveLoading(true);
       try {
-        await onUpdate(player.id, editForm);
+        await onUpdate(p.id, editForm);
+        
+        // Update local fullPlayer state immediately with changes
+        setFullPlayer(prev => ({
+          ...prev,
+          username: editForm.username,
+          display_name: editForm.fullName,
+          site: editForm.site,
+          school_level: editForm.schoolLevel,
+          password: editForm.password
+        }));
+        
         setIsEditing(false);
       } catch (err) {
         alert("Erreur lors de la mise à jour : " + (err.message || "Erreur inconnue"));
@@ -82,10 +151,10 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
     <>
       <div className={`panel-backdrop ${open ? 'open' : ''}`} onClick={onClose} />
       <div className={`player-panel ${open ? 'open' : ''}`}>
-        {player && (
+        {p && (
           <>
             <div className="panel-header">
-              <div className="panel-avatar">{getInitials(player.display_name)}</div>
+              <div className="panel-avatar">{getInitials(p.display_name)}</div>
               <div className="panel-info">
                 {isEditing ? (
                   <input 
@@ -96,20 +165,20 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
                     autoFocus
                   />
                 ) : (
-                  <div className="panel-name">{player.display_name || 'Joueur'}</div>
+                  <div className="panel-name">{p.display_name || 'Joueur'}</div>
                 )}
-                <div className="panel-type">{player.profile_type || 'Le Stratège'}</div>
+                <div className="panel-type">{p.profile_type || 'Le Stratège'}</div>
                 <div className="panel-meta">
                   <div className="panel-meta-item">
-                    <span className="panel-meta-value">{player.xp?.toLocaleString()}</span>
+                    <span className="panel-meta-value">{p.xp?.toLocaleString()}</span>
                     <span className="panel-meta-label">XP Total</span>
                   </div>
                   <div className="panel-meta-item">
-                    <span className="panel-meta-value">Lvl {player.level}</span>
+                    <span className="panel-meta-value">Lvl {p.level}</span>
                     <span className="panel-meta-label">Niveau</span>
                   </div>
                   <div className="panel-meta-item">
-                    <span className="panel-meta-value">{player.streak_days}j</span>
+                    <span className="panel-meta-value">{p.streak_days}j</span>
                     <span className="panel-meta-label">Streak 🔥</span>
                   </div>
                 </div>
@@ -149,7 +218,7 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
                         onChange={e => setEditForm({...editForm, username: e.target.value})}
                       />
                     ) : (
-                      <span className="credential-value">{player.username || '—'}</span>
+                      <span className="credential-value">{p.username || '—'}</span>
                     )}
                   </div>
                   <div className="credential-item">
@@ -161,7 +230,7 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
                         onChange={e => setEditForm({...editForm, password: e.target.value})}
                       />
                     ) : (
-                      <span className="credential-value">{player.password || '—'}</span>
+                      <span className="credential-value">{p.password || '—'}</span>
                     )}
                   </div>
                   <div className="credential-item">
@@ -173,7 +242,7 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
                         onChange={e => setEditForm({...editForm, site: e.target.value})}
                       />
                     ) : (
-                      <span className="credential-value">{player.site || '—'}</span>
+                      <span className="credential-value">{p.site || '—'}</span>
                     )}
                   </div>
                   <div className="credential-item">
@@ -185,13 +254,13 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
                         onChange={e => setEditForm({...editForm, schoolLevel: e.target.value})}
                       />
                     ) : (
-                      <span className="credential-value">{player.school_level || '—'}</span>
+                      <span className="credential-value">{p.school_level || '—'}</span>
                     )}
                   </div>
                 </div>
               </div>
 
-              {loading ? (
+              {isPanelLoading ? (
                 <div className="loading"><div className="spinner" /> Chargement...</div>
               ) : (
                 <>
@@ -199,13 +268,13 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
                   <div className="panel-section">
                     <h4><Zap size={12} style={{display:'inline', marginRight:4}} />Progression XP</h4>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                      <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Vers niveau {player.level + 1}</span>
+                      <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Vers niveau {p.level + 1}</span>
                       <span style={{ fontSize: 12, color: 'var(--primary-light)', fontWeight: 600 }}>
-                        {player.xp % 100}/100 XP
+                        {p.xp % 100}/100 XP
                       </span>
                     </div>
                     <div className="xp-bar-wrap">
-                      <div className="xp-bar-fill" style={{ width: `${player.xp % 100}%` }} />
+                      <div className="xp-bar-fill" style={{ width: `${p.xp % 100}%` }} />
                     </div>
                   </div>
 
@@ -456,10 +525,10 @@ export default function PlayerPanel({ player, onClose, onDelete, onUpdate }) {
                         style={{ width: '100%', justifyContent: 'center', color: 'var(--warning)' }}
                         onClick={async () => {
                           if (confirm("Réinitialiser toute la progression du joueur ?")) {
-                            await supabase.from('player_city_progress').delete().eq('player_id', player.id);
-                            await supabase.from('act_results').delete().eq('player_id', player.id);
-                            await supabase.from('player_profiles').update({ xp: 0, level: 1, streak_days: 0 }).eq('id', player.id);
-                            await supabase.from('app_users').update({ xp: 0, level: 1 }).eq('id', player.id);
+                            await supabase.from('player_city_progress').delete().eq('player_id', p.id);
+                            await supabase.from('act_results').delete().eq('player_id', p.id);
+                            await supabase.from('player_profiles').update({ xp: 0, level: 1, streak_days: 0 }).eq('id', p.id);
+                            await supabase.from('app_users').update({ xp: 0, level: 1 }).eq('id', p.id);
                             window.location.reload();
                           }
                         }}

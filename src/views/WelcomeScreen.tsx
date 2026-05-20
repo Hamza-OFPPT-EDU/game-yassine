@@ -77,7 +77,7 @@ export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProp
                   }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all duration-300 ${
                     language === 'fr'
-                      ? 'bg-linear-to-r from-[#F4A261] to-[#E76F51] text-[#4A1E05] shadow-md scale-105'
+                      ? 'bg-voyage-accent text-voyage-primary-dark shadow-md scale-105'
                       : 'text-white/80 hover:text-white hover:bg-white/5'
                   }`}
                 >
@@ -90,7 +90,7 @@ export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProp
                   }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-black arabic-font transition-all duration-300 ${
                     language === 'ar'
-                      ? 'bg-linear-to-r from-[#F4A261] to-[#E76F51] text-[#4A1E05] shadow-md scale-105'
+                      ? 'bg-voyage-accent text-voyage-primary-dark shadow-md scale-105'
                       : 'text-white/80 hover:text-white hover:bg-white/5'
                   }`}
                   dir="rtl"
@@ -135,7 +135,7 @@ export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProp
                 transition={{ delay: 0.2 }}
                 className="bg-white/10 backdrop-blur-2xl border border-white/20 p-8 rounded-[40px] shadow-[0_20px_60px_rgba(0,0,0,0.3)] max-w-[340px] mx-auto w-full relative overflow-hidden group"
               >
-                <div className="absolute -top-10 -right-10 w-24 h-24 bg-[#F4A261]/20 rounded-full blur-2xl group-hover:bg-[#F4A261]/30 transition-colors" />
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-voyage-accent/20 rounded-full blur-2xl group-hover:bg-voyage-accent/30 transition-colors" />
                 <p
                   className={`text-white text-lg font-black leading-tight uppercase tracking-tight mb-2 ${language === 'ar' ? 'arabic-font text-xl' : ''}`}
                   style={welcomeConfig.titleStyle}
@@ -151,13 +151,13 @@ export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProp
                   {language === 'ar' ? (
                     welcomeConfig.subtitle_ar || (
                       <>
-                        طوّر مهاراتك وقدراتك مع <span className="text-[#F4A261] font-black">عائلة بوليالي</span> من خلال رحلة ممتعة في قلب المغرب.
+                        طوّر مهاراتك وقدراتك مع <span className="text-voyage-accent font-black">عائلة بوليالي</span> من خلال رحلة ممتعة في قلب المغرب.
                       </>
                     )
                   ) : (
                     welcomeConfig.subtitle || (
                       <>
-                        Développe ton potentiel avec la <span className="text-[#7B3F1A] font-black">famille Boulyali</span> à travers un parcours ludique au cœur du Maroc.
+                        Développe ton potentiel avec la <span className="text-voyage-primary font-black">famille Boulyali</span> à travers un parcours ludique au cœur du Maroc.
                       </>
                     )
                   )}
@@ -179,7 +179,7 @@ export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProp
                 className="w-full relative overflow-hidden group"
               >
                 <div className={`flex items-center justify-center gap-2 w-full ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
-                  <Sparkles size={20} className="text-[#F4A261] animate-pulse shrink-0" fill="currentColor" />
+                  <Sparkles size={20} className="text-voyage-accent animate-pulse shrink-0" fill="currentColor" />
                   <span className={`font-black text-xl leading-none ${language === 'ar' ? 'arabic-font text-lg' : ''}`}>
                     {language === 'ar' ? "تسجيل الدخول" : "Se Connecter"}
                   </span>

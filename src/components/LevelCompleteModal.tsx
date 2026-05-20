@@ -87,7 +87,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
   }, [summary?.missionId]);
 
   return (
-    <div className="fixed inset-0 z-100 bg-amber-50/60 backdrop-blur-md px-4 py-5 sm:px-6 flex items-center justify-center">
+    <div className="fixed inset-0 z-100 bg-voyage-sand/60 backdrop-blur-md px-4 py-5 sm:px-6 flex items-center justify-center">
       {/* Celebration Confetti - Toujours affiché pour le classement */}
       <AnimatePresence>
         <motion.div
@@ -183,10 +183,10 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
               );
             })()}
           </motion.div>
-          <h2 className="text-3xl font-black text-[#24160D] tracking-tight mb-2">
+          <h2 className="text-3xl font-black text-voyage-primary-dark tracking-tight mb-2">
             Mission Accomplie !
           </h2>
-          <p className="text-[#A08363] font-black uppercase tracking-[0.2em] text-[11px]">
+          <p className="text-voyage-secondary-dark font-black uppercase tracking-[0.2em] text-[11px]">
             {summary?.missionTitle || 'Résultats du voyage'}
           </p>
         </div>
@@ -197,7 +197,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
             {/* Score Section */}
             <div className={cn("grid grid-cols-2 gap-3", language === 'ar' && "flex-row-reverse")}>
               <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-4 rounded-3xl shadow-sm text-center">
-                <p className={cn("text-[9px] font-black uppercase tracking-[0.15em] text-[#A08363] mb-1", language === 'ar' && "arabic-font")}>
+                <p className={cn("text-[9px] font-black uppercase tracking-[0.15em] text-voyage-secondary-dark mb-1", language === 'ar' && "arabic-font")}>
                   {language === 'ar' ? 'النقاط' : 'Score'}
                 </p>
                 <div className="flex items-baseline justify-center gap-1">
@@ -207,21 +207,21 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
               </div>
               
               <div className="bg-white/60 backdrop-blur-xl border border-white/70 p-4 rounded-3xl shadow-sm text-center">
-                <p className={cn("text-[9px] font-black uppercase tracking-[0.15em] text-[#A08363] mb-1", language === 'ar' && "arabic-font")}>
+                <p className={cn("text-[9px] font-black uppercase tracking-[0.15em] text-voyage-secondary-dark mb-1", language === 'ar' && "arabic-font")}>
                   {language === 'ar' ? 'الدقة' : 'Précision'}
                 </p>
                 <div className="flex items-baseline justify-center gap-1">
-                  <span className="text-3xl font-black text-amber-600">{countedRate}</span>
-                  <span className="text-xs font-black text-amber-600/60">%</span>
+                  <span className="text-3xl font-black text-voyage-accent">{countedRate}</span>
+                  <span className="text-xs font-black text-voyage-accent/60">%</span>
                 </div>
               </div>
             </div>
 
             {/* Ranking Section */}
             <div className="bg-white/40 backdrop-blur-md rounded-[2.5rem] border border-white/60 shadow-lg overflow-hidden" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-              <div className="px-6 py-4 border-b border-[#E5D5B8]/30 bg-white/30">
-                <h3 className={cn("text-sm font-black text-[#24160D] uppercase tracking-widest flex items-center gap-2", language === 'ar' && "arabic-font")}>
-                  <Trophy size={16} className="text-amber-500" />
+              <div className="px-6 py-4 border-b border-voyage-secondary/30 bg-white/30">
+                <h3 className={cn("text-sm font-black text-voyage-primary-dark uppercase tracking-widest flex items-center gap-2", language === 'ar' && "arabic-font")}>
+                  <Trophy size={16} className="text-voyage-accent" />
                   {language === 'ar' ? 'أفضل 5 - الترتيب العالمي' : 'Top 5 - Classement Mondial'}
                 </h3>
               </div>
@@ -231,7 +231,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                   <Loader2 className="animate-spin text-voyage-primary" />
                 </div>
               ) : (
-                <div className="divide-y divide-[#E5D5B8]/20">
+                <div className="divide-y divide-voyage-secondary/20">
                   <LeaderboardList 
                     players={leaderboard} 
                     currentUserId={profile?.id} 
@@ -244,10 +244,10 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
             {/* Questions Section */}
             <div className="space-y-4" dir={language === 'ar' ? 'rtl' : 'ltr'}>
               <div className={cn("flex items-center justify-between px-2", language === 'ar' && "flex-row-reverse")}>
-                <h3 className={cn("text-sm font-black text-[#24160D] uppercase tracking-widest", language === 'ar' && "arabic-font")}>
+                <h3 className={cn("text-sm font-black text-voyage-primary-dark uppercase tracking-widest", language === 'ar' && "arabic-font")}>
                   {language === 'ar' ? 'تفاصيل الأسئلة' : 'Détail des questions'}
                 </h3>
-                <span className={cn("text-[10px] font-black text-[#A08363] uppercase tracking-widest", language === 'ar' && "arabic-font")}>
+                <span className={cn("text-[10px] font-black text-voyage-secondary-dark uppercase tracking-widest", language === 'ar' && "arabic-font")}>
                   {language === 'ar' ? `${summary?.correctCount}/${summary?.totalQuestions} صحيحة` : `${summary?.correctCount}/${summary?.totalQuestions} Correctes`}
                 </span>
               </div>
@@ -265,7 +265,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                       {q.isCorrect ? <CheckCircle2 size={18} /> : <XCircle size={18} />}
                     </div>
                     <div className="grow">
-                      <p className={cn("text-[13px] font-bold text-[#24160D] leading-tight", language === 'ar' && "arabic-font")}>
+                      <p className={cn("text-[13px] font-bold text-voyage-primary-dark leading-tight", language === 'ar' && "arabic-font")}>
                         {q.question}
                       </p>
                     </div>
@@ -284,13 +284,13 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
           </div>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 border-t border-white/40 bg-[linear-gradient(180deg,rgba(255,250,243,0.62),rgba(248,240,230,0.95))] px-6 py-4 backdrop-blur-2xl sm:px-8 lg:px-10 z-20" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+        <div className="absolute inset-x-0 bottom-0 border-t border-voyage-secondary/20 bg-voyage-sand/95 px-6 py-4 backdrop-blur-2xl sm:px-8 lg:px-10 z-20" dir={language === 'ar' ? 'rtl' : 'ltr'}>
           <div className={cn("flex items-center justify-between gap-4", language === 'ar' && "flex-row-reverse")}>
             <div className={cn("flex flex-col", language === 'ar' && "items-start text-right")}>
-              <span className={cn("text-[10px] font-black uppercase tracking-widest text-[#A08363]", language === 'ar' && "arabic-font")}>
+              <span className={cn("text-[10px] font-black uppercase tracking-widest text-voyage-secondary-dark", language === 'ar' && "arabic-font")}>
                 {language === 'ar' ? 'إجمالي ما ربحته' : 'Total gagné'}
               </span>
-              <span className={cn("text-xl font-black text-[#2A1A10]", language === 'ar' && "arabic-font")}>{countedXp} XP</span>
+              <span className={cn("text-xl font-black text-voyage-primary-dark", language === 'ar' && "arabic-font")}>{countedXp} XP</span>
             </div>
             
             <div className={cn("flex items-center gap-3", language === 'ar' && "flex-row-reverse")}>
@@ -298,7 +298,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                 whileHover={{ scale: 1.1, backgroundColor: '#fff' }}
                 whileTap={{ scale: 0.9 }}
                 onClick={onReplayMission}
-                className="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-[#D7C4AD] bg-white/50 text-[#A77C55] shadow-sm backdrop-blur-md transition-colors hover:text-amber-600 hover:border-amber-400"
+                className="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-voyage-secondary/50 bg-white/50 text-voyage-primary shadow-sm backdrop-blur-md transition-colors hover:text-voyage-accent hover:border-voyage-accent"
                 title={language === 'ar' ? 'إعادة اللعب' : 'Rejouer'}
               >
                 <RotateCcw size={22} strokeWidth={2.5} />
@@ -308,7 +308,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setShowQuitConfirm(true)}
-                className="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-[#D7C4AD] bg-white/50 text-[#A77C55] shadow-sm backdrop-blur-md transition-colors hover:text-rose-600 hover:border-rose-400"
+                className="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-voyage-secondary/50 bg-white/50 text-voyage-primary shadow-sm backdrop-blur-md transition-colors hover:text-rose-600 hover:border-rose-400"
                 title={language === 'ar' ? 'خروج' : 'Quitter'}
               >
                 <LogOut size={22} strokeWidth={2.5} />
@@ -319,7 +319,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                   whileHover={{ scale: 1.1, x: language === 'ar' ? -5 : 5 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onContinue}
-                  className="h-12 px-8 flex items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-[#24160D] to-[#2A1A10] text-white shadow-lg shadow-black/10"
+                  className="h-12 px-8 flex items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-voyage-primary-dark to-voyage-primary text-white shadow-lg shadow-black/10"
                 >
                   <span className={cn("font-black text-xs uppercase tracking-widest", language === 'ar' && "arabic-font")}>
                     {language === 'ar' ? 'المهمة التالية' : 'Suivant'}
@@ -351,7 +351,7 @@ export default function LevelCompleteModal({ summary, onReplayMission, onBackToC
                 <AlertTriangle size={40} />
               </div>
               
-              <h3 className={cn("text-2xl font-black text-[#2A1A10] mb-3", language === 'ar' && "arabic-font")}>
+              <h3 className={cn("text-2xl font-black text-voyage-primary-dark mb-3", language === 'ar' && "arabic-font")}>
                 {language === 'ar' ? 'هل تريد المغادرة حقاً؟' : 'Vraiment partir ?'}
               </h3>
               <p className={cn("text-slate-500 font-bold text-sm mb-8 leading-relaxed", language === 'ar' && "arabic-font")}>
@@ -401,8 +401,8 @@ function StatTile({ label, value, suffix, accent }: { label: string; value: numb
         animate={{ width: [64, 80, 64] }}
         transition={{ duration: 2, repeat: Infinity }}
       />
-      <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#A08363]">{label}</p>
-      <div className="mt-2 flex items-baseline gap-1 text-[#24160D]">
+      <p className="text-[11px] font-black uppercase tracking-[0.28em] text-voyage-secondary-dark">{label}</p>
+      <div className="mt-2 flex items-baseline gap-1 text-voyage-primary-dark">
         <motion.span 
           className="text-[33px] font-black tracking-tight"
           initial={{ scale: 0.5, opacity: 0 }}
@@ -411,7 +411,7 @@ function StatTile({ label, value, suffix, accent }: { label: string; value: numb
         >
           {value}
         </motion.span>
-        <span className="text-base font-black uppercase tracking-[0.24em] text-[#7D634A]">{suffix}</span>
+        <span className="text-base font-black uppercase tracking-[0.24em] text-voyage-secondary-dark">{suffix}</span>
       </div>
     </motion.div>
   );
@@ -423,17 +423,17 @@ function AnswerPanel({ label, value, muted = false }: { label: string; value: st
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className={`rounded-[1.35rem] border p-3.5 overflow-hidden relative group ${muted ? 'border-[#E9DDCF] bg-white/65' : 'border-[#E6D8C8] bg-[#FBF6EF]'}`}
+      className={`rounded-[1.35rem] border p-3.5 overflow-hidden relative group ${muted ? 'border-voyage-secondary/30 bg-white/65' : 'border-voyage-secondary/50 bg-voyage-sand/20'}`}
     >
       {/* Hover glow */}
       <motion.div 
-        className={`absolute inset-0 ${muted ? 'bg-linear-to-br from-white/10 to-transparent' : 'bg-linear-to-br from-amber-100/10 to-transparent'} opacity-0 group-hover:opacity-100`}
+        className={`absolute inset-0 ${muted ? 'bg-linear-to-br from-white/10 to-transparent' : 'bg-linear-to-br from-voyage-accent/10 to-transparent'} opacity-0 group-hover:opacity-100`}
         transition={{ duration: 0.3 }}
         style={{ pointerEvents: 'none' }}
       />
 
-      <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#A08363] relative z-10">{label}</p>
-      <p className="mt-2 whitespace-pre-line text-base font-semibold leading-relaxed text-[#4A3828] relative z-10">{value || '—'}</p>
+      <p className="text-[11px] font-black uppercase tracking-[0.28em] text-voyage-secondary-dark relative z-10">{label}</p>
+      <p className="mt-2 whitespace-pre-line text-base font-semibold leading-relaxed text-voyage-primary relative z-10">{value || '—'}</p>
     </motion.div>
   );
 }
@@ -507,12 +507,12 @@ function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]
           return (
             <div key={player.id}>
               {showSeparator && (
-                <div className="px-6 py-2 bg-[#F6EFE6] flex items-center justify-center gap-2" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-                  <div className="h-px grow bg-[#D7C4AD]" />
-                  <span className={cn("text-[9px] font-black text-[#A08363] uppercase tracking-[0.3em]", language === 'ar' && "arabic-font")}>
+                <div className="px-6 py-2 bg-voyage-sand/40 flex items-center justify-center gap-2" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+                  <div className="h-px grow bg-voyage-secondary/30" />
+                  <span className={cn("text-[9px] font-black text-voyage-secondary-dark uppercase tracking-[0.3em]", language === 'ar' && "arabic-font")}>
                     {language === 'ar' ? 'ترتيبك الحالي' : 'Ta Position'}
                   </span>
-                  <div className="h-px grow bg-[#D7C4AD]" />
+                  <div className="h-px grow bg-voyage-secondary/30" />
                 </div>
               )}
               <motion.div 
@@ -530,7 +530,7 @@ function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]
                 }}
                 className={cn(
                   "flex items-center gap-4 px-6 py-4 transition-all duration-700", 
-                  isMe ? "bg-amber-100/40 border-y border-amber-200/50 shadow-inner z-10" : "bg-transparent",
+                  isMe ? "bg-voyage-accent/15 border-y border-voyage-accent/20 shadow-inner z-10" : "bg-transparent",
                   language === 'ar' && "flex-row-reverse text-right"
                 )}
               >
@@ -539,7 +539,7 @@ function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]
                      key={actualRank}
                      initial={{ y: 10, opacity: 0 }}
                      animate={{ y: 0, opacity: 1 }}
-                     className={cn("text-xs font-black", isMe ? "text-amber-600" : "text-[#7B3F1A]/40")}
+                     className={cn("text-xs font-black", isMe ? "text-voyage-accent" : "text-voyage-primary/40")}
                    >
                      #{actualRank}
                    </motion.span>
@@ -547,7 +547,7 @@ function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]
                      <motion.div
                        animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
                        transition={{ repeat: Infinity, duration: 0.6 }}
-                       className="w-1.5 h-1.5 bg-amber-500 rounded-full mt-1"
+                       className="w-1.5 h-1.5 bg-voyage-accent rounded-full mt-1"
                      />
                    )}
                 </div>
@@ -574,18 +574,18 @@ function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]
                 </div>
 
                 <div className="grow">
-                  <p className={cn("text-[15px] font-black tracking-tight", isMe ? "text-amber-900" : "text-[#4E2510]", language === 'ar' && "arabic-font")}>
+                  <p className={cn("text-[15px] font-black tracking-tight", isMe ? "text-voyage-primary-dark" : "text-voyage-primary", language === 'ar' && "arabic-font")}>
                     {player.name} {isMe && (language === 'ar' ? '(أنت)' : '(Toi)')}
                   </p>
                   <div className={cn("flex items-center gap-2", language === 'ar' && "flex-row-reverse")}>
-                    <p className={cn("text-[10px] font-bold text-[#A08363] uppercase tracking-widest", language === 'ar' && "arabic-font")}>
+                    <p className={cn("text-[10px] font-bold text-voyage-secondary-dark uppercase tracking-widest", language === 'ar' && "arabic-font")}>
                       {language === 'ar' ? `المستوى ${player.level}` : `Niveau ${player.level}`}
                     </p>
                     {isMe && animationProgress < 1 && (
                        <motion.span 
                          animate={{ x: language === 'ar' ? [0, -5, 0] : [0, 5, 0] }}
                          transition={{ repeat: Infinity, duration: 0.8 }}
-                         className={cn("text-[9px] font-black text-amber-600 uppercase tracking-tighter", language === 'ar' && "arabic-font")}
+                         className={cn("text-[9px] font-black text-voyage-accent uppercase tracking-tighter", language === 'ar' && "arabic-font")}
                        >
                          {language === 'ar' ? '🚀 في تقدم مستمر !' : '🚀 En pleine remontée !'}
                        </motion.span>
@@ -596,7 +596,7 @@ function LeaderboardList({ players, currentUserId, missionXp }: { players: any[]
                 <div className="text-right">
                   <div className={cn("flex flex-col items-end", isMe ? "scale-110" : "scale-100")}>
                     <RollingNumber value={player.score} isMe={isMe} />
-                    <span className={cn("text-[10px] font-black uppercase tracking-widest", isMe ? "text-amber-600/60" : "text-[#A08363]/40")}>XP</span>
+                    <span className={cn("text-[10px] font-black uppercase tracking-widest", isMe ? "text-voyage-accent/60" : "text-voyage-secondary-dark/40")}>XP</span>
                   </div>
                 </div>
               </motion.div>
@@ -614,7 +614,7 @@ function RollingNumber({ value, isMe }: { value: number; isMe: boolean }) {
       key={value}
       initial={{ y: 15, opacity: 0, filter: 'blur(4px)' }}
       animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-      className={cn("text-lg font-black font-mono tracking-tighter", isMe ? "text-amber-700" : "text-[#24160D]")}
+      className={cn("text-lg font-black font-mono tracking-tighter", isMe ? "text-voyage-accent" : "text-voyage-primary-dark")}
     >
       {value.toLocaleString()}
     </motion.span>

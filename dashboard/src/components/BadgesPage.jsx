@@ -21,7 +21,7 @@ const CATEGORY_COLORS = {
   multiplayer: '#67e8f9'
 };
 
-export default function BadgesPage() {
+export default function BadgesPage({ onPlayerClick, players = [] }) {
   const [activeTab, setActiveTab] = useState('analytics'); // 'analytics' | 'manager'
   const [earnedBadges, setEarnedBadges] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -187,35 +187,52 @@ export default function BadgesPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {earnedBadges.slice(0, 15).map(b => (
-                      <tr key={b.id}>
-                        <td>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <div className="user-avatar-sm">{b.player_id.substring(0, 2).toUpperCase()}</div>
-                            <span style={{ fontSize: 13, color: 'var(--text-primary)' }}>{b.player_id}</span>
-                          </div>
-                        </td>
-                        <td>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                            <span style={{ fontSize: 20 }}>{b.badge?.icon_url || '🏅'}</span>
-                            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{b.badge?.badge_name}</span>
-                          </div>
-                        </td>
-                        <td>
-                          <span className="badge-category-chip" style={{ color: CATEGORY_COLORS[b.badge?.category] || '#7c3aed' }}>
-                            {b.badge?.category}
-                          </span>
-                        </td>
-                        <td>
-                          <span className="rarity-tag" style={{ backgroundColor: RARITY_COLORS[b.badge?.rarity] }}>
-                            {b.badge?.rarity}
-                          </span>
-                        </td>
-                        <td style={{ color: 'var(--text-muted)', fontSize: 12 }}>
-                          {new Date(b.earned_at).toLocaleString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute:'2-digit' })}
-                        </td>
-                      </tr>
-                    ))}
+                    {earnedBadges.slice(0, 15).map(b => {
+                      const fullPlayer = players.find(p => p.id === b.player_id);
+                      const displayName = fullPlayer?.display_name || `Joueur (${b.player_id.substring(0, 8)})`;
+                      const initials = (displayName || 'J').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+
+                      return (
+                        <tr 
+                          key={b.id}
+                          className="clickable-row"
+                          onClick={() => {
+                            if (fullPlayer) {
+                              onPlayerClick?.(fullPlayer);
+                            } else {
+                              onPlayerClick?.({ id: b.player_id, display_name: displayName });
+                            }
+                          }}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <td>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                              <div className="user-avatar-sm">{initials}</div>
+                              <span style={{ fontSize: 13, color: 'var(--text-primary)', fontWeight: 600 }}>{displayName}</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                              <span style={{ fontSize: 20 }}>{b.badge?.icon_url || '🏅'}</span>
+                              <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{b.badge?.badge_name}</span>
+                            </div>
+                          </td>
+                          <td>
+                            <span className="badge-category-chip" style={{ color: CATEGORY_COLORS[b.badge?.category] || '#7c3aed' }}>
+                              {b.badge?.category}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="rarity-tag" style={{ backgroundColor: RARITY_COLORS[b.badge?.rarity] }}>
+                              {b.badge?.rarity}
+                            </span>
+                          </td>
+                          <td style={{ color: 'var(--text-muted)', fontSize: 12 }}>
+                            {new Date(b.earned_at).toLocaleString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute:'2-digit' })}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               )}
@@ -239,6 +256,9 @@ export default function BadgesPage() {
           gap: 8px;
           font-weight: 500;
           transition: all 0.2s;
+        }
+        .clickable-row:hover {
+          background-color: rgba(255, 255, 255, 0.03) !important;
         }
         .tab-btn:hover {
           color: var(--text-primary);

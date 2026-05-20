@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   MapPin, Check, ChevronRight, X, Loader2, Lock,
   Star, Sparkles, Navigation2, ArrowDown
 } from 'lucide-react';
-import { type City } from '../types';
+import { type City, DEFAULT_AVATAR_URL } from '../types';
 import { cn } from '../lib/utils';
 import TopAppBar from '../components/TopAppBar';
 import { useAudio } from '../hooks/useAudio';
@@ -23,17 +23,30 @@ import { useSettings } from '../contexts/SettingsContext';
 
 interface MapJourneyScreenProps {
   stats: { xp: number; stars: number; level: number };
+  profile?: any;
   completedCities: string[];
   completedMissions: string[];
   onSelectCity: (city: City, mission?: any) => void;
 }
 
 export default function MapJourneyScreen({
-  stats, completedCities, completedMissions, onSelectCity
+  stats, profile, completedCities, completedMissions, onSelectCity
 }: MapJourneyScreenProps) {
   const { playSound, playVoice } = useAudio();
   const { language } = useSettings();
   const { cities, loading } = useSupabaseCities(completedCities, completedMissions);
+
+  // Sorting and progress indices for Duolingo dual-trail path calculation
+  const sortedCities = useMemo(() => {
+    return [...(cities || [])].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+  }, [cities]);
+
+  const activeCityIndex = useMemo(() => {
+    const idx = sortedCities.findIndex(c => c.status === 'active');
+    if (idx !== -1) return idx;
+    const lastCompletedIdx = sortedCities.reduce((acc, c, i) => c.status === 'completed' ? i : acc, -1);
+    return lastCompletedIdx !== -1 ? lastCompletedIdx : 0;
+  }, [sortedCities]);
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
   const [cinematicCity, setCinematicCity] = useState<City | null>(null);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
@@ -88,9 +101,9 @@ export default function MapJourneyScreen({
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
-          className="w-16 h-16 rounded-full border-[6px] border-[#7B3F1A]/20 border-t-voyage-accent"
+          className="w-16 h-16 rounded-full border-[6px] border-voyage-primary/20 border-t-voyage-accent"
         />
-        <p className={cn("font-headline font-black text-[#7B3F1A] uppercase tracking-widest text-[11px] opacity-70", language === 'ar' && "arabic-font text-[14px]")}>
+        <p className={cn("font-headline font-black text-voyage-primary uppercase tracking-widest text-[11px] opacity-80", language === 'ar' && "arabic-font text-[14px]")}>
           {language === 'ar' ? "جاري تحضير الرحلة..." : "Préparation du voyage..."}
         </p>
       </div>
@@ -102,18 +115,18 @@ export default function MapJourneyScreen({
   const displayCityTheme = getCityTheme(displayCity ?? null);
 
   return (
-    <div className="h-full w-full flex flex-col relative overflow-hidden map-bg">
+    <div className="h-full w-full flex flex-col relative overflow-hidden map-bg pt-[56px]">
       <TopAppBar stats={stats} />
 
-      {/* ── Écran cinématique ──────────────────────────────────────────────── */}
+      {/* ── Écran cinématique ────────────────────────────────────────────── */}
       <AnimatePresence>
         {cinematicCity && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-100"
-            style={{ background: 'linear-gradient(160deg, #4E2510 0%, #7B3F1A 50%, #A0572B 100%)' }}
+            className="fixed inset-0 z-50 flex flex-col"
+            style={{ background: 'linear-gradient(160deg, var(--color-voyage-primary-dark) 0%, var(--color-voyage-primary) 50%, var(--color-voyage-terracotta) 100%)' }}
           >
             <button
               onClick={() => setCinematicCity(null)}
@@ -150,7 +163,7 @@ export default function MapJourneyScreen({
                     transition={{ duration: 4, repeat: Infinity }}
                     className="mx-auto flex items-center justify-center"
                   >
-                    {resolveCityIcon(cinematicCity, 60, 'text-[#D4A43E]')}
+                    {resolveCityIcon(cinematicCity, 60, 'text-voyage-accent')}
                   </motion.div>
 
                   <div className="space-y-2.5">
@@ -264,8 +277,63 @@ export default function MapJourneyScreen({
         )}
       </AnimatePresence>
 
+      {/* Duolingo-Style Moroccan Chapter Banner */}
+      {activeCity && (
+        <div className="relative z-20 px-4 pt-4 pb-2 shrink-0 animate-fade-in" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="bg-linear-to-br from-voyage-primary via-voyage-primary to-voyage-primary-dark rounded-[24px] p-4.5 shadow-[0_12px_28px_-6px_rgba(90,34,7,0.38)] border-2 border-voyage-secondary/45 border-b-[6px] border-b-black/35 relative overflow-hidden"
+          >
+            {/* Arabic pattern background opacity */}
+            <div 
+              className="absolute inset-0 opacity-[0.08] pointer-events-none" 
+              style={{ 
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0l10 10-10 10-10-10zM0 20l10 10-10 10-10-10zM40 20l10 10-10 10-10-10zM20 40l10 10-10 10-10-10z' fill='%23FFFFFF' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+                backgroundSize: '40px 40px'
+              }}
+            />
+
+            <div className="flex items-center justify-between gap-4 relative z-10">
+              <div className="flex items-center gap-3">
+                {/* 3D-styled mini icon representation of active city */}
+                <div className="w-12 h-12 bg-white/12 backdrop-blur-md rounded-2xl flex items-center justify-center border-2 border-white/30 shadow-inner shrink-0 transition-transform hover:scale-105">
+                  {resolveCityIcon(activeCity, 26, 'text-voyage-accent')}
+                </div>
+
+                <div>
+                  <p className={cn("text-voyage-accent font-black text-[9px] uppercase tracking-[0.25em]", language === 'ar' && "arabic-font text-[11px] tracking-normal")}>
+                    {language === 'ar' ? "المدينة النشطة" : "VILLE ACTIVE"}
+                  </p>
+                  <h2 className={cn("text-white text-[19px] font-black tracking-tight leading-none mt-1", language === 'ar' && "arabic-font text-[21px]")}>
+                    {language === 'ar' 
+                      ? activeCity.arabicName || activeCity.name 
+                      : `${activeCity.sort_order || 1}. ${activeCity.name}`}
+                  </h2>
+                  <p className={cn("text-white/85 text-[10px] font-bold mt-1.5 line-clamp-1 leading-tight", language === 'ar' && "arabic-font text-[12px]")}>
+                    {language === 'ar' 
+                      ? activeCity.arabicHeadline || "استعد للتحديات!" 
+                      : activeCity.description || "Relève les défis pour progresser !"}
+                  </p>
+                </div>
+              </div>
+
+              {/* Progress pill on right */}
+              <div className="bg-white/12 backdrop-blur-md px-3.5 py-2 rounded-2xl border-2 border-white/20 shadow-inner shrink-0 text-center min-w-[70px]">
+                <span className="block text-voyage-accent text-[8.5px] font-black uppercase tracking-wider">
+                  {language === 'ar' ? "التقدم" : "PROGRESSION"}
+                </span>
+                <span className="block text-white font-black text-[15px] mt-0.5 tracking-tight">
+                  {Math.max(0, activeCity.stepNum - 1)}/{activeCity.totalSteps}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
       {/* ── Corps principal ──────────────────────────────────────────────── */}
-      <main className="grow overflow-y-auto relative pt-16 pb-0 scrollbar-hide" ref={scrollContainerRef} dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      <main className="grow overflow-y-auto relative pt-4 pb-0 scrollbar-hide" ref={scrollContainerRef} dir={language === 'ar' ? 'rtl' : 'ltr'}>
 
         {/* ── SVG Path + Nœuds ────────────────────────────────────────────── */}
         <div className="relative max-w-sm mx-auto px-4">
@@ -277,37 +345,50 @@ export default function MapJourneyScreen({
             viewBox={`0 0 320 ${cities.length * 300}`}
             preserveAspectRatio="xMidYMid meet"
           >
-            {/* Chemin Principal (Dashed) */}
+            {/* 1. Chemin d'arrière-plan (Complet, non-atteint) - Sable/Bronze clair */}
             <path
               d={buildPath(cities, 320)}
               fill="none"
-              stroke="#D4A43E"
-              strokeWidth="24"
+              stroke="var(--color-voyage-secondary-light)"
+              strokeWidth="16"
               strokeOpacity="0.4"
               strokeLinecap="round"
-              strokeDasharray="48 64"
-              className="path-dashed"
-              style={{
-                filter: 'drop-shadow(0 0 8px rgba(212, 164, 62, 0.3))'
-              }}
-            >
-              <animate
-                attributeName="stroke-dashoffset"
-                from="100"
-                to="0"
-                dur="10s"
-                repeatCount="indefinite"
-              />
-            </path>
-            {/* Ligne de contour très fine pour l'effet "tracé" */}
-            <path
-              d={buildPath(cities, 320)}
-              fill="none"
-              stroke="#7B3F1A"
-              strokeWidth="6"
-              strokeOpacity="0.1"
-              strokeLinecap="round"
             />
+
+            {/* 2. Chemin actif / complété - Or riche */}
+            {activeCityIndex >= 0 && (
+              <path
+                d={buildPath(cities, 320, activeCityIndex)}
+                fill="none"
+                stroke="var(--color-voyage-accent)"
+                strokeWidth="16"
+                strokeLinecap="round"
+                style={{
+                  filter: 'drop-shadow(0 0 8px var(--color-voyage-accent))'
+                }}
+              />
+            )}
+
+            {/* 3. Ligne fine interne pulsante pour l'effet de flux */}
+            {activeCityIndex >= 0 && (
+              <path
+                d={buildPath(cities, 320, activeCityIndex)}
+                fill="none"
+                stroke="var(--color-voyage-accent-light)"
+                strokeWidth="6"
+                strokeLinecap="round"
+                strokeDasharray="20 40"
+                style={{ opacity: 0.8 }}
+              >
+                <animate
+                  attributeName="stroke-dashoffset"
+                  from="120"
+                  to="0"
+                  dur="6s"
+                  repeatCount="indefinite"
+                />
+              </path>
+            )}
           </svg>
 
           {/* Nœuds des villes */}
@@ -323,6 +404,7 @@ export default function MapJourneyScreen({
               >
                 <CityNode
                   city={city}
+                  profile={profile}
                   onSelect={() => handleShowCitySheet(city)}
                   isSelected={selectedCityId === city.id}
                   delay={index * 0.12}
@@ -545,17 +627,13 @@ export default function MapJourneyScreen({
 }
 
 // ── Calcul du chemin SVG Dynamique ───────────────────────────────────────────
-function buildPath(cities: City[], width: number): string {
-  if (cities.length < 2) return '';
+function buildPath(cities: City[], width: number, limitIndex?: number): string {
   const cx = width / 2;
   const sorted = [...cities].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
-
-  // The distance between centers of cities in the SVG
-  // This should match the visual height of (Node + Margin)
-  // Node height is ~128px, Margin is 220px. Total ~348px.
-  // But let's use a consistent scale factor that matches our SVG viewBox height.
   const stepY = 300;
   const startY = (sorted.length - 1) * stepY + 150; // Bottom city y
+
+  const sliced = limitIndex !== undefined ? sorted.slice(0, limitIndex + 1) : sorted;
 
   let d = '';
   sorted.forEach((city, idx) => {
@@ -605,57 +683,90 @@ const CityOrb: React.FC<{
       )}
 
       <motion.div
-        whileHover={onClick && !isLocked ? { scale: 1.1, y: -5 } : {}}
+        whileHover={onClick && !isLocked ? { scale: 1.05 } : {}}
         whileTap={onClick && !isLocked ? { scale: 0.95 } : {}}
         className={cn(
-          "relative rounded-full flex items-center justify-center transition-all duration-300",
-          "border-4 shadow-lg overflow-hidden",
-          size,
-          isLocked ? "bg-slate-200 border-slate-300 opacity-60" : "bg-white border-white shadow-voyage-accent/10"
+          "relative rounded-full transition-all duration-100",
+          size
         )}
-        style={!isLocked ? { borderColor: isSelected ? '#D4A43E' : 'white' } : {}}
       >
-        <div className="relative z-10 flex items-center justify-center w-full h-full p-2">
-          {city.iconName ? (
-            city.iconName.startsWith('http') ? (
-              <img
-                src={resolveAssetUrl(city.iconName, '')}
-                alt={city.name}
-                className={cn(
-                  "w-full h-full object-contain transition-transform duration-500 group-hover:scale-110",
-                  isLocked ? "grayscale opacity-40" : ""
-                )}
-              />
+        {/* 3D Base (Shadow Layer) */}
+        <div
+          className={cn(
+            "absolute inset-0 rounded-full translate-y-[6px]",
+            isLocked 
+              ? "bg-slate-350" 
+              : isCompleted 
+                ? "bg-emerald-700" 
+                : "bg-voyage-accent-dark"
+          )}
+        />
+
+        {/* 3D Face (Top Layer) */}
+        <div
+          className={cn(
+            "absolute inset-0 rounded-full transition-all duration-100",
+            "flex items-center justify-center border-b-4",
+            isLocked 
+              ? "bg-slate-200 border-slate-300 text-slate-400 opacity-60" 
+              : isCompleted 
+                ? "bg-emerald-500 border-emerald-600 text-white shadow-emerald-500/20" 
+                : "bg-voyage-accent border-voyage-accent-dark text-white shadow-voyage-accent/20",
+            "active:translate-y-[6px] active:border-b-0 -translate-y-0"
+          )}
+          style={isSelected && !isLocked ? { borderColor: 'var(--color-voyage-accent-light)' } : {}}
+        >
+          {/* Inner Content */}
+          <div className="relative z-10 flex items-center justify-center w-full h-full p-2.5">
+            {city.iconName ? (
+              city.iconName.startsWith('http') ? (
+                <img
+                  src={resolveAssetUrl(city.iconName, '')}
+                  alt={city.name}
+                  className={cn(
+                    "w-full h-full object-contain transition-transform duration-500",
+                    isLocked ? "grayscale opacity-40" : "drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
+                  )}
+                />
+              ) : (
+                resolveCityIcon(city, (city.iconSize || 36), isLocked ? "grayscale opacity-40 text-slate-400" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]")
+              )
             ) : (
-              resolveCityIcon(city, (city.iconSize || 48), isLocked ? "grayscale opacity-50" : "text-voyage-accent")
-            )
-          ) : (
-            <div className="text-voyage-accent/20">
-              <MapPin size={40} />
+              <div className="text-white/80">
+                <MapPin size={32} strokeWidth={2.8} />
+              </div>
+            )}
+          </div>
+
+          {/* SVG Progress Corona surrounding the button */}
+          {!isLocked && (
+            <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none scale-105">
+              <circle
+                cx="50%" cy="50%" r="42"
+                fill="none"
+                stroke={isCompleted ? "#047857" : "var(--color-voyage-accent-dark)"}
+                strokeWidth="4"
+                strokeOpacity="0.15"
+              />
+              <circle
+                cx="50%" cy="50%" r="42"
+                fill="none"
+                stroke={isCompleted ? "#34D399" : "var(--color-voyage-accent-light)"}
+                strokeWidth="4"
+                strokeDasharray={264}
+                strokeDashoffset={264 * (1 - progress)}
+                strokeLinecap="round"
+                className="transition-all duration-1000"
+              />
+            </svg>
+          )}
+
+          {isLocked && (
+            <div className="absolute inset-0 flex items-center justify-center bg-slate-900/5 rounded-full">
+              <Lock size={20} strokeWidth={2.8} className="text-slate-400 drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]" />
             </div>
           )}
         </div>
-
-        {!isLocked && (
-          <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
-            <circle
-              cx="50%" cy="50%" r="42"
-              fill="none"
-              stroke={isCompleted ? "#10B981" : "#D4A43E"}
-              strokeWidth="4"
-              strokeDasharray={264}
-              strokeDashoffset={264 * (1 - progress)}
-              strokeLinecap="round"
-              className="transition-all duration-1000"
-            />
-          </svg>
-        )}
-
-        {isLocked && (
-          <div className="absolute inset-0 flex items-center justify-center bg-slate-100/40 backdrop-blur-[1px]">
-            <Lock size={20} className="text-slate-400" />
-          </div>
-        )}
       </motion.div>
 
       {isCompleted && (
@@ -664,7 +775,7 @@ const CityOrb: React.FC<{
           animate={{ scale: 1 }}
           className="absolute -bottom-1 -right-1 w-7 h-7 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center shadow-md z-20"
         >
-          <Check size={14} className="text-white font-bold" />
+          <Check size={14} strokeWidth={3} className="text-white font-bold" />
         </motion.div>
       )}
     </div>
@@ -674,15 +785,17 @@ const CityOrb: React.FC<{
 // ── Composant Nœud de ville ────────────────────────────────────────────────────
 const CityNode: React.FC<{
   city: City;
+  profile?: any;
   onSelect: () => void;
   isSelected: boolean;
   delay: number;
   index: number;
   isScrollTarget?: boolean;
   scrollDone?: boolean;
-}> = ({ city, onSelect, isSelected, delay, index, isScrollTarget = false, scrollDone = false }) => {
+}> = ({ city, profile, onSelect, isSelected, delay, index, isScrollTarget = false, scrollDone = false }) => {
   const isLocked = city.status === 'locked';
   const { language } = useSettings();
+  const completedCount = city.status === 'completed' ? city.totalSteps : Math.max(0, city.stepNum - 1);
 
   return (
     <motion.div
@@ -691,6 +804,59 @@ const CityNode: React.FC<{
       transition={{ delay }}
       className="flex flex-col items-center relative"
     >
+      {/* Floating Player Avatar on top of active CityOrb */}
+      {city.status === 'active' && (
+        <div className="absolute -top-[90px] z-40 flex flex-col items-center pointer-events-none">
+          {/* Gentle Bouncing Avatar Container */}
+          <motion.div
+            animate={{ 
+              y: [0, -8, 0],
+            }}
+            transition={{ 
+              duration: 2.2, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+            className="relative flex flex-col items-center"
+          >
+            {/* Avatar Frame (Circle with white border and thick shadow) */}
+            <div className="w-[52px] h-[52px] rounded-full border-4 border-white bg-voyage-sand shadow-[0_6px_16px_rgba(0,0,0,0.25)] overflow-hidden flex items-center justify-center relative">
+              <img
+                src={optimizeSupabaseUrl(profile?.avatar_url || DEFAULT_AVATAR_URL, 128, 80)}
+                alt="Player Avatar"
+                className="w-full h-full object-cover"
+              />
+              {/* Sparkles floating on top */}
+              <div className="absolute top-0 right-0 bg-voyage-accent rounded-full p-0.5 border border-white shadow-xs">
+                <Sparkles size={8} className="text-white fill-white" />
+              </div>
+            </div>
+
+            {/* Moroccan/Duolingo speech bubble indicating "T'es ici !" */}
+            <div className="mt-1 bg-voyage-accent text-white font-black text-[7.5px] uppercase tracking-wider px-2 py-0.5 rounded-md shadow-md border border-white/20 whitespace-nowrap">
+              {language === 'ar' ? "أنت هنا" : "Tu es ici !"}
+            </div>
+
+            {/* Down pointing pointer triangle */}
+            <div className="w-2.5 h-2.5 bg-voyage-accent rotate-45 -mt-1 shadow-md" />
+          </motion.div>
+
+          {/* Bouncing Shadow at the ground level (pulsating in scale & opacity in opposition to height) */}
+          <motion.div
+            animate={{
+              scale: [1, 0.7, 1],
+              opacity: [0.35, 0.15, 0.35]
+            }}
+            transition={{
+              duration: 2.2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="w-8 h-2 bg-black/40 rounded-full blur-[2px] -mt-1"
+          />
+        </div>
+      )}
+
       <CityOrb
         city={city}
         isSelected={isSelected}
@@ -698,10 +864,10 @@ const CityNode: React.FC<{
       />
 
       {/* City Labels */}
-      <div className="mt-4 text-center">
+      <div className="mt-4 text-center flex flex-col items-center">
         <h3 className={cn(
           "text-[13px] font-black tracking-tight leading-none mb-1 uppercase",
-          isLocked ? "text-slate-500" : "text-slate-900",
+          isLocked ? "text-slate-500" : "text-[#5A2207]",
           language === 'ar' && "arabic-font text-[15px]"
         )}>
           {language === 'ar' ? city.arabicName || city.name : city.name}
@@ -712,18 +878,21 @@ const CityNode: React.FC<{
         )}>
           {language === 'ar' ? city.name : city.arabicName}
         </p>
-      </div>
 
-      {/* Floating Status Badge (Active) */}
-      {city.status === 'active' && (
-        <motion.div
-          animate={{ y: [0, -4, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className={cn("absolute -top-6 bg-voyage-accent text-white text-[7.5px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 whitespace-nowrap z-30", language === 'ar' && "arabic-font text-[9.5px]")}
-        >
-          {language === 'ar' ? "المهمة الحالية" : "MISSION EN COURS"}
-        </motion.div>
-      )}
+        {/* Mission Progress Indicator */}
+        <div className="mt-2 flex items-center justify-center">
+          <span className={cn(
+            "text-[9px] font-black px-2 py-0.5 rounded-full border shadow-xs transition-all tracking-wider select-none",
+            isLocked 
+              ? "bg-slate-100 text-slate-400 border-slate-200/60" 
+              : city.status === 'completed'
+                ? "bg-emerald-50 text-emerald-600 border-emerald-200/80 shadow-emerald-100/30"
+                : "bg-voyage-accent/10 text-voyage-accent border-voyage-accent/20 shadow-amber-100/30"
+          )}>
+            {completedCount}/{city.totalSteps}
+          </span>
+        </div>
+      </div>
     </motion.div>
   );
 };
