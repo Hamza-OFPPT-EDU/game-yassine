@@ -277,60 +277,7 @@ export default function MapJourneyScreen({
         )}
       </AnimatePresence>
 
-      {/* Duolingo-Style Moroccan Chapter Banner */}
-      {activeCity && (
-        <div className="relative z-20 px-4 pt-4 pb-2 shrink-0 animate-fade-in" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-          <motion.div
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="bg-linear-to-br from-voyage-primary via-voyage-primary to-voyage-primary-dark rounded-[24px] p-4.5 shadow-[0_12px_28px_-6px_rgba(90,34,7,0.38)] border-2 border-voyage-secondary/45 border-b-[6px] border-b-black/35 relative overflow-hidden"
-          >
-            {/* Arabic pattern background opacity */}
-            <div 
-              className="absolute inset-0 opacity-[0.08] pointer-events-none" 
-              style={{ 
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0l10 10-10 10-10-10zM0 20l10 10-10 10-10-10zM40 20l10 10-10 10-10-10zM20 40l10 10-10 10-10-10z' fill='%23FFFFFF' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-                backgroundSize: '40px 40px'
-              }}
-            />
 
-            <div className="flex items-center justify-between gap-4 relative z-10">
-              <div className="flex items-center gap-3">
-                {/* 3D-styled mini icon representation of active city */}
-                <div className="w-12 h-12 bg-white/12 backdrop-blur-md rounded-2xl flex items-center justify-center border-2 border-white/30 shadow-inner shrink-0 transition-transform hover:scale-105">
-                  {resolveCityIcon(activeCity, 26, 'text-voyage-accent')}
-                </div>
-
-                <div>
-                  <p className={cn("text-voyage-accent font-black text-[9px] uppercase tracking-[0.25em]", language === 'ar' && "arabic-font text-[11px] tracking-normal")}>
-                    {language === 'ar' ? "المدينة النشطة" : "VILLE ACTIVE"}
-                  </p>
-                  <h2 className={cn("text-white text-[19px] font-black tracking-tight leading-none mt-1", language === 'ar' && "arabic-font text-[21px]")}>
-                    {language === 'ar' 
-                      ? activeCity.arabicName || activeCity.name 
-                      : `${activeCity.sort_order || 1}. ${activeCity.name}`}
-                  </h2>
-                  <p className={cn("text-white/85 text-[10px] font-bold mt-1.5 line-clamp-1 leading-tight", language === 'ar' && "arabic-font text-[12px]")}>
-                    {language === 'ar' 
-                      ? activeCity.arabicHeadline || "استعد للتحديات!" 
-                      : activeCity.description || "Relève les défis pour progresser !"}
-                  </p>
-                </div>
-              </div>
-
-              {/* Progress pill on right */}
-              <div className="bg-white/12 backdrop-blur-md px-3.5 py-2 rounded-2xl border-2 border-white/20 shadow-inner shrink-0 text-center min-w-[70px]">
-                <span className="block text-voyage-accent text-[8.5px] font-black uppercase tracking-wider">
-                  {language === 'ar' ? "التقدم" : "PROGRESSION"}
-                </span>
-                <span className="block text-white font-black text-[15px] mt-0.5 tracking-tight">
-                  {Math.max(0, activeCity.stepNum - 1)}/{activeCity.totalSteps}
-                </span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
 
       {/* ── Corps principal ──────────────────────────────────────────────── */}
       <main className="grow overflow-y-auto relative pt-4 pb-0 scrollbar-hide" ref={scrollContainerRef} dir={language === 'ar' ? 'rtl' : 'ltr'}>
@@ -351,7 +298,7 @@ export default function MapJourneyScreen({
               fill="none"
               stroke="var(--color-voyage-secondary-light)"
               strokeWidth="16"
-              strokeOpacity="0.4"
+              strokeOpacity="0.2"
               strokeLinecap="round"
             />
 
@@ -362,9 +309,10 @@ export default function MapJourneyScreen({
                 fill="none"
                 stroke="var(--color-voyage-accent)"
                 strokeWidth="16"
+                strokeOpacity="0.5"
                 strokeLinecap="round"
                 style={{
-                  filter: 'drop-shadow(0 0 8px var(--color-voyage-accent))'
+                  filter: 'drop-shadow(0 0 4px var(--color-voyage-accent))'
                 }}
               />
             )}
@@ -378,7 +326,7 @@ export default function MapJourneyScreen({
                 strokeWidth="6"
                 strokeLinecap="round"
                 strokeDasharray="20 40"
-                style={{ opacity: 0.8 }}
+                style={{ opacity: 0.4 }}
               >
                 <animate
                   attributeName="stroke-dashoffset"
