@@ -54,15 +54,49 @@ export default function MapJourneyScreen({
 
   // Refs pour scroll automatique
   const activeCityRef = useRef<HTMLDivElement | null>(null);
+  const firstCityRef = useRef<HTMLDivElement | null>(null);
+  const lastCityRef = useRef<HTMLDivElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [scrollDone, setScrollDone] = useState(false);
 
-  // Hook pour scroll automatique
+  // Hook pour scroll automatique (utilisé uniquement pour IntersectionObserver et le bouton retour)
   const { isInView: isActiveCityInView } = useAutoScroll({
     targetRef: activeCityRef,
-    enabled: !loading && !scrollDone,
-    onScrolDone: () => setScrollDone(true),
+    enabled: false,
   });
+
+  // Auto-scroll cinematic effect: Start at Dakhla (top) and scroll down to Rabat (bottom) on mount
+  useEffect(() => {
+    if (loading || !scrollContainerRef.current) return;
+
+    // Force starting scroll position to top (where Dakhla is) after a tiny layout delay
+    const initTimer = setTimeout(() => {
+      if (lastCityRef.current) {
+        lastCityRef.current.scrollIntoView({
+          behavior: 'auto',
+          block: 'center',
+        });
+      } else if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTop = 0;
+      }
+    }, 50);
+
+    // Wait a delay for Dakhla's grand prize to shine, then scroll down to Rabat smoothly
+    const scrollTimer = setTimeout(() => {
+      if (firstCityRef.current) {
+        firstCityRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+      setScrollDone(true);
+    }, 1500); // 1.5s delay for premium impact
+
+    return () => {
+      clearTimeout(initTimer);
+      clearTimeout(scrollTimer);
+    };
+  }, [loading]);
 
   const handleShowCitySheet = (city: City) => {
     playSound('whoosh');
@@ -280,7 +314,7 @@ export default function MapJourneyScreen({
 
 
       {/* ── Corps principal ──────────────────────────────────────────────── */}
-      <main className="grow overflow-y-auto relative pt-24 pb-20 scrollbar-hide" ref={scrollContainerRef} dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      <main className="grow overflow-y-auto relative pt-4 pb-20 scrollbar-hide" ref={scrollContainerRef} dir={language === 'ar' ? 'rtl' : 'ltr'}>
 
         {/* ── SVG Path + Nœuds ────────────────────────────────────────────── */}
         <div className="relative max-w-sm mx-auto px-4">
@@ -348,7 +382,11 @@ export default function MapJourneyScreen({
               <div
                 key={city.id}
                 style={{ marginBottom: index < cities.length - 1 ? '220px' : 0 }}
-                ref={city.status === 'active' ? activeCityRef : null}
+                ref={(el) => {
+                  if (index === 0) firstCityRef.current = el;
+                  if (index === cities.length - 1) lastCityRef.current = el;
+                  if (city.status === 'active') activeCityRef.current = el;
+                }}
               >
                 <CityNode
                   city={city}
@@ -447,7 +485,7 @@ export default function MapJourneyScreen({
                       }}
                       className={cn("absolute top-4 p-2 bg-black/20 backdrop-blur-md hover:bg-black/40 rounded-xl transition-all z-50 border border-white/20 group", language === 'ar' ? "left-4" : "right-4")}
                     >
-                      <X size={20} className="text-white group-hover:rotate-90 transition-transform" />
+                      <X size={22} className="text-white group-hover:rotate-90 transition-transform" />
                     </button>
                   </div>
 
@@ -505,7 +543,7 @@ export default function MapJourneyScreen({
                             "p-2 rounded-xl transition-colors",
                             isMissionsExpanded ? "bg-voyage-accent text-white" : "bg-white text-voyage-accent"
                           )}>
-                            <Sparkles size={16} />
+                            <Sparkles size={18} />
                           </div>
                           <div className="text-left">
                             <h4 className={cn("text-[9.5px] font-black text-[#7B3F1A] uppercase tracking-[0.2em] leading-none mb-1", language === 'ar' && "arabic-font text-[12px] tracking-normal")}>
@@ -520,7 +558,7 @@ export default function MapJourneyScreen({
                           animate={{ rotate: isMissionsExpanded ? 180 : 0 }}
                           className="text-[#7B3F1A]/30 group-hover:text-[#7B3F1A]"
                         >
-                          <ArrowDown size={20} />
+                          <ArrowDown size={22} />
                         </motion.div>
                       </button>
 
@@ -562,7 +600,7 @@ export default function MapJourneyScreen({
                           ? (language === 'ar' ? 'تحدي مجدداً' : 'Relever de nouveau')
                           : (language === 'ar' ? 'ابدأ المغامرة' : "Lancer l'aventure")}
                       </span>
-                      <ChevronRight size={22} strokeWidth={3} className={cn("relative z-10 transition-transform", language === 'ar' && "rotate-180")} />
+                      <ChevronRight size={24} strokeWidth={3} className={cn("relative z-10 transition-transform", language === 'ar' && "rotate-180")} />
                     </GameButton>
                   </div>
                 </div>
@@ -790,11 +828,11 @@ const CityOrb: React.FC<{
                   )}
                 />
               ) : (
-                resolveCityIcon(city, (city.iconSize || 36), isLocked ? "grayscale opacity-40 text-slate-400" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]")
+                resolveCityIcon(city, (city.iconSize ? Math.round(city.iconSize * 1.1) : 40), isLocked ? "grayscale opacity-40 text-slate-400" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]")
               )
             ) : (
               <div className="text-white/80">
-                <MapPin size={32} strokeWidth={2.8} />
+                <MapPin size={35} strokeWidth={2.8} />
               </div>
             )}
           </div>
@@ -824,7 +862,7 @@ const CityOrb: React.FC<{
 
           {isLocked && (
             <div className="absolute inset-0 flex items-center justify-center bg-slate-900/5 rounded-full">
-              <Lock size={20} strokeWidth={2.8} className="text-slate-400 drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]" />
+              <Lock size={22} strokeWidth={2.8} className="text-slate-400 drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)]" />
             </div>
           )}
         </div>
@@ -836,7 +874,7 @@ const CityOrb: React.FC<{
           animate={{ scale: 1 }}
           className="absolute -bottom-1 -right-1 w-7 h-7 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center shadow-md z-20"
         >
-          <Check size={14} strokeWidth={3} className="text-white font-bold" />
+          <Check size={15} strokeWidth={3} className="text-white font-bold" />
         </motion.div>
       )}
     </div>
@@ -908,7 +946,7 @@ const CityNode: React.FC<{
               />
               {/* Sparkles floating on top */}
               <div className="absolute top-0 right-0 bg-voyage-accent rounded-full p-0.5 border border-white shadow-xs">
-                <Sparkles size={8} className="text-white fill-white" />
+                <Sparkles size={9} className="text-white fill-white" />
               </div>
             </div>
 
@@ -956,11 +994,11 @@ const CityNode: React.FC<{
             
             {/* Trophy Icon Badge */}
             <div className="w-[56px] h-[56px] rounded-full bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-600 border-4 border-white shadow-[0_8px_20px_rgba(217,119,6,0.5)] flex items-center justify-center relative">
-              <Trophy size={28} className="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] stroke-[2.5]" />
+              <Trophy size={31} className="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] stroke-[2.5]" />
               
               {/* Little sparkles on the trophy badge */}
               <div className="absolute -top-1 -right-1 bg-yellow-300 rounded-full p-0.5 border border-white shadow-xs">
-                <Sparkles size={8} className="text-amber-800 fill-amber-800 animate-pulse" />
+                <Sparkles size={9} className="text-amber-800 fill-amber-800 animate-pulse" />
               </div>
             </div>
 
@@ -1031,7 +1069,7 @@ const MissionsList: React.FC<{
 
     if (loading) return (
       <div className="flex flex-col items-center justify-center py-10 gap-3" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-        <Loader2 className="animate-spin text-voyage-accent" size={24} />
+        <Loader2 className="animate-spin text-voyage-accent" size={26} />
         <span className={cn("text-[9.5px] font-black text-[#7B3F1A]/40 uppercase tracking-widest", language === 'ar' && "arabic-font text-[12px] tracking-normal")}>
           {language === 'ar' ? "جاري تحميل التحديات..." : "Chargement des défis..."}
         </span>
@@ -1070,7 +1108,7 @@ const MissionsList: React.FC<{
                     boxShadow: isDone ? `0 4px 12px ${themeColor}40` : 'none'
                   }}
                 >
-                  {isDone ? <Check size={18} strokeWidth={3} /> : idx + 1}
+                  {isDone ? <Check size={20} strokeWidth={3} /> : idx + 1}
                 </div>
 
                 <div>
@@ -1079,12 +1117,12 @@ const MissionsList: React.FC<{
                       {language === 'ar' ? mission.title_ar || mission.title_fr : mission.title_fr}
                     </p>
                     {mission.is_bonus && (
-                      <Sparkles size={12} className="text-voyage-accent" />
+                      <Sparkles size={13} className="text-voyage-accent" />
                     )}
                   </div>
                   <div className="flex items-center gap-3 mt-0.5">
                     <span className={cn("text-[8.5px] font-black text-voyage-accent uppercase tracking-wider flex items-center gap-1", language === 'ar' && "arabic-font text-[10.5px] tracking-normal")}>
-                      <Star size={10} className="fill-voyage-accent text-voyage-accent" /> {language === 'ar' ? `+${mission.xp_reward} نقطة` : `+${mission.xp_reward} XP`}
+                      <Star size={11} className="fill-voyage-accent text-voyage-accent" /> {language === 'ar' ? `+${mission.xp_reward} نقطة` : `+${mission.xp_reward} XP`}
                     </span>
                     <span className={cn("text-[8.5px] font-bold text-[#7B3F1A]/40 uppercase tracking-widest", language === 'ar' && "arabic-font text-[10.5px] tracking-normal")}>
                       {language === 'ar' ? "٥ دقائق" : (mission.estimated_time || '5 min')}
@@ -1098,11 +1136,11 @@ const MissionsList: React.FC<{
                 {isDone ? (
                   <div className="flex gap-0.5 bg-voyage-accent/10 p-1 rounded-lg">
                     {[...Array(3)].map((_, i) => (
-                      <Star key={i} size={10} className="text-voyage-accent fill-voyage-accent star-twinkle" style={{ animationDelay: `${i * 0.2}s` }} />
+                      <Star key={i} size={11} className="text-voyage-accent fill-voyage-accent star-twinkle" style={{ animationDelay: `${i * 0.2}s` }} />
                     ))}
                   </div>
                 ) : (
-                  <ChevronRight size={18} className={cn("text-[#7B3F1A]/20 group-hover:text-[#7B3F1A] transition-all", language === 'ar' && "rotate-180")} />
+                  <ChevronRight size={20} className={cn("text-[#7B3F1A]/20 group-hover:text-[#7B3F1A] transition-all", language === 'ar' && "rotate-180")} />
                 )}
               </div>
 
@@ -1111,7 +1149,7 @@ const MissionsList: React.FC<{
           );
         }) : (
           <div className="py-12 flex flex-col items-center justify-center border-2 border-dashed border-[#E5D5B8] rounded-[30px] opacity-40">
-            <MapPin size={32} className="text-[#7B3F1A] mb-2" />
+            <MapPin size={35} className="text-[#7B3F1A] mb-2" />
             <p className={cn("text-[11px] font-black text-[#7B3F1A] uppercase tracking-widest", language === 'ar' && "arabic-font")}>
               {language === 'ar' ? 'في انتظار المغامرة...' : "En attente d'expédition..."}
             </p>
