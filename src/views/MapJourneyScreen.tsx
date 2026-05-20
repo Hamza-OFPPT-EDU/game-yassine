@@ -7,7 +7,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   MapPin, Check, ChevronRight, X, Loader2, Lock,
-  Star, Sparkles, Navigation2, ArrowDown
+  Star, Sparkles, Navigation2, ArrowDown, Trophy
 } from 'lucide-react';
 import { type City, DEFAULT_AVATAR_URL } from '../types';
 import { cn } from '../lib/utils';
@@ -345,50 +345,78 @@ export default function MapJourneyScreen({
             viewBox={`0 0 320 ${cities.length * 300}`}
             preserveAspectRatio="xMidYMid meet"
           >
-            {/* 1. Chemin d'arrière-plan (Complet, non-atteint) - Sable/Bronze clair */}
-            <path
-              d={buildPath(cities, 320)}
-              fill="none"
-              stroke="var(--color-voyage-secondary-light)"
-              strokeWidth="16"
-              strokeOpacity="0.4"
-              strokeLinecap="round"
-            />
+            {/* 1. Dynamic city-by-city segmented SVG paths */}
+            {sortedCities.map((city, idx) => {
+              if (idx === 0) return null;
+              const prevCity = sortedCities[idx - 1];
 
-            {/* 2. Chemin actif / complété - Or riche */}
-            {activeCityIndex >= 0 && (
-              <path
-                d={buildPath(cities, 320, activeCityIndex)}
-                fill="none"
-                stroke="var(--color-voyage-accent)"
-                strokeWidth="16"
-                strokeLinecap="round"
-                style={{
-                  filter: 'drop-shadow(0 0 8px var(--color-voyage-accent))'
-                }}
-              />
-            )}
+              // Math for coordinates matching buildPath exactly
+              const cx = 320 / 2;
+              const stepY = 300;
+              const startY = (sortedCities.length - 1) * stepY + 150;
 
-            {/* 3. Ligne fine interne pulsante pour l'effet de flux */}
-            {activeCityIndex >= 0 && (
-              <path
-                d={buildPath(cities, 320, activeCityIndex)}
-                fill="none"
-                stroke="var(--color-voyage-accent-light)"
-                strokeWidth="6"
-                strokeLinecap="round"
-                strokeDasharray="20 40"
-                style={{ opacity: 0.8 }}
-              >
-                <animate
-                  attributeName="stroke-dashoffset"
-                  from="120"
-                  to="0"
-                  dur="6s"
-                  repeatCount="indefinite"
-                />
-              </path>
-            )}
+              const prevX = cx + ((prevCity.map_x || 0) * 320) / 100;
+              const prevY = startY - ((idx - 1) * stepY);
+
+              const x = cx + ((city.map_x || 0) * 320) / 100;
+              const y = startY - (idx * stepY);
+
+              const midY = (prevY + y) / 2;
+              const waveOffset = idx % 2 === 0 ? 45 : -45;
+
+              const d = `M ${prevX} ${prevY} C ${prevX + waveOffset} ${midY}, ${x - waveOffset} ${midY}, ${x} ${y}`;
+
+              const isSegmentActive = idx <= activeCityIndex;
+              const segmentColor = city.color || 'var(--color-voyage-accent)';
+
+              return (
+                <g key={`segment-${city.id}`}>
+                  {/* Background segment (faded or incomplete) */}
+                  <path
+                    d={d}
+                    fill="none"
+                    stroke={segmentColor}
+                    strokeWidth="16"
+                    strokeOpacity={isSegmentActive ? "0.22" : "0.08"}
+                    strokeLinecap="round"
+                    className="transition-all duration-300"
+                  />
+
+                  {/* Active/Completed segment with vivid coloring and custom glow */}
+                  {isSegmentActive && (
+                    <>
+                      <path
+                        d={d}
+                        fill="none"
+                        stroke={segmentColor}
+                        strokeWidth="16"
+                        strokeLinecap="round"
+                        style={{
+                          filter: `drop-shadow(0 0 7px ${segmentColor})`
+                        }}
+                      />
+                      {/* Pulsative flow effect line */}
+                      <path
+                        d={d}
+                        fill="none"
+                        stroke="rgba(255, 255, 255, 0.7)"
+                        strokeWidth="5"
+                        strokeLinecap="round"
+                        strokeDasharray="20 40"
+                      >
+                        <animate
+                          attributeName="stroke-dashoffset"
+                          from="120"
+                          to="0"
+                          dur="5s"
+                          repeatCount="indefinite"
+                        />
+                      </path>
+                    </>
+                  )}
+                </g>
+              );
+            })}
           </svg>
 
           {/* Nœuds des villes */}
@@ -796,6 +824,7 @@ const CityNode: React.FC<{
   const isLocked = city.status === 'locked';
   const { language } = useSettings();
   const completedCount = city.status === 'completed' ? city.totalSteps : Math.max(0, city.stepNum - 1);
+  const isDakhla = city.id?.toLowerCase() === 'dakhla';
 
   return (
     <motion.div
@@ -855,6 +884,71 @@ const CityNode: React.FC<{
             className="w-8 h-2 bg-black/40 rounded-full blur-[2px] -mt-1"
           />
         </div>
+      )}
+
+      {/* Dakhla Special Final Endpoint Effects */}
+      {isDakhla && (
+        <>
+          {/* Pulsating colorful final portal glow aura */}
+          <motion.div
+            animate={{
+              scale: [0.95, 1.25, 0.95],
+              opacity: [0.65, 0.25, 0.65],
+            }}
+            transition={{
+              duration: 3.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute inset-0 w-[100px] h-[100px] -left-2 -top-2 bg-gradient-to-r from-voyage-accent via-[#FFD700] to-cyan-500 rounded-full blur-2xl -z-10"
+          />
+
+          {/* Dotted outer portal ring rotating clockwise */}
+          <motion.svg
+            animate={{ rotate: 360 }}
+            transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+            className="absolute -inset-4 w-[116px] h-[116px] pointer-events-none z-0"
+          >
+            <circle
+              cx="58" cy="58" r="48"
+              fill="none"
+              stroke="#FFD700"
+              strokeWidth="2.5"
+              strokeDasharray="6 8"
+              strokeOpacity="0.85"
+            />
+          </motion.svg>
+
+          {/* Dotted inner portal ring rotating counter-clockwise */}
+          <motion.svg
+            animate={{ rotate: -360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            className="absolute -inset-6 w-[132px] h-[132px] pointer-events-none z-0"
+          >
+            <circle
+              cx="66" cy="66" r="58"
+              fill="none"
+              stroke="#06B6D4"
+              strokeWidth="2"
+              strokeDasharray="4 6"
+              strokeOpacity="0.65"
+            />
+          </motion.svg>
+
+          {/* Bouncing gold ribbon crown signifying Final Stage */}
+          <div className="absolute -top-[36px] z-30 flex flex-col items-center pointer-events-none animate-bounce" style={{ animationDuration: '3s' }}>
+            <div className="bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-white px-2 py-0.5 rounded-full border border-white text-[7px] font-black uppercase tracking-widest shadow-md flex items-center gap-1">
+              <Trophy size={8} className="fill-white" />
+              <span>{language === 'ar' ? "النهائي" : "FINALE"}</span>
+            </div>
+            <div className="w-1.5 h-1.5 bg-[#FFA500] rotate-45 -mt-0.5 shadow-xs" />
+          </div>
+
+          {/* Twinkling mini-stars around Dakhla */}
+          <div className="absolute -left-6 top-2 text-[#FFD700] text-xs star-twinkle pointer-events-none animate-pulse">★</div>
+          <div className="absolute -right-6 top-8 text-cyan-400 text-xs star-twinkle pointer-events-none animate-pulse" style={{ animationDelay: '0.5s' }}>✦</div>
+          <div className="absolute -left-4 bottom-2 text-[#FFD700] text-[8px] star-twinkle pointer-events-none animate-pulse" style={{ animationDelay: '1.2s' }}>★</div>
+        </>
       )}
 
       <CityOrb
