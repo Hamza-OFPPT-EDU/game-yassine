@@ -7,7 +7,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   MapPin, Check, ChevronRight, X, Loader2, Lock,
-  Star, Sparkles, Navigation2, ArrowDown
+  Star, Sparkles, Navigation2, ArrowDown, Trophy
 } from 'lucide-react';
 import { type City, DEFAULT_AVATAR_URL } from '../types';
 import { cn } from '../lib/utils';
@@ -411,6 +411,7 @@ export default function MapJourneyScreen({
                   index={index}
                   isScrollTarget={city.status === 'active'}
                   scrollDone={scrollDone}
+                  isLastCity={index === cities.length - 1}
                 />
               </div>
             ))}
@@ -665,7 +666,8 @@ const CityOrb: React.FC<{
   size?: string;
   onClick?: () => void;
   isLocked?: boolean;
-}> = ({ city, isSelected = false, size = "w-[92px] h-[92px]", onClick, isLocked: manualIsLocked }) => {
+  isLastCity?: boolean;
+}> = ({ city, isSelected = false, size = "w-[92px] h-[92px]", onClick, isLocked: manualIsLocked, isLastCity = false }) => {
   const isLocked = manualIsLocked ?? (city.status === 'locked');
   const isCompleted = city.status === 'completed';
   const isActive = city.status === 'active';
@@ -673,6 +675,69 @@ const CityOrb: React.FC<{
 
   return (
     <div className="relative group" onClick={onClick}>
+      {/* Premium Rotating Starburst Aura & Pulsing Glow for Last City (Grand Prize) */}
+      {isLastCity && (
+        <div className="absolute inset-0 pointer-events-none -z-10 flex items-center justify-center">
+          {/* Pulsing radial sunburst glow */}
+          <motion.div
+            animate={{
+              scale: [1.3, 1.5, 1.3],
+              opacity: [0.35, 0.65, 0.35],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            style={{
+              background: 'radial-gradient(circle, rgba(251,191,36,0.65) 0%, rgba(245,158,11,0.2) 55%, rgba(0,0,0,0) 100%)',
+            }}
+            className="absolute w-full h-full rounded-full blur-md scale-[1.5]"
+          />
+
+          {/* Rotating dashed ring 1 */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="absolute w-full h-full rounded-full border-4 border-dashed border-amber-400/40 scale-[1.38]"
+          />
+
+          {/* Rotating dashed ring 2 (reverse speed) */}
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="absolute w-full h-full rounded-full border-2 border-dashed border-yellow-500/30 scale-[1.48]"
+          />
+
+          {/* Sparkly particle emitters */}
+          {[...Array(4)].map((_, i) => (
+            <motion.div
+              key={i}
+              animate={{
+                scale: [0, 1.2, 0],
+                opacity: [0, 1, 0],
+                y: [0, (i % 2 === 0 ? -28 : 28), 0],
+                x: [0, (i < 2 ? -28 : 28), 0],
+              }}
+              transition={{
+                duration: 2.2 + i * 0.4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.5,
+              }}
+              className="absolute w-2.5 h-2.5 bg-yellow-300 rounded-full blur-[0.5px]"
+            />
+          ))}
+        </div>
+      )}
       {/* Concentric Sonar Wave Ripples for Active City Node */}
       {isActive && (
         <div className="absolute inset-0 pointer-events-none -z-10 flex items-center justify-center">
@@ -840,7 +905,8 @@ const CityNode: React.FC<{
   index: number;
   isScrollTarget?: boolean;
   scrollDone?: boolean;
-}> = ({ city, profile, onSelect, isSelected, delay, index, isScrollTarget = false, scrollDone = false }) => {
+  isLastCity?: boolean;
+}> = ({ city, profile, onSelect, isSelected, delay, index, isScrollTarget = false, scrollDone = false, isLastCity = false }) => {
   const isLocked = city.status === 'locked';
   const { language } = useSettings();
   const completedCount = city.status === 'completed' ? city.totalSteps : Math.max(0, city.stepNum - 1);
@@ -867,6 +933,24 @@ const CityNode: React.FC<{
             }}
             className="relative flex flex-col items-center"
           >
+            {/* Crown on top of active last city avatar */}
+            {isLastCity && (
+              <motion.div
+                animate={{ 
+                  rotate: [-5, 5, -5],
+                  scale: [1, 1.05, 1]
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+                className="absolute -top-[22px] z-50 text-[26px] drop-shadow-[0_3px_5px_rgba(0,0,0,0.25)] pointer-events-none select-none"
+              >
+                👑
+              </motion.div>
+            )}
+
             {/* Avatar Frame (Circle with white border and thick shadow) */}
             <div className="w-[52px] h-[52px] rounded-full border-4 border-white bg-voyage-sand shadow-[0_6px_16px_rgba(0,0,0,0.25)] overflow-hidden flex items-center justify-center relative">
               <img
@@ -905,10 +989,49 @@ const CityNode: React.FC<{
         </div>
       )}
 
+      {/* Floating spectacular golden trophy above the last city node when locked/completed */}
+      {isLastCity && city.status !== 'active' && (
+        <div className="absolute -top-[82px] z-40 flex flex-col items-center pointer-events-none">
+          <motion.div
+            animate={{
+              y: [0, -8, 0],
+            }}
+            transition={{
+              duration: 2.4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="relative flex flex-col items-center animate-fade-in"
+          >
+            {/* Glowing gold back aura */}
+            <div className="absolute inset-0 -m-3 bg-amber-400/25 blur-xl rounded-full animate-pulse pointer-events-none" />
+            
+            {/* Trophy Icon Badge */}
+            <div className="w-[56px] h-[56px] rounded-full bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-600 border-4 border-white shadow-[0_8px_20px_rgba(217,119,6,0.5)] flex items-center justify-center relative">
+              <Trophy size={28} className="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] stroke-[2.5]" />
+              
+              {/* Little sparkles on the trophy badge */}
+              <div className="absolute -top-1 -right-1 bg-yellow-300 rounded-full p-0.5 border border-white shadow-xs">
+                <Sparkles size={8} className="text-amber-800 fill-amber-800 animate-pulse" />
+              </div>
+            </div>
+
+            {/* Bilingual Ribbon Label */}
+            <div className="mt-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-white font-black text-[9.5px] uppercase tracking-wider px-3 py-1 rounded-full shadow-[0_4px_10px_rgba(217,119,6,0.3)] border-2 border-white whitespace-nowrap flex items-center gap-1">
+              {language === 'ar' ? "الجائزة الكبرى 🏆" : "LE GRAND PRIX 🏆"}
+            </div>
+
+            {/* Small subtle pointing glow triangle */}
+            <div className="w-2.5 h-2.5 bg-amber-500 rotate-45 -mt-1 shadow-md border-r border-b border-white/20" />
+          </motion.div>
+        </div>
+      )}
+
       <CityOrb
         city={city}
         isSelected={isSelected}
         onClick={onSelect}
+        isLastCity={isLastCity}
       />
 
       {/* City Labels */}
