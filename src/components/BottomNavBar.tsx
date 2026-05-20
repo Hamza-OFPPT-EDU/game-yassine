@@ -17,7 +17,7 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-[0.48rem] pt-[0.3rem] bg-white border-t border-voyage-secondary/30 shadow-2xl">
+    <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-[0.24rem] pt-[0.15rem] bg-white border-t border-voyage-secondary/30 shadow-2xl">
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         const Icon = tab.icon;
@@ -30,7 +30,7 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
               onTabChange(tab.id);
             }}
             className={cn(
-              "flex flex-col items-center justify-center p-[0.90rem] rounded-2xl transition-all relative group",
+              "flex flex-col items-center justify-center p-[0.45rem] rounded-2xl transition-all relative group",
               isActive ? "text-voyage-primary" : "text-voyage-secondary"
             )}
           >
@@ -41,11 +41,11 @@ export default function BottomNavBar({ activeTab, onTabChange }: BottomNavBarPro
               />
             )}
             <div className={cn(
-              "p-[0.71rem] rounded-xl transition-all duration-300",
+              "p-[0.35rem] rounded-xl transition-all duration-300",
               isActive ? "bg-voyage-primary/5 scale-110" : "group-hover:bg-voyage-sand"
             )}>
               <Icon 
-                size={44} 
+                size={22} 
                 className={cn(
                   "transition-all duration-300",
                   isActive ? "stroke-[3px]" : "stroke-[2px] opacity-70"
