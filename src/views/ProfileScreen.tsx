@@ -89,11 +89,15 @@ function BadgeDetail({ badge, isEarned, onClose }: BadgeDetailProps) {
               className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,#D4A43E_0%,transparent_70%)]"
             />
           )}
-          <img
-            src={optimizeSupabaseUrl(badge.url || '', 300, 85) || '/assets/badge_placeholder.png'}
-            className="w-32 h-32 object-contain relative z-10"
-            alt={badge.badge_name}
-          />
+          {badge.isEmoji ? (
+            <span className="text-7xl relative z-10 select-none animate-pulse-slow">{badge.emoji}</span>
+          ) : (
+            <img
+              src={optimizeSupabaseUrl(badge.url || '', 300, 85) || '/assets/badge_placeholder.png'}
+              className="w-32 h-32 object-contain relative z-10"
+              alt={badge.badge_name || badge.name}
+            />
+          )}
           {!isEarned && <Lock className="text-gray-400 opacity-30 absolute" size={64} />}
         </div>
 
@@ -323,37 +327,57 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
 
   const allGameBadges = useMemo(() => {
     return badges.map(b => {
-      const staticInfo = (BADGE_MAP as any)[b.id];
-      const name = staticInfo?.name || b.badge_name;
-      const nameAr = b.badge_name_ar || '';
-      let rawUrl = b.image_url || staticInfo?.url || b.badge_name;
+      const bId = b.id || b.badge_id;
+      const bName = b.badge_name || b.name_fr || b.translation || '';
+      const bNameAr = b.badge_name_ar || b.name_ar || '';
+      const bImageUrl = b.image_url || '';
+      const bDescription = b.description_fr || b.description || '';
+      const bRarity = b.rarity || b.rank || 'common';
+      const bXpRequirement = b.xp_requirement || b.points || 0;
 
-      if (rawUrl && !rawUrl.toLowerCase().endsWith('.png') && !rawUrl.startsWith('http')) {
+      const staticInfo = (BADGE_MAP as any)[bId];
+      const name = staticInfo?.name || bName;
+      const nameAr = bNameAr || '';
+      let rawUrl = bImageUrl || staticInfo?.url || bName;
+
+      // Check if rawUrl is an emoji
+      const isEmoji = rawUrl && (
+        ['💎', '🗡️', '👑', '⭐', '🏆', '🎯', '🌟', '⛰️', '🏅'].includes(rawUrl) ||
+        (rawUrl.length <= 4 && /[\u{1F300}-\u{1F9FF}]/u.test(rawUrl))
+      );
+
+      if (rawUrl && !isEmoji && !rawUrl.toLowerCase().endsWith('.png') && !rawUrl.startsWith('http')) {
         rawUrl += '.png';
       }
 
-      let city = staticInfo?.city;
-      if (!city) {
-        if (b.category === 'cultural' || b.category === 'culture') city = 'Culture';
-        else if (b.category === 'achievement' || b.category === 'succes') city = 'Succès';
-        else if (b.category === 'multiplayer') city = 'Succès';
+      const mainCities = ['Rabat', 'Chefchaouen', 'Fès', 'Marrakech', 'Laâyoune', 'Dakhla'];
+      let city = staticInfo?.city || b.city;
+      if (!city || !mainCities.some(mc => mc.toLowerCase() === city.toLowerCase())) {
+        const cat = (b.category || '').toLowerCase();
+        if (cat === 'cultural' || cat === 'culture') city = 'Culture';
         else city = 'Succès';
+      } else {
+        city = mainCities.find(mc => mc.toLowerCase() === city.toLowerCase()) || city;
       }
 
       const playerXp = profile?.xp || 0;
-      const xpRequirement = b.xp_requirement || 0;
+      const xpRequirement = bXpRequirement || 0;
       const isUnlockedByXp = xpRequirement > 0 && playerXp >= xpRequirement;
 
       return {
-        id: b.id,
+        id: bId,
         name: name,
+        badge_name: name,
         nameAr: nameAr,
-        url: getBadgeUrl(rawUrl),
+        badge_name_ar: nameAr,
+        url: isEmoji ? '' : getBadgeUrl(rawUrl),
+        emoji: isEmoji ? rawUrl : null,
+        isEmoji: !!isEmoji,
         city: city,
-        isEarned: earnedBadges.includes(b.id) || isUnlockedByXp,
+        isEarned: earnedBadges.includes(bId) || isUnlockedByXp,
         xp_requirement: xpRequirement,
-        description_fr: b.description_fr || (staticInfo ? `Bijou traditionnel de la ville de ${staticInfo.city}.` : ''),
-        rarity: b.rarity
+        description_fr: bDescription || (staticInfo ? `Bijou traditionnel de la ville de ${staticInfo.city}.` : ''),
+        rarity: bRarity
       };
     });
   }, [badges, earnedBadges, profile?.xp]);
@@ -811,7 +835,9 @@ export default function ProfileScreen({ onBack, onSettings, onShowBadges, onLogo
                             />
                           )}
 
-                          {badge.url ? (
+                          {badge.isEmoji ? (
+                            <span className="text-4xl relative z-10 select-none">{badge.emoji}</span>
+                          ) : badge.url ? (
                             <img
                               src={optimizeSupabaseUrl(badge.url, 160, 85)}
                               alt={badge.name}

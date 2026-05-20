@@ -758,17 +758,45 @@ export function useSupabaseBadges(userId?: string) {
             category: 'cultural',
             image_url: b.url,
             xp_requirement: 500,
+            city: b.city
           }));
           
           fallbackBadges.push(
-            { id: 'Tazra n Imazighen', badge_name: 'Tazra n Imazighen', badge_name_ar: '', description_fr: 'Connaissance Amazighe', category: 'achievement', image_url: '', xp_requirement: 1000 },
-            { id: 'Azadagh n Umdan', badge_name: 'Azadagh n Umdan', badge_name_ar: '', description_fr: 'Guerrier Uni', category: 'multiplayer', image_url: '', xp_requirement: 1000 },
-            { id: 'Amazir Agmazen', badge_name: 'Amazir Agmazen', badge_name_ar: '', description_fr: 'Maître Amazighe', category: 'cultural', image_url: '', xp_requirement: 2000 }
+            { id: 'Tazra n Imazighen', badge_name: 'Tazra n Imazighen', badge_name_ar: '', description_fr: 'Connaissance Amazighe', category: 'achievement', image_url: '💎', xp_requirement: 1000, city: 'Succès' },
+            { id: 'Azadagh n Umdan', badge_name: 'Azadagh n Umdan', badge_name_ar: '', description_fr: 'Guerrier Uni', category: 'multiplayer', image_url: '🗡️', xp_requirement: 1000, city: 'Succès' },
+            { id: 'Amazir Agmazen', badge_name: 'Amazir Agmazen', badge_name_ar: '', description_fr: 'Maître Amazighe', category: 'cultural', image_url: '👑', xp_requirement: 2000, city: 'Culture' }
           );
           
           setBadges(fallbackBadges);
         } else {
-          setBadges(defs);
+          const dbBadges = defs.map(b => ({
+            id: b.badge_id || b.id,
+            badge_name: b.name_fr || b.badge_name || b.translation || '',
+            badge_name_ar: b.name_ar || b.badge_name_ar || '',
+            description_fr: b.description || b.description_fr || '',
+            description_ar: b.name_ar || b.description_ar || '',
+            category: b.category || (b.skill === 'excellence' ? 'cultural' : b.skill === 'equipe' ? 'multiplayer' : 'achievement'),
+            rarity: b.rarity || (b.rank === 'or' ? 'legendary' : b.rank === 'argent' ? 'rare' : 'common'),
+            image_url: b.image_url || '',
+            xp_requirement: b.xp_requirement || b.points || 0,
+            city: b.city
+          }));
+
+          const dbBadgeIds = new Set(dbBadges.map(b => b.id));
+          const missingBadges = Object.entries(BADGE_MAP)
+            .filter(([id]) => !dbBadgeIds.has(id))
+            .map(([id, b]) => ({
+              id,
+              badge_name: b.name,
+              badge_name_ar: '',
+              description_fr: `Bijou de ${b.city}`,
+              category: 'cultural',
+              image_url: b.url,
+              xp_requirement: 500,
+              city: b.city
+            }));
+
+          setBadges([...dbBadges, ...missingBadges]);
         }
 
         if (userId) {

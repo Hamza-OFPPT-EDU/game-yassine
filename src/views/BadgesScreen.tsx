@@ -90,11 +90,14 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                 {catBadges.map((badge, idx) => {
                   const isEarned = earnedBadges.includes(badge.id);
                   
-                  // Resolve image URL dynamically based on badge name as requested
-                  let imageUrl = badge.image_url;
-                  if (!imageUrl || !imageUrl.startsWith('http')) {
-                    // Reconstruct filename from badge_name if image_url is missing or just a partial path
-                    let fileName = imageUrl || badge.badge_name;
+                  const isEmoji = badge.image_url && (
+                    ['💎', '🗡️', '👑', '⭐', '🏆', '🎯', '🌟', '⛰️', '🏅'].includes(badge.image_url) ||
+                    (badge.image_url.length <= 4 && /[\u{1F300}-\u{1F9FF}]/u.test(badge.image_url))
+                  );
+                  
+                  let imageUrl = isEmoji ? '' : badge.image_url;
+                  if (imageUrl && !imageUrl.startsWith('http')) {
+                    let fileName = imageUrl;
                     if (!fileName.toLowerCase().endsWith('.png')) {
                       fileName += '.png';
                     }
@@ -118,9 +121,11 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                         {/* Badge Icon Container */}
                         <div 
                           className={cn("w-20 h-20 rounded-full flex items-center justify-center border-b-4 shadow-sm transition-transform bg-voyage-primary/10 border-voyage-primary/20 overflow-hidden relative mb-2")}
-                          style={isEarned ? getAssetStyle(imageUrl) : {}}
+                          style={isEarned && imageUrl ? getAssetStyle(imageUrl) : {}}
                         >
-                          {imageUrl ? (
+                          {isEmoji ? (
+                            <span className="text-4xl relative z-10 select-none">{badge.image_url}</span>
+                          ) : imageUrl ? (
                             <img 
                               src={optimizeSupabaseUrl(imageUrl, 160, 85)} 
                               alt={badge.badge_name} 
