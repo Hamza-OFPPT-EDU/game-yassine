@@ -11,6 +11,8 @@ import { useLeagues } from '../hooks/useLeagues';
 import { useAuth } from '../hooks/useSupabase';
 import TopAppBar from '../components/TopAppBar';
 import ConfirmationModal from '../components/ConfirmationModal';
+import { useSettings } from '../contexts/SettingsContext';
+
 
 interface LeagueDetailScreenProps {
   leagueId: string;
@@ -22,6 +24,7 @@ interface LeagueDetailScreenProps {
 
 export default function LeagueDetailScreen({ leagueId, onBack, onShowBadges, onContinueAdventure, userStats }: LeagueDetailScreenProps) {
   const { session } = useAuth();
+  const { language } = useSettings();
   const { leagues, loading, leaveLeague, deleteLeague } = useLeagues(session?.user?.id);
   const [showExitModal, setShowExitModal] = useState(false);
   const [showActionModal, setShowActionModal] = useState<'leave' | 'delete' | null>(null);
@@ -32,6 +35,41 @@ export default function LeagueDetailScreen({ leagueId, onBack, onShowBadges, onC
   const league = useMemo(() => leagues.find(l => l.id === leagueId), [leagues, leagueId]);
   const isCreator = league?.creator_id === session?.user?.id;
   const stats = userStats; 
+
+  const comparisonStats = useMemo(() => {
+    if (!league) return null;
+    
+    const myPlayer = league.players.find(p => p.isCurrentUser || p.id === session?.user?.id);
+    const myXp = myPlayer?.xp || 0;
+    const myRank = myPlayer?.rank || 1;
+    
+    const otherPlayers = league.players.filter(p => !p.isCurrentUser && p.id !== session?.user?.id);
+    const averageXp = otherPlayers.length > 0 ? Math.round(otherPlayers.reduce((sum, p) => sum + p.xp, 0) / otherPlayers.length) : myXp;
+    
+    const isAboveAverage = myXp >= averageXp;
+    const xpDiffAvg = Math.abs(myXp - averageXp);
+    
+    const isFirst = myRank === 1;
+    const playerAhead = league.players.find(p => p.rank === myRank - 1);
+    const xpToPlayerAhead = playerAhead ? playerAhead.xp - myXp : 0;
+    
+    const maxXp = league.players[0]?.xp || 1;
+    const minXp = league.players[league.players.length - 1]?.xp || 0;
+    
+    return {
+      myXp,
+      myRank,
+      averageXp,
+      isAboveAverage,
+      xpDiffAvg,
+      isFirst,
+      playerAhead,
+      xpToPlayerAhead,
+      maxXp,
+      minXp
+    };
+  }, [league, session]);
+
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(`Rejoins ma ligue ${league?.name} ! ID: ${league?.id}`);
@@ -200,6 +238,156 @@ export default function LeagueDetailScreen({ leagueId, onBack, onShowBadges, onC
               <span className="text-[10px] font-black text-slate-400 uppercase">Top 3</span>
            </div>
         </div>
+
+        {/* Comparative Analysis Section */}
+        {comparisonStats && (
+          <section className="bg-white rounded-[2.5rem] p-6 border-2 border-slate-50 shadow-xl space-y-6">
+             <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div>
+                   <h3 className={cn("text-base font-black text-voyage-primary-dark uppercase tracking-tight", language === 'ar' && "arabic-font")}>
+                      {language === 'ar' ? 'المقارنة التحليلية للمنافسة' : 'Analyse Comparative'}
+                   </h3>
+                   <p className={cn("text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5", language === 'ar' && "arabic-font")}>
+                      {language === 'ar' ? 'كيف تبدو مقارنة مع اللاعبين الآخرين؟' : 'Comment tu te situes par rapport aux autres ?'}
+                   </p>
+                </div>
+                <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+                   <TrendingUp size={20} />
+                </div>
+             </div>
+
+             {/* Metrics Grid */}
+             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Average XP Comparison */}
+                <div className="bg-slate-50/50 rounded-3xl p-4 border border-slate-100 relative overflow-hidden group">
+                   <div className="flex justify-between items-start">
+                      <div>
+                         <span className={cn("text-[8px] font-black uppercase tracking-widest text-slate-400", language === 'ar' && "arabic-font")}>
+                            {language === 'ar' ? 'متوسط نقاط المنافسين' : 'Moyenne de la Ligue'}
+                         </span>
+                         <h4 className="text-xl font-black text-slate-700 mt-1">{comparisonStats.averageXp.toLocaleString()} XP</h4>
+                      </div>
+                      <div className={cn(
+                         "px-2.5 py-1 rounded-full text-[9px] font-black uppercase flex items-center gap-1.5",
+                         comparisonStats.isAboveAverage ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-amber-50 text-amber-600 border border-amber-100"
+                      )}>
+                         {comparisonStats.isAboveAverage ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                         {language === 'ar' 
+                            ? (comparisonStats.isAboveAverage ? `+${comparisonStats.xpDiffAvg.toLocaleString()} فوق` : `${comparisonStats.xpDiffAvg.toLocaleString()} تحت`)
+                            : (comparisonStats.isAboveAverage ? `+${comparisonStats.xpDiffAvg.toLocaleString()} XP` : `-${comparisonStats.xpDiffAvg.toLocaleString()} XP`)
+                         }
+                      </div>
+                   </div>
+                   {/* Visual progress bar comparison */}
+                   <div className="mt-4 space-y-2">
+                      <div className="flex justify-between text-[9px] font-bold text-slate-400 uppercase">
+                         <span>{language === 'ar' ? 'نقاطك' : 'Tes points'}</span>
+                         <span>{language === 'ar' ? 'المتوسط' : 'Moyenne'}</span>
+                      </div>
+                      <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                         <div 
+                            className="h-full bg-voyage-accent transition-all duration-1000"
+                            style={{ 
+                               width: `${Math.min(100, (comparisonStats.myXp / (Math.max(comparisonStats.myXp, comparisonStats.averageXp) || 1)) * 100)}%` 
+                            }}
+                         />
+                      </div>
+                   </div>
+                </div>
+
+                {/* Leader or Target comparison */}
+                <div className="bg-slate-50/50 rounded-3xl p-4 border border-slate-100 relative overflow-hidden">
+                   <div className="flex justify-between items-start">
+                      <div>
+                         <span className={cn("text-[8px] font-black uppercase tracking-widest text-slate-400", language === 'ar' && "arabic-font")}>
+                            {language === 'ar' ? 'الهدف التالي' : 'Objectif de Position'}
+                         </span>
+                         <h4 className="text-base font-black text-slate-700 mt-1 uppercase tracking-tight truncate max-w-[150px]">
+                            {comparisonStats.isFirst 
+                               ? (language === 'ar' ? 'أنت في الصدارة !' : 'Tu es le leader !')
+                               : (language === 'ar' ? `تجاوز ${comparisonStats.playerAhead?.name}` : `Dépasser ${comparisonStats.playerAhead?.name}`)
+                            }
+                         </h4>
+                      </div>
+                      <div className={cn(
+                         "w-8 h-8 rounded-full flex items-center justify-center shadow-inner",
+                         comparisonStats.isFirst ? "bg-yellow-50 text-yellow-600 border border-yellow-100 animate-bounce" : "bg-indigo-50 text-indigo-600 border border-indigo-100"
+                      )}>
+                         <Trophy size={16} />
+                      </div>
+                   </div>
+                   
+                   <div className="mt-4">
+                      {comparisonStats.isFirst ? (
+                         <p className={cn("text-[10px] font-bold text-slate-500 leading-normal", language === 'ar' && "arabic-font")}>
+                            {language === 'ar' ? 'رائع ! حافظ على تقدمك ونشاطك للبقاء في الصدارة حتى نهاية الوقت.' : 'Superbe performance ! Reste actif pour conserver ta première place.'}
+                         </p>
+                      ) : (
+                         <div className="space-y-1">
+                            <p className={cn("text-[10px] font-bold text-slate-500", language === 'ar' && "arabic-font")}>
+                               {language === 'ar' ? 'الفارق المتبقي للصعود بالترتيب :' : 'Score nécessaire pour monter :'}
+                            </p>
+                            <div className="flex items-center gap-2">
+                               <div className="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-xl font-black text-[11px]">
+                                  +{comparisonStats.xpToPlayerAhead.toLocaleString()} XP
+                                </div>
+                               <span className={cn("text-[9px] font-black text-slate-400 uppercase tracking-widest", language === 'ar' && "arabic-font")}>
+                                  {language === 'ar' ? `لتصبح #${comparisonStats.myRank - 1}` : `pour être #${comparisonStats.myRank - 1}`}
+                               </span>
+                            </div>
+                         </div>
+                      )}
+                   </div>
+                </div>
+             </div>
+
+             {/* Full comparative spectrum visualization */}
+             <div className="bg-slate-50/50 rounded-3xl p-4 border border-slate-100 space-y-3">
+                <div className="flex justify-between items-center text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                   <span>{language === 'ar' ? 'طيف النقاط' : 'Spectre des Points'}</span>
+                   <span>{league.players.length} {language === 'ar' ? 'لاعبين' : 'Joueurs'}</span>
+                </div>
+                <div className="relative pt-4 pb-2">
+                   {/* A beautiful slider track showing user relative to min and max score */}
+                   <div className="h-2 w-full bg-slate-200/60 rounded-full relative">
+                      {/* Leader Position Dot (100%) */}
+                      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-yellow-400 rounded-full border border-white" title="Leader" />
+                      
+                      {/* Last Player Position Dot (0%) */}
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-slate-400 rounded-full border border-white" title="Dernier" />
+                      
+                      {/* Average Position Dot */}
+                      <div 
+                         className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-blue-400 rounded-full border border-white"
+                         style={{ 
+                            left: `${Math.min(90, Math.max(10, ((comparisonStats.averageXp - comparisonStats.minXp) / (comparisonStats.maxXp - comparisonStats.minXp || 1)) * 100))}%` 
+                         }}
+                         title="Moyenne"
+                      />
+
+                      {/* Current User Position Dot */}
+                      <div 
+                         className="absolute top-1/2 -translate-y-1/2 -mt-[2px] w-5 h-5 bg-voyage-accent rounded-full border-2 border-white shadow-md flex items-center justify-center animate-pulse"
+                         style={{ 
+                            left: `${Math.min(90, Math.max(10, ((comparisonStats.myXp - comparisonStats.minXp) / (comparisonStats.maxXp - comparisonStats.minXp || 1)) * 100))}%`,
+                            transform: 'translate(-50%, -50%)'
+                         }}
+                         title="Moi"
+                      >
+                         <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                      </div>
+                   </div>
+
+                   {/* Labels */}
+                   <div className="flex justify-between text-[8px] font-black text-slate-400 uppercase tracking-tighter mt-3">
+                      <span>{language === 'ar' ? 'الأقل' : 'Min'} ({comparisonStats.minXp.toLocaleString()} XP)</span>
+                      <span className="text-blue-500">{language === 'ar' ? 'المتوسط' : 'Moyenne'} ({comparisonStats.averageXp.toLocaleString()} XP)</span>
+                      <span className="text-yellow-600">{language === 'ar' ? 'المتصدر' : 'Leader'} ({comparisonStats.maxXp.toLocaleString()} XP)</span>
+                   </div>
+                </div>
+             </div>
+          </section>
+        )}
 
         {/* Specialized Stats Section */}
         <div className="grid gap-6">
