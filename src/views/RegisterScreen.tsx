@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 import { useAudio } from '../contexts/AudioContext';
 import { useSettings } from '../contexts/SettingsContext';
 import { AVATAR_MALE_URL, AVATAR_FEMALE_URL } from '../types';
+import TermsModal from '../components/TermsModal';
 
 interface RegisterScreenProps {
   onBack: () => void;
@@ -23,6 +24,8 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
   const [academicLevel, setAcademicLevel] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [password, setPassword] = useState('');
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -332,11 +335,48 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
               </motion.div>
             )}
 
+            {/* Terms of Use Checkbox */}
+            <div className="flex items-start gap-3 px-2 py-1">
+              <input
+                id="terms-checkbox"
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={(e) => setAcceptedTerms(e.target.checked)}
+                className="mt-1 w-5 h-5 rounded-lg border-2 border-voyage-secondary/40 text-voyage-primary focus:ring-voyage-primary/20 accent-voyage-primary cursor-pointer"
+                disabled={loading}
+              />
+              <label htmlFor="terms-checkbox" className={`text-xs font-bold text-voyage-primary/80 select-none ${isAr ? 'arabic-font text-[13px] leading-relaxed text-right' : 'leading-relaxed'}`}>
+                {isAr ? (
+                  <>
+                    أوافق على{" "}
+                    <button
+                      type="button"
+                      onClick={() => { playSound('click'); setIsTermsOpen(true); }}
+                      className="text-voyage-accent-dark underline hover:text-voyage-primary transition-colors font-black"
+                    >
+                      شروط الاستخدام وسياسة حماية البيانات
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    J'accepte les{" "}
+                    <button
+                      type="button"
+                      onClick={() => { playSound('click'); setIsTermsOpen(true); }}
+                      className="text-voyage-accent-dark underline hover:text-voyage-primary transition-colors font-black"
+                    >
+                      conditions d'utilisation et la politique de protection des données
+                    </button>
+                  </>
+                )}
+              </label>
+            </div>
+
             <motion.button
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              disabled={loading || !password}
+              disabled={loading || !password || !acceptedTerms}
               className="w-full bg-linear-to-br from-voyage-primary to-voyage-primary-dark text-white py-4.5 rounded-3xl font-black text-lg uppercase tracking-tight flex items-center justify-center gap-3 shadow-xl shadow-voyage-primary/20 hover:shadow-voyage-primary/40 disabled:opacity-50 transition-all mt-4 border-b-4 border-voyage-primary-dark/50"
             >
               {loading ? (
@@ -371,6 +411,11 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
             ? "تبدأ مغامرتك من هنا. اختر اسم المسافر الخاص بك واستعد لاستكشاف لا يُنسى."
             : "Ton aventure commence ici. Choisis ton nom de voyageur et prépare-toi pour une exploration inoubliable."}
         </p>
+        <TermsModal 
+          isOpen={isTermsOpen} 
+          onClose={() => setIsTermsOpen(false)} 
+          language={language} 
+        />
       </main>
     </div>
   );

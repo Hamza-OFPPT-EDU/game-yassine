@@ -65,11 +65,14 @@ export default function App() {
 
   const { language } = useSettings();
   const { session, loading: authLoading } = useAuth();
-  const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(session?.user?.id);
-  const { earnedBadges } = useSupabaseBadges(session?.user?.id);
+  const [demoSession, setDemoSession] = useState<any>(null);
+  const activeSession = session || demoSession;
+
+  const { profile, loading: profileLoading, updateProfile } = useSupabaseProfile(activeSession?.user?.id);
+  const { earnedBadges } = useSupabaseBadges(activeSession?.user?.id);
   
   // Track user activities and time spent
-  useActivityTracker(session?.user?.id, currentScreen, selectedCity?.id || null);
+  useActivityTracker(activeSession?.user?.id, currentScreen, selectedCity?.id || null);
 
   const [dynamicAssets, setDynamicAssets] = useState<Asset[]>([]);
   const [loadedCities, setLoadedCities] = useState<string[]>([]);
@@ -128,13 +131,13 @@ export default function App() {
       }
     }
     
-    if (session && [Screen.Welcome, Screen.Login, Screen.Register].includes(currentScreen)) {
+    if (activeSession && [Screen.Welcome, Screen.Login, Screen.Register].includes(currentScreen)) {
       const timer = setTimeout(() => {
         setCurrentScreen(Screen.Map);
       }, 800);
       return () => clearTimeout(timer);
     }
-  }, [splashComplete, currentScreen, session, authLoading, assetsComplete]);
+  }, [splashComplete, currentScreen, activeSession, authLoading, assetsComplete]);
 
   /**
    * Robust synchronization of auth user metadata with app_users and player_profiles tables.
@@ -461,6 +464,21 @@ export default function App() {
         return <WelcomeScreen 
           onLogin={() => setCurrentScreen(Screen.Login)}
           onRegister={() => setCurrentScreen(Screen.Register)}
+          onDemoLogin={() => {
+            setDemoSession({
+              user: {
+                id: 'demo-guest-id',
+                email: 'demo@voyage.ma',
+                user_metadata: {
+                  full_name: 'Voyageur Démo',
+                  username: 'demo',
+                  gender: 'H',
+                  group_name: 'Général'
+                }
+              }
+            });
+            setCurrentScreen(Screen.Map);
+          }}
         />;
       case Screen.Login:
         return <LoginScreen 
@@ -583,6 +601,8 @@ export default function App() {
             onSettings={() => setCurrentScreen(Screen.Settings)}
             onShowBadges={() => setCurrentScreen(Screen.Badges)}
             onLogout={() => {
+              supabase.auth.signOut();
+              setDemoSession(null);
               setCurrentScreen(Screen.Welcome);
             }}
             completedMissions={completedMissions}

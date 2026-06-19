@@ -582,6 +582,24 @@ export function useSupabaseProfile(userId?: string) {
       return;
     }
 
+    if (userId === 'demo-guest-id') {
+      setProfile({
+        id: userId,
+        full_name: 'Voyageur Démo',
+        username: 'demo',
+        gender: 'H',
+        group_name: 'Général',
+        birth_date: null,
+        organization_id: null,
+        xp: 0,
+        level: 1,
+        stars: 0,
+        avatar_url: AVATAR_MALE_URL
+      });
+      setLoading(false);
+      return;
+    }
+
     async function fetchProfile() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s timeout
@@ -664,6 +682,10 @@ export function useSupabaseProfile(userId?: string) {
 
   const updateProfile = async (updates: any) => {
     if (!userId) return false;
+    if (userId === 'demo-guest-id') {
+      setProfile(prev => prev ? { ...prev, ...updates } : null);
+      return true;
+    }
     
     // Create a copy without join data for DB update
     const dbUpdates = { ...updates };
@@ -800,17 +822,21 @@ export function useSupabaseBadges(userId?: string) {
         }
 
         if (userId) {
-          const { data: earned, error: earnedError } = await supabase
-            .from('player_earned_badges')
-            .select('badge_id')
-            .eq('player_id', userId);
-
-          if (!earnedError && earned) {
-            setEarnedBadges(earned.map((b: any) => b.badge_id));
+          if (userId === 'demo-guest-id') {
+            setEarnedBadges([]);
           } else {
-            // Provide a mock unlocked state for demo purposes if DB completely fails
-            if (defsError) {
-                setEarnedBadges(Object.keys(BADGE_MAP).slice(0, 3)); 
+            const { data: earned, error: earnedError } = await supabase
+              .from('player_earned_badges')
+              .select('badge_id')
+              .eq('player_id', userId);
+
+            if (!earnedError && earned) {
+              setEarnedBadges(earned.map((b: any) => b.badge_id));
+            } else {
+              // Provide a mock unlocked state for demo purposes if DB completely fails
+              if (defsError) {
+                  setEarnedBadges(Object.keys(BADGE_MAP).slice(0, 3)); 
+              }
             }
           }
         }
@@ -889,6 +915,35 @@ export function useSupabaseUserHistory(userId?: string) {
 
   useEffect(() => {
     if (!userId) {
+      setLoading(false);
+      return;
+    }
+
+    if (userId === 'demo-guest-id') {
+      const now = new Date();
+      const skills = ['Communication', 'Décision', "Travail d'équipe", 'Gestion Stress'];
+      const cities = ['rabat', 'casablanca', 'marrakech', 'tanger'];
+      const mockHistory = [];
+      
+      for (let i = 0; i < 20; i++) {
+        const date = new Date(now);
+        date.setDate(date.getDate() - (20 - i));
+        
+        mockHistory.push({
+          id: `mock-${i}`,
+          xp: 50 + Math.floor(Math.random() * 100),
+          score: 60 + Math.floor(Math.random() * 40),
+          stars: 1 + Math.floor(Math.random() * 3),
+          created_at: date.toISOString(),
+          missions: {
+            id: `mission-${i}`,
+            title_fr: `Mission ${i + 1}`,
+            city_id: cities[i % cities.length],
+            soft_skill_dominant: skills[i % skills.length]
+          }
+        });
+      }
+      setHistory(mockHistory);
       setLoading(false);
       return;
     }

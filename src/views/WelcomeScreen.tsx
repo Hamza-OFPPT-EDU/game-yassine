@@ -14,11 +14,12 @@ import GameButton from '../components/GameButton';
 interface WelcomeScreenProps {
   onLogin: () => void;
   onRegister: () => void;
+  onDemoLogin: () => void;
 }
 
 const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
 
-export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProps) {
+export default function WelcomeScreen({ onLogin, onRegister, onDemoLogin }: WelcomeScreenProps) {
   const { playSound, openSettings } = useAudio();
   const { getSetting } = useSupabaseSettings();
   const { language, setLanguage } = useSettings();
@@ -205,6 +206,23 @@ export default function WelcomeScreen({ onLogin, onRegister }: WelcomeScreenProp
               >
                 <span className={`font-bold ${language === 'ar' ? 'arabic-font text-lg font-black' : ''}`}>
                   {language === 'ar' ? "إنشاء حساب" : "Créer un compte"}
+                </span>
+              </GameButton>
+
+              <GameButton
+                variant="glass"
+                size="lg"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                onClick={() => {
+                  playSound('click');
+                  onDemoLogin();
+                }}
+                className="w-full border border-voyage-accent/30 bg-voyage-accent/5 hover:bg-voyage-accent/15"
+              >
+                <span className={`font-bold ${language === 'ar' ? 'arabic-font text-lg font-black' : ''}`}>
+                  {language === 'ar' ? "وضع التجربة (بدون حساب)" : "Lancer Démo (Sans compte)"}
                 </span>
               </GameButton>
             </section>

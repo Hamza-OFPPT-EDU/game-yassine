@@ -10,7 +10,7 @@ export function useActivityTracker(userId: string | undefined, currentScreen: Sc
   const activeSessionRef = useRef<{ type: string, id: string | null } | null>(null);
 
   const logActivity = async (type: string, id: string | null, duration: number) => {
-    if (!userId || duration < 5) return; // Don't log sessions < 5s to avoid noise
+    if (!userId || userId === 'demo-guest-id' || duration < 5) return; // Don't log sessions < 5s to avoid noise
 
     console.log(`[ActivityTracker] Logging ${type} for ${id || 'global'} - Duration: ${Math.floor(duration)}s`);
     
