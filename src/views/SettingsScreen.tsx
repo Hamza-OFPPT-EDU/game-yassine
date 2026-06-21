@@ -609,7 +609,7 @@ export default function SettingsScreen({ onBack }: SettingsScreenProps) {
                         type="range" min={0} max={100}
                         value={audio.voiceVolume}
                         onChange={e => updateAudio({ voiceVolume: Number(e.target.value) })}
-                        onMouseUp={() => playVoice('https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/rabat_intro_voice.mp3')}
+                        onMouseUp={() => playVoice('/assets/supabase/rabat_intro_voice.mp3')}
                         className="flex-1 accent-voyage-terracotta h-2 cursor-pointer"
                       />
                       <Volume2 size={16} className="text-voyage-terracotta shrink-0" />

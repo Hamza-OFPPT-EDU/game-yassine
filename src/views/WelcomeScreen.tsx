@@ -17,7 +17,7 @@ interface WelcomeScreenProps {
   onDemoLogin: () => void;
 }
 
-const SPLASH_VIDEO_URL = 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/splash%20vedio.mp4';
+const SPLASH_VIDEO_URL = '/assets/supabase/splash_vedio.mp4';
 
 export default function WelcomeScreen({ onLogin, onRegister, onDemoLogin }: WelcomeScreenProps) {
   const { playSound, openSettings } = useAudio();
@@ -121,7 +121,7 @@ export default function WelcomeScreen({ onLogin, onRegister, onDemoLogin }: Welc
                 initial={{ scale: 0.8, y: -20, opacity: 0 }}
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 transition={{ delay: 0.1, type: "spring", stiffness: 120, damping: 20 }}
-                src="https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png"
+                src="/assets/supabase/paneau.png"
                 alt="Le Voyage des Compétences"
                 className="w-full max-w-[380px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
               />

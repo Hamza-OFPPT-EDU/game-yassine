@@ -76,11 +76,11 @@ export const resolveAssetUrl = (name: string | undefined, fallback: string) => {
   
   // Mapping for known technical names in dashboard
   const mapping: Record<string, string> = {
-    'intro_caracter': 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/Guide%20de%20voayage.gif',
+    'intro_caracter': '/assets/supabase/Guide_de_voayage.gif',
     'guide': '/assets/game/guide_portrait.png',
     'dr_amina': '/assets/game/dr_amina_portrait.png',
-    'avatar_map': 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-map-user.jpg',
-    'paneau': 'https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/paneau.png',
+    'avatar_map': '/assets/supabase/avatar-map-user.jpg',
+    'paneau': '/assets/supabase/paneau.png',
     'hospital_bg': '/assets/game/hospital_bg.png',
 
   };
@@ -180,7 +180,7 @@ export const resolveCityIcon = (city: City, size = 72, className = "") => {
   const cityName = city.name ? city.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
   const getPremiumIcon = (iconName: string) => (
     <img 
-      src={`https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Cities%20icons/${iconName}.png`}
+      src={`/assets/supabase/Cities_icons/${iconName}.png`}
       style={{ width: '100%', height: '100%', maxWidth: size, maxHeight: size, objectFit: 'contain', display: 'block' }}
       className={className}
       alt={iconName}

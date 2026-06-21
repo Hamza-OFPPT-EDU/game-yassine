@@ -96,10 +96,10 @@ export default function App() {
     if (fullscreenShownOnce && !splashTimerRef.current) {
       splashTimerRef.current = true;
       setSplashStarted(true);
-      // Fixed 4-second splash duration
+      // Fixed 5-second splash duration
       const timer = setTimeout(() => {
         setSplashComplete(true);
-      }, 4000);
+      }, 5000);
       return () => { clearTimeout(timer); };
     }
   }, [fullscreenShownOnce]);

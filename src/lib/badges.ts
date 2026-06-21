@@ -38,5 +38,5 @@ export const getBadgeUrl = (url: string) => {
   if (url.startsWith('http')) return url;
   // Use decodeURIComponent first to ensure we don't double encode
   const cleanPath = decodeURIComponent(url);
-  return `https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/${encodeURIComponent(cleanPath)}`;
+  return `/assets/supabase/badges/${encodeURIComponent(cleanPath)}`;
 };

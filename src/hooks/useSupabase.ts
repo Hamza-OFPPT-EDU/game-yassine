@@ -146,7 +146,7 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
           // Rabat Illustration Override
           let displayImage = city.illustration_url;
           if (city.city_name_fr === 'Rabat') {
-            displayImage = "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/challenge-illustrations/rabat/1775865430897-hz5t79e38xk-compressed.jpg";
+            displayImage = "/assets/supabase/1775865430897-hz5t79e38xk-compressed.jpg";
           }
 
           return {

@@ -418,7 +418,7 @@ export default function DuelCompetitionScreen({ onBack, onHome, userProfile }: D
               className="w-full h-auto max-h-[180px] object-contain drop-shadow-2xl"
               onError={(e) => {
                 // Fallback to a styled SVG/Div if image fails
-                (e.target as any).src = "https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/app-assets/avatar-homme.png";
+                (e.target as any).src = "/assets/supabase/avatar-homme.png";
               }}
             />
             

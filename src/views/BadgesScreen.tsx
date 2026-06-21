@@ -102,7 +102,7 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                       fileName += '.png';
                     }
                     const cleanPath = decodeURIComponent(fileName);
-                    imageUrl = `https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/badges/${encodeURIComponent(cleanPath)}`;
+                    imageUrl = `/assets/supabase/${encodeURIComponent(cleanPath)}`;
                   }
                   
                     return (
