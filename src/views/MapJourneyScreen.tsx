@@ -120,7 +120,7 @@ export default function MapJourneyScreen({
   // Hook pour jouer la voix de Rabat automatiquement
   useEffect(() => {
     if (cinematicCity && cinematicCity.name === 'Rabat') {
-      const audio = playVoice('/assets/supabase/rabat_intro_voice.mp3');
+      const audio = playVoice('/assets/audios/cities/Rabat/rabat_intro_voice.mp3');
       return () => {
         audio.pause();
         audio.currentTime = 0;
@@ -462,7 +462,7 @@ export default function MapJourneyScreen({
                   {/* City Illustration / Banner */}
                   <div className="h-50 w-full relative overflow-hidden">
                     <img
-                      src={optimizeSupabaseUrl(displayCity.image || '/assets/supabase/fallback-city.jpg', 800, 80)}
+                      src={optimizeSupabaseUrl(displayCity.image || '/assets/images/global/fallback-city.jpg', 800, 80)}
                       alt={displayCity.name}
                       className="w-full h-full object-cover"
                     />

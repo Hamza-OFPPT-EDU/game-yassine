@@ -15,10 +15,10 @@ export const optimizeImageUrl = (url: string, width = 800, quality = 80) => {
 
 export const CORE_ASSETS = {
   videos: [
-    '/assets/supabase/splash_vedio.mp4',
+    '/assets/videos/global/splash_vedio.mp4',
   ],
   images: [
-    '/assets/supabase/logo.png',
+    '/assets/images/global/logo.png',
     '/assets/guide_voyage.gif',
     '/assets/avatar_user.jpg',
     '/assets/panel.png',
@@ -149,14 +149,14 @@ export const getCoreAssets = () => {
   const assets: Asset[] = [];
   
   // 1. Prioritize Logo
-  assets.push({ url: '/assets/supabase/logo.png', type: 'image' });
+  assets.push({ url: '/assets/images/global/logo.png', type: 'image' });
   
   // 2. Prioritize Intro Video
-  assets.push({ url: '/assets/supabase/splash_vedio.mp4', type: 'video' });
+  assets.push({ url: '/assets/videos/global/splash_vedio.mp4', type: 'video' });
   
   // 3. Add remaining core images
   CORE_ASSETS.images.forEach(url => {
-    if (url !== '/assets/supabase/logo.png') {
+    if (url !== '/assets/images/global/logo.png') {
       assets.push({ url, type: 'image' });
     }
   });
@@ -166,7 +166,7 @@ export const getCoreAssets = () => {
 
   // 5. Add other videos (if any)
   CORE_ASSETS.videos.forEach(url => {
-    if (url !== '/assets/supabase/splash_vedio.mp4') {
+    if (url !== '/assets/videos/global/splash_vedio.mp4') {
       assets.push({ url, type: 'video' });
     }
   });
@@ -178,9 +178,9 @@ export const getAssetsByPriority = (dynamicAssets: Asset[] = []) => {
   const priorities: Asset[][] = [[], [], [], []];
 
   // Priority 1: Intro Video and Background Music
-  priorities[0].push({ url: '/assets/supabase/splash_vedio.mp4', type: 'video' });
+  priorities[0].push({ url: '/assets/videos/global/splash_vedio.mp4', type: 'video' });
   priorities[0].push({ url: '/audio/intro_music.mp3', type: 'audio' });
-  priorities[0].push({ url: '/assets/supabase/logo.png', type: 'image' });
+  priorities[0].push({ url: '/assets/images/global/logo.png', type: 'image' });
 
   // Priority 2: Audio Effects
   const effectAudios = [

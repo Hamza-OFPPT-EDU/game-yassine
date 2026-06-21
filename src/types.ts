@@ -22,8 +22,8 @@ export enum Screen {
   Duel = 'duel',
 }
 
-export const AVATAR_MALE_URL = '/assets/supabase/avatar-homme.png';
-export const AVATAR_FEMALE_URL = '/assets/supabase/avatar-femme.png';
+export const AVATAR_MALE_URL = '/assets/images/global/avatar-homme.png';
+export const AVATAR_FEMALE_URL = '/assets/images/global/avatar-femme.png';
 export const DEFAULT_AVATAR_URL = AVATAR_MALE_URL;
 
 export type LeaguePlayer = {

@@ -14,7 +14,7 @@ interface CinematicIntroScreenProps {
   onClose: () => void;
 }
 
-const PANEAU_URL = '/assets/supabase/paneau.png';
+const PANEAU_URL = '/assets/images/global/paneau.png';
 
 export default function CinematicIntroScreen({ city, mission, onNext, onClose }: CinematicIntroScreenProps) {
   const { language } = useSettings();

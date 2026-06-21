@@ -14,7 +14,7 @@ interface SplashScreenProps {
   logs?: CacheLog[];
 }
 
-const SPLASH_VIDEO_URL = '/assets/supabase/splash_vedio.mp4';
+const SPLASH_VIDEO_URL = '/assets/videos/global/splash_vedio.mp4';
 
 export default function SplashScreen({ onProgress, progress: externalProgress, logs = [] }: SplashScreenProps) {
   const [videoStage, setVideoStage] = useState<'video' | 'ui'>('video');
@@ -154,7 +154,7 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
                   className="w-full h-full flex items-center justify-center"
                 >
                   <img
-                    src="/assets/supabase/logo.png"
+                    src="/assets/images/global/logo.png"
                     alt="Logo"
                     className="w-full h-full object-contain"
                   />

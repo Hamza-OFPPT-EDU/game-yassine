@@ -36,7 +36,15 @@ export const BADGE_MAP: Record<string, { name: string; url: string; city?: strin
 export const getBadgeUrl = (url: string) => {
   if (!url) return '';
   if (url.startsWith('http')) return url;
-  // Use decodeURIComponent first to ensure we don't double encode
+  
   const cleanPath = decodeURIComponent(url);
-  return `/assets/supabase/badges/${encodeURIComponent(cleanPath)}`;
+  const badgeEntry = Object.values(BADGE_MAP).find(b => b.url === url || b.name === cleanPath || b.url === cleanPath);
+  const city = badgeEntry && badgeEntry.city ? badgeEntry.city : 'Other';
+  
+  // Note: the original code had 'Fès' with an accent, which might cause folder encoding issues.
+  // We used 'Fes' in our node script so let's normalize the city name to avoid problems.
+  let normalizedCity = city;
+  if (normalizedCity === 'Fès') normalizedCity = 'Fes';
+
+  return `/assets/images/badges/${normalizedCity}/${encodeURIComponent(cleanPath)}`;
 };

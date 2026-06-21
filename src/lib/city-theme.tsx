@@ -180,7 +180,7 @@ export const resolveCityIcon = (city: City, size = 72, className = "") => {
   const cityName = city.name ? city.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
   const getPremiumIcon = (iconName: string) => (
     <img 
-      src={`/assets/supabase/Cities_icons/${iconName}.png`}
+      src={`/assets/images/cities_icons/${iconName}/${iconName}.png`}
       style={{ width: '100%', height: '100%', maxWidth: size, maxHeight: size, objectFit: 'contain', display: 'block' }}
       className={className}
       alt={iconName}
