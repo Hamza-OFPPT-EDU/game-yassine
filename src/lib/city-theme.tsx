@@ -56,7 +56,20 @@ export const optimizeSupabaseUrl = (url: string, width = 200, quality = 75) => {
 
     // Check if it's a GIF (ignoring query params)
     const isGif = url.split('?')[0].toLowerCase().endsWith('.gif');
-    if (isGif) return url;
+    if (isGif) {
+      if (url.includes('/app-assets/')) {
+        const decodedName = decodeURIComponent(url.split('/').pop()?.split('?')[0] || '');
+        let city = 'global';
+        const lower = decodedName.toLowerCase();
+        if (lower.includes('rabat')) city = 'Rabat';
+        else if (lower.includes('chefchaoun')) city = 'Chefchaouen';
+        else if (lower.includes('fes')) city = 'Fes';
+        else if (lower.includes('marrakech')) city = 'Marrakech';
+        
+        return `/assets/gifs/cities/${city}/${decodedName}`;
+      }
+      return url;
+    }
     try {
       const transformed = url.replace('/object/public/', '/render/image/public/');
       return `${transformed}?width=${width}&quality=${quality}`;
