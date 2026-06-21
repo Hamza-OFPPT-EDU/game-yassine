@@ -76,11 +76,11 @@ export const resolveAssetUrl = (name: string | undefined, fallback: string) => {
   
   // Mapping for known technical names in dashboard
   const mapping: Record<string, string> = {
-    'intro_caracter': '/assets/supabase/Guide_de_voayage.gif',
+    'intro_caracter': '/assets/gifs/global/Guide_de_voayage.gif',
     'guide': '/assets/game/guide_portrait.png',
     'dr_amina': '/assets/game/dr_amina_portrait.png',
-    'avatar_map': '/assets/supabase/avatar-map-user.jpg',
-    'paneau': '/assets/supabase/paneau.png',
+    'avatar_map': '/assets/images/global/avatar-map-user.jpg',
+    'paneau': '/assets/images/global/paneau.png',
     'hospital_bg': '/assets/game/hospital_bg.png',
 
   };

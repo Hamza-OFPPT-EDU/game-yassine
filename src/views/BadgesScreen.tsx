@@ -4,6 +4,7 @@ import { useAuth, useSupabaseBadges, useSupabaseProfile, useSupabaseAssetConfigs
 import TopAppBar from '../components/TopAppBar';
 import { cn } from '../lib/utils';
 import { optimizeSupabaseUrl } from '../lib/city-theme';
+import { getBadgeUrl } from '../lib/badges';
 
 
 interface BadgesScreenProps {
@@ -101,8 +102,7 @@ export default function BadgesScreen({ onBack }: BadgesScreenProps) {
                     if (!fileName.toLowerCase().endsWith('.png')) {
                       fileName += '.png';
                     }
-                    const cleanPath = decodeURIComponent(fileName);
-                    imageUrl = `/assets/supabase/${encodeURIComponent(cleanPath)}`;
+                    imageUrl = getBadgeUrl(fileName);
                   }
                   
                     return (
