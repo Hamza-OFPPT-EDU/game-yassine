@@ -811,29 +811,23 @@ const CityOrb: React.FC<{
               : isCompleted
                 ? "bg-emerald-500 border-emerald-600 text-white shadow-emerald-500/20"
                 : "bg-voyage-accent border-voyage-accent-dark text-white shadow-voyage-accent/20",
-            "active:translate-y-[6px] active:border-b-0 translate-y-0"
+            "active:translate-y-[6px] active:border-b-0 -translate-y-0"
           )}
           style={isSelected && !isLocked ? { borderColor: 'var(--color-voyage-accent-light)' } : {}}
         >
           {/* Inner Content */}
           <div className="relative z-10 flex items-center justify-center w-full h-full p-2.5">
-            {city.iconName ? (
-              city.iconName.startsWith('http') ? (
-                <img
-                  src={resolveAssetUrl(city.iconName, '')}
-                  alt={city.name}
-                  className={cn(
-                    "w-full h-full object-contain transition-transform duration-500",
-                    isLocked ? "grayscale opacity-40" : "drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
-                  )}
-                />
-              ) : (
-                resolveCityIcon(city, (city.iconSize ? Math.round(city.iconSize * 1.1) : 40), isLocked ? "grayscale opacity-40 text-slate-400" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]")
-              )
+            {city.iconName && city.iconName.startsWith('http') ? (
+              <img
+                src={resolveAssetUrl(city.iconName, '')}
+                alt={city.name}
+                className={cn(
+                  "w-full h-full object-contain transition-transform duration-500",
+                  isLocked ? "grayscale opacity-40" : "drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
+                )}
+              />
             ) : (
-              <div className="text-white/80">
-                <MapPin size={35} strokeWidth={2.8} />
-              </div>
+              resolveCityIcon(city, (city.iconSize ? Math.round(city.iconSize * 1.1) : 40), isLocked ? "grayscale opacity-40 text-slate-400" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]")
             )}
           </div>
 
@@ -906,7 +900,7 @@ const CityNode: React.FC<{
     >
       {/* Floating Player Avatar on top of active CityOrb */}
       {city.status === 'active' && (
-        <div className="absolute top-[-90px] z-40 flex flex-col items-center pointer-events-none">
+        <div className="absolute -top-[90px] z-40 flex flex-col items-center pointer-events-none">
           {/* Gentle Bouncing Avatar Container */}
           <motion.div
             animate={{
@@ -931,7 +925,7 @@ const CityNode: React.FC<{
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="absolute top-[-22px] z-50 text-[26px] drop-shadow-[0_3px_5px_rgba(0,0,0,0.25)] pointer-events-none select-none"
+                className="absolute -top-[22px] z-50 text-[26px] drop-shadow-[0_3px_5px_rgba(0,0,0,0.25)] pointer-events-none select-none"
               >
                 👑
               </motion.div>
@@ -977,7 +971,7 @@ const CityNode: React.FC<{
 
       {/* Floating spectacular golden trophy above the last city node when locked/completed */}
       {isLastCity && city.status !== 'active' && (
-        <div className="absolute top-[-82px] z-40 flex flex-col items-center pointer-events-none">
+        <div className="absolute -top-[82px] z-40 flex flex-col items-center pointer-events-none">
           <motion.div
             animate={{
               y: [0, -8, 0],
@@ -993,7 +987,7 @@ const CityNode: React.FC<{
             <div className="absolute inset-0 -m-3 bg-amber-400/25 blur-xl rounded-full animate-pulse pointer-events-none" />
 
             {/* Trophy Icon Badge */}
-            <div className="w-[56px] h-[56px] rounded-full bg-linear-to-b from-amber-300 via-amber-400 to-yellow-600 border-4 border-white shadow-[0_8px_20px_rgba(217,119,6,0.5)] flex items-center justify-center relative">
+            <div className="w-[56px] h-[56px] rounded-full bg-gradient-to-b from-amber-300 via-amber-400 to-yellow-600 border-4 border-white shadow-[0_8px_20px_rgba(217,119,6,0.5)] flex items-center justify-center relative">
               <Trophy size={31} className="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] stroke-[2.5]" />
 
               {/* Little sparkles on the trophy badge */}
@@ -1003,7 +997,7 @@ const CityNode: React.FC<{
             </div>
 
             {/* Bilingual Ribbon Label */}
-            <div className="mt-1 bg-linear-to-r from-amber-500 via-yellow-400 to-amber-600 text-white font-black text-[9.5px] uppercase tracking-wider px-3 py-1 rounded-full shadow-[0_4px_10px_rgba(217,119,6,0.3)] border-2 border-white whitespace-nowrap flex items-center gap-1">
+            <div className="mt-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-white font-black text-[9.5px] uppercase tracking-wider px-3 py-1 rounded-full shadow-[0_4px_10px_rgba(217,119,6,0.3)] border-2 border-white whitespace-nowrap flex items-center gap-1">
               {language === 'ar' ? "الجائزة الكبرى 🏆" : "LE GRAND PRIX 🏆"}
             </div>
 

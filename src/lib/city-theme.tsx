@@ -177,24 +177,24 @@ export const resolveCityIcon = (city: City, size = 72, className = "") => {
   if (name === 'music') return <Music {...props} />;
 
   // 4. Default City Mapping (Premium PNG Assets)
-  const cityId = city.id?.toLowerCase();
-  const getPremiumIcon = (cityName: string) => (
+  const cityName = city.name ? city.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
+  const getPremiumIcon = (iconName: string) => (
     <img 
-      src={`https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Cities%20icons/${cityName}.png`}
+      src={`https://rydmefudpczpxrresflx.supabase.co/storage/v1/object/public/Cities%20icons/${iconName}.png`}
       style={{ width: '100%', height: '100%', maxWidth: size, maxHeight: size, objectFit: 'contain', display: 'block' }}
       className={className}
-      alt={cityName}
+      alt={iconName}
     />
   );
 
-  if (cityId === 'rabat') return getPremiumIcon('Rabat');
-  if (cityId === 'marrakech') return getPremiumIcon('Marrakech');
-  if (cityId === 'fes') return getPremiumIcon('Fes');
-  if (cityId === 'chefchaouen') return getPremiumIcon('Chefchaouen');
-  if (cityId === 'laayoune') return <LandmarkIcon {...props} />;
-  if (cityId === 'dakhla') return <Ship {...props} />;
-  if (cityId === 'agadir') return <Sun {...props} />;
-  if (cityId === 'meknes') return <Shield {...props} />;
+  if (cityName === 'rabat') return getPremiumIcon('Rabat');
+  if (cityName === 'marrakech') return getPremiumIcon('Marrakech');
+  if (cityName === 'fes') return getPremiumIcon('Fes');
+  if (cityName === 'chefchaouen') return getPremiumIcon('Chefchaouen');
+  if (cityName === 'laayoune') return <LandmarkIcon {...props} />;
+  if (cityName === 'dakhla') return <Ship {...props} />;
+  if (cityName === 'agadir') return <Sun {...props} />;
+  if (cityName === 'meknes') return <Shield {...props} />;
 
   return <MapPin {...props} />;
 };
