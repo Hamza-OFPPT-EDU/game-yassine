@@ -29,10 +29,10 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Show video for 4 seconds max (matching the 4s requirement)
+    // Show video for 10 seconds max (matching the 10s requirement)
     const videoTimer = setTimeout(() => {
       setVideoStage('ui');
-    }, 4000);
+    }, 10000);
 
     return () => clearTimeout(videoTimer);
   }, []);
@@ -238,35 +238,13 @@ export default function SplashScreen({ onProgress, progress: externalProgress, l
             </motion.div>
 
             {/* Log Area — shown during UI phase */}
-            {logs.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2 }}
-                className="w-full max-w-[260px] mt-4"
-              >
-                <div className="bg-voyage-primary-dark/5 rounded-2xl p-3 max-h-[80px] overflow-hidden relative">
-                  <div className="space-y-0.5 overflow-y-auto max-h-[72px] scrollbar-hide">
-                    {logs.slice(-6).map(log => (
-                      <div key={log.id} className="flex items-center gap-1.5">
-                        <span className={[
-                          'text-[8px] font-bold leading-tight break-all',
-                          log.status === 'success' ? 'text-emerald-600' :
-                          log.status === 'error'   ? 'text-red-400' :
-                          log.status === 'skip'    ? 'text-voyage-primary/30' :
-                                                     'text-voyage-primary/50'
-                        ].join(' ')}>
-                          {log.message}
-                        </span>
-                      </div>
-                    ))}
-                    <div ref={logEndRef} />
-                  </div>
-                  {/* Fade overlay to hide overflow */}
-                  <div className="absolute bottom-0 inset-x-0 h-4 bg-linear-to-t from-voyage-sand to-transparent rounded-b-2xl pointer-events-none" />
-                </div>
+            {/* 
+              Masqué à la demande de l'utilisateur :
+              logs.length > 0 && (
+              <motion.div ...>
+                ...
               </motion.div>
-            )}
+            )*/}
 
             <div className="h-8" />
           </motion.div>
