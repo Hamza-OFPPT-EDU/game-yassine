@@ -322,13 +322,13 @@ export default function MapJourneyScreen({
           {/* Chemin SVG entre les villes */}
           <svg
             className="absolute inset-0 w-full pointer-events-none"
-            style={{ height: `${cities.length * 300}px` }}
-            viewBox={`0 0 320 ${cities.length * 300}`}
+            style={{ height: `${sortedCities.length * 300}px` }}
+            viewBox={`0 0 320 ${sortedCities.length * 300}`}
             preserveAspectRatio="xMidYMid meet"
           >
             {/* 1. Chemin d'arrière-plan (Complet, non-atteint) - Sable/Bronze clair */}
             <path
-              d={buildPath(cities, 320)}
+              d={buildPath(sortedCities, 320)}
               fill="none"
               stroke="var(--color-voyage-secondary-light)"
               strokeWidth="16"
@@ -339,7 +339,7 @@ export default function MapJourneyScreen({
             {/* 2. Chemin actif / complété - Or riche */}
             {activeCityIndex >= 0 && (
               <path
-                d={buildPath(cities, 320, activeCityIndex)}
+                d={buildPath(sortedCities, 320, activeCityIndex)}
                 fill="none"
                 stroke="var(--color-voyage-accent)"
                 strokeWidth="16"
@@ -354,7 +354,7 @@ export default function MapJourneyScreen({
             {/* 3. Ligne fine interne pulsante pour l'effet de flux */}
             {activeCityIndex >= 0 && (
               <path
-                d={buildPath(cities, 320, activeCityIndex)}
+                d={buildPath(sortedCities, 320, activeCityIndex)}
                 fill="none"
                 stroke="var(--color-voyage-accent-light)"
                 strokeWidth="6"
@@ -378,13 +378,13 @@ export default function MapJourneyScreen({
             className="relative z-10 flex flex-col-reverse items-center gap-0 pt-28 pb-16"
             style={{ gap: 0 }}
           >
-            {cities.map((city, index) => (
+            {sortedCities.map((city, index) => (
               <div
                 key={city.id}
-                style={{ marginBottom: index < cities.length - 1 ? '220px' : 0 }}
+                style={{ marginBottom: index < sortedCities.length - 1 ? '220px' : 0 }}
                 ref={(el) => {
                   if (index === 0) firstCityRef.current = el;
-                  if (index === cities.length - 1) lastCityRef.current = el;
+                  if (index === sortedCities.length - 1) lastCityRef.current = el;
                   if (city.status === 'active') activeCityRef.current = el;
                 }}
               >
