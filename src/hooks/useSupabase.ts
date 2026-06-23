@@ -145,17 +145,19 @@ export function useSupabaseCities(completedCities: string[], completedMissions: 
 
           // City Illustrations Override
           let displayImage = city.illustration_url;
-          if (city.city_name_fr === 'Rabat') {
+          const normalizedName = (city.city_name_fr || '').toLowerCase().trim();
+          
+          if (normalizedName.includes('rabat')) {
             displayImage = "/assets/images/cities_illustrations/Rabat/1775865430897-hz5t79e38xk-compressed (1).jpg";
-          } else if (city.city_name_fr === 'Chefchaouen') {
+          } else if (normalizedName.includes('chefchaouen') || normalizedName.includes('chefchaoun')) {
             displayImage = "/assets/images/cities_illustrations/Chefchaouen/chefchaoun - uliistration (1).jpg";
-          } else if (city.city_name_fr === 'Fès' || city.city_name_fr === 'Fes') {
+          } else if (normalizedName.includes('fès') || normalizedName.includes('fes')) {
             displayImage = "/assets/images/cities_illustrations/Fes/1775897948311-n36zgyweqeq-compressed (1).jpg";
-          } else if (city.city_name_fr === 'Marrakech') {
+          } else if (normalizedName.includes('marrakech')) {
             displayImage = "/assets/images/cities_illustrations/Marrakech/1775866461317-lgr7dl7gvb (1).jpg";
-          } else if (city.city_name_fr === 'Laâyoune' || city.city_name_fr === 'Laayoune') {
+          } else if (normalizedName.includes('laâyoune') || normalizedName.includes('laayoune')) {
             displayImage = "/assets/images/cities_illustrations/Laayoune/Laayoune illustration  (2).png";
-          } else if (city.city_name_fr === 'Dakhla') {
+          } else if (normalizedName.includes('dakhla')) {
             displayImage = "/assets/images/cities_illustrations/Dakhla/1775912215516-390zqh5fuyc-compressed (1).jpg";
           }
 
