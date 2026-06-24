@@ -31,17 +31,32 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
 
   const isAr = language === 'ar';
 
-  const username = useMemo(() => {
-    const f = firstName.trim().toLowerCase().replace(/\s+/g, '');
-    const l = lastName.trim().toLowerCase().replace(/\s+/g, '');
-    if (!f && !l) return 'voyageur' + Math.floor(1000 + Math.random() * 9000);
-    if (!f) return l;
-    if (!l) return f;
-    return `${f}.${l}`;
-  }, [firstName, lastName]);
+  const [username, setUsername] = useState('');
+  const [isUsernameEdited, setIsUsernameEdited] = useState(false);
+
+  // Auto-generate username only if user hasn't manually edited it
+  React.useEffect(() => {
+    if (!isUsernameEdited) {
+      const f = firstName.trim().toLowerCase().replace(/\s+/g, '');
+      const l = lastName.trim().toLowerCase().replace(/\s+/g, '');
+      if (f && l) {
+        setUsername(`${f}.${l}`);
+      } else if (f) {
+        setUsername(f);
+      } else if (l) {
+        setUsername(l);
+      } else {
+        setUsername('');
+      }
+    }
+  }, [firstName, lastName, isUsernameEdited]);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Fallback if somehow username is empty
+    const finalUsername = username.trim() || ('voyageur' + Math.floor(1000 + Math.random() * 9000));
+    
     if (!password) {
       setError(isAr ? "كلمة المرور مطلوبة لإنشاء حسابك." : "Le mot de passe est requis pour créer ton compte.");
       return;
@@ -54,7 +69,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
     try {
       const lowerFirstName = firstName.trim().toLowerCase();
       const lowerLastName = lastName.trim().toLowerCase();
-      const lowerUsername = username;
+      const lowerUsername = finalUsername;
       const avatarUrl = gender === 'F' ? AVATAR_FEMALE_URL : AVATAR_MALE_URL;
       const email = `${lowerUsername}@voyage.ma`;
       
@@ -80,7 +95,7 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
 
       if (authError) {
         const errorMsg = authError.message === "User already registered" 
-          ? (isAr ? `هذا الحساب موجود بالفعل (الاسم: ${lowerUsername})` : "Ce profil existe déjà (pseudo: " + lowerUsername + ")")
+          ? (isAr ? `هذا الحساب موجود بالفعل (${lowerUsername}). يرجى اختيار اسم مستخدم آخر.` : `Ce profil existe déjà (${lowerUsername}). Veuillez choisir un autre pseudo.`)
           : authError.message;
         setError(errorMsg);
         playSound('wrong');
@@ -187,19 +202,23 @@ export default function RegisterScreen({ onBack, onLogin, onSuccess }: RegisterS
 
             <div className="space-y-1.5">
               <label className={`text-[10px] font-black text-voyage-primary-dark uppercase tracking-widest ${isAr ? 'arabic-font mr-2' : 'ml-2'}`}>
-                {isAr ? "اسم المستخدم الخاص بك (تلقائي)" : "Ton Pseudo de voyageur"}
+                {isAr ? "اسم المستخدم الخاص بك" : "Ton Pseudo de voyageur"}
               </label>
               <div className="relative">
-                <div className={`absolute top-1/2 -translate-y-1/2 text-voyage-accent-dark ${isAr ? 'right-4' : 'left-4'}`}>
+                <div className={`absolute top-1/2 -translate-y-1/2 text-voyage-primary/50 ${isAr ? 'right-4' : 'left-4'}`}>
                   <User size={18} strokeWidth={2.5} />
                 </div>
                 <input
                   name="register_username"
                   autoComplete="off"
                   value={username}
-                  readOnly
+                  onChange={(e) => {
+                    setUsername(e.target.value.toLowerCase().replace(/\s+/g, ''));
+                    setIsUsernameEdited(true);
+                  }}
                   placeholder="prenom.nom"
-                  className={`w-full bg-voyage-accent/5 border-2 border-voyage-accent/30 rounded-2xl py-3.5 text-voyage-accent-dark font-black italic cursor-not-allowed ${isAr ? 'pr-11 pl-4 text-right' : 'pl-11 pr-4'}`}
+                  className={`w-full bg-voyage-sand/30 border-2 border-voyage-secondary/40 rounded-2xl py-3.5 focus:outline-none focus:border-voyage-primary focus:ring-4 focus:ring-voyage-primary/10 transition-all text-voyage-primary-dark font-black ${isAr ? 'pr-11 pl-4 text-right' : 'pl-11 pr-4'}`}
+                  disabled={loading}
                 />
               </div>
             </div>
