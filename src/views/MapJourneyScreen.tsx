@@ -623,7 +623,7 @@ function buildPath(cities: City[], width: number, limitIndex?: number): string {
   const sliced = limitIndex !== undefined ? sorted.slice(0, limitIndex + 1) : sorted;
 
   let d = '';
-  sorted.forEach((city, idx) => {
+  sliced.forEach((city, idx) => {
     const x = cx + ((city.map_x || 0) * width) / 100;
     // Calculate y based on index to match flex-col-reverse
     // Cities[0] is at the bottom, so its y is largest.
@@ -632,7 +632,7 @@ function buildPath(cities: City[], width: number, limitIndex?: number): string {
     if (idx === 0) {
       d += `M ${x} ${y}`;
     } else {
-      const prev = sorted[idx - 1];
+      const prev = sliced[idx - 1];
       const prevX = cx + ((prev.map_x || 0) * width) / 100;
       const prevY = startY - ((idx - 1) * stepY);
 
