@@ -30,7 +30,7 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
     playSound('click');
 
     try {
-      const email = `${username.trim().toLowerCase()}@voyage.ma`;
+      const email = `${username.toLowerCase().replace(/\s+/g, '')}@voyage.ma`;
       
       const { data, error: authError } = await supabase.auth.signInWithPassword({
         email,
@@ -141,7 +141,7 @@ export default function LoginScreen({ onBack, onRegister, onSuccess }: LoginScre
                   <input
                     type="text"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value.toLowerCase())}
+                    onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/\s+/g, ''))}
                     placeholder={isAr ? "الاسم.اللقب" : "prenom.nom"}
                     className={`w-full bg-[#FFF8F0] border-2 border-[#E5D5B8]/30 rounded-3xl py-5 focus:outline-none focus:border-[#7B3F1A] focus:ring-4 focus:ring-[#7B3F1A]/5 transition-all font-bold text-[#1A1A2E] ${isAr ? 'pr-14 pl-6 text-right arabic-font' : 'pl-14 pr-6'}`}
                     disabled={loading}
